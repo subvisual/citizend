@@ -1,0 +1,24 @@
+{
+  "name": "@discovery-dao/monorepo",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/contracts"
+    ],
+    "nohoist": [
+      "**/@nomiclabs/**",
+      "**/@typechain/**",
+      "**/typechain/**",
+      "**/typescript",
+      "**/ts-node",
+      "@typescript-eslint/**"
+    ]
+  },
+  "scripts": {
+    "contracts:dev": "yarn workspace @discovery-dao/contracts dev",
+    "contracts:export": "yarn workspace @discover-dao/contracts export",
+    "contracts:compile": "yarn workspace @discover-dao/contracts compile",
+    "lint": "yarn workspace @discover-dao/contracts lint",
+    "test": "yarn workspace @discover-dao/contracts test"
+  }
+}

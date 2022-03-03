@@ -36,6 +36,6 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - run: yarn install
-      - run: yarn workspace @discover-dao/contracts compile
-      - run: yarn workspace @discover-dao/contracts lint
-      - run: yarn workspace @discover-dao/contracts test
+      - run: yarn workspace @discovery-dao/contracts compile
+      - run: yarn workspace @discovery-dao/contracts lint
+      - run: yarn workspace @discovery-dao/contracts test

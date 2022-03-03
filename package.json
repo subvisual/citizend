@@ -17,8 +17,6 @@
   "scripts": {
     "contracts:dev": "yarn workspace @discovery-dao/contracts dev",
     "contracts:export": "yarn workspace @discover-dao/contracts export",
-    "contracts:compile": "yarn workspace @discover-dao/contracts compile",
-    "lint": "yarn workspace @discover-dao/contracts lint",
-    "test": "yarn workspace @discover-dao/contracts test"
+    "contracts:compile": "yarn workspace @discover-dao/contracts compile"
   }
 }

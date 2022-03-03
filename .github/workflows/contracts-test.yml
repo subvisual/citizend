@@ -1,4 +1,4 @@
-name: Test Contracts
+name: Contracts - Test Suite
 
 on:
   push:
@@ -10,9 +10,8 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  test-contracts:
+  contracts-test-suite:
     runs-on: ubuntu-latest
-    container: node:16
 
     env:
       FORCE_COLOR: true
@@ -23,8 +22,25 @@ jobs:
         with:
           node-version: '16'
           cacheh: 'yarn'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
       - run: yarn install
       - run: yarn workspace @discovery-dao/contracts compile
       - run: yarn workspace @discovery-dao/contracts lint
       - run: yarn workspace @discovery-dao/contracts test
+
+      - name: Run Slither
+        uses: crytic/slither-action@v0.1.0
+        continue-on-error: true
+        id: slither
+        with:
+          ignore-compile: true
+          sarif: results.sarif
+          target: packages/contracts
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ${{ steps.slither.outputs.sarif }}

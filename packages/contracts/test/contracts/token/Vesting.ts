@@ -6,7 +6,7 @@ import {
   MockERC20,
   MockERC20__factory,
   Vesting,
-  Vesting__factory,
+  // Vesting__factory,
 } from "../../../src/types";
 
 describe("Citizend", () => {
@@ -19,7 +19,7 @@ describe("Citizend", () => {
     [owner] = await ethers.getSigners();
 
     token = await new MockERC20__factory(owner).deploy();
-    vesting = await new Vesting__factory(owner).deploy();
+    // vesting = await new Vesting__factory(owner).deploy();
   });
 
   describe("constructor", () => {});

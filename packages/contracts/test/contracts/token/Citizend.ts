@@ -23,6 +23,6 @@ describe("Citizend", () => {
       expect(await citizend.symbol()).to.equal("CTND");
     });
 
-    xit("mints initial amount to the owner");
+    it("mints initial amount to the owner");
   });
 });

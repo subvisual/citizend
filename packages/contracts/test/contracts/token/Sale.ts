@@ -18,8 +18,8 @@ describe("Citizend", () => {
   beforeEach(async () => {
     [owner] = await ethers.getSigners();
 
-    token = await new MockERC20__factory(owner).deploy();
-    sale = await new Sale__factory(owner).deploy();
+    // token = await new MockERC20__factory(owner).deploy();
+    // sale = await new Sale__factory(owner).deploy();
   });
 
   describe("constructor", () => {});

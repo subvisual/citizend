@@ -1,4 +1,4 @@
-import { ethers } from "hardhat";
+import { ethers, deployments } from "hardhat";
 import { expect } from "chai";
 
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
@@ -6,23 +6,37 @@ import {
   MockERC20,
   MockERC20__factory,
   Sale,
-  Sale__factory,
+  Citizend,
+  Citizend__factory,
 } from "../../../src/types";
 
 describe("Citizend", () => {
   let owner: SignerWithAddress;
+  let alice: SignerWithAddress;
 
-  let token: MockERC20;
+  let aUSD: MockERC20;
+  let citizend: Citizend;
   let sale: Sale;
 
-  beforeEach(async () => {
-    [owner] = await ethers.getSigners();
+  const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
+    await deployments.fixture(["sale"]);
 
-    // token = await new MockERC20__factory(owner).deploy();
-    // sale = await new Sale__factory(owner).deploy();
+    [owner, alice] = await ethers.getSigners();
+
+    const aUSDDeployment = await deployments.get("aUSD");
+    const citizendDeployment = await deployments.get("Citizend");
+
+    aUSD = MockERC20__factory.connect(aUSDDeployment.address, owner);
+    citizend = Citizend__factory.connect(citizendDeployment.address, owner);
   });
 
-  describe("constructor", () => {});
+  beforeEach(() => fixture());
+
+  describe("constructor", () => {
+    it("", async () => {
+      console.log(await aUSD.balanceOf(alice.address));
+    });
+  });
 
   describe("buy", () => {
     it("allows paying 0.30 $aUSD for 1 $CTND");

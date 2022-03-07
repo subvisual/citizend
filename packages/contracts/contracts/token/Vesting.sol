@@ -77,5 +77,4 @@ interface IVesting {
  * @dev Remove `abstract` when fully implemented
  */
 abstract contract Vesting is IVesting {
-
 }

@@ -18,7 +18,7 @@ describe("Citizend", () => {
   beforeEach(async () => {
     [owner] = await ethers.getSigners();
 
-    token = await new MockERC20__factory(owner).deploy();
+    // token = await new MockERC20__factory(owner).deploy();
     // vesting = await new Vesting__factory(owner).deploy();
   });
 

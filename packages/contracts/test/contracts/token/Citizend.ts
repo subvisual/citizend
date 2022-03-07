@@ -23,7 +23,8 @@ describe("Citizend", () => {
 
   describe("constructor", () => {
     it("sets the correct params", async () => {
-      console.log(citizend.address);
+      expect(await citizend.name()).to.equal("Citizend");
+      expect(await citizend.symbol()).to.equal("CTND");
     });
 
     it("mints initial amount to the owner");

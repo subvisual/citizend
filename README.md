@@ -3,6 +3,9 @@
 [notion]: https://www.notion.so/fractal-/Discovery-DAO-0b8ada556f544e219e4756032f97c0e7
 [cra]: https://create-react-app.dev/
 [hardhat]: https://hardhat.org/
+[webflow]: https://webflow.com/
+[appfairy]: https://github.com/DAB0mB/Appfairy
+[subvisual]: https://subvisual.com/
 
 ## Relevant links
 
@@ -34,4 +37,4 @@ using the awesome [AppFairy][appfairy] tool.
 
 ### About
 
-Proudly build by [Subvisual][subvisual].
+Proudly built by [Subvisual][subvisual].

@@ -1,6 +1,4 @@
 {
-  "cSpell.words": [
-    "citizend",
-    "CTND"
-  ]
+  "cSpell.words": ["citizend", "CTND"],
+  "prettier.prettierPath": "../../node_modules/prettier"
 }

@@ -15,7 +15,7 @@
 [Notion][notion]
 [Token One Pager][token-one-pager]
 [Token Allocation and P&L][token-alloc]
-[Figma User Stories][figma]roudly built by [Subvisual][subvisual].
+[Figma User Stories][figma]
 
 ## Development
 
@@ -28,7 +28,6 @@ yarn install
 ```
 
 2. `yarn contracts:dev` boots the local development chain (`hardhat node`), with a test contract
-3. `yarn web:dev` runs the development Create React App server
 
 ## Contracts
 
@@ -42,5 +41,3 @@ Details to be added in the future, but most likely will be a [Webflow][webflow],
 using the awesome [AppFairy][appfairy] tool.
 
 ### About
-
-

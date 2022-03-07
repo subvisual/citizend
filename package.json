@@ -6,6 +6,7 @@
       "packages/contracts"
     ],
     "nohoist": [
+      "**/@openzeppelin/**",
       "**/@nomiclabs/**",
       "**/@typechain/**",
       "**/typechain/**",

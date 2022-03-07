@@ -25,5 +25,7 @@ describe("Citizend", () => {
     it("sets the correct params", async () => {
       console.log(citizend.address);
     });
+
+    it("mints initial amount to the owner");
   });
 });

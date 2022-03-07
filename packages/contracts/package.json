@@ -39,6 +39,6 @@
     "compile": "hardhat compile",
     "dev": "hardhat node",
     "test": "hardhat test",
-    "lint": "solhint contracts/**.sol && prettier --check . contracts/**/*.sol"
+    "lint": "solhint contracts/**/*.sol && prettier --check . contracts/**/*.sol"
   }
 }

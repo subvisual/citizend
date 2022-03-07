@@ -39,4 +39,5 @@ interface ISale {
  * @dev Remove `abstract` when fully implemented
  */
 abstract contract Sale is ISale {
+
 }

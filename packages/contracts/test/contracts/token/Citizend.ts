@@ -1,4 +1,4 @@
-import { ethers } from "hardhat";
+import { ethers, deployments } from "hardhat";
 import { expect } from "chai";
 
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
@@ -6,16 +6,20 @@ import { Citizend, Citizend__factory } from "../../../src/types";
 
 describe("Citizend", () => {
   let owner: SignerWithAddress;
-  let alice: SignerWithAddress;
-  let bob: SignerWithAddress;
 
   let citizend: Citizend;
 
-  beforeEach(async () => {
-    [owner, alice, bob] = await ethers.getSigners();
+  const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
+    await deployments.fixture(["citizend"]);
 
-    citizend = await new Citizend__factory(owner).deploy();
+    [owner] = await ethers.getSigners();
+
+    const citizendDeployment = await deployments.get("Citizend");
+
+    citizend = Citizend__factory.connect(citizendDeployment.address, owner);
   });
+
+  beforeEach(() => fixture());
 
   describe("constructor", () => {
     it("sets the correct params", async () => {

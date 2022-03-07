@@ -7,7 +7,9 @@ import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  * An ERC20 token meant for testing purposes (free minting & burning)
  */
 contract MockERC20 is ERC20 {
-    constructor() ERC20("Citizend", "CTND") {
+    constructor(string memory _name, string memory _symbol)
+        ERC20(_name, _symbol)
+    {
         _mint(msg.sender, 1e9 ether);
     }
 

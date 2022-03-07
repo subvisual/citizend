@@ -38,7 +38,7 @@
   "scripts": {
     "compile": "hardhat compile",
     "dev": "hardhat node",
-    "test": "hardhat test",
+    "test": "hardhat test --deploy-fixture",
     "lint": "solhint contracts/**/*.sol && prettier --check . contracts/**/*.sol"
   }
 }

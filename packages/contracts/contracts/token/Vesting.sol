@@ -2,7 +2,7 @@
 pragma solidity =0.8.12;
 
 interface IVesting {
-    /// @return The timestamp at which cliff/vesting accountting starts
+    /// @return The timestamp at which cliff/vesting accounting starts
     function cliffStart() external view returns (uint256);
 
     /// @return The cliff period, in months, for public sale vesting
@@ -11,7 +11,7 @@ interface IVesting {
     /// @return The vesting duration, in months
     function publicSaleVestingMonths() external view returns (uint256);
 
-    /// @return The token being vevsted
+    /// @return The token being vested
     function token() external view returns (address);
 
     /// @return How many tokens vested in total for a given address, including already claimed amount
@@ -54,7 +54,7 @@ interface IVesting {
      *
      * @param to Beneficiary
      * @param amount Amount to vest
-     */
+     **/
     function createPublicSaleVest(address to, uint256 amount) external;
 
     /**
@@ -76,6 +76,50 @@ interface IVesting {
 /**
  * @dev Remove `abstract` when fully implemented
  */
-abstract contract Vesting is IVesting {
+contract Vesting is IVesting {
+    mapping (address => uint256) public _vested;
 
+    function cliffStart() external view returns (uint256) {
+        revert();
+    }
+
+    function publicSaleCliffMonths() external view returns (uint256) {
+        revert();
+    }
+
+    function publicSaleVestingMonths() external view returns (uint256) {
+        revert();
+    }
+
+    function token() external view returns (address) {
+        revert();
+    }
+
+    function totalVested(address to) external view returns (uint256) {
+        return uint256(0);
+    }
+
+    function claimed(address to) external view returns (uint256) {
+        revert();
+    }
+
+    function claimable(address to) external view returns (uint256) {
+        revert();
+    }
+
+    function claim(address to) external {
+        revert();
+    }
+
+    function createPublicSaleVest(address to, uint256 amount) external {
+        revert();
+    }
+
+    function createPrivateSaleVest(
+        address to,
+        uint256 amount,
+        uint16 cliffMonths
+    ) external {
+        revert();
+    }
 }

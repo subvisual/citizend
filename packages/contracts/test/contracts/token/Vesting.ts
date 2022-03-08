@@ -6,20 +6,21 @@ import {
   MockERC20,
   MockERC20__factory,
   Vesting,
-  // Vesting__factory,
+  Vesting__factory,
 } from "../../../src/types";
 
-describe("Citizend", () => {
+describe("Vesting", () => {
   let owner: SignerWithAddress;
+  let alice: SignerWithAddress;
 
   let token: MockERC20;
   let vesting: Vesting;
 
   beforeEach(async () => {
-    [owner] = await ethers.getSigners();
+    [owner, alice] = await ethers.getSigners();
 
     // token = await new MockERC20__factory(owner).deploy();
-    // vesting = await new Vesting__factory(owner).deploy();
+    vesting = await new Vesting__factory(owner).deploy();
   });
 
   describe("constructor", () => {});
@@ -55,6 +56,12 @@ describe("Citizend", () => {
   describe("claimed", () => {
     it("is zero before claiming");
     it("equals the already claimed amount after multiple claims");
+  });
+
+  describe("totalVested", () => {
+    it("is zero before vesting starts", async () => {
+      expect(await vesting.totalVested(alice.address)).to.equal(0);
+    });
   });
 
   describe("public sale claim", () => {

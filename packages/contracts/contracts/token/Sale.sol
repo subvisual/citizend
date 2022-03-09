@@ -38,6 +38,24 @@ interface ISale {
  *
  * @dev Remove `abstract` when fully implemented
  */
-abstract contract Sale is ISale {
+contract Sale is ISale {
+    address public token;
+    address public paymentToken;
 
+    constructor(address _token, address _paymentToken) {
+        token = _token;
+        paymentToken = _paymentToken;
+    }
+
+    function calculateAmount(uint256 _paymentAmount)
+        external
+        view
+        returns (uint256)
+    {
+        revert("not implemented");
+    }
+
+    function buy(uint256 _paymentAmount) external {
+        revert("not implemented");
+    }
 }

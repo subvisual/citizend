@@ -31,6 +31,9 @@ describe("Sale", () => {
     aUSD = MockERC20__factory.connect(aUSDDeployment.address, owner);
     citizend = Citizend__factory.connect(citizendDeployment.address, owner);
     sale = Sale__factory.connect(saleDeployment.address, owner);
+
+    const allowance = ethers.constants.MaxUint256;
+    await aUSD.connect(alice).approve(sale.address, allowance);
   });
 
   beforeEach(() => fixture());
@@ -46,7 +49,15 @@ describe("Sale", () => {
     it("allows paying 0.30 $aUSD for 1 $CTND");
     it("allows payment 300 $aUSD for 1000 $CTND");
     it("fails if not enough $CTND are available");
-    it("emits a Purchase event");
+
+    it("emits a Purchase event", async () => {
+      const paymentAmount = ethers.utils.parseUnits("1");
+
+      expect(await sale.connect(alice).buy(paymentAmount))
+        .to.emit(sale, "Purchase")
+        .withArgs(alice.address, paymentAmount);
+    });
+
     it("sends tokens into vesting with correct parameters");
     it("correctly handles multiple purchases from the same account");
   });

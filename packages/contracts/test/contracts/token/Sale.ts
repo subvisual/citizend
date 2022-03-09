@@ -11,6 +11,8 @@ import {
   Citizend__factory,
 } from "../../../src/types";
 
+const { parseUnits } = ethers.utils;
+
 describe("Sale", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
@@ -46,12 +48,24 @@ describe("Sale", () => {
   });
 
   describe("buy", () => {
-    it("allows paying 0.30 $aUSD for 1 $CTND");
-    it("allows payment 300 $aUSD for 1000 $CTND");
+    it("allows paying 0.30 $aUSD for 1 $CTND", async () => {
+      const paymentAmount = parseUnits("0.30");
+      const tokens = 1;
+
+      expect(await sale.calculateAmount(paymentAmount)).to.equal(tokens);
+    });
+
+    it("allows payment 300 $aUSD for 1000 $CTND", async () => {
+      const paymentAmount = parseUnits("300");
+      const tokens = 1000;
+
+      expect(await sale.calculateAmount(paymentAmount)).to.equal(tokens);
+    });
+
     it("fails if not enough $CTND are available");
 
     it("emits a Purchase event", async () => {
-      const paymentAmount = ethers.utils.parseUnits("1");
+      const paymentAmount = parseUnits("1");
 
       expect(await sale.connect(alice).buy(paymentAmount))
         .to.emit(sale, "Purchase")

@@ -6,11 +6,12 @@ import {
   MockERC20,
   MockERC20__factory,
   Sale,
+  Sale__factory,
   Citizend,
   Citizend__factory,
 } from "../../../src/types";
 
-describe("Citizend", () => {
+describe("Sale", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
 
@@ -25,16 +26,19 @@ describe("Citizend", () => {
 
     const aUSDDeployment = await deployments.get("aUSD");
     const citizendDeployment = await deployments.get("Citizend");
+    const saleDeployment = await deployments.get("Sale");
 
     aUSD = MockERC20__factory.connect(aUSDDeployment.address, owner);
     citizend = Citizend__factory.connect(citizendDeployment.address, owner);
+    sale = Sale__factory.connect(saleDeployment.address, owner);
   });
 
   beforeEach(() => fixture());
 
   describe("constructor", () => {
-    it("", async () => {
-      console.log(await aUSD.balanceOf(alice.address));
+    it("sets the correct params", async () => {
+      expect(await sale.token()).to.equal(citizend.address);
+      expect(await sale.paymentToken()).to.equal(aUSD.address);
     });
   });
 

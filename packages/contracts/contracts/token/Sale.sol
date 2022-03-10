@@ -2,6 +2,8 @@
 pragma solidity =0.8.12;
 
 import {IVesting} from "./Vesting.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "hardhat/console.sol";
 
 interface ISale {
     /// The $CTND token
@@ -42,6 +44,8 @@ contract Sale is ISale {
     address public token;
     address public paymentToken;
 
+    event Purchase(address from, uint256 amount);
+
     constructor(address _token, address _paymentToken) {
         token = _token;
         paymentToken = _paymentToken;
@@ -56,6 +60,16 @@ contract Sale is ISale {
     }
 
     function buy(uint256 _paymentAmount) external {
-        revert("not implemented");
+        require(_paymentAmount > 0, "can't be zero");
+
+        IERC20(paymentToken).transferFrom(
+            msg.sender,
+            address(this),
+            _paymentAmount
+        );
+
+        // vesting.registerNewPublicVesting(msg.sender, 1);
+
+        emit Purchase(msg.sender, _paymentAmount);
     }
 }

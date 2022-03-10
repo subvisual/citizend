@@ -16,6 +16,7 @@ const { parseUnits } = ethers.utils;
 describe("Sale", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
+  let fakeVesting: SignerWithAddress;
 
   let aUSD: MockERC20;
   let citizend: Citizend;
@@ -24,7 +25,7 @@ describe("Sale", () => {
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
     await deployments.fixture(["sale"]);
 
-    [owner, alice] = await ethers.getSigners();
+    [owner, alice, fakeVesting] = await ethers.getSigners();
 
     const aUSDDeployment = await deployments.get("aUSD");
     const citizendDeployment = await deployments.get("Citizend");
@@ -74,5 +75,26 @@ describe("Sale", () => {
 
     it("sends tokens into vesting with correct parameters");
     it("correctly handles multiple purchases from the same account");
+  });
+
+  describe("setVesting", () => {
+    it("allows setting the vesting contract address", async () => {
+      await sale.setVesting(fakeVesting.address);
+
+      expect(await sale.vesting()).to.equal(fakeVesting.address);
+    });
+
+    it("does not allow reassigning the vesting contract address", async () => {
+      await sale.setVesting(fakeVesting.address);
+
+      await expect(
+        sale.connect(owner).setVesting(alice.address)
+      ).to.be.revertedWith("already set the vesting address");
+    });
+
+    it("prevents non admin from assigning the vesting contract address", async () => {
+      await expect(sale.connect(alice).setVesting(fakeVesting.address)).to.be
+        .reverted;
+    });
   });
 });

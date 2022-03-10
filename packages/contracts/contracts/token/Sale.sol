@@ -44,9 +44,20 @@ contract Sale is ISale {
     address public token;
     address public paymentToken;
 
+    uint256 private tokenPrice;
+
     event Purchase(address from, uint256 amount);
 
-    constructor(address _token, address _paymentToken) {
+    constructor(
+        uint256 _tokenPrice,
+        address _token,
+        address _paymentToken
+    ) {
+        require(_tokenPrice > 0, "can't be zero");
+        require(_token != address(0), "can't be zero");
+        require(_paymentToken != address(0), "can't be zero");
+
+        tokenPrice = _tokenPrice;
         token = _token;
         paymentToken = _paymentToken;
     }
@@ -56,7 +67,9 @@ contract Sale is ISale {
         view
         returns (uint256)
     {
-        revert("not implemented");
+        require(_paymentAmount > 0, "can't be zero");
+
+        return _paymentAmount / tokenPrice;
     }
 
     function buy(uint256 _paymentAmount) external {

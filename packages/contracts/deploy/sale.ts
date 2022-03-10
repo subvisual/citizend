@@ -1,6 +1,8 @@
 import { ethers } from "hardhat";
 import { DeployFunction } from "hardhat-deploy/types";
 
+const { parseUnits } = ethers.utils;
+
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
@@ -11,7 +13,7 @@ const func: DeployFunction = async function (hre) {
   await deploy("Sale", {
     log: true,
     from: deployer,
-    args: [citizend.address, aUSD.address],
+    args: [parseUnits("0.3"), citizend.address, aUSD.address],
   });
 };
 

@@ -48,59 +48,15 @@ describe("Vesting", () => {
     let tomorrow: number = Date.now() + 1000 * 60 * 60 * 24;
     vestingStart = new BN(tomorrow / 1000);
     convertedStart = BigNumber.from(vestingStart.toNumber());
-    let releases: BigNumber[] = [
-      convertedStart,
-      convertedStart.add(60 * 60 * 24 * 30),
-      convertedStart.add(60 * 60 * 24 * 30 * 2),
-      convertedStart.add(60 * 60 * 24 * 30 * 3),
-      convertedStart.add(60 * 60 * 24 * 30 * 4),
-      convertedStart.add(60 * 60 * 24 * 30 * 5),
-      convertedStart.add(60 * 60 * 24 * 30 * 6),
-      convertedStart.add(60 * 60 * 24 * 30 * 7),
-      convertedStart.add(60 * 60 * 24 * 30 * 8),
-      convertedStart.add(60 * 60 * 24 * 30 * 9),
-      convertedStart.add(60 * 60 * 24 * 30 * 10),
-      convertedStart.add(60 * 60 * 24 * 30 * 11),
-      convertedStart.add(60 * 60 * 24 * 30 * 12),
-      convertedStart.add(60 * 60 * 24 * 30 * 13),
-      convertedStart.add(60 * 60 * 24 * 30 * 14),
-      convertedStart.add(60 * 60 * 24 * 30 * 15),
-      convertedStart.add(60 * 60 * 24 * 30 * 16),
-      convertedStart.add(60 * 60 * 24 * 30 * 17),
-      convertedStart.add(60 * 60 * 24 * 30 * 18),
-      convertedStart.add(60 * 60 * 24 * 30 * 19),
-      convertedStart.add(60 * 60 * 24 * 30 * 20),
-      convertedStart.add(60 * 60 * 24 * 30 * 21),
-      convertedStart.add(60 * 60 * 24 * 30 * 22),
-      convertedStart.add(60 * 60 * 24 * 30 * 23),
-      convertedStart.add(60 * 60 * 24 * 30 * 24),
-      convertedStart.add(60 * 60 * 24 * 30 * 25),
-      convertedStart.add(60 * 60 * 24 * 30 * 26),
-      convertedStart.add(60 * 60 * 24 * 30 * 27),
-      convertedStart.add(60 * 60 * 24 * 30 * 28),
-      convertedStart.add(60 * 60 * 24 * 30 * 29),
-      convertedStart.add(60 * 60 * 24 * 30 * 30),
-      convertedStart.add(60 * 60 * 24 * 30 * 31),
-      convertedStart.add(60 * 60 * 24 * 30 * 32),
-      convertedStart.add(60 * 60 * 24 * 30 * 33),
-      convertedStart.add(60 * 60 * 24 * 30 * 34),
-      convertedStart.add(60 * 60 * 24 * 30 * 35),
-      convertedStart.add(60 * 60 * 24 * 30 * 36),
-      convertedStart.add(60 * 60 * 24 * 30 * 37),
-      convertedStart.add(60 * 60 * 24 * 30 * 38),
-      convertedStart.add(60 * 60 * 24 * 30 * 39),
-      convertedStart.add(60 * 60 * 24 * 30 * 40),
-      convertedStart.add(60 * 60 * 24 * 30 * 41),
-      convertedStart.add(60 * 60 * 24 * 30 * 42),
-    ];
 
-    vesting = await new Vesting__factory(owner).deploy(3, citizend.address, fakeSaleContract.address, releases);
+    vesting = await new Vesting__factory(owner).deploy(3, citizend.address, fakeSaleContract.address, convertedStart);
     await citizend.transfer(vesting.address, 1000);
     await vesting.grantRole(await vesting.PRIVATE_SELLER(), seller.address);
   });
 
   describe("constructor", () => {
     it("sets the correct attributes", async () => {
+      expect(await vesting.startTime()).to.eq(convertedStart);
       expect(await vesting.publicSaleVestingMonths()).to.eq(3);
       expect(await vesting.publicSaleCliffMonths()).to.eq(0);
       expect(await vesting.token()).to.eq(citizend.address);
@@ -247,9 +203,9 @@ describe("Vesting", () => {
       expect(await vesting.claimable(alice.address)).to.equal(50);
     });
 
-    it("is 75% of the amount after 75% of vesting period", async () => {
+    it("is 2/3 of the amount after 2/3 of vesting period", async () => {
       await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
-      await increaseTime(time.duration.days(60));
+      await increaseTime(time.duration.days(31));
 
       expect(await vesting.claimable(alice.address)).to.equal(100);
     });

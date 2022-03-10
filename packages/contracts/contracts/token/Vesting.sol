@@ -4,6 +4,7 @@ pragma solidity =0.8.12;
 import "hardhat/console.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
+import "../libraries/DateTime.sol";
 
 interface IVesting {
     /// @return The current balance of the vesting contract.
@@ -99,11 +100,11 @@ contract Vesting is IVesting, AccessControl {
     mapping(address => Account) public accounts;
 
     address public immutable token;
+    uint256 public immutable startTime;
     address public immutable saleContract;
     uint256 public immutable publicSaleVestingMonths;
     uint256 public immutable publicSaleCliffMonths;
     uint256 public reservedAmount;
-    uint64[] public periods;
 
     uint256 public constant PRIVATE_SALE_VESTING_MONTHS = 36;
     uint256 public constant PRIVATE_SALE_MAX_CLIFF_MONTHS = 6;
@@ -126,18 +127,13 @@ contract Vesting is IVesting, AccessControl {
         uint256 _publicSaleVestingMonths,
         address _token,
         address _saleContract,
-        uint64[] memory _periods
+        uint256 _startTime
     ) {
-        require(
-            _periods.length >=
-                PRIVATE_SALE_VESTING_MONTHS + PRIVATE_SALE_MAX_CLIFF_MONTHS
-        );
-
         publicSaleVestingMonths = _publicSaleVestingMonths;
         publicSaleCliffMonths = 0;
         token = _token;
         saleContract = _saleContract;
-        periods = _periods;
+        startTime = _startTime;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
@@ -246,7 +242,7 @@ contract Vesting is IVesting, AccessControl {
         account.totalAmount += amount;
         account.leftToClaim += amount;
         account.cliffMonths = cliffMonths;
-        account.vestingMonths = 36;
+        account.vestingMonths = PRIVATE_SALE_VESTING_MONTHS;
         account.accountType = AccountType.PrivateSale;
 
         reservedAmount += amount;
@@ -263,20 +259,24 @@ contract Vesting is IVesting, AccessControl {
      * @return The number of periods elapsed since the cliff start
      */
     function _numberOfPeriodsElapsed() internal view returns (uint256) {
-        if (block.timestamp < periods[0]) {
+        if (block.timestamp < startTime) {
             return 0;
         } else {
-            uint256 lastPeriod;
-
-            for (uint256 i = 0; i < periods.length; i++) {
-                if (block.timestamp >= periods[i]) {
-                    lastPeriod = i;
-                } else {
-                    break;
-                }
-            }
-
-            return lastPeriod + 1;
+            uint256 beginningOfMonth = DateTime.timestampFromDate(
+                DateTime.getYear(block.timestamp),
+                DateTime.getMonth(block.timestamp),
+                1
+            );
+            uint256 beginningOfMonthStartTime = DateTime.timestampFromDate(
+                DateTime.getYear(startTime),
+                DateTime.getMonth(startTime),
+                1
+            );
+            return
+                DateTime.diffMonths(
+                    beginningOfMonthStartTime,
+                    beginningOfMonth
+                ) + 1;
         }
     }
 }

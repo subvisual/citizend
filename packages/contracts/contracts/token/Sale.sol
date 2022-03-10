@@ -44,7 +44,7 @@ contract Sale is ISale {
     address public token;
     address public paymentToken;
 
-    uint256 private tokenPrice;
+    uint256 public tokenPrice;
 
     event Purchase(address from, uint256 amount);
 

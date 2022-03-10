@@ -1,10 +1,16 @@
-import { ethers } from "hardhat";
+import { ethers, deployments, network } from "hardhat";
+import { BigNumber } from "ethers";
+import BN from "bn.js";
 import { expect } from "chai";
+
+import { time } from "@openzeppelin/test-helpers";
 
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {
   MockERC20,
   MockERC20__factory,
+  Citizend,
+  Citizend__factory,
   Vesting,
   Vesting__factory,
 } from "../../../src/types";
@@ -12,69 +18,367 @@ import {
 describe("Vesting", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
+  let fakeSaleContract: SignerWithAddress;
+  let seller: SignerWithAddress;
 
-  let token: MockERC20;
+  let citizend: Citizend;
   let vesting: Vesting;
+  let vestingStart: BN;
+  let convertedStart: BigNumber;
 
-  beforeEach(async () => {
-    [owner, alice] = await ethers.getSigners();
+  async function increaseTime(seconds: BN): Promise<void> {
+    await network.provider.send("evm_increaseTime", [seconds.toNumber()]);
+    await network.provider.send("evm_mine")
+  }
 
-    // token = await new MockERC20__factory(owner).deploy();
-    vesting = await new Vesting__factory(owner).deploy();
+  const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
+    await deployments.fixture(["citizend"]);
+
+    [owner] = await ethers.getSigners();
+
+    const citizendDeployment = await deployments.get("Citizend");
+
+    citizend = Citizend__factory.connect(citizendDeployment.address, owner);
   });
 
-  describe("constructor", () => {});
+  beforeEach(async () => {
+    await fixture();
+
+    [owner, alice, fakeSaleContract, seller] = await ethers.getSigners();
+    let tomorrow: number = Date.now() + 1000 * 60 * 60 * 24;
+    vestingStart = new BN(tomorrow / 1000);
+    convertedStart = BigNumber.from(vestingStart.toNumber());
+    let releases: BigNumber[] = [
+      convertedStart,
+      convertedStart.add(60 * 60 * 24 * 30),
+      convertedStart.add(60 * 60 * 24 * 30 * 2),
+      convertedStart.add(60 * 60 * 24 * 30 * 3),
+      convertedStart.add(60 * 60 * 24 * 30 * 4),
+      convertedStart.add(60 * 60 * 24 * 30 * 5),
+      convertedStart.add(60 * 60 * 24 * 30 * 6),
+      convertedStart.add(60 * 60 * 24 * 30 * 7),
+      convertedStart.add(60 * 60 * 24 * 30 * 8),
+      convertedStart.add(60 * 60 * 24 * 30 * 9),
+      convertedStart.add(60 * 60 * 24 * 30 * 10),
+      convertedStart.add(60 * 60 * 24 * 30 * 11),
+      convertedStart.add(60 * 60 * 24 * 30 * 12),
+      convertedStart.add(60 * 60 * 24 * 30 * 13),
+      convertedStart.add(60 * 60 * 24 * 30 * 14),
+      convertedStart.add(60 * 60 * 24 * 30 * 15),
+      convertedStart.add(60 * 60 * 24 * 30 * 16),
+      convertedStart.add(60 * 60 * 24 * 30 * 17),
+      convertedStart.add(60 * 60 * 24 * 30 * 18),
+      convertedStart.add(60 * 60 * 24 * 30 * 19),
+      convertedStart.add(60 * 60 * 24 * 30 * 20),
+      convertedStart.add(60 * 60 * 24 * 30 * 21),
+      convertedStart.add(60 * 60 * 24 * 30 * 22),
+      convertedStart.add(60 * 60 * 24 * 30 * 23),
+      convertedStart.add(60 * 60 * 24 * 30 * 24),
+      convertedStart.add(60 * 60 * 24 * 30 * 25),
+      convertedStart.add(60 * 60 * 24 * 30 * 26),
+      convertedStart.add(60 * 60 * 24 * 30 * 27),
+      convertedStart.add(60 * 60 * 24 * 30 * 28),
+      convertedStart.add(60 * 60 * 24 * 30 * 29),
+      convertedStart.add(60 * 60 * 24 * 30 * 30),
+      convertedStart.add(60 * 60 * 24 * 30 * 31),
+      convertedStart.add(60 * 60 * 24 * 30 * 32),
+      convertedStart.add(60 * 60 * 24 * 30 * 33),
+      convertedStart.add(60 * 60 * 24 * 30 * 34),
+      convertedStart.add(60 * 60 * 24 * 30 * 35),
+      convertedStart.add(60 * 60 * 24 * 30 * 36),
+      convertedStart.add(60 * 60 * 24 * 30 * 37),
+      convertedStart.add(60 * 60 * 24 * 30 * 38),
+      convertedStart.add(60 * 60 * 24 * 30 * 39),
+      convertedStart.add(60 * 60 * 24 * 30 * 40),
+      convertedStart.add(60 * 60 * 24 * 30 * 41),
+      convertedStart.add(60 * 60 * 24 * 30 * 42),
+    ];
+
+    vesting = await new Vesting__factory(owner).deploy(3, citizend.address, fakeSaleContract.address, releases);
+    await citizend.transfer(vesting.address, 1000);
+    await vesting.grantRole(await vesting.PRIVATE_SELLER(), seller.address);
+  });
+
+  describe("constructor", () => {
+    it("sets the correct attributes", async () => {
+      expect(await vesting.publicSaleVestingMonths()).to.eq(3);
+      expect(await vesting.publicSaleCliffMonths()).to.eq(0);
+      expect(await vesting.token()).to.eq(citizend.address);
+      expect(await vesting.saleContract()).to.eq(fakeSaleContract.address);
+    });
+  });
+
+  describe("balance", () => {
+    it("returns the correct balance to start", async () => {
+      expect(await vesting.balance()).to.eq(1000);
+    });
+
+    it("returns the correct balance after a claim", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await increaseTime(time.duration.days(30 * 3 + 1));
+      await vesting.claim(alice.address);
+
+      expect(await vesting.balance()).to.eq(850);
+    });
+  });
+
+  describe("remainingBalance", () => {
+    it("returns the correct balance to start", async () => {
+      expect(await vesting.remainingBalance()).to.eq(1000);
+    });
+
+    it("returns the correct balance after a vesting starts", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await increaseTime(time.duration.days(30 * 3 + 1));
+
+      expect(await vesting.remainingBalance()).to.eq(850);
+    });
+  });
 
   describe("createPublicSaleVesting", () => {
-    it("creates a vesting with public sale parameters");
-    it("transfers correct amount of tokens from sender");
-    it("adds to an existing vesting");
-    it("fails if beneficiary already has private vesting");
-    it("fails if sender is not the sale contract");
-    it("emits an event");
+    it("creates a vesting with public sale parameters", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+
+      let account = await vesting.accounts(alice.address);
+      expect(account.totalAmount).to.eq(150);
+      expect(account.vestingMonths).to.eq(3);
+      expect(account.cliffMonths).to.eq(0);
+      expect(account.accountType).to.eq(1);
+      expect(account.leftToClaim).to.eq(150);
+    });
+
+    it("is not possible to create a vesting for more than the remaining balance", async () => {
+      await expect(vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 1001)).
+        to.be.revertedWith("Insufficient balance");
+    });
+
+    it("adds to an existing vesting", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 100);
+      await increaseTime(time.duration.days(30 * 3 + 1));
+
+      expect(await vesting.claimable(alice.address)).to.equal(250);
+    });
+
+    it("fails if beneficiary already has private vesting", async () => {
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 150, 3);
+
+      await expect(vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 100)).
+        to.be.revertedWith("Account already has private vesting");
+    });
+
+    it("fails if sender is not the sale contract", async () => {
+      await expect(vesting.createPublicSaleVest(alice.address, 100)).
+        to.be.reverted;
+    });
+
+    it("emits an event", async () => {
+      await expect(vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150)).
+        to.emit(vesting, "VestingCreated").withArgs(alice.address, 150, 1);
+    });
   });
 
   describe("createPrivateSaleVesting", () => {
-    it("creates a vesting with private sale parameters");
-    it("can customize the cliff period");
-    it("transfers correct amount of tokens from sender");
-    it("adds to an existing vesting");
-    it("fails if beneficiary already has public vesting");
-    it("fails if sender is not the sale contract");
-    it("emits an event");
+    it("creates a vesting with private sale parameters", async () => {
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 150, 3);
+
+      let account = await vesting.accounts(alice.address);
+      expect(account.totalAmount).to.eq(150);
+      expect(account.vestingMonths).to.eq(36);
+      expect(account.accountType).to.eq(2);
+      expect(account.leftToClaim).to.eq(150);
+    });
+
+    it("can customize the cliff period", async () => {
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 150, 3);
+
+      let account = await vesting.accounts(alice.address);
+      expect(account.cliffMonths).to.eq(3);
+    });
+
+    it("is not possible to create a vesting for more than the remaining balance", async () => {
+      await expect(vesting.connect(seller).createPrivateSaleVest(alice.address, 1001, 3)).
+        to.be.revertedWith("Insufficient balance");
+    });
+
+    it("adds to an existing vesting", async () => {
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 150, 3);
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 3);
+      await increaseTime(time.duration.days(30 * 39 + 1));
+
+      expect(await vesting.claimable(alice.address)).to.equal(250);
+    });
+
+    it("fails if beneficiary already has public vesting", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+
+      await expect(vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 3)).
+        to.be.revertedWith("Account already has public vesting");
+    });
+
+    it("fails if cliff period is greater than vesting period", async () => {
+      await expect(vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 7)).
+        to.be.revertedWith("Cliff months too big");
+    });
+
+    it("emits an event", async () => {
+      await expect(vesting.connect(seller).createPrivateSaleVest(alice.address, 150, 3)).
+        to.emit(vesting, "VestingCreated").withArgs(alice.address, 150, 2);
+    });
   });
 
   describe("claimable", () => {
-    it("is zero for addresses with no vesting");
-    it("is more than zero after initial cliff period");
-    it("is 50% of the amount after cliff period and 50% of vesting period");
-    it("is 100% of the amount after 100% of vesting and cliff period");
-    it("increases if not claimed during long periods");
-    it("goes back to 0 after claiming");
+    it("is zero for addresses with no vesting", async () => {
+      await increaseTime(time.duration.days(3));
+      expect(await vesting.claimable(alice.address)).to.equal(0);
+    });
+
+    it("is zero for the duration of the cliff", async () => {
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 150, 3);
+      await increaseTime(time.duration.days(3));
+
+      expect(await vesting.claimable(alice.address)).to.equal(0);
+    });
+
+    it("is more than zero after initial cliff period", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await increaseTime(time.duration.days(3));
+
+      expect(await vesting.claimable(alice.address)).to.equal(50);
+    });
+
+    it("is 75% of the amount after 75% of vesting period", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await increaseTime(time.duration.days(60));
+
+      expect(await vesting.claimable(alice.address)).to.equal(100);
+    });
+
+    it("is 100% of the amount after 100% of vesting and cliff period", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await increaseTime(time.duration.days(61));
+
+      expect(await vesting.claimable(alice.address)).to.equal(150);
+    });
+
+    it("increases if not claimed during long periods", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await increaseTime(time.duration.days(20));
+
+      expect(await vesting.claimable(alice.address)).to.equal(50);
+
+      await increaseTime(time.duration.days(60));
+
+      expect(await vesting.claimable(alice.address)).to.equal(150);
+    });
+
+    it("does not go over the original total", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await increaseTime(time.duration.days(200));
+
+      expect(await vesting.claimable(alice.address)).to.equal(150);
+    });
+
+    it("goes back to 0 after claiming", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await increaseTime(time.duration.days(10));
+
+      expect(await vesting.claimable(alice.address)).to.equal(50);
+      await vesting.claim(alice.address);
+      expect(await vesting.claimable(alice.address)).to.equal(0);
+    });
   });
 
   describe("claimed", () => {
-    it("is zero before claiming");
-    it("equals the already claimed amount after multiple claims");
+    it("is zero before claiming", async () => {
+      expect(await vesting.claimed(alice.address)).to.eq(0);
+    });
+
+    it("equals the already claimed amount after a claim", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await increaseTime(time.duration.days(10));
+
+      expect(await vesting.claimed(alice.address)).to.eq(0);
+      await vesting.claim(alice.address);
+      expect(await vesting.claimed(alice.address)).to.eq(50);
+    });
   });
 
   describe("totalVested", () => {
     it("is zero before vesting starts", async () => {
       expect(await vesting.totalVested(alice.address)).to.equal(0);
     });
+
+    it("is 100% after the vesting", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 150);
+      await increaseTime(time.duration.days(61));
+
+      expect(await vesting.totalVested(alice.address)).to.equal(150);
+    });
   });
 
   describe("public sale claim", () => {
-    it("allows me to claim 0 tokens after 2 weeks");
-    it("allows me to claim 33% of my tokens after 1 month");
-    it("allows me to claim 100% of my tokens after 3 months");
-    it("emits an event");
+    it("allows me to claim 0 tokens before the cliff starts", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 100);
+
+      expect(await vesting.claimable(alice.address)).to.equal(0);
+    });
+
+    it("allows me to claim 33% of my tokens after 2 weeks", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 100);
+      await increaseTime(time.duration.weeks(2));
+
+      expect(await vesting.claimable(alice.address)).to.equal(33);
+    });
+
+    it("allows me to claim 100% of my tokens on the beginning of the 3rd month", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 100);
+      await increaseTime(time.duration.days(30 * 2 + 1));
+
+      expect(await vesting.claimable(alice.address)).to.equal(100);
+    });
+
+    it("emits an event", async () => {
+      await vesting.connect(fakeSaleContract).createPublicSaleVest(alice.address, 100);
+      await increaseTime(time.duration.days(30 * 2 + 1));
+
+      await expect(vesting.claim(alice.address)).to.emit(vesting, "VestingClaimed");
+    });
   });
 
   describe("private sale claim", () => {
-    it("allows me to claim 0 tokens after 2 weeks");
-    it("allows me to claim 0 tokens after 1 month");
-    it("allows me to claim some amount tokens after the full cliff period");
-    it("allows me to claim 100% after the full cliff and vesting period");
+    it("allows me to claim 0 tokens before the cliff starts", async () => {
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 3);
+
+      expect(await vesting.claimable(alice.address)).to.equal(0);
+    });
+
+    it("allows me to claim 0 tokens after 1 month", async () => {
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 3);
+      await increaseTime(time.duration.days(30));
+
+      expect(await vesting.claimable(alice.address)).to.equal(0);
+    });
+
+    it("allows me to claim some amount tokens after the full cliff period", async () => {
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 3);
+      await increaseTime(time.duration.days(30 * 3 + 2));
+
+      expect(await vesting.claimable(alice.address)).to.equal(2);
+    });
+
+    it("allows me to claim 100% after the full cliff and vesting period", async () => {
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 3);
+      await increaseTime(time.duration.days(3 * 30 + 36 * 30));
+
+      expect(await vesting.claimable(alice.address)).to.equal(100);
+    });
+
+    it("emits an event", async () => {
+      await vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 1);
+      await increaseTime(time.duration.days(30 * 2 + 1));
+
+      await expect(vesting.claim(alice.address)).to.emit(vesting, "VestingClaimed");
+    });
   });
 });

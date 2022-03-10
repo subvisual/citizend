@@ -1,9 +1,16 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity =0.8.12;
 
+import "hardhat/console.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+
 interface IVesting {
-    /// @return The timestamp at which cliff/vesting accounting starts
-    function cliffStart() external view returns (uint256);
+    /// @return The current balance of the vesting contract.
+    function balance() external view returns (uint256);
+
+    /// @return The balance of the vesting contract that has not been vested yet.
+    function remainingBalance() external view returns (uint256);
 
     /// @return The cliff period, in months, for public sale vesting
     function publicSaleCliffMonths() external view returns (uint256);
@@ -37,8 +44,6 @@ interface IVesting {
     /**
      * Claims currently claimable amount for the given address
      *
-     * @dev This can currently be called by anyone (may change)
-     *
      * @param to Address to claim from
      */
     function claim(address to) external;
@@ -65,7 +70,7 @@ interface IVesting {
      * already has public a sale vesting
      *
      * @dev Should only be callable by an authorized account
-     */
+     **/
     function createPrivateSaleVest(
         address to,
         uint256 amount,
@@ -75,51 +80,203 @@ interface IVesting {
 
 /**
  * @dev Remove `abstract` when fully implemented
- */
-contract Vesting is IVesting {
-    mapping (address => uint256) public _vested;
-
-    function cliffStart() external view returns (uint256) {
-        revert();
+ **/
+contract Vesting is IVesting, AccessControl {
+    enum AccountType {
+        Empty,
+        PublicSale,
+        PrivateSale
     }
 
-    function publicSaleCliffMonths() external view returns (uint256) {
-        revert();
+    struct Account {
+        uint256 totalAmount;
+        uint256 leftToClaim;
+        uint256 cliffMonths;
+        uint256 vestingMonths;
+        AccountType accountType;
     }
 
-    function publicSaleVestingMonths() external view returns (uint256) {
-        revert();
+    mapping(address => Account) public accounts;
+
+    address public immutable token;
+    address public immutable saleContract;
+    uint256 public immutable publicSaleVestingMonths;
+    uint256 public immutable publicSaleCliffMonths;
+    uint256 public reservedAmount;
+    uint64[] public periods;
+
+    uint256 public constant PRIVATE_SALE_VESTING_MONTHS = 36;
+    uint256 public constant PRIVATE_SALE_MAX_CLIFF_MONTHS = 6;
+
+    bytes32 public constant PRIVATE_SELLER = keccak256("private_seller");
+
+    event VestingCreated(
+        address indexed to,
+        uint256 amount,
+        AccountType accountType
+    );
+    event VestingClaimed(address indexed to, uint256 amount);
+
+    modifier onlySaleContract() {
+        require(msg.sender == saleContract);
+        _;
     }
 
-    function token() external view returns (address) {
-        revert();
+    constructor(
+        uint256 _publicSaleVestingMonths,
+        address _token,
+        address _saleContract,
+        uint64[] memory _periods
+    ) {
+        require(
+            _periods.length >=
+                PRIVATE_SALE_VESTING_MONTHS + PRIVATE_SALE_MAX_CLIFF_MONTHS
+        );
+
+        publicSaleVestingMonths = _publicSaleVestingMonths;
+        publicSaleCliffMonths = 0;
+        token = _token;
+        saleContract = _saleContract;
+        periods = _periods;
+
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
+    /// See {IVesting.balance}
+    function balance() public view returns (uint256) {
+        return IERC20(token).balanceOf(address(this));
+    }
+
+    /// See {IVesting.remainingBalance}
+    function remainingBalance() public view returns (uint256) {
+        return balance() - reservedAmount;
+    }
+
+    /// See {IVesting.totalVested}
     function totalVested(address to) external view returns (uint256) {
-        return uint256(0);
+        Account storage account = accounts[to];
+        uint256 periodsElapsed = _numberOfPeriodsElapsed();
+
+        if (periodsElapsed >= publicSaleVestingMonths) {
+            return account.totalAmount;
+        } else {
+            uint256 vestingPerMonth = account.totalAmount /
+                publicSaleVestingMonths;
+            return vestingPerMonth * periodsElapsed;
+        }
     }
 
+    /// See {IVesting.claimed}
     function claimed(address to) external view returns (uint256) {
-        revert();
+        Account storage account = accounts[to];
+        return account.totalAmount - account.leftToClaim;
     }
 
-    function claimable(address to) external view returns (uint256) {
-        revert();
+    /// See {IVesting.claimable}
+    function claimable(address to) public view returns (uint256) {
+        Account storage account = accounts[to];
+        uint256 periodsElapsed = _numberOfPeriodsElapsed();
+
+        if (account.cliffMonths >= periodsElapsed) {
+            return 0;
+        }
+
+        if (periodsElapsed >= account.vestingMonths + account.cliffMonths) {
+            return account.leftToClaim;
+        }
+
+        uint256 vestingPerMonth = account.totalAmount / account.vestingMonths;
+        return
+            (vestingPerMonth * (periodsElapsed - account.cliffMonths)) -
+            (account.totalAmount - account.leftToClaim);
     }
 
+    /// See {IVesting.claim}
     function claim(address to) external {
-        revert();
+        uint256 claimableAmount = claimable(to);
+        require(claimableAmount > 0, "No claimable amount");
+        Account storage account = accounts[to];
+
+        account.leftToClaim -= claimableAmount;
+        reservedAmount -= claimableAmount;
+        IERC20(token).transfer(to, claimableAmount);
+
+        emit VestingClaimed(to, claimableAmount);
     }
 
-    function createPublicSaleVest(address to, uint256 amount) external {
-        revert();
+    /// See {IVesting.createPublicSaleVest}
+    function createPublicSaleVest(address to, uint256 amount)
+        external
+        onlySaleContract
+    {
+        require(amount <= remainingBalance(), "Insufficient balance");
+        Account storage account = accounts[to];
+        require(
+            account.accountType != AccountType.PrivateSale,
+            "Account already has private vesting"
+        );
+        account.totalAmount += amount;
+        account.leftToClaim += amount;
+        account.cliffMonths = 0;
+        account.vestingMonths = publicSaleVestingMonths;
+        account.accountType = AccountType.PublicSale;
+
+        reservedAmount += amount;
+
+        emit VestingCreated(to, amount, account.accountType);
     }
 
+    /// See {IVesting.createPrivateSaleVest}
     function createPrivateSaleVest(
         address to,
         uint256 amount,
         uint16 cliffMonths
-    ) external {
-        revert();
+    ) external onlyRole(PRIVATE_SELLER) {
+        require(
+            cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
+            "Cliff months too big"
+        );
+        require(amount <= remainingBalance(), "Insufficient balance");
+        Account storage account = accounts[to];
+        require(
+            account.accountType != AccountType.PublicSale,
+            "Account already has public vesting"
+        );
+
+        account.totalAmount += amount;
+        account.leftToClaim += amount;
+        account.cliffMonths = cliffMonths;
+        account.vestingMonths = 36;
+        account.accountType = AccountType.PrivateSale;
+
+        reservedAmount += amount;
+
+        emit VestingCreated(to, amount, account.accountType);
+    }
+
+    /**
+     * Calculates the number of periods elapsed since the cliff start.
+     *
+     * Each period is the beginning of each month and will be passed in as a
+     * parameter to the contract
+     *
+     * @return The number of periods elapsed since the cliff start
+     */
+    function _numberOfPeriodsElapsed() internal view returns (uint256) {
+        if (block.timestamp < periods[0]) {
+            return 0;
+        } else {
+            uint256 lastPeriod;
+
+            for (uint256 i = 0; i < periods.length; i++) {
+                if (block.timestamp >= periods[i]) {
+                    lastPeriod = i;
+                } else {
+                    break;
+                }
+            }
+
+            return lastPeriod + 1;
+        }
     }
 }

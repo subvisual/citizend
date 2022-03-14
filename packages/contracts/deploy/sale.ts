@@ -10,10 +10,15 @@ const func: DeployFunction = async function (hre) {
   const aUSD = await get("aUSD");
   const citizend = await get("Citizend");
 
+  const today = ethers.BigNumber.from(Math.round(new Date().getTime() / 1000));
+  const tomorrow = ethers.BigNumber.from(
+    Math.round(new Date().getTime() / 1000) + 60 * 60 * 24
+  );
+
   await deploy("Sale", {
     log: true,
     from: deployer,
-    args: [parseUnits("0.3"), citizend.address, aUSD.address],
+    args: [parseUnits("0.3"), citizend.address, aUSD.address, today, tomorrow],
   });
 };
 

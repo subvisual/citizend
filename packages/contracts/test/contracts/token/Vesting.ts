@@ -39,7 +39,9 @@ describe("Vesting", () => {
   async function goToTime(seconds: BN): Promise<void> {
     let currentTime = new Date().getTime() / 1000;
 
-    await network.provider.send("evm_increaseTime", [seconds.toNumber() - currentTime]);
+    await network.provider.send("evm_increaseTime", [
+      seconds.toNumber() - currentTime,
+    ]);
     await network.provider.send("evm_mine");
   }
 
@@ -58,7 +60,11 @@ describe("Vesting", () => {
 
     [owner, alice, fakeSaleContract, seller] = await ethers.getSigners();
     const currentDate: Date = new Date();
-    const beginningOfMonth: Date = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const beginningOfMonth: Date = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      1
+    );
     vestingStart = new BN(beginningOfMonth.getTime() / 1000);
     convertedStart = BigNumber.from(vestingStart.toNumber());
     await goToTime(vestingStart);

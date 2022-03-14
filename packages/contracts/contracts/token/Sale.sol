@@ -3,6 +3,8 @@ pragma solidity =0.8.12;
 
 import {IVesting} from "./Vesting.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+
 import "hardhat/console.sol";
 
 interface ISale {
@@ -11,6 +13,9 @@ interface ISale {
 
     /// The $aUSD token
     function paymentToken() external view returns (address);
+
+    /// Set the vesting contract. Only callbable once by an admin role
+    function setVesting(address _vesting) external;
 
     /// How many $CTND will be received for the given payment amount
     function calculateAmount(uint256 _paymentAmount)
@@ -40,9 +45,10 @@ interface ISale {
  *
  * @dev Remove `abstract` when fully implemented
  */
-contract Sale is ISale {
+contract Sale is ISale, AccessControl {
     address public token;
     address public paymentToken;
+    address public vesting;
 
     uint256 public tokenPrice;
 
@@ -60,6 +66,18 @@ contract Sale is ISale {
         tokenPrice = _tokenPrice;
         token = _token;
         paymentToken = _paymentToken;
+
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
+
+    function setVesting(address _vesting)
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        require(vesting == address(0), "already set the vesting address");
+        require(_vesting != address(0), "vesting address can't be zero");
+
+        vesting = _vesting;
     }
 
     function calculateAmount(uint256 _paymentAmount)

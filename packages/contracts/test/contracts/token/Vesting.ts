@@ -31,6 +31,18 @@ describe("Vesting", () => {
     await network.provider.send("evm_mine");
   }
 
+  async function decreaseTime(seconds: BN): Promise<void> {
+    await network.provider.send("evm_increaseTime", [seconds.toNumber() * -1]);
+    await network.provider.send("evm_mine");
+  }
+
+  async function goToTime(seconds: BN): Promise<void> {
+    let currentTime = new Date().getTime() / 1000;
+
+    await network.provider.send("evm_increaseTime", [seconds.toNumber() - currentTime]);
+    await network.provider.send("evm_mine");
+  }
+
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
     await deployments.fixture(["citizend"]);
 
@@ -45,9 +57,11 @@ describe("Vesting", () => {
     await fixture();
 
     [owner, alice, fakeSaleContract, seller] = await ethers.getSigners();
-    let tomorrow: number = Date.now() + 1000 * 60 * 60 * 24;
-    vestingStart = new BN(tomorrow / 1000);
+    const currentDate: Date = new Date();
+    const beginningOfMonth: Date = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    vestingStart = new BN(beginningOfMonth.getTime() / 1000);
     convertedStart = BigNumber.from(vestingStart.toNumber());
+    await goToTime(vestingStart);
 
     vesting = await new Vesting__factory(owner).deploy(
       3,
@@ -340,6 +354,7 @@ describe("Vesting", () => {
       await vesting
         .connect(fakeSaleContract)
         .createPublicSaleVest(alice.address, 100);
+      await decreaseTime(time.duration.days(1));
 
       expect(await vesting.claimable(alice.address)).to.equal(0);
     });

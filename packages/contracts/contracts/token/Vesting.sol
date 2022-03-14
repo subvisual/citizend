@@ -83,6 +83,8 @@ interface IVesting {
  * @dev Remove `abstract` when fully implemented
  **/
 contract Vesting is IVesting, AccessControl {
+    using DateTime for uint256;
+
     enum AccountType {
         Empty,
         PublicSale,
@@ -263,13 +265,13 @@ contract Vesting is IVesting, AccessControl {
             return 0;
         } else {
             uint256 beginningOfMonth = DateTime.timestampFromDate(
-                DateTime.getYear(block.timestamp),
-                DateTime.getMonth(block.timestamp),
+                block.timestamp.getYear(),
+                block.timestamp.getMonth(),
                 1
             );
             uint256 beginningOfMonthStartTime = DateTime.timestampFromDate(
-                DateTime.getYear(startTime),
-                DateTime.getMonth(startTime),
+                startTime.getYear(),
+                startTime.getMonth(),
                 1
             );
             return

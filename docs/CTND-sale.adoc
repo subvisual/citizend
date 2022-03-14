@@ -2,7 +2,7 @@
 
 == User flows
 
-[mermaid,abcd-flowchart,svg]
+[mermaid,user-flows,png]
 ....
 sequenceDiagram
     participant User
@@ -47,11 +47,6 @@ sequenceDiagram
     participant User
     participant Sale
     participant Vesting
-
-    Admin ->> Sale: deploy()
-    Admin ->> Vesting: deploy()
-    Admin ->> Sale: setVesting(addr)
-    Admin ->> Vesting: ctnd.transfer(sale.address, totalSupply)
 
     rect rgb(230, 230, 230)
         Note right of User: investment flow

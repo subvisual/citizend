@@ -51,21 +51,29 @@ contract Sale is ISale, AccessControl {
     address public vesting;
 
     uint256 public tokenPrice;
+    uint256 public start;
+    uint256 public end;
 
     event Purchase(address from, uint256 amount);
 
     constructor(
         uint256 _tokenPrice,
         address _token,
-        address _paymentToken
+        address _paymentToken,
+        uint256 _start,
+        uint256 _end
     ) {
         require(_tokenPrice > 0, "can't be zero");
         require(_token != address(0), "can't be zero");
         require(_paymentToken != address(0), "can't be zero");
+        require(_start > 0, "can't be zero");
+        require(_end > _start, "end date should be higher than start date");
 
         tokenPrice = _tokenPrice;
         token = _token;
         paymentToken = _paymentToken;
+        start = _start;
+        end = _end;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
@@ -91,6 +99,10 @@ contract Sale is ISale, AccessControl {
     }
 
     function buy(uint256 _paymentAmount) external {
+        require(
+            block.timestamp >= start && block.timestamp <= end,
+            "no active sale"
+        );
         require(_paymentAmount > 0, "can't be zero");
 
         IERC20(paymentToken).transferFrom(

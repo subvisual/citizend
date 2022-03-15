@@ -12,6 +12,7 @@ import {
 } from "../../../src/types";
 
 const { parseUnits } = ethers.utils;
+const { MaxUint256 } = ethers.constants;
 
 describe("Sale", () => {
   let owner: SignerWithAddress;
@@ -35,8 +36,7 @@ describe("Sale", () => {
     citizend = Citizend__factory.connect(citizendDeployment.address, owner);
     sale = Sale__factory.connect(saleDeployment.address, owner);
 
-    const allowance = ethers.constants.MaxUint256;
-    await aUSD.connect(alice).approve(sale.address, allowance);
+    await aUSD.connect(alice).approve(sale.address, MaxUint256);
   });
 
   beforeEach(() => fixture());
@@ -51,19 +51,17 @@ describe("Sale", () => {
   describe("buy", () => {
     it("allows paying 0.30 $aUSD for 1 $CTND", async () => {
       const paymentAmount = parseUnits("0.30");
-      const tokens = 1;
+      const tokens = parseUnits("1");
 
       expect(await sale.calculateAmount(paymentAmount)).to.equal(tokens);
     });
 
     it("allows payment 300 $aUSD for 1000 $CTND", async () => {
       const paymentAmount = parseUnits("300");
-      const tokens = 1000;
+      const tokens = parseUnits("1000");
 
       expect(await sale.calculateAmount(paymentAmount)).to.equal(tokens);
     });
-
-    it("fails if not enough $CTND are available");
 
     it("emits a Purchase event", async () => {
       const paymentAmount = parseUnits("1");
@@ -73,8 +71,17 @@ describe("Sale", () => {
         .withArgs(alice.address, paymentAmount);
     });
 
-    it("sends tokens into vesting with correct parameters");
-    it("correctly handles multiple purchases from the same account");
+    it("correctly handles multiple purchases from the same account", async () => {
+      const paymentAmount = parseUnits("1");
+
+      expect(await sale.connect(alice).buy(paymentAmount))
+        .to.emit(sale, "Purchase")
+        .withArgs(alice.address, paymentAmount);
+
+      expect(await sale.connect(alice).buy(paymentAmount))
+        .to.emit(sale, "Purchase")
+        .withArgs(alice.address, paymentAmount);
+    });
   });
 
   describe("setVesting", () => {

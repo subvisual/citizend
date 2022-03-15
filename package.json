@@ -11,8 +11,7 @@
       "**/@typechain/**",
       "**/typechain/**",
       "**/typescript",
-      "**/ts-node",
-      "@typescript-eslint/**"
+      "**/ts-node"
     ]
   },
   "scripts": {

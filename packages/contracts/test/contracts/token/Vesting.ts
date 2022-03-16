@@ -110,9 +110,7 @@ describe("Vesting", () => {
         .createPrivateSaleVest(alice.address, 150, 3);
 
       await expect(
-        vesting
-          .connect(saleContract)
-          .createPublicSaleVest(alice.address, 100)
+        vesting.connect(saleContract).createPublicSaleVest(alice.address, 100)
       ).to.be.revertedWith("Account already has private vesting");
     });
 
@@ -123,9 +121,7 @@ describe("Vesting", () => {
 
     it("emits an event", async () => {
       await expect(
-        vesting
-          .connect(saleContract)
-          .createPublicSaleVest(alice.address, 150)
+        vesting.connect(saleContract).createPublicSaleVest(alice.address, 150)
       )
         .to.emit(vesting, "VestingCreated")
         .withArgs(alice.address, 150, 1);

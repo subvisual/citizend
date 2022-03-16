@@ -122,7 +122,10 @@ contract Sale is ISale, AccessControl {
             _paymentAmount
         );
 
-        IVesting(vesting).createPublicSaleVest(msg.sender, paymentTokenToToken(_paymentAmount));
+        IVesting(vesting).createPublicSaleVest(
+            msg.sender,
+            paymentTokenToToken(_paymentAmount)
+        );
 
         emit Purchase(msg.sender, _paymentAmount);
     }

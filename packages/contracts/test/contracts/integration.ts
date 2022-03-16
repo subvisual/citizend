@@ -74,7 +74,9 @@ describe("Integration", () => {
 
   describe("refund", () => {
     it("reverts the transaction if there is nothing to be refunded", async () => {
-      await expect(vesting.refund(alice.address)).to.be.revertedWith("No tokens to refund");
+      await expect(vesting.refund(alice.address)).to.be.revertedWith(
+        "No tokens to refund"
+      );
     });
 
     it("refunds in aUSD the amount of tokens that could not be claimed", async () => {
@@ -82,11 +84,15 @@ describe("Integration", () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
       await vesting.connect(seller).setIndividualCap(50);
 
-      const beforeRefund = await aUSD.balanceOf(alice.address)
-      await expect(vesting.refund(alice.address)).to.emit(vesting, "Refunded").withArgs(alice.address, 50);
-      const afterRefund = await aUSD.balanceOf(alice.address)
+      const beforeRefund = await aUSD.balanceOf(alice.address);
+      await expect(vesting.refund(alice.address))
+        .to.emit(vesting, "Refunded")
+        .withArgs(alice.address, 50);
+      const afterRefund = await aUSD.balanceOf(alice.address);
 
-      expect(afterRefund.sub(beforeRefund)).to.eq(await sale.tokenToPaymentToken(50));
+      expect(afterRefund.sub(beforeRefund)).to.eq(
+        await sale.tokenToPaymentToken(50)
+      );
     });
   });
 });

@@ -6,9 +6,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 import {ISale} from "./ISale.sol";
-import {IVesting} from "./Vesting.sol";
-
-import "hardhat/console.sol";
+import {IVesting} from "./IVesting.sol";
 
 /// Citizend token sale contract
 ///
@@ -32,10 +30,10 @@ contract Sale is ISale, AccessControl {
     // State
     //
 
-    /// Seee {ISale.token}
+    /// See {ISale.token}
     address public immutable override(ISale) token;
 
-    /// Seee {ISale.paymentToken}
+    /// See {ISale.paymentToken}
     address public immutable override(ISale) paymentToken;
 
     /// Fixed price of token, expressed in paymentToken amount
@@ -47,7 +45,7 @@ contract Sale is ISale, AccessControl {
     /// Timestamp at which sale ends
     uint256 public immutable end;
 
-    /// Seee {ISale.vesting}
+    /// See {ISale.vesting}
     address public override(ISale) vesting;
 
     /// @param _token Token being sold

@@ -1,18 +1,15 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity =0.8.12;
 
-import "hardhat/console.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
+
+import "./Sale.sol";
 import "../libraries/DateTime.sol";
 
+import "hardhat/console.sol";
+
 interface IVesting {
-    /// @return The current balance of the vesting contract.
-    function balance() external view returns (uint256);
-
-    /// @return The balance of the vesting contract that has not been vested yet.
-    function remainingBalance() external view returns (uint256);
-
     /// @return The cliff period, in months, for public sale vesting
     function publicSaleCliffMonths() external view returns (uint256);
 
@@ -77,6 +74,30 @@ interface IVesting {
         uint256 amount,
         uint16 cliffMonths
     ) external;
+
+    /**
+     * Refunds currently refundable amount for the given address
+     *
+     * @param to Address to refund to
+     */
+    function refund(address to) external;
+
+    /**
+     * Returns the amount of tokens that are available for refund do to the
+     * rising tide mechanism
+     *
+     * @param to The address to query
+     * @return The currently claimable amount
+     */
+    function refundable(address to) external view returns (uint256);
+
+    /**
+     * Sets the individual cap for investors, which will then be used when
+     * claiming or refunding
+     *
+     * @param cap The cap per investor to be set
+     */
+    function setIndividualCap(uint256 cap) external;
 }
 
 /**
@@ -93,7 +114,8 @@ contract Vesting is IVesting, AccessControl {
 
     struct Account {
         uint256 totalAmount;
-        uint256 leftToClaim;
+        uint256 claimedAmount;
+        uint256 refundableAmount;
         uint256 cliffMonths;
         uint256 vestingMonths;
         AccountType accountType;
@@ -102,16 +124,20 @@ contract Vesting is IVesting, AccessControl {
     mapping(address => Account) public accounts;
 
     address public immutable token;
+    address public immutable aUSD;
     uint256 public immutable startTime;
     address public immutable saleContract;
     uint256 public immutable publicSaleVestingMonths;
     uint256 public immutable publicSaleCliffMonths;
-    uint256 public reservedAmount;
+    uint256 public immutable privateSaleCap;
+    uint256 public individualCap;
+    uint256 public totalPrivateSales;
 
     uint256 public constant PRIVATE_SALE_VESTING_MONTHS = 36;
     uint256 public constant PRIVATE_SALE_MAX_CLIFF_MONTHS = 6;
 
     bytes32 public constant PRIVATE_SELLER = keccak256("private_seller");
+    bytes32 public constant CAP_VALIDATOR = keccak256("cap_validator");
 
     event VestingCreated(
         address indexed to,
@@ -119,6 +145,7 @@ contract Vesting is IVesting, AccessControl {
         AccountType accountType
     );
     event VestingClaimed(address indexed to, uint256 amount);
+    event Refunded(address indexed to, uint256 amount);
 
     modifier onlySaleContract() {
         require(msg.sender == saleContract);
@@ -128,26 +155,20 @@ contract Vesting is IVesting, AccessControl {
     constructor(
         uint256 _publicSaleVestingMonths,
         address _token,
+        address _aUSD,
         address _saleContract,
-        uint256 _startTime
+        uint256 _startTime,
+        uint256 _privateSaleCap
     ) {
         publicSaleVestingMonths = _publicSaleVestingMonths;
         publicSaleCliffMonths = 0;
         token = _token;
+        aUSD = _aUSD;
         saleContract = _saleContract;
         startTime = _startTime;
+        privateSaleCap = _privateSaleCap;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    }
-
-    /// See {IVesting.balance}
-    function balance() public view returns (uint256) {
-        return IERC20(token).balanceOf(address(this));
-    }
-
-    /// See {IVesting.remainingBalance}
-    function remainingBalance() public view returns (uint256) {
-        return balance() - reservedAmount;
     }
 
     /// See {IVesting.totalVested}
@@ -167,7 +188,7 @@ contract Vesting is IVesting, AccessControl {
     /// See {IVesting.claimed}
     function claimed(address to) external view returns (uint256) {
         Account storage account = accounts[to];
-        return account.totalAmount - account.leftToClaim;
+        return account.claimedAmount;
     }
 
     /// See {IVesting.claimable}
@@ -175,28 +196,33 @@ contract Vesting is IVesting, AccessControl {
         Account storage account = accounts[to];
         uint256 periodsElapsed = _numberOfPeriodsElapsed();
 
+        if (individualCap == 0) {
+            return 0;
+        }
+
         if (account.cliffMonths >= periodsElapsed) {
             return 0;
         }
 
         if (periodsElapsed >= account.vestingMonths + account.cliffMonths) {
-            return account.leftToClaim;
+            return _applyCap(account.totalAmount) - account.claimedAmount;
         }
 
-        uint256 vestingPerMonth = account.totalAmount / account.vestingMonths;
+        uint256 vestingPerMonth = _applyCap(account.totalAmount) /
+            account.vestingMonths;
         return
             (vestingPerMonth * (periodsElapsed - account.cliffMonths)) -
-            (account.totalAmount - account.leftToClaim);
+            account.claimedAmount;
     }
 
     /// See {IVesting.claim}
     function claim(address to) external {
         uint256 claimableAmount = claimable(to);
         require(claimableAmount > 0, "No claimable amount");
+
         Account storage account = accounts[to];
 
-        account.leftToClaim -= claimableAmount;
-        reservedAmount -= claimableAmount;
+        account.claimedAmount += claimableAmount;
         IERC20(token).transfer(to, claimableAmount);
 
         emit VestingClaimed(to, claimableAmount);
@@ -207,19 +233,15 @@ contract Vesting is IVesting, AccessControl {
         external
         onlySaleContract
     {
-        require(amount <= remainingBalance(), "Insufficient balance");
         Account storage account = accounts[to];
         require(
             account.accountType != AccountType.PrivateSale,
             "Account already has private vesting"
         );
         account.totalAmount += amount;
-        account.leftToClaim += amount;
         account.cliffMonths = 0;
         account.vestingMonths = publicSaleVestingMonths;
         account.accountType = AccountType.PublicSale;
-
-        reservedAmount += amount;
 
         emit VestingCreated(to, amount, account.accountType);
     }
@@ -234,7 +256,10 @@ contract Vesting is IVesting, AccessControl {
             cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
             "Cliff months too big"
         );
-        require(amount <= remainingBalance(), "Insufficient balance");
+        require(
+            totalPrivateSales + amount <= privateSaleCap,
+            "Private sale cap reached"
+        );
         Account storage account = accounts[to];
         require(
             account.accountType != AccountType.PublicSale,
@@ -242,14 +267,47 @@ contract Vesting is IVesting, AccessControl {
         );
 
         account.totalAmount += amount;
-        account.leftToClaim += amount;
         account.cliffMonths = cliffMonths;
         account.vestingMonths = PRIVATE_SALE_VESTING_MONTHS;
         account.accountType = AccountType.PrivateSale;
 
-        reservedAmount += amount;
+        totalPrivateSales += amount;
 
         emit VestingCreated(to, amount, account.accountType);
+    }
+
+    /// See {IVesting.setIndividualCap}
+    function setIndividualCap(uint256 _cap) external onlyRole(CAP_VALIDATOR) {
+        require(_cap > 0, "Cap must be greater than 0");
+        individualCap = _cap;
+    }
+
+    /// See {IVesting.refundable}
+    function refundable(address to) public view returns (uint256) {
+        Account storage account = accounts[to];
+
+        if (individualCap == 0) {
+            return 0;
+        }
+
+        if (account.totalAmount <= individualCap) {
+            return 0;
+        } else {
+            return account.totalAmount - individualCap;
+        }
+    }
+
+    /// See {IVesting.refund}
+    function refund(address to) external {
+        uint256 refundableAmount = refundable(to);
+        require(refundableAmount > 0, "No tokens to refund");
+
+        IERC20(aUSD).transfer(
+            to,
+            Sale(saleContract).tokenToPaymentToken(refundableAmount)
+        );
+
+        emit Refunded(to, refundableAmount);
     }
 
     /**
@@ -280,5 +338,17 @@ contract Vesting is IVesting, AccessControl {
                     beginningOfMonth
                 ) + 1;
         }
+    }
+
+    function _applyCap(uint256 amount) internal view returns (uint256) {
+        if (individualCap == 0) {
+            return 0;
+        }
+
+        if (amount > individualCap) {
+            return individualCap;
+        }
+
+        return amount;
     }
 }

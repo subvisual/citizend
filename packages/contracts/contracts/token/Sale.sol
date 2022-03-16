@@ -8,6 +8,8 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ISale} from "./ISale.sol";
 import {IVesting} from "./Vesting.sol";
 
+import "hardhat/console.sol";
+
 /// Citizend token sale contract
 ///
 /// Users interact with this contract to deposit $aUSD in exchange for $CTND.
@@ -89,8 +91,8 @@ contract Sale is ISale, AccessControl {
     //
 
     /// @inheritdoc ISale
-    function calculateAmount(uint256 _paymentAmount)
-        external
+    function paymentTokenToToken(uint256 _paymentAmount)
+        public
         view
         override(ISale)
         returns (uint256)
@@ -101,16 +103,28 @@ contract Sale is ISale, AccessControl {
     }
 
     /// @inheritdoc ISale
+    function tokenToPaymentToken(uint256 _tokenAmount)
+        external
+        view
+        override(ISale)
+        returns (uint256)
+    {
+        require(_tokenAmount > 0, "can't be zero");
+
+        return (_tokenAmount * rate) / MUL;
+    }
+
+    /// @inheritdoc ISale
     function buy(uint256 _paymentAmount) external override(ISale) inSale {
         require(_paymentAmount > 0, "can't be zero");
 
         IERC20(paymentToken).safeTransferFrom(
             msg.sender,
-            address(this),
+            vesting,
             _paymentAmount
         );
 
-        // vesting.registerNewPublicVesting(msg.sender, 1);
+        IVesting(vesting).createPublicSaleVest(msg.sender, paymentTokenToToken(_paymentAmount));
 
         emit Purchase(msg.sender, _paymentAmount);
     }

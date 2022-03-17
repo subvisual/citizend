@@ -3,6 +3,8 @@ import { DeployFunction } from "hardhat-deploy/types";
 
 const { parseUnits } = ethers.utils;
 
+import { getNetworkConfig } from "../src/deployConfigs";
+
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
@@ -10,15 +12,18 @@ const func: DeployFunction = async function (hre) {
   const aUSD = await get("aUSD");
   const citizend = await get("Citizend");
 
-  const today = ethers.BigNumber.from(Math.round(new Date().getTime() / 1000));
-  const tomorrow = ethers.BigNumber.from(
-    Math.round(new Date().getTime() / 1000) + 60 * 60 * 24
-  );
+  const { ctndSale } = await getNetworkConfig();
 
   await deploy("Sale", {
     log: true,
     from: deployer,
-    args: [parseUnits("0.3"), citizend.address, aUSD.address, today, tomorrow],
+    args: [
+      citizend.address,
+      aUSD.address,
+      parseUnits("0.3"),
+      ctndSale.start,
+      ctndSale.end,
+    ],
   });
 };
 

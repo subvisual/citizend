@@ -9,6 +9,8 @@ import {
   Sale__factory,
   Citizend,
   Citizend__factory,
+  Vesting,
+  Vesting__factory,
 } from "../../../src/types";
 
 const { parseUnits } = ethers.utils;
@@ -17,24 +19,26 @@ const { MaxUint256 } = ethers.constants;
 describe("Sale", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
-  let fakeVesting: SignerWithAddress;
 
   let aUSD: MockERC20;
   let citizend: Citizend;
   let sale: Sale;
+  let vesting: Vesting;
 
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
     await deployments.fixture(["sale"]);
 
-    [owner, alice, fakeVesting] = await ethers.getSigners();
+    [owner, alice] = await ethers.getSigners();
 
     const aUSDDeployment = await deployments.get("aUSD");
     const citizendDeployment = await deployments.get("Citizend");
     const saleDeployment = await deployments.get("Sale");
+    const vestingDeployment = await deployments.get("Vesting");
 
     aUSD = MockERC20__factory.connect(aUSDDeployment.address, owner);
     citizend = Citizend__factory.connect(citizendDeployment.address, owner);
     sale = Sale__factory.connect(saleDeployment.address, owner);
+    vesting = Vesting__factory.connect(vestingDeployment.address, owner);
 
     await aUSD.connect(alice).approve(sale.address, MaxUint256);
   });
@@ -49,22 +53,9 @@ describe("Sale", () => {
   });
 
   describe("buy", () => {
-    it("allows paying 0.30 $aUSD for 1 $CTND", async () => {
-      const paymentAmount = parseUnits("0.30");
-      const tokens = parseUnits("1");
-
-      expect(await sale.calculateAmount(paymentAmount)).to.equal(tokens);
-    });
-
-    it("allows payment 300 $aUSD for 1000 $CTND", async () => {
-      const paymentAmount = parseUnits("300");
-      const tokens = parseUnits("1000");
-
-      expect(await sale.calculateAmount(paymentAmount)).to.equal(tokens);
-    });
-
     it("emits a Purchase event", async () => {
       const paymentAmount = parseUnits("1");
+      await sale.setVesting(vesting.address);
 
       expect(await sale.connect(alice).buy(paymentAmount))
         .to.emit(sale, "Purchase")
@@ -73,6 +64,7 @@ describe("Sale", () => {
 
     it("correctly handles multiple purchases from the same account", async () => {
       const paymentAmount = parseUnits("1");
+      await sale.setVesting(vesting.address);
 
       expect(await sale.connect(alice).buy(paymentAmount))
         .to.emit(sale, "Purchase")
@@ -86,13 +78,13 @@ describe("Sale", () => {
 
   describe("setVesting", () => {
     it("allows setting the vesting contract address", async () => {
-      await sale.setVesting(fakeVesting.address);
+      await sale.setVesting(vesting.address);
 
-      expect(await sale.vesting()).to.equal(fakeVesting.address);
+      expect(await sale.vesting()).to.equal(vesting.address);
     });
 
     it("does not allow reassigning the vesting contract address", async () => {
-      await sale.setVesting(fakeVesting.address);
+      await sale.setVesting(vesting.address);
 
       await expect(
         sale.connect(owner).setVesting(alice.address)
@@ -100,8 +92,41 @@ describe("Sale", () => {
     });
 
     it("prevents non admin from assigning the vesting contract address", async () => {
-      await expect(sale.connect(alice).setVesting(fakeVesting.address)).to.be
+      await expect(sale.connect(alice).setVesting(vesting.address)).to.be
         .reverted;
+    });
+  });
+
+  describe("paymentTokenToToken", async () => {
+    it("reverts when the amount is zero", async () => {
+      await expect(sale.paymentTokenToToken(parseUnits("0"))).to.be.reverted;
+    });
+
+    it("allows paying 0.30 $aUSD for 1 $CTND", async () => {
+      const paymentAmount = parseUnits("0.30");
+      const tokens = parseUnits("1");
+
+      expect(await sale.paymentTokenToToken(paymentAmount)).to.equal(tokens);
+    });
+
+    it("allows payment 300 $aUSD for 1000 $CTND", async () => {
+      const paymentAmount = parseUnits("300");
+      const tokens = parseUnits("1000");
+
+      expect(await sale.paymentTokenToToken(paymentAmount)).to.equal(tokens);
+    });
+  });
+
+  describe("tokenToPaymentToken", async () => {
+    it("reverts when the amount is zero", async () => {
+      await expect(sale.tokenToPaymentToken(parseUnits("0"))).to.be.reverted;
+    });
+
+    it("converts the correct amount", async () => {
+      const tokens = parseUnits("1");
+      const paymentAmount = parseUnits("0.30");
+
+      expect(await sale.tokenToPaymentToken(tokens)).to.equal(paymentAmount);
     });
   });
 });

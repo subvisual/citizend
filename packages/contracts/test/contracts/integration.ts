@@ -27,49 +27,31 @@ describe("Integration", () => {
   let citizend: Citizend;
   let vesting: Vesting;
   let sale: Sale;
-  let vestingStart: BN;
-  let convertedStart: BigNumber;
 
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
     await deployments.fixture(["sale"]);
 
-    [owner, alice] = await ethers.getSigners();
+    [owner, alice, seller] = await ethers.getSigners();
 
     const citizendDeployment = await deployments.get("Citizend");
     const aUSDDeployment = await deployments.get("aUSD");
     const saleDeployment = await deployments.get("Sale");
+    const vestingDeployment = await deployments.get("Vesting");
 
     aUSD = MockERC20__factory.connect(aUSDDeployment.address, owner);
     citizend = Citizend__factory.connect(citizendDeployment.address, owner);
     sale = Sale__factory.connect(saleDeployment.address, owner);
-  });
-
-  beforeEach(async () => {
-    await fixture();
-
-    [owner, alice, seller] = await ethers.getSigners();
-    const currentDate: Date = new Date();
-    const beginningOfMonth: Date = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      1
-    );
-    const now = Math.floor(new Date().getTime() / 1000);
-
-    vesting = await new Vesting__factory(owner).deploy(
-      3,
-      citizend.address,
-      aUSD.address,
-      sale.address,
-      now,
-      BigNumber.from(10000)
-    );
+    vesting = Vesting__factory.connect(vestingDeployment.address, owner);
 
     await citizend.transfer(vesting.address, 1000);
     await vesting.grantRole(await vesting.CAP_VALIDATOR(), seller.address);
 
     const allowance = ethers.constants.MaxUint256;
     await aUSD.connect(alice).approve(sale.address, allowance);
+  });
+
+  beforeEach(async () => {
+    await fixture();
   });
 
   describe("refund", () => {

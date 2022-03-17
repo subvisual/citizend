@@ -5,8 +5,13 @@ interface CTNDSale {
   end: number;
 }
 
+interface CTNDVesting {
+  start: number;
+}
+
 interface Config {
   ctndSale: CTNDSale;
+  ctndVesting: CTNDVesting;
 }
 
 async function networkConfigs(chainId: number): Promise<Config> {
@@ -20,6 +25,9 @@ async function networkConfigs(chainId: number): Promise<Config> {
           start: now,
           end: now + 60 * 60 * 24,
         },
+        ctndVesting: {
+          start: now,
+        }
       };
     }
 

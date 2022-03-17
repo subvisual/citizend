@@ -36,7 +36,7 @@ const func: DeployFunction = async function (hre) {
   );
 };
 
-func.id = "test_aUSD";
-func.tags = ["test_aUSD"];
+func.id = "aUSD";
+func.tags = ["aUSD"];
 
 export default func;

@@ -3,7 +3,7 @@ import { DeployFunction } from "hardhat-deploy/types";
 
 const { parseUnits } = ethers.utils;
 
-import { getNetworkConfig } from "../src/deployConfigs";
+import { getNetworkConfig } from "../../src/deployConfigs";
 
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
@@ -27,8 +27,8 @@ const func: DeployFunction = async function (hre) {
   });
 };
 
-func.id = "sale";
-func.tags = ["sale"];
-func.dependencies = ["test_aUSD", "citizend"];
+func.id = "ctnd.sale";
+func.tags = ["ctnd", "ctnd.sale"];
+func.dependencies = ["aUSD", "ctnd.token"];
 
 export default func;

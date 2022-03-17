@@ -46,7 +46,7 @@ describe("Vesting", () => {
   }
 
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
-    await deployments.fixture(["citizend"]);
+    await deployments.fixture(["ctnd"]);
 
     [owner] = await ethers.getSigners();
 

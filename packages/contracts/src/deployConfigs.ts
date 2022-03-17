@@ -5,8 +5,13 @@ interface CTNDSale {
   end: number;
 }
 
+interface CTNDVesting {
+  start: number;
+}
+
 interface Config {
   ctndSale: CTNDSale;
+  ctndVesting: CTNDVesting;
 }
 
 async function networkConfigs(chainId: number): Promise<Config> {
@@ -15,10 +20,14 @@ async function networkConfigs(chainId: number): Promise<Config> {
   switch (network) {
     case "hardhat": {
       const now = Math.floor(new Date().getTime() / 1000);
+      const oneDay = 60 * 60 * 24;
       return {
         ctndSale: {
           start: now,
-          end: now + 60 * 60 * 24,
+          end: now + oneDay,
+        },
+        ctndVesting: {
+          start: now + oneDay + oneDay,
         },
       };
     }

@@ -85,6 +85,20 @@ describe("Sale", () => {
   });
 
   describe("setVesting", () => {
+    // these tests deploy a new vesting contract,
+    // since `setVesting` is already called in the fixture
+    let sale: Sale;
+
+    beforeEach(async () => {
+      sale = await new Sale__factory(owner).deploy(
+        citizend.address,
+        aUSD.address,
+        parseUnits("1"),
+        1,
+        2
+      );
+    });
+
     it("allows setting the vesting contract address", async () => {
       await sale.setVesting(fakeVesting.address);
 

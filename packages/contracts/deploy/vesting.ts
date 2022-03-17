@@ -25,7 +25,7 @@ const func: DeployFunction = async function (hre) {
       aUSD.address,
       sale.address,
       ctndVesting.start,
-      BigNumber.from(10000)
+      BigNumber.from(10000),
     ],
   });
 };

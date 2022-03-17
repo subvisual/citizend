@@ -1,0 +1,44 @@
+= Voting
+
+[mermaid,user-flows,png]
+....
+sequenceDiagram
+    participant User
+    participant Batch
+    participant Project1
+    participant Project2
+    participant Project3
+    participant Anyone
+
+    Note right of User: In this example<br>Project 1 gets voted successfully, but Project 2 
+
+    User ->> Batch: vote(1, 100$)
+    activate Batch
+    Batch ->> Project1: vote(100$)
+    deactivate Batch
+
+    User ->> Batch: vote(2, 200$)
+    activate Batch
+    Batch ->> Project2: vote(100$)
+    deactivate Batch
+
+    rect rgb(153, 192, 255)
+      Note left of Anyone: Assign slot 1
+      Anyone ->> Batch: fillSlot()
+      activate Batch
+      Batch -->> Project1: setState(pendingCapCalculation)
+    end
+
+    rect rgb(153, 192, 255)
+      Note left of Anyone: Assign slot 2
+      Anyone ->> Batch: fillSlot()
+      activate Batch
+      Batch -->> Project2: setState(investing)
+      Batch -->> Project3: setState(lost)
+    end
+
+    rect rgb(153, 192, 255)
+      Note left of Anyone: Rising tide calculations
+      Anyone ->> Project1: setIndividualCap(100$)
+    end
+....

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@acala-network/eth-providers": "^2.3.0",
     "@ethersproject/abi": "^5.0.0",
     "@ethersproject/bytes": "^5.0.0",
     "@ethersproject/providers": "^5.0.0",
@@ -43,5 +44,10 @@
   },
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.15"
+  },
+  "resolutions": {
+    "@polkadot/util": "^8.5.1",
+    "@polkadot/util-crypto": "^8.5.1",
+    "@polkadot/wasm-crypto": "^4.6.1"
   }
 }

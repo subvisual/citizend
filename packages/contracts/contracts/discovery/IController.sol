@@ -5,16 +5,16 @@ library ProjectHelpers {
     uint256 public constant MUL = 10**18;
 
     function paymentToTokenAmount(
-        IController.Project project,
+        IController.Project memory project,
         uint256 _paymentAmount
-    ) internal view returns (uint256) {
+    ) internal pure returns (uint256) {
         return (_paymentAmount * MUL) / project.rate;
     }
 
     function tokenToPaymentAmount(
-        IController.Project project,
+        IController.Project memory project,
         uint256 _tokenAmount
-    ) internal view returns (uint256) {
+    ) internal pure returns (uint256) {
         return (_tokenAmount * project.rate) / MUL;
     }
 }
@@ -48,15 +48,16 @@ interface IController {
 
     /// @param id ID of the project to read
     /// @return Project data structure
-    function projects(uint256 id) external view returns (Project memory);
+    function getProject(uint256 id) external view returns (Project memory);
 
-    function batches(uint256 id) external view returns (Batch memory);
+    /// @param id ID of the batch to read
+    /// @return Batch data structure
+    function getBatch(uint256 id) external view returns (Batch memory);
 
     /// Whitelists a project, allowing it to be included on the next batch
     ///
     /// @dev Should only be callable by the owner
     function approveProjectByOwner(uint256 id) external;
-
 
     /// Creates a new batch with
     ///
@@ -64,19 +65,21 @@ interface IController {
     ///
     /// @dev Batches are created in order, and with no overlap.
     ///   i.e.: when creating batch #3, its start date must be after the end date of batch #2
-    function createBatch(uint256[] projectIds, Period votingPeriod) external;
+    function createBatch(
+        uint256[] calldata projectIds,
+        Period calldata votingPeriod
+    ) external;
 
     /// How many votes have been cast by a user on a given batch
-    function userVoteCount(uint256 batch, address user);
+    function userVoteCount(uint256 batch, address user) external;
 
     /// How many votes have been cast for a project on a given batch
-    function projectVoteCount(uint256 batch, address user);
+    function projectVoteCount(uint256 batch, address user) external;
 }
 
-contract Controller is IController {
+abstract contract Controller is IController {
     using ProjectHelpers for Project;
 
-    /// @inheritdoc IController
     mapping(uint256 => Project) public projects;
 
     mapping(uint256 => Batch) public batches;
@@ -86,4 +89,14 @@ contract Controller is IController {
 
     /// Batch => projectId => votes
     mapping(uint256 => mapping(uint256 => uint256)) projectVoteCount;
+
+    /// @inheritdoc IController
+    function getProject(uint256 id) external view returns (Project memory) {
+        return projects[id];
+    }
+
+    /// @inheritdoc IController
+    function getBatch(uint256 id) external view returns (Batch memory) {
+        return batches[id];
+    }
 }

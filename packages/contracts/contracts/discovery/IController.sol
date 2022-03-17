@@ -1,24 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity =0.8.12;
 
-library ProjectHelpers {
-    uint256 public constant MUL = 10**18;
-
-    function paymentToTokenAmount(
-        IController.Project memory project,
-        uint256 _paymentAmount
-    ) internal pure returns (uint256) {
-        return (_paymentAmount * MUL) / project.rate;
-    }
-
-    function tokenToPaymentAmount(
-        IController.Project memory project,
-        uint256 _tokenAmount
-    ) internal pure returns (uint256) {
-        return (_tokenAmount * project.rate) / MUL;
-    }
-}
-
 /// The main entry point for most admin interactions with the discovery system:
 ///   * Creating batches
 ///   * Whitelisting companies
@@ -71,32 +53,8 @@ interface IController {
     ) external;
 
     /// How many votes have been cast by a user on a given batch
-    function userVoteCount(uint256 batch, address user) external;
+    function userVoteCount(uint256 batch, address user) external returns (uint256);
 
     /// How many votes have been cast for a project on a given batch
-    function projectVoteCount(uint256 batch, address user) external;
-}
-
-abstract contract Controller is IController {
-    using ProjectHelpers for Project;
-
-    mapping(uint256 => Project) public projects;
-
-    mapping(uint256 => Batch) public batches;
-
-    /// Batch => user => votes
-    mapping(uint256 => mapping(address => uint256)) userVoteCount;
-
-    /// Batch => projectId => votes
-    mapping(uint256 => mapping(uint256 => uint256)) projectVoteCount;
-
-    /// @inheritdoc IController
-    function getProject(uint256 id) external view returns (Project memory) {
-        return projects[id];
-    }
-
-    /// @inheritdoc IController
-    function getBatch(uint256 id) external view returns (Batch memory) {
-        return batches[id];
-    }
+    function projectVoteCount(uint256 batch, uint256 projectId) external returns (uint256);
 }

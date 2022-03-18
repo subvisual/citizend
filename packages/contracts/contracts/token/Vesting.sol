@@ -194,6 +194,14 @@ contract Vesting is IVesting, AccessControl {
         totalPrivateSales += amount;
     }
 
+    /// @inheritdoc IVesting
+    function refund(address to) external override(IVesting) {
+        for (uint256 i = 0; i < saleAddresses.length; i++) {
+            address saleAddress = saleAddresses[i];
+            ISale(saleAddress).refund(to);
+        }
+    }
+
     //
     // Internal API
     //

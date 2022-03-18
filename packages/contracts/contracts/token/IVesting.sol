@@ -63,16 +63,29 @@ interface IVesting {
 
     /**
      * Creates a new vesting with private sale parameters
-     * If the address is already registered, simply add the funds to his existing vesting
+     * If the address is already registered, it does nothing. If the address
+     * has been registered in a public sale, it reverts the transaction
      *
-     * @dev In order to not mess up calculations, this should revert if address
-     * already has public a sale vesting
+     * Also checks if the private sale cap has been reached, and if so,
+     * reverts.
      *
-     * @dev Should only be callable by an authorized account
+     * @param to Beneficiary
+     * @param amount Amount of tokens to vest
+     * @param cliffMonths Number of months to wait before the vesting starts
      **/
     function createPrivateSaleVest(
         address to,
         uint256 amount,
         uint16 cliffMonths
     ) external;
+
+    /**
+     * Triggers the refund of a given address on all sales
+     *
+     * @dev It will trigger a number of transactions equal to the number of
+     * sales (assuming all of them have something to refund)
+     *
+     * @param to Beneficiary
+     **/
+    function refund(address to) external;
 }

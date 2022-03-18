@@ -37,6 +37,14 @@ interface ISale {
      */
     function buy(uint256 _paymentAmount) external;
 
+    /**
+     * Buy some $CTND, in exchange for a fixed amount of $aUSD, for private
+     * buyers. Can only be called by an authorized private seller address.
+     *
+     * @param _buyer The address of the buyer
+     * @param _paymentAmount The amount of $aUSD sent to the contract
+     * @param _cliffMonths The number of months before the vesting starts
+     */
     function privateBuy(
         address _buyer,
         uint256 _paymentAmount,
@@ -69,7 +77,7 @@ interface ISale {
 
     /**
      * Returns the amount of tokens that have been allocated in this sale for
-     * a given address (including the individual cap)
+     * a given address (applying the individual cap)
      *
      * @param _who The address to query
      */
@@ -77,7 +85,7 @@ interface ISale {
 
     /**
      * Returns the amount of tokens that have been allocated in this sale for
-     * a given address (excluding the individual cap)
+     * a given address (ignoring the individual cap)
      *
      * @param _who The address to query
      */

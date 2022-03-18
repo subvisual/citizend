@@ -79,7 +79,6 @@ describe("Integration", () => {
       await sale.connect(seller).setIndividualCap(50);
 
       const beforeRefund = await aUSD.balanceOf(alice.address);
-      const saleBalance = await aUSD.balanceOf(sale.address);
       await expect(sale.refund(alice.address))
         .to.emit(sale, "Refunded")
         .withArgs(alice.address, 50);
@@ -87,6 +86,22 @@ describe("Integration", () => {
 
       expect(afterRefund.sub(beforeRefund)).to.eq(
         await sale.tokenToPaymentToken(50)
+      );
+    });
+
+    it("is possible to refund all sales at once from the vesting contract", async () => {
+      await vesting.addSale(secondSale.address);
+      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await sale.connect(seller).setIndividualCap(50);
+      await secondSale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await secondSale.connect(seller).setIndividualCap(50);
+
+      const beforeRefund = await aUSD.balanceOf(alice.address);
+      await vesting.refund(alice.address);
+      const afterRefund = await aUSD.balanceOf(alice.address);
+
+      expect(afterRefund.sub(beforeRefund)).to.eq(
+        await sale.tokenToPaymentToken(100)
       );
     });
   });

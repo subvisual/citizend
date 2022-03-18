@@ -148,6 +148,7 @@ contract Sale is ISale, AccessControl {
         emit Purchase(msg.sender, _paymentAmount);
     }
 
+    /// @inheritdoc ISale
     function privateBuy(
         address _buyer,
         uint256 _paymentAmount,

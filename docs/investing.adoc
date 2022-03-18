@@ -1,0 +1,14 @@
+= Investing
+
+[mermaid,user-flows,png]
+....
+sequenceDiagram
+    participant User
+    participant Project
+    participant Anyone
+
+    Anyone ->> Project: setCap(100$)
+
+    User ->> Project: investPeoplesPool(100$)
+    User ->> Project: investStakersPool(100$)
+....

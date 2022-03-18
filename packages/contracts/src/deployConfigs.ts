@@ -10,7 +10,8 @@ interface CTNDVesting {
 }
 
 interface Config {
-  ctndSale: CTNDSale;
+  ctndSale1: CTNDSale;
+  ctndSale2: CTNDSale;
   ctndVesting: CTNDVesting;
 }
 
@@ -22,15 +23,16 @@ async function networkConfigs(chainId: number): Promise<Config> {
       const now = Math.floor(new Date().getTime() / 1000);
       const oneDay = 60 * 60 * 24;
       return {
-        ctndSale: {
+        ctndSale1: {
           start: now,
           end: now + oneDay,
         },
         ctndVesting: {
           start: now + oneDay + oneDay,
         },
-        ctndVesting: {
-          start: now,
+        ctndSale2: {
+          start: now + 60 * 60 * 24 * 2,
+          end: now + 60 * 60 * 24 * 3,
         },
       };
     }

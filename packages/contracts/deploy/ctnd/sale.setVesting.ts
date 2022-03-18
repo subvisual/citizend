@@ -7,20 +7,20 @@ const func: DeployFunction = async function (hre) {
 
   const vesting = await get("Vesting");
 
-  const currentVesting = await read("Sale", { from: deployer }, "vesting");
+  const currentVesting = await read("Sale1", { from: deployer }, "vesting");
 
-  if (currentVesting == ethers.constants.AddressZero) {
-    await execute(
-      "Sale",
-      { from: deployer, log: true },
-      "setVesting",
-      vesting.address
-    );
-  }
+  // if (currentVesting == ethers.constants.AddressZero) {
+  //   await execute(
+  //     "Sale1",
+  //     { from: deployer, log: true },
+  //     "setVesting",
+  //     vesting.address
+  //   );
+  // }
 };
 
 func.id = "ctnd.sale.setVesting";
 func.tags = ["ctnd", "ctnd.sale.setVesting"];
-func.dependencies = ["ctnd.sale", "ctnd.vesting"];
+func.dependencies = ["ctnd.sale1", "ctnd.vesting"];
 
 export default func;

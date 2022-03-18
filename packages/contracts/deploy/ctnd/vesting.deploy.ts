@@ -6,7 +6,7 @@ const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy, get } = hre.deployments;
 
-  const sale = await get("Sale");
+  const sale = await get("Sale1");
   const citizend = await get("Citizend");
 
   const { ctndVesting } = await getNetworkConfig();
@@ -14,7 +14,7 @@ const func: DeployFunction = async function (hre) {
   await deploy("Vesting", {
     log: true,
     from: deployer,
-    args: [3, citizend.address, sale.address, ctndVesting.start],
+    args: [3, citizend.address, [], ctndVesting.start, 10000],
   });
 };
 

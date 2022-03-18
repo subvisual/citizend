@@ -63,7 +63,10 @@ describe("Vesting", () => {
     );
     await citizend.transfer(vesting.address, 1000);
     await vesting.grantRole(await vesting.PRIVATE_SELLER(), seller.address);
-    await vesting.grantRole(await vesting.SALE_CONTRACT(), saleContract.address);
+    await vesting.grantRole(
+      await vesting.SALE_CONTRACT(),
+      saleContract.address
+    );
   });
 
   describe("constructor", () => {
@@ -78,9 +81,7 @@ describe("Vesting", () => {
 
   describe("createPublicSaleVesting", () => {
     it("creates a vesting with public sale parameters", async () => {
-      await vesting
-        .connect(saleContract)
-        .createPublicSaleVest(alice.address);
+      await vesting.connect(saleContract).createPublicSaleVest(alice.address);
 
       let account = await vesting.accounts(alice.address);
       expect(account.vestingMonths).to.eq(3);
@@ -100,8 +101,7 @@ describe("Vesting", () => {
     });
 
     it("fails if sender is not the sale contract", async () => {
-      await expect(vesting.createPublicSaleVest(alice.address)).to.be
-        .reverted;
+      await expect(vesting.createPublicSaleVest(alice.address)).to.be.reverted;
     });
   });
 
@@ -140,9 +140,7 @@ describe("Vesting", () => {
     });
 
     it("fails if beneficiary already has public vesting", async () => {
-      await vesting
-        .connect(saleContract)
-        .createPublicSaleVest(alice.address);
+      await vesting.connect(saleContract).createPublicSaleVest(alice.address);
 
       await expect(
         vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 3)

@@ -37,6 +37,12 @@ interface ISale {
      */
     function buy(uint256 _paymentAmount) external;
 
+    function privateBuy(
+        address _buyer,
+        uint256 _paymentAmount,
+        uint16 _cliffMonths
+    ) external;
+
     /**
      * Refunds currently refundable amount for the given address
      *
@@ -63,9 +69,20 @@ interface ISale {
 
     /**
      * Returns the amount of tokens that have been allocated in this sale for
-     * a given address
+     * a given address (including the individual cap)
      *
      * @param _who The address to query
      */
     function getAllocations(address _who) external view returns (uint256);
+
+    /**
+     * Returns the amount of tokens that have been allocated in this sale for
+     * a given address (excluding the individual cap)
+     *
+     * @param _who The address to query
+     */
+    function getUncappedAllocations(address _who)
+        external
+        view
+        returns (uint256);
 }

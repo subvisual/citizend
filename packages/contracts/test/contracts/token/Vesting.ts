@@ -62,7 +62,6 @@ describe("Vesting", () => {
       BigNumber.from(10000)
     );
     await citizend.transfer(vesting.address, 1000);
-    await vesting.grantRole(await vesting.PRIVATE_SELLER(), seller.address);
     await vesting.grantRole(
       await vesting.SALE_CONTRACT(),
       saleContract.address
@@ -92,7 +91,7 @@ describe("Vesting", () => {
 
     it("fails if beneficiary already has private vesting", async () => {
       await vesting
-        .connect(seller)
+        .connect(saleContract)
         .createPrivateSaleVest(alice.address, 150, 3);
 
       await expect(
@@ -108,11 +107,10 @@ describe("Vesting", () => {
   describe("createPrivateSaleVesting", () => {
     it("creates a vesting with private sale parameters", async () => {
       await vesting
-        .connect(seller)
+        .connect(saleContract)
         .createPrivateSaleVest(alice.address, 150, 3);
 
       let account = await vesting.accounts(alice.address);
-      expect(account.totalAmount).to.eq(150);
       expect(account.vestingMonths).to.eq(36);
       expect(account.accountType).to.eq(2);
       expect(account.claimedAmount).to.eq(0);
@@ -120,111 +118,37 @@ describe("Vesting", () => {
 
     it("can customize the cliff period", async () => {
       await vesting
-        .connect(seller)
+        .connect(saleContract)
         .createPrivateSaleVest(alice.address, 150, 3);
 
       let account = await vesting.accounts(alice.address);
       expect(account.cliffMonths).to.eq(3);
     });
 
-    it("adds to an existing vesting", async () => {
-      await vesting
-        .connect(seller)
-        .createPrivateSaleVest(alice.address, 150, 3);
-      await vesting
-        .connect(seller)
-        .createPrivateSaleVest(alice.address, 100, 3);
-      await increaseTime(time.duration.days(30 * 39 + 1));
-
-      expect(await vesting.claimable(alice.address)).to.equal(250);
-    });
-
     it("fails if beneficiary already has public vesting", async () => {
       await vesting.connect(saleContract).createPublicSaleVest(alice.address);
 
       await expect(
-        vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 3)
+        vesting
+          .connect(saleContract)
+          .createPrivateSaleVest(alice.address, 100, 3)
       ).to.be.revertedWith("Account already has public vesting");
     });
 
     it("fails if cliff period is greater than vesting period", async () => {
       await expect(
-        vesting.connect(seller).createPrivateSaleVest(alice.address, 100, 7)
+        vesting
+          .connect(saleContract)
+          .createPrivateSaleVest(alice.address, 100, 7)
       ).to.be.revertedWith("Cliff months too big");
-    });
-
-    it("emits an event", async () => {
-      await expect(
-        vesting.connect(seller).createPrivateSaleVest(alice.address, 150, 3)
-      )
-        .to.emit(vesting, "VestingCreated")
-        .withArgs(alice.address, 150, 2);
     });
 
     it("rejects the transaction when it would go above the private cap", async () => {
       await expect(
-        vesting.connect(seller).createPrivateSaleVest(alice.address, 11000, 3)
+        vesting
+          .connect(saleContract)
+          .createPrivateSaleVest(alice.address, 11000, 3)
       ).to.be.revertedWith("Private sale cap reached");
-    });
-  });
-
-  describe("claimable", () => {
-    it("is zero for the duration of the cliff", async () => {
-      await vesting
-        .connect(seller)
-        .createPrivateSaleVest(alice.address, 150, 3);
-      await increaseTime(time.duration.days(3));
-
-      expect(await vesting.claimable(alice.address)).to.equal(0);
-    });
-  });
-
-  describe("private sale claim", () => {
-    it("allows me to claim 0 tokens before the cliff starts", async () => {
-      await vesting
-        .connect(seller)
-        .createPrivateSaleVest(alice.address, 100, 3);
-
-      expect(await vesting.claimable(alice.address)).to.equal(0);
-    });
-
-    it("allows me to claim 0 tokens after 1 month", async () => {
-      await vesting
-        .connect(seller)
-        .createPrivateSaleVest(alice.address, 100, 3);
-      await increaseTime(time.duration.days(30));
-
-      expect(await vesting.claimable(alice.address)).to.equal(0);
-    });
-
-    it("allows me to claim some amount tokens after the full cliff period", async () => {
-      await vesting
-        .connect(seller)
-        .createPrivateSaleVest(alice.address, 100, 3);
-      await increaseTime(time.duration.days(30 * 3 + 2));
-
-      expect(await vesting.claimable(alice.address)).to.equal(2);
-    });
-
-    it("allows me to claim 100% after the full cliff and vesting period", async () => {
-      await vesting
-        .connect(seller)
-        .createPrivateSaleVest(alice.address, 100, 3);
-      await increaseTime(time.duration.days(3 * 30 + 36 * 30));
-
-      expect(await vesting.claimable(alice.address)).to.equal(100);
-    });
-
-    it("emits an event", async () => {
-      await vesting
-        .connect(seller)
-        .createPrivateSaleVest(alice.address, 100, 1);
-      await increaseTime(time.duration.days(30 * 2 + 1));
-
-      await expect(vesting.claim(alice.address)).to.emit(
-        vesting,
-        "VestingClaimed"
-      );
     });
   });
 });

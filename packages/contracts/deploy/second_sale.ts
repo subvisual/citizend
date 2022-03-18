@@ -14,7 +14,8 @@ const func: DeployFunction = async function (hre) {
 
   const { ctndSale } = await getNetworkConfig();
 
-  await deploy("Sale", {
+  await deploy("SecondSale", {
+    contract: "Sale",
     log: true,
     from: deployer,
     args: [
@@ -27,8 +28,8 @@ const func: DeployFunction = async function (hre) {
   });
 };
 
-func.id = "sale";
-func.tags = ["sale"];
+func.id = "second_sale";
+func.tags = ["second_sale"];
 func.dependencies = ["test_aUSD", "citizend"];
 
 export default func;

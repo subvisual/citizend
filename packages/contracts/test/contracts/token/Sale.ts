@@ -43,6 +43,7 @@ describe("Sale", () => {
 
     await aUSD.connect(alice).approve(sale.address, MaxUint256);
     await sale.grantRole(await sale.CAP_VALIDATOR(), seller.address);
+    await sale.grantRole(await sale.PRIVATE_SELLER(), seller.address);
     await vesting.grantRole(await vesting.SALE_CONTRACT(), sale.address);
   });
 
@@ -76,6 +77,59 @@ describe("Sale", () => {
       expect(await sale.connect(alice).buy(paymentAmount))
         .to.emit(sale, "Purchase")
         .withArgs(alice.address, paymentAmount);
+    });
+  });
+
+  describe("privateBuy", () => {
+    it("keeps track of the allocations", async () => {
+      await sale.setVesting(vesting.address);
+      await sale
+        .connect(seller)
+        .privateBuy(alice.address, await sale.tokenToPaymentToken(150), 3);
+
+      expect(await sale.getUncappedAllocations(alice.address)).to.equal(150);
+    });
+
+    it("adds to an existing private purchase", async () => {
+      await sale.setVesting(vesting.address);
+      await sale
+        .connect(seller)
+        .privateBuy(alice.address, await sale.tokenToPaymentToken(150), 3);
+      await sale
+        .connect(seller)
+        .privateBuy(alice.address, await sale.tokenToPaymentToken(100), 3);
+
+      expect(await sale.getUncappedAllocations(alice.address)).to.equal(250);
+    });
+
+    it("fails if buyer is already part of public sale", async () => {
+      await sale.setVesting(vesting.address);
+      await sale.connect(alice).buy(100);
+
+      await expect(
+        sale.connect(seller).privateBuy(alice.address, 100, 3)
+      ).to.be.revertedWith("Account already has public vesting");
+    });
+
+    it("emits an event", async () => {
+      await sale.setVesting(vesting.address);
+      await expect(sale.connect(seller).privateBuy(alice.address, 150, 2))
+        .to.emit(sale, "PrivatePurchase")
+        .withArgs(alice.address, 150, 2);
+    });
+
+    it("rejects the transaction when it would go above the private cap", async () => {
+      await sale.setVesting(vesting.address);
+      const privateCap = await vesting.privateSaleCap();
+      await expect(
+        sale
+          .connect(seller)
+          .privateBuy(
+            alice.address,
+            await sale.tokenToPaymentToken(privateCap.add(100)),
+            2
+          )
+      ).to.be.revertedWith("Private sale cap reached");
     });
   });
 

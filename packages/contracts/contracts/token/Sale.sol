@@ -8,6 +8,8 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ISale} from "./ISale.sol";
 import {IVesting} from "./IVesting.sol";
 
+import "hardhat/console.sol";
+
 /// Citizend token sale contract
 ///
 /// Users interact with this contract to deposit $aUSD in exchange for $CTND.
@@ -19,13 +21,21 @@ contract Sale is ISale, AccessControl {
 
     uint256 public constant MUL = 10**18;
     bytes32 public constant CAP_VALIDATOR = keccak256("cap_validator");
+    bytes32 public constant PRIVATE_SELLER = keccak256("private_seller");
 
     //
     // Events
     //
 
-    /// Emitted for every purchase
+    /// Emitted for every public purchase
     event Purchase(address indexed from, uint256 amount);
+
+    /// Emitted for every private purchase
+    event PrivatePurchase(
+        address indexed from,
+        uint256 amount,
+        uint16 cliffMonths
+    );
 
     /// Emitted for every refund
     event Refunded(address indexed to, uint256 amount);
@@ -126,17 +136,39 @@ contract Sale is ISale, AccessControl {
     function buy(uint256 _paymentAmount) external override(ISale) inSale {
         require(_paymentAmount > 0, "can't be zero");
 
+        IVesting(vesting).createPublicSaleVest(msg.sender);
+        allocations[msg.sender] += paymentTokenToToken(_paymentAmount);
+
         IERC20(paymentToken).safeTransferFrom(
             msg.sender,
             address(this),
             _paymentAmount
         );
 
-        IVesting(vesting).createPublicSaleVest(msg.sender);
-
-        allocations[msg.sender] += paymentTokenToToken(_paymentAmount);
-
         emit Purchase(msg.sender, _paymentAmount);
+    }
+
+    function privateBuy(
+        address _buyer,
+        uint256 _paymentAmount,
+        uint16 _cliffMonths
+    ) external override(ISale) onlyRole(PRIVATE_SELLER) {
+        require(_paymentAmount > 0, "can't be zero");
+
+        IVesting(vesting).createPrivateSaleVest(
+            _buyer,
+            paymentTokenToToken(_paymentAmount),
+            _cliffMonths
+        );
+        allocations[_buyer] += paymentTokenToToken(_paymentAmount);
+
+        IERC20(paymentToken).safeTransferFrom(
+            _buyer,
+            address(this),
+            _paymentAmount
+        );
+
+        emit PrivatePurchase(_buyer, _paymentAmount, _cliffMonths);
     }
 
     /// @inheritdoc ISale
@@ -180,6 +212,16 @@ contract Sale is ISale, AccessControl {
         returns (uint256)
     {
         return _applyCap(allocations[_who]);
+    }
+
+    /// @inheritdoc ISale
+    function getUncappedAllocations(address _who)
+        public
+        view
+        override(ISale)
+        returns (uint256)
+    {
+        return allocations[_who];
     }
 
     //

@@ -9,6 +9,8 @@ import {ISale} from "./ISale.sol";
 import {IVesting} from "./IVesting.sol";
 import {DateTime} from "../libraries/DateTime.sol";
 
+import "hardhat/console.sol";
+
 contract Vesting is IVesting, AccessControl {
     using DateTime for uint256;
     using SafeERC20 for IERC20;
@@ -20,7 +22,6 @@ contract Vesting is IVesting, AccessControl {
     }
 
     struct Account {
-        uint256 totalAmount;
         uint256 claimedAmount;
         uint256 cliffMonths;
         uint256 vestingMonths;
@@ -40,14 +41,8 @@ contract Vesting is IVesting, AccessControl {
     uint256 public constant PRIVATE_SALE_VESTING_MONTHS = 36;
     uint256 public constant PRIVATE_SALE_MAX_CLIFF_MONTHS = 6;
 
-    bytes32 public constant PRIVATE_SELLER = keccak256("private_seller");
     bytes32 public constant SALE_CONTRACT = keccak256("sale_contract");
 
-    event VestingCreated(
-        address indexed to,
-        uint256 amount,
-        AccountType accountType
-    );
     event VestingClaimed(address indexed to, uint256 amount);
 
     /// @param _publicSaleVestingMonths Number of months of vesting for the public sale
@@ -90,7 +85,8 @@ contract Vesting is IVesting, AccessControl {
         override(IVesting)
         returns (uint256)
     {
-        uint256 totalAllocated = _totalAllocated(to);
+        Account storage account = accounts[to];
+        uint256 totalAllocated = _totalAllocated(to, account.accountType);
         uint256 periodsElapsed = _numberOfPeriodsElapsed();
 
         if (periodsElapsed >= publicSaleVestingMonths) {
@@ -120,14 +116,7 @@ contract Vesting is IVesting, AccessControl {
         returns (uint256)
     {
         Account storage account = accounts[to];
-        uint256 totalAllocated;
-
-        if (account.totalAmount == 0) {
-            totalAllocated = _totalAllocated(to);
-        } else {
-            totalAllocated = account.totalAmount;
-        }
-
+        uint256 totalAllocated = _totalAllocated(to, account.accountType);
         uint256 periodsElapsed = _numberOfPeriodsElapsed();
 
         if (totalAllocated == 0) {
@@ -183,7 +172,7 @@ contract Vesting is IVesting, AccessControl {
         address to,
         uint256 amount,
         uint16 cliffMonths
-    ) external override(IVesting) onlyRole(PRIVATE_SELLER) {
+    ) external override(IVesting) onlyRole(SALE_CONTRACT) {
         require(
             cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
             "Cliff months too big"
@@ -198,14 +187,11 @@ contract Vesting is IVesting, AccessControl {
             "Account already has public vesting"
         );
 
-        account.totalAmount += amount;
         account.cliffMonths = cliffMonths;
         account.vestingMonths = PRIVATE_SALE_VESTING_MONTHS;
         account.accountType = AccountType.PrivateSale;
 
         totalPrivateSales += amount;
-
-        emit VestingCreated(to, amount, account.accountType);
     }
 
     //
@@ -250,11 +236,20 @@ contract Vesting is IVesting, AccessControl {
      * @param to The address of the buyer
      * @return The total amount of tokens that have been allocated to the buyer
      */
-    function _totalAllocated(address to) internal view returns (uint256) {
+    function _totalAllocated(address to, AccountType accountType)
+        internal
+        view
+        returns (uint256)
+    {
         uint256 totalAllocated = 0;
 
         for (uint256 i = 0; i < saleAddresses.length; i++) {
-            totalAllocated += ISale(saleAddresses[i]).getAllocations(to);
+            if (accountType == AccountType.PrivateSale) {
+                totalAllocated += ISale(saleAddresses[i])
+                    .getUncappedAllocations(to);
+            } else {
+                totalAllocated += ISale(saleAddresses[i]).getAllocations(to);
+            }
         }
 
         return totalAllocated;

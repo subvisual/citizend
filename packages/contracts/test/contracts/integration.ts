@@ -30,14 +30,14 @@ describe("Integration", () => {
   let secondSale: Sale;
 
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
-    await deployments.fixture(["vesting", "sale", "second-sale"]);
+    await deployments.fixture(["vesting", "sale1", "sale2"]);
 
     [owner, alice, seller] = await ethers.getSigners();
 
     const citizendDeployment = await deployments.get("Citizend");
     const aUSDDeployment = await deployments.get("aUSD");
-    const saleDeployment = await deployments.get("Sale");
-    const secondSaleDeployment = await deployments.get("SecondSale");
+    const saleDeployment = await deployments.get("Sale1");
+    const secondSaleDeployment = await deployments.get("Sale2");
     const vestingDeployment = await deployments.get("Vesting");
 
     aUSD = MockERC20__factory.connect(aUSDDeployment.address, owner);

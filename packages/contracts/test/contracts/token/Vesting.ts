@@ -29,7 +29,7 @@ describe("Vesting", () => {
   let convertedStart: BigNumber;
 
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
-    await deployments.fixture(["citizend"]);
+    await deployments.fixture(["test_aUSD", "citizend"]);
 
     [owner] = await ethers.getSigners();
 

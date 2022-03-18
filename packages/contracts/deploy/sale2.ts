@@ -12,23 +12,24 @@ const func: DeployFunction = async function (hre) {
   const aUSD = await get("aUSD");
   const citizend = await get("Citizend");
 
-  const { ctndSale } = await getNetworkConfig();
+  const { ctndSale2 } = await getNetworkConfig();
 
-  await deploy("Sale", {
+  await deploy("Sale2", {
+    contract: "Sale",
     log: true,
     from: deployer,
     args: [
       citizend.address,
       aUSD.address,
       parseUnits("0.3"),
-      ctndSale.start,
-      ctndSale.end,
+      ctndSale2.start,
+      ctndSale2.end,
     ],
   });
 };
 
-func.id = "sale";
-func.tags = ["sale"];
+func.id = "sale2";
+func.tags = ["sale2"];
 func.dependencies = ["test_aUSD", "citizend"];
 
 export default func;

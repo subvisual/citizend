@@ -12,7 +12,6 @@ const func: DeployFunction = async function (hre) {
 
   const aUSD = await get("aUSD");
   const citizend = await get("Citizend");
-  const sale = await get("Sale");
 
   const { ctndVesting } = await getNetworkConfig();
 
@@ -22,8 +21,7 @@ const func: DeployFunction = async function (hre) {
     args: [
       3,
       citizend.address,
-      aUSD.address,
-      sale.address,
+      [],
       ctndVesting.start,
       BigNumber.from(10000),
     ],
@@ -32,6 +30,6 @@ const func: DeployFunction = async function (hre) {
 
 func.id = "vesting";
 func.tags = ["vesting"];
-func.dependencies = ["test_aUSD", "citizend", "sale"];
+func.dependencies = ["test_aUSD", "citizend"];
 
 export default func;

@@ -11,11 +11,30 @@ interface IVesting {
     /// @return The token being vested
     function token() external view returns (address);
 
+    /// @return The addresses that are registered as sale contracts
+    function saleAddresses() external view returns (address[]);
+
+    /// @return The start time for the vesting
+    function startTime() external view returns (uint256);
+
+    /// @return The total cap for the private sale
+    function privateSaleCap() external view returns (uint256);
+
+    /**
+     * Adds an address to the list of sale contracts. Can only be called by the
+     * admin.
+     *
+     * @param _saleAddress The address of the sale contract
+     */
+    function addSale(address _saleAddress) public;
+
     /// @return How many tokens vested in total for a given address, including already claimed amount
     function totalVested(address to) external view returns (uint256);
 
     /// @return Amount already claimed by a given address
     function claimed(address to) external view returns (uint256);
+
+    function addSale(address _saleAddress) external;
 
     /**
      * Calculates claimable amount of tokens for an address.
@@ -40,17 +59,12 @@ interface IVesting {
 
     /**
      * Creates a new vesting with public sale parameters
-     * If the address is already registered, simply add the funds to his existing vesting
-     *
-     * @dev Should only be callable by the sale contract
-     *
-     * @dev In order to not mess up calculations, this should revert if address
-     * already has private sale vesting
+     * If the address is already registered, it does nothing. If the address
+     * has been registered in a private sale, it reverts the transaction
      *
      * @param to Beneficiary
-     * @param amount Amount to vest
      **/
-    function createPublicSaleVest(address to, uint256 amount) external;
+    function createPublicSaleVest(address to) external;
 
     /**
      * Creates a new vesting with private sale parameters
@@ -66,28 +80,4 @@ interface IVesting {
         uint256 amount,
         uint16 cliffMonths
     ) external;
-
-    /**
-     * Refunds currently refundable amount for the given address
-     *
-     * @param to Address to refund to
-     */
-    function refund(address to) external;
-
-    /**
-     * Returns the amount of tokens that are available for refund do to the
-     * rising tide mechanism
-     *
-     * @param to The address to query
-     * @return The currently claimable amount
-     */
-    function refundable(address to) external view returns (uint256);
-
-    /**
-     * Sets the individual cap for investors, which will then be used when
-     * claiming or refunding
-     *
-     * @param cap The cap per investor to be set
-     */
-    function setIndividualCap(uint256 cap) external;
 }

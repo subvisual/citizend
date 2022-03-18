@@ -18,6 +18,7 @@ contract Sale is ISale, AccessControl {
     using SafeERC20 for IERC20;
 
     uint256 public constant MUL = 10**18;
+    bytes32 public constant CAP_VALIDATOR = keccak256("cap_validator");
 
     //
     // Events
@@ -25,6 +26,9 @@ contract Sale is ISale, AccessControl {
 
     /// Emitted for every purchase
     event Purchase(address indexed from, uint256 amount);
+
+    /// Emitted for every refund
+    event Refunded(address indexed to, uint256 amount);
 
     //
     // State
@@ -47,6 +51,12 @@ contract Sale is ISale, AccessControl {
 
     /// See {ISale.vesting}
     address public override(ISale) vesting;
+
+    /// Token allocations committed by each buyer
+    mapping(address => uint256) public allocations;
+
+    /// Maximum amount of tokens that each buyer can actually get
+    uint256 public individualCap;
 
     /// @param _token Token being sold
     /// @param _paymentToken Token accepted as payment
@@ -102,7 +112,7 @@ contract Sale is ISale, AccessControl {
 
     /// @inheritdoc ISale
     function tokenToPaymentToken(uint256 _tokenAmount)
-        external
+        public
         view
         override(ISale)
         returns (uint256)
@@ -118,16 +128,58 @@ contract Sale is ISale, AccessControl {
 
         IERC20(paymentToken).safeTransferFrom(
             msg.sender,
-            vesting,
+            address(this),
             _paymentAmount
         );
 
-        IVesting(vesting).createPublicSaleVest(
-            msg.sender,
-            paymentTokenToToken(_paymentAmount)
-        );
+        IVesting(vesting).createPublicSaleVest(msg.sender);
+
+        allocations[msg.sender] += paymentTokenToToken(_paymentAmount);
 
         emit Purchase(msg.sender, _paymentAmount);
+    }
+
+    /// @inheritdoc ISale
+    function refund(address to) external override(ISale) {
+        uint256 refundableAmount = refundable(to);
+        require(refundableAmount > 0, "No tokens to refund");
+
+        IERC20(paymentToken).transfer(
+            to,
+            tokenToPaymentToken(refundableAmount)
+        );
+
+        emit Refunded(to, refundableAmount);
+    }
+
+    /// @inheritdoc ISale
+    function refundable(address to)
+        public
+        view
+        override(ISale)
+        returns (uint256)
+    {
+        uint256 totalAmount = allocations[to];
+
+        if (individualCap == 0) {
+            return 0;
+        }
+
+        if (totalAmount <= individualCap) {
+            return 0;
+        } else {
+            return totalAmount - individualCap;
+        }
+    }
+
+    /// @inheritdoc ISale
+    function getAllocations(address _who)
+        public
+        view
+        override(ISale)
+        returns (uint256)
+    {
+        return _applyCap(allocations[_who]);
     }
 
     //
@@ -146,5 +198,36 @@ contract Sale is ISale, AccessControl {
         require(_vesting != address(0), "vesting address can't be zero");
 
         vesting = _vesting;
+    }
+
+    /// Sets the individual cap
+    /// @dev Can only be called once
+    ///
+    /// @param _cap new individual cap
+    function setIndividualCap(uint256 _cap) external onlyRole(CAP_VALIDATOR) {
+        require(_cap > 0, "Cap must be greater than 0");
+        individualCap = _cap;
+    }
+
+    //
+    // Internal API
+    //
+
+    /**
+     * Applies the individual cap to the given amount
+     *
+     * @param _amount amount to apply cap to
+     * @return capped amount
+     */
+    function _applyCap(uint256 amount) internal view returns (uint256) {
+        if (individualCap == 0) {
+            return 0;
+        }
+
+        if (amount > individualCap) {
+            return individualCap;
+        }
+
+        return amount;
     }
 }

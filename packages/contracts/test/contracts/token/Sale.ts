@@ -19,6 +19,7 @@ const { MaxUint256 } = ethers.constants;
 describe("Sale", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
+  let seller: SignerWithAddress;
 
   let aUSD: MockERC20;
   let citizend: Citizend;
@@ -26,9 +27,9 @@ describe("Sale", () => {
   let vesting: Vesting;
 
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
-    await deployments.fixture(["sale"]);
+    await deployments.fixture(["sale", "vesting"]);
 
-    [owner, alice] = await ethers.getSigners();
+    [owner, alice, seller] = await ethers.getSigners();
 
     const aUSDDeployment = await deployments.get("aUSD");
     const citizendDeployment = await deployments.get("Citizend");
@@ -41,6 +42,8 @@ describe("Sale", () => {
     vesting = Vesting__factory.connect(vestingDeployment.address, owner);
 
     await aUSD.connect(alice).approve(sale.address, MaxUint256);
+    await sale.grantRole(await sale.CAP_VALIDATOR(), seller.address);
+    await vesting.grantRole(await vesting.SALE_CONTRACT(), sale.address);
   });
 
   beforeEach(() => fixture());
@@ -127,6 +130,36 @@ describe("Sale", () => {
       const paymentAmount = parseUnits("0.30");
 
       expect(await sale.tokenToPaymentToken(tokens)).to.equal(paymentAmount);
+    });
+  });
+
+  describe("set individual cap", () => {
+    it("allows me to set the cap", async () => {
+      await sale.connect(seller).setIndividualCap(100);
+
+      expect(await sale.individualCap()).to.equal(100);
+    });
+  });
+
+  describe("refundable", () => {
+    it("is 0 before the vesting", async () => {
+      expect(await sale.refundable(alice.address)).to.equal(0);
+    });
+
+    it("is 0 if the individual cap is higher than the invested total", async () => {
+      await sale.setVesting(vesting.address);
+      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await sale.connect(seller).setIndividualCap(200);
+
+      expect(await sale.refundable(alice.address)).to.equal(0);
+    });
+
+    it("is the difference between the cap and the invested total", async () => {
+      await sale.setVesting(vesting.address);
+      await sale.connect(alice).buy(await sale.tokenToPaymentToken(300));
+      await sale.connect(seller).setIndividualCap(200);
+
+      expect(await sale.refundable(alice.address)).to.equal(100);
     });
   });
 });

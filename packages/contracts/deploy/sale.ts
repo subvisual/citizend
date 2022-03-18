@@ -25,6 +25,19 @@ const func: DeployFunction = async function (hre) {
       ctndSale.end,
     ],
   });
+
+  await deploy("SecondSale", {
+    contract: "Sale",
+    log: true,
+    from: deployer,
+    args: [
+      citizend.address,
+      aUSD.address,
+      parseUnits("0.3"),
+      ctndSale.start,
+      ctndSale.end,
+    ],
+  });
 };
 
 func.id = "sale";

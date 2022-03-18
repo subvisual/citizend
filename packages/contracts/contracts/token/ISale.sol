@@ -36,4 +36,36 @@ interface ISale {
      * TODO probably should allow a partial purchase?
      */
     function buy(uint256 _paymentAmount) external;
+
+    /**
+     * Refunds currently refundable amount for the given address
+     *
+     * @param to Address to refund to
+     */
+    function refund(address to) external;
+
+    /**
+     * Returns the amount of tokens that are available for refund do to the
+     * rising tide mechanism
+     *
+     * @param to The address to query
+     * @return The currently claimable amount
+     */
+    function refundable(address to) external view returns (uint256);
+
+    /**
+     * Sets the individual cap for investors, which will then be used when
+     * claiming or refunding. Only callable by the cap validator role.
+     *
+     * @param cap The cap per investor to be set
+     */
+    function setIndividualCap(uint256 cap) external;
+
+    /**
+     * Returns the amount of tokens that have been allocated in this sale for
+     * a given address
+     *
+     * @param _who The address to query
+     */
+    function getAllocations(address _who) external view returns (uint256);
 }

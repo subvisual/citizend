@@ -22,7 +22,6 @@ contract Vesting is IVesting, AccessControl {
     struct Account {
         uint256 totalAmount;
         uint256 claimedAmount;
-        uint256 refundableAmount;
         uint256 cliffMonths;
         uint256 vestingMonths;
         AccountType accountType;
@@ -31,20 +30,18 @@ contract Vesting is IVesting, AccessControl {
     mapping(address => Account) public accounts;
 
     address public immutable token;
-    address public immutable aUSD;
     uint256 public immutable startTime;
-    address public immutable saleContract;
     uint256 public immutable publicSaleVestingMonths;
     uint256 public immutable publicSaleCliffMonths;
     uint256 public immutable privateSaleCap;
-    uint256 public individualCap;
     uint256 public totalPrivateSales;
+    address[] public saleAddresses;
 
     uint256 public constant PRIVATE_SALE_VESTING_MONTHS = 36;
     uint256 public constant PRIVATE_SALE_MAX_CLIFF_MONTHS = 6;
 
     bytes32 public constant PRIVATE_SELLER = keccak256("private_seller");
-    bytes32 public constant CAP_VALIDATOR = keccak256("cap_validator");
+    bytes32 public constant SALE_CONTRACT = keccak256("sale_contract");
 
     event VestingCreated(
         address indexed to,
@@ -52,64 +49,88 @@ contract Vesting is IVesting, AccessControl {
         AccountType accountType
     );
     event VestingClaimed(address indexed to, uint256 amount);
-    event Refunded(address indexed to, uint256 amount);
-
-    modifier onlySaleContract() {
-        require(msg.sender == saleContract);
-        _;
-    }
 
     /// @param _publicSaleVestingMonths Number of months of vesting for the public sale
     /// @param _token Address for the CTND token contract
-    /// @param _aUSD Address for the payment token contract
-    /// @param _saleContract Address for the sale contract
+    /// @param _saleAddresses Addresses for the initial sales contracts
     /// @param _startTime Start time of the vesting
     /// @param _privateSaleCap Total cap for the private sale
     constructor(
         uint256 _publicSaleVestingMonths,
         address _token,
-        address _aUSD,
-        address _saleContract,
+        address[] memory _saleAddresses,
         uint256 _startTime,
         uint256 _privateSaleCap
     ) {
         publicSaleVestingMonths = _publicSaleVestingMonths;
         publicSaleCliffMonths = 0;
         token = _token;
-        aUSD = _aUSD;
-        saleContract = _saleContract;
+        saleAddresses = _saleAddresses;
         startTime = _startTime;
         privateSaleCap = _privateSaleCap;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
-    /// See {IVesting.totalVested}
-    function totalVested(address to) external view returns (uint256) {
-        Account storage account = accounts[to];
+    /// @inheritdoc ISale
+    function addSale(address _saleAddress)
+        public
+        override(IVesting)
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        require(_saleAddress != address(0));
+
+        saleAddresses.push(_saleAddress);
+    }
+
+    /// @inheritdoc ISale
+    function totalVested(address to)
+        external
+        view
+        override(IVesting)
+        returns (uint256)
+    {
+        uint256 totalAllocated = _totalAllocated(to);
         uint256 periodsElapsed = _numberOfPeriodsElapsed();
 
         if (periodsElapsed >= publicSaleVestingMonths) {
-            return account.totalAmount;
+            return totalAllocated;
         } else {
-            uint256 vestingPerMonth = account.totalAmount /
-                publicSaleVestingMonths;
+            uint256 vestingPerMonth = totalAllocated / publicSaleVestingMonths;
             return vestingPerMonth * periodsElapsed;
         }
     }
 
-    /// See {IVesting.claimed}
-    function claimed(address to) external view returns (uint256) {
+    /// @inheritdoc ISale
+    function claimed(address to)
+        external
+        view
+        override(IVesting)
+        returns (uint256)
+    {
         Account storage account = accounts[to];
         return account.claimedAmount;
     }
 
-    /// See {IVesting.claimable}
-    function claimable(address to) public view returns (uint256) {
+    /// @inheritdoc ISale
+    function claimable(address to)
+        public
+        view
+        override(IVesting)
+        returns (uint256)
+    {
         Account storage account = accounts[to];
+        uint256 totalAllocated;
+
+        if (account.totalAmount == 0) {
+            totalAllocated = _totalAllocated(to);
+        } else {
+            totalAllocated = account.totalAmount;
+        }
+
         uint256 periodsElapsed = _numberOfPeriodsElapsed();
 
-        if (individualCap == 0) {
+        if (totalAllocated == 0) {
             return 0;
         }
 
@@ -118,18 +139,17 @@ contract Vesting is IVesting, AccessControl {
         }
 
         if (periodsElapsed >= account.vestingMonths + account.cliffMonths) {
-            return _applyCap(account.totalAmount) - account.claimedAmount;
+            return totalAllocated - account.claimedAmount;
         }
 
-        uint256 vestingPerMonth = _applyCap(account.totalAmount) /
-            account.vestingMonths;
+        uint256 vestingPerMonth = totalAllocated / account.vestingMonths;
         return
             (vestingPerMonth * (periodsElapsed - account.cliffMonths)) -
             account.claimedAmount;
     }
 
-    /// See {IVesting.claim}
-    function claim(address to) external {
+    /// @inheritdoc ISale
+    function claim(address to) external override(IVesting) {
         uint256 claimableAmount = claimable(to);
         require(claimableAmount > 0, "No claimable amount");
 
@@ -141,30 +161,29 @@ contract Vesting is IVesting, AccessControl {
         emit VestingClaimed(to, claimableAmount);
     }
 
-    /// See {IVesting.createPublicSaleVest}
-    function createPublicSaleVest(address to, uint256 amount)
+    /// @inheritdoc ISale
+    function createPublicSaleVest(address to)
         external
-        onlySaleContract
+        override(IVesting)
+        onlyRole(SALE_CONTRACT)
     {
         Account storage account = accounts[to];
         require(
             account.accountType != AccountType.PrivateSale,
             "Account already has private vesting"
         );
-        account.totalAmount += amount;
+
         account.cliffMonths = 0;
         account.vestingMonths = publicSaleVestingMonths;
         account.accountType = AccountType.PublicSale;
-
-        emit VestingCreated(to, amount, account.accountType);
     }
 
-    /// See {IVesting.createPrivateSaleVest}
+    /// @inheritdoc ISale
     function createPrivateSaleVest(
         address to,
         uint256 amount,
         uint16 cliffMonths
-    ) external onlyRole(PRIVATE_SELLER) {
+    ) external override(IVesting) onlyRole(PRIVATE_SELLER) {
         require(
             cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
             "Cliff months too big"
@@ -189,39 +208,9 @@ contract Vesting is IVesting, AccessControl {
         emit VestingCreated(to, amount, account.accountType);
     }
 
-    /// See {IVesting.setIndividualCap}
-    function setIndividualCap(uint256 _cap) external onlyRole(CAP_VALIDATOR) {
-        require(_cap > 0, "Cap must be greater than 0");
-        individualCap = _cap;
-    }
-
-    /// See {IVesting.refundable}
-    function refundable(address to) public view returns (uint256) {
-        Account storage account = accounts[to];
-
-        if (individualCap == 0) {
-            return 0;
-        }
-
-        if (account.totalAmount <= individualCap) {
-            return 0;
-        } else {
-            return account.totalAmount - individualCap;
-        }
-    }
-
-    /// See {IVesting.refund}
-    function refund(address to) external {
-        uint256 refundableAmount = refundable(to);
-        require(refundableAmount > 0, "No tokens to refund");
-
-        IERC20(aUSD).transfer(
-            to,
-            ISale(saleContract).tokenToPaymentToken(refundableAmount)
-        );
-
-        emit Refunded(to, refundableAmount);
-    }
+    //
+    // Internal API
+    //
 
     /**
      * Calculates the number of periods elapsed since the cliff start.
@@ -253,15 +242,21 @@ contract Vesting is IVesting, AccessControl {
         }
     }
 
-    function _applyCap(uint256 amount) internal view returns (uint256) {
-        if (individualCap == 0) {
-            return 0;
+    /**
+     * Gets the total amount of tokens that have been allocated to a buyer from
+     * multiple sales. It already takes into account the individual cap of each
+     * sale.
+     *
+     * @param to The address of the buyer
+     * @return The total amount of tokens that have been allocated to the buyer
+     */
+    function _totalAllocated(address to) internal view returns (uint256) {
+        uint256 totalAllocated = 0;
+
+        for (uint256 i = 0; i < saleAddresses.length; i++) {
+            totalAllocated += ISale(saleAddresses[i]).getAllocations(to);
         }
 
-        if (amount > individualCap) {
-            return individualCap;
-        }
-
-        return amount;
+        return totalAllocated;
     }
 }

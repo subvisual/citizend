@@ -2,10 +2,7 @@ import { ethers, deployments } from "hardhat";
 import { expect } from "chai";
 
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import {
-  Controller,
-  Controller__factory,
-} from "../../src/types";
+import { Controller, Controller__factory } from "../../src/types";
 
 describe("Controller", () => {
   let owner: SignerWithAddress;
@@ -20,13 +17,15 @@ describe("Controller", () => {
 
     const controllerDeployment = await deployments.get("Controller");
 
-    controller = Controller__factory.connect(controllerDeployment.address, owner);
+    controller = Controller__factory.connect(
+      controllerDeployment.address,
+      owner
+    );
   });
 
   beforeEach(() => fixture());
 
   describe("constructor", () => {
-    it("sets the correct params", async () => {
-    });
+    it("sets the correct params", async () => {});
   });
 });

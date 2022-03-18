@@ -53,8 +53,12 @@ interface IController {
     ) external;
 
     /// How many votes have been cast by a user on a given batch
-    function userVoteCount(uint256 batch, address user) external returns (uint256);
+    function userVoteCount(uint256 batch, address user)
+        external
+        returns (uint256);
 
     /// How many votes have been cast for a project on a given batch
-    function projectVoteCount(uint256 batch, uint256 projectId) external returns (uint256);
+    function projectVoteCount(uint256 batch, uint256 projectId)
+        external
+        returns (uint256);
 }

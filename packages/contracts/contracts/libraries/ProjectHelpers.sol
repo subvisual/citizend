@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.9.0;
 
-import { IController } from "../discovery/IController.sol";
+import {IController} from "../discovery/IController.sol";
 
 library ProjectHelpers {
     uint256 public constant MUL = 10**18;

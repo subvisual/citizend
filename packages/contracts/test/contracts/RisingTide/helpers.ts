@@ -20,7 +20,7 @@ export async function expectCapValidation(
   gasSpent = gasSpent.add(await getGasSpent(tx));
 
   while (await contract.risingTide_validating()) {
-    tx = await contract.risingTide_continueValidation();
+    tx = await contract.risingTide_validate();
     gasSpent = gasSpent.add(await getGasSpent(tx));
   }
 

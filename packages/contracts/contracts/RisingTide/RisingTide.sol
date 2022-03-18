@@ -77,7 +77,10 @@ abstract contract RisingTide {
         return risingTideState == RisingTideState.Finished;
     }
 
-    function _risingTide_setCap(uint256 _cap) internal returns (bool) {
+    function _risingTide_setCap(uint256 _cap)
+        internal
+        returns (bool valid, bool finished)
+    {
         require(
             risingTideState == RisingTideState.NotSet ||
                 risingTideState == RisingTideState.Invalid,
@@ -88,10 +91,10 @@ abstract contract RisingTide {
         risingTideState = RisingTideState.Validating;
         risingTideCache = RisingTideCache(0, 0, 0, 0);
 
-        return risingTide_continueValidation();
+        return risingTide_validate();
     }
 
-    function risingTide_continueValidation() public returns (bool) {
+    function risingTide_validate() public returns (bool valid, bool finished) {
         require(risingTideState == RisingTideState.Validating);
 
         // copy the whole struct to memory
@@ -119,9 +122,9 @@ abstract contract RisingTide {
             } else {
                 risingTideState = RisingTideState.NotSet;
             }
-            return valid;
+            return (valid, true);
         } else {
-            return false;
+            return (false, false);
         }
     }
 

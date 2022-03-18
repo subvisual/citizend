@@ -25,6 +25,7 @@ if (process.env.RISING_TIDE_GAS_ESTIMATES) {
 
       const blockNumber = await ethers.provider.getBlockNumber();
 
+      console.log("Calc");
       const { txGasPrice, txGasLimit } = calcEthereumTransactionParams({
         gasLimit: "2100001",
         validUntil: (blockNumber + 100).toString(),
@@ -32,6 +33,7 @@ if (process.env.RISING_TIDE_GAS_ESTIMATES) {
         txFeePerGas,
         storageByteDeposit,
       });
+      console.log({ txGasPrice, txGasLimit });
 
       ethParams = { gasPrice: txGasPrice, gasLimit: txGasLimit };
     });

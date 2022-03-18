@@ -16,12 +16,16 @@ export async function expectCapValidation(
   let gasSpent = BigNumber.from(0);
   let tx;
 
+  console.log("setCap");
   tx = await contract.setCap(cap);
   gasSpent = gasSpent.add(await getGasSpent(tx));
+  console.log(gasSpent.toNumber());
 
   while (await contract.risingTide_validating()) {
+    console.log("continueValidation");
     tx = await contract.risingTide_continueValidation();
     gasSpent = gasSpent.add(await getGasSpent(tx));
+    console.log(gasSpent.toNumber());
   }
 
   expect(await contract.risingTide_isValidCap()).to.equal(expectation);
@@ -31,6 +35,7 @@ export async function expectCapValidation(
 
 async function getGasSpent(tx: ContractTransaction) {
   const receipt = await tx.wait();
+  console.log(receipt);
 
   return receipt.gasUsed;
 }

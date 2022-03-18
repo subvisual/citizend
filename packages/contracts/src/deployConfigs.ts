@@ -29,6 +29,9 @@ async function networkConfigs(chainId: number): Promise<Config> {
         ctndVesting: {
           start: now + oneDay + oneDay,
         },
+        ctndVesting: {
+          start: now,
+        },
       };
     }
 

@@ -6,7 +6,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 import {ISale} from "./ISale.sol";
-import {IVesting} from "./Vesting.sol";
+import {IVesting} from "./IVesting.sol";
 
 /// Citizend token sale contract
 ///
@@ -30,10 +30,10 @@ contract Sale is ISale, AccessControl {
     // State
     //
 
-    /// Seee {ISale.token}
+    /// See {ISale.token}
     address public immutable override(ISale) token;
 
-    /// Seee {ISale.paymentToken}
+    /// See {ISale.paymentToken}
     address public immutable override(ISale) paymentToken;
 
     /// Fixed price of token, expressed in paymentToken amount
@@ -45,7 +45,7 @@ contract Sale is ISale, AccessControl {
     /// Timestamp at which sale ends
     uint256 public immutable end;
 
-    /// Seee {ISale.vesting}
+    /// See {ISale.vesting}
     address public override(ISale) vesting;
 
     /// @param _token Token being sold
@@ -89,8 +89,8 @@ contract Sale is ISale, AccessControl {
     //
 
     /// @inheritdoc ISale
-    function calculateAmount(uint256 _paymentAmount)
-        external
+    function paymentTokenToToken(uint256 _paymentAmount)
+        public
         view
         override(ISale)
         returns (uint256)
@@ -101,16 +101,31 @@ contract Sale is ISale, AccessControl {
     }
 
     /// @inheritdoc ISale
+    function tokenToPaymentToken(uint256 _tokenAmount)
+        external
+        view
+        override(ISale)
+        returns (uint256)
+    {
+        require(_tokenAmount > 0, "can't be zero");
+
+        return (_tokenAmount * rate) / MUL;
+    }
+
+    /// @inheritdoc ISale
     function buy(uint256 _paymentAmount) external override(ISale) inSale {
         require(_paymentAmount > 0, "can't be zero");
 
         IERC20(paymentToken).safeTransferFrom(
             msg.sender,
-            address(this),
+            vesting,
             _paymentAmount
         );
 
-        // vesting.registerNewPublicVesting(msg.sender, 1);
+        IVesting(vesting).createPublicSaleVest(
+            msg.sender,
+            paymentTokenToToken(_paymentAmount)
+        );
 
         emit Purchase(msg.sender, _paymentAmount);
     }

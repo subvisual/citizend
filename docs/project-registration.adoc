@@ -1,0 +1,33 @@
+= Project registration
+
+[mermaid,user-flows,png]
+....
+sequenceDiagram
+    participant Owner
+    participant Contracts
+    participant Project1
+    participant Project2
+    participant Project3
+
+    Note right of Owner: Owner can eventually be <br />a DAO contract
+
+    Note right of Contracts: Projects need to register and<br /> go through all required steps
+
+    Project1 ->> Contracts: register(data)
+    Project2 ->> Contracts: register(data)
+    Project3 ->> Contracts: register(data)
+
+    Note right of Contracts: will we emit their token? <br>or will they transfer the public sale <br>supply to us?
+
+    Owner ->> Contracts: approve(project1)
+    Owner ->> Contracts: approve(project2)
+
+    rect rgb(153, 192, 255)
+      Note right of Owner: Batch creation:<br />Only works if no overlap with another batch
+      Owner ->> Contracts: configureNextBatch(start, end, [1, 2])
+      activate Contracts
+      Contracts ->> Contracts: new Batch(start, end, [1, 2])
+      deactivate Contracts
+    end
+....
+

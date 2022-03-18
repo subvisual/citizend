@@ -1,0 +1,73 @@
+= CTND sale
+
+== User flows
+
+[mermaid,user-flows,png]
+....
+sequenceDiagram
+    participant User
+    participant Contracts
+    participant Admin
+
+    User ->> Contracts: commit(100$)
+
+
+    rect rgb(230, 230, 230)
+        Note left of Admin: Set individual cap
+        Admin ->> Contracts: setRisingTideCap(60$)
+        loop Check Rising Tide
+            Admin ->> Contracts: continueValidation()
+        end
+    end
+
+    rect rgb(230, 230, 230)
+        note right of User: refund process (immediately)
+        User ->> Contracts: refund()
+        activate Contracts
+        Contracts -->> User : 40$
+        deactivate Contracts
+    end
+
+    rect rgb(230, 230, 230)
+        note right of User: claim process (only available after cliff)
+        User ->> Contracts: claim()
+        activate Contracts
+        Contracts -->> User: 20 $CTND
+        deactivate Contracts
+    end
+
+....
+
+== Contracts
+
+[mermaid,abcd-flowchart,svg]
+....
+sequenceDiagram
+    participant Admin
+    participant User
+    participant Sale
+    participant Vesting
+
+    rect rgb(230, 230, 230)
+        Note right of User: investment flow
+        User ->> Sale: commit(100$)
+        Sale ->> Vesting: registerPublicVesting(user.address, 100$)
+    end
+
+    rect rgb(230, 230, 230)
+        Note right of Admin: Rising Tide Mechanism
+        Admin ->> Contracts: setRisingTideCap(60$)
+        loop Check Rising Tide
+            Admin ->> Contracts: continueValidation()
+        end
+    end
+
+    rect rgb(230, 230, 230)
+        Note right of User: claim process
+        User ->> Vesting: claim()
+        activate Vesting
+        Vesting -->> Vesting: computeClaimableAmount()
+        Vesting ->> User: 50 $CTND
+        deactivate Vesting
+    end
+....

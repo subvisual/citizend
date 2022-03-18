@@ -94,6 +94,8 @@ abstract contract RisingTide {
         return risingTide_validate();
     }
 
+    /// TODO document this
+    /// TODO test these return values
     function risingTide_validate() public returns (bool valid, bool finished) {
         require(risingTideState == RisingTideState.Validating);
 

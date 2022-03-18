@@ -11,9 +11,6 @@ interface IVesting {
     /// @return The token being vested
     function token() external view returns (address);
 
-    /// @return The addresses that are registered as sale contracts
-    function saleAddresses() external view returns (address[]);
-
     /// @return The start time for the vesting
     function startTime() external view returns (uint256);
 
@@ -26,15 +23,13 @@ interface IVesting {
      *
      * @param _saleAddress The address of the sale contract
      */
-    function addSale(address _saleAddress) public;
+    function addSale(address _saleAddress) external;
 
     /// @return How many tokens vested in total for a given address, including already claimed amount
     function totalVested(address to) external view returns (uint256);
 
     /// @return Amount already claimed by a given address
     function claimed(address to) external view returns (uint256);
-
-    function addSale(address _saleAddress) external;
 
     /**
      * Calculates claimable amount of tokens for an address.

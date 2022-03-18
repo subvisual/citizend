@@ -72,7 +72,7 @@ contract Vesting is IVesting, AccessControl {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
-    /// @inheritdoc ISale
+    /// @inheritdoc IVesting
     function addSale(address _saleAddress)
         public
         override(IVesting)
@@ -83,7 +83,7 @@ contract Vesting is IVesting, AccessControl {
         saleAddresses.push(_saleAddress);
     }
 
-    /// @inheritdoc ISale
+    /// @inheritdoc IVesting
     function totalVested(address to)
         external
         view
@@ -101,7 +101,7 @@ contract Vesting is IVesting, AccessControl {
         }
     }
 
-    /// @inheritdoc ISale
+    /// @inheritdoc IVesting
     function claimed(address to)
         external
         view
@@ -112,7 +112,7 @@ contract Vesting is IVesting, AccessControl {
         return account.claimedAmount;
     }
 
-    /// @inheritdoc ISale
+    /// @inheritdoc IVesting
     function claimable(address to)
         public
         view
@@ -148,7 +148,7 @@ contract Vesting is IVesting, AccessControl {
             account.claimedAmount;
     }
 
-    /// @inheritdoc ISale
+    /// @inheritdoc IVesting
     function claim(address to) external override(IVesting) {
         uint256 claimableAmount = claimable(to);
         require(claimableAmount > 0, "No claimable amount");
@@ -161,7 +161,7 @@ contract Vesting is IVesting, AccessControl {
         emit VestingClaimed(to, claimableAmount);
     }
 
-    /// @inheritdoc ISale
+    /// @inheritdoc IVesting
     function createPublicSaleVest(address to)
         external
         override(IVesting)
@@ -178,7 +178,7 @@ contract Vesting is IVesting, AccessControl {
         account.accountType = AccountType.PublicSale;
     }
 
-    /// @inheritdoc ISale
+    /// @inheritdoc IVesting
     function createPrivateSaleVest(
         address to,
         uint256 amount,

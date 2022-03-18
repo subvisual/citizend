@@ -219,15 +219,15 @@ contract Sale is ISale, AccessControl {
      * @param _amount amount to apply cap to
      * @return capped amount
      */
-    function _applyCap(uint256 amount) internal view returns (uint256) {
+    function _applyCap(uint256 _amount) internal view returns (uint256) {
         if (individualCap == 0) {
             return 0;
         }
 
-        if (amount > individualCap) {
+        if (_amount > individualCap) {
             return individualCap;
         }
 
-        return amount;
+        return _amount;
     }
 }

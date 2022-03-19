@@ -53,15 +53,6 @@ interface IVesting {
     function claim(address to) external;
 
     /**
-     * Creates a new vesting with public sale parameters
-     * If the address is already registered, it does nothing. If the address
-     * has been registered in a private sale, it reverts the transaction
-     *
-     * @param to Beneficiary
-     **/
-    function createPublicSaleVest(address to) external;
-
-    /**
      * Creates a new vesting with private sale parameters
      * If the address is already registered, it does nothing. If the address
      * has been registered in a public sale, it reverts the transaction
@@ -73,11 +64,11 @@ interface IVesting {
      * @param amount Amount of tokens to vest
      * @param cliffMonths Number of months to wait before the vesting starts
      **/
-    function createPrivateSaleVest(
-        address to,
-        uint256 amount,
-        uint16 cliffMonths
-    ) external;
+    // function createPrivateSaleVest(
+    //     address to,
+    //     uint256 amount,
+    //     uint16 cliffMonths
+    // ) external;
 
     /**
      * Triggers the refund of a given address on all sales

@@ -20,6 +20,6 @@ const func: DeployFunction = async function (hre) {
 
 func.id = "ctnd.vesting";
 func.tags = ["ctnd", "ctnd.vesting"];
-func.dependencies = ["ctnd.sale", "ctnd.token"];
+func.dependencies = ["ctnd.sale1", "ctnd.token"];
 
 export default func;

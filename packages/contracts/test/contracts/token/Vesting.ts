@@ -9,13 +9,12 @@ import {
   Citizend__factory,
   Vesting,
   Vesting__factory,
-  Sale,
-  Sale__factory,
+  MockSale,
+  MockSale__factory,
 } from "../../../src/types";
 
-import { goToTime } from "../../timeHelpers";
+import { goToTime, currentTimestamp, currentDate } from "../../timeHelpers";
 
-const { parseUnits } = ethers.utils;
 const { AddressZero } = ethers.constants;
 
 describe("Vesting", () => {
@@ -26,43 +25,39 @@ describe("Vesting", () => {
   let aUSD: MockERC20;
   let citizend: Citizend;
   let vesting: Vesting;
-  let sale: Sale;
+  let sale: MockSale;
 
   let saleStart: number;
   let saleEnd: number;
-  let vestingStart: BigNumber;
+  let vestingStart: number;
+  let oneDay = 60 * 60 * 24;
 
   beforeEach(async () => {
     [owner, alice, fakeSale] = await ethers.getSigners();
 
-    saleStart = Math.floor(new Date().getTime() / 1000);
+    saleStart = await currentTimestamp();
     saleEnd = saleStart + 60 * 60 * 24;
 
-    const currentDate: Date = new Date();
-    const beginningOfMonth: Date = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      1
+    const now = await currentDate();
+    const beginningOfNextMonth = new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      1,
+      12
     );
-    vestingStart = BigNumber.from(beginningOfMonth.getTime() / 1000);
-    await goToTime(vestingStart);
+    vestingStart = Math.floor(beginningOfNextMonth.getTime() / 1000);
 
     aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD");
     citizend = await new Citizend__factory(owner).deploy();
 
-    sale = await new Sale__factory(owner).deploy(
-      aUSD.address,
-      parseUnits("0.3"),
-      saleStart,
-      saleEnd
-    );
+    sale = await new MockSale__factory(owner).deploy();
 
     vesting = await new Vesting__factory(owner).deploy(
       3,
       citizend.address,
       [sale.address],
       vestingStart,
-      BigNumber.from(10000)
+      10000
     );
     await citizend.transfer(vesting.address, 1000);
   });
@@ -99,23 +94,65 @@ describe("Vesting", () => {
 
   // TODO
   describe("totalVested", () => {
-    it("accumulates multiple public sales", async () => {});
+    it("accumulates multiple public sales", async () => {
+      await sale.test_addAllocation(alice.address, 1);
+      await vesting.createPrivateSaleVest(alice.address, 2, 0);
+
+      expect(await vesting.totalVested(alice.address)).to.equal(3);
+    });
   });
 
   describe("totalVestedPublic", () => {
-    it("is non-zero after a public vest is created");
-    it("is zero after a private vest is created");
+    it("is non-zero after a public vest is created", async () => {
+      await sale.test_addAllocation(alice.address, 1);
+
+      expect(await vesting.totalVestedPublic(alice.address)).to.equal(1);
+    });
+
+    it("is zero after a private vest is created", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 1, 0);
+
+      expect(await vesting.totalVestedPublic(alice.address)).to.equal(0);
+    });
   });
 
   describe("totalVestedPrivate", () => {
-    it("is zero after a public vest is created");
-    it("is non-zero after a private vest is created");
+    it("is zero after a public vest is created", async () => {
+      await sale.test_addAllocation(alice.address, 1);
+
+      expect(await vesting.totalVestedPrivate(alice.address)).to.equal(0);
+    });
+    it("is non-zero after a private vest is created", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 1, 0);
+
+      expect(await vesting.totalVestedPrivate(alice.address)).to.equal(1);
+    });
   });
 
-  describe("claimablePublicSales", () => {
-    it("is non zero after one vesting month");
-    it("is zero with a sale while vesting period does not start");
-    it("does not include private sale amounts");
+  describe("claimablePublic", () => {
+    it("is non zero after one vesting month", async () => {
+      await sale.test_addAllocation(alice.address, 300);
+
+      await goToTime(vestingStart);
+
+      expect(await vesting.claimablePublic(alice.address)).to.equal(100);
+    });
+
+    it("is zero with a sale while vesting period does not start", async () => {
+      await sale.test_addAllocation(alice.address, 300);
+
+      await goToTime(vestingStart - oneDay);
+
+      expect(await vesting.claimablePublic(alice.address)).to.equal(0);
+    });
+
+    it("does not include private sale amounts", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 300, 0);
+
+      await goToTime(vestingStart - oneDay);
+
+      expect(await vesting.claimablePublic(alice.address)).to.equal(0);
+    });
   });
 
   // TODO

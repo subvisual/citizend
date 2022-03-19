@@ -9,8 +9,6 @@ import {ISale} from "./ISale.sol";
 import {IVesting} from "./IVesting.sol";
 import {DateTime} from "../libraries/DateTime.sol";
 
-import "hardhat/console.sol";
-
 contract Vesting is IVesting, AccessControl {
     using DateTime for uint256;
     using SafeERC20 for IERC20;
@@ -124,10 +122,7 @@ contract Vesting is IVesting, AccessControl {
      *
      * @param _saleAddress The address of the sale contract
      */
-    function addSale(address _saleAddress)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function addSale(address _saleAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(_saleAddress != address(0), "cannot be 0x0");
 
         // TODO emit an event
@@ -142,26 +137,25 @@ contract Vesting is IVesting, AccessControl {
         uint256 amount,
         uint16 cliffMonths
     ) external override(IVesting) onlyRole(DEFAULT_ADMIN_ROLE) {
-        revert("not yet implemented");
-        // require(
-        //     cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
-        //     "Cliff months too big"
-        // );
-        // require(
-        //     totalPrivateSales + amount <= privateSaleCap,
-        //     "Private sale cap reached"
-        // );
-        // Account storage account = accounts[to];
-        // require(
-        //     account.accountType != AccountType.PublicSale,
-        //     "Account already has public vesting"
-        // );
+        require(
+            cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
+            "Cliff months too big"
+        );
+        require(
+            totalPrivateSales + amount <= privateSaleCap,
+            "Private sale cap reached"
+        );
+        PrivateVesting storage vesting = privateVestings[to];
+        require(
+            vesting.amount == 0 || vesting.cliffMonths == cliffMonths,
+            "vesting already exists with different cliff"
+        );
 
-        // account.cliffMonths = cliffMonths;
-        // account.vestingMonths = PRIVATE_SALE_VESTING_MONTHS;
-        // account.accountType = AccountType.PrivateSale;
+        vesting.cliffMonths = cliffMonths;
+        vesting.vestingMonths = PRIVATE_SALE_VESTING_MONTHS;
+        vesting.amount += amount;
 
-        // totalPrivateSales += amount;
+        totalPrivateSales += amount;
     }
 
     //

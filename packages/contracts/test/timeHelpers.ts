@@ -1,11 +1,22 @@
-import { network } from "hardhat";
+import { network, ethers } from "hardhat";
 import { BigNumber } from "ethers";
 
-export async function goToTime(seconds: BigNumber): Promise<void> {
-  let currentTime = new Date().getTime() / 1000;
+export async function currentTimestamp(): Promise<number> {
+  const blockNumber = await ethers.provider.getBlockNumber();
+  const latestBlock = await ethers.provider.getBlock(blockNumber);
+
+  return latestBlock.timestamp;
+}
+
+export async function currentDate(): Promise<Date> {
+  return new Date((await currentTimestamp()) * 1000);
+}
+
+export async function goToTime(seconds: BigNumber | number): Promise<void> {
+  let currentTime = await currentTimestamp();
 
   await network.provider.send("evm_increaseTime", [
-    seconds.toNumber() - currentTime,
+    BigNumber.from(seconds).sub(currentTime).toNumber(),
   ]);
   await network.provider.send("evm_mine");
 }

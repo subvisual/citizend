@@ -17,14 +17,6 @@ interface IVesting {
     /// @return The total cap for the private sale
     function privateSaleCap() external view returns (uint256);
 
-    /**
-     * Adds an address to the list of sale contracts. Can only be called by the
-     * admin.
-     *
-     * @param _saleAddress The address of the sale contract
-     */
-    function addSale(address _saleAddress) external;
-
     /// @return How many tokens vested in total for a given address, including already claimed amount
     function totalVested(address to) external view returns (uint256);
 
@@ -64,11 +56,11 @@ interface IVesting {
      * @param amount Amount of tokens to vest
      * @param cliffMonths Number of months to wait before the vesting starts
      **/
-    // function createPrivateSaleVest(
-    //     address to,
-    //     uint256 amount,
-    //     uint16 cliffMonths
-    // ) external;
+    function createPrivateSaleVest(
+        address to,
+        uint256 amount,
+        uint16 cliffMonths
+    ) external;
 
     /**
      * Triggers the refund of a given address on all sales

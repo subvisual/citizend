@@ -13,6 +13,8 @@ import {
   Vesting__factory,
 } from "../../../src/types";
 
+import { goToTime } from "../../timeHelpers";
+
 const { parseUnits } = ethers.utils;
 const { MaxUint256 } = ethers.constants;
 
@@ -57,6 +59,18 @@ describe("Sale", () => {
         .to.be.true;
       expect(await sale.hasRole(await sale.CAP_VALIDATOR_ROLE(), owner.address))
         .to.be.true;
+    });
+  });
+
+  describe("withdraw", async () => {
+    it("allows the owner to withdraw", async () => {
+      await sale.connect(alice).buy(30);
+      console.log(end);
+      goToTime(end + 10000);
+
+      await sale.connect(owner).withdraw();
+
+      expect(await aUSD.balanceOf(owner.address)).to.equal(parseUnits("1030"));
     });
   });
 

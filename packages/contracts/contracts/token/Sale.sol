@@ -110,6 +110,15 @@ contract Sale is ISale, AccessControl {
     // ISale
     //
 
+    function withdraw() external onlyRole(DEFAULT_ADMIN_ROLE) {
+        console.log(block.timestamp);
+        console.log(end);
+        require(block.timestamp > end, "sale not ended yet");
+
+        uint256 total = IERC20(paymentToken).balanceOf(address(this));
+        IERC20(paymentToken).transfer(msg.sender, total);
+    }
+
     /// @inheritdoc ISale
     function paymentTokenToToken(uint256 _paymentAmount)
         public

@@ -1,6 +1,6 @@
 declare namespace JSX {
     interface IntrinsicElements {
-      "sock-connect": DetailedHTMLProps<
+      "af-metamask-connect-btn": DetailedHTMLProps<
         HTMLAttributes<HTMLButtonElement>,
         HTMLElement
       >;

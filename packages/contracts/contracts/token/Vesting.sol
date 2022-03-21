@@ -10,6 +10,7 @@ import {IVesting} from "./IVesting.sol";
 import {DateTime} from "../libraries/DateTime.sol";
 
 contract Vesting is IVesting, AccessControl {
+    // TODO: Think about how to get the citizend out
     using DateTime for uint256;
     using SafeERC20 for IERC20;
 
@@ -43,8 +44,11 @@ contract Vesting is IVesting, AccessControl {
 
     uint256 public constant PRIVATE_SALE_VESTING_MONTHS = 36;
     uint256 public constant PRIVATE_SALE_MAX_CLIFF_MONTHS = 6;
+    bytes32 public constant PRIVATE_SELLER_ROLE =
+        keccak256("PRIVATE_SELLER_ROLE");
 
-    event VestingClaimed(address indexed to, uint256 amount);
+    event ClaimVesting(address indexed to, uint256 amount);
+    event AddSale(address indexed saleContract);
 
     /// @param _publicSaleVestingMonths Number of months of vesting for the public sale
     /// @param _token Address for the CTND token contract
@@ -66,6 +70,7 @@ contract Vesting is IVesting, AccessControl {
         privateSaleCap = _privateSaleCap;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PRIVATE_SELLER_ROLE, msg.sender);
     }
 
     //
@@ -100,7 +105,7 @@ contract Vesting is IVesting, AccessControl {
 
         IERC20(token).transfer(to, claimableAmount);
 
-        emit VestingClaimed(to, claimableAmount);
+        emit ClaimVesting(to, claimableAmount);
     }
 
     /// @inheritdoc IVesting
@@ -125,18 +130,17 @@ contract Vesting is IVesting, AccessControl {
     function addSale(address _saleAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(_saleAddress != address(0), "cannot be 0x0");
 
-        // TODO emit an event
-
         sales.push(_saleAddress);
+
+        emit AddSale(_saleAddress);
     }
 
     /// @inheritdoc IVesting
-    // TODO review this role
     function createPrivateSaleVest(
         address to,
         uint256 amount,
         uint16 cliffMonths
-    ) external override(IVesting) onlyRole(DEFAULT_ADMIN_ROLE) {
+    ) external override(IVesting) onlyRole(PRIVATE_SELLER_ROLE) {
         require(
             cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
             "Cliff months too big"

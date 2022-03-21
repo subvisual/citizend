@@ -12,6 +12,7 @@ contract MockSale is ISale {
     //
     mapping(address => uint256) public override(ISale) allocation;
     mapping(address => uint256) public override(ISale) refundAmount;
+    mapping(string => uint256) public calls;
 
     address public paymentToken;
 
@@ -37,7 +38,8 @@ contract MockSale is ISale {
         revert("not implemented");
     }
 
-    function refund(address) external pure {
+    function refund(address) external {
+        calls["refund"]++;
         return;
     }
 
@@ -64,5 +66,13 @@ contract MockSale is ISale {
 
     function test_addRefund(address to, uint256 amount) external {
         refundAmount[to] += amount;
+    }
+
+    function test_Called(string calldata name, uint256 amount)
+        external
+        view
+        returns (bool)
+    {
+        return calls[name] == amount;
     }
 }

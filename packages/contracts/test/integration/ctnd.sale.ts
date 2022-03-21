@@ -49,8 +49,6 @@ describe("Integration", () => {
     await citizend.transfer(vesting.address, 1000);
     await sale.grantRole(await sale.CAP_VALIDATOR_ROLE(), seller.address);
     await secondSale.grantRole(await sale.CAP_VALIDATOR_ROLE(), seller.address);
-    // await sale.grantRole(await sale.PRIVATE_SELLER(), seller.address);
-    // await secondSale.grantRole(await sale.PRIVATE_SELLER(), seller.address);
 
     const allowance = ethers.constants.MaxUint256;
     await aUSD.connect(alice).approve(sale.address, allowance);
@@ -258,7 +256,7 @@ describe("Integration", () => {
 
       await expect(vesting.claim(alice.address)).to.emit(
         vesting,
-        "VestingClaimed"
+        "ClaimVesting"
       );
     });
   });

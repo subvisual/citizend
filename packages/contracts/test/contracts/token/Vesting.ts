@@ -14,6 +14,7 @@ import {
 } from "../../../src/types";
 
 import { goToTime, currentTimestamp, currentDate } from "../../timeHelpers";
+import "./matchers";
 
 const { AddressZero } = ethers.constants;
 
@@ -244,15 +245,14 @@ describe("Vesting", () => {
     });
   });
 
-  // describe("refund", () => {
-  //   it("refunds public sale after the cap", async () => {
-  //     await sale.test_addAllocation(alice.address, 300);
-  //     await sale.setIndividualCap(100);
-  //     await goToTime(vestingStart);
+  describe("refund", () => {
+    it("refunds via the public sale contract", async () => {
+      await sale.test_addRefund(alice.address, 300);
+      await goToTime(vestingStart);
 
-  //     await vesting.refund(alice.address);
+      await vesting.refund(alice.address);
 
-  //     expect(await sale.balanceOf(alice.address)).to.equal(300);
-  //   });
-  // });
+      expect(sale).to.haveReceived("refund");
+    });
+  });
 });

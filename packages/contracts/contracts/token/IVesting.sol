@@ -17,8 +17,12 @@ interface IVesting {
     /// @return The total cap for the private sale
     function privateSaleCap() external view returns (uint256);
 
-    /// @return How many tokens vested in total for a given address, including already claimed amount
-    function totalVested(address to) external view returns (uint256);
+    /**
+     * @return How many tokens allocated in total for a given
+     * address, for private and public sales, including already
+     * claimed amount
+     **/
+    function totalAllocated(address to) external view returns (uint256);
 
     /// @return Amount already claimed by a given address
     function claimed(address to) external view returns (uint256);

@@ -17,7 +17,7 @@ contract Vesting is IVesting, AccessControl {
     // Structs
     //
 
-    struct PrivateVesting {
+    struct PrivateAllocation {
         uint256 amount;
         uint256 claimedAmount;
         uint256 cliffMonths;
@@ -31,7 +31,7 @@ contract Vesting is IVesting, AccessControl {
     /// @inheritdoc IVesting
     mapping(address => uint256) public override(IVesting) claimed;
 
-    mapping(address => PrivateVesting) public privateVestings;
+    mapping(address => PrivateAllocation) public privateAllocations;
 
     address public immutable token;
     uint256 public immutable startTime;
@@ -72,13 +72,13 @@ contract Vesting is IVesting, AccessControl {
     // IVesting
     //
     /// @inheritdoc IVesting
-    function totalVested(address to)
+    function totalAllocated(address to)
         public
         view
         override(IVesting)
         returns (uint256)
     {
-        return totalVestedPublic(to) + totalVestedPrivate(to);
+        return totalAllocatedPublic(to) + totalAllocatedPrivate(to);
     }
 
     /// @inheritdoc IVesting
@@ -145,7 +145,7 @@ contract Vesting is IVesting, AccessControl {
             totalPrivateSales + amount <= privateSaleCap,
             "Private sale cap reached"
         );
-        PrivateVesting storage vesting = privateVestings[to];
+        PrivateAllocation storage vesting = privateAllocations[to];
         require(
             vesting.amount == 0 || vesting.cliffMonths == cliffMonths,
             "vesting already exists with different cliff"
@@ -162,23 +162,23 @@ contract Vesting is IVesting, AccessControl {
     // Other Public API
     //
 
-    function totalVestedPublic(address to) public view returns (uint256) {
-        uint256 totalAllocated = 0;
+    function totalAllocatedPublic(address to) public view returns (uint256) {
+        uint256 total = 0;
 
         for (uint256 i = 0; i < sales.length; i++) {
-            totalAllocated += ISale(sales[i]).allocation(to);
+            total += ISale(sales[i]).allocation(to);
         }
 
-        return totalAllocated;
+        return total;
     }
 
-    function totalVestedPrivate(address to) public view returns (uint256) {
-        return privateVestings[to].amount;
+    function totalAllocatedPrivate(address to) public view returns (uint256) {
+        return privateAllocations[to].amount;
     }
 
     function claimablePublic(address to) public view returns (uint256) {
         uint256 localClaimed = claimed[to];
-        uint256 total = totalVestedPublic(to);
+        uint256 total = totalAllocatedPublic(to);
         uint256 elapsed = _numberOfPeriodsElapsed();
         uint256 cliff = publicSaleCliffMonths;
         uint256 vesting = publicSaleVestingMonths;
@@ -200,8 +200,27 @@ contract Vesting is IVesting, AccessControl {
     }
 
     function claimablePrivate(address to) public view returns (uint256) {
-        // TODO
-        return 0;
+        PrivateAllocation storage allocation = privateAllocations[to];
+        uint256 localClaimed = claimed[to];
+        uint256 total = allocation.amount;
+        uint256 elapsed = _numberOfPeriodsElapsed();
+        uint256 cliff = allocation.cliffMonths;
+        uint256 vesting = allocation.vestingMonths;
+
+        if (total == 0) {
+            return 0;
+        }
+
+        if (cliff >= elapsed) {
+            return 0;
+        }
+
+        if (elapsed >= vesting + cliff) {
+            return total - localClaimed;
+        }
+
+        uint256 perMonth = total / vesting;
+        return (perMonth * (elapsed - cliff)) - localClaimed;
     }
 
     //

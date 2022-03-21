@@ -93,39 +93,39 @@ describe("Vesting", () => {
   });
 
   // TODO
-  describe("totalVested", () => {
-    it("accumulates multiple public sales", async () => {
+  describe("totalAllocated", () => {
+    it("sums all sales, public and private", async () => {
       await sale.test_addAllocation(alice.address, 1);
       await vesting.createPrivateSaleVest(alice.address, 2, 0);
 
-      expect(await vesting.totalVested(alice.address)).to.equal(3);
+      expect(await vesting.totalAllocated(alice.address)).to.equal(3);
     });
   });
 
-  describe("totalVestedPublic", () => {
+  describe("totalAllocatedPublic", () => {
     it("is non-zero after a public vest is created", async () => {
       await sale.test_addAllocation(alice.address, 1);
 
-      expect(await vesting.totalVestedPublic(alice.address)).to.equal(1);
+      expect(await vesting.totalAllocatedPublic(alice.address)).to.equal(1);
     });
 
     it("is zero after a private vest is created", async () => {
       await vesting.createPrivateSaleVest(alice.address, 1, 0);
 
-      expect(await vesting.totalVestedPublic(alice.address)).to.equal(0);
+      expect(await vesting.totalAllocatedPublic(alice.address)).to.equal(0);
     });
   });
 
-  describe("totalVestedPrivate", () => {
+  describe("totalAllocatedPrivate", () => {
     it("is zero after a public vest is created", async () => {
       await sale.test_addAllocation(alice.address, 1);
 
-      expect(await vesting.totalVestedPrivate(alice.address)).to.equal(0);
+      expect(await vesting.totalAllocatedPrivate(alice.address)).to.equal(0);
     });
     it("is non-zero after a private vest is created", async () => {
       await vesting.createPrivateSaleVest(alice.address, 1, 0);
 
-      expect(await vesting.totalVestedPrivate(alice.address)).to.equal(1);
+      expect(await vesting.totalAllocatedPrivate(alice.address)).to.equal(1);
     });
   });
 
@@ -155,23 +155,89 @@ describe("Vesting", () => {
     });
   });
 
-  // TODO
   describe("claimablePrivateSale", () => {
-    it("is non zero after one vesting month");
-    it("is zero with a sale while vesting period does not start");
-    it("does not include public sale amounts");
+    it("is non zero after one vesting month", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 300, 0);
+
+      await goToTime(vestingStart);
+
+      expect(await vesting.claimablePrivate(alice.address)).to.equal(8);
+    });
+
+    it("is zero with a sale while vesting period does not start", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 300, 3);
+
+      await goToTime(vestingStart);
+
+      expect(await vesting.claimablePrivate(alice.address)).to.equal(0);
+    });
+
+    it("does not include public sale amounts", async () => {
+      await sale.test_addAllocation(alice.address, 300);
+      await vesting.createPrivateSaleVest(alice.address, 300, 0);
+
+      await goToTime(vestingStart);
+
+      expect(await vesting.claimablePrivate(alice.address)).to.equal(8);
+    });
   });
 
   describe("claimable", () => {
-    it("includes public sales");
-    it("includes private sales");
-    it("sums public and private sales");
+    it("includes public sales", async () => {
+      await sale.test_addAllocation(alice.address, 300);
+
+      await goToTime(vestingStart);
+
+      expect(await vesting.claimable(alice.address)).to.equal(100);
+    });
+
+    it("includes private sales", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 300, 0);
+
+      await goToTime(vestingStart);
+
+      expect(await vesting.claimable(alice.address)).to.equal(8);
+    });
+
+    it("sums public and private sales", async () => {
+      await sale.test_addAllocation(alice.address, 300);
+      await vesting.createPrivateSaleVest(alice.address, 300, 0);
+
+      await goToTime(vestingStart);
+
+      expect(await vesting.claimable(alice.address)).to.equal(108);
+    });
   });
 
   describe("claim", () => {
-    it("claims public sale claimable amounts");
-    it("claims private sale claimable amounts");
+    it("claims public sale claimable amounts", async () => {
+      await sale.test_addAllocation(alice.address, 300);
+      await goToTime(vestingStart);
+
+      await vesting.claim(alice.address);
+
+      expect(await citizend.balanceOf(alice.address)).to.equal(100);
+    });
+
+    it("claims private sale claimable amounts", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 300, 0);
+      await goToTime(vestingStart);
+
+      await vesting.claim(alice.address);
+
+      expect(await citizend.balanceOf(alice.address)).to.equal(8);
+    });
   });
 
-  describe("refund", () => {});
+  // describe("refund", () => {
+  //   it("refunds public sale after the cap", async () => {
+  //     await sale.test_addAllocation(alice.address, 300);
+  //     await sale.setIndividualCap(100);
+  //     await goToTime(vestingStart);
+
+  //     await vesting.refund(alice.address);
+
+  //     expect(await sale.balanceOf(alice.address)).to.equal(300);
+  //   });
+  // });
 });

@@ -17,7 +17,7 @@ contract MockSale is ISale {
 
     function paymentTokenToToken(uint256 _x)
         external
-        view
+        pure
         override(ISale)
         returns (uint256)
     {
@@ -26,18 +26,18 @@ contract MockSale is ISale {
 
     function tokenToPaymentToken(uint256 _x)
         external
-        view
+        pure
         override(ISale)
         returns (uint256)
     {
         return _x;
     }
 
-    function buy(uint256) external {
+    function buy(uint256) external pure {
         revert("not implemented");
     }
 
-    function refund(address) external {
+    function refund(address) external pure {
         return;
     }
 
@@ -50,7 +50,7 @@ contract MockSale is ISale {
         return allocation[to];
     }
 
-    function setIndividualCap(uint256 cap) external {
+    function setIndividualCap(uint256 cap) external pure {
         revert("not implemented");
     }
 

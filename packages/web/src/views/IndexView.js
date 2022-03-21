@@ -68,7 +68,6 @@ class IndexView extends React.Component {
             <div className="af-class-container w-container">
               {map(proxies['af-metamask-connect-btn'], props => <a href="#" {...{...props, className: `w-button ${props.className || ''}`}}>{props.children ? props.children : <React.Fragment>Button Text</React.Fragment>}</a>)}
             </div>
-            {/* [if lte IE 9]><![endif] */}
           </div>
         </span>
       </span>

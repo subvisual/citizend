@@ -156,7 +156,23 @@ describe("Vesting", () => {
   });
 
   describe("claimablePrivateSale", () => {
-    it("is non zero after one vesting month", async () => {
+    it("allows me to claim 0 tokens before the cliff starts", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 300, 3);
+
+      await goToTime(vestingStart - oneDay);
+
+      expect(await vesting.claimablePrivate(alice.address)).to.equal(0);
+    });
+
+    it("is zero during the cliff period", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 300, 3);
+
+      await goToTime(vestingStart);
+
+      expect(await vesting.claimablePrivate(alice.address)).to.equal(0);
+    });
+
+    it("allows me to claim some amount tokens after the full cliff period", async () => {
       await vesting.createPrivateSaleVest(alice.address, 300, 0);
 
       await goToTime(vestingStart);
@@ -164,12 +180,11 @@ describe("Vesting", () => {
       expect(await vesting.claimablePrivate(alice.address)).to.equal(8);
     });
 
-    it("is zero with a sale while vesting period does not start", async () => {
+    it("allows me to claim 100% after the full cliff and vesting period", async () => {
       await vesting.createPrivateSaleVest(alice.address, 300, 3);
+      await goToTime(vestingStart + oneDay * (3 * 30 + 36 * 30));
 
-      await goToTime(vestingStart);
-
-      expect(await vesting.claimablePrivate(alice.address)).to.equal(0);
+      expect(await vesting.claimable(alice.address)).to.equal(300);
     });
 
     it("does not include public sale amounts", async () => {

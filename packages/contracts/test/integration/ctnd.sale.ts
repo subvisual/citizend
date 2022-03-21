@@ -47,12 +47,10 @@ describe("Integration", () => {
     vesting = Vesting__factory.connect(vestingDeployment.address, owner);
 
     await citizend.transfer(vesting.address, 1000);
-    await sale.grantRole(await sale.CAP_VALIDATOR(), seller.address);
-    await secondSale.grantRole(await sale.CAP_VALIDATOR(), seller.address);
-    await sale.grantRole(await sale.PRIVATE_SELLER(), seller.address);
-    await secondSale.grantRole(await sale.PRIVATE_SELLER(), seller.address);
-    await vesting.grantRole(await vesting.SALE_CONTRACT(), sale.address);
-    await vesting.grantRole(await vesting.SALE_CONTRACT(), secondSale.address);
+    await sale.grantRole(await sale.CAP_VALIDATOR_ROLE(), seller.address);
+    await secondSale.grantRole(await sale.CAP_VALIDATOR_ROLE(), seller.address);
+    // await sale.grantRole(await sale.PRIVATE_SELLER(), seller.address);
+    // await secondSale.grantRole(await sale.PRIVATE_SELLER(), seller.address);
 
     const allowance = ethers.constants.MaxUint256;
     await aUSD.connect(alice).approve(sale.address, allowance);
@@ -62,13 +60,12 @@ describe("Integration", () => {
   beforeEach(async () => {
     await fixture();
 
-    await sale.setVesting(vesting.address);
-    await secondSale.setVesting(vesting.address);
     await vesting.addSale(sale.address);
   });
 
   describe("refund", () => {
     it("reverts the transaction if there is nothing to be refunded", async () => {
+      await sale.connect(seller).setIndividualCap(50);
       await expect(sale.refund(alice.address)).to.be.revertedWith(
         "No tokens to refund"
       );
@@ -80,8 +77,8 @@ describe("Integration", () => {
 
       const beforeRefund = await aUSD.balanceOf(alice.address);
       await expect(sale.refund(alice.address))
-        .to.emit(sale, "Refunded")
-        .withArgs(alice.address, 50);
+        .to.emit(sale, "Refund")
+        .withArgs(alice.address, await sale.tokenToPaymentToken(50));
       const afterRefund = await aUSD.balanceOf(alice.address);
 
       expect(afterRefund.sub(beforeRefund)).to.eq(
@@ -106,9 +103,9 @@ describe("Integration", () => {
     });
   });
 
-  describe("totalVested", () => {
+  describe("totalAllocated", () => {
     it("is zero before vesting starts", async () => {
-      expect(await vesting.totalVested(alice.address)).to.equal(0);
+      expect(await vesting.totalAllocated(alice.address)).to.equal(0);
     });
 
     it("is 100% after the vesting", async () => {
@@ -116,7 +113,7 @@ describe("Integration", () => {
       await sale.connect(seller).setIndividualCap(200);
       await increaseTime(time.duration.days(61));
 
-      expect(await vesting.totalVested(alice.address)).to.equal(150);
+      expect(await vesting.totalAllocated(alice.address)).to.equal(150);
     });
   });
 
@@ -274,47 +271,6 @@ describe("Integration", () => {
       await increaseTime(time.duration.days(30 * 3 + 1));
 
       expect(await vesting.claimable(alice.address)).to.equal(250);
-    });
-  });
-
-  describe("private sale claim", () => {
-    it("allows me to claim 0 tokens before the cliff starts", async () => {
-      await sale
-        .connect(seller)
-        .privateBuy(alice.address, await sale.tokenToPaymentToken(150), 3);
-      await sale.connect(seller).setIndividualCap(500);
-
-      expect(await vesting.claimable(alice.address)).to.equal(0);
-    });
-
-    it("is zero for the duration of the cliff", async () => {
-      await sale
-        .connect(seller)
-        .privateBuy(alice.address, await sale.tokenToPaymentToken(150), 3);
-      await sale.connect(seller).setIndividualCap(500);
-      await increaseTime(time.duration.days(30));
-
-      expect(await vesting.claimable(alice.address)).to.equal(0);
-    });
-
-    it("allows me to claim some amount tokens after the full cliff period", async () => {
-      await sale
-        .connect(seller)
-        .privateBuy(alice.address, await sale.tokenToPaymentToken(100), 3);
-      await sale.connect(seller).setIndividualCap(500);
-      await increaseTime(time.duration.days(30 * 3 + 2));
-
-      expect(await vesting.claimable(alice.address)).to.equal(2);
-    });
-
-    it("allows me to claim 100% after the full cliff and vesting period", async () => {
-      await sale
-        .connect(seller)
-        .privateBuy(alice.address, await sale.tokenToPaymentToken(100), 3);
-      await sale.connect(seller).setIndividualCap(500);
-      await increaseTime(time.duration.days(3 * 30 + 36 * 30));
-
-      expect(await vesting.claimable(alice.address)).to.equal(100);
     });
   });
 });

@@ -254,5 +254,15 @@ describe("Vesting", () => {
 
       expect(sale).to.haveReceived("refund");
     });
+
+    it("works even if there is a wrong sale address", async () => {
+      await vesting.addSale("0xc0ffee254729296a45a3885639AC7E10F9d54979");
+      await sale.test_addRefund(alice.address, 300);
+      await goToTime(vestingStart);
+
+      await vesting.refund(alice.address);
+
+      expect(sale).to.haveReceived("refund");
+    });
   });
 });

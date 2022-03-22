@@ -1,8 +1,6 @@
 import { ethers } from "hardhat";
 import { DeployFunction } from "hardhat-deploy/types";
 
-const { parseUnits } = ethers.utils;
-
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
@@ -14,7 +12,7 @@ const func: DeployFunction = async function (hre) {
   });
 };
 
-func.id = "citizend";
-func.tags = ["citizend"];
+func.id = "ctnd.token";
+func.tags = ["ctnd", "ctnd.token"];
 
 export default func;

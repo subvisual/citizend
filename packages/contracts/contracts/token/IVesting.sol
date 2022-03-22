@@ -11,8 +11,18 @@ interface IVesting {
     /// @return The token being vested
     function token() external view returns (address);
 
-    /// @return How many tokens vested in total for a given address, including already claimed amount
-    function totalVested(address to) external view returns (uint256);
+    /// @return The start time for the vesting
+    function startTime() external view returns (uint256);
+
+    /// @return The total cap for the private sale
+    function privateSaleCap() external view returns (uint256);
+
+    /**
+     * @return How many tokens allocated in total for a given
+     * address, for private and public sales, including already
+     * claimed amount
+     **/
+    function totalAllocated(address to) external view returns (uint256);
 
     /// @return Amount already claimed by a given address
     function claimed(address to) external view returns (uint256);
@@ -39,27 +49,16 @@ interface IVesting {
     function claim(address to) external;
 
     /**
-     * Creates a new vesting with public sale parameters
-     * If the address is already registered, simply add the funds to his existing vesting
+     * Creates a new vesting with private sale parameters
+     * If the address is already registered, it does nothing. If the address
+     * has been registered in a public sale, it reverts the transaction
      *
-     * @dev Should only be callable by the sale contract
-     *
-     * @dev In order to not mess up calculations, this should revert if address
-     * already has private sale vesting
+     * Also checks if the private sale cap has been reached, and if so,
+     * reverts.
      *
      * @param to Beneficiary
-     * @param amount Amount to vest
-     **/
-    function createPublicSaleVest(address to, uint256 amount) external;
-
-    /**
-     * Creates a new vesting with private sale parameters
-     * If the address is already registered, simply add the funds to his existing vesting
-     *
-     * @dev In order to not mess up calculations, this should revert if address
-     * already has public a sale vesting
-     *
-     * @dev Should only be callable by an authorized account
+     * @param amount Amount of tokens to vest
+     * @param cliffMonths Number of months to wait before the vesting starts
      **/
     function createPrivateSaleVest(
         address to,
@@ -68,26 +67,12 @@ interface IVesting {
     ) external;
 
     /**
-     * Refunds currently refundable amount for the given address
+     * Triggers the refund of a given address on all sales
      *
-     * @param to Address to refund to
-     */
+     * @dev It will trigger a number of transactions equal to the number of
+     * sales (assuming all of them have something to refund)
+     *
+     * @param to Beneficiary
+     **/
     function refund(address to) external;
-
-    /**
-     * Returns the amount of tokens that are available for refund do to the
-     * rising tide mechanism
-     *
-     * @param to The address to query
-     * @return The currently claimable amount
-     */
-    function refundable(address to) external view returns (uint256);
-
-    /**
-     * Sets the individual cap for investors, which will then be used when
-     * claiming or refunding
-     *
-     * @param cap The cap per investor to be set
-     */
-    function setIndividualCap(uint256 cap) external;
 }

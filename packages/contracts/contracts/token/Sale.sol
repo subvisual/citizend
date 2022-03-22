@@ -112,6 +112,11 @@ contract Sale is ISale, RisingTide, AccessControl {
         _;
     }
 
+    modifier afterSale() {
+        require(block.timestamp > end, "sale not over");
+        _;
+    }
+
     /// Ensures the individual cap is already calculated
     modifier capCalculated() {
         require(individualCap > 0, "cap not yet set");
@@ -281,6 +286,7 @@ contract Sale is ISale, RisingTide, AccessControl {
     function setIndividualCap(uint256 _cap)
         external
         onlyRole(CAP_VALIDATOR_ROLE)
+        afterSale
     {
         _risingTide_setCap(_cap);
     }

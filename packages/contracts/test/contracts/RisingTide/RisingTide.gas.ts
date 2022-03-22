@@ -25,7 +25,7 @@ if (process.env.RISING_TIDE_GAS_ESTIMATES) {
       const results: Record<string, string> = {};
       const total = 1000000;
 
-      [2500, 5000, 10000, 20000].forEach((n: number) => {
+      [250, 500, 1000].forEach((n: number) => {
         it(`${n} investors`, async function () {
           const contract = (await WithStaticAmounts.deploy(
             n,

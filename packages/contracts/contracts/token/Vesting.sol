@@ -8,13 +8,16 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ISale} from "./ISale.sol";
 import {IVesting} from "./IVesting.sol";
 import {DateTime} from "../libraries/DateTime.sol";
+import {ERC165Query} from "../libraries/ERC165Query.sol";
 
 import "hardhat/console.sol";
 
 contract Vesting is IVesting, AccessControl {
     // TODO: Think about how to get the citizend out
+
     using DateTime for uint256;
     using SafeERC20 for IERC20;
+    using ERC165Query for address;
 
     //
     // Structs
@@ -64,15 +67,18 @@ contract Vesting is IVesting, AccessControl {
         uint256 _startTime,
         uint256 _privateSaleCap
     ) {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PRIVATE_SELLER_ROLE, msg.sender);
+
         publicSaleVestingMonths = _publicSaleVestingMonths;
         publicSaleCliffMonths = 0;
         token = _token;
-        sales = _sales;
         startTime = _startTime;
         privateSaleCap = _privateSaleCap;
 
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(PRIVATE_SELLER_ROLE, msg.sender);
+        for (uint256 i = 0; i < _sales.length; ++i) {
+            addSale(_sales[i]);
+        }
     }
 
     //
@@ -127,14 +133,19 @@ contract Vesting is IVesting, AccessControl {
      * Adds an address to the list of sale contracts. Can only be called by the
      * admin.
      *
-     * @param _saleAddress The address of the sale contract
+     * @param _sale The address of the sale contract
      */
-    function addSale(address _saleAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(_saleAddress != address(0), "cannot be 0x0");
+    function addSale(address _sale) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(_sale != address(0), "cannot be 0x0");
 
-        sales.push(_saleAddress);
+        require(
+            _sale.doesContractImplementInterface(type(ISale).interfaceId),
+            "not an ISale"
+        );
 
-        emit AddSale(_saleAddress);
+        sales.push(_sale);
+
+        emit AddSale(_sale);
     }
 
     /// @inheritdoc IVesting

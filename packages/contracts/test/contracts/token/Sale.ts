@@ -68,7 +68,7 @@ describe("Sale", () => {
     });
 
     it("reverts if the sale is not ended", async () => {
-      await sale.connect(owner).withdraw();
+      await sale.setIndividualCap(100);
       await expect(sale.connect(owner).withdraw()).to.be.revertedWith(
         "sale not ended yet"
       );

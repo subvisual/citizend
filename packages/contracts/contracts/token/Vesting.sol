@@ -4,11 +4,11 @@ pragma solidity =0.8.12;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {ERC165Checker} from "@openzeppelin/contracts/introspection/ERC165Checker.sol";
 
 import {ISale} from "./ISale.sol";
 import {IVesting} from "./IVesting.sol";
 import {DateTime} from "../libraries/DateTime.sol";
-import {ERC165Query} from "../libraries/ERC165Query.sol";
 
 import "hardhat/console.sol";
 
@@ -17,7 +17,7 @@ contract Vesting is IVesting, AccessControl {
 
     using DateTime for uint256;
     using SafeERC20 for IERC20;
-    using ERC165Query for address;
+    using ERC165Checker for address;
 
     //
     // Structs
@@ -140,7 +140,7 @@ contract Vesting is IVesting, AccessControl {
         require(_sale != address(0), "cannot be 0x0");
 
         require(
-            _sale.doesContractImplementInterface(type(ISale).interfaceId),
+            _sale._supportsInterface(type(ISale).interfaceId),
             "not an ISale"
         );
 

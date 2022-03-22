@@ -4,6 +4,7 @@ pragma solidity =0.8.12;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import {ISale} from "./ISale.sol";
 
@@ -13,7 +14,7 @@ import "hardhat/console.sol";
 ///
 /// Users interact with this contract to deposit $aUSD in exchange for $CTND.
 /// The contract should hold all $CTND tokens meant to be distributed in the public sale
-contract Sale is ISale, AccessControl {
+contract Sale is ISale, AccessControl, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     struct Account {
@@ -108,7 +109,12 @@ contract Sale is ISale, AccessControl {
     // ISale
     //
 
-    function withdraw() external onlyRole(DEFAULT_ADMIN_ROLE) capCalculated {
+    function withdraw()
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+        capCalculated
+        nonReentrant
+    {
         require(block.timestamp > end, "sale not ended yet");
 
         uint256 total = IERC20(paymentToken).balanceOf(address(this));

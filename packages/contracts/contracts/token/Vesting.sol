@@ -111,11 +111,10 @@ contract Vesting is IVesting, AccessControl {
     }
 
     /// @inheritdoc IVesting
-    // TODO silently ignore errors
     function refund(address to) external override(IVesting) {
         for (uint256 i = 0; i < sales.length; i++) {
             address saleAddress = sales[i];
-            ISale(saleAddress).refund(to);
+            saleAddress.call(abi.encodeWithSignature("refund(address)", to));
         }
     }
 

@@ -63,13 +63,30 @@ describe("Sale", () => {
   });
 
   describe("withdraw", async () => {
-    it("allows the owner to withdraw", async () => {
+    it("reverts if the caller is not the owner", async () => {
+      await expect(sale.connect(alice).withdraw()).to.be.reverted;
+    });
+
+    it("reverts if the sale is not ended", async () => {
+      await sale.setIndividualCap(100);
+      await expect(sale.connect(owner).withdraw()).to.be.revertedWith(
+        "sale not ended yet"
+      );
+    });
+
+    it("reverts if no cap is set", async () => {
       await sale.connect(alice).buy(30);
       await goToTime(end + 1000);
 
-      const action = () => sale.connect(owner).withdraw();
+      await expect(sale.withdraw()).to.be.revertedWith("cap not yet set");
+    });
 
-      // TODO the cap wasn't set here, so this shouldn't work!
+    it("allows the owner to withdraw", async () => {
+      await sale.connect(alice).buy(30);
+      await goToTime(end + 1000);
+      await sale.setIndividualCap(100);
+
+      const action = () => sale.connect(owner).withdraw();
 
       await expect(action).to.changeTokenBalance(aUSD, owner, 30);
     });

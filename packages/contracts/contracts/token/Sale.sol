@@ -14,8 +14,6 @@ import "hardhat/console.sol";
 /// Users interact with this contract to deposit $aUSD in exchange for $CTND.
 /// The contract should hold all $CTND tokens meant to be distributed in the public sale
 contract Sale is ISale, AccessControl {
-    // TODO ability to withdraw aUSD funds from sale
-
     using SafeERC20 for IERC20;
 
     struct Account {
@@ -110,7 +108,7 @@ contract Sale is ISale, AccessControl {
     // ISale
     //
 
-    function withdraw() external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function withdraw() external onlyRole(DEFAULT_ADMIN_ROLE) capCalculated {
         require(block.timestamp > end, "sale not ended yet");
 
         uint256 total = IERC20(paymentToken).balanceOf(address(this));

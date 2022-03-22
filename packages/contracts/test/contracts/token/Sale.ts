@@ -40,7 +40,8 @@ describe("Sale", () => {
       aUSD.address,
       parseUnits("0.3"),
       start,
-      end
+      end,
+      parseUnits("1000000")
     );
 
     await aUSD.mint(alice.address, parseUnits("1000"));

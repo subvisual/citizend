@@ -50,7 +50,8 @@ abstract contract RisingTide {
     RisingTideCache public risingTideCache;
 
     /// The currently set cap
-    uint256 public cap;
+    /// Maximum amount of tokens that each buyer can actually get
+    uint256 public individualCap;
 
     //
     // Virtual Interface
@@ -64,10 +65,14 @@ abstract contract RisingTide {
     function investorAmountAt(uint256 n) public view virtual returns (uint256);
 
     /// @return Total amount invested
-    function totalInvested() public view virtual returns (uint256);
+    function risingTide_totalAllocatedUncapped()
+        public
+        view
+        virtual
+        returns (uint256);
 
-    /// @return amount corresponding to the largest individual investor
-    function maxTotalInvestment() public view virtual returns (uint256);
+    /// @return amount corresponding to the total supply available for distribution
+    function risingTide_totalCap() public view virtual returns (uint256);
 
     function risingTide_validating() public view returns (bool) {
         return risingTideState == RisingTideState.Validating;
@@ -87,7 +92,7 @@ abstract contract RisingTide {
             "already set or in progress"
         );
 
-        cap = _cap;
+        individualCap = _cap;
         risingTideState = RisingTideState.Validating;
         risingTideCache = RisingTideCache(0, 0, 0, 0);
 
@@ -102,6 +107,7 @@ abstract contract RisingTide {
         // copy the whole struct to memory
         RisingTideCache memory validation = risingTideCache;
         uint256 count = investorCount();
+        uint256 localCap = individualCap;
 
         for (
             ;
@@ -110,16 +116,16 @@ abstract contract RisingTide {
         ) {
             uint256 amount = investorAmountAt(validation.index);
 
-            validation.sumForCap += amount.min(cap);
-            validation.sumForNextCap += amount.min(cap + 1);
+            validation.sumForCap += amount.min(localCap);
+            validation.sumForNextCap += amount.min(localCap + 1);
             validation.largest = Math.max(validation.largest, amount);
         }
 
         risingTideCache = validation;
 
         if (validation.index == count) {
-            bool valid = _risingTide_validCap(cap, validation);
-            if (_risingTide_validCap(cap, validation)) {
+            bool valid = _risingTide_validCap(localCap, validation);
+            if (_risingTide_validCap(localCap, validation)) {
                 risingTideState = RisingTideState.Finished;
             } else {
                 risingTideState = RisingTideState.NotSet;
@@ -156,8 +162,8 @@ abstract contract RisingTide {
         uint256 _cap,
         RisingTideCache memory _validation
     ) internal view returns (bool) {
-        uint256 total = totalInvested();
-        uint256 max = maxTotalInvestment();
+        uint256 total = risingTide_totalAllocatedUncapped();
+        uint256 max = risingTide_totalCap();
 
         require(_validation.largest <= total);
         require(_validation.sumForCap <= total);

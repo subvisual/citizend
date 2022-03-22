@@ -6,6 +6,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 import {ISale} from "./ISale.sol";
+import {RisingTide} from "../RisingTide/RisingTide.sol";
 
 import "hardhat/console.sol";
 
@@ -13,7 +14,7 @@ import "hardhat/console.sol";
 ///
 /// Users interact with this contract to deposit $aUSD in exchange for $CTND.
 /// The contract should hold all $CTND tokens meant to be distributed in the public sale
-contract Sale is ISale, AccessControl {
+contract Sale is ISale, RisingTide, AccessControl {
     // TODO ability to withdraw aUSD funds from sale
 
     using SafeERC20 for IERC20;
@@ -61,11 +62,19 @@ contract Sale is ISale, AccessControl {
     /// Timestamp at which sale ends
     uint256 public immutable end;
 
+    uint256 public immutable totalTokensForSale;
+
     /// Token allocations committed by each buyer
     mapping(address => Account) accounts;
 
-    /// Maximum amount of tokens that each buyer can actually get
-    uint256 public individualCap;
+    /// incrementing index => investor address
+    mapping(uint256 => address) investorByIndex;
+
+    /// total unique investors
+    uint256 public accountsCount;
+
+    /// How many tokens have been allocated, before cap calculation
+    uint256 public totalUncappedAllocations;
 
     /// @param _paymentToken Token accepted as payment
     /// @param _rate token:paymentToken exchange rate, multiplied by 10e18
@@ -75,17 +84,20 @@ contract Sale is ISale, AccessControl {
         address _paymentToken,
         uint256 _rate,
         uint256 _start,
-        uint256 _end
+        uint256 _end,
+        uint256 _totalTokensForSale
     ) {
         require(_rate > 0, "can't be zero");
         require(_paymentToken != address(0), "can't be zero");
         require(_start > 0, "can't be zero");
         require(_end > _start, "end must be after start");
+        require(_totalTokensForSale > 0, "total cannot be 0");
 
         paymentToken = _paymentToken;
         rate = _rate;
         start = _start;
         end = _end;
+        totalTokensForSale = _totalTokensForSale;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -100,7 +112,7 @@ contract Sale is ISale, AccessControl {
         _;
     }
 
-    // Ensures the individual cap is already calculated
+    /// Ensures the individual cap is already calculated
     modifier capCalculated() {
         require(individualCap > 0, "cap not yet set");
         _;
@@ -142,8 +154,15 @@ contract Sale is ISale, AccessControl {
         require(_paymentAmount > 0, "can't be zero");
 
         uint256 tokenAmount = paymentTokenToToken(_paymentAmount);
+        uint256 currentAllocation = accounts[msg.sender].uncappedAllocation;
+
+        if (currentAllocation == 0) {
+            investorByIndex[accountsCount] = msg.sender;
+            accountsCount++;
+        }
 
         accounts[msg.sender].uncappedAllocation += tokenAmount;
+        totalUncappedAllocations += tokenAmount;
 
         emit Purchase(msg.sender, _paymentAmount, tokenAmount);
 
@@ -202,6 +221,53 @@ contract Sale is ISale, AccessControl {
         returns (uint256)
     {
         return _applyCap(uncappedAllocation(_to));
+    }
+
+    //
+    // RisingTide
+    //
+
+    /// @inheritdoc RisingTide
+    function investorCount()
+        public
+        view
+        override(RisingTide)
+        returns (uint256)
+    {
+        return accountsCount;
+    }
+
+    /// @inheritdoc RisingTide
+    function investorAmountAt(uint256 i)
+        public
+        view
+        override(RisingTide)
+        returns (uint256)
+    {
+        address addr = investorByIndex[i];
+        Account storage account = accounts[addr];
+
+        return account.uncappedAllocation;
+    }
+
+    /// @inheritdoc RisingTide
+    function risingTide_totalAllocatedUncapped()
+        public
+        view
+        override(RisingTide)
+        returns (uint256)
+    {
+        return totalUncappedAllocations;
+    }
+
+    /// @inheritdoc RisingTide
+    function risingTide_totalCap()
+        public
+        view
+        override(RisingTide)
+        returns (uint256)
+    {
+        return totalTokensForSale;
     }
 
     //

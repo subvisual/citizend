@@ -8,19 +8,10 @@ contract TestRisingTideWithCustomAmounts is RisingTide {
 
     uint256 private totalInvestors;
     mapping(uint256 => uint256) private investors;
-    uint256 private _totalInvested;
+    uint256 private _totalAllocatedUncapped;
 
     constructor(uint256 __maxTotalInvestment) {
         _maxTotalInvestment = __maxTotalInvestment;
-    }
-
-    function maxTotalInvestment()
-        public
-        view
-        override(RisingTide)
-        returns (uint256)
-    {
-        return _maxTotalInvestment;
     }
 
     function investorCount()
@@ -41,13 +32,22 @@ contract TestRisingTideWithCustomAmounts is RisingTide {
         return investors[i];
     }
 
-    function totalInvested()
+    function risingTide_totalAllocatedUncapped()
         public
         view
         override(RisingTide)
         returns (uint256)
     {
-        return _totalInvested;
+        return _totalAllocatedUncapped;
+    }
+
+    function risingTide_totalCap()
+        public
+        view
+        override(RisingTide)
+        returns (uint256)
+    {
+        return _maxTotalInvestment;
     }
 
     function test_invest(uint256 i, uint256 amount) external {
@@ -56,7 +56,7 @@ contract TestRisingTideWithCustomAmounts is RisingTide {
         }
 
         investors[i] += amount;
-        _totalInvested += amount;
+        _totalAllocatedUncapped += amount;
     }
 
     function setCap(uint256 _cap) external {

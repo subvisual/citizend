@@ -17,7 +17,13 @@ const func: DeployFunction = async function (hre) {
     contract: "Sale",
     log: true,
     from: deployer,
-    args: [aUSD.address, parseUnits("0.3"), ctndSale1.start, ctndSale1.end],
+    args: [
+      aUSD.address,
+      parseUnits("0.3"),
+      ctndSale1.start,
+      ctndSale1.end,
+      parseUnits("5000000"),
+    ],
   });
 };
 

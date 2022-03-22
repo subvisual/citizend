@@ -9,6 +9,7 @@ contract TestRisingTideWithStaticAmounts is RisingTide {
     uint256 private totalInvestors;
     uint256 private amountPerInvestor;
     uint256 private _totalInvested;
+    mapping(uint256 => uint256) allZeros;
 
     constructor(
         uint256 _totalInvestors,
@@ -38,13 +39,13 @@ contract TestRisingTideWithStaticAmounts is RisingTide {
         return totalInvestors;
     }
 
-    function investorAmountAt(uint256)
+    function investorAmountAt(uint256 i)
         public
         view
         override(RisingTide)
         returns (uint256)
     {
-        return amountPerInvestor;
+        return allZeros[i] + amountPerInvestor;
     }
 
     function totalInvested()

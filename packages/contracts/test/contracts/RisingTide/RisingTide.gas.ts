@@ -1,6 +1,5 @@
 import type { ContractFactory } from "ethers";
 import type { TestRisingTideWithStaticAmounts } from "../../../src/types";
-import { calcEthereumTransactionParams } from "@acala-network/eth-providers";
 
 import { ethers } from "hardhat";
 
@@ -13,18 +12,12 @@ import { txParams } from "../../../src/transactionHelper";
  */
 if (process.env.RISING_TIDE_GAS_ESTIMATES) {
   describe("RisingTide", () => {
-    const txFeePerGas = "199999946752";
-    const storageByteDeposit = "100000000000000";
     let WithStaticAmounts: ContractFactory;
-
-    let ethParams: any;
 
     beforeEach(async () => {
       WithStaticAmounts = await ethers.getContractFactory(
         "TestRisingTideWithStaticAmounts"
       );
-
-      const blockNumber = await ethers.provider.getBlockNumber();
     });
 
     describe("gas estimates", function () {
@@ -33,7 +26,7 @@ if (process.env.RISING_TIDE_GAS_ESTIMATES) {
       const results: Record<string, string> = {};
       const total = 1000000;
 
-      [1000].forEach((n: number) => {
+      [100, 250, 500].forEach((n: number) => {
         it(`${n} investors`, async function () {
           console.log("deploying");
           const contract = (await WithStaticAmounts.deploy(n, total, total, {

@@ -3,6 +3,8 @@ pragma solidity =0.8.12;
 
 import {Math} from "../libraries/Math.sol";
 
+import "hardhat/console.sol";
+
 /**
  * Abstract implementation of a Rising Tide Calculator
  *
@@ -37,7 +39,7 @@ abstract contract RisingTide {
     //
 
     /// Min gas required to run one more cap validation iteration
-    uint256 public constant CAP_VALIDATION_GAS_LIMIT = 100000;
+    uint256 public constant CAP_VALIDATION_GAS_LIMIT = 10000;
 
     //
     // State
@@ -103,16 +105,19 @@ abstract contract RisingTide {
         RisingTideCache memory validation = risingTideCache;
         uint256 count = investorCount();
 
-        for (
-            ;
-            validation.index < count && gasleft() > CAP_VALIDATION_GAS_LIMIT;
-            ++validation.index
-        ) {
-            uint256 amount = investorAmountAt(validation.index);
+        unchecked {
+            for (
+                ;
+                validation.index < count &&
+                    gasleft() > CAP_VALIDATION_GAS_LIMIT;
+                ++validation.index
+            ) {
+                uint256 amount = investorAmountAt(validation.index);
 
-            validation.sumForCap += amount.min(cap);
-            validation.sumForNextCap += amount.min(cap + 1);
-            validation.largest = Math.max(validation.largest, amount);
+                validation.sumForCap += amount.min(cap);
+                validation.sumForNextCap += amount.min(cap + 1);
+                validation.largest = Math.max(validation.largest, amount);
+            }
         }
 
         risingTideCache = validation;

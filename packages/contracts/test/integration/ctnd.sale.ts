@@ -4,7 +4,12 @@ import BN from "bn.js";
 import { expect } from "chai";
 
 import { time } from "@openzeppelin/test-helpers";
-import { increaseTime, decreaseTime } from "../timeHelpers";
+import {
+  goToTime,
+  increaseTime,
+  decreaseTime,
+  currentDate,
+} from "../timeHelpers";
 
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {
@@ -84,10 +89,11 @@ describe("Integration", () => {
       );
     });
 
-    xit("is possible to refund all sales at once from the vesting contract", async () => {
+    it("is possible to refund all sales at once from the vesting contract", async () => {
       await vesting.addSale(secondSale.address);
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
       await sale.connect(seller).setIndividualCap(50);
+      await goToTime(await secondSale.start());
       await secondSale.connect(alice).buy(await sale.tokenToPaymentToken(100));
       await secondSale.connect(seller).setIndividualCap(50);
 
@@ -123,7 +129,7 @@ describe("Integration", () => {
     it("equals the already claimed amount after a claim", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(150));
       await sale.connect(seller).setIndividualCap(200);
-      await increaseTime(time.duration.days(10));
+      await goToTime(await vesting.startTime());
 
       expect(await vesting.claimed(alice.address)).to.eq(0);
       await vesting.claim(alice.address);
@@ -141,7 +147,8 @@ describe("Integration", () => {
     it("is more than zero immediately after the vesting starts", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(150));
       await sale.connect(seller).setIndividualCap(500);
-      await increaseTime(time.duration.days(3));
+
+      await goToTime(await vesting.startTime());
 
       expect(await vesting.claimable(alice.address)).to.equal(50);
     });
@@ -149,6 +156,8 @@ describe("Integration", () => {
     it("is 2/3 of the amount after 2/3 of vesting period", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(150));
       await sale.connect(seller).setIndividualCap(500);
+
+      await goToTime(await vesting.startTime());
       await increaseTime(time.duration.days(31));
 
       expect(await vesting.claimable(alice.address)).to.equal(100);
@@ -157,7 +166,9 @@ describe("Integration", () => {
     it("is 100% of the amount after 100% of vesting and cliff period", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(150));
       await sale.connect(seller).setIndividualCap(500);
-      await increaseTime(time.duration.days(61));
+
+      await goToTime(await vesting.startTime());
+      await increaseTime(time.duration.days(31 * 3));
 
       expect(await vesting.claimable(alice.address)).to.equal(150);
     });
@@ -176,6 +187,7 @@ describe("Integration", () => {
     it("does not go over the original total", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(150));
       await sale.connect(seller).setIndividualCap(500);
+
       await increaseTime(time.duration.days(200));
 
       expect(await vesting.claimable(alice.address)).to.equal(150);
@@ -184,7 +196,8 @@ describe("Integration", () => {
     it("goes back to 0 after claiming", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(150));
       await sale.connect(seller).setIndividualCap(500);
-      await increaseTime(time.duration.days(10));
+
+      await goToTime(await vesting.startTime());
 
       expect(await vesting.claimable(alice.address)).to.equal(50);
       await vesting.claim(alice.address);
@@ -194,7 +207,8 @@ describe("Integration", () => {
     xit("takes into account the individual cap", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(150));
       await sale.connect(seller).setIndividualCap(100);
-      await increaseTime(time.duration.days(10));
+
+      await goToTime(await vesting.startTime());
 
       expect(await vesting.claimable(alice.address)).to.equal(33);
     });
@@ -206,7 +220,8 @@ describe("Integration", () => {
       await secondSale.connect(alice).buy(await sale.tokenToPaymentToken(50));
       await sale.connect(seller).setIndividualCap(500);
       await secondSale.connect(seller).setIndividualCap(500);
-      await increaseTime(time.duration.days(10));
+
+      await goToTime(await vesting.startTime());
 
       expect(await vesting.claimable(alice.address)).to.equal(66);
     });
@@ -218,7 +233,8 @@ describe("Integration", () => {
       await secondSale.connect(alice).buy(await sale.tokenToPaymentToken(300));
       await sale.connect(seller).setIndividualCap(100);
       await secondSale.connect(seller).setIndividualCap(200);
-      await increaseTime(time.duration.days(10));
+
+      await goToTime(await vesting.startTime());
 
       expect(await vesting.claimable(alice.address)).to.equal(100);
     });
@@ -228,7 +244,8 @@ describe("Integration", () => {
     it("allows me to claim 0 tokens before the vesting starts", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
       await sale.connect(seller).setIndividualCap(100);
-      await decreaseTime(time.duration.days(1));
+
+      await goToTime((await vesting.startTime()).sub(1000));
 
       expect(await vesting.claimable(alice.address)).to.equal(0);
     });
@@ -236,7 +253,8 @@ describe("Integration", () => {
     xit("allows me to claim 33% as soon as the vesting starts", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
       await sale.connect(seller).setIndividualCap(100);
-      await increaseTime(time.duration.days(1));
+
+      await goToTime(await vesting.startTime());
 
       expect(await vesting.claimable(alice.address)).to.equal(33);
     });
@@ -244,6 +262,8 @@ describe("Integration", () => {
     it("allows me to claim 100% of my tokens on the beginning of the 3rd month", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
       await sale.connect(seller).setIndividualCap(100);
+
+      await goToTime(await vesting.startTime());
       await increaseTime(time.duration.days(30 * 2 + 1));
 
       expect(await vesting.claimable(alice.address)).to.equal(100);

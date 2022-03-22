@@ -9,6 +9,8 @@ import {ISale} from "./ISale.sol";
 import {IVesting} from "./IVesting.sol";
 import {DateTime} from "../libraries/DateTime.sol";
 
+import "hardhat/console.sol";
+
 contract Vesting is IVesting, AccessControl {
     // TODO: Think about how to get the citizend out
     using DateTime for uint256;

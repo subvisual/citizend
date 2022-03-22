@@ -13,7 +13,7 @@ import {
   Vesting__factory,
 } from "../../../src/types";
 
-import { goToTime } from "../../timeHelpers";
+import { goToTime, currentTimestamp } from "../../timeHelpers";
 
 const { parseUnits } = ethers.utils;
 const { MaxUint256 } = ethers.constants;
@@ -31,7 +31,7 @@ describe("Sale", () => {
   beforeEach(async () => {
     [owner, alice] = await ethers.getSigners();
 
-    start = Math.floor(new Date().getTime() / 1000);
+    start = await currentTimestamp();
     end = start + 60 * 60 * 24;
 
     aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD");
@@ -65,12 +65,13 @@ describe("Sale", () => {
   describe("withdraw", async () => {
     it("allows the owner to withdraw", async () => {
       await sale.connect(alice).buy(30);
-      console.log(end);
-      goToTime(end + 10000);
+      await goToTime(end + 1000);
 
-      await sale.connect(owner).withdraw();
+      const action = () => sale.connect(owner).withdraw();
 
-      expect(await aUSD.balanceOf(owner.address)).to.equal(parseUnits("1030"));
+      // TODO the cap wasn't set here, so this shouldn't work!
+
+      await expect(action).to.changeTokenBalance(aUSD, owner, 30);
     });
   });
 

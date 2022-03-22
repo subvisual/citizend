@@ -20,15 +20,23 @@ async function networkConfigs(chainId: number): Promise<Config> {
 
   switch (network) {
     case "hardhat": {
-      const now = Math.floor(new Date().getTime() / 1000);
+      const date = new Date();
+      const beginningOfNextMonth = new Date(
+        date.getFullYear(),
+        date.getMonth() + 1,
+        1,
+        12
+      );
+      const now = Math.floor(date.getTime() / 1000);
       const oneDay = 60 * 60 * 24;
+
       return {
         ctndSale1: {
           start: now,
           end: now + oneDay,
         },
         ctndVesting: {
-          start: now + oneDay + oneDay,
+          start: beginningOfNextMonth.getTime() / 1000,
         },
         ctndSale2: {
           start: now + 60 * 60 * 24 * 2,

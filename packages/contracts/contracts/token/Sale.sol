@@ -95,7 +95,7 @@ contract Sale is ISale, AccessControl {
     modifier inSale() {
         require(
             block.timestamp >= start && block.timestamp <= end,
-            "no active sale"
+            "sale not active"
         );
         _;
     }
@@ -111,8 +111,6 @@ contract Sale is ISale, AccessControl {
     //
 
     function withdraw() external onlyRole(DEFAULT_ADMIN_ROLE) {
-        console.log(block.timestamp);
-        console.log(end);
         require(block.timestamp > end, "sale not ended yet");
 
         uint256 total = IERC20(paymentToken).balanceOf(address(this));

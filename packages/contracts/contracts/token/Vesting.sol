@@ -132,6 +132,7 @@ contract Vesting is IVesting, AccessControl {
     /**
      * Adds an address to the list of sale contracts. Can only be called by the
      * admin.
+     * The sale contract must implement ISale and ERC165
      *
      * @param _sale The address of the sale contract
      */

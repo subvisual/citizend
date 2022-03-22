@@ -282,11 +282,7 @@ contract Sale is ISale, RisingTide, AccessControl {
         external
         onlyRole(CAP_VALIDATOR_ROLE)
     {
-        require(_cap > 0, "invalid cap");
-
-        // TODO calculate rising tide
-
-        individualCap = _cap;
+        _risingTide_setCap(_cap);
     }
 
     //

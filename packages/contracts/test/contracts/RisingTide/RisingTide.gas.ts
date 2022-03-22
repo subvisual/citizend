@@ -5,6 +5,7 @@ import { calcEthereumTransactionParams } from "@acala-network/eth-providers";
 import { ethers } from "hardhat";
 
 import { expectCapValidation } from "./helpers";
+import { txParams } from "../../../src/transactionHelper";
 
 /**
  * Measures the gas spent to validate investment caps
@@ -24,16 +25,6 @@ if (process.env.RISING_TIDE_GAS_ESTIMATES) {
       );
 
       const blockNumber = await ethers.provider.getBlockNumber();
-
-      const { txGasPrice, txGasLimit } = calcEthereumTransactionParams({
-        gasLimit: "2100001",
-        validUntil: (blockNumber + 100).toString(),
-        storageLimit: "64001",
-        txFeePerGas,
-        storageByteDeposit,
-      });
-
-      ethParams = { gasPrice: txGasPrice, gasLimit: txGasLimit };
     });
 
     describe("gas estimates", function () {
@@ -42,12 +33,14 @@ if (process.env.RISING_TIDE_GAS_ESTIMATES) {
       const results: Record<string, string> = {};
       const total = 1000000;
 
-      [1000, 2000, 3000, 4000, 5000].forEach((n: number) => {
+      [1000].forEach((n: number) => {
         it(`${n} investors`, async function () {
+          console.log("deploying");
           const contract = (await WithStaticAmounts.deploy(n, total, total, {
-            ...ethParams,
+            ...(await txParams()),
           })) as TestRisingTideWithStaticAmounts;
           await contract.deployed();
+          console.log("deployed");
 
           const cap = Math.floor(total / n);
 

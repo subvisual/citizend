@@ -142,7 +142,12 @@ contract Sale is ISale, AccessControl, ReentrancyGuard {
     }
 
     /// @inheritdoc ISale
-    function buy(uint256 _paymentAmount) external override(ISale) inSale {
+    function buy(uint256 _paymentAmount)
+        external
+        override(ISale)
+        inSale
+        nonReentrant
+    {
         require(_paymentAmount > 0, "can't be zero");
 
         uint256 tokenAmount = paymentTokenToToken(_paymentAmount);
@@ -159,7 +164,12 @@ contract Sale is ISale, AccessControl, ReentrancyGuard {
     }
 
     /// @inheritdoc ISale
-    function refund(address to) external override(ISale) capCalculated {
+    function refund(address to)
+        external
+        override(ISale)
+        capCalculated
+        nonReentrant
+    {
         Account storage account = accounts[to];
         require(!account.refunded, "already refunded");
 
@@ -219,6 +229,7 @@ contract Sale is ISale, AccessControl, ReentrancyGuard {
     function setIndividualCap(uint256 _cap)
         external
         onlyRole(CAP_VALIDATOR_ROLE)
+        nonReentrant
     {
         require(_cap > 0, "invalid cap");
 

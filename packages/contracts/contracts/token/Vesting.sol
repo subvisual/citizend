@@ -4,6 +4,7 @@ pragma solidity =0.8.12;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import {ISale} from "./ISale.sol";
 import {IVesting} from "./IVesting.sol";
@@ -11,7 +12,7 @@ import {DateTime} from "../libraries/DateTime.sol";
 
 import "hardhat/console.sol";
 
-contract Vesting is IVesting, AccessControl {
+contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     // TODO: Think about how to get the citizend out
     using DateTime for uint256;
     using SafeERC20 for IERC20;
@@ -99,7 +100,7 @@ contract Vesting is IVesting, AccessControl {
     }
 
     /// @inheritdoc IVesting
-    function claim(address to) external override(IVesting) {
+    function claim(address to) external override(IVesting) nonReentrant {
         uint256 claimableAmount = claimable(to);
         require(claimableAmount > 0, "No claimable amount");
 
@@ -111,7 +112,7 @@ contract Vesting is IVesting, AccessControl {
     }
 
     /// @inheritdoc IVesting
-    function refund(address to) external override(IVesting) {
+    function refund(address to) external override(IVesting) nonReentrant {
         for (uint256 i = 0; i < sales.length; i++) {
             address saleAddress = sales[i];
             saleAddress.call(abi.encodeWithSignature("refund(address)", to));
@@ -128,7 +129,11 @@ contract Vesting is IVesting, AccessControl {
      *
      * @param _saleAddress The address of the sale contract
      */
-    function addSale(address _saleAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function addSale(address _saleAddress)
+        public
+        onlyRole(DEFAULT_ADMIN_ROLE)
+        nonReentrant
+    {
         require(_saleAddress != address(0), "cannot be 0x0");
 
         sales.push(_saleAddress);
@@ -141,7 +146,7 @@ contract Vesting is IVesting, AccessControl {
         address to,
         uint256 amount,
         uint16 cliffMonths
-    ) external override(IVesting) onlyRole(PRIVATE_SELLER_ROLE) {
+    ) external override(IVesting) onlyRole(PRIVATE_SELLER_ROLE) nonReentrant {
         require(
             cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
             "Cliff months too big"

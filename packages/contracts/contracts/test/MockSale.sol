@@ -54,7 +54,7 @@ contract MockSale is ISale, ERC165 {
         return allocation[to];
     }
 
-    function setIndividualCap(uint256 cap) external pure {
+    function setIndividualCap(uint256) external pure {
         revert("not implemented");
     }
 

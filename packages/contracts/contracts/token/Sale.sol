@@ -8,6 +8,7 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import {ISale} from "./ISale.sol";
+import {RisingTide} from "../RisingTide/RisingTide.sol";
 import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
 
 import "hardhat/console.sol";
@@ -16,7 +17,7 @@ import "hardhat/console.sol";
 ///
 /// Users interact with this contract to deposit $aUSD in exchange for $CTND.
 /// The contract should hold all $CTND tokens meant to be distributed in the public sale
-contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
+contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     struct Account {
@@ -62,11 +63,19 @@ contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
     /// Timestamp at which sale ends
     uint256 public immutable end;
 
+    uint256 public immutable totalTokensForSale;
+
     /// Token allocations committed by each buyer
     mapping(address => Account) accounts;
 
-    /// Maximum amount of tokens that each buyer can actually get
-    uint256 public individualCap;
+    /// incrementing index => investor address
+    mapping(uint256 => address) investorByIndex;
+
+    /// total unique investors
+    uint256 public _investorCount;
+
+    /// How many tokens have been allocated, before cap calculation
+    uint256 public totalUncappedAllocations;
 
     /// Fractal Registry address
     address public immutable registry;
@@ -83,17 +92,20 @@ contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
         uint256 _rate,
         uint256 _start,
         uint256 _end,
+        uint256 _totalTokensForSale,
         address _registry
     ) {
         require(_rate > 0, "can't be zero");
         require(_paymentToken != address(0), "can't be zero");
         require(_start > 0, "can't be zero");
         require(_end > _start, "end must be after start");
+        require(_totalTokensForSale > 0, "total cannot be 0");
 
         paymentToken = _paymentToken;
         rate = _rate;
         start = _start;
         end = _end;
+        totalTokensForSale = _totalTokensForSale;
         registry = _registry;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -109,9 +121,14 @@ contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
         _;
     }
 
-    // Ensures the individual cap is already calculated
+    modifier afterSale() {
+        require(block.timestamp > end, "sale not over");
+        _;
+    }
+
+    /// Ensures the individual cap is already calculated
     modifier capCalculated() {
-        require(individualCap > 0, "cap not yet set");
+        require(risingTide_isValidCap(), "cap not yet set");
         _;
     }
 
@@ -168,8 +185,15 @@ contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
         );
 
         uint256 tokenAmount = paymentTokenToToken(_paymentAmount);
+        uint256 currentAllocation = accounts[msg.sender].uncappedAllocation;
+
+        if (currentAllocation == 0) {
+            investorByIndex[_investorCount] = msg.sender;
+            _investorCount++;
+        }
 
         accounts[msg.sender].uncappedAllocation += tokenAmount;
+        totalUncappedAllocations += tokenAmount;
         fractalIdToAddress[fractalId] = msg.sender;
 
         emit Purchase(msg.sender, _paymentAmount, tokenAmount);
@@ -237,6 +261,53 @@ contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
     }
 
     //
+    // RisingTide
+    //
+
+    /// @inheritdoc RisingTide
+    function investorCount()
+        public
+        view
+        override(RisingTide)
+        returns (uint256)
+    {
+        return _investorCount;
+    }
+
+    /// @inheritdoc RisingTide
+    function investorAmountAt(uint256 i)
+        public
+        view
+        override(RisingTide)
+        returns (uint256)
+    {
+        address addr = investorByIndex[i];
+        Account storage account = accounts[addr];
+
+        return account.uncappedAllocation;
+    }
+
+    /// @inheritdoc RisingTide
+    function risingTide_totalAllocatedUncapped()
+        public
+        view
+        override(RisingTide)
+        returns (uint256)
+    {
+        return totalUncappedAllocations;
+    }
+
+    /// @inheritdoc RisingTide
+    function risingTide_totalCap()
+        public
+        view
+        override(RisingTide)
+        returns (uint256)
+    {
+        return totalTokensForSale;
+    }
+
+    //
     // Admin API
     //
 
@@ -247,13 +318,10 @@ contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
     function setIndividualCap(uint256 _cap)
         external
         onlyRole(CAP_VALIDATOR_ROLE)
+        afterSale
         nonReentrant
     {
-        require(_cap > 0, "invalid cap");
-
-        // TODO calculate rising tide
-
-        individualCap = _cap;
+        _risingTide_setCap(_cap);
     }
 
     //

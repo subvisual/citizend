@@ -14,7 +14,7 @@ const func: DeployFunction = async function (hre) {
   await deploy("Vesting", {
     log: true,
     from: deployer,
-    args: [3, citizend.address, [], ctndVesting.start, 10000],
+    args: [3, citizend.address, [], ctndVesting.start, 10000], // TODO input correct private sale value
   });
 };
 

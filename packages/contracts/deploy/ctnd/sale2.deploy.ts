@@ -23,6 +23,7 @@ const func: DeployFunction = async function (hre) {
       parseUnits("0.3"),
       ctndSale2.start,
       ctndSale2.end,
+      ctndSale2.supply,
       registry.address,
     ],
   });

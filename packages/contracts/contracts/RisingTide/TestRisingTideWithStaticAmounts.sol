@@ -4,29 +4,18 @@ pragma solidity =0.8.12;
 import {RisingTide} from "./RisingTide.sol";
 
 contract TestRisingTideWithStaticAmounts is RisingTide {
-    uint256 immutable _maxTotalInvestment;
-
-    uint256 private totalInvestors;
-    uint256 private amountPerInvestor;
-    uint256 private _totalInvested;
+    uint256 private immutable totalInvestors;
+    uint256 private immutable amountPerInvestor;
+    uint256 private immutable _totalAvailable;
 
     constructor(
         uint256 _totalInvestors,
         uint256 _amountPerInvestor,
-        uint256 __maxTotalInvestment
+        uint256 __totalAvailable
     ) {
         totalInvestors = _totalInvestors;
         amountPerInvestor = _amountPerInvestor;
-        _maxTotalInvestment = __maxTotalInvestment;
-    }
-
-    function maxTotalInvestment()
-        public
-        view
-        override(RisingTide)
-        returns (uint256)
-    {
-        return _maxTotalInvestment;
+        _totalAvailable = __totalAvailable;
     }
 
     function investorCount()
@@ -47,13 +36,22 @@ contract TestRisingTideWithStaticAmounts is RisingTide {
         return amountPerInvestor;
     }
 
-    function totalInvested()
+    function risingTide_totalAllocatedUncapped()
         public
         view
         override(RisingTide)
         returns (uint256)
     {
         return amountPerInvestor * totalInvestors;
+    }
+
+    function risingTide_totalCap()
+        public
+        view
+        override(RisingTide)
+        returns (uint256)
+    {
+        return _totalAvailable;
     }
 
     function setCap(uint256 _cap) external {

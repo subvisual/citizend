@@ -4,12 +4,8 @@ pragma solidity =0.8.12;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
-<<<<<<< HEAD
 import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
-||||||| f774a9c
-=======
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
->>>>>>> main
 
 import {ISale} from "./ISale.sol";
 import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";

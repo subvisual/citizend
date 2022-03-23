@@ -70,7 +70,7 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
     mapping(uint256 => address) investorByIndex;
 
     /// total unique investors
-    uint256 public accountsCount;
+    uint256 public _investorCount;
 
     /// How many tokens have been allocated, before cap calculation
     uint256 public totalUncappedAllocations;
@@ -171,8 +171,8 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
         uint256 currentAllocation = accounts[msg.sender].uncappedAllocation;
 
         if (currentAllocation == 0) {
-            investorByIndex[accountsCount] = msg.sender;
-            accountsCount++;
+            investorByIndex[_investorCount] = msg.sender;
+            _investorCount++;
         }
 
         accounts[msg.sender].uncappedAllocation += tokenAmount;
@@ -253,7 +253,7 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
         override(RisingTide)
         returns (uint256)
     {
-        return accountsCount;
+        return _investorCount;
     }
 
     /// @inheritdoc RisingTide

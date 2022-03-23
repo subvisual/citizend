@@ -120,7 +120,6 @@ abstract contract RisingTide {
     function risingTide_validate() public returns (bool valid, bool finished) {
         require(risingTideState == RisingTideState.Validating);
 
-        // copy the whole struct to memory
         RisingTideCache memory validation = risingTideCache;
         uint256 count = investorCount();
         uint256 localCap = individualCap;

@@ -200,13 +200,10 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
         uint256 amount = refundAmount(to);
         require(amount > 0, "No tokens to refund");
 
-        console.log(amount);
-        console.log(to);
         accounts[to].refunded = true;
         IERC20(paymentToken).transfer(to, amount);
 
         emit Refund(to, amount);
-        console.log("after");
     }
 
     /// @inheritdoc ISale
@@ -303,12 +300,8 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
     function setIndividualCap(uint256 _cap)
         external
         onlyRole(CAP_VALIDATOR_ROLE)
-<<<<<<< HEAD
         afterSale
-||||||| f774a9c
-=======
         nonReentrant
->>>>>>> main
     {
         _risingTide_setCap(_cap);
     }

@@ -82,12 +82,6 @@ describe("Vesting", () => {
       expect(await vesting.sales(1)).to.equal(sale2.address);
     });
 
-    it("does not allow the zero address", async () => {
-      await expect(vesting.addSale(AddressZero)).to.be.revertedWith(
-        "cannot be 0x0"
-      );
-    });
-
     it("does not allow contracts that do not implement ISale", async () => {
       await expect(vesting.addSale(vesting.address)).to.be.revertedWith(
         "not an ISale"

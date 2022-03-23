@@ -119,7 +119,7 @@ contract Sale is ISale, RisingTide, AccessControl {
 
     /// Ensures the individual cap is already calculated
     modifier capCalculated() {
-        require(individualCap > 0, "cap not yet set");
+        require(risingTide_isValidCap(), "cap not yet set");
         _;
     }
 

@@ -41,7 +41,7 @@ describe("Sale", () => {
       parseUnits("0.3"),
       start,
       end,
-      parseUnits("1000000")
+      1000
     );
 
     await aUSD.mint(alice.address, parseUnits("1000"));
@@ -66,13 +66,6 @@ describe("Sale", () => {
   describe("withdraw", async () => {
     it("reverts if the caller is not the owner", async () => {
       await expect(sale.connect(alice).withdraw()).to.be.reverted;
-    });
-
-    it("reverts if the sale is not ended", async () => {
-      await sale.setIndividualCap(100);
-      await expect(sale.connect(owner).withdraw()).to.be.revertedWith(
-        "sale not ended yet"
-      );
     });
 
     it("reverts if no cap is set", async () => {
@@ -160,10 +153,24 @@ describe("Sale", () => {
   });
 
   describe("set individual cap", () => {
-    it("allows me to set the cap", async () => {
+    it("allows me to set the cap after sale is over", async () => {
+      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await goToTime(end);
+
       await sale.setIndividualCap(100);
 
       expect(await sale.individualCap()).to.equal(100);
+      expect(await sale.risingTide_isValidCap()).to.equal(true);
+    });
+
+    it("fails to validate the cap for the wrong value", async () => {
+      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await goToTime(end);
+
+      await sale.setIndividualCap(50);
+
+      expect(await sale.individualCap()).to.equal(50);
+      expect(await sale.risingTide_isValidCap()).to.equal(false);
     });
   });
 
@@ -174,6 +181,8 @@ describe("Sale", () => {
 
     it("is 0 if the individual cap is higher than the invested total", async () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+
+      await goToTime(end);
       await sale.setIndividualCap(200);
 
       expect(await sale.refundAmount(alice.address)).to.equal(0);
@@ -184,6 +193,8 @@ describe("Sale", () => {
 
       // set a cap of 200$ in $CTND
       const cap = await sale.paymentTokenToToken(200);
+
+      await goToTime(end);
       await sale.setIndividualCap(cap);
 
       expect(await sale.refundAmount(alice.address)).to.equal(100);
@@ -200,41 +211,52 @@ describe("Sale", () => {
     });
 
     it("refunds the correct amount once the cap is set", async () => {
-      await sale.connect(alice).buy(300);
+      const paymentAmount = await sale.tokenToPaymentToken(1000);
 
-      // set a cap of 200$ in $CTND
-      const cap = await sale.paymentTokenToToken(200);
+      await sale.connect(alice).buy(paymentAmount.mul(2));
+
+      // set a cap of 1000 $CTND
+      const cap = 1000;
+      await goToTime(end);
       await sale.setIndividualCap(cap);
 
       await expect(() => sale.refund(alice.address)).to.changeTokenBalance(
         aUSD,
         alice,
-        100
+        paymentAmount
       );
     });
 
     it("emits an event", async () => {
-      await sale.connect(alice).buy(300);
+      const paymentAmount = await sale.tokenToPaymentToken(1000);
 
-      // set a cap of 200$ in $CTND
-      const cap = await sale.paymentTokenToToken(200);
+      await sale.connect(alice).buy(paymentAmount.mul(2));
+
+      // set a cap of 1000 $CTND
+      const cap = 1000;
+      await goToTime(end);
       await sale.setIndividualCap(cap);
 
       await expect(sale.refund(alice.address))
         .to.emit(sale, "Refund")
-        .withArgs(alice.address, 100);
+        .withArgs(alice.address, paymentAmount);
     });
 
     it("does not allow double refunds", async () => {
-      await sale.connect(alice).buy(300);
+      const paymentAmount = await sale.tokenToPaymentToken(1000);
 
-      // set a cap of 200$ in $CTND
-      const cap = await sale.paymentTokenToToken(200);
+      await sale.connect(alice).buy(paymentAmount.mul(2));
+
+      // set a cap of 1000 $CTND
+      const cap = 1000;
+      await goToTime(end);
       await sale.setIndividualCap(cap);
 
       await sale.refund(alice.address);
 
-      expect(sale.refund(alice.address)).to.be.revertedWith("already refunded");
+      await expect(sale.refund(alice.address)).to.be.revertedWith(
+        "already refunded"
+      );
     });
   });
 });

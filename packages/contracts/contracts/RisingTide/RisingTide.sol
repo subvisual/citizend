@@ -3,6 +3,8 @@ pragma solidity =0.8.12;
 
 import {Math} from "../libraries/Math.sol";
 
+import "hardhat/console.sol";
+
 /**
  * Abstract implementation of a Rising Tide Calculator
  *
@@ -37,7 +39,8 @@ abstract contract RisingTide {
     //
 
     /// Min gas required to run one more cap validation iteration
-    uint256 public constant CAP_VALIDATION_GAS_LIMIT = 100000;
+    /// TODO tweak this value
+    uint256 public constant CAP_VALIDATION_GAS_LIMIT = 50000;
 
     //
     // State

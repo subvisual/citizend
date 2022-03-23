@@ -111,7 +111,7 @@ contract Sale is ISale, ERC165, AccessControl {
     // ISale
     //
 
-    function withdraw() external onlyRole(DEFAULT_ADMIN_ROLE) {
+    function withdraw() external onlyRole(DEFAULT_ADMIN_ROLE) capCalculated {
         require(block.timestamp > end, "sale not ended yet");
 
         uint256 total = IERC20(paymentToken).balanceOf(address(this));

@@ -4,7 +4,7 @@ pragma solidity =0.8.12;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
-import {ERC165Checker} from "@openzeppelin/contracts/introspection/ERC165Checker.sol";
+import {ERC165Checker} from "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 
 import {ISale} from "./ISale.sol";
 import {IVesting} from "./IVesting.sol";
@@ -117,11 +117,10 @@ contract Vesting is IVesting, AccessControl {
     }
 
     /// @inheritdoc IVesting
-    // TODO silently ignore errors
     function refund(address to) external override(IVesting) {
         for (uint256 i = 0; i < sales.length; i++) {
             address saleAddress = sales[i];
-            ISale(saleAddress).refund(to);
+            saleAddress.call(abi.encodeWithSignature("refund(address)", to));
         }
     }
 
@@ -140,7 +139,7 @@ contract Vesting is IVesting, AccessControl {
         require(_sale != address(0), "cannot be 0x0");
 
         require(
-            _sale._supportsInterface(type(ISale).interfaceId),
+            _sale.supportsInterface(type(ISale).interfaceId),
             "not an ISale"
         );
 

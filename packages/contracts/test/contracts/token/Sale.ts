@@ -92,6 +92,7 @@ describe("Sale", () => {
 
       expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
     });
+
     it("emits a Purchase event", async () => {
       const amount = parseUnits("1");
 

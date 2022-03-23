@@ -4,6 +4,7 @@ pragma solidity =0.8.12;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import {ISale} from "./ISale.sol";
 import {RisingTide} from "../RisingTide/RisingTide.sol";
@@ -14,9 +15,7 @@ import "hardhat/console.sol";
 ///
 /// Users interact with this contract to deposit $aUSD in exchange for $CTND.
 /// The contract should hold all $CTND tokens meant to be distributed in the public sale
-contract Sale is ISale, RisingTide, AccessControl {
-    // TODO ability to withdraw aUSD funds from sale
-
+contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     struct Account {
@@ -127,7 +126,12 @@ contract Sale is ISale, RisingTide, AccessControl {
     // ISale
     //
 
-    function withdraw() external onlyRole(DEFAULT_ADMIN_ROLE) capCalculated {
+    function withdraw()
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+        capCalculated
+        nonReentrant
+    {
         require(block.timestamp > end, "sale not ended yet");
 
         uint256 total = IERC20(paymentToken).balanceOf(address(this));
@@ -155,7 +159,12 @@ contract Sale is ISale, RisingTide, AccessControl {
     }
 
     /// @inheritdoc ISale
-    function buy(uint256 _paymentAmount) external override(ISale) inSale {
+    function buy(uint256 _paymentAmount)
+        external
+        override(ISale)
+        inSale
+        nonReentrant
+    {
         require(_paymentAmount > 0, "can't be zero");
 
         uint256 tokenAmount = paymentTokenToToken(_paymentAmount);
@@ -179,7 +188,12 @@ contract Sale is ISale, RisingTide, AccessControl {
     }
 
     /// @inheritdoc ISale
-    function refund(address to) external override(ISale) capCalculated {
+    function refund(address to)
+        external
+        override(ISale)
+        capCalculated
+        nonReentrant
+    {
         Account storage account = accounts[to];
         require(!account.refunded, "already refunded");
 
@@ -289,7 +303,12 @@ contract Sale is ISale, RisingTide, AccessControl {
     function setIndividualCap(uint256 _cap)
         external
         onlyRole(CAP_VALIDATOR_ROLE)
+<<<<<<< HEAD
         afterSale
+||||||| f774a9c
+=======
+        nonReentrant
+>>>>>>> main
     {
         _risingTide_setCap(_cap);
     }

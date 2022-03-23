@@ -4,6 +4,7 @@ pragma solidity =0.8.12;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {ERC165Checker} from "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import {ISale} from "./ISale.sol";
@@ -14,8 +15,10 @@ import "hardhat/console.sol";
 
 contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     // TODO: Think about how to get the citizend out
+
     using DateTime for uint256;
     using SafeERC20 for IERC20;
+    using ERC165Checker for address;
 
     //
     // Structs
@@ -65,15 +68,18 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         uint256 _startTime,
         uint256 _privateSaleCap
     ) {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PRIVATE_SELLER_ROLE, msg.sender);
+
         publicSaleVestingMonths = _publicSaleVestingMonths;
         publicSaleCliffMonths = 0;
         token = _token;
-        sales = _sales;
         startTime = _startTime;
         privateSaleCap = _privateSaleCap;
 
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(PRIVATE_SELLER_ROLE, msg.sender);
+        for (uint256 i = 0; i < _sales.length; ++i) {
+            addSale(_sales[i]);
+        }
     }
 
     //
@@ -126,19 +132,23 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     /**
      * Adds an address to the list of sale contracts. Can only be called by the
      * admin.
+     * The sale contract must implement ISale and ERC165
      *
-     * @param _saleAddress The address of the sale contract
+     * @param _sale The address of the sale contract
      */
-    function addSale(address _saleAddress)
+    function addSale(address _sale)
         public
         onlyRole(DEFAULT_ADMIN_ROLE)
         nonReentrant
     {
-        require(_saleAddress != address(0), "cannot be 0x0");
+        require(
+            _sale.supportsInterface(type(ISale).interfaceId),
+            "not an ISale"
+        );
 
-        sales.push(_saleAddress);
+        sales.push(_sale);
 
-        emit AddSale(_saleAddress);
+        emit AddSale(_sale);
     }
 
     /// @inheritdoc IVesting

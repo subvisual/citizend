@@ -21,12 +21,12 @@ const { AddressZero } = ethers.constants;
 describe("Vesting", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
-  let fakeSale: SignerWithAddress;
 
   let aUSD: MockERC20;
   let citizend: Citizend;
   let vesting: Vesting;
   let sale: MockSale;
+  let sale2: MockSale;
 
   let saleStart: number;
   let saleEnd: number;
@@ -34,7 +34,7 @@ describe("Vesting", () => {
   let oneDay = 60 * 60 * 24;
 
   beforeEach(async () => {
-    [owner, alice, fakeSale] = await ethers.getSigners();
+    [owner, alice] = await ethers.getSigners();
 
     saleStart = await currentTimestamp();
     saleEnd = saleStart + 60 * 60 * 24;
@@ -52,6 +52,7 @@ describe("Vesting", () => {
     citizend = await new Citizend__factory(owner).deploy(owner.address);
 
     sale = await new MockSale__factory(owner).deploy();
+    sale2 = await new MockSale__factory(owner).deploy();
 
     vesting = await new Vesting__factory(owner).deploy(
       3,
@@ -75,25 +76,24 @@ describe("Vesting", () => {
 
   describe("addSale", () => {
     it("adds a new sale contract", async () => {
-      await vesting.addSale(fakeSale.address);
+      await vesting.addSale(sale2.address);
 
       expect(await vesting.sales(0)).to.equal(sale.address);
-      expect(await vesting.sales(1)).to.equal(fakeSale.address);
+      expect(await vesting.sales(1)).to.equal(sale2.address);
     });
 
-    it("does not allow the zero address", async () => {
-      await expect(vesting.addSale(AddressZero)).to.be.revertedWith(
-        "cannot be 0x0"
+    it("does not allow contracts that do not implement ISale", async () => {
+      await expect(vesting.addSale(vesting.address)).to.be.revertedWith(
+        "not an ISale"
       );
     });
 
     it("is not callable by a non-admin", async () => {
-      await expect(vesting.connect(alice).addSale(fakeSale.address)).to.be
+      await expect(vesting.connect(alice).addSale(sale2.address)).to.be
         .reverted;
     });
   });
 
-  // TODO
   describe("totalAllocated", () => {
     it("sums all sales, public and private", async () => {
       await sale.test_addAllocation(alice.address, 1);

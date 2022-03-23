@@ -4,6 +4,7 @@ pragma solidity =0.8.12;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import {ISale} from "./ISale.sol";
@@ -16,7 +17,7 @@ import "hardhat/console.sol";
 ///
 /// Users interact with this contract to deposit $aUSD in exchange for $CTND.
 /// The contract should hold all $CTND tokens meant to be distributed in the public sale
-contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
+contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     struct Account {
@@ -321,6 +322,21 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
         nonReentrant
     {
         _risingTide_setCap(_cap);
+    }
+
+    //
+    // ERC165
+    //
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC165, AccessControl)
+        returns (bool)
+    {
+        return
+            interfaceId == type(ISale).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 
     //

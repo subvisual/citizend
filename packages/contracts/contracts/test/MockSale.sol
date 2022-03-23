@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity =0.8.12;
 
+import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+
 import {ISale} from "../token/Sale.sol";
 
 /**
  * An ERC20 token meant for testing purposes (free minting & burning)
  */
-contract MockSale is ISale {
+contract MockSale is ISale, ERC165 {
     //
     // ISale
     //
@@ -74,5 +76,20 @@ contract MockSale is ISale {
         returns (bool)
     {
         return calls[name] == amount;
+    }
+
+    //
+    // ERC165
+    //
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC165)
+        returns (bool)
+    {
+        return
+            interfaceId == type(ISale).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 }

@@ -136,21 +136,11 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
      *
      * @param _sale The address of the sale contract
      */
-<<<<<<< HEAD
-    function addSale(address _sale) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(_sale != address(0), "cannot be 0x0");
-||||||| f774a9c
-    function addSale(address _saleAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        require(_saleAddress != address(0), "cannot be 0x0");
-=======
     function addSale(address _saleAddress)
         public
         onlyRole(DEFAULT_ADMIN_ROLE)
         nonReentrant
     {
-        require(_saleAddress != address(0), "cannot be 0x0");
->>>>>>> main
-
         require(
             _sale.supportsInterface(type(ISale).interfaceId),
             "not an ISale"

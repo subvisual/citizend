@@ -7,7 +7,7 @@ const func: DeployFunction = async function (hre) {
 
   await deploy("Citizend", {
     from: deployer,
-    args: [],
+    args: [deployer],
     log: true,
   });
 };

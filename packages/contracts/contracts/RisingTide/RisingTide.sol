@@ -94,7 +94,8 @@ abstract contract RisingTide {
     ///
     /// @param _cap The cap to validate
     /// @return valid true if the validation is done. false if invalid, or if not yet validated
-    /// @return finished If false, then {risingTide_validate} needs to be called again, and the first return value can be discarded
+    /// @return finished If false, then {risingTide_validate} needs to be called
+    /// again, and the first return value can be discarded
     function _risingTide_setCap(uint256 _cap)
         internal
         returns (bool valid, bool finished)
@@ -116,7 +117,8 @@ abstract contract RisingTide {
     /// TODO test these return values
     ///
     /// @return valid true if the validation is done. false if invalid, or if not yet validated
-    /// @return finished If false, then {risingTide_validate} needs to be called again, and the first return value can be discarded
+    /// @return finished If false, then {risingTide_validate} needs to be called
+    /// again, and the first return value can be discarded
     function risingTide_validate() public returns (bool valid, bool finished) {
         require(risingTideState == RisingTideState.Validating);
 

@@ -23,6 +23,8 @@ import {
   Sale__factory,
 } from "../../src/types";
 
+const { parseUnits } = ethers.utils;
+
 describe("Integration", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
@@ -76,35 +78,55 @@ describe("Integration", () => {
       );
     });
 
-    it.only("refunds in aUSD the amount of tokens that could not be claimed", async () => {
-      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+    it("refunds in aUSD the amount of tokens that could not be claimed", async () => {
+      const fullSupply = await sale.totalTokensForSale();
+      const refundAmount = parseUnits("1");
+      const purchaseAmount = (await sale.tokenToPaymentToken(fullSupply)).add(
+        refundAmount
+      );
+      await sale.connect(alice).buy(purchaseAmount);
 
       await goToTime(await sale.end());
-      await sale.connect(seller).setIndividualCap(50);
+      await sale.connect(seller).setIndividualCap(fullSupply);
 
       const beforeRefund = await aUSD.balanceOf(alice.address);
-      await expect(sale.refund(alice.address))
-        .to.emit(sale, "Refund")
-        .withArgs(alice.address, await sale.tokenToPaymentToken(50));
+      await expect(sale.refund(alice.address)).to.emit(sale, "Refund");
       const afterRefund = await aUSD.balanceOf(alice.address);
 
-      expect(afterRefund.sub(beforeRefund)).to.eq(
-        await sale.tokenToPaymentToken(50)
-      );
+      /// 1 wei error margin
+      expect(afterRefund.sub(beforeRefund)).to.be.closeTo(refundAmount, 1);
     });
 
-    it("is possible to refund all sales at once from the vesting contract", async () => {
-      await vesting.addSale(secondSale.address);
-      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
-      await sale.connect(seller).setIndividualCap(50);
-      await goToTime(await secondSale.start());
-      await secondSale.connect(alice).buy(await sale.tokenToPaymentToken(100));
-      await secondSale.connect(seller).setIndividualCap(50);
+    it.only("is possible to refund all sales at once from the vesting contract", async () => {
+      const fullSupply1 = await sale.totalTokensForSale();
+      const refundAmount1 = parseUnits("1");
+      const purchaseAmount1 = (await sale.tokenToPaymentToken(fullSupply1)).add(
+        refundAmount1
+      );
+      const fullSupply2 = await secondSale.totalTokensForSale();
+      const refundAmount2 = parseUnits("1");
+      const purchaseAmount2 = (
+        await secondSale.tokenToPaymentToken(fullSupply2)
+      ).add(refundAmount2);
 
-      expect(vesting.refund(alice.address)).to.changeTokenBalance(
-        aUSD,
-        alice,
-        await sale.tokenToPaymentToken(100)
+      await vesting.addSale(secondSale.address);
+
+      await sale.connect(alice).buy(purchaseAmount1);
+      await goToTime(await secondSale.start());
+      await secondSale.connect(alice).buy(purchaseAmount2);
+
+      await goToTime(await secondSale.end());
+
+      await sale.connect(seller).setIndividualCap(fullSupply1);
+      await secondSale.connect(seller).setIndividualCap(fullSupply2);
+
+      const beforeRefund = await aUSD.balanceOf(alice.address);
+      await vesting.refund(alice.address);
+      const afterRefund = await aUSD.balanceOf(alice.address);
+
+      expect(afterRefund.sub(beforeRefund)).to.be.closeTo(
+        refundAmount1.add(refundAmount2),
+        2
       );
     });
   });

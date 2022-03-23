@@ -186,10 +186,13 @@ contract Sale is ISale, RisingTide, AccessControl {
         uint256 amount = refundAmount(to);
         require(amount > 0, "No tokens to refund");
 
+        console.log(amount);
+        console.log(to);
         accounts[to].refunded = true;
         IERC20(paymentToken).transfer(to, amount);
 
         emit Refund(to, amount);
+        console.log("after");
     }
 
     /// @inheritdoc ISale

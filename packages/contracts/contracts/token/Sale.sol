@@ -7,12 +7,8 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import {ISale} from "./ISale.sol";
-<<<<<<< HEAD
 import {RisingTide} from "../RisingTide/RisingTide.sol";
-||||||| 868aa3b
-=======
 import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
->>>>>>> main
 
 import "hardhat/console.sol";
 

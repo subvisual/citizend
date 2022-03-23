@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { createScope, map, transformProxies } from './helpers'
+import AfConnectSectionView from './AfConnectSectionView'
 
 const scripts = [
   { loading: fetch("https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=622f6ba14509bfee4a60560d").then(body => body.text()), isAsync: false },
@@ -53,7 +54,7 @@ class IndexView extends React.Component {
 
   render() {
     const proxies = IndexView.Controller !== IndexView ? transformProxies(this.props.children) : {
-      'af-metamask-connect-btn': [],
+
     }
 
     return (
@@ -65,9 +66,8 @@ class IndexView extends React.Component {
         ` }} />
         <span className="af-view">
           <div>
-            <div className="af-class-container w-container">
-              {map(proxies['af-metamask-connect-btn'], props => <a href="#" {...{...props, className: `w-button ${props.className || ''}`}}>{props.children ? props.children : <React.Fragment>Button Text</React.Fragment>}</a>)}
-            </div>
+            <AfConnectSectionView.Controller />
+            {/* [if lte IE 9]><![endif] */}
           </div>
         </span>
       </span>

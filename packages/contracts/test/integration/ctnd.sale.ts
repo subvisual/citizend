@@ -97,11 +97,9 @@ describe("Integration", () => {
       await secondSale.connect(alice).buy(await sale.tokenToPaymentToken(100));
       await secondSale.connect(seller).setIndividualCap(50);
 
-      const beforeRefund = await aUSD.balanceOf(alice.address);
-      await vesting.refund(alice.address);
-      const afterRefund = await aUSD.balanceOf(alice.address);
-
-      expect(afterRefund.sub(beforeRefund)).to.eq(
+      expect(vesting.refund(alice.address)).to.changeTokenBalance(
+        aUSD,
+        alice,
         await sale.tokenToPaymentToken(100)
       );
     });

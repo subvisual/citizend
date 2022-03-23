@@ -71,6 +71,9 @@ interface IVesting {
      *
      * @dev It will trigger a number of transactions equal to the number of
      * sales (assuming all of them have something to refund)
+     * @dev It uses the low level `call` function to ensure that even if for
+     * some reason an address that does not belong to a sale contract makes its
+     * way to the sales list, we can recover from it.
      *
      * @param to Beneficiary
      **/

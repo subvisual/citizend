@@ -23,7 +23,7 @@ interface ISale {
     /// @dev Actual $CTND allocation is only available once individual cap is set
     /// @dev Needs to be approved by Fractal via the Registry
     ///
-    /// @param _paymentToken amount in payment token to commit
+    /// @param _paymentAmount amount in payment token to commit
     function buy(uint256 _paymentAmount) external;
 
     /**

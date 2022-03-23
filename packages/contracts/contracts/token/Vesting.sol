@@ -136,7 +136,7 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
      *
      * @param _sale The address of the sale contract
      */
-    function addSale(address _saleAddress)
+    function addSale(address _sale)
         public
         onlyRole(DEFAULT_ADMIN_ROLE)
         nonReentrant

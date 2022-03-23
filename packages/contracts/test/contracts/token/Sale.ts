@@ -11,41 +11,52 @@ import {
   Citizend__factory,
   Vesting,
   Vesting__factory,
+  FractalRegistry,
+  FractalRegistry__factory,
 } from "../../../src/types";
 
 import { goToTime, currentTimestamp } from "../../timeHelpers";
 
-const { parseUnits } = ethers.utils;
+const { parseUnits, formatBytes32String } = ethers.utils;
 const { MaxUint256 } = ethers.constants;
 
 describe("Sale", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
+  let bob: SignerWithAddress;
 
   let aUSD: MockERC20;
   let sale: Sale;
+  let registry: FractalRegistry;
 
   let start: number;
   let end: number;
 
   beforeEach(async () => {
-    [owner, alice] = await ethers.getSigners();
+    [owner, alice, bob] = await ethers.getSigners();
 
     start = await currentTimestamp();
     end = start + 60 * 60 * 24;
 
     aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD");
 
+    registry = await new FractalRegistry__factory(owner).deploy(owner.address);
+
     sale = await new Sale__factory(owner).deploy(
       aUSD.address,
       parseUnits("0.3"),
       start,
-      end
+      end,
+      registry.address
     );
 
     await aUSD.mint(alice.address, parseUnits("1000"));
+    await aUSD.mint(bob.address, parseUnits("1000"));
     await aUSD.mint(owner.address, parseUnits("1000"));
     await aUSD.connect(alice).approve(sale.address, MaxUint256);
+    await aUSD.connect(bob).approve(sale.address, MaxUint256);
+
+    await registry.addUserAddress(alice.address, formatBytes32String("id1"));
   });
 
   describe("constructor", () => {
@@ -93,8 +104,8 @@ describe("Sale", () => {
   });
 
   describe("buy", () => {
-    it("register an account", async () => {
-      await sale.connect(alice).buy(30);
+    it("registers an account", async () => {
+      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
 
       expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
     });
@@ -123,6 +134,27 @@ describe("Sale", () => {
         .withArgs(alice.address, paymentAmount, 100);
 
       expect(await sale.uncappedAllocation(alice.address)).to.eq(200);
+    });
+
+    it("requires the caller to have gone through Fractal KYC", async () => {
+      await registry.addUserAddress(alice.address, formatBytes32String("id1"));
+
+      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
+
+      await expect(sale.connect(bob).buy(30)).to.be.revertedWith(
+        "not registered"
+      );
+    });
+
+    it("can only use one address for a given fractal id", async () => {
+      await registry.addUserAddress(bob.address, formatBytes32String("id1"));
+      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
+
+      await expect(sale.connect(bob).buy(30)).to.be.revertedWith(
+        "id registered to another address"
+      );
     });
   });
 

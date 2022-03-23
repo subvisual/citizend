@@ -3,16 +3,16 @@ import { DeployFunction } from "hardhat-deploy/types";
 
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
-  const { deploy } = hre.deployments;
+  const { deploy, get } = hre.deployments;
 
-  await deploy("Citizend", {
+  await deploy("FractalRegistry", {
+    log: true,
     from: deployer,
     args: [deployer],
-    log: true,
   });
 };
 
-func.id = "ctnd.token";
-func.tags = ["ctnd", "ctnd.token"];
+func.id = "fractal-registry";
+func.tags = ["fractal-registry"];
 
 export default func;

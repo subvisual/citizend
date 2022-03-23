@@ -12,6 +12,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 >>>>>>> main
 
 import {ISale} from "./ISale.sol";
+import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
 
 import "hardhat/console.sol";
 
@@ -71,6 +72,12 @@ contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
     /// Maximum amount of tokens that each buyer can actually get
     uint256 public individualCap;
 
+    /// Fractal Registry address
+    address public immutable registry;
+
+    /// Fractal Id associated with the address to be used in this sale
+    mapping(bytes32 => address) public fractalIdToAddress;
+
     /// @param _paymentToken Token accepted as payment
     /// @param _rate token:paymentToken exchange rate, multiplied by 10e18
     /// @param _start Start timestamp
@@ -79,7 +86,8 @@ contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
         address _paymentToken,
         uint256 _rate,
         uint256 _start,
-        uint256 _end
+        uint256 _end,
+        address _registry
     ) {
         require(_rate > 0, "can't be zero");
         require(_paymentToken != address(0), "can't be zero");
@@ -90,6 +98,7 @@ contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
         rate = _rate;
         start = _start;
         end = _end;
+        registry = _registry;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -154,10 +163,18 @@ contract Sale is ISale, ERC165, AccessControl, ReentrancyGuard {
         nonReentrant
     {
         require(_paymentAmount > 0, "can't be zero");
+        bytes32 fractalId = FractalRegistry(registry).getFractalId(msg.sender);
+        require(fractalId != 0, "not registered");
+        require(
+            fractalIdToAddress[fractalId] == address(0) ||
+                fractalIdToAddress[fractalId] == msg.sender,
+            "id registered to another address"
+        );
 
         uint256 tokenAmount = paymentTokenToToken(_paymentAmount);
 
         accounts[msg.sender].uncappedAllocation += tokenAmount;
+        fractalIdToAddress[fractalId] = msg.sender;
 
         emit Purchase(msg.sender, _paymentAmount, tokenAmount);
 

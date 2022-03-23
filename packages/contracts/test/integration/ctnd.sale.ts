@@ -21,7 +21,11 @@ import {
   Vesting__factory,
   Sale,
   Sale__factory,
+  FractalRegistry,
+  FractalRegistry__factory,
 } from "../../src/types";
+
+const { formatBytes32String } = ethers.utils;
 
 describe("Integration", () => {
   let owner: SignerWithAddress;
@@ -30,6 +34,7 @@ describe("Integration", () => {
 
   let aUSD: MockERC20;
   let citizend: Citizend;
+  let registry: FractalRegistry;
   let vesting: Vesting;
   let sale: Sale;
   let secondSale: Sale;
@@ -41,12 +46,17 @@ describe("Integration", () => {
 
     const citizendDeployment = await deployments.get("Citizend");
     const aUSDDeployment = await deployments.get("aUSD");
+    const registryDeployment = await deployments.get("FractalRegistry");
     const saleDeployment = await deployments.get("Sale1");
     const secondSaleDeployment = await deployments.get("Sale2");
     const vestingDeployment = await deployments.get("Vesting");
 
     aUSD = MockERC20__factory.connect(aUSDDeployment.address, owner);
     citizend = Citizend__factory.connect(citizendDeployment.address, owner);
+    registry = FractalRegistry__factory.connect(
+      registryDeployment.address,
+      owner
+    );
     sale = Sale__factory.connect(saleDeployment.address, owner);
     secondSale = Sale__factory.connect(secondSaleDeployment.address, owner);
     vesting = Vesting__factory.connect(vestingDeployment.address, owner);
@@ -58,6 +68,7 @@ describe("Integration", () => {
     const allowance = ethers.constants.MaxUint256;
     await aUSD.connect(alice).approve(sale.address, allowance);
     await aUSD.connect(alice).approve(secondSale.address, allowance);
+    await registry.addUserAddress(alice.address, formatBytes32String("id1"));
   });
 
   beforeEach(async () => {

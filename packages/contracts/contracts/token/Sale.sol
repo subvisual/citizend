@@ -7,7 +7,12 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import {ISale} from "./ISale.sol";
+<<<<<<< HEAD
 import {RisingTide} from "../RisingTide/RisingTide.sol";
+||||||| 868aa3b
+=======
+import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
+>>>>>>> main
 
 import "hardhat/console.sol";
 
@@ -75,6 +80,12 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
     /// How many tokens have been allocated, before cap calculation
     uint256 public totalUncappedAllocations;
 
+    /// Fractal Registry address
+    address public immutable registry;
+
+    /// Fractal Id associated with the address to be used in this sale
+    mapping(bytes32 => address) public fractalIdToAddress;
+
     /// @param _paymentToken Token accepted as payment
     /// @param _rate token:paymentToken exchange rate, multiplied by 10e18
     /// @param _start Start timestamp
@@ -84,7 +95,8 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
         uint256 _rate,
         uint256 _start,
         uint256 _end,
-        uint256 _totalTokensForSale
+        uint256 _totalTokensForSale,
+        address _registry
     ) {
         require(_rate > 0, "can't be zero");
         require(_paymentToken != address(0), "can't be zero");
@@ -97,6 +109,7 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
         start = _start;
         end = _end;
         totalTokensForSale = _totalTokensForSale;
+        registry = _registry;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -166,6 +179,13 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
         nonReentrant
     {
         require(_paymentAmount > 0, "can't be zero");
+        bytes32 fractalId = FractalRegistry(registry).getFractalId(msg.sender);
+        require(fractalId != 0, "not registered");
+        require(
+            fractalIdToAddress[fractalId] == address(0) ||
+                fractalIdToAddress[fractalId] == msg.sender,
+            "id registered to another address"
+        );
 
         uint256 tokenAmount = paymentTokenToToken(_paymentAmount);
         uint256 currentAllocation = accounts[msg.sender].uncappedAllocation;
@@ -177,6 +197,7 @@ contract Sale is ISale, RisingTide, AccessControl, ReentrancyGuard {
 
         accounts[msg.sender].uncappedAllocation += tokenAmount;
         totalUncappedAllocations += tokenAmount;
+        fractalIdToAddress[fractalId] = msg.sender;
 
         emit Purchase(msg.sender, _paymentAmount, tokenAmount);
 

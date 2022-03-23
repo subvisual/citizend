@@ -49,7 +49,7 @@ describe("Vesting", () => {
     vestingStart = Math.floor(beginningOfNextMonth.getTime() / 1000);
 
     aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD");
-    citizend = await new Citizend__factory(owner).deploy();
+    citizend = await new Citizend__factory(owner).deploy(owner.address);
 
     sale = await new MockSale__factory(owner).deploy();
 

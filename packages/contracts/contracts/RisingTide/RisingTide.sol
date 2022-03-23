@@ -141,7 +141,7 @@ abstract contract RisingTide {
 
         if (validation.index == count) {
             bool valid = _risingTide_validCap(localCap, validation);
-            if (_risingTide_validCap(localCap, validation)) {
+            if (valid) {
                 risingTideState = RisingTideState.Finished;
             } else {
                 risingTideState = RisingTideState.NotSet;

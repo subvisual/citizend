@@ -10,6 +10,7 @@ const func: DeployFunction = async function (hre) {
   const { deploy, get } = hre.deployments;
 
   const aUSD = await get("aUSD");
+  const registry = await get("FractalRegistry");
 
   const { ctndSale2 } = await getNetworkConfig();
 
@@ -17,12 +18,18 @@ const func: DeployFunction = async function (hre) {
     contract: "Sale",
     log: true,
     from: deployer,
-    args: [aUSD.address, parseUnits("0.3"), ctndSale2.start, ctndSale2.end],
+    args: [
+      aUSD.address,
+      parseUnits("0.3"),
+      ctndSale2.start,
+      ctndSale2.end,
+      registry.address,
+    ],
   });
 };
 
 func.id = "ctnd.sale2";
 func.tags = ["ctnd", "ctnd.sale2"];
-func.dependencies = ["aUSD"];
+func.dependencies = ["aUSD", "fractal-registry"];
 
 export default func;

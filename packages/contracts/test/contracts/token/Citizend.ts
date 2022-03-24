@@ -12,7 +12,7 @@ describe("Citizend", () => {
   beforeEach(async () => {
     [owner] = await ethers.getSigners();
 
-    citizend = await new Citizend__factory(owner).deploy();
+    citizend = await new Citizend__factory(owner).deploy(owner.address);
   });
 
   describe("constructor", () => {
@@ -21,6 +21,10 @@ describe("Citizend", () => {
       expect(await citizend.symbol()).to.equal("CTND");
     });
 
-    it("mints initial amount to the owner");
+    it("mints initial amount to the owner", async () => {
+      expect(await citizend.balanceOf(owner.address)).to.equal(
+        ethers.utils.parseEther("1000000000")
+      );
+    });
   });
 });

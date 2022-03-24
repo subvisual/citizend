@@ -21,8 +21,9 @@ interface ISale {
     ///
     /// @dev aUSD allowance must be previously set by spender
     /// @dev Actual $CTND allocation is only available once individual cap is set
+    /// @dev Needs to be approved by Fractal via the Registry
     ///
-    /// TODO probably should allow a partial purchase?
+    /// @param _paymentAmount amount in payment token to commit
     function buy(uint256 _paymentAmount) external;
 
     /**

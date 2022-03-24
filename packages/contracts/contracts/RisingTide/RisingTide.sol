@@ -39,7 +39,8 @@ abstract contract RisingTide {
     //
 
     /// Min gas required to run one more cap validation iteration
-    uint256 public constant CAP_VALIDATION_GAS_LIMIT = 10000;
+    /// TODO tweak this value
+    uint256 public constant CAP_VALIDATION_GAS_LIMIT = 50000;
 
     //
     // State
@@ -52,7 +53,8 @@ abstract contract RisingTide {
     RisingTideCache public risingTideCache;
 
     /// The currently set cap
-    uint256 public cap;
+    /// Maximum amount of tokens that each buyer can actually get
+    uint256 public individualCap;
 
     //
     // Virtual Interface
@@ -61,24 +63,39 @@ abstract contract RisingTide {
     /// @return How many individual investors exist
     function investorCount() public view virtual returns (uint256);
 
-    /// @param n Index to look for
     /// @return Amount of the nth investor
     function investorAmountAt(uint256 n) public view virtual returns (uint256);
 
+    /// How many allocations have been made, regardless of the future individual cap
+    ///
     /// @return Total amount invested
-    function totalInvested() public view virtual returns (uint256);
+    function risingTide_totalAllocatedUncapped()
+        public
+        view
+        virtual
+        returns (uint256);
 
-    /// @return amount corresponding to the largest individual investor
-    function maxTotalInvestment() public view virtual returns (uint256);
+    /// How many tokens are to be distributed in total
+    ///
+    /// @return amount corresponding to the total supply available for distribution
+    function risingTide_totalCap() public view virtual returns (uint256);
 
+    /// @return true if validation of current cap is still ongoing
     function risingTide_validating() public view returns (bool) {
         return risingTideState == RisingTideState.Validating;
     }
 
+    /// @return true if current cap is already validated
     function risingTide_isValidCap() public view returns (bool) {
         return risingTideState == RisingTideState.Finished;
     }
 
+    /// Internal helper to set a new cap and trigger the beginning of the validation logic
+    ///
+    /// @param _cap The cap to validate
+    /// @return valid true if the validation is done. false if invalid, or if not yet validated
+    /// @return finished If false, then {risingTide_validate} needs to be called
+    /// again, and the first return value can be discarded
     function _risingTide_setCap(uint256 _cap)
         internal
         returns (bool valid, bool finished)
@@ -89,21 +106,25 @@ abstract contract RisingTide {
             "already set or in progress"
         );
 
-        cap = _cap;
+        individualCap = _cap;
         risingTideState = RisingTideState.Validating;
         risingTideCache = RisingTideCache(0, 0, 0, 0);
 
         return risingTide_validate();
     }
 
-    /// TODO document this
+    /// Continues a pending validation of the individual cap
     /// TODO test these return values
+    ///
+    /// @return valid true if the validation is done. false if invalid, or if not yet validated
+    /// @return finished If false, then {risingTide_validate} needs to be called
+    /// again, and the first return value can be discarded
     function risingTide_validate() public returns (bool valid, bool finished) {
         require(risingTideState == RisingTideState.Validating);
 
-        // copy the whole struct to memory
         RisingTideCache memory validation = risingTideCache;
         uint256 count = investorCount();
+        uint256 localCap = individualCap;
 
         unchecked {
             for (
@@ -114,8 +135,8 @@ abstract contract RisingTide {
             ) {
                 uint256 amount = investorAmountAt(validation.index);
 
-                validation.sumForCap += amount.min(cap);
-                validation.sumForNextCap += amount.min(cap + 1);
+                validation.sumForCap += amount.min(localCap);
+                validation.sumForNextCap += amount.min(localCap + 1);
                 validation.largest = Math.max(validation.largest, amount);
             }
         }
@@ -123,8 +144,8 @@ abstract contract RisingTide {
         risingTideCache = validation;
 
         if (validation.index == count) {
-            bool valid = _risingTide_validCap(cap, validation);
-            if (_risingTide_validCap(cap, validation)) {
+            bool valid = _risingTide_validCap(localCap, validation);
+            if (valid) {
                 risingTideState = RisingTideState.Finished;
             } else {
                 risingTideState = RisingTideState.NotSet;
@@ -139,30 +160,28 @@ abstract contract RisingTide {
     // Internal API
     //
 
-    /**
-     * @dev Determine if the given rising tide cap is valid.
-     *
-     * If the maximum investment is not reached, the rising tide cap does not
-     * have an upper bound. In this scenario, the cap is conventioned to be the
-     * largest individual investment.
-     *
-     * If the maximum investment is reached, the rising tide cap is defined as
-     * the highest possible cap such that the sum of all contributions with the
-     * cap applied does not exceed the maximum investment. This means that the
-     * sum of all contirbutions with any cap above the rising tide cap applied
-     * would exceed the maximum investment limit.
-     *
-     * @param _cap Rising tide cap to be validated, in wei.
-     * @param _validation The calculated CapValidation struct
-     *
-     * @return true if `cap` is a valid rising tide cap for the given parameters.
-     */
+    /// @dev Determine if the given rising tide cap is valid.
+    ///
+    /// If the maximum investment is not reached, the rising tide cap does not
+    /// have an upper bound. In this scenario, the cap is conventioned to be the
+    /// largest individual investment.
+    ///
+    /// If the maximum investment is reached, the rising tide cap is defined as
+    /// the highest possible cap such that the sum of all contributions with the
+    /// cap applied does not exceed the maximum investment. This means that the
+    /// sum of all contirbutions with any cap above the rising tide cap applied
+    /// would exceed the maximum investment limit.
+    ///
+    /// @param _cap Rising tide cap to be validated, in wei.
+    /// @param _validation The calculated CapValidation struct
+    ///
+    /// @return true if `cap` is a valid rising tide cap for the given parameters.
     function _risingTide_validCap(
         uint256 _cap,
         RisingTideCache memory _validation
     ) internal view returns (bool) {
-        uint256 total = totalInvested();
-        uint256 max = maxTotalInvestment();
+        uint256 total = risingTide_totalAllocatedUncapped();
+        uint256 max = risingTide_totalCap();
 
         require(_validation.largest <= total);
         require(_validation.sumForCap <= total);

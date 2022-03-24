@@ -4,11 +4,9 @@ pragma solidity =0.8.12;
 import {RisingTide} from "./RisingTide.sol";
 
 contract TestRisingTideWithStaticAmounts is RisingTide {
-    uint256 immutable _maxTotalInvestment;
-
-    uint256 private totalInvestors;
-    uint256 private amountPerInvestor;
-    uint256 private _totalAvailable;
+    uint256 private immutable totalInvestors;
+    uint256 private immutable amountPerInvestor;
+    uint256 private immutable _totalAvailable;
     mapping(uint256 => uint256) allZeros;
 
     constructor(

@@ -6,6 +6,8 @@ import "@nomiclabs/hardhat-waffle";
 import "hardhat-deploy";
 import "hardhat-gas-reporter";
 
+import "./src/tasks";
+
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
 

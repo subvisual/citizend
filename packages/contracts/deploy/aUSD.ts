@@ -18,8 +18,15 @@ const func: DeployFunction = async function (hre) {
     args: ["Acala USD", "aUSD"],
   });
 
-  const [owner, alice, bob] = await ethers.getSigners();
+  const [owner, alice, bob, carol] = await ethers.getSigners();
 
+  await execute(
+    "aUSD",
+    { from: deployer, log: true },
+    "mint",
+    owner.address,
+    parseUnits("1000")
+  );
   await execute(
     "aUSD",
     { from: deployer, log: true },
@@ -32,6 +39,13 @@ const func: DeployFunction = async function (hre) {
     { from: deployer, log: true },
     "mint",
     bob.address,
+    parseUnits("1000")
+  );
+  await execute(
+    "aUSD",
+    { from: deployer, log: true },
+    "mint",
+    carol.address,
     parseUnits("1000")
   );
 };

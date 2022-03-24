@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity =0.8.12;
 
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {IController} from "./IController.sol";
 import {ProjectHelpers} from "../libraries/ProjectHelpers.sol";
 
 import "hardhat/console.sol";
 
-contract Controller is IController {
+contract Controller is IController, AccessControl {
     using ProjectHelpers for Project;
 
     uint256 lastProjectId;
@@ -24,6 +25,10 @@ contract Controller is IController {
 
     event RegisterProject(uint256 projectId);
 
+    constructor() {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
+
     /// @inheritdoc IController
     function getProject(uint256 id) external view returns (Project memory) {
         return projects[id];
@@ -34,8 +39,16 @@ contract Controller is IController {
         return batches[id];
     }
 
-    function approveProjectByOwner(uint256 id) external {
-        revert("not implemented");
+    function approveProjectByOwner(uint256 id)
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        require(
+            projects[id].status == ProjectStatus.Created,
+            "invalid state for project"
+        );
+
+        projects[id].status = ProjectStatus.Whitelisted;
     }
 
     function registerProject(

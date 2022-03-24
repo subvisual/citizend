@@ -40,6 +40,8 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
 
     mapping(address => PrivateAllocation) public privateAllocations;
 
+    mapping(uint64 => bool) public usedNonces;
+
     address public immutable token;
     uint256 public immutable startTime;
     uint256 public immutable publicSaleVestingMonths;
@@ -80,6 +82,11 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         for (uint256 i = 0; i < _sales.length; ++i) {
             addSale(_sales[i]);
         }
+    }
+
+    modifier unusedNonce(uint64 nonce) {
+        require(!usedNonces[nonce], "nonce already used");
+        _;
     }
 
     //
@@ -155,8 +162,15 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     function createPrivateSaleVest(
         address to,
         uint256 amount,
-        uint16 cliffMonths
-    ) external override(IVesting) onlyRole(PRIVATE_SELLER_ROLE) nonReentrant {
+        uint16 cliffMonths,
+        uint64 nonce
+    )
+        external
+        override(IVesting)
+        onlyRole(PRIVATE_SELLER_ROLE)
+        nonReentrant
+        unusedNonce(nonce)
+    {
         require(
             cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
             "Cliff months too big"
@@ -176,6 +190,7 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         vesting.amount += amount;
 
         totalPrivateSales += amount;
+        usedNonces[nonce] = true;
     }
 
     //

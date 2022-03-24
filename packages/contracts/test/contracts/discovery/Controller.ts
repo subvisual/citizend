@@ -82,4 +82,43 @@ describe("Controller", () => {
     it("fails to register a project that's already registered in a batch");
     it("fails to register a project that is not ready for listing");
   });
+
+  describe("approveProjectByOwner", () => {
+    it("sets the project status to whitelisted", async () => {
+      await controller.registerProject(
+        alice.address,
+        parseUnits("1000"),
+        parseUnits("2")
+      );
+
+      const project = await controller.getProject(0);
+
+      expect(project.status).to.eq(1);
+
+      await controller.approveProjectByOwner(project.id);
+
+      const approvedProject = await controller.getProject(0);
+
+      expect(approvedProject.status).to.eq(2);
+    });
+
+    it("reverts if the project is not created", async () => {
+      await expect(controller.approveProjectByOwner(0)).to.be.revertedWith(
+        "invalid state for project"
+      );
+    });
+
+    it("only allows an admin to whitelist a project", async () => {
+      await controller.registerProject(
+        alice.address,
+        parseUnits("1000"),
+        parseUnits("2")
+      );
+
+      await expect(controller.connect(alice).approveProjectByOwner(0)).to.be
+        .reverted;
+      await expect(controller.connect(owner).approveProjectByOwner(0)).to.not.be
+        .reverted;
+    });
+  });
 });

@@ -15,6 +15,8 @@ contract Staking is IStaking {
         uint256 actualAmount;
         uint256 availableAmount;
         Unbonding[] unbondings;
+        uint128 firstUnbonding;
+        uint128 lastUnbonding;
     }
 
     struct Unbonding {
@@ -47,6 +49,7 @@ contract Staking is IStaking {
         );
 
         _stake.unbondings.push(unbonding);
+        _stake.lastUnbonding += 1;
         _stake.availableAmount -= amount;
     }
 
@@ -54,9 +57,9 @@ contract Staking is IStaking {
         Stake storage _stake = stakes[msg.sender];
         require(_stake.actualAmount >= amount, "not enough funds");
         uint256 withdrawableAmount;
-        uint256[] memory toBeRemovedUnbondings;
+        uint128 toBeRemovedUnbondings;
 
-        for (uint256 i = 0; i < _stake.unbondings.length; i++) {
+        for (uint256 i = _stake.firstUnbonding; i < _stake.lastUnbonding; i++) {
             Unbonding storage unbonding = _stake.unbondings[i];
             if (unbonding.time > block.timestamp) {
                 break;
@@ -68,7 +71,7 @@ contract Staking is IStaking {
                 break;
             } else {
                 withdrawableAmount += unbonding.amount;
-                toBeRemovedUnbondings[toBeRemovedUnbondings.length - 1] = i;
+                toBeRemovedUnbondings += 1;
             }
         }
 
@@ -83,12 +86,15 @@ contract Staking is IStaking {
         return stakes[msg.sender].availableAmount;
     }
 
-    function _removeUnbondings(uint256[] memory indexes) public {
-        Unbonding[] storage unbondings = stakes[msg.sender].unbondings;
-
-        for (uint256 i = 0; i < indexes.length; i++) {
-            unbondings[indexes[i]] = unbondings[unbondings.length - 1];
-            unbondings.pop();
+    function _removeUnbondings(uint128 toBeRemovedUnbondings) public {
+        Stake storage _stake = stakes[msg.sender];
+        for (
+            uint256 i = _stake.firstUnbonding;
+            i < toBeRemovedUnbondings;
+            i++
+        ) {
+            delete _stake.unbondings[i];
         }
+        stakes[msg.sender].firstUnbonding += toBeRemovedUnbondings;
     }
 }

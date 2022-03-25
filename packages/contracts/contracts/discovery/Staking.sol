@@ -87,7 +87,7 @@ contract Staking is IStaking {
         Unbonding[] storage unbondings = stakes[msg.sender].unbondings;
 
         for (uint256 i = 0; i < indexes.length; i++) {
-            unbondings[i] = unbondings[unbondings.length - 1];
+            unbondings[indexes[i]] = unbondings[unbondings.length - 1];
             unbondings.pop();
         }
     }

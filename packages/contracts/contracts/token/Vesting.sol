@@ -84,8 +84,9 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         }
     }
 
-    modifier unusedNonce(uint64 nonce) {
+    modifier useNonce(uint64 nonce) {
         require(!usedNonces[nonce], "nonce already used");
+        usedNonces[nonce] = true;
         _;
     }
 
@@ -169,7 +170,7 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         override(IVesting)
         onlyRole(PRIVATE_SELLER_ROLE)
         nonReentrant
-        unusedNonce(nonce)
+        useNonce(nonce)
     {
         require(
             cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
@@ -190,7 +191,6 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         vesting.amount += amount;
 
         totalPrivateSales += amount;
-        usedNonces[nonce] = true;
     }
 
     //

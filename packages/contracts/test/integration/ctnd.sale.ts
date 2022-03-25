@@ -1,6 +1,4 @@
 import { ethers, deployments, network } from "hardhat";
-import { BigNumber } from "ethers";
-import BN from "bn.js";
 import { expect } from "chai";
 
 import { time } from "@openzeppelin/test-helpers";

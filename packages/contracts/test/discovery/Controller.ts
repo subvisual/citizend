@@ -125,4 +125,40 @@ describe("Controller", () => {
         .reverted;
     });
   });
+
+  describe("createBatch", () => {
+    it("creates a new batch", async () => {
+      await controller.registerProject(
+        alice.address,
+        parseUnits("1000"),
+        parseUnits("1")
+      );
+
+      controller.createBatch([0], { start: 1, end: 2 }, 4);
+
+      await controller.connect(owner).approveProjectByOwner(0);
+
+      await expect(controller.createBatch([0], { start: 1, end: 2}, 4)).to.not.be.reverted;
+    });
+
+    it("reverts when creating a batch without projects", async () => {
+      await expect(
+        controller.createBatch([], { start: 1, end: 2 }, 4)
+      ).to.be.revertedWith("can't create batch without projects");
+    });
+
+    it("reverts if a project is not whitelisted", async () => {
+      await controller.registerProject(
+        alice.address,
+        parseUnits("1000"),
+        parseUnits("2")
+      );
+
+      await controller.connect(owner).approveProjectByOwner(0);
+
+      await expect(
+        controller.createBatch([0, 1], { start: 1, end: 2 }, 4)
+      ).to.be.revertedWith("project is not whitelisted");
+    });
+  });
 });

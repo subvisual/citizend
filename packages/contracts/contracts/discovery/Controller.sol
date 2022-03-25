@@ -3,25 +3,22 @@ pragma solidity =0.8.12;
 
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {IController} from "./IController.sol";
+import {ICommon} from "./ICommon.sol";
+import {IBatch} from "./IBatch.sol";
+import {Batch} from "./Batch.sol";
 import {ProjectHelpers} from "../libraries/ProjectHelpers.sol";
 
-import "hardhat/console.sol";
-
-contract Controller is IController, AccessControl {
+contract Controller is IController, ICommon, AccessControl {
     using ProjectHelpers for Project;
 
     uint256 lastProjectId;
     uint256 lastBatchId;
 
+    /// projectID => Project
     mapping(uint256 => Project) public projects;
 
-    mapping(uint256 => Batch) public batches;
-
-    /// Batch => user => votes
-    mapping(uint256 => mapping(address => uint256)) public userVoteCount;
-
-    /// Batch => projectId => votes
-    mapping(uint256 => mapping(uint256 => uint256)) public projectVoteCount;
+    /// batchID => Batch address
+    mapping(uint256 => address) public batches;
 
     event RegisterProject(uint256 projectId);
 
@@ -35,20 +32,8 @@ contract Controller is IController, AccessControl {
     }
 
     /// @inheritdoc IController
-    function getBatch(uint256 id) external view returns (Batch memory) {
+    function getBatch(uint256 id) external view returns (address) {
         return batches[id];
-    }
-
-    function approveProjectByOwner(uint256 id)
-        external
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
-        require(
-            projects[id].status == ProjectStatus.Created,
-            "invalid state for project"
-        );
-
-        projects[id].status = ProjectStatus.Whitelisted;
     }
 
     function registerProject(
@@ -74,10 +59,54 @@ contract Controller is IController, AccessControl {
         lastProjectId++;
     }
 
+    function approveProjectByOwner(uint256 id)
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        require(
+            projects[id].status == ProjectStatus.Created,
+            "invalid state for project"
+        );
+
+        projects[id].status = ProjectStatus.Whitelisted;
+    }
+
+    /// deploy new Batch contract
+    /// Batch contract handles the voting and checks with KYC and tokens availability
     function createBatch(
-        uint256[] calldata projectIds,
-        Period calldata votingPeriod
+        uint256[] memory projectIds,
+        Period memory votingPeriod,
+        uint256 slotCount
     ) external {
-        revert("not implemented");
+        require(projectIds.length > 0, "can't create batch without projects");
+        require(
+            votingPeriod.end > votingPeriod.start,
+            "end has to be higher than start"
+        );
+        require(votingPeriod.start > 0, "start can't be zero");
+
+        for (uint256 i = 0; i < projectIds.length; i++) {
+            uint256 projectId = projectIds[i];
+
+            Project memory project = projects[projectId];
+
+            require(
+                project.status == ProjectStatus.Whitelisted,
+                "project is not whitelisted"
+            );
+
+            project.status = ProjectStatus.InBatch;
+        }
+
+        IBatch batch = new Batch(
+            lastBatchId,
+            projectIds,
+            slotCount,
+            votingPeriod
+        );
+
+        batches[lastBatchId] = address(batch);
+
+        lastBatchId++;
     }
 }

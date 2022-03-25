@@ -61,8 +61,7 @@ describe("Staking", () => {
       const amount = 100;
       await staking.connect(alice).stake(amount);
       await staking.connect(alice).unbond(amount);
-      const unbondingPeriod = await staking.UNBONDING_PERIOD_IN_DAYS();
-      await increaseTime(unbondingPeriod.mul(24 * 60 * 60));
+      await increaseTime(await staking.UNBONDING_PERIOD());
 
       const action = () => staking.connect(alice).withdraw(amount);
       await expect(action).to.changeTokenBalance(citizend, alice, amount);
@@ -87,8 +86,7 @@ describe("Staking", () => {
         "not enough unbonded funds"
       );
 
-      const unbondingPeriod = await staking.UNBONDING_PERIOD_IN_DAYS();
-      await increaseTime(unbondingPeriod.mul(24 * 60 * 60));
+      await increaseTime(await staking.UNBONDING_PERIOD());
 
       const action = () => staking.connect(alice).withdraw(amount);
       await expect(action).to.changeTokenBalance(citizend, alice, amount);

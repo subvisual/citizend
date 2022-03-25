@@ -5,10 +5,8 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import {IStaking} from "./IStaking.sol";
-import {DateTime} from "../libraries/DateTime.sol";
 
 contract Staking is IStaking {
-    using DateTime for uint256;
     using SafeERC20 for IERC20;
 
     struct Stake {
@@ -27,7 +25,7 @@ contract Staking is IStaking {
     mapping(address => Stake) public stakes;
     address public immutable token;
 
-    uint256 public constant UNBONDING_PERIOD_IN_DAYS = 28;
+    uint256 public constant UNBONDING_PERIOD = 28 days;
 
     constructor(address _token) {
         token = _token;
@@ -45,7 +43,7 @@ contract Staking is IStaking {
         require(_stake.availableAmount >= amount, "not enough funds");
         Unbonding memory unbonding = Unbonding(
             amount,
-            DateTime.addDays(block.timestamp, UNBONDING_PERIOD_IN_DAYS)
+            block.timestamp + UNBONDING_PERIOD
         );
 
         _stake.unbondings.push(unbonding);
@@ -75,9 +73,8 @@ contract Staking is IStaking {
             }
         }
 
-        _removeUnbondings(toBeRemovedUnbondings);
-
         require(withdrawableAmount >= amount, "not enough unbonded funds");
+        _removeUnbondings(toBeRemovedUnbondings);
         _stake.actualAmount -= amount;
         IERC20(token).transfer(msg.sender, withdrawableAmount);
     }

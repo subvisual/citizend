@@ -51,6 +51,36 @@ contract Staking is IStaking {
         _stake.availableAmount -= amount;
     }
 
+    function rebond(uint256 amount) external {
+        Stake storage _stake = stakes[msg.sender];
+        require(
+            (_stake.actualAmount - _stake.availableAmount) >= amount,
+            "not enough unbonding funds"
+        );
+
+        for (
+            uint256 i = _stake.lastUnbonding - 1;
+            i >= _stake.firstUnbonding;
+            i--
+        ) {
+            Unbonding storage unbonding = _stake.unbondings[i];
+            // Do we want this restriction?
+            if (unbonding.time <= block.timestamp) {
+                break;
+            }
+
+            if (unbonding.amount >= amount) {
+                unbonding.amount -= amount;
+                _stake.availableAmount += amount;
+                break;
+            } else {
+                _stake.availableAmount += amount;
+                delete _stake.unbondings[i];
+                _stake.lastUnbonding -= 1;
+            }
+        }
+    }
+
     function withdraw(uint256 amount) public {
         Stake storage _stake = stakes[msg.sender];
         require(_stake.actualAmount >= amount, "not enough funds");

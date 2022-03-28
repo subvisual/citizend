@@ -43,6 +43,17 @@ describe("Staking", () => {
     });
   });
 
+  describe("getStake", () => {
+    it("returns the stake of the given address", async () => {
+      const amount = 100;
+      await staking.connect(alice).stake(amount);
+
+      const stake = await staking.connect(alice.address).getStake();
+
+      expect(stake).to.eq(amount);
+    });
+  });
+
   describe("unbond", () => {
     it("unbonds the given amount", async () => {
       const amount = 100;
@@ -53,6 +64,31 @@ describe("Staking", () => {
       const stake = await staking.stakes(alice.address);
       expect(stake.actualAmount).to.eq(100);
       expect(stake.availableAmount).to.eq(0);
+    });
+  });
+
+  describe("rebond", () => {
+    it("rebonds the given amount", async () => {
+      const amount = 100;
+      await staking.connect(alice).stake(amount);
+      await staking.connect(alice).unbond(amount);
+
+      await staking.connect(alice).rebond(50);
+
+      const stake = await staking.stakes(alice.address);
+      expect(stake.actualAmount).to.eq(100);
+      expect(stake.availableAmount).to.eq(50);
+    });
+
+    it("can only rebond the amount that is in the unbonded pool", async () => {
+      const amount = 100;
+      await staking.connect(alice).stake(amount);
+      await staking.connect(alice).unbond(10);
+      await staking.connect(alice).unbond(20);
+
+      await expect(staking.connect(alice).rebond(40)).to.be.revertedWith(
+        "not enough unbonding funds"
+      );
     });
   });
 

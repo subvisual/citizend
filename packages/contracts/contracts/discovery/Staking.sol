@@ -29,18 +29,27 @@ contract Staking is IStaking {
 
     uint256 public constant UNBONDING_PERIOD = 28 days;
 
+    event StakeFunds(address indexed staker, uint256 amount);
+    event Unbond(address indexed staker, uint256 amount);
+    event Rebond(address indexed staker, uint256 amount);
+    event Withdraw(address indexed staker, uint256 amount);
+
     constructor(address _token) {
         token = _token;
     }
 
-    function stake(uint256 _amount) public {
+    /// @inheritdoc IStaking
+    function stake(uint256 _amount) external override(IStaking) {
         stakes[msg.sender].actualAmount += _amount;
         stakes[msg.sender].availableAmount += _amount;
 
         IERC20(token).safeTransferFrom(msg.sender, address(this), _amount);
+
+        emit StakeFunds(msg.sender, _amount);
     }
 
-    function unbond(uint256 amount) public {
+    /// @inheritdoc IStaking
+    function unbond(uint256 amount) external override(IStaking) {
         Stake storage _stake = stakes[msg.sender];
         require(_stake.availableAmount >= amount, "not enough funds");
         Unbonding memory unbonding = Unbonding(
@@ -51,9 +60,12 @@ contract Staking is IStaking {
         _stake.unbondings[_stake.nextUnbonding] = unbonding;
         _stake.nextUnbonding += 1;
         _stake.availableAmount -= amount;
+
+        emit Unbond(msg.sender, amount);
     }
 
-    function rebond(uint256 amount) external {
+    /// @inheritdoc IStaking
+    function rebond(uint256 amount) external override(IStaking) {
         Stake storage _stake = stakes[msg.sender];
         require(
             (_stake.actualAmount - _stake.availableAmount) >= amount,
@@ -79,9 +91,12 @@ contract Staking is IStaking {
                 _stake.nextUnbonding -= 1;
             }
         }
+
+        emit Rebond(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) public {
+    /// @inheritdoc IStaking
+    function withdraw(uint256 amount) external override(IStaking) {
         Stake storage _stake = stakes[msg.sender];
         require(_stake.actualAmount >= amount, "not enough funds");
         uint256 withdrawableAmount;
@@ -106,5 +121,7 @@ contract Staking is IStaking {
         require(withdrawableAmount >= amount, "not enough unbonded funds");
         _stake.actualAmount -= amount;
         IERC20(token).transfer(msg.sender, withdrawableAmount);
+
+        emit Withdraw(msg.sender, amount);
     }
 }

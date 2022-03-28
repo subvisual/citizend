@@ -6,6 +6,8 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 
 import {IStaking} from "./IStaking.sol";
 
+import "hardhat/console.sol";
+
 contract Staking is IStaking {
     using SafeERC20 for IERC20;
 
@@ -57,25 +59,23 @@ contract Staking is IStaking {
             (_stake.actualAmount - _stake.availableAmount) >= amount,
             "not enough unbonding funds"
         );
+        uint256 toBeRebonded = amount;
 
-        for (
-            uint256 i = _stake.lastUnbonding - 1;
-            i >= _stake.firstUnbonding;
-            i--
-        ) {
-            Unbonding storage unbonding = _stake.unbondings[i];
+        for (uint256 i = _stake.lastUnbonding; i > _stake.firstUnbonding; i--) {
+            Unbonding storage unbonding = _stake.unbondings[i - 1];
             // Do we want this restriction?
             if (unbonding.time <= block.timestamp) {
                 break;
             }
 
-            if (unbonding.amount >= amount) {
-                unbonding.amount -= amount;
-                _stake.availableAmount += amount;
+            if (unbonding.amount >= toBeRebonded) {
+                unbonding.amount -= toBeRebonded;
+                _stake.availableAmount += toBeRebonded;
                 break;
             } else {
-                _stake.availableAmount += amount;
-                delete _stake.unbondings[i];
+                _stake.availableAmount += unbonding.amount;
+                toBeRebonded -= unbonding.amount;
+                delete _stake.unbondings[i - 1];
                 _stake.lastUnbonding -= 1;
             }
         }

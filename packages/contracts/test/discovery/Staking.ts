@@ -80,6 +80,19 @@ describe("Staking", () => {
       expect(stake.availableAmount).to.eq(50);
     });
 
+    it("rebonds multiple unbondings at once", async () => {
+      const amount = 100;
+      await staking.connect(alice).stake(amount);
+      await staking.connect(alice).unbond(20);
+      await staking.connect(alice).unbond(10);
+
+      await staking.connect(alice).rebond(25);
+
+      const stake = await staking.stakes(alice.address);
+      expect(stake.actualAmount).to.eq(100);
+      expect(stake.availableAmount).to.eq(95);
+    });
+
     it("can only rebond the amount that is in the unbonded pool", async () => {
       const amount = 100;
       await staking.connect(alice).stake(amount);

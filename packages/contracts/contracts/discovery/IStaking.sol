@@ -8,5 +8,5 @@ interface IStaking {
 
     function withdraw(uint256 amount) external;
 
-    function getStake() external view returns (uint256);
+    function rebond(uint256 amount) external;
 }

@@ -43,17 +43,6 @@ describe("Staking", () => {
     });
   });
 
-  describe("getStake", () => {
-    it("returns the stake of the given address", async () => {
-      const amount = 100;
-      await staking.connect(alice).stake(amount);
-
-      const stake = await staking.connect(alice.address).getStake();
-
-      expect(stake).to.eq(amount);
-    });
-  });
-
   describe("unbond", () => {
     it("unbonds the given amount", async () => {
       const amount = 100;
@@ -124,6 +113,17 @@ describe("Staking", () => {
       await expect(staking.connect(alice).withdraw(amount)).to.be.revertedWith(
         "not enough unbonded funds"
       );
+    });
+
+    it("can withdraw from multiple unbondings", async () => {
+      const amount = 100;
+      await staking.connect(alice).stake(amount);
+      await staking.connect(alice).unbond(20);
+      await staking.connect(alice).unbond(10);
+      await increaseTime(await staking.UNBONDING_PERIOD());
+
+      const action = () => staking.connect(alice).withdraw(30);
+      await expect(action).to.changeTokenBalance(citizend, alice, 30);
     });
 
     it("still allows you to withdraw even after failing to withdraw", async () => {

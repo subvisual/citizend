@@ -14,9 +14,9 @@ contract Staking is IStaking {
     struct Stake {
         uint256 actualAmount;
         uint256 availableAmount;
-        Unbonding[] unbondings;
+        mapping(uint256 => Unbonding) unbondings;
         uint128 firstUnbonding;
-        uint128 lastUnbonding;
+        uint128 nextUnbonding;
     }
 
     struct Unbonding {
@@ -48,8 +48,8 @@ contract Staking is IStaking {
             block.timestamp + UNBONDING_PERIOD
         );
 
-        _stake.unbondings.push(unbonding);
-        _stake.lastUnbonding += 1;
+        _stake.unbondings[_stake.nextUnbonding] = unbonding;
+        _stake.nextUnbonding += 1;
         _stake.availableAmount -= amount;
     }
 
@@ -61,12 +61,12 @@ contract Staking is IStaking {
         );
         uint256 toBeRebonded = amount;
 
-        for (uint256 i = _stake.lastUnbonding; i > _stake.firstUnbonding; i--) {
-            Unbonding storage unbonding = _stake.unbondings[i - 1];
-            // Do we want this restriction?
-            if (unbonding.time <= block.timestamp) {
-                break;
-            }
+        for (
+            uint256 i = _stake.nextUnbonding - 1;
+            i >= _stake.firstUnbonding;
+            i--
+        ) {
+            Unbonding storage unbonding = _stake.unbondings[i];
 
             if (unbonding.amount >= toBeRebonded) {
                 unbonding.amount -= toBeRebonded;
@@ -75,8 +75,8 @@ contract Staking is IStaking {
             } else {
                 _stake.availableAmount += unbonding.amount;
                 toBeRebonded -= unbonding.amount;
-                delete _stake.unbondings[i - 1];
-                _stake.lastUnbonding -= 1;
+                delete _stake.unbondings[i];
+                _stake.nextUnbonding -= 1;
             }
         }
     }
@@ -85,9 +85,8 @@ contract Staking is IStaking {
         Stake storage _stake = stakes[msg.sender];
         require(_stake.actualAmount >= amount, "not enough funds");
         uint256 withdrawableAmount;
-        uint128 toBeRemovedUnbondings;
 
-        for (uint256 i = _stake.firstUnbonding; i < _stake.lastUnbonding; i++) {
+        for (uint256 i = _stake.firstUnbonding; i < _stake.nextUnbonding; i++) {
             Unbonding storage unbonding = _stake.unbondings[i];
             if (unbonding.time > block.timestamp) {
                 break;
@@ -99,29 +98,13 @@ contract Staking is IStaking {
                 break;
             } else {
                 withdrawableAmount += unbonding.amount;
-                toBeRemovedUnbondings += 1;
+                delete _stake.unbondings[i];
+                _stake.firstUnbonding += 1;
             }
         }
 
         require(withdrawableAmount >= amount, "not enough unbonded funds");
-        _removeUnbondings(toBeRemovedUnbondings);
         _stake.actualAmount -= amount;
         IERC20(token).transfer(msg.sender, withdrawableAmount);
-    }
-
-    function getStake() public view returns (uint256) {
-        return stakes[msg.sender].availableAmount;
-    }
-
-    function _removeUnbondings(uint128 toBeRemovedUnbondings) public {
-        Stake storage _stake = stakes[msg.sender];
-        for (
-            uint256 i = _stake.firstUnbonding;
-            i < toBeRemovedUnbondings;
-            i++
-        ) {
-            delete _stake.unbondings[i];
-        }
-        stakes[msg.sender].firstUnbonding += toBeRemovedUnbondings;
     }
 }

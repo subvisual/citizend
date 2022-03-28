@@ -13,7 +13,7 @@ import {
 
 import { currentTimestamp } from "../../../test/timeHelpers";
 
-import { computeRisingTide } from "../../../src/tasks/ctnd/risingTide";
+import { computeRisingTideCap } from "../../../src/tasks/ctnd/risingTide";
 
 const { parseUnits, formatBytes32String } = ethers.utils;
 const { MaxUint256 } = ethers.constants;
@@ -52,7 +52,7 @@ describe("ctnd:risingTide task", () => {
       parseUnits("1"),
       start,
       end,
-      5000,
+      500000,
       registry.address
     );
   });
@@ -64,7 +64,8 @@ describe("ctnd:risingTide task", () => {
   describe("rising tide calculation", () => {
     it("correctly computes the Gitbook example", async () => {
       const gitbookExample = [
-        500, 1000, 750, 500, 1000, 750, 200, 1000, 800, 1000,
+        50000, 100000, 75000, 50000, 100000, 75000, 20000, 100000, 80000,
+        100000,
       ];
 
       for (const [i, amount] of gitbookExample.entries()) {
@@ -82,7 +83,8 @@ describe("ctnd:risingTide task", () => {
         await sale.connect(signer).buy(paymentAmount);
       }
 
-      await computeRisingTide(sale.address, 0, hre);
+      const cap = await computeRisingTideCap(sale.address, 0, hre);
+      expect(cap).to.equal(54285);
     });
   });
 });

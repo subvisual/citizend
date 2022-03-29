@@ -1,4 +1,4 @@
-import { task } from "hardhat/config";
+import type { NetworksUserConfig } from "hardhat/types";
 
 import "@typechain/hardhat";
 import "@nomiclabs/hardhat-ethers";
@@ -8,13 +8,16 @@ import "hardhat-gas-reporter";
 
 import "./src/tasks";
 
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
+const devMnemonic =
+  process.env.DEV_MNEMONIC ||
+  "test test test test test test test test test test test junk";
 
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
+let networks: NetworksUserConfig = {};
+
+networks["hardhat"] = {
+  blockGasLimit: 3000000000,
+  accounts: { mnemonic: devMnemonic },
+};
 
 const config = {
   solidity: {
@@ -26,6 +29,7 @@ const config = {
       },
     },
   },
+  networks,
   namedAccounts: {
     deployer: 0,
   },

@@ -1,10 +1,8 @@
 # DiscoveryDAO monorepo
 
 [notion]: https://www.notion.so/fractal-/Discovery-DAO-0b8ada556f544e219e4756032f97c0e7
-[cra]: https://create-react-app.dev/
+[gitbook]: https://app.gitbook.com/o/wJRQafZq48KlUkYl9v4X/s/txjkyhfQuOMVFy4HSbaM/
 [hardhat]: https://hardhat.org/
-[webflow]: https://webflow.com/
-[appfairy]: https://github.com/DAB0mB/Appfairy
 [subvisual]: https://subvisual.com/
 [token-alloc]: https://docs.google.com/spreadsheets/d/1KPmg42jJYDyhaShfwE8DNzEl1pk99AGFQx56E9VfwFY/edit#gid=2019661501
 [figma-flows]: https://www.figma.com/file/pP7j75NZkAhL31C4hqwSNg/Stealth-DAO?node-id=3%3A4
@@ -14,6 +12,7 @@
 ## Relevant links
 
 [Notion][notion]
+[Gitbook][gitbook]
 [Token One Pager][token-one-pager]
 [Token Allocation and P&L][token-alloc]
 [Figma User Stories][figma-flows]
@@ -37,9 +36,8 @@ A [hardhat][hardhat] project. Details to be added in the future
 
 ### Web
 
-A [create-react-app][cra] project.
-
-Details to be added in the future, but most likely will be a [Webflow][webflow],
-using the awesome [AppFairy][appfairy] tool.
+TODO
 
 ### About
+
+TODO

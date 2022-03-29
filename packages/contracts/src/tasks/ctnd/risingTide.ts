@@ -2,9 +2,6 @@ import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { BigNumber } from "ethers";
 
-import { Sale__factory } from "../../types";
-import { PurchaseEvent } from "../../types/Sale";
-
 task("ctnd:risingTide", "Compute Rising Tide cap for a $CTND sale")
   .addParam("sale", "index of the sale (first one is 1)")
   .setAction(async ({ sale }, hre) => {
@@ -18,6 +15,9 @@ export async function computeRisingTideCap(
   fromBlock: number,
   hre: HardhatRuntimeEnvironment
 ) {
+  // need to import this dynamically, since it won't exist on the first run
+  const { Sale__factory } = await import("../../types");
+
   const { ethers } = hre;
   const [owner] = await ethers.getSigners();
   const sale = Sale__factory.connect(saleAddress, owner);
@@ -62,6 +62,13 @@ export async function computeRisingTideCap(
   // at this point, the cap is just whatever amount is not yet allocated (i.e.:
   // without the small investors) divided equally by everyone else
   return available.sub(accum).div(investorsLeft);
+}
+
+interface PurchaseEvent {
+  args: {
+    from: string;
+    tokenAmount: BigNumber;
+  };
 }
 
 function reduceAmounts(purchases: PurchaseEvent[]): BigNumber[] {

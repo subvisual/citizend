@@ -5,6 +5,13 @@ pragma solidity =0.8.12;
 ///   * Creating batches
 ///   * Whitelisting companies
 interface IController {
+    enum ProjectStatus {
+        Uninitialized,
+        Created,
+        Whitelisted,
+        InBatch
+    }
+
     /// Information on an individual project
     struct Project {
         uint256 id;
@@ -14,6 +21,8 @@ interface IController {
         uint256 saleSupply;
         /// Exchange rate, multiplied by 10e18
         uint256 rate;
+        /// ProjectStatus
+        ProjectStatus status;
     }
 
     /// Definition of a time period
@@ -50,6 +59,13 @@ interface IController {
     function createBatch(
         uint256[] calldata projectIds,
         Period calldata votingPeriod
+    ) external;
+
+    /// Registers a new Project
+    function registerProject(
+        address _token,
+        uint256 _saleSupply,
+        uint256 _rate
     ) external;
 
     /// How many votes have been cast by a user on a given batch

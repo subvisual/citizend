@@ -33,7 +33,7 @@
     "prettier-plugin-solidity": "^1.0.0-beta.19",
     "solhint": "^3.3.6",
     "ts-node": "^10.5.0",
-    "typechain": "^6.0.3",
+    "typechain": "^8.0.0",
     "typescript": "^4.6.2"
   },
   "scripts": {

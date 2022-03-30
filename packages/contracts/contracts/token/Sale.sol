@@ -144,6 +144,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     {
         require(block.timestamp > end, "sale not ended yet");
 
+        // TODO this cannot allow withdrawing all tokens (what about pending refunds?)
+
         uint256 total = IERC20(paymentToken).balanceOf(address(this));
         IERC20(paymentToken).transfer(msg.sender, total);
     }

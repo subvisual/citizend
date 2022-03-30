@@ -14,8 +14,6 @@ import {DateTime} from "../libraries/DateTime.sol";
 import "hardhat/console.sol";
 
 contract Vesting is IVesting, AccessControl, ReentrancyGuard {
-    // TODO: Think about how to get the citizend out
-
     using DateTime for uint256;
     using SafeERC20 for IERC20;
     using ERC165Checker for address;

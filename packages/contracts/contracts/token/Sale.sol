@@ -183,13 +183,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     /// @inheritdoc ISale
-    function buy(uint256 _paymentAmount)
-        external
-        override(ISale)
-        inSale
-        nonReentrant
-    {
-        require(_paymentAmount > 0, "can't be zero");
+    function buy(uint256 _amount) external override(ISale) inSale nonReentrant {
         bytes32 fractalId = FractalRegistry(registry).getFractalId(msg.sender);
         require(fractalId != 0, "not registered");
         require(
@@ -198,7 +192,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
             "id registered to another address"
         );
 
-        uint256 tokenAmount = paymentTokenToToken(_paymentAmount);
+        uint256 paymentAmount = tokenToPaymentToken(_amount);
+        require(paymentAmount > 0, "can't be zero");
+
         uint256 currentAllocation = accounts[msg.sender].uncappedAllocation;
 
         if (currentAllocation == 0) {
@@ -206,16 +202,16 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
             _investorCount++;
         }
 
-        accounts[msg.sender].uncappedAllocation += tokenAmount;
-        totalUncappedAllocations += tokenAmount;
+        accounts[msg.sender].uncappedAllocation += _amount;
+        totalUncappedAllocations += _amount;
         fractalIdToAddress[fractalId] = msg.sender;
 
-        emit Purchase(msg.sender, _paymentAmount, tokenAmount);
+        emit Purchase(msg.sender, paymentAmount, _amount);
 
         IERC20(paymentToken).safeTransferFrom(
             msg.sender,
             address(this),
-            _paymentAmount
+            paymentAmount
         );
     }
 
@@ -245,7 +241,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         override(ISale)
         returns (uint256)
     {
-        if (individualCap == 0) {
+        if (!risingTide_isValidCap()) {
             return 0;
         }
 
@@ -375,6 +371,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
      * @return capped amount
      */
     function _applyCap(uint256 _amount) internal view returns (uint256) {
+        if (!risingTide_isValidCap()) {
+            return 0;
+        }
+
         if (_amount >= individualCap) {
             return individualCap;
         }

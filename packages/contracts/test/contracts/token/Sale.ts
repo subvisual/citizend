@@ -89,7 +89,7 @@ describe("Sale", () => {
     });
 
     it("allows the owner to withdraw", async () => {
-      await sale.connect(alice).buy(30);
+      await sale.connect(alice).buy(100);
       await goToTime(end + 1000);
       await sale.setIndividualCap(100);
 
@@ -99,7 +99,7 @@ describe("Sale", () => {
     });
 
     it("only allows withdrawing once", async () => {
-      await sale.connect(alice).buy(30);
+      await sale.connect(alice).buy(100);
       await goToTime(end + 1000);
       await sale.setIndividualCap(100);
 
@@ -109,9 +109,9 @@ describe("Sale", () => {
       await expect(action()).to.be.revertedWith("already withdrawn");
     });
 
-    it.only("does not withdraw amounts meant for refunds", async () => {
-      await sale.connect(alice).buy(300);
-      await sale.connect(bob).buy(300);
+    it("does not withdraw amounts meant for refunds", async () => {
+      await sale.connect(alice).buy(1000);
+      await sale.connect(bob).buy(1000);
       await goToTime(end + 1000);
       await sale.setIndividualCap(500);
 
@@ -123,7 +123,7 @@ describe("Sale", () => {
 
   describe("buy", () => {
     it("registers an account", async () => {
-      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await sale.connect(alice).buy(100);
 
       expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
     });
@@ -141,15 +141,15 @@ describe("Sale", () => {
     });
 
     it("correctly handles multiple purchases from the same account", async () => {
-      const paymentAmount = 30;
+      const amount = 100;
 
-      expect(await sale.connect(alice).buy(paymentAmount))
+      expect(await sale.connect(alice).buy(amount))
         .to.emit(sale, "Purchase")
-        .withArgs(alice.address, paymentAmount, 100);
+        .withArgs(alice.address, amount, 100);
 
-      expect(await sale.connect(alice).buy(paymentAmount))
+      expect(await sale.connect(alice).buy(amount))
         .to.emit(sale, "Purchase")
-        .withArgs(alice.address, paymentAmount, 100);
+        .withArgs(alice.address, amount, 100);
 
       expect(await sale.uncappedAllocation(alice.address)).to.eq(200);
     });
@@ -157,7 +157,7 @@ describe("Sale", () => {
     it("requires the caller to have gone through Fractal KYC", async () => {
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
 
-      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await sale.connect(alice).buy(100);
       expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
 
       await expect(sale.connect(carol).buy(30)).to.be.revertedWith(
@@ -167,7 +167,7 @@ describe("Sale", () => {
 
     it("can only use one address for a given fractal id", async () => {
       await registry.addUserAddress(carol.address, formatBytes32String("id1"));
-      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await sale.connect(alice).buy(100);
       expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
 
       await expect(sale.connect(carol).buy(30)).to.be.revertedWith(
@@ -211,7 +211,7 @@ describe("Sale", () => {
 
   describe("set individual cap", () => {
     it("allows me to set the cap after sale is over", async () => {
-      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await sale.connect(alice).buy(100);
       await goToTime(end);
 
       await sale.setIndividualCap(100);
@@ -221,7 +221,7 @@ describe("Sale", () => {
     });
 
     it("fails to validate the cap for the wrong value", async () => {
-      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await sale.connect(alice).buy(100);
       await goToTime(end);
 
       await sale.setIndividualCap(50);
@@ -237,30 +237,30 @@ describe("Sale", () => {
     });
 
     it("is 0 if the individual cap is higher than the invested total", async () => {
-      await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
+      await sale.connect(alice).buy(200);
+      await sale.connect(bob).buy(1000);
 
       await goToTime(end);
-      await sale.setIndividualCap(200);
+      await sale.setIndividualCap(800);
 
       expect(await sale.refundAmount(alice.address)).to.equal(0);
     });
 
     it("is the difference between the cap and the invested total", async () => {
-      await sale.connect(alice).buy(300);
-
-      // set a cap of 200$ in $CTND
-      const cap = await sale.paymentTokenToToken(200);
+      await sale.connect(alice).buy(1001);
 
       await goToTime(end);
-      await sale.setIndividualCap(cap);
+      await sale.setIndividualCap(1000);
 
-      expect(await sale.refundAmount(alice.address)).to.equal(100);
+      expect(await sale.refundAmount(alice.address)).to.equal(
+        await sale.tokenToPaymentToken(1)
+      );
     });
   });
 
   describe("refund", () => {
     it("fails if individual cap is not yet set", async () => {
-      await sale.connect(alice).buy(300);
+      await sale.connect(alice).buy(1000);
 
       await expect(sale.refund(alice.address)).to.be.revertedWith(
         "cap not yet set"
@@ -268,9 +268,9 @@ describe("Sale", () => {
     });
 
     it("refunds the correct amount once the cap is set", async () => {
-      const paymentAmount = await sale.tokenToPaymentToken(1000);
+      const amount = 1000;
 
-      await sale.connect(alice).buy(paymentAmount.mul(2));
+      await sale.connect(alice).buy(amount * 2);
 
       // set a cap of 1000 $CTND
       const cap = 1000;
@@ -280,14 +280,14 @@ describe("Sale", () => {
       await expect(() => sale.refund(alice.address)).to.changeTokenBalance(
         aUSD,
         alice,
-        paymentAmount
+        await sale.tokenToPaymentToken(amount)
       );
     });
 
     it("emits an event", async () => {
-      const paymentAmount = await sale.tokenToPaymentToken(1000);
+      const amount = 1000;
 
-      await sale.connect(alice).buy(paymentAmount.mul(2));
+      await sale.connect(alice).buy(amount * 2);
 
       // set a cap of 1000 $CTND
       const cap = 1000;
@@ -296,13 +296,13 @@ describe("Sale", () => {
 
       await expect(sale.refund(alice.address))
         .to.emit(sale, "Refund")
-        .withArgs(alice.address, paymentAmount);
+        .withArgs(alice.address, await sale.tokenToPaymentToken(amount));
     });
 
     it("does not allow double refunds", async () => {
-      const paymentAmount = await sale.tokenToPaymentToken(1000);
+      const amount = 1000;
 
-      await sale.connect(alice).buy(paymentAmount.mul(2));
+      await sale.connect(alice).buy(amount * 2);
 
       // set a cap of 1000 $CTND
       const cap = 1000;

@@ -24,6 +24,7 @@ describe("Sale", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
   let bob: SignerWithAddress;
+  let carol: SignerWithAddress;
 
   let aUSD: MockERC20;
   let sale: Sale;
@@ -33,7 +34,7 @@ describe("Sale", () => {
   let end: number;
 
   beforeEach(async () => {
-    [owner, alice, bob] = await ethers.getSigners();
+    [owner, alice, bob, carol] = await ethers.getSigners();
 
     start = await currentTimestamp();
     end = start + 60 * 60 * 24;
@@ -58,6 +59,7 @@ describe("Sale", () => {
     await aUSD.connect(bob).approve(sale.address, MaxUint256);
 
     await registry.addUserAddress(alice.address, formatBytes32String("id1"));
+    await registry.addUserAddress(bob.address, formatBytes32String("id2"));
   });
 
   describe("constructor", () => {
@@ -74,7 +76,7 @@ describe("Sale", () => {
     });
   });
 
-  describe.only("withdraw", async () => {
+  describe("withdraw", async () => {
     it("reverts if the caller is not the owner", async () => {
       await expect(sale.connect(alice).withdraw()).to.be.reverted;
     });
@@ -104,10 +106,19 @@ describe("Sale", () => {
       const action = () => sale.connect(owner).withdraw();
 
       await action();
-      await expect(action).to.be.revertedWith("already withdrawn");
+      await expect(action()).to.be.revertedWith("already withdrawn");
     });
 
-    it("does not withdraw amounts meant for refunds", async () => {});
+    it.only("does not withdraw amounts meant for refunds", async () => {
+      await sale.connect(alice).buy(300);
+      await sale.connect(bob).buy(300);
+      await goToTime(end + 1000);
+      await sale.setIndividualCap(500);
+
+      const action = () => sale.connect(owner).withdraw();
+
+      await expect(action).to.changeTokenBalance(aUSD, owner, 300);
+    });
   });
 
   describe("buy", () => {
@@ -149,17 +160,17 @@ describe("Sale", () => {
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
       expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
 
-      await expect(sale.connect(bob).buy(30)).to.be.revertedWith(
+      await expect(sale.connect(carol).buy(30)).to.be.revertedWith(
         "not registered"
       );
     });
 
     it("can only use one address for a given fractal id", async () => {
-      await registry.addUserAddress(bob.address, formatBytes32String("id1"));
+      await registry.addUserAddress(carol.address, formatBytes32String("id1"));
       await sale.connect(alice).buy(await sale.tokenToPaymentToken(100));
       expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
 
-      await expect(sale.connect(bob).buy(30)).to.be.revertedWith(
+      await expect(sale.connect(carol).buy(30)).to.be.revertedWith(
         "id registered to another address"
       );
     });

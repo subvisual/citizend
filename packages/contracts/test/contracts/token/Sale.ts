@@ -74,7 +74,7 @@ describe("Sale", () => {
     });
   });
 
-  describe("withdraw", async () => {
+  describe.only("withdraw", async () => {
     it("reverts if the caller is not the owner", async () => {
       await expect(sale.connect(alice).withdraw()).to.be.reverted;
     });
@@ -95,6 +95,19 @@ describe("Sale", () => {
 
       await expect(action).to.changeTokenBalance(aUSD, owner, 30);
     });
+
+    it("only allows withdrawing once", async () => {
+      await sale.connect(alice).buy(30);
+      await goToTime(end + 1000);
+      await sale.setIndividualCap(100);
+
+      const action = () => sale.connect(owner).withdraw();
+
+      await action();
+      await expect(action).to.be.revertedWith("already withdrawn");
+    });
+
+    it("does not withdraw amounts meant for refunds", async () => {});
   });
 
   describe("buy", () => {

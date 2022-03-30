@@ -10,6 +10,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 import {ISale} from "./ISale.sol";
 import {RisingTide} from "../RisingTide/RisingTide.sol";
 import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
+import {Math} from "../libraries/Math.sol";
 
 import "hardhat/console.sol";
 
@@ -19,6 +20,7 @@ import "hardhat/console.sol";
 /// The contract should hold all $CTND tokens meant to be distributed in the public sale
 contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     using SafeERC20 for IERC20;
+    using Math for uint256;
 
     struct Account {
         uint256 uncappedAllocation;
@@ -46,6 +48,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     /// Emitted for every refund given
     event Refund(address indexed to, uint256 paymentTokenAmount);
+
+    event Withdraw(address indexed to, uint256 paymentTokenAmount);
 
     //
     // State
@@ -79,6 +83,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     /// Fractal Registry address
     address public immutable registry;
+
+    /// Did the admins already withdraw all aUSD from sales
+    bool public withdrawn;
 
     /// Fractal Id associated with the address to be used in this sale
     mapping(bytes32 => address) public fractalIdToAddress;
@@ -143,11 +150,16 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         nonReentrant
     {
         require(block.timestamp > end, "sale not ended yet");
+        require(!withdrawn, "already withdrawn");
 
-        // TODO this cannot allow withdrawing all tokens (what about pending refunds?)
+        withdrawn = true;
 
-        uint256 total = IERC20(paymentToken).balanceOf(address(this));
-        IERC20(paymentToken).transfer(msg.sender, total);
+        uint256 allocatedAmount = allocated();
+        uint256 paymentTokenAmount = tokenToPaymentToken(allocatedAmount);
+
+        emit Withdraw(msg.sender, paymentTokenAmount);
+
+        IERC20(paymentToken).transfer(msg.sender, paymentTokenAmount);
     }
 
     /// @inheritdoc ISale
@@ -329,6 +341,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     //
     // ERC165
     //
+
+    /// @inheritdoc ERC165
     function supportsInterface(bytes4 interfaceId)
         public
         view
@@ -339,6 +353,15 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         return
             interfaceId == type(ISale).interfaceId ||
             super.supportsInterface(interfaceId);
+    }
+
+    //
+    // Other public APIs
+    //
+
+    /// @return the amount of tokens already allocated
+    function allocated() public view returns (uint256) {
+        return Math.min(totalUncappedAllocations, totalTokensForSale);
     }
 
     //

@@ -11,8 +11,6 @@ import {ISale} from "./ISale.sol";
 import {IVesting} from "./IVesting.sol";
 import {DateTime} from "../libraries/DateTime.sol";
 
-import "hardhat/console.sol";
-
 contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     using DateTime for uint256;
     using SafeERC20 for IERC20;

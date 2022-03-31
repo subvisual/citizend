@@ -12,8 +12,6 @@ import {RisingTide} from "../RisingTide/RisingTide.sol";
 import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
 import {Math} from "../libraries/Math.sol";
 
-import "hardhat/console.sol";
-
 /// Citizend token sale contract
 ///
 /// Users interact with this contract to deposit $aUSD in exchange for $CTND.

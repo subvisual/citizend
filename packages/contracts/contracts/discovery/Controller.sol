@@ -4,8 +4,6 @@ pragma solidity =0.8.12;
 import {IController} from "./IController.sol";
 import {ProjectHelpers} from "../libraries/ProjectHelpers.sol";
 
-import "hardhat/console.sol";
-
 contract Controller is IController {
     using ProjectHelpers for Project;
 

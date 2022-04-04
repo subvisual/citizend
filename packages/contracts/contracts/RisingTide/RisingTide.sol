@@ -126,19 +126,16 @@ abstract contract RisingTide {
         uint256 count = investorCount();
         uint256 localCap = individualCap;
 
-        unchecked {
-            for (
-                ;
-                validation.index < count &&
-                    gasleft() > CAP_VALIDATION_GAS_LIMIT;
-                ++validation.index
-            ) {
-                uint256 amount = investorAmountAt(validation.index);
+        for (
+            ;
+            validation.index < count && gasleft() > CAP_VALIDATION_GAS_LIMIT;
+            ++validation.index
+        ) {
+            uint256 amount = investorAmountAt(validation.index);
 
-                validation.sumForCap += amount.min(localCap);
-                validation.sumForNextCap += amount.min(localCap + 1);
-                validation.largest = Math.max(validation.largest, amount);
-            }
+            validation.sumForCap += amount.min(localCap);
+            validation.sumForNextCap += amount.min(localCap + 1);
+            validation.largest = Math.max(validation.largest, amount);
         }
 
         risingTideCache = validation;

@@ -1,0 +1,46 @@
+name: Web - Test Suite
+
+on:
+  pull_request:
+    branches:
+      - main
+
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17.0'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Setup module dependencies cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install module dependencies
+        run:  yarn install --frozen-lockfile
+
+      - name: Lint javascript
+        run: yarn workspace @discovery-dao/web lint:js
+
+      - name: Lint styles
+        run: yarn workspace @discovery-dao/web lint:styles
+
+      - name: Lint types
+        run: yarn workspace @discovery-dao/web lint:types
+      
+      - name: Build
+        run: yarn workspace @discovery-dao/web build

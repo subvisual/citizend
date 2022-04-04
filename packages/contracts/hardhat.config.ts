@@ -1,5 +1,3 @@
-import type { NetworksUserConfig } from "hardhat/types";
-
 import "@typechain/hardhat";
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
@@ -7,17 +5,7 @@ import "hardhat-deploy";
 import "hardhat-gas-reporter";
 
 import "./src/tasks";
-
-const devMnemonic =
-  process.env.DEV_MNEMONIC ||
-  "test test test test test test test test test test test junk";
-
-let networks: NetworksUserConfig = {};
-
-networks["hardhat"] = {
-  blockGasLimit: 3000000000,
-  accounts: { mnemonic: devMnemonic },
-};
+import { networks } from "./src/hardhat";
 
 const config = {
   solidity: {

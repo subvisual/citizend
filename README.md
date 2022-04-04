@@ -8,6 +8,7 @@
 [figma-flows]: https://www.figma.com/file/pP7j75NZkAhL31C4hqwSNg/Stealth-DAO?node-id=3%3A4
 [figma-designs]: https://www.figma.com/file/cTQvLFRdIxXA9Cr4qmBYwV/Citizend---Web-Design---Draft?node-id=78%3A310
 [token-one-pager]: https://docs.google.com/document/d/1vswBT46bVJub2uGqz-fzuhznolyuRPwgkxJtFfz5FmE/edit#heading=h.w7ipbahzitg7
+[mandala-explorer]: https://blockscout.mandala.acala.network/
 
 ## Relevant links
 
@@ -17,6 +18,7 @@
 [Token Allocation and P&L][token-alloc]
 [Figma User Stories][figma-flows]
 [Figma Web Design][figma-designs]
+Acala explorers: [Mandala][mandala-explorer]
 
 ## Development
 

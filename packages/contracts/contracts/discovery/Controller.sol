@@ -2,34 +2,30 @@
 pragma solidity =0.8.12;
 
 import {IController} from "./IController.sol";
-import {ProjectHelpers} from "../libraries/ProjectHelpers.sol";
+import {IProject} from "./IProject.sol";
+import {Project} from "./Project.sol";
+import {IBatch} from "./IBatch.sol";
+import {Batch} from "./Batch.sol";
 
-contract Controller is IController {
-    using ProjectHelpers for Project;
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
-    uint256 lastProjectId;
-    uint256 lastBatchId;
+import "hardhat/console.sol";
 
-    mapping(uint256 => Project) public projects;
+contract Controller is IController, AccessControl {
+    mapping(address => bool) public projects;
+    mapping(address => address) public projectsToBatches;
 
-    mapping(uint256 => Batch) public batches;
+    address public stakingContract;
 
-    /// Batch => user => votes
-    mapping(uint256 => mapping(address => uint256)) public userVoteCount;
+    event RegisterProject(address project);
 
-    /// Batch => projectId => votes
-    mapping(uint256 => mapping(uint256 => uint256)) public projectVoteCount;
-
-    event RegisterProject(uint256 projectId);
-
-    /// @inheritdoc IController
-    function getProject(uint256 id) external view returns (Project memory) {
-        return projects[id];
+    constructor() {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     /// @inheritdoc IController
-    function getBatch(uint256 id) external view returns (Batch memory) {
-        return batches[id];
+    function getBatch(address _project) external view returns (address) {
+        return projectsToBatches[_project];
     }
 
     function approveProjectByOwner(uint256 id) external {
@@ -37,32 +33,57 @@ contract Controller is IController {
     }
 
     function registerProject(
+        string calldata _description,
         address _token,
         uint256 _saleSupply,
         uint256 _rate
-    ) external {
-        require(
-            projects[lastProjectId].status == ProjectStatus.Uninitialized,
-            "project already exists"
+    ) external returns(address) {
+        IProject project = new Project(
+            _description,
+            _token,
+            _saleSupply,
+            _rate
         );
 
-        emit RegisterProject(lastProjectId);
+        emit RegisterProject(address(project));
 
-        projects[lastProjectId] = Project({
-            id: lastProjectId,
-            token: _token,
-            saleSupply: _saleSupply,
-            rate: _rate,
-            status: ProjectStatus.Created
-        });
+        projects[address(project)] = true;
 
-        lastProjectId++;
+        console.log("%s", address(project));
+
+        return address(project);
     }
 
-    function createBatch(
-        uint256[] calldata projectIds,
-        Period calldata votingPeriod
-    ) external {
-        revert("not implemented");
+    function createBatch(address[] calldata _projects, uint256 _slotCount)
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        require(_projects.length > 0, "can't create batch without projects");
+        require(_slotCount > 0, "batch has to have at least one slot");
+
+        IBatch batch = new Batch(_projects, _slotCount);
+
+        for (uint256 i = 0; i < _projects.length; i++) {
+            IProject project = Project(_projects[i]);
+
+            require(
+                project.isReady(),
+                "project is not ready to be included in batch"
+            );
+            require(
+                projectsToBatches[address(project)] == address(0),
+                "project already in a batch"
+            );
+
+            projectsToBatches[address(project)] = address(batch);
+        }
+    }
+
+    function isProjectInBatch(address _project, address _batch)
+        external
+        view
+        returns (bool)
+    {
+        return projectsToBatches[_project] == _batch;
     }
 }

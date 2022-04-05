@@ -29,7 +29,7 @@ interface IController {
         address _token,
         uint256 _saleSupply,
         uint256 _rate
-    ) external returns(address);
+    ) external returns (address);
 
     function isProjectInBatch(address _project, address _batch)
         external

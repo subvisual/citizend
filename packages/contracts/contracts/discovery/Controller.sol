@@ -37,7 +37,7 @@ contract Controller is IController, AccessControl {
         address _token,
         uint256 _saleSupply,
         uint256 _rate
-    ) external returns(address) {
+    ) external returns (address) {
         IProject project = new Project(
             _description,
             _token,

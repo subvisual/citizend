@@ -27,7 +27,7 @@ jobs:
           python-version: "3.x"
 
       - run: yarn install
-      - run: TS_NODE_TRANSPILE_ONLY=1 yarn workspace @discovery-dao/contracts compile
+      - run: yarn workspace @discovery-dao/contracts compile
       - run: yarn workspace @discovery-dao/contracts lint
       - run: yarn workspace @discovery-dao/contracts test
 

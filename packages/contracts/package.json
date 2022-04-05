@@ -38,7 +38,7 @@
     "typescript": "^4.6.2"
   },
   "scripts": {
-    "compile": "hardhat compile",
+    "compile": "TS_NODE_TRANSPILE_ONLY=1 hardhat compile",
     "dev": "hardhat node",
     "test": "hardhat test --deploy-fixture",
     "lint": "solhint contracts/**/*.sol && prettier --check . contracts/**/*.sol"

@@ -9,8 +9,6 @@ import {Batch} from "./Batch.sol";
 
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
-import "hardhat/console.sol";
-
 contract Controller is IController, AccessControl {
     mapping(address => bool) public projects;
     mapping(address => address) public projectsToBatches;
@@ -37,7 +35,7 @@ contract Controller is IController, AccessControl {
         address _token,
         uint256 _saleSupply,
         uint256 _rate
-    ) external returns (address) {
+    ) external {
         IProject project = new Project(
             _description,
             _token,
@@ -48,10 +46,6 @@ contract Controller is IController, AccessControl {
         emit RegisterProject(address(project));
 
         projects[address(project)] = true;
-
-        console.log("%s", address(project));
-
-        return address(project);
     }
 
     function createBatch(address[] calldata _projects, uint256 _slotCount)

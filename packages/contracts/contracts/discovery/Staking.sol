@@ -11,6 +11,10 @@ import "hardhat/console.sol";
 contract Staking is IStaking {
     using SafeERC20 for IERC20;
 
+    //
+    // Structs
+    //
+
     struct Stake {
         uint256 actualAmount;
         uint256 availableAmount;
@@ -24,17 +28,35 @@ contract Staking is IStaking {
         uint256 time;
     }
 
-    mapping(address => Stake) public stakes;
-    address public immutable token;
-
-    uint256 public constant UNBONDING_PERIOD = 28 days;
+    //
+    // Events
+    //
 
     event StakeFunds(address indexed staker, uint256 amount);
     event Unbond(address indexed staker, uint256 amount);
     event Rebond(address indexed staker, uint256 amount);
     event Withdraw(address indexed staker, uint256 amount);
 
+    //
+    // Constants
+    //
+
+    // How long an unbonding takes
+    uint256 public constant UNBONDING_PERIOD = 28 days;
+
+    //
+    // State
+    //
+
+    /// The token to stake
+    address public immutable token;
+
+    /// account => stakes
+    mapping(address => Stake) public stakes;
+
     constructor(address _token) {
+        require(_token != address(0), "_token cannot be 0");
+
         token = _token;
     }
 

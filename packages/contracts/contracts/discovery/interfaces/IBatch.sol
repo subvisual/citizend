@@ -6,5 +6,11 @@ interface IBatch {
     function userVoteCount(address user) external returns (uint256);
 
     /// How many votes have been cast for a project on this batch
-    function projectVoteCount(uint256 projectId) external returns (uint256);
+    function projectVoteCount(address project) external returns (uint256);
+
+    function vote(
+        address projectAddress,
+        uint256 peoplePoolStake,
+        uint256 stakersPoolStake
+    ) external;
 }

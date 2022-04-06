@@ -134,7 +134,8 @@ describe("Controller", () => {
 
       await controller.connect(owner).approveProjectByOwner(0);
 
-      await expect(controller.createBatch([0], { start: 1, end: 2}, 4)).to.not.be.reverted;
+      await expect(controller.createBatch([0], { start: 1, end: 2 }, 4)).to.not
+        .be.reverted;
     });
 
     it("reverts when creating a batch without projects", async () => {

@@ -38,7 +38,7 @@ contract Project is IProject {
         return true;
     }
 
-    function isReady() external pure returns (bool) {
+    function isReadyForListing() external pure returns (bool) {
         return hasTokens() && isApproved();
     }
 

@@ -10,12 +10,17 @@ import {Batch} from "./Batch.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract Controller is IController, AccessControl {
+
+
+    /// Events
+    event ProjectRegistered(address project);
+
+
+    /// State
     mapping(address => bool) public projects;
     mapping(address => address) public projectsToBatches;
 
-    address public stakingContract;
-
-    event RegisterProject(address project);
+    address public staking;
 
     constructor() {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -43,7 +48,7 @@ contract Controller is IController, AccessControl {
             _rate
         );
 
-        emit RegisterProject(address(project));
+        emit ProjectRegistered(address(project));
 
         projects[address(project)] = true;
     }
@@ -61,7 +66,7 @@ contract Controller is IController, AccessControl {
             IProject project = Project(_projects[i]);
 
             require(
-                project.isReady(),
+                project.isReadyForListing(),
                 "project is not ready to be included in batch"
             );
             require(

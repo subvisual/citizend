@@ -7,8 +7,6 @@ import {ICommon} from "./ICommon.sol";
 contract Batch is IBatch, ICommon {
     /// address of the projects
     address[] projects;
-    /// number of approved projects in this batch
-    uint256 projectCount;
     /// number of available slots
     uint256 slotCount;
     Period votingPeriod;
@@ -22,6 +20,5 @@ contract Batch is IBatch, ICommon {
     constructor(address[] memory _projects, uint256 _slotCount) {
         projects = _projects;
         slotCount = _slotCount;
-        projectCount = _projects.length;
     }
 }

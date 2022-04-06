@@ -56,7 +56,7 @@ describe("Controller", () => {
         parseUnits("2")
       );
 
-      const event = await findEvent(tx, "RegisterProject");
+      const event = await findEvent(tx, "ProjectRegistered");
       const projectAddress = event?.args?.project;
 
       project = Project__factory.connect(projectAddress, owner);
@@ -67,7 +67,7 @@ describe("Controller", () => {
       expect(await project.rate()).to.eq(parseUnits("2"));
     });
 
-    it("emits a RegisterProject event", async () => {
+    it("emits a ProjectRegistered event", async () => {
       expect(
         await controller.registerProject(
           "My Project",
@@ -75,7 +75,7 @@ describe("Controller", () => {
           parseUnits("1000"),
           parseUnits("2")
         )
-      ).to.emit(controller, "RegisterProject");
+      ).to.emit(controller, "ProjectRegistered");
     });
   });
 });

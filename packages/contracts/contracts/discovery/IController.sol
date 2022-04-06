@@ -9,7 +9,10 @@ import {IBatch} from "./IBatch.sol";
 interface IController {
     /// @param _project address of the project
     /// @return Batch address
-    function getBatchForProject(address _project) external view returns (address);
+    function getBatchForProject(address _project)
+        external
+        view
+        returns (address);
 
     /// Whitelists a project, allowing it to be included on the next batch
     function approveProjectByOwner(uint256 id) external;

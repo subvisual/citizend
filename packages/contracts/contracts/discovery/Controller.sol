@@ -10,12 +10,9 @@ import {Batch} from "./Batch.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract Controller is IController, AccessControl {
-
-
     /// Events
     event ProjectRegistered(address project);
     event BatchCreated(address batch);
-
 
     /// State
     mapping(address => bool) public projects;
@@ -28,7 +25,11 @@ contract Controller is IController, AccessControl {
     }
 
     /// @inheritdoc IController
-    function getBatchForProject(address _project) external view returns (address) {
+    function getBatchForProject(address _project)
+        external
+        view
+        returns (address)
+    {
         return projectsToBatches[_project];
     }
 

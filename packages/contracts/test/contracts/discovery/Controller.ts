@@ -7,6 +7,8 @@ import {
   Controller__factory,
   Project,
   Project__factory,
+  MockERC20,
+  MockERC20__factory,
 } from "../../../src/types";
 
 import { findEvent } from "../../shared/utils";
@@ -20,6 +22,7 @@ describe("Controller", () => {
 
   let controller: Controller;
   let project: Project;
+  let projectToken: MockERC20;
 
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
     await deployments.fixture(["controller"]);
@@ -34,7 +37,14 @@ describe("Controller", () => {
     );
   });
 
-  beforeEach(() => fixture());
+  beforeEach(async () => {
+    await fixture();
+
+    projectToken = await new MockERC20__factory(owner).deploy(
+      "ProjectToken",
+      "ProjectToken"
+    );
+  });
 
   describe("constructor", () => {
     it("sets the correct params", async () => {
@@ -51,7 +61,7 @@ describe("Controller", () => {
     it("registers a project", async () => {
       const tx = await controller.registerProject(
         "My Project",
-        alice.address,
+        projectToken.address,
         parseUnits("1000"),
         parseUnits("2")
       );
@@ -62,7 +72,7 @@ describe("Controller", () => {
       project = Project__factory.connect(projectAddress, owner);
 
       expect(await project.description()).to.eq("My Project");
-      expect(await project.token()).to.eq(alice.address);
+      expect(await project.token()).to.eq(projectToken.address);
       expect(await project.saleSupply()).to.eq(parseUnits("1000"));
       expect(await project.rate()).to.eq(parseUnits("2"));
     });
@@ -81,5 +91,49 @@ describe("Controller", () => {
     it("fails to register a project that is not known to the controller");
     it("fails to register a project that's already registered in a batch");
     it("fails to register a project that is not ready for listing");
+  });
+
+  describe("createBatch", () => {
+    it("creates a batch", async () => {
+      const tx = await controller.registerProject(
+        "My Project",
+        projectToken.address,
+        parseUnits("1000"),
+        parseUnits("2")
+      );
+
+      const event = await findEvent(tx, "ProjectRegistered");
+      const projectAddress = event?.args?.project;
+
+      const project = Project__factory.connect(projectAddress, owner);
+
+      await projectToken
+        .connect(owner)
+        .transfer(project.address, parseUnits("1000"));
+
+      await project.approveByLegal();
+      await project.approveByManager();
+
+      expect(await project.approvedByLegal()).to.equal(true);
+      expect(await project.approvedByManager()).to.equal(true);
+      expect(await project.isReadyForListing()).to.equal(true);
+
+      await expect(controller.createBatch([projectAddress], 4)).to.not.be
+        .reverted;
+    });
+
+    it("reverts if a project is not approved", async () => {
+      const tx = await controller.registerProject(
+        "My Project",
+        alice.address,
+        parseUnits("1000"),
+        parseUnits("2")
+      );
+
+      const event = await findEvent(tx, "RegisterProject");
+      const projectAddress = event?.args?.project;
+
+      await expect(controller.createBatch([projectAddress], 4)).to.be.reverted;
+    });
   });
 });

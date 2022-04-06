@@ -5,11 +5,8 @@ import {IBatch} from "./IBatch.sol";
 import {ICommon} from "./ICommon.sol";
 
 contract Batch is IBatch, ICommon {
-    uint256 batchId;
-    /// Ids of the projects
-    uint256[] projectIds;
-    /// number of approved projects in this batch
-    uint256 projectCount;
+    /// address of the projects
+    address[] projects;
     /// number of available slots
     uint256 slotCount;
     Period votingPeriod;
@@ -20,16 +17,8 @@ contract Batch is IBatch, ICommon {
     /// projectId => votes
     mapping(uint256 => uint256) public projectVoteCount;
 
-    constructor(
-        uint256 _batchId,
-        uint256[] memory _projectIds,
-        uint256 _slotCount,
-        Period memory _votingPeriod
-    ) {
-        batchId = _batchId;
-        projectIds = _projectIds;
-        projectCount = _projectIds.length;
+    constructor(address[] memory _projects, uint256 _slotCount) {
+        projects = _projects;
         slotCount = _slotCount;
-        votingPeriod = _votingPeriod;
     }
 }

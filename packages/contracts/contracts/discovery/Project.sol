@@ -12,7 +12,7 @@ contract Project is IProject {
     address public controller;
     address public token;
 
-    string public immutable description;
+    string public description;
     uint256 public immutable saleSupply;
     uint256 public immutable rate;
 

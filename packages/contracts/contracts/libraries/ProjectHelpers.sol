@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.9.0;
 
-import {Project} from "../discovery/Project.sol";
-
 library ProjectHelpers {
     uint256 public constant MUL = 10**18;
 

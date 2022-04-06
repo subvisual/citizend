@@ -19,5 +19,12 @@
     "contracts:dev": "yarn workspace @discovery-dao/contracts dev",
     "contracts:export": "yarn workspace @discovery-dao/contracts export",
     "contracts:compile": "yarn workspace @discovery-dao/contracts compile"
+  },
+  "resolutions": {
+    "**/**/node-fetch": ">=2.6.7",
+    "**/**/underscore": ">=1.12.1",
+    "**/**/lodash": ">=4.17.21",
+    "**/**/ansi-regex": ">=4.1.1",
+    "**/**/yargs-parser": ">=5.0.1"
   }
 }

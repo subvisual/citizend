@@ -9,8 +9,8 @@ contract Project is IProject {
     // must be deployed via the Controller
     // will have a similar role as the CTND Vesting contract
 
-    address public controller;
-    address public token;
+    address public immutable controller;
+    address public immutable token;
 
     string public description;
     uint256 public immutable saleSupply;

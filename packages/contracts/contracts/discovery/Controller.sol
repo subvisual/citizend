@@ -14,6 +14,7 @@ contract Controller is IController, AccessControl {
 
     /// Events
     event ProjectRegistered(address project);
+    event BatchCreated(address batch);
 
 
     /// State
@@ -27,7 +28,7 @@ contract Controller is IController, AccessControl {
     }
 
     /// @inheritdoc IController
-    function getBatch(address _project) external view returns (address) {
+    function getBatchForProject(address _project) external view returns (address) {
         return projectsToBatches[_project];
     }
 
@@ -76,6 +77,8 @@ contract Controller is IController, AccessControl {
 
             projectsToBatches[address(project)] = address(batch);
         }
+
+        emit BatchCreated(address(batch));
     }
 
     function isProjectInBatch(address _project, address _batch)

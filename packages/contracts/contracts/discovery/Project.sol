@@ -12,8 +12,8 @@ contract Project is IProject {
     address public controller;
     address public token;
 
-    string public description;
-    uint256 public saleSupply;
+    string public immutable description;
+    uint256 public immutable saleSupply;
     uint256 public immutable rate;
 
     constructor(
@@ -42,7 +42,7 @@ contract Project is IProject {
         return hasTokens() && isApproved();
     }
 
-    modifier isProjectInBatch() {
+    modifier onlyBatch() {
         IController(controller).isProjectInBatch(address(this), msg.sender);
         _;
     }

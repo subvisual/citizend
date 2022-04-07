@@ -10,8 +10,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 import {ISale} from "./ISale.sol";
 import {RisingTide} from "../RisingTide/RisingTide.sol";
 import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
-
-import "hardhat/console.sol";
+import {Math} from "../libraries/Math.sol";
 
 /// Citizend token sale contract
 ///
@@ -19,6 +18,7 @@ import "hardhat/console.sol";
 /// The contract should hold all $CTND tokens meant to be distributed in the public sale
 contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     using SafeERC20 for IERC20;
+    using Math for uint256;
 
     struct Account {
         uint256 uncappedAllocation;
@@ -46,6 +46,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     /// Emitted for every refund given
     event Refund(address indexed to, uint256 paymentTokenAmount);
+
+    event Withdraw(address indexed to, uint256 paymentTokenAmount);
 
     //
     // State
@@ -79,6 +81,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     /// Fractal Registry address
     address public immutable registry;
+
+    /// Did the admins already withdraw all aUSD from sales
+    bool public withdrawn;
 
     /// Fractal Id associated with the address to be used in this sale
     mapping(bytes32 => address) public fractalIdToAddress;
@@ -143,9 +148,16 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         nonReentrant
     {
         require(block.timestamp > end, "sale not ended yet");
+        require(!withdrawn, "already withdrawn");
 
-        uint256 total = IERC20(paymentToken).balanceOf(address(this));
-        IERC20(paymentToken).transfer(msg.sender, total);
+        withdrawn = true;
+
+        uint256 allocatedAmount = allocated();
+        uint256 paymentTokenAmount = tokenToPaymentToken(allocatedAmount);
+
+        emit Withdraw(msg.sender, paymentTokenAmount);
+
+        IERC20(paymentToken).transfer(msg.sender, paymentTokenAmount);
     }
 
     /// @inheritdoc ISale
@@ -169,13 +181,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     /// @inheritdoc ISale
-    function buy(uint256 _paymentAmount)
-        external
-        override(ISale)
-        inSale
-        nonReentrant
-    {
-        require(_paymentAmount > 0, "can't be zero");
+    function buy(uint256 _amount) external override(ISale) inSale nonReentrant {
         bytes32 fractalId = FractalRegistry(registry).getFractalId(msg.sender);
         require(fractalId != 0, "not registered");
         require(
@@ -184,7 +190,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
             "id registered to another address"
         );
 
-        uint256 tokenAmount = paymentTokenToToken(_paymentAmount);
+        uint256 paymentAmount = tokenToPaymentToken(_amount);
+        require(paymentAmount > 0, "can't be zero");
+
         uint256 currentAllocation = accounts[msg.sender].uncappedAllocation;
 
         if (currentAllocation == 0) {
@@ -192,16 +200,16 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
             _investorCount++;
         }
 
-        accounts[msg.sender].uncappedAllocation += tokenAmount;
-        totalUncappedAllocations += tokenAmount;
+        accounts[msg.sender].uncappedAllocation += _amount;
+        totalUncappedAllocations += _amount;
         fractalIdToAddress[fractalId] = msg.sender;
 
-        emit Purchase(msg.sender, _paymentAmount, tokenAmount);
+        emit Purchase(msg.sender, paymentAmount, _amount);
 
         IERC20(paymentToken).safeTransferFrom(
             msg.sender,
             address(this),
-            _paymentAmount
+            paymentAmount
         );
     }
 
@@ -231,7 +239,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         override(ISale)
         returns (uint256)
     {
-        if (individualCap == 0) {
+        if (!risingTide_isValidCap()) {
             return 0;
         }
 
@@ -327,6 +335,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     //
     // ERC165
     //
+
+    /// @inheritdoc ERC165
     function supportsInterface(bytes4 interfaceId)
         public
         view
@@ -340,6 +350,15 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     //
+    // Other public APIs
+    //
+
+    /// @return the amount of tokens already allocated
+    function allocated() public view returns (uint256) {
+        return Math.min(totalUncappedAllocations, totalTokensForSale);
+    }
+
+    //
     // Internal API
     //
 
@@ -350,6 +369,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
      * @return capped amount
      */
     function _applyCap(uint256 _amount) internal view returns (uint256) {
+        if (!risingTide_isValidCap()) {
+            return 0;
+        }
+
         if (_amount >= individualCap) {
             return individualCap;
         }

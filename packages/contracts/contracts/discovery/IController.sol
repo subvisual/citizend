@@ -1,44 +1,20 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity =0.8.12;
 
+import {IBatch} from "./IBatch.sol";
+
 /// The main entry point for most admin interactions with the discovery system:
 ///   * Creating batches
 ///   * Whitelisting companies
 interface IController {
-    /// Information on an individual project
-    struct Project {
-        uint256 id;
-        /// ERC20 being sold on behalf of the project
-        address token;
-        /// How many tokens are being sold
-        uint256 saleSupply;
-        /// Exchange rate, multiplied by 10e18
-        uint256 rate;
-    }
-
-    /// Definition of a time period
-    struct Period {
-        uint256 start;
-        uint256 end;
-    }
-
-    struct Batch {
-        uint256 projectCount;
-        uint256 slotCount;
-        Period votingPeriod;
-    }
-
-    /// @param id ID of the project to read
-    /// @return Project data structure
-    function getProject(uint256 id) external view returns (Project memory);
-
-    /// @param id ID of the batch to read
-    /// @return Batch data structure
-    function getBatch(uint256 id) external view returns (Batch memory);
+    /// @param _project address of the project
+    /// @return Batch address
+    function getBatchForProject(address _project)
+        external
+        view
+        returns (address);
 
     /// Whitelists a project, allowing it to be included on the next batch
-    ///
-    /// @dev Should only be callable by the owner
     function approveProjectByOwner(uint256 id) external;
 
     /// Creates a new batch with
@@ -47,18 +23,18 @@ interface IController {
     ///
     /// @dev Batches are created in order, and with no overlap.
     ///   i.e.: when creating batch #3, its start date must be after the end date of batch #2
-    function createBatch(
-        uint256[] calldata projectIds,
-        Period calldata votingPeriod
+    function createBatch(address[] calldata projects, uint256 _slotCount)
+        external;
+
+    /// Registers a new Project
+    function registerProject(
+        string calldata _description,
+        address _token,
+        uint256 _saleSupply,
+        uint256 _rate
     ) external;
 
-    /// How many votes have been cast by a user on a given batch
-    function userVoteCount(uint256 batch, address user)
+    function isProjectInBatch(address _project, address _batch)
         external
-        returns (uint256);
-
-    /// How many votes have been cast for a project on a given batch
-    function projectVoteCount(uint256 batch, uint256 projectId)
-        external
-        returns (uint256);
+        returns (bool);
 }

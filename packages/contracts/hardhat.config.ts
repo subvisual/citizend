@@ -1,18 +1,11 @@
-import { task } from "hardhat/config";
-
 import "@typechain/hardhat";
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
 import "hardhat-deploy";
 import "hardhat-gas-reporter";
 
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
-
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
+import "./src/tasks";
+import { networks } from "./src/hardhat";
 
 const config = {
   solidity: {
@@ -24,6 +17,7 @@ const config = {
       },
     },
   },
+  networks,
   namedAccounts: {
     deployer: 0,
   },

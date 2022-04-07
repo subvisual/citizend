@@ -11,11 +11,7 @@ import {ISale} from "./ISale.sol";
 import {IVesting} from "./IVesting.sol";
 import {DateTime} from "../libraries/DateTime.sol";
 
-import "hardhat/console.sol";
-
 contract Vesting is IVesting, AccessControl, ReentrancyGuard {
-    // TODO: Think about how to get the citizend out
-
     using DateTime for uint256;
     using SafeERC20 for IERC20;
     using ERC165Checker for address;
@@ -39,6 +35,8 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     mapping(address => uint256) public override(IVesting) claimed;
 
     mapping(address => PrivateAllocation) public privateAllocations;
+
+    mapping(uint64 => bool) public usedNonces;
 
     address public immutable token;
     uint256 public immutable startTime;
@@ -80,6 +78,12 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         for (uint256 i = 0; i < _sales.length; ++i) {
             addSale(_sales[i]);
         }
+    }
+
+    modifier useNonce(uint64 nonce) {
+        require(!usedNonces[nonce], "nonce already used");
+        usedNonces[nonce] = true;
+        _;
     }
 
     //
@@ -155,8 +159,15 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     function createPrivateSaleVest(
         address to,
         uint256 amount,
-        uint16 cliffMonths
-    ) external override(IVesting) onlyRole(PRIVATE_SELLER_ROLE) nonReentrant {
+        uint16 cliffMonths,
+        uint64 nonce
+    )
+        external
+        override(IVesting)
+        onlyRole(PRIVATE_SELLER_ROLE)
+        nonReentrant
+        useNonce(nonce)
+    {
         require(
             cliffMonths <= PRIVATE_SALE_MAX_CLIFF_MONTHS,
             "Cliff months too big"

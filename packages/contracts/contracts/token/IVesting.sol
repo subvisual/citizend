@@ -59,11 +59,13 @@ interface IVesting {
      * @param to Beneficiary
      * @param amount Amount of tokens to vest
      * @param cliffMonths Number of months to wait before the vesting starts
+     * @param nonce Nonce used to prevent the same sale from being registered twice
      **/
     function createPrivateSaleVest(
         address to,
         uint256 amount,
-        uint16 cliffMonths
+        uint16 cliffMonths,
+        uint64 nonce
     ) external;
 
     /**

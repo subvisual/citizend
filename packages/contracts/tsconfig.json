@@ -13,9 +13,6 @@
     "isolatedModules": true,
     "outDir": "dist",
     "baseUrl": ".",
-    "paths": {
-      "@root/*": ["./*"]
-    },
     "typeRoots": ["./src/typechain"]
   },
   "include": [

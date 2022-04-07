@@ -3,8 +3,6 @@ pragma solidity =0.8.12;
 
 import {Math} from "../libraries/Math.sol";
 
-import "hardhat/console.sol";
-
 /**
  * Abstract implementation of a Rising Tide Calculator
  *

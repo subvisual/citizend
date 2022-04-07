@@ -1,5 +1,6 @@
 import { network, ethers } from "hardhat";
 import type { BigNumber } from "ethers";
+import dayjs from "dayjs";
 
 interface CTNDSale {
   start: number;
@@ -54,21 +55,22 @@ async function networkConfigs(chainId: number): Promise<Config> {
     case "acala":
     case "karura":
       throw "not yet implemented";
-      return {
-        ctndSale1: {
-          start: 0, // TODO
-          end: 0, // TODO
-          supply: parseUnits("5000000"),
-        },
-        ctndSale2: {
-          start: 0, // TODO
-          end: 0, // TODO
-          supply: parseUnits("10000000"),
-        },
-        ctndVesting: {
-          start: 0, //TODO
-        },
-      };
+      const saleStart = dayjs("2022-04-26");
+    // return {
+    //   ctndSale1: {
+    //     start: saleStart.unix(),
+    //     end: saleStart.add(5, "days").unix(), // TODO
+    //     supply: parseUnits("5000000"), // TODO
+    //   },
+    //   ctndSale2: {
+    //     start: 0, // TODO
+    //     end: 0, // TODO
+    //     supply: parseUnits("10000000"),
+    //   },
+    //   ctndVesting: {
+    //     start: 0, //TODO
+    //   },
+    // };
   }
 
   throw "error";

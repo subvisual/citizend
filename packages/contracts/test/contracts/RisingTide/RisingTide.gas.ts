@@ -4,6 +4,7 @@ import type { TestRisingTideWithStaticAmounts } from "../../../src/types";
 import { ethers } from "hardhat";
 
 import { expectCapValidation } from "./helpers";
+import { txParams } from "../../../src/transactionHelper";
 
 /**
  * Measures the gas spent to validate investment caps
@@ -25,14 +26,14 @@ if (process.env.RISING_TIDE_GAS_ESTIMATES) {
       const results: Record<string, string> = {};
       const total = 1000000;
 
-      [250, 500, 1000].forEach((n: number) => {
+      [100, 250, 500].forEach((n: number) => {
         it(`${n} investors`, async function () {
-          const contract = (await WithStaticAmounts.deploy(
-            n,
-            total,
-            total
-          )) as TestRisingTideWithStaticAmounts;
+          console.log("deploying");
+          const contract = (await WithStaticAmounts.deploy(n, total, total, {
+            ...(await txParams()),
+          })) as TestRisingTideWithStaticAmounts;
           await contract.deployed();
+          console.log("deployed");
 
           const cap = Math.floor(total / n);
 

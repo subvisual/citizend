@@ -36,9 +36,19 @@ yarn install
 
 A [hardhat][hardhat] project. Details to be added in the future
 
-### Web
+## Web
 
-TODO
+To start the project locally run:
+
+```sh
+yarn web:start
+```
+
+To bundle the project run:
+
+```sh
+yarn web:bundle
+```
 
 ### About
 

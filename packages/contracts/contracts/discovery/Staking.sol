@@ -6,17 +6,22 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 
 import {IStaking} from "./IStaking.sol";
 
-import "hardhat/console.sol";
-
 contract Staking is IStaking {
     using SafeERC20 for IERC20;
 
+    //
+    // Structs
+    //
+
     struct Stake {
-        uint256 actualAmount;
-        uint256 availableAmount;
-        mapping(uint256 => Unbonding) unbondings;
-        uint128 firstUnbonding;
-        uint128 nextUnbonding;
+        uint256 total;
+        uint256 bonded;
+    }
+
+    struct UnbondingList {
+        mapping(uint256 => Unbonding) list;
+        uint128 first;
+        uint128 next;
     }
 
     struct Unbonding {
@@ -24,24 +29,39 @@ contract Staking is IStaking {
         uint256 time;
     }
 
-    mapping(address => Stake) public stakes;
-    address public immutable token;
-
-    uint256 public constant UNBONDING_PERIOD = 28 days;
+    //
+    // Events
+    //
 
     event StakeFunds(address indexed staker, uint256 amount);
     event Unbond(address indexed staker, uint256 amount);
     event Rebond(address indexed staker, uint256 amount);
     event Withdraw(address indexed staker, uint256 amount);
 
+    //
+    // Constants
+    //
+
+    uint256 public constant UNBONDING_PERIOD = 28 days;
+
+    //
+    // State
+    //
+
+    mapping(address => Stake) public stakes;
+    mapping(address => UnbondingList) public unbondings;
+    address public immutable token;
+
     constructor(address _token) {
+        require(_token != address(0), "_token cannot be 0");
+
         token = _token;
     }
 
     /// @inheritdoc IStaking
     function stake(uint256 _amount) external override(IStaking) {
-        stakes[msg.sender].actualAmount += _amount;
-        stakes[msg.sender].availableAmount += _amount;
+        stakes[msg.sender].total += _amount;
+        stakes[msg.sender].bonded += _amount;
 
         IERC20(token).safeTransferFrom(msg.sender, address(this), _amount);
 
@@ -51,15 +71,17 @@ contract Staking is IStaking {
     /// @inheritdoc IStaking
     function unbond(uint256 amount) external override(IStaking) {
         Stake storage _stake = stakes[msg.sender];
-        require(_stake.availableAmount >= amount, "not enough funds");
+        UnbondingList storage _unbondings = unbondings[msg.sender];
+
+        require(_stake.bonded >= amount, "not enough funds");
         Unbonding memory unbonding = Unbonding(
             amount,
             block.timestamp + UNBONDING_PERIOD
         );
 
-        _stake.unbondings[_stake.nextUnbonding] = unbonding;
-        _stake.nextUnbonding += 1;
-        _stake.availableAmount -= amount;
+        _unbondings.list[_unbondings.next] = unbonding;
+        _unbondings.next++;
+        _stake.bonded -= amount;
 
         emit Unbond(msg.sender, amount);
     }
@@ -67,28 +89,26 @@ contract Staking is IStaking {
     /// @inheritdoc IStaking
     function rebond(uint256 amount) external override(IStaking) {
         Stake storage _stake = stakes[msg.sender];
+        UnbondingList storage _unbondings = unbondings[msg.sender];
+
         require(
-            (_stake.actualAmount - _stake.availableAmount) >= amount,
+            (_stake.total - _stake.bonded) >= amount,
             "not enough unbonding funds"
         );
         uint256 toBeRebonded = amount;
 
-        for (
-            uint256 i = _stake.nextUnbonding - 1;
-            i >= _stake.firstUnbonding;
-            i--
-        ) {
-            Unbonding storage unbonding = _stake.unbondings[i];
+        for (uint256 i = _unbondings.next - 1; i >= _unbondings.first; i--) {
+            Unbonding storage unbonding = _unbondings.list[i];
 
             if (unbonding.amount >= toBeRebonded) {
                 unbonding.amount -= toBeRebonded;
-                _stake.availableAmount += toBeRebonded;
+                _stake.bonded += toBeRebonded;
                 break;
             } else {
-                _stake.availableAmount += unbonding.amount;
+                _stake.bonded += unbonding.amount;
                 toBeRebonded -= unbonding.amount;
-                delete _stake.unbondings[i];
-                _stake.nextUnbonding -= 1;
+                delete _unbondings.list[i];
+                _unbondings.next--;
             }
         }
 
@@ -98,11 +118,13 @@ contract Staking is IStaking {
     /// @inheritdoc IStaking
     function withdraw(uint256 amount) external override(IStaking) {
         Stake storage _stake = stakes[msg.sender];
-        require(_stake.actualAmount >= amount, "not enough funds");
+        UnbondingList storage _unbondings = unbondings[msg.sender];
+
+        require(_stake.total >= amount, "not enough funds");
         uint256 withdrawableAmount;
 
-        for (uint256 i = _stake.firstUnbonding; i < _stake.nextUnbonding; i++) {
-            Unbonding storage unbonding = _stake.unbondings[i];
+        for (uint256 i = _unbondings.first; i < _unbondings.next; i++) {
+            Unbonding storage unbonding = _unbondings.list[i];
             if (unbonding.time > block.timestamp) {
                 break;
             }
@@ -113,15 +135,34 @@ contract Staking is IStaking {
                 break;
             } else {
                 withdrawableAmount += unbonding.amount;
-                delete _stake.unbondings[i];
-                _stake.firstUnbonding += 1;
+                delete _unbondings.list[i];
+                _unbondings.first++;
             }
         }
 
         require(withdrawableAmount >= amount, "not enough unbonded funds");
-        _stake.actualAmount -= amount;
+        _stake.total -= amount;
         IERC20(token).transfer(msg.sender, withdrawableAmount);
 
         emit Withdraw(msg.sender, amount);
+    }
+
+    function withdrawableAmount(address _account)
+        public
+        view
+        returns (uint256 amount)
+    {
+        UnbondingList storage _unbondings = unbondings[_account];
+        uint256 amount;
+
+        for (uint256 i = _unbondings.first; i < _unbondings.next; i++) {
+            Unbonding storage unbonding = _unbondings.list[i];
+
+            if (unbonding.time > block.timestamp) {
+                return amount;
+            }
+
+            amount += _unbondings.list[i].amount;
+        }
     }
 }

@@ -31,6 +31,9 @@ jobs:
       - run: yarn workspace @discovery-dao/contracts lint
       - run: yarn workspace @discovery-dao/contracts test
 
+      - name: Workaround for github actions cache bug
+        run: mkdir -fp ~/.cache/yarn/v6
+
       - name: Run Slither
         uses: crytic/slither-action@v0.1.0
         continue-on-error: true

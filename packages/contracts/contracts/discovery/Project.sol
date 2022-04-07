@@ -1,20 +1,31 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.8.12;
 
-import {IController} from "./IController.sol";
-import {IProject} from "./IProject.sol";
+import {IController} from "./interfaces/IController.sol";
+import {IProject} from "./interfaces/IProject.sol";
 
 contract Project is IProject {
     // deployed by each individual project owner, when registering
     // must be deployed via the Controller
     // will have a similar role as the CTND Vesting contract
 
+    // The IController instance in control of this project
     address public immutable controller;
+
+    // The token to be listed for sale
     address public immutable token;
 
-    string public description;
+    // Total supply of {token} up for sale
     uint256 public immutable saleSupply;
+
+    // fixed price of token, expressed in paymentToken amount
     uint256 public immutable rate;
+
+    // Project description, given at registration
+    string public description;
+
+    // has the project been approved by a Citizend manager
+    bool approvedByManager;
 
     constructor(
         string memory _description,
@@ -30,20 +41,40 @@ contract Project is IProject {
         rate = _rate;
     }
 
-    function hasTokens() private pure returns (bool) {
-        return true;
+    //
+    // Modifiers
+    //
+
+    modifier onlyManager(address _account) {
+        require(
+            IController(controller).hasProjectManagerRole(msg.sender),
+            "not a project manager"
+        );
     }
 
-    function isApproved() private pure returns (bool) {
-        return true;
+    //
+    // IProject
+    //
+
+    /// @inheritdoc IProject
+    function approveByManager() public override(IProject) onlyManager {
+        approvedByManager = true;
     }
 
-    function isReadyForListing() external pure returns (bool) {
-        return hasTokens() && isApproved();
+    /// @inheritdoc IProject
+    function hasTokens() external view override(IProject) returns (bool) {
+        uint256 balance = IERC20(token).balanceOf(address(this));
+
+        return balance >= saleSupply;
     }
 
-    modifier onlyBatch() {
-        IController(controller).isProjectInBatch(address(this), msg.sender);
-        _;
+    /// @inheritdoc IProject
+    function isReadyForListing()
+        external
+        view
+        override(IProject)
+        returns (bool)
+    {
+        return hasTokens() && approvedByManager;
     }
 }

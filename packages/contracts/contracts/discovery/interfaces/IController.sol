@@ -14,9 +14,6 @@ interface IController {
         view
         returns (address);
 
-    /// Whitelists a project, allowing it to be included on the next batch
-    function approveProjectByOwner(uint256 id) external;
-
     /// Creates a new batch with
     ///
     /// @dev Must guarantee projects are in a valid state (whitelisted & not already belonging to a batch)
@@ -34,6 +31,7 @@ interface IController {
         uint256 _rate
     ) external;
 
+    /// Checks if a project is included in the given batch
     function isProjectInBatch(address _project, address _batch)
         external
         returns (bool);

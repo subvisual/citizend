@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity =0.8.12;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -51,6 +51,23 @@ contract Staking is IStaking {
     mapping(address => Stake) public stakes;
     mapping(address => UnbondingList) public unbondings;
     address public immutable token;
+
+    //
+    // Constants
+    //
+
+    // How long an unbonding takes
+    uint256 public constant UNBONDING_PERIOD = 28 days;
+
+    //
+    // State
+    //
+
+    /// The token to stake
+    address public immutable token;
+
+    /// account => stakes
+    mapping(address => Stake) public stakes;
 
     constructor(address _token) {
         require(_token != address(0), "_token cannot be 0");

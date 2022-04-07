@@ -1,17 +1,19 @@
 import { ethers } from "hardhat";
-import { DeployFunction } from "hardhat-deploy/types";
+import type { DeployFunction } from "hardhat-deploy/types";
+
+import { acalaDeploy } from "../src/acala";
 
 const { parseUnits } = ethers.utils;
 
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
-  const { deploy, execute } = hre.deployments;
+  const { execute } = hre.deployments;
 
   if (hre.network.live) {
     return;
   }
 
-  await deploy("aUSD", {
+  await acalaDeploy(hre, "aUSD", {
     contract: "MockERC20",
     log: true,
     from: deployer,

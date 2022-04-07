@@ -1,20 +1,21 @@
 import { ethers } from "hardhat";
-import { DeployFunction } from "hardhat-deploy/types";
+import type { DeployFunction } from "hardhat-deploy/types";
+
+import { acalaDeploy } from "../../src/acala";
+import { getNetworkConfig } from "../../src/deployConfigs";
 
 const { parseUnits } = ethers.utils;
 
-import { getNetworkConfig } from "../../src/deployConfigs";
-
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
-  const { deploy, get } = hre.deployments;
+  const { get } = hre.deployments;
 
   const aUSD = await get("aUSD");
   const registry = await get("FractalRegistry");
 
   const { ctndSale2 } = await getNetworkConfig();
 
-  await deploy("Sale2", {
+  await acalaDeploy(hre, "Sale2", {
     contract: "Sale",
     log: true,
     from: deployer,

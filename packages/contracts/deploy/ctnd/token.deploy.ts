@@ -1,10 +1,11 @@
-import { DeployFunction } from "hardhat-deploy/types";
+import type { DeployFunction } from "hardhat-deploy/types";
+
+import { acalaDeploy } from "../../src/acala";
 
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
-  const { deploy } = hre.deployments;
 
-  await deploy("Citizend", {
+  await acalaDeploy(hre, "Citizend", {
     from: deployer,
     args: [deployer],
     log: true,

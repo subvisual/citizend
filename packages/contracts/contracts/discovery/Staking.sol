@@ -48,26 +48,14 @@ contract Staking is IStaking {
     // State
     //
 
-    mapping(address => Stake) public stakes;
-    mapping(address => UnbondingList) public unbondings;
-    address public immutable token;
-
-    //
-    // Constants
-    //
-
-    // How long an unbonding takes
-    uint256 public constant UNBONDING_PERIOD = 28 days;
-
-    //
-    // State
-    //
-
     /// The token to stake
     address public immutable token;
 
     /// account => stakes
     mapping(address => Stake) public stakes;
+
+    /// account => unbondings
+    mapping(address => UnbondingList) public unbondings;
 
     constructor(address _token) {
         require(_token != address(0), "_token cannot be 0");

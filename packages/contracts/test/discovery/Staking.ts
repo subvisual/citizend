@@ -150,7 +150,7 @@ describe("Staking", () => {
       await staking.connect(alice).unbond(amount);
       await increaseTime(await staking.UNBONDING_PERIOD());
 
-      const action = () => staking.connect(alice).withdraw(amount);
+      const action = () => staking.connect(alice).withdraw();
       await expect(action).to.changeTokenBalance(citizend, alice, amount);
     });
 
@@ -159,8 +159,8 @@ describe("Staking", () => {
       await staking.connect(alice).stake(amount);
       await staking.connect(alice).unbond(amount);
 
-      await expect(staking.connect(alice).withdraw(amount)).to.be.revertedWith(
-        "not enough unbonded funds"
+      await expect(staking.connect(alice).withdraw()).to.be.revertedWith(
+        "nothing to withdraw"
       );
     });
 
@@ -171,7 +171,7 @@ describe("Staking", () => {
       await staking.connect(alice).unbond(10);
       await increaseTime(await staking.UNBONDING_PERIOD());
 
-      const action = () => staking.connect(alice).withdraw(30);
+      const action = () => staking.connect(alice).withdraw();
       await expect(action).to.changeTokenBalance(citizend, alice, 30);
     });
 
@@ -180,13 +180,13 @@ describe("Staking", () => {
       await staking.connect(alice).stake(amount);
       await staking.connect(alice).unbond(amount);
 
-      await expect(staking.connect(alice).withdraw(amount)).to.be.revertedWith(
-        "not enough unbonded funds"
+      await expect(staking.connect(alice).withdraw()).to.be.revertedWith(
+        "nothing to withdraw"
       );
 
       await increaseTime(await staking.UNBONDING_PERIOD());
 
-      const action = () => staking.connect(alice).withdraw(amount);
+      const action = () => staking.connect(alice).withdraw();
       await expect(action).to.changeTokenBalance(citizend, alice, amount);
     });
 
@@ -196,7 +196,7 @@ describe("Staking", () => {
       await staking.connect(alice).unbond(amount);
       await increaseTime(await staking.UNBONDING_PERIOD());
 
-      expect(await staking.connect(alice).withdraw(amount))
+      expect(await staking.connect(alice).withdraw())
         .to.emit(staking, "Withdraw")
         .withArgs(alice.address, amount);
     });

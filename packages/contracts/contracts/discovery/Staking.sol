@@ -36,7 +36,7 @@ contract Staking is IStaking {
     event StakeFunds(address indexed staker, uint256 amount);
     event Unbond(address indexed staker, uint256 amount);
     event Rebond(address indexed staker, uint256 amount);
-    event Withdraw(address indexed staker, uint256 amount);
+    event Withdrawal(address indexed staker, uint256 amount);
 
     //
     // Constants
@@ -74,6 +74,7 @@ contract Staking is IStaking {
         UnbondingList storage _unbondings = unbondings[msg.sender];
 
         require(_stake.bonded >= amount, "not enough funds");
+
         Unbonding memory unbonding = Unbonding(
             amount,
             block.timestamp + UNBONDING_PERIOD
@@ -95,67 +96,64 @@ contract Staking is IStaking {
             (_stake.total - _stake.bonded) >= amount,
             "not enough unbonding funds"
         );
-        uint256 toBeRebonded = amount;
 
-        for (uint256 i = _unbondings.next - 1; i >= _unbondings.first; i--) {
+        uint256 toBeRebonded = amount;
+        uint256 limit = _unbondings.first;
+        for (uint256 i = _unbondings.next - 1; i >= limit; i--) {
             Unbonding storage unbonding = _unbondings.list[i];
 
             if (unbonding.amount >= toBeRebonded) {
                 unbonding.amount -= toBeRebonded;
-                _stake.bonded += toBeRebonded;
                 break;
             } else {
-                _stake.bonded += unbonding.amount;
                 toBeRebonded -= unbonding.amount;
                 delete _unbondings.list[i];
                 _unbondings.next--;
             }
         }
+        _stake.bonded += amount;
 
         emit Rebond(msg.sender, amount);
     }
 
+    /// TODO add a gas meter to prevent this function from crashing if too many unbondings exist
     /// @inheritdoc IStaking
-    function withdraw(uint256 amount) external override(IStaking) {
+    function withdraw() external override(IStaking) {
         Stake storage _stake = stakes[msg.sender];
         UnbondingList storage _unbondings = unbondings[msg.sender];
 
-        require(_stake.total >= amount, "not enough funds");
-        uint256 withdrawableAmount;
-
-        for (uint256 i = _unbondings.first; i < _unbondings.next; i++) {
+        uint256 amount;
+        uint256 limit = _unbondings.next;
+        for (uint256 i = _unbondings.first; i < limit; i++) {
             Unbonding storage unbonding = _unbondings.list[i];
+
             if (unbonding.time > block.timestamp) {
                 break;
             }
 
-            if (unbonding.amount >= amount) {
-                unbonding.amount -= amount;
-                withdrawableAmount += amount;
-                break;
-            } else {
-                withdrawableAmount += unbonding.amount;
-                delete _unbondings.list[i];
-                _unbondings.first++;
-            }
+            amount += unbonding.amount;
+            delete _unbondings.list[i];
+            _unbondings.first++;
         }
 
-        require(withdrawableAmount >= amount, "not enough unbonded funds");
+        require(amount > 0, "nothing to withdraw");
         _stake.total -= amount;
-        IERC20(token).transfer(msg.sender, withdrawableAmount);
 
-        emit Withdraw(msg.sender, amount);
+        IERC20(token).safeTransfer(msg.sender, amount);
+
+        emit Withdrawal(msg.sender, amount);
     }
 
-    function withdrawableAmount(address _account)
+    function withdrawable(address _account)
         public
         view
         returns (uint256 amount)
     {
         UnbondingList storage _unbondings = unbondings[_account];
-        uint256 amount;
 
-        for (uint256 i = _unbondings.first; i < _unbondings.next; i++) {
+        uint256 amount;
+        uint256 limit = _unbondings.next;
+        for (uint256 i = _unbondings.first; i < limit; i++) {
             Unbonding storage unbonding = _unbondings.list[i];
 
             if (unbonding.time > block.timestamp) {

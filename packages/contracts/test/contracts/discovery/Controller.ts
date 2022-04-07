@@ -7,9 +7,9 @@ import {
   Controller__factory,
   Project,
   Project__factory,
-} from "../../src/types";
+} from "../../../src/types";
 
-import { findEvent } from "../shared/utils";
+import { findEvent } from "../../shared/utils";
 
 const { parseUnits } = ethers.utils;
 

@@ -8,9 +8,9 @@ import {
   Citizend__factory,
   Staking,
   Staking__factory,
-} from "../../src/types";
+} from "../../../src/types";
 
-import { increaseTime } from "../timeHelpers";
+import { increaseTime } from "../../timeHelpers";
 
 const { MaxUint256 } = ethers.constants;
 

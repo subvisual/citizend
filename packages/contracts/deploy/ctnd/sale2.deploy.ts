@@ -15,6 +15,10 @@ const func: DeployFunction = async function (hre) {
 
   const { ctndSale2 } = await getNetworkConfig();
 
+  if (!ctndSale2) {
+    return;
+  }
+
   await acalaDeploy(hre, "Sale2", {
     contract: "Sale",
     log: true,

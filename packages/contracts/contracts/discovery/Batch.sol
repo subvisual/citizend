@@ -28,9 +28,6 @@ contract Batch is IBatch, ICommon {
     /// List of addresses for the project in the batch
     address[] public projectAddresses;
 
-    /// Id of the batch
-    uint256 public batchId;
-
     /// number of available slots
     uint256 public slotCount;
 
@@ -69,28 +66,25 @@ contract Batch is IBatch, ICommon {
     /// duration in seconds of each slot
     uint256 public singleSlotDuration;
 
+    modifier votingPeriodIsSet() {
+        require(votingPeriod.start != 0, "voting period not set");
+        require(votingPeriod.end != 0, "voting period not set");
+        _;
+    }
+
     modifier inVotingPeriod() {
         require(
             votingPeriod.end >= block.timestamp &&
-                votingPeriod.start <= block.timestamp
+                votingPeriod.start <= block.timestamp,
+            "outside of voting period"
         );
         _;
     }
 
-    constructor(
-        uint256 _batchId,
-        address[] memory _projectAddresses,
-        uint256 _slotCount,
-        Period memory _votingPeriod
-    ) {
+    constructor(address[] memory _projectAddresses, uint256 _slotCount) {
         controller = msg.sender;
-        batchId = _batchId;
         projectAddresses = _projectAddresses;
         slotCount = _slotCount;
-        votingPeriod = _votingPeriod;
-        singleSlotDuration =
-            (_votingPeriod.end - _votingPeriod.start) /
-            _slotCount;
 
         for (uint256 i = 0; i < projectAddresses.length; i++) {
             projects[projectAddresses[i]] = Project(
@@ -100,23 +94,42 @@ contract Batch is IBatch, ICommon {
         }
     }
 
+    function setVotingPeriod(uint256 start, uint256 end) public {
+        require(start >= block.timestamp, "start must be in the future");
+        require(start < end, "start must be before end");
+        require(
+            msg.sender == controller,
+            "only controller can set voting period"
+        );
+        votingPeriod = Period(start, end);
+        singleSlotDuration =
+            (votingPeriod.end - votingPeriod.start) /
+            slotCount;
+    }
+
     function vote(
         address projectAddress,
         uint256 peoplePoolStake,
         uint256 stakersPoolStake
-    ) external inVotingPeriod {
+    ) external votingPeriodIsSet inVotingPeriod {
         _vote(projectAddress);
         _investPeoplePool(peoplePoolStake);
         _investStakersPool(stakersPoolStake);
     }
 
-    function getCurrentWinners() external view returns (address[] memory) {
+    function getCurrentWinners()
+        external
+        view
+        votingPeriodIsSet
+        returns (address[] memory)
+    {
         return _getWinners();
     }
 
     function getProject(address projectAddress)
         external
         view
+        votingPeriodIsSet
         returns (Project memory)
     {
         address[] memory computedWinners = _getWinners();
@@ -186,6 +199,10 @@ contract Batch is IBatch, ICommon {
     }
 
     function _getWinners() internal view returns (address[] memory) {
+        if (block.timestamp < votingPeriod.start) {
+            return winners;
+        }
+
         uint256 numberOfVotes = votes.length;
         uint256 numberOfExistingWinners = winners.length;
         uint256 numberOfSlotsToCalculate = _numberOfSlotsToCalculate();
@@ -235,7 +252,8 @@ contract Batch is IBatch, ICommon {
     }
 
     function _numberOfSlotsToCalculate() internal view returns (uint256) {
-        return (block.timestamp - votingPeriod.start) / singleSlotDuration;
+        uint256 endTimestamp = Math.min(votingPeriod.end, block.timestamp);
+        return (endTimestamp - votingPeriod.start) / singleSlotDuration;
     }
 
     function _investStakersPool(uint256 stakersPoolStake) internal {}

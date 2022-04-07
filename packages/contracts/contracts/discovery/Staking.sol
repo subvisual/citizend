@@ -149,6 +149,7 @@ contract Staking is IStaking {
         emit Withdrawal(msg.sender, amount);
     }
 
+    /// @inheritdoc IStaking
     function withdrawable(address _account)
         public
         view

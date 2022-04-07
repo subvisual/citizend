@@ -2,9 +2,9 @@ import { ethers } from "hardhat";
 import { expect } from "chai";
 
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { Batch, Batch__factory } from "../../src/types";
+import { Batch, Batch__factory } from "../../../src/types";
 
-import { goToTime, currentTimestamp } from "../timeHelpers";
+import { goToTime, currentTimestamp } from "../../timeHelpers";
 
 describe("Batch", () => {
   let owner: SignerWithAddress;

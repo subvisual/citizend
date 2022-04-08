@@ -14,7 +14,7 @@ function bytes32(s: string): string {
 const ID_42 = bytes32("42");
 const ID_43 = bytes32("43");
 
-describe.only("FractalRegistry", () => {
+describe("FractalRegistry", () => {
   let subject: any;
 
   let root: SignerWithAddress;

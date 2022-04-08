@@ -33,8 +33,8 @@ describe("Batch", () => {
 
   describe("constructor", async () => {
     it("should set the correct values", async () => {
-      expect(await batch.projectAddresses(0)).to.eq(fakeProject.address);
-      expect(await batch.projectAddresses(1)).to.eq(anotherFakeProject.address);
+      expect(await batch.projects(0)).to.eq(fakeProject.address);
+      expect(await batch.projects(1)).to.eq(anotherFakeProject.address);
       expect(await batch.slotCount()).to.eq(2);
     });
   });
@@ -106,14 +106,13 @@ describe("Batch", () => {
     });
   });
 
-  describe("getProject", () => {
+  describe("getProjectStatus", () => {
     it("returns the correct project", async () => {
       await batch.setVotingPeriod(votingStart, votingEnd);
 
-      const project = await batch.getProject(fakeProject.address);
+      const status = await batch.getProjectStatus(fakeProject.address);
 
-      expect(project.projectAddress).to.eq(fakeProject.address);
-      expect(project.status).to.eq(0);
+      expect(status).to.eq(0);
     });
 
     it("takes the votes into account", async () => {
@@ -124,20 +123,18 @@ describe("Batch", () => {
       await batch.connect(alice).vote(anotherFakeProject.address, 0, 0);
       await goToTime(votingStart + 5 * oneDay);
 
-      const project = await batch.getProject(fakeProject.address);
+      const status = await batch.getProjectStatus(fakeProject.address);
 
-      expect(project.projectAddress).to.eq(fakeProject.address);
-      expect(project.status).to.eq(1);
+      expect(status).to.eq(1);
     });
 
     it("marks projects as losers after the end of the batch", async () => {
       await batch.setVotingPeriod(votingStart, votingEnd);
       await goToTime(votingStart + 11 * oneDay);
 
-      const project = await batch.getProject(fakeProject.address);
+      const status = await batch.getProjectStatus(fakeProject.address);
 
-      expect(project.projectAddress).to.eq(fakeProject.address);
-      expect(project.status).to.eq(2);
+      expect(status).to.eq(2);
     });
   });
 

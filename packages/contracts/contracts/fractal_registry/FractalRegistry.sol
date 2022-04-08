@@ -14,18 +14,25 @@ contract FractalRegistry {
         root = _root;
     }
 
-    /// @param addr is ERC20 address
+    /// @param addr is Eth address
     /// @return FractalId as bytes32
     function getFractalId(address addr) public view returns (bytes32) {
         return fractalIdForAddress[addr];
     }
 
-    /// @notice Adds a user to the mapping of ERC20 address to fractalId.
-    /// @param addr is ERC20 address.
+    /// @notice Adds a user to the mapping of Eth address to FractalId.
+    /// @param addr is Eth address.
     /// @param fractalId is FractalId in bytes32.
     function addUserAddress(address addr, bytes32 fractalId) public {
         requireMutatePermission();
         fractalIdForAddress[addr] = fractalId;
+    }
+
+    /// @notice Removes an address from the mapping of Eth address to FractalId.
+    /// @param addr is Eth address.
+    function removeUserAddress(address addr) public {
+        requireMutatePermission();
+        delete fractalIdForAddress[addr];
     }
 
     /// @notice Checks if a user by FractalId exists in a specific list.
@@ -57,14 +64,14 @@ contract FractalRegistry {
     }
 
     /// @notice Only root can add delegates. Delegates have mutate permissions.
-    /// @param addr is ERC20 address
+    /// @param addr is Eth address
     function addDelegate(address addr) public {
         require(msg.sender == root, "Must be root");
         delegates[addr] = true;
     }
 
     /// @notice Removing delegates is only posible from root or by himself.
-    /// @param addr is ERC20 address
+    /// @param addr is Eth address
     function removeDelegate(address addr) public {
         require(
             msg.sender == root || msg.sender == addr,

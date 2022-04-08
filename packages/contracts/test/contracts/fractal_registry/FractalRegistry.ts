@@ -14,7 +14,7 @@ function bytes32(s: string): string {
 const ID_42 = bytes32("42");
 const ID_43 = bytes32("43");
 
-describe("FractalRegistry", () => {
+describe.only("FractalRegistry", () => {
   let subject: any;
 
   let root: SignerWithAddress;
@@ -46,6 +46,13 @@ describe("FractalRegistry", () => {
       await subject.addUserAddress(user2.address, ID_43);
 
       expect(await subject.getFractalId(user1.address)).to.equal(ID_42);
+    });
+
+    it("is gone after remove", async () => {
+      await subject.addUserAddress(user1.address, ID_42);
+      await subject.removeUserAddress(user1.address);
+
+      expect(await subject.getFractalId(user1.address)).to.equal(bytes32(""));
     });
   });
 
@@ -101,6 +108,12 @@ describe("FractalRegistry", () => {
     it("fails when adding user address from not-root", async () => {
       await expect(
         subject.connect(user1).addUserAddress(user2.address, ID_42)
+      ).to.be.revertedWith("Not allowed to mutate");
+    });
+
+    it("fails when removing user address from not-root", async () => {
+      await expect(
+        subject.connect(user1).removeUserAddress(user2.address)
       ).to.be.revertedWith("Not allowed to mutate");
     });
 

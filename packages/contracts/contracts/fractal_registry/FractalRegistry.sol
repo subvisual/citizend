@@ -23,14 +23,14 @@ contract FractalRegistry {
     /// @notice Adds a user to the mapping of Eth address to FractalId.
     /// @param addr is Eth address.
     /// @param fractalId is FractalId in bytes32.
-    function addUserAddress(address addr, bytes32 fractalId) public {
+    function addUserAddress(address addr, bytes32 fractalId) external {
         requireMutatePermission();
         fractalIdForAddress[addr] = fractalId;
     }
 
     /// @notice Removes an address from the mapping of Eth address to FractalId.
     /// @param addr is Eth address.
-    function removeUserAddress(address addr) public {
+    function removeUserAddress(address addr) external {
         requireMutatePermission();
         delete fractalIdForAddress[addr];
     }
@@ -50,7 +50,7 @@ contract FractalRegistry {
     /// @notice Add user by FractalId to a specific list.
     /// @param userId is FractalId in bytes32.
     /// @param listId is the list id.
-    function addUserToList(bytes32 userId, string memory listId) public {
+    function addUserToList(bytes32 userId, string memory listId) external {
         requireMutatePermission();
         userLists[listId][userId] = true;
     }
@@ -58,21 +58,21 @@ contract FractalRegistry {
     /// @notice Remove user by FractalId from a specific list.
     /// @param userId is FractalId in bytes32.
     /// @param listId is the list id.
-    function removeUserFromList(bytes32 userId, string memory listId) public {
+    function removeUserFromList(bytes32 userId, string memory listId) external {
         requireMutatePermission();
         delete userLists[listId][userId];
     }
 
     /// @notice Only root can add delegates. Delegates have mutate permissions.
     /// @param addr is Eth address
-    function addDelegate(address addr) public {
+    function addDelegate(address addr) external {
         require(msg.sender == root, "Must be root");
         delegates[addr] = true;
     }
 
     /// @notice Removing delegates is only posible from root or by himself.
     /// @param addr is Eth address
-    function removeDelegate(address addr) public {
+    function removeDelegate(address addr) external {
         require(
             msg.sender == root || msg.sender == addr,
             "Not allowed to remove address"

@@ -135,4 +135,28 @@ contract Controller is IController, AccessControl {
     {
         return projectsToBatches[_project];
     }
+
+    function vote(
+        address _batch,
+        address _project,
+        uint256 _peoplesPoolAmount,
+        uint256 _stakersPoolAmount
+    ) external {
+        revert("not yet implemented");
+        // TODO call batch.vote(_project)
+        // TODO transfer tokens from msg.sender to peoplesPool
+        // TODO transfer tokens from msg.sender to stakersPool
+        // TODO call peoplesPool.buy()
+        // TODO call stakersPool.buy()
+    }
+
+    function invest(uint256 _peoplesPoolAmount, uint256 _stakersPoolAmount)
+        external
+    {
+        revert("not yet implemented");
+        // TODO transfer tokens from msg.sender to peoplesPool
+        // TODO transfer tokens from msg.sender to stakersPool
+        // TODO call peoplesPool.buy()
+        // TODO call stakersPool.buy()
+    }
 }

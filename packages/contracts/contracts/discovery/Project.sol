@@ -51,15 +51,15 @@ contract Project is IProject {
         saleSupply = _saleSupply;
         rate = _rate;
 
-        stakersPool = new StakersPool();
-        peoplesPool = new PeoplesPool();
+        stakersPool = new StakersPool(controller, _saleSupply / 2);
+        peoplesPool = new PeoplesPool(_saleSupply / 2);
     }
 
     //
     // Modifiers
     //
 
-    modifier onlyManager(address _account) {
+    modifier onlyManager() {
         require(
             IController(controller).hasProjectManagerRole(msg.sender),
             "not a project manager"
@@ -68,20 +68,27 @@ contract Project is IProject {
         _;
     }
 
-    function invest(uint256 _peoplesAmount, uint256 _stakersAmount) external {
-        revert("not yet implemented");
+    /// Restricts a call to only the Batch where this project is included
+    modifier onlyBatch(address _batch) {
+        require(IBatch(msg.sender).includesProject(address(this)));
+        _;
     }
 
     //
     // IProject
     //
 
-    /// @inheritdoc IProject
-    function approveByManager()
-        public
+    /// @Inheritdoc IProject
+    function invest(uint256 _peoplesAmount, uint256 _stakersAmount)
+        external
         override(IProject)
-        onlyManager(msg.sender)
+        onlyBatch
     {
+        revert("not yet implemented");
+    }
+
+    /// @inheritdoc IProject
+    function approveByManager() public override(IProject) onlyManager {
         approvedByManager = true;
     }
 

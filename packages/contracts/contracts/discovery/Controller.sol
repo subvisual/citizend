@@ -111,7 +111,7 @@ contract Controller is IController, AccessControl {
         view
         returns (bool)
     {
-        return hasRole(_account, PROJECT_MANAGER_ROLE);
+        return hasRole(PROJECT_MANAGER_ROLE, _account);
     }
 
     // Checks if a given account has the BATCH_MANAGER_ROLE role
@@ -120,7 +120,7 @@ contract Controller is IController, AccessControl {
         view
         returns (bool)
     {
-        return hasRole(_account, BATCH_MANAGER_ROLE);
+        return hasRole(BATCH_MANAGER_ROLE, _account);
     }
 
     //

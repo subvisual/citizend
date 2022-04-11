@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.8.12;
 
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 import {IController} from "./interfaces/IController.sol";
 import {IProject} from "./interfaces/IProject.sol";
 
@@ -25,7 +27,7 @@ contract Project is IProject {
     string public description;
 
     // has the project been approved by a Citizend manager
-    bool approvedByManager;
+    bool public override(IProject) approvedByManager;
 
     constructor(
         string memory _description,
@@ -50,6 +52,8 @@ contract Project is IProject {
             IController(controller).hasProjectManagerRole(msg.sender),
             "not a project manager"
         );
+
+        _;
     }
 
     //
@@ -57,12 +61,16 @@ contract Project is IProject {
     //
 
     /// @inheritdoc IProject
-    function approveByManager() public override(IProject) onlyManager {
+    function approveByManager()
+        public
+        override(IProject)
+        onlyManager(msg.sender)
+    {
         approvedByManager = true;
     }
 
     /// @inheritdoc IProject
-    function hasTokens() external view override(IProject) returns (bool) {
+    function hasTokens() public view override(IProject) returns (bool) {
         uint256 balance = IERC20(token).balanceOf(address(this));
 
         return balance >= saleSupply;

@@ -7,6 +7,14 @@ import {IBatch} from "./IBatch.sol";
 ///   * Creating batches
 ///   * Whitelisting companies
 interface IController {
+    // Checks if a given account has the PROJECT_MANAGER_ROLE role
+    /// @param _account Account to check
+    /// @return true if account is a project manager
+    function hasProjectManagerRole(address _account)
+        external
+        view
+        returns (bool);
+
     /// @param _project address of the project
     /// @return Batch address
     function getBatchForProject(address _project)

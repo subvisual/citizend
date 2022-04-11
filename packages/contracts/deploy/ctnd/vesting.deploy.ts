@@ -1,16 +1,17 @@
-import { DeployFunction } from "hardhat-deploy/types";
+import type { DeployFunction } from "hardhat-deploy/types";
 
+import { acalaDeploy } from "../../src/acala";
 import { getNetworkConfig } from "../../src/deployConfigs";
 
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
-  const { deploy, get } = hre.deployments;
+  const { get } = hre.deployments;
 
   const citizend = await get("Citizend");
 
   const { ctndVesting } = await getNetworkConfig();
 
-  await deploy("Vesting", {
+  await acalaDeploy(hre, "Vesting", {
     log: true,
     from: deployer,
     args: [3, citizend.address, [], ctndVesting.start, 10000], // TODO input correct private sale value

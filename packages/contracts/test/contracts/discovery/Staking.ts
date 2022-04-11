@@ -44,8 +44,8 @@ describe("Staking", () => {
 
       const stake = await staking.stakes(alice.address);
 
-      expect(stake.actualAmount).to.eq(amount);
-      expect(stake.availableAmount).to.eq(amount);
+      expect(stake.total).to.eq(amount);
+      expect(stake.bonded).to.eq(amount);
     });
 
     it("transfers the given amount to the staking contract", async () => {
@@ -74,8 +74,8 @@ describe("Staking", () => {
       await staking.connect(alice).unbond(amount);
 
       const stake = await staking.stakes(alice.address);
-      expect(stake.actualAmount).to.eq(100);
-      expect(stake.availableAmount).to.eq(0);
+      expect(stake.total).to.eq(100);
+      expect(stake.bonded).to.eq(0);
     });
 
     it("requires enough funds to have been staked", async () => {
@@ -103,8 +103,8 @@ describe("Staking", () => {
       await staking.connect(alice).rebond(50);
 
       const stake = await staking.stakes(alice.address);
-      expect(stake.actualAmount).to.eq(100);
-      expect(stake.availableAmount).to.eq(50);
+      expect(stake.total).to.eq(100);
+      expect(stake.bonded).to.eq(50);
     });
 
     it("rebonds multiple unbondings at once", async () => {
@@ -116,8 +116,8 @@ describe("Staking", () => {
       await staking.connect(alice).rebond(25);
 
       const stake = await staking.stakes(alice.address);
-      expect(stake.actualAmount).to.eq(100);
-      expect(stake.availableAmount).to.eq(95);
+      expect(stake.total).to.eq(100);
+      expect(stake.bonded).to.eq(95);
     });
 
     it("can only rebond the amount that is in the unbonded pool", async () => {
@@ -150,7 +150,7 @@ describe("Staking", () => {
       await staking.connect(alice).unbond(amount);
       await increaseTime(await staking.UNBONDING_PERIOD());
 
-      const action = () => staking.connect(alice).withdraw(amount);
+      const action = () => staking.connect(alice).withdraw();
       await expect(action).to.changeTokenBalance(citizend, alice, amount);
     });
 
@@ -159,8 +159,8 @@ describe("Staking", () => {
       await staking.connect(alice).stake(amount);
       await staking.connect(alice).unbond(amount);
 
-      await expect(staking.connect(alice).withdraw(amount)).to.be.revertedWith(
-        "not enough unbonded funds"
+      await expect(staking.connect(alice).withdraw()).to.be.revertedWith(
+        "nothing to withdraw"
       );
     });
 
@@ -171,7 +171,7 @@ describe("Staking", () => {
       await staking.connect(alice).unbond(10);
       await increaseTime(await staking.UNBONDING_PERIOD());
 
-      const action = () => staking.connect(alice).withdraw(30);
+      const action = () => staking.connect(alice).withdraw();
       await expect(action).to.changeTokenBalance(citizend, alice, 30);
     });
 
@@ -180,13 +180,13 @@ describe("Staking", () => {
       await staking.connect(alice).stake(amount);
       await staking.connect(alice).unbond(amount);
 
-      await expect(staking.connect(alice).withdraw(amount)).to.be.revertedWith(
-        "not enough unbonded funds"
+      await expect(staking.connect(alice).withdraw()).to.be.revertedWith(
+        "nothing to withdraw"
       );
 
       await increaseTime(await staking.UNBONDING_PERIOD());
 
-      const action = () => staking.connect(alice).withdraw(amount);
+      const action = () => staking.connect(alice).withdraw();
       await expect(action).to.changeTokenBalance(citizend, alice, amount);
     });
 
@@ -196,7 +196,7 @@ describe("Staking", () => {
       await staking.connect(alice).unbond(amount);
       await increaseTime(await staking.UNBONDING_PERIOD());
 
-      expect(await staking.connect(alice).withdraw(amount))
+      expect(await staking.connect(alice).withdraw())
         .to.emit(staking, "Withdraw")
         .withArgs(alice.address, amount);
     });

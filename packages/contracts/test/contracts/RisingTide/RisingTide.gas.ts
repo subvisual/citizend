@@ -4,7 +4,7 @@ import type { TestRisingTideWithStaticAmounts } from "../../../src/types";
 import { ethers } from "hardhat";
 
 import { expectCapValidation } from "./helpers";
-import { txParams } from "../../../src/transactionHelper";
+import { acalaDeployParams } from "../../../src/acala";
 
 /**
  * Measures the gas spent to validate investment caps
@@ -30,7 +30,7 @@ if (process.env.RISING_TIDE_GAS_ESTIMATES) {
         it(`${n} investors`, async function () {
           console.log("deploying");
           const contract = (await WithStaticAmounts.deploy(n, total, total, {
-            ...(await txParams()),
+            ...(await acalaDeployParams()),
           })) as TestRisingTideWithStaticAmounts;
           await contract.deployed();
           console.log("deployed");

@@ -3,6 +3,8 @@
  */
 
 import { AppProps, NextWebVitalsMetric } from 'next/app';
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
+import { Web3ReactProvider } from '@web3-react/core';
 import GlobalStyle from 'src/components/core/global-style';
 import Head from 'next/head';
 import React from 'react';
@@ -28,6 +30,18 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
 }
 
 /**
+ * Get library.
+ */
+
+function getLibrary(provider: ExternalProvider): Web3Provider {
+  const library = new Web3Provider(provider);
+
+  library.pollingInterval = 12000;
+
+  return library;
+}
+
+/**
  * `PageApp` page.
  */
 
@@ -35,7 +49,7 @@ const PageApp = (props: AppProps) => {
   const { Component, pageProps } = props;
 
   return (
-    <>
+    <Web3ReactProvider getLibrary={getLibrary}>
       <Head>
         <meta content={'IE=edge'} httpEquiv={'X-UA-Compatible'} />
 
@@ -63,7 +77,7 @@ const PageApp = (props: AppProps) => {
       <GlobalStyle />
 
       <Component {...pageProps} />
-    </>
+    </Web3ReactProvider>
   );
 };
 

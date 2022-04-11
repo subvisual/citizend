@@ -6,7 +6,7 @@ interface IStaking {
      * Stakes the given amount of tokens, using the `msg.sender` as the
      * staker.
      *
-     * @dev Emits a `StakeFunds` event.
+     * @dev Emits a `Stake` event.
      *
      * @param amount The amount of tokens to stake.
      */
@@ -37,12 +37,14 @@ interface IStaking {
     function rebond(uint256 amount) external;
 
     /**
-     * Withdraws the given amount of tokens. Requires that the staker has the
-     * amount unbonded.
+     * Withdraws any tokens that have gone through the full unbonding period
      *
-     * @dev Emits a `Withdraw` event.
-     *
-     * @param amount The amount of tokens to withdraw.
+     * @dev Emits a `Withdrawal` event.
      */
-    function withdraw(uint256 amount) external;
+    function withdraw() external;
+
+    /**
+     * Computes how many tokens waiting for unbonding can already be withdrawn
+     */
+    function withdrawable(address _account) external view returns (uint256);
 }

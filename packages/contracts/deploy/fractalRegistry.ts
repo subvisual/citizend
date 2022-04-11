@@ -1,11 +1,11 @@
-import { ethers } from "hardhat";
 import { DeployFunction } from "hardhat-deploy/types";
+
+import { acalaDeploy } from "../src/acala";
 
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
-  const { deploy, get } = hre.deployments;
 
-  await deploy("FractalRegistry", {
+  await acalaDeploy(hre, "FractalRegistry", {
     log: true,
     from: deployer,
     args: [deployer],

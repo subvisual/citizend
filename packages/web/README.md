@@ -41,3 +41,16 @@ To run the project tests (eslint, stylelint and typescript):
 ```sh
 yarn lint
 ```
+
+### Environment variables
+
+## NEXT_PUBLIC_DAO_CONTRACTS_FOLDER
+
+This application will run with the `mandala (staging)` contracts by default.
+In order to bundle the application with other contracts schemas, please use:
+`NEXT_PUBLIC_DAO_CONTRACTS_FOLDER=<folderName> yarn bundle`
+
+Where the `folderName` should be one of the folders in the following folder:
+`../packages/contracts/deployments/`
+
+If running a local blockchain network, use: `NEXT_PUBLIC_DAO_CONTRACTS_FOLDER=localhost yarn start`

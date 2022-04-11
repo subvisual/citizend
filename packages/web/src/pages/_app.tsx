@@ -3,6 +3,7 @@
  */
 
 import { AppProps, NextWebVitalsMetric } from 'next/app';
+import { ContractsProvider } from 'src/context/contracts';
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 import { Web3ReactProvider } from '@web3-react/core';
 import GlobalStyle from 'src/components/core/global-style';
@@ -49,7 +50,7 @@ const PageApp = (props: AppProps) => {
   const { Component, pageProps } = props;
 
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
+    <>
       <Head>
         <meta content={'IE=edge'} httpEquiv={'X-UA-Compatible'} />
 
@@ -76,8 +77,12 @@ const PageApp = (props: AppProps) => {
 
       <GlobalStyle />
 
-      <Component {...pageProps} />
-    </Web3ReactProvider>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <ContractsProvider>
+          <Component {...pageProps} />
+        </ContractsProvider>
+      </Web3ReactProvider>
+    </>
   );
 };
 

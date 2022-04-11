@@ -3,29 +3,37 @@
  */
 
 import { Web3Provider } from '@ethersproject/providers';
+import { useBalance } from 'src/hooks/use-balance';
 import { useWeb3React } from '@web3-react/core';
 import Metatags from 'src/components/core/metatags';
 import React from 'react';
 import useWalletConnect from 'src/hooks/use-wallet-connect';
 
 /**
- * `ConnectWallet` component.
+ * `Home` page.
  */
 
-const ConnectWallet = () => {
+function Home() {
   const { account, active } = useWeb3React<Web3Provider>();
   const { connectStatus, onConnect, onDisconnect } = useWalletConnect();
+  const balance = useBalance();
 
   return (
-    <div>
+    <>
+      <Metatags />
+
       <div>{`Account: ${account ?? '-'}`}</div>
 
       <div>{`Connection Status: ${active ? '🟢' : '🔴'}`}</div>
 
       {active ? (
-        <button onClick={onDisconnect} type={'button'}>
-          {'Disconnect'}
-        </button>
+        <>
+          <div>{`Balance: ${balance}`}</div>
+
+          <button onClick={onDisconnect} type={'button'}>
+            {'Disconnect'}
+          </button>
+        </>
       ) : (
         <>
           <button
@@ -53,20 +61,6 @@ const ConnectWallet = () => {
           <div>{'Sign the message in your wallet to continue'}</div>
         </div>
       )}
-    </div>
-  );
-};
-
-/**
- * `Home` page.
- */
-
-function Home() {
-  return (
-    <>
-      <Metatags />
-
-      <ConnectWallet />
     </>
   );
 }

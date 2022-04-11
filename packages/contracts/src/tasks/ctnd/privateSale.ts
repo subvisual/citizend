@@ -1,5 +1,4 @@
 import { task } from "hardhat/config";
-import { ethers } from "hardhat";
 import csv from "fast-csv";
 
 import type { HardhatRuntimeEnvironment } from "hardhat/types";
@@ -10,8 +9,6 @@ task("ctnd:importPrivateSale", "Import private sale records")
     await importCSV(hre, file);
   });
 
-const { parseUnits } = ethers.utils;
-
 interface Row {
   address: string;
   amount: string;
@@ -21,8 +18,9 @@ interface Row {
 
 async function importCSV(hre: HardhatRuntimeEnvironment, file: string) {
   const { Vesting__factory } = await import("../../types");
+  const { parseUnits } = hre.ethers.utils;
 
-  const [owner] = await ethers.getSigners();
+  const [owner] = await hre.ethers.getSigners();
   const vestingAddress = (await hre.deployments.get("Vesting")).address;
   const vesting = Vesting__factory.connect(vestingAddress, owner);
 

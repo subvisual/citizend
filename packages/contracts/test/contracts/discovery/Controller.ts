@@ -77,5 +77,9 @@ describe("Controller", () => {
         )
       ).to.emit(controller, "ProjectRegistered");
     });
+
+    it("fails to register a project that is not known to the controller");
+    it("fails to register a project that's already registered in a batch");
+    it("fails to register a project that is not ready for listing");
   });
 });

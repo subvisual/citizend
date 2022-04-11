@@ -3,7 +3,7 @@ pragma solidity =0.8.12;
 
 import {IController} from "./interfaces/IController.sol";
 import {IProject} from "./interfaces/IProject.sol";
-import {IBatch} from "./interfaces/Batch.sol";
+import {IBatch} from "./interfaces/IBatch.sol";
 import {Project} from "./Project.sol";
 import {Batch} from "./Batch.sol";
 

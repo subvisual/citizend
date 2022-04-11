@@ -6,11 +6,11 @@ interface IProject {
     function approveByManager() external;
 
     /// One of the criteria for listing: has the project been approved by a project manager?
-    function approvedByManager() external view returns (bool)
+    function approvedByManager() external view returns (bool);
 
     /// One of the criteria for listing: does the project contract hold the sale
     /// supply already?
-    function hasTokens() external view returns (bool)
+    function hasTokens() external view returns (bool);
 
     /// True if project fulfills all criteria to be included in an upcoming batch
     function isReadyForListing() external view returns (bool);

@@ -4,6 +4,8 @@ pragma solidity =0.8.12;
 import {ICommon} from "./ICommon.sol";
 import {Math} from "../libraries/Math.sol";
 
+import "hardhat/console.sol";
+
 abstract contract ProjectVoting is ICommon {
     /// number of votes for each project
     uint32[] public votes;
@@ -23,6 +25,9 @@ abstract contract ProjectVoting is ICommon {
 
     /// project address => votes
     mapping(address => uint256) public projectVoteCount;
+
+    /// project address => votes
+    mapping(address => uint256) public weightedProjectVoteCount;
 
     /// project => (user => voted)
     mapping(address => mapping(address => bool)) public userVotesPerProject;
@@ -49,6 +54,10 @@ abstract contract ProjectVoting is ICommon {
         virtual
         returns (uint256);
 
+    function projectVoting_initialBonus() public view virtual returns (int256);
+
+    function projectVoting_finalBonus() public view virtual returns (int256);
+
     enum ProjectStatus {
         InProgress,
         Won,
@@ -73,6 +82,9 @@ abstract contract ProjectVoting is ICommon {
         userVotesPerProject[projectAddress][msg.sender] = true;
         userVoteCount[msg.sender]++;
         projectVoteCount[projectAddress]++;
+        weightedProjectVoteCount[projectAddress] += _calculateWeightedVote(
+            block.timestamp
+        );
 
         if (
             votes.length == 0 ||
@@ -207,5 +219,27 @@ abstract contract ProjectVoting is ICommon {
         }
         if (left < j) _quickSort(_votes, left, j);
         if (i < right) _quickSort(_votes, i, right);
+    }
+
+    function _calculateWeightedVote(uint256 currentTime)
+        internal
+        view
+        returns (uint256)
+    {
+        int256 bonusDelta = int256(
+            projectVoting_finalBonus() - projectVoting_initialBonus()
+        );
+        int256 timeDelta = int256(
+            projectVoting_votingPeriod().end -
+                projectVoting_votingPeriod().start
+        );
+        int256 slope = bonusDelta / timeDelta;
+        uint256 weightedVote = uint256(
+            (slope *
+                int256(currentTime - projectVoting_votingPeriod().start) +
+                projectVoting_initialBonus())
+        );
+
+        return weightedVote;
     }
 }

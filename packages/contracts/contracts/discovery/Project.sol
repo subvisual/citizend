@@ -2,6 +2,7 @@
 pragma solidity =0.8.12;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 import {IController} from "./interfaces/IController.sol";
 import {IProject} from "./interfaces/IProject.sol";
@@ -9,7 +10,7 @@ import {IProject} from "./interfaces/IProject.sol";
 import {StakersPool} from "./pools/StakersPool.sol";
 import {PeoplesPool} from "./pools/PeoplesPool.sol";
 
-contract Project is IProject {
+contract Project is IProject, ERC165 {
     // deployed by each individual project owner, when registering
     // must be deployed via the Controller
     // will have a similar role as the CTND Vesting contract
@@ -100,5 +101,22 @@ contract Project is IProject {
         returns (bool)
     {
         return hasTokens() && approvedByManager;
+    }
+
+    //
+    // ERC165
+    //
+
+    /// @inheritdoc ERC165
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC165)
+        returns (bool)
+    {
+        return
+            interfaceId == type(IProject).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 }

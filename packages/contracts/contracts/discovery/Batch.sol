@@ -1,13 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.8.12;
 
-import {IBatch} from "./IBatch.sol";
+import {ERC165Checker} from "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
+
 import {ICommon} from "./ICommon.sol";
+import {IProject} from "./IProject.sol";
+import {IBatch} from "./IBatch.sol";
 import {ProjectVoting} from "./ProjectVoting.sol";
 
 import "hardhat/console.sol";
 
 contract Batch is IBatch, ICommon, ProjectVoting {
+    using ERC165Checker for address;
+
     /// List of addresses for the project in the batch
     address[] public projects;
 
@@ -39,6 +44,13 @@ contract Batch is IBatch, ICommon, ProjectVoting {
     }
 
     constructor(address[] memory _projects, uint256 _slotCount) {
+        require(_projects.length > 0, "projects must not be empty");
+        for (uint256 i = 0; i < _projects.length; i++) {
+            require(
+                _projects[i].supportsInterface(type(IProject).interfaceId),
+                "project must be an IProject"
+            );
+        }
         controller = msg.sender;
         projects = _projects;
         slotCount = _slotCount;
@@ -72,6 +84,26 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         returns (uint256)
     {
         return singleSlotDuration;
+    }
+
+    function projectVoting_initialBonus()
+        public
+        view
+        virtual
+        override(ProjectVoting)
+        returns (int256)
+    {
+        return 0.05 * 10**18;
+    }
+
+    function projectVoting_finalBonus()
+        public
+        view
+        virtual
+        override(ProjectVoting)
+        returns (int256)
+    {
+        return 0;
     }
 
     function setVotingPeriod(uint256 start, uint256 end) public {

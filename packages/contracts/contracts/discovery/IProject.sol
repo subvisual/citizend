@@ -3,4 +3,8 @@ pragma solidity =0.8.12;
 
 interface IProject {
     function isReadyForListing() external view returns (bool);
+
+    function stakersPool() external view returns (address);
+
+    function peoplesPool() external view returns (address);
 }

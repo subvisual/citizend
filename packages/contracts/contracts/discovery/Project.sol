@@ -3,6 +3,8 @@ pragma solidity =0.8.12;
 
 import {IController} from "./IController.sol";
 import {IProject} from "./IProject.sol";
+import {StakersPool} from "./pools/StakersPool";
+import {PeoplesPool} from "./pools/PeoplesPool";
 
 contract Project is IProject {
     // deployed by each individual project owner, when registering
@@ -16,6 +18,12 @@ contract Project is IProject {
     uint256 public immutable saleSupply;
     uint256 public immutable rate;
 
+    /// @inheritdoc IProject
+    address override(IProject) stakersPool;
+
+    /// @inheritdoc IProject
+    address override(IProject) peoplesPool;
+
     constructor(
         string memory _description,
         address _token,
@@ -28,6 +36,9 @@ contract Project is IProject {
         token = _token;
         saleSupply = _saleSupply;
         rate = _rate;
+
+        stakersPool = new StakersPool();
+        peoplesPool = new PeoplesPool();
     }
 
     function hasTokens() private pure returns (bool) {

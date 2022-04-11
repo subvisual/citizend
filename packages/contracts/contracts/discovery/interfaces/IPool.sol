@@ -5,8 +5,6 @@ interface IPool {
     /// Similar to Sale.buy
     function buy(uint256 _amount) external;
 
-    function buyInternal(uint256 _amount) external;
-
     /// Similar to Sale.refund
     function refund(address _to) external;
 

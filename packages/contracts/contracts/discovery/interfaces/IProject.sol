@@ -19,5 +19,5 @@ interface IProject {
 
     function peoplesPool() external view returns (address);
 
-    function invest(uint256 _peoplesAmount, uint256 _stakersAmount) 
+    function invest(uint256 _peoplesAmount, uint256 _stakersAmount) external;
 }

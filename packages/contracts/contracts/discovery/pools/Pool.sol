@@ -7,7 +7,7 @@ import {IPool} from "../interfaces/IPool.sol";
  * TODO users should be able to `buy` into the pool, as long as they meet the conditions
  * (stakerspool is for CTND stakers, peoplespool is for those who have already voted for the project)
  *
- * TODO `buyInternal` is for the Project to call directly when people vote and include an investment amount
+ * TODO `buy` is for the Project to called from the project only
  * TODO other than these requirements, the rest should be very similar to the CTND Sale contract
  */
 abstract contract Pool is IPool {
@@ -27,12 +27,7 @@ abstract contract Pool is IPool {
     //
 
     /// @inheritdoc IPool
-    function buy(uint256 _amount) external override(IPool) {
-        revert("not yet implemented");
-    }
-
-    /// @inheritdoc IPool
-    function buyInternal(uint256 _amount) external override(IPool) onlyProject {
+    function buy(uint256 _amount) external override(IPool) onlyProject {
         revert("not yet implemented");
     }
 

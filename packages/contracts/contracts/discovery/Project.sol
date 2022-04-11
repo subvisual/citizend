@@ -57,4 +57,8 @@ contract Project is IProject {
         IController(controller).isProjectInBatch(address(this), msg.sender);
         _;
     }
+
+    function invest(uint256 _peoplesAmount, uint256 _stakersAmount) external {
+        revert("not yet implemented");
+    }
 }

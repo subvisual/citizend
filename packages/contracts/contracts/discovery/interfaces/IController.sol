@@ -7,15 +7,20 @@ import {IBatch} from "./IBatch.sol";
 ///   * Creating batches
 ///   * Whitelisting companies
 interface IController {
+    // Checks if a given account has the PROJECT_MANAGER_ROLE role
+    /// @param _account Account to check
+    /// @return true if account is a project manager
+    function hasProjectManagerRole(address _account)
+        external
+        view
+        returns (bool);
+
     /// @param _project address of the project
     /// @return Batch address
     function getBatchForProject(address _project)
         external
         view
         returns (address);
-
-    /// Whitelists a project, allowing it to be included on the next batch
-    function approveProjectByOwner(uint256 id) external;
 
     /// Creates a new batch with
     ///
@@ -34,6 +39,7 @@ interface IController {
         uint256 _rate
     ) external;
 
+    /// Checks if a project is included in the given batch
     function isProjectInBatch(address _project, address _batch)
         external
         returns (bool);

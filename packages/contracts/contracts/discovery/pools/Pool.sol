@@ -40,6 +40,8 @@ abstract contract Pool is IPool, RisingTide {
 
     /// The address of the investment token contract (likely $aUSD)
     address public immutable investmentToken;
+    address controller;
+    uint256 investedAmount;
 
     /// total unique investors
     uint256 public _investorCount;
@@ -55,10 +57,15 @@ abstract contract Pool is IPool, RisingTide {
     // Total supply of the project's token up for sale
     uint256 public immutable saleSupply;
 
-    constructor(uint256 _saleSupply, address _investmentToken) {
+    constructor(
+        uint256 _saleSupply,
+        address _investmentToken,
+        address _controller
+    ) {
         project = msg.sender;
         saleSupply = _saleSupply;
         investmentToken = _investmentToken;
+        controller = _controller;
     }
 
     modifier onlyProject() {
@@ -70,6 +77,10 @@ abstract contract Pool is IPool, RisingTide {
     /// Ensures the individual cap is already calculated
     modifier capCalculated() {
         require(risingTide_isValidCap(), "cap not yet set");
+    }
+
+    modifier onlyController() {
+        require(msg.sender == controller, "not controller");
         _;
     }
 

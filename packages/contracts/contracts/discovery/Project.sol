@@ -160,6 +160,15 @@ contract Project is IProject, ERC165 {
         return (_amount * rate) / MUL;
     }
 
+    /// @inheritdoc IProject
+    function getPools()
+        external
+        view
+        returns (address peoplesPool, address stakersPool)
+    {
+        return (peoplesPool, stakersPool);
+    }
+
     //
     // ERC165
     //

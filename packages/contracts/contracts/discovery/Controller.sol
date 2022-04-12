@@ -5,11 +5,13 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 import {IController} from "./interfaces/IController.sol";
 import {IProject} from "./interfaces/IProject.sol";
 import {IBatch} from "./interfaces/IBatch.sol";
 import {IStaking} from "./interfaces/IStaking.sol";
+import {IPool} from "./interfaces/IPool.sol";
 import {Project} from "./Project.sol";
 import {Batch} from "./Batch.sol";
 import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
@@ -44,7 +46,7 @@ contract Controller is IController, ERC165, AccessControl {
     // project => batch
     mapping(address => address) public projectsToBatches;
 
-    // CTND staking contract
+    /// CTND staking contract
     address public staking;
 
     // Fractal Registry contract
@@ -99,6 +101,7 @@ contract Controller is IController, ERC165, AccessControl {
         override(IController)
         onlyRole(BATCH_MANAGER_ROLE)
     {
+        // TODO: add staking contract address to the Batch
         IBatch batch = new Batch(_projects, _slotCount);
 
         uint256 len = _projects.length;
@@ -222,7 +225,7 @@ contract Controller is IController, ERC165, AccessControl {
 
     /// @inheritdoc IController
     function getBatchForProject(address _project)
-        external
+        public
         view
         returns (address)
     {
@@ -243,5 +246,54 @@ contract Controller is IController, ERC165, AccessControl {
         return
             interfaceId == type(IController).interfaceId ||
             super.supportsInterface(interfaceId);
+    }
+
+    function vote(
+        address _project,
+        uint256 _peoplesPoolAmount,
+        uint256 _stakersPoolAmount
+    ) external {
+        // TODO require KYC
+
+        Batch batch = getBatchForProject(_project);
+
+        IBatch(batch).vote(_project, _peoplesPoolAmount, _stakersPoolAmount);
+
+        _invest(_project, _peoplesPoolAmount, _stakersPoolAmount);
+    }
+
+    function invest(
+        address _project,
+        uint256 _peoplesPoolAmount,
+        uint256 _stakersPoolAmount
+    ) public {
+      _invest(_project, _peoplesPoolAmount, _stakersPoolAmount);
+    }
+
+    function _invest(address _project, uint256 _peoplesPoolAmount, uint256 _stakersPoolAmount) private {
+        (address peoplesPool, address stakersPool) = IProject(_project)
+            .getPools();
+
+        if (_peoplesPoolAmount > 0) {
+            // TODO what is paymentToken?
+            IERC20(_paymentToken).safeTransferFrom(
+                msg.sender,
+                peoplesPool,
+                _peoplesPoolAmount
+            );
+
+            IPool(peoplesPool).invest(msg.sender, _project, getBatchForProject(_project), _peoplesPoolAmount);
+        }
+
+        if (_stakersPoolAmount > 0) {
+            // TODO what is paymentToken?
+            IERC20(_paymentToken).safeTransferFrom(
+                msg.sender,
+                stakersPool,
+                _stakersPoolAmount
+            );
+
+            IPool(stakersPool).invest(msg.sender, _project, getBatchForProject(_project), _stakersPoolAmount);
+        }
     }
 }

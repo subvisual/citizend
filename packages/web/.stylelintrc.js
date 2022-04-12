@@ -4,7 +4,13 @@ module.exports = {
     'selector-type-no-unknown': [
       true,
       {
-        ignoreTypes: ['$dummyValue']
+        ignoreTypes: ['/-styled-mixin/', '$dummyValue']
+      }
+    ],
+    'length-zero-no-unit': [
+      true,
+      {
+        ignoreFunctions: ['var']
       }
     ]
   }

@@ -33,7 +33,7 @@ const ImageWrapper = styled.div`
   inset: 0;
 
   &::after {
-    background-color: #42526c;
+    background-color: var(--color-blue600);
     content: '';
     inset: 0;
     mix-blend-mode: multiply;
@@ -42,7 +42,7 @@ const ImageWrapper = styled.div`
 `;
 
 /**
- * `PageContent` component.
+ * Export `PageContent` component.
  */
 
 export function PageContent({ children }: Props) {

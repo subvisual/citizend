@@ -14,4 +14,10 @@ interface IProject {
 
     /// True if project fulfills all criteria to be included in an upcoming batch
     function isReadyForListing() external view returns (bool);
+
+    function stakersPool() external view returns (address);
+
+    function peoplesPool() external view returns (address);
+
+    function invest(uint256 _peoplesAmount, uint256 _stakersAmount) external;
 }

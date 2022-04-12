@@ -6,6 +6,9 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {IController} from "./interfaces/IController.sol";
 import {IProject} from "./interfaces/IProject.sol";
 
+import {StakersPool} from "./pools/StakersPool.sol";
+import {PeoplesPool} from "./pools/PeoplesPool.sol";
+
 contract Project is IProject {
     // deployed by each individual project owner, when registering
     // must be deployed via the Controller
@@ -22,6 +25,12 @@ contract Project is IProject {
 
     // fixed price of token, expressed in paymentToken amount
     uint256 public immutable rate;
+
+    /// @inheritdoc IProject
+    address public override(IProject) stakersPool;
+
+    /// @inheritdoc IProject
+    address public override(IProject) peoplesPool;
 
     // Project description, given at registration
     string public description;
@@ -41,6 +50,9 @@ contract Project is IProject {
         token = _token;
         saleSupply = _saleSupply;
         rate = _rate;
+
+        stakersPool = address(new StakersPool());
+        peoplesPool = address(new PeoplesPool());
     }
 
     //
@@ -54,6 +66,10 @@ contract Project is IProject {
         );
 
         _;
+    }
+
+    function invest(uint256 _peoplesAmount, uint256 _stakersAmount) external {
+        revert("not yet implemented");
     }
 
     //

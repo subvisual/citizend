@@ -33,6 +33,10 @@ module.exports = {
     'no-process-env': 0,
     'no-unused-vars': 0,
     'no-use-before-define': 0,
-    'react/react-in-jsx-scope': 0
+    'react/react-in-jsx-scope': 0,
+    'react-hooks/exhaustive-deps': [
+      'error',
+      { enableDangerousAutofixThisMayCauseInfiniteLoops: true }
+    ]
   }
 };

@@ -13,19 +13,20 @@ import { useWeb3React } from '@web3-react/core';
 
 export function useBalance() {
   const [balance, setBalance] = useState<string>('-');
-  const contracts = useContracts();
   const { account, library } = useWeb3React<Web3Provider>();
-  const getBalance = useCallback(() => {
+  const contracts = useContracts();
+  const getBalance = useCallback(async () => {
     if (!contracts?.citizend) {
       return;
     }
 
-    contracts.citizend
-      .balanceOf(account)
-      .then(value => setBalance(value.toString()))
-      .catch
-      // Handle error.
-      ();
+    try {
+      const value = await contracts.sale1.uncappedAllocation(account);
+
+      setBalance(value.toString());
+    } catch (error) {
+      // Handle error
+    }
   }, [contracts, account]);
 
   useEffect(() => {

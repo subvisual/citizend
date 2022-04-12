@@ -65,7 +65,7 @@ const bodyStyles = {
 
 const titleStyles = {
   fontFamily: '--druke-wide-font-family',
-  fontSize: '5rem',
+  fontSize: 'clamp(1.5rem, 0.125rem + 8.333vw, 5rem)',
   fontWeight: 500,
   letterSpacing: '2.2px',
   lineHeight: 1.2
@@ -77,7 +77,7 @@ const titleStyles = {
 
 const leadStyles = {
   fontFamily: '--montserrat-font-family',
-  fontSize: '2.5rem',
+  fontSize: 'clamp(1.2rem, -0.5rem + 8.333vw, 2.5rem)',
   fontWeight: 700,
   lineHeight: 1.2
 } as const;

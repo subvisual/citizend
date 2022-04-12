@@ -88,7 +88,16 @@ describe("ProjectVoting", () => {
         10
       );
 
-      await projectVoting.setNumSlots(3);
+      let projectVoting: TestProjectVoting =
+        await new TestProjectVoting__factory(owner).deploy(
+          {
+            start: votingStart,
+            end: votingEnd,
+          },
+          [project1.address, project2.address, project3.address],
+          3
+        );
+
       await goToTime(votingStart);
       await projectVoting.connect(alice).vote(project1.address);
       await goToTime(votingStart + 4 * oneDay);

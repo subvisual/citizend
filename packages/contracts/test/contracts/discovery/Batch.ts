@@ -123,7 +123,7 @@ describe("Batch", () => {
 
   describe("vote", () => {
     it("allows a user to vote", async () => {
-      await batch.connect(alice).vote(fakeProject.address, 0, 0);
+      await batch.connect(alice).vote(fakeProject.address);
 
       expect(await batch.userVoteCount(alice.address)).to.eq(1);
       expect(await batch.projectVoteCount(fakeProject.address)).to.eq(1);
@@ -133,10 +133,10 @@ describe("Batch", () => {
     });
 
     it("does not allow a user to vote twice in the same project", async () => {
-      await batch.connect(alice).vote(fakeProject.address, 0, 0);
+      await batch.connect(alice).vote(fakeProject.address);
 
       await expect(
-        batch.connect(alice).vote(fakeProject.address, 0, 0)
+        batch.connect(alice).vote(fakeProject.address)
       ).to.be.revertedWith("already voted in this project");
     });
 
@@ -144,7 +144,7 @@ describe("Batch", () => {
       batch = await new Batch__factory(owner).deploy([fakeProject.address], 1);
 
       await expect(
-        batch.connect(alice).vote(fakeProject.address, 0, 0)
+        batch.connect(alice).vote(fakeProject.address)
       ).to.be.revertedWith("voting period not set");
     });
   });
@@ -157,9 +157,9 @@ describe("Batch", () => {
     });
 
     it("takes the votes into account", async () => {
-      await batch.connect(alice).vote(fakeProject.address, 0, 0);
-      await batch.connect(bob).vote(fakeProject.address, 0, 0);
-      await batch.connect(alice).vote(anotherFakeProject.address, 0, 0);
+      await batch.connect(alice).vote(fakeProject.address);
+      await batch.connect(bob).vote(fakeProject.address);
+      await batch.connect(alice).vote(anotherFakeProject.address);
       await goToTime(votingStart + 5 * oneDay);
 
       const status = await batch.getProjectStatus(fakeProject.address);
@@ -178,7 +178,7 @@ describe("Batch", () => {
 
   describe("getCurrentWinners", () => {
     it("calculates the winner if one exists", async () => {
-      await batch.connect(alice).vote(fakeProject.address, 0, 0);
+      await batch.connect(alice).vote(fakeProject.address);
 
       await goToTime(votingStart + 5 * oneDay);
       const winners = await batch.getCurrentWinners();
@@ -187,9 +187,9 @@ describe("Batch", () => {
     });
 
     it("calculates the winners of multiple slots", async () => {
-      await batch.connect(alice).vote(fakeProject.address, 0, 0);
-      await batch.connect(bob).vote(fakeProject.address, 0, 0);
-      await batch.connect(alice).vote(anotherFakeProject.address, 0, 0);
+      await batch.connect(alice).vote(fakeProject.address);
+      await batch.connect(bob).vote(fakeProject.address);
+      await batch.connect(alice).vote(anotherFakeProject.address);
 
       await goToTime(votingStart + 5 * oneDay);
       let winners = await batch.getCurrentWinners();
@@ -207,14 +207,14 @@ describe("Batch", () => {
     });
 
     it("calculates the winners of multiple slots with votes in multiple slots", async () => {
-      await batch.connect(alice).vote(fakeProject.address, 0, 0);
-      await batch.connect(bob).vote(fakeProject.address, 0, 0);
-      await batch.connect(alice).vote(anotherFakeProject.address, 0, 0);
+      await batch.connect(alice).vote(fakeProject.address);
+      await batch.connect(bob).vote(fakeProject.address);
+      await batch.connect(alice).vote(anotherFakeProject.address);
 
       await goToTime(votingStart + 5 * oneDay);
       let winners = await batch.getCurrentWinners();
 
-      await batch.connect(bob).vote(anotherFakeProject.address, 0, 0);
+      await batch.connect(bob).vote(anotherFakeProject.address);
       expect(winners.length).to.eq(1);
       expect(winners[0]).to.eq(fakeProject.address);
 
@@ -228,9 +228,9 @@ describe("Batch", () => {
     });
 
     it("works even when it doesn't actually have to calculate anything", async () => {
-      await batch.connect(alice).vote(fakeProject.address, 0, 0);
+      await batch.connect(alice).vote(fakeProject.address);
       await goToTime(votingStart + 5 * oneDay);
-      await batch.connect(alice).vote(anotherFakeProject.address, 0, 0);
+      await batch.connect(alice).vote(anotherFakeProject.address);
 
       let winners = await batch.getCurrentWinners();
 
@@ -249,8 +249,8 @@ describe("Batch", () => {
 
   describe("projectVoteCount", () => {
     it("counts 1 vote per project, linearly", async () => {
-      await batch.connect(alice).vote(fakeProject.address, 0, 0);
-      await batch.connect(bob).vote(fakeProject.address, 0, 0);
+      await batch.connect(alice).vote(fakeProject.address);
+      await batch.connect(bob).vote(fakeProject.address);
 
       expect(await batch.projectVoteCount(fakeProject.address)).to.eq(2);
     });
@@ -259,14 +259,14 @@ describe("Batch", () => {
   describe("weightedProjectVoteCount", () => {
     it("gives more weight to early votes, following a linear curve", async () => {
       await goToTime(votingStart + oneDay);
-      await batch.connect(alice).vote(fakeProject.address, 0, 0);
+      await batch.connect(alice).vote(fakeProject.address);
 
       expect(
         await batch.weightedProjectVoteCount(fakeProject.address)
       ).to.be.closeTo(parseUnits("0.045"), parseUnits("0.0001"));
 
       await goToTime(votingStart + 4 * oneDay);
-      await batch.connect(bob).vote(fakeProject.address, 0, 0);
+      await batch.connect(bob).vote(fakeProject.address);
 
       expect(
         await batch.weightedProjectVoteCount(fakeProject.address)

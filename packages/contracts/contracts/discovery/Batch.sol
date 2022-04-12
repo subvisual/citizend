@@ -43,7 +43,9 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         _;
     }
 
-    constructor(address[] memory _projects, uint256 _slotCount) {
+    constructor(address[] memory _projects, uint256 _slotCount)
+        ProjectVoting(_projects)
+    {
         require(_projects.length > 0, "projects must not be empty");
         for (uint256 i = 0; i < _projects.length; i++) {
             require(
@@ -119,14 +121,12 @@ contract Batch is IBatch, ICommon, ProjectVoting {
             slotCount;
     }
 
-    function vote(
-        address projectAddress,
-        uint256 peoplePoolStake,
-        uint256 stakersPoolStake
-    ) external votingPeriodIsSet inVotingPeriod {
+    function vote(address projectAddress)
+        external
+        votingPeriodIsSet
+        inVotingPeriod
+    {
         _vote(projectAddress);
-        _investPeoplePool(peoplePoolStake);
-        _investStakersPool(stakersPoolStake);
     }
 
     function getCurrentWinners()
@@ -158,8 +158,4 @@ contract Batch is IBatch, ICommon, ProjectVoting {
 
         return projectStatuses[projectAddress];
     }
-
-    function _investStakersPool(uint256 stakersPoolStake) internal {}
-
-    function _investPeoplePool(uint256 peoplePoolStake) internal {}
 }

@@ -47,6 +47,16 @@ abstract contract ProjectVoting is ICommon {
     /// @dev only valid up to the last time there was a vote. Use getProject(address) instead.
     mapping(address => ProjectStatus) projectStatuses;
 
+    uint256 projectsWithVotesCount;
+
+    constructor(address[] memory _projects) {
+        for (uint256 i = 0; i < _projects.length; i++) {
+            votes.push(0);
+            votesIndexToProject[i] = _projects[i];
+            projectToVotesIndex[_projects[i]] = i;
+        }
+    }
+
     function projectVoting_projects()
         public
         view
@@ -86,17 +96,10 @@ abstract contract ProjectVoting is ICommon {
             block.timestamp
         );
 
-        if (
-            votes.length == 0 ||
-            (projectToVotesIndex[projectAddress] == 0 &&
-                votesIndexToProject[0] != projectAddress)
-        ) {
-            votes.push(1);
-            votesIndexToProject[votes.length - 1] = projectAddress;
-            projectToVotesIndex[projectAddress] = votes.length - 1;
-        } else {
-            votes[projectToVotesIndex[projectAddress]]++;
+        if (votes[projectToVotesIndex[projectAddress]] == 0) {
+            projectsWithVotesCount++;
         }
+        votes[projectToVotesIndex[projectAddress]]++;
     }
 
     function _defineWinners() internal {
@@ -125,28 +128,29 @@ abstract contract ProjectVoting is ICommon {
     }
 
     function _getNewWinners() internal view returns (address[] memory) {
-        if (block.timestamp < projectVoting_votingPeriod().start) {
-            return winners;
-        }
-
-        uint256 numberOfVotes = votes.length;
         uint256 numberOfExistingWinners = winners.length;
         uint256 numberOfSlotsToCalculate = _numberOfSlotsToCalculate();
         uint256 numberOfWinners = Math.min(
-            numberOfVotes,
+            projectsWithVotesCount,
             numberOfSlotsToCalculate
         );
         uint256 numberOfNewWinners = numberOfWinners - numberOfExistingWinners;
         address[] memory result = new address[](numberOfNewWinners);
 
+        if (block.timestamp < projectVoting_votingPeriod().start) {
+            return result;
+        }
+
         if (numberOfNewWinners == 0) {
             return result;
         }
 
-        SortableVote[] memory sortedVotes = new SortableVote[](numberOfVotes);
+        SortableVote[] memory sortedVotes = new SortableVote[](
+            projectsWithVotesCount
+        );
 
         // copy votes to sortedVotes to get the original indexes
-        for (uint256 i = 0; i < numberOfVotes; i++) {
+        for (uint256 i = 0; i < projectsWithVotesCount; i++) {
             ProjectStatus status = projectStatuses[votesIndexToProject[i]];
             if (status == ProjectStatus.Won) {
                 // This index can be left empty because it will be sorted
@@ -174,11 +178,10 @@ abstract contract ProjectVoting is ICommon {
             return winners;
         }
 
-        uint256 numberOfVotes = votes.length;
         uint256 numberOfExistingWinners = winners.length;
         uint256 numberOfSlotsToCalculate = _numberOfSlotsToCalculate();
         uint256 numberOfWinners = Math.min(
-            numberOfVotes,
+            projectsWithVotesCount,
             numberOfSlotsToCalculate
         );
 
@@ -186,11 +189,13 @@ abstract contract ProjectVoting is ICommon {
             return winners;
         }
 
-        SortableVote[] memory sortedVotes = new SortableVote[](numberOfVotes);
+        SortableVote[] memory sortedVotes = new SortableVote[](
+            projectsWithVotesCount
+        );
         address[] memory result = new address[](numberOfWinners);
 
         // copy votes to sortedVotes to get the original indexes
-        for (uint256 i = 0; i < numberOfVotes; i++) {
+        for (uint256 i = 0; i < projectsWithVotesCount; i++) {
             sortedVotes[i] = SortableVote(i, votes[i]);
         }
 
@@ -235,7 +240,7 @@ abstract contract ProjectVoting is ICommon {
         view
         returns (SortableVote[] memory)
     {
-        _quickSort(_votes, int256(0), int256(votes.length - 1));
+        _quickSort(_votes, int256(0), int256(projectsWithVotesCount - 1));
         return _votes;
     }
 

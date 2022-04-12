@@ -3,6 +3,8 @@ pragma solidity =0.8.12;
 
 import {ProjectVoting} from "./ProjectVoting.sol";
 
+import "hardhat/console.sol";
+
 contract TestProjectVoting is ProjectVoting {
     Period public votingPeriod;
     address[] public projects;
@@ -12,7 +14,7 @@ contract TestProjectVoting is ProjectVoting {
         Period memory _votingPeriod,
         address[] memory _projects,
         uint256 _numSlots
-    ) {
+    ) ProjectVoting(_projects) {
         votingPeriod = _votingPeriod;
         projects = _projects;
         numSlots = _numSlots;
@@ -21,7 +23,6 @@ contract TestProjectVoting is ProjectVoting {
     function projectVoting_projects()
         public
         view
-        virtual
         override(ProjectVoting)
         returns (address[] memory)
     {
@@ -31,7 +32,6 @@ contract TestProjectVoting is ProjectVoting {
     function projectVoting_votingPeriod()
         public
         view
-        virtual
         override(ProjectVoting)
         returns (Period memory)
     {
@@ -41,7 +41,6 @@ contract TestProjectVoting is ProjectVoting {
     function projectVoting_singleSlotDuration()
         public
         view
-        virtual
         override(ProjectVoting)
         returns (uint256)
     {
@@ -51,7 +50,6 @@ contract TestProjectVoting is ProjectVoting {
     function projectVoting_initialBonus()
         public
         view
-        virtual
         override(ProjectVoting)
         returns (int256)
     {
@@ -61,15 +59,10 @@ contract TestProjectVoting is ProjectVoting {
     function projectVoting_finalBonus()
         public
         view
-        virtual
         override(ProjectVoting)
         returns (int256)
     {
         return 0;
-    }
-
-    function setNumSlots(uint256 _numSlots) external {
-        numSlots = _numSlots;
     }
 
     function vote(address projectAddress) external {

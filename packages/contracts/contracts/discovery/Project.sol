@@ -111,7 +111,6 @@ contract Project is IProject, ERC165 {
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        virtual
         override(ERC165)
         returns (bool)
     {

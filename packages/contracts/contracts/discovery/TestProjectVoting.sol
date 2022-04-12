@@ -6,9 +6,16 @@ import {ProjectVoting} from "./ProjectVoting.sol";
 contract TestProjectVoting is ProjectVoting {
     Period public votingPeriod;
     address[] public projects;
+    uint256 public numSlots;
 
-    constructor(Period memory _votingPeriod) {
+    constructor(
+        Period memory _votingPeriod,
+        address[] memory _projects,
+        uint256 _numSlots
+    ) {
         votingPeriod = _votingPeriod;
+        projects = _projects;
+        numSlots = _numSlots;
     }
 
     function projectVoting_projects()
@@ -38,7 +45,7 @@ contract TestProjectVoting is ProjectVoting {
         override(ProjectVoting)
         returns (uint256)
     {
-        return votingPeriod.end - votingPeriod.start;
+        return (votingPeriod.end - votingPeriod.start) / numSlots;
     }
 
     function projectVoting_initialBonus()
@@ -59,6 +66,18 @@ contract TestProjectVoting is ProjectVoting {
         returns (int256)
     {
         return 0;
+    }
+
+    function setNumSlots(uint256 _numSlots) external {
+        numSlots = _numSlots;
+    }
+
+    function vote(address projectAddress) external {
+        _vote(projectAddress);
+    }
+
+    function getWinners() external view returns (address[] memory) {
+        return _getWinners();
     }
 
     function calculateWeightedVote(uint256 currentTime)

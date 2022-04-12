@@ -7,6 +7,17 @@ import {Math} from "../libraries/Math.sol";
 import "hardhat/console.sol";
 
 abstract contract ProjectVoting is ICommon {
+    enum ProjectStatus {
+        InProgress,
+        Won,
+        Lost
+    }
+
+    struct SortableVote {
+        uint256 originalIndex;
+        uint32 count;
+    }
+
     /// number of votes for each project
     uint32[] public votes;
 
@@ -26,7 +37,7 @@ abstract contract ProjectVoting is ICommon {
     /// project address => votes
     mapping(address => uint256) public projectVoteCount;
 
-    /// project address => votes
+    /// project address => weightedVotes
     mapping(address => uint256) public weightedProjectVoteCount;
 
     /// project => (user => voted)
@@ -57,17 +68,6 @@ abstract contract ProjectVoting is ICommon {
     function projectVoting_initialBonus() public view virtual returns (int256);
 
     function projectVoting_finalBonus() public view virtual returns (int256);
-
-    enum ProjectStatus {
-        InProgress,
-        Won,
-        Lost
-    }
-
-    struct Vote {
-        uint256 originalIndex;
-        uint32 count;
-    }
 
     function _vote(address projectAddress) internal {
         require(
@@ -100,15 +100,15 @@ abstract contract ProjectVoting is ICommon {
     }
 
     function _defineWinners() internal {
-        address[] memory computedWinners = _getWinners();
+        address[] memory newWinners = _getNewWinners();
 
-        if (computedWinners.length == winners.length) {
+        if (newWinners.length == 0) {
             return;
         }
 
-        for (uint256 i = 0; i < computedWinners.length; i++) {
-            winners.push(computedWinners[i]);
-            projectStatuses[computedWinners[i]] = ProjectStatus.Won;
+        for (uint256 i = 0; i < newWinners.length; i++) {
+            winners.push(newWinners[i]);
+            projectStatuses[newWinners[i]] = ProjectStatus.Won;
         }
 
         if (block.timestamp >= projectVoting_votingPeriod().end) {
@@ -122,6 +122,51 @@ abstract contract ProjectVoting is ICommon {
                 }
             }
         }
+    }
+
+    function _getNewWinners() internal view returns (address[] memory) {
+        if (block.timestamp < projectVoting_votingPeriod().start) {
+            return winners;
+        }
+
+        uint256 numberOfVotes = votes.length;
+        uint256 numberOfExistingWinners = winners.length;
+        uint256 numberOfSlotsToCalculate = _numberOfSlotsToCalculate();
+        uint256 numberOfWinners = Math.min(
+            numberOfVotes,
+            numberOfSlotsToCalculate
+        );
+        uint256 numberOfNewWinners = numberOfWinners - numberOfExistingWinners;
+        address[] memory result = new address[](numberOfNewWinners);
+
+        if (numberOfNewWinners == 0) {
+            return result;
+        }
+
+        SortableVote[] memory sortedVotes = new SortableVote[](numberOfVotes);
+
+        // copy votes to sortedVotes to get the original indexes
+        for (uint256 i = 0; i < numberOfVotes; i++) {
+            ProjectStatus status = projectStatuses[votesIndexToProject[i]];
+            if (status == ProjectStatus.Won) {
+                // This index can be left empty because it will be sorted
+                continue;
+            } else {
+                sortedVotes[i] = SortableVote(i, votes[i]);
+            }
+        }
+
+        // sort the remaining votes (the ones that are in winners will be at the end)
+        sortedVotes = _sortVotes(sortedVotes);
+
+        // add the remaining votes to the result. Ensuring we start from where
+        // the last loop left off and end at the number of total winners to be
+        // calculated
+        for (uint256 i = 0; i < numberOfNewWinners; i++) {
+            result[i] = votesIndexToProject[sortedVotes[i].originalIndex];
+        }
+
+        return result;
     }
 
     function _getWinners() internal view returns (address[] memory) {
@@ -141,12 +186,12 @@ abstract contract ProjectVoting is ICommon {
             return winners;
         }
 
-        Vote[] memory sortedVotes = new Vote[](numberOfVotes);
+        SortableVote[] memory sortedVotes = new SortableVote[](numberOfVotes);
         address[] memory result = new address[](numberOfWinners);
 
         // copy votes to sortedVotes to get the original indexes
         for (uint256 i = 0; i < numberOfVotes; i++) {
-            sortedVotes[i] = Vote(i, votes[i]);
+            sortedVotes[i] = SortableVote(i, votes[i]);
         }
 
         // remove from sortedVotes the votes that are already in winners
@@ -185,17 +230,17 @@ abstract contract ProjectVoting is ICommon {
             projectVoting_singleSlotDuration();
     }
 
-    function _sortVotes(Vote[] memory _votes)
+    function _sortVotes(SortableVote[] memory _votes)
         internal
         view
-        returns (Vote[] memory)
+        returns (SortableVote[] memory)
     {
         _quickSort(_votes, int256(0), int256(votes.length - 1));
         return _votes;
     }
 
     function _quickSort(
-        Vote[] memory _votes,
+        SortableVote[] memory _votes,
         int256 left,
         int256 right
     ) internal view {

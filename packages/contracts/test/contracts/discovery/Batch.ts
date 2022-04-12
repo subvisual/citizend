@@ -176,7 +176,7 @@ describe("Batch", () => {
     });
   });
 
-  describe("getWinners", () => {
+  describe("getCurrentWinners", () => {
     it("calculates the winner if one exists", async () => {
       await batch.connect(alice).vote(fakeProject.address, 0, 0);
 

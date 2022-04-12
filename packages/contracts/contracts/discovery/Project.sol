@@ -125,6 +125,11 @@ contract Project is IProject, ERC165 {
         return hasTokens() && approvedByManager && approvedByLegal;
     }
 
+    /// @inheritdoc IProject
+    function getPools() external view returns (address peoplesPool, address stakersPool) {
+      return (peoplesPool, stakersPool);
+    }
+
     //
     // ERC165
     //

@@ -15,6 +15,8 @@ import "hardhat/console.sol";
  */
 abstract contract Pool is IPool, RisingTide {
     address project;
+    address controller;
+    uint256 investedAmount;
 
     /// total unique investors
     uint256 public _investorCount;
@@ -30,13 +32,19 @@ abstract contract Pool is IPool, RisingTide {
     // Total supply of the project's token up for sale
     uint256 public immutable saleSupply;
 
-    constructor(uint256 _saleSupply) {
+    constructor(uint256 _saleSupply, address _controller) {
         project = msg.sender;
         saleSupply = _saleSupply;
+        controller = _controller;
     }
 
     modifier onlyProject() {
         require(msg.sender == project, "not project");
+        _;
+    }
+
+    modifier onlyController() {
+        require(msg.sender == controller, "not controller");
         _;
     }
 

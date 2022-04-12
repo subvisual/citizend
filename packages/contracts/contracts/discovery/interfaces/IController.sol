@@ -68,4 +68,13 @@ interface IController {
         uint256 end,
         uint256 extraInvestmentDuration
     ) external;
+
+    function vote(
+        address _project,
+        uint256 _peoplesPoolAmount,
+        uint256 _stakersPoolAmount
+    ) external;
+
+    function invest(uint256 _peoplesPoolAmount, uint256 _stakersPoolAmount)
+        external;
 }

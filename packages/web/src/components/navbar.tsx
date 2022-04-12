@@ -8,7 +8,7 @@ import { Text } from 'src/components/core/text';
 import { Web3Provider } from '@ethersproject/providers';
 import { useAccountKycStatus } from 'src/hooks/use-kyc-status';
 import { useWeb3React } from '@web3-react/core';
-import logoSvg from 'src/assets/svgs/logo.svg';
+import logotypeSvg from 'src/assets/svgs/logotype.svg';
 import styled from 'styled-components';
 import useWalletConnect from 'src/hooks/use-wallet-connect';
 
@@ -98,7 +98,7 @@ export function Navbar() {
 
   return (
     <Nav>
-      <Svg icon={logoSvg} size={'116px'} />
+      <Svg icon={logotypeSvg} size={'116px'} />
 
       {account?.length && (
         <MenuWrapper role={'button'}>

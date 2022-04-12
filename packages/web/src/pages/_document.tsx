@@ -56,7 +56,27 @@ class PageDocument extends Document<DocumentInitialProps> {
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+          <link
+            href={
+              'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'
+            }
+            rel={'stylesheet'}
+          />
+
+          <link
+            as={'font'}
+            crossOrigin={''}
+            href={'/fonts/druk-wide-bold.otf'}
+            rel={'preload'}
+          />
+          <link
+            as={'font'}
+            crossOrigin={''}
+            href={'/fonts/druk-wide-medium.otf'}
+            rel={'preload'}
+          />
+        </Head>
 
         <body>
           <Main />

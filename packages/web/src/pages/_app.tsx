@@ -5,8 +5,9 @@
 import { AppProps, NextWebVitalsMetric } from 'next/app';
 import { ContractsProvider } from 'src/context/contracts';
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
+import { GlobalStyle } from 'src/styles/global';
+import { PageContent } from 'src/components/page-content';
 import { Web3ReactProvider } from '@web3-react/core';
-import GlobalStyle from 'src/components/core/global-style';
 import Head from 'next/head';
 import React from 'react';
 import packageJson from 'package.json';
@@ -79,7 +80,9 @@ const PageApp = (props: AppProps) => {
 
       <Web3ReactProvider getLibrary={getLibrary}>
         <ContractsProvider>
-          <Component {...pageProps} />
+          <PageContent>
+            <Component {...pageProps} />
+          </PageContent>
         </ContractsProvider>
       </Web3ReactProvider>
     </>

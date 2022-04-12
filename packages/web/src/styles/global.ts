@@ -31,7 +31,7 @@ const rootVariables = `
     --druke-wide-font-family: 'Druk Wide', sans-serif;
 
     /* Container */
-    --container-padding: 2.5rem;
+    --container-padding: 2rem;
 
     /* Transition */
     --transition-default-animation: cubic-bezier(0.4, 0, 0.2, 1);
@@ -40,7 +40,7 @@ const rootVariables = `
 
     /* Modal */
     --modal-backdrop-background-color: #5463824d;
-    --modal-background-color: var(--color-blue700);
+    --modal-background-color: var(--color-blue650);
 
     ${media.min.ms`
       --container-padding: 3rem;

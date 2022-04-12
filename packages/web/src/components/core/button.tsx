@@ -14,13 +14,14 @@ import styled from 'styled-components';
 type Props = ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
- * `Wrapper` styled component.
+ * `ButtonElement` styled component.
  */
 
-const Wrapper = styled.button`
+const ButtonElement = styled.button`
   background: none;
   border: none;
   color: var(--color-white);
+  font-family: var(--druke-wide-font-family);
   font-size: 15px;
   font-weight: 400;
   letter-spacing: 0.3px;
@@ -28,6 +29,7 @@ const Wrapper = styled.button`
   min-height: 3rem;
   padding-left: 1rem;
   position: relative;
+  text-align: left;
   transition: color var(--transition-fast);
 
   :focus,
@@ -35,6 +37,15 @@ const Wrapper = styled.button`
   :hover {
     filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));
   }
+`;
+
+/**
+ * `Label` styled component.
+ */
+
+const Label = styled.span`
+  position: relative;
+  top: 1px;
 `;
 
 /**
@@ -56,10 +67,10 @@ export function Button(props: Props) {
   const { children, ...rest } = props;
 
   return (
-    <Wrapper {...rest}>
+    <ButtonElement {...rest}>
       <StyledSvg icon={buttonSvg} size={'42px'} />
 
-      {children}
-    </Wrapper>
+      <Label>{children}</Label>
+    </ButtonElement>
   );
 }

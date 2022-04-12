@@ -13,18 +13,7 @@ describe("PeoplesPool", () => {
 
   let pool: PeoplesPool;
 
-  const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
-    await deployments.fixture(["controller"]);
-
-    const controllerDeployment = await deployments.get("Controller");
-
-    controller = Controller__factory.connect(
-      controllerDeployment.address,
-      owner
-    );
-  });
-
-  beforeEach(() => {
+  beforeEach(async () => {
     [owner, alice, bob] = await ethers.getSigners();
 
     const pool = new PeoplesPool__factory(owner).deploy();

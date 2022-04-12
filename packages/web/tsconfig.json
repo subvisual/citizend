@@ -16,9 +16,8 @@
     "moduleResolution": "node",
     "noEmit": true,
     "paths": {
-      "src/*": [
-        "./src/*"
-      ]
+      "public/*": ["./public/*"],
+      "src/*": ["./src/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,

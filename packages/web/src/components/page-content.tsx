@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 
+import { media } from 'src/styles/breakpoints';
 import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
@@ -20,8 +21,11 @@ type Props = {
 
 const Content = styled.div`
   margin: 0 auto;
-  max-width: 82%;
   position: relative;
+
+  ${media.min.ms`
+    max-width: 88%;
+  `}
 `;
 
 /**

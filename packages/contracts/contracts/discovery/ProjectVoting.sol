@@ -15,7 +15,7 @@ abstract contract ProjectVoting is ICommon {
 
     struct SortableVote {
         uint256 originalIndex;
-        uint32 count;
+        uint256 count;
     }
 
     /// number of votes for each project
@@ -108,7 +108,6 @@ abstract contract ProjectVoting is ICommon {
         if (newWinners.length == 0) {
             return;
         }
-
         for (uint256 i = 0; i < newWinners.length; i++) {
             winners.push(newWinners[i]);
             projectStatuses[newWinners[i]] = ProjectStatus.Won;
@@ -136,6 +135,7 @@ abstract contract ProjectVoting is ICommon {
             projectsWithVotesCount,
             numberOfSlotsToCalculate
         );
+        uint256 votesSize = votes.length;
         uint256 numberOfNewWinners = numberOfWinners - numberOfExistingWinners;
         address[] memory result = new address[](numberOfNewWinners);
 
@@ -147,22 +147,23 @@ abstract contract ProjectVoting is ICommon {
             return result;
         }
 
-        SortableVote[] memory sortedVotes = new SortableVote[](
-            projectsWithVotesCount
-        );
+        SortableVote[] memory sortedVotes = new SortableVote[](votesSize);
 
         // copy votes to sortedVotes to get the original indexes
-        for (uint256 i = 0; i < projectsWithVotesCount; i++) {
+        for (uint256 i = 0; i < votesSize; i++) {
             ProjectStatus status = projectStatuses[votesIndexToProject[i]];
             if (status == ProjectStatus.Won) {
                 // This index can be left empty because it will be sorted
                 continue;
             } else {
-                sortedVotes[i] = SortableVote(i, votes[i]);
+                sortedVotes[i] = SortableVote(
+                    i,
+                    weightedProjectVoteCount[votesIndexToProject[i]]
+                );
             }
         }
 
-        // sort the remaining votes (the ones that are in winners will be at the end)
+        // sort the votes
         sortedVotes = _sortVotes(sortedVotes);
 
         // add the remaining votes to the result. Ensuring we start from where
@@ -186,19 +187,21 @@ abstract contract ProjectVoting is ICommon {
             projectsWithVotesCount,
             numberOfSlotsToCalculate
         );
+        uint256 votesSize = votes.length;
 
         if (numberOfWinners == numberOfExistingWinners) {
             return winners;
         }
 
-        SortableVote[] memory sortedVotes = new SortableVote[](
-            projectsWithVotesCount
-        );
+        SortableVote[] memory sortedVotes = new SortableVote[](votesSize);
         address[] memory result = new address[](numberOfWinners);
 
         // copy votes to sortedVotes to get the original indexes
-        for (uint256 i = 0; i < projectsWithVotesCount; i++) {
-            sortedVotes[i] = SortableVote(i, votes[i]);
+        for (uint256 i = 0; i < votesSize; i++) {
+            sortedVotes[i] = SortableVote(
+                i,
+                weightedProjectVoteCount[votesIndexToProject[i]]
+            );
         }
 
         // remove from sortedVotes the votes that are already in winners
@@ -242,7 +245,7 @@ abstract contract ProjectVoting is ICommon {
         view
         returns (SortableVote[] memory)
     {
-        _quickSort(_votes, int256(0), int256(projectsWithVotesCount - 1));
+        _quickSort(_votes, int256(0), int256(_votes.length - 1));
         return _votes;
     }
 

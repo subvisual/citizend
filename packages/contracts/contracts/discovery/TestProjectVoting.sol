@@ -80,4 +80,12 @@ contract TestProjectVoting is ProjectVoting {
     {
         return _calculateWeightedVote(currentTime);
     }
+
+    function test_sortVotes(SortableVote[] memory votes)
+        external
+        view
+        returns (SortableVote[] memory)
+    {
+        return _sortVotes(votes);
+    }
 }

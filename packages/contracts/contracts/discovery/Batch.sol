@@ -46,8 +46,15 @@ contract Batch is IBatch, ICommon, ProjectVoting {
     constructor(address[] memory _projects, uint256 _slotCount)
         ProjectVoting(_projects)
     {
-        require(_projects.length > 0, "projects must not be empty");
-        for (uint256 i = 0; i < _projects.length; i++) {
+        uint256 numProjects = _projects.length;
+        require(numProjects > 0, "projects must not be empty");
+        require(_slotCount > 0, "slotCount must be greater than 0");
+        require(
+            _slotCount <= numProjects,
+            "cannot have more slots than projects"
+        );
+
+        for (uint256 i = 0; i < numProjects; i++) {
             require(
                 _projects[i].supportsInterface(type(IProject).interfaceId),
                 "project must be an IProject"

@@ -65,15 +65,15 @@ contract TestProjectVoting is ProjectVoting {
         return 0;
     }
 
-    function vote(address projectAddress) external {
+    function test_vote(address projectAddress) external {
         _vote(projectAddress);
     }
 
-    function getWinners() external view returns (address[] memory) {
+    function test_getWinners() external view returns (address[] memory) {
         return _getWinners();
     }
 
-    function calculateWeightedVote(uint256 currentTime)
+    function test_calculateWeightedVote(uint256 currentTime)
         external
         view
         returns (uint256)

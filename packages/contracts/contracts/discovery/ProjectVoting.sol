@@ -41,7 +41,7 @@ abstract contract ProjectVoting is ICommon {
     mapping(address => uint256) public weightedProjectVoteCount;
 
     /// project => (user => voted)
-    mapping(address => mapping(address => bool)) public userVotesPerProject;
+    mapping(address => mapping(address => bool)) public userHasVotedForProject;
 
     /// Project address to status
     /// @dev only valid up to the last time there was a vote. Use getProject(address) instead.
@@ -81,7 +81,7 @@ abstract contract ProjectVoting is ICommon {
 
     function _vote(address projectAddress) internal {
         require(
-            !userVotesPerProject[projectAddress][msg.sender],
+            !userHasVotedForProject[projectAddress][msg.sender],
             "already voted in this project"
         );
         _defineWinners();
@@ -89,7 +89,7 @@ abstract contract ProjectVoting is ICommon {
             projectStatuses[projectAddress] == ProjectStatus.InProgress,
             "project is not in progress"
         );
-        userVotesPerProject[projectAddress][msg.sender] = true;
+        userHasVotedForProject[projectAddress][msg.sender] = true;
         userVoteCount[msg.sender]++;
         projectVoteCount[projectAddress]++;
         weightedProjectVoteCount[projectAddress] += _calculateWeightedVote(
@@ -115,7 +115,9 @@ abstract contract ProjectVoting is ICommon {
         }
 
         if (block.timestamp >= projectVoting_votingPeriod().end) {
-            for (uint256 i = 0; i < projectVoting_projects().length; i++) {
+            uint256 numProjects = projectVoting_projects().length;
+
+            for (uint256 i = 0; i < numProjects; i++) {
                 if (
                     projectStatuses[projectVoting_projects()[i]] ==
                     ProjectStatus.InProgress

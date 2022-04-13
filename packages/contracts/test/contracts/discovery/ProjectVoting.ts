@@ -43,24 +43,26 @@ describe("ProjectVoting", () => {
 
   describe("calculateWeightedVote", async () => {
     it("is equal to the initial bonus when the voting starts", async () => {
-      const weight = await projectVoting.calculateWeightedVote(votingStart);
+      const weight = await projectVoting.test_calculateWeightedVote(
+        votingStart
+      );
 
       expect(weight).to.eq(parseUnits("0.05"));
     });
 
     it("is equal to the final bonus when the voting ends", async () => {
-      const weight = await projectVoting.calculateWeightedVote(votingEnd);
+      const weight = await projectVoting.test_calculateWeightedVote(votingEnd);
 
       expect(weight).to.be.closeTo(parseUnits("0"), parseUnits("0.001"));
     });
 
     it("goes down linerarly as time goes by", async () => {
       expect(
-        await projectVoting.calculateWeightedVote(votingStart + oneDay)
+        await projectVoting.test_calculateWeightedVote(votingStart + oneDay)
       ).to.be.closeTo(parseUnits("0.045"), parseUnits("0.001"));
 
       expect(
-        await projectVoting.calculateWeightedVote(votingStart + oneDay * 8)
+        await projectVoting.test_calculateWeightedVote(votingStart + oneDay * 8)
       ).to.be.closeTo(parseUnits("0.01"), parseUnits("0.001"));
     });
   });
@@ -99,14 +101,14 @@ describe("ProjectVoting", () => {
         );
 
       await goToTime(votingStart);
-      await projectVoting.connect(alice).vote(project1.address);
+      await projectVoting.connect(alice).test_vote(project1.address);
       await goToTime(votingStart + 4 * oneDay);
-      await projectVoting.connect(bob).vote(project2.address);
+      await projectVoting.connect(bob).test_vote(project2.address);
       await goToTime(votingStart + 8 * oneDay);
-      await projectVoting.connect(carol).vote(project3.address);
+      await projectVoting.connect(carol).test_vote(project3.address);
       await goToTime(votingStart + 10 * oneDay);
 
-      const winners = await projectVoting.getWinners();
+      const winners = await projectVoting.test_getWinners();
 
       expect(winners.length).to.eq(3);
       expect(winners[0]).to.eq(project1.address);

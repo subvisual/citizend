@@ -68,17 +68,29 @@ describe("Batch", () => {
       );
     });
 
+    it("fails with no slots", async () => {
+      await expect(
+        new Batch__factory(owner).deploy([fakeProject.address], 0)
+      ).to.be.revertedWith("slotCount must be greater than 0");
+    });
+
+    it("fails with more slots than projects", async () => {
+      await expect(
+        new Batch__factory(owner).deploy([fakeProject.address], 2)
+      ).to.be.revertedWith("cannot have more slots than projects");
+    });
+
     it("fails with an address that does not implement IProject", async () => {
       await expect(
         new Batch__factory(owner).deploy([fakeToken.address], 1)
       ).to.be.revertedWith("project must be an IProject");
     });
 
-    // it("fails if one of the projects is not whitelisted", async () => {
-    //   await expect(
-    //     new Batch__factory(owner).deploy([fakeProject.address], 1)
-    //   ).to.be.revertedWith("project must be whitelisted");
-    // });
+    xit("fails if one of the projects is not whitelisted", async () => {
+      await expect(
+        new Batch__factory(owner).deploy([fakeProject.address], 1)
+      ).to.be.revertedWith("project must be whitelisted");
+    });
   });
 
   describe("setVotingPeriod", async () => {
@@ -128,7 +140,7 @@ describe("Batch", () => {
       expect(await batch.userVoteCount(alice.address)).to.eq(1);
       expect(await batch.projectVoteCount(fakeProject.address)).to.eq(1);
       expect(
-        await batch.userVotesPerProject(fakeProject.address, alice.address)
+        await batch.userHasVotedForProject(fakeProject.address, alice.address)
       ).to.be.true;
     });
 

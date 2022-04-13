@@ -3,6 +3,7 @@
  */
 
 import { Svg } from 'src/components/core/svg';
+import { media } from 'src/styles/breakpoints';
 import React from 'react';
 import ReactModal, { Props } from 'react-modal';
 import crossSvg from 'src/assets/svgs/cross.svg';
@@ -26,12 +27,10 @@ const modalStyles = {
     bottom: 'auto',
     left: '50%',
     marginRight: '-50%',
-    maxWidth: '650px',
     padding: '5rem 1.25rem',
     right: 'auto',
     top: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '80%'
+    transform: 'translate(-50%, -50%)'
   },
   overlay: {
     backdropFilter: 'blur(20px)',
@@ -44,21 +43,33 @@ const modalStyles = {
  */
 
 const CloseButton = styled.button`
+  align-items: center;
   background: none;
   border: none;
+  border-radius: 50%;
   color: var(--color-white);
+  display: flex;
+  height: 2rem;
+  justify-content: center;
   line-height: 0;
+  padding: 0;
   position: absolute;
   right: 1.75rem;
   top: 1.75rem;
   transform: rotate(0deg);
   transition: var(--transition-default);
   transition-property: color, transform;
+  width: 2rem;
 
   :focus,
   :hover {
-    color: var(--color-blue200);
-    transform: rotate(190deg);
+    transform: rotate(180deg);
+  }
+
+  :focus-visible {
+    background-color: var(--color-blue400);
+    color: var(--color-white);
+    outline: none;
   }
 `;
 
@@ -67,17 +78,28 @@ const CloseButton = styled.button`
  */
 
 const ModalGlobalStyle = createGlobalStyle`
-  .ReactModal__Overlay {
-    opacity: 0;
-    text-align: center;
-    transition: opacity var(--transition-default);
+  .ReactModal {
+    &__Overlay {
+      opacity: 0;
+      text-align: center;
+      transition: opacity var(--transition-default);
 
-    &--after-open {
-      opacity: 1;
+      &--after-open {
+        opacity: 1;
+      }
+
+      &--before-close{
+        opacity: 0;
+      }
     }
 
-    &--before-close{
-      opacity: 0;
+    &__Content {
+      max-width: 650px;
+      width: 90%;
+
+      ${media.min.sm`
+        width: 80%;
+      `}
     }
   }
 `;

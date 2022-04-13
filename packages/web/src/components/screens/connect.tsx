@@ -3,55 +3,120 @@
  */
 
 import { Button } from 'src/components/core/button';
-import { Container } from 'src/components/core/container';
-import { Modal } from 'src/components/core/modal';
+import { HexagonShape } from 'src/components/connect/hexagon-shape';
+import { ModalConnecting } from 'src/components/connect/modal-connecting';
+import { ModalWalletConnect } from 'src/components/connect/modal-wallet-connect';
 import { Svg } from 'src/components/core/svg';
 import { Text } from 'src/components/core/text';
+import { media } from 'src/styles/breakpoints';
 import { useAppStatus } from 'src/hooks/use-app-status';
-import React, { useState } from 'react';
-import metamaskSvg from 'src/assets/svgs/metamask.svg';
+import React, { useCallback, useState } from 'react';
+import logotypeSvg from 'src/assets/svgs/logotype.svg';
+import shapeSvg from 'src/assets/svgs/hexagon-rounded.svg';
 import styled from 'styled-components';
 import useWalletConnect from 'src/hooks/use-wallet-connect';
-import walletconnectSvg from 'src/assets/svgs/walletconnect.svg';
 
 /**
- * `ConnectContent` styled component.
+ * `Grid` styled component.
  */
 
-const ConnectContent = styled.div`
+const Grid = styled.div`
   display: grid;
-  grid-gap: 3rem;
+  grid-template-areas: '. . .' 'text . hexagon' '. . . ';
+  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-rows: 150px auto 150px;
+  position: relative;
+
+  ${media.min.sm`
+    grid-template-rows: 200px auto 200px;
+  `}
 `;
 
 /**
- * `ConnectButton` styled component.
+ * `Content` styled component.
  */
 
-const ConnectButton = styled.button`
-  background: none;
-  border: none;
-  color: inherit;
-  transition: color var(--transition-default);
+const Content = styled.div`
+  position: relative;
+`;
 
-  :focus,
-  :hover {
-    color: var(--color-blue200);
+/**
+ * `RightContent` styled component.
+ */
+
+const RightContent = styled(Content)`
+  grid-area: text;
+`;
+
+/**
+ * `Logotype` styled component.
+ */
+
+const Logotype = styled(Svg).attrs({
+  icon: logotypeSvg,
+  size: '116px'
+})`
+  margin-bottom: 2.5rem;
+`;
+
+/**
+ * `Title` styled component.
+ */
+
+const Title = styled(Text).attrs({
+  as: 'h1',
+  variant: 'title'
+})`
+  margin-bottom: 1.75rem;
+`;
+
+/**
+ * `HexagonWrapper` styled component.
+ */
+
+const HexagonWrapper = styled.div`
+  align-items: flex-end;
+  display: flex;
+  grid-area: hexagon;
+  justify-content: flex-end;
+  position: relative;
+  text-align: center;
+  top: 10%;
+
+  ${media.max.md`
+    display: none;
+  `}
+`;
+
+/**
+ * `Shape` styled component.
+ */
+
+const Shape = styled(Svg).attrs({
+  icon: shapeSvg,
+  size: '270%'
+})`
+  left: -115%;
+  position: absolute;
+  top: -30%;
+  transform: scale(0.9);
+
+  ${media.min.sm`
+    left: -100%;
+    top: -85%;
+    transform: scale(0.8);
+  `}
+
+  ${media.min.md`
+    left: -77%;
+    top: -177%;
+    transform: none;
+  `}
+
+  svg {
+    max-width: 1600px;
   }
 `;
-
-/**
- * `TermsAndPrivacyLink` component.
- */
-
-function TermsAndPrivacyLink() {
-  return (
-    <Text as={'p'} noMargin style={{ padding: '0 3rem' }}>
-      {
-        'By connecting my wallet, I confirm I have read and accepted the Terms of Service and Privacy Policy'
-      }
-    </Text>
-  );
-}
 
 /**
  * Export `ConnectScreen` component.
@@ -61,74 +126,43 @@ export function ConnectScreen() {
   const { connectStatus, onConnect } = useWalletConnect();
   const currentAppState = useAppStatus();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const toggleModal = useCallback(() => {
+    setIsOpen(open => !open);
+  }, []);
 
   return (
-    <Container>
-      <Text as={'h1'} variant={'title'}>
-        {'Discovery DAO'}
-      </Text>
+    <Grid>
+      <RightContent>
+        <Shape />
 
-      <div style={{ marginBottom: '5rem' }}>
-        <Text bold>{'Status: '}</Text>
-        <Text>{currentAppState}</Text>
-      </div>
+        <Content>
+          <Logotype />
 
-      {currentAppState !== 'SOON' && (
-        <Button
-          onClick={() => {
-            setIsOpen(open => !open);
-          }}
-        >
-          {'Connect'}
-        </Button>
-      )}
+          <Title>{'Become citizend'}</Title>
 
-      <Modal
+          <Text as={'p'} style={{ marginBottom: '4rem' }}>
+            {'Connect your wallet to continue'}
+          </Text>
+
+          {currentAppState !== 'SOON' && (
+            <Button onClick={toggleModal}>{'Connect wallet'}</Button>
+          )}
+        </Content>
+      </RightContent>
+
+      <HexagonWrapper>
+        <HexagonShape />
+      </HexagonWrapper>
+
+      <ModalWalletConnect
         isOpen={isOpen}
+        onConnect={onConnect}
         onRequestClose={() => {
           setIsOpen(false);
         }}
-      >
-        <ConnectContent>
-          <Text as={'p'} variant={'lead'}>
-            {'Connect your wallet'}
-          </Text>
+      />
 
-          <ConnectButton
-            aria-label={'Connect wallet with Metamask'}
-            onClick={() => {
-              onConnect('metamask');
-            }}
-          >
-            <Svg icon={metamaskSvg} size={'162px'} />
-          </ConnectButton>
-
-          <ConnectButton
-            aria-label={'Connect wallet with WalletConnect'}
-            onClick={() => {
-              onConnect('walletconnect');
-            }}
-          >
-            <Svg icon={walletconnectSvg} size={'182px'} />
-          </ConnectButton>
-
-          <TermsAndPrivacyLink />
-        </ConnectContent>
-      </Modal>
-
-      <Modal isOpen={connectStatus === 'loading'}>
-        <Text as={'p'} variant={'lead'}>
-          {'Sign the message in your wallet to continue'}
-        </Text>
-
-        <Text as={'p'}>
-          {
-            "Citizend uses this signature to verify that you're the owner of this Ethereum address."
-          }
-        </Text>
-
-        <TermsAndPrivacyLink />
-      </Modal>
-    </Container>
+      <ModalConnecting isOpen={connectStatus === 'loading'} />
+    </Grid>
   );
 }

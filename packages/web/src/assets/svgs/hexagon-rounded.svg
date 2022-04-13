@@ -1,0 +1,17 @@
+<svg fill="none" viewBox="0 0 1178 1206">
+  <g filter="url(#a)">
+    <path fill="url(#b)" fill-opacity=".5" d="M819.846 0H366.344a55.999 55.999 0 0 0-40.653 17.486L15.347 345.07A56.002 56.002 0 0 0 0 383.583v441.12a56 56 0 0 0 15.787 38.974l315.274 325.293a55.977 55.977 0 0 0 40.213 17.03h448.074c15.534 0 30.37-6.45 40.962-17.82l302.65-324.661a55.974 55.974 0 0 0 15.04-38.185V370.527c0-14.463-5.6-28.365-15.62-38.795L860.23 17.204A55.999 55.999 0 0 0 819.846 0Z"/>
+  </g>
+  <defs>
+    <linearGradient id="b" x1="589" x2="589" y1="0" y2="1206" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#697CA4"/>
+      <stop offset="1" stop-color="#3B4C72"/>
+    </linearGradient>
+    <filter id="a" width="1290" height="1318" x="-56" y="-56" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_1102_11473"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="56"/>
+      <feBlend in="SourceGraphic" in2="effect1_backgroundBlur_1102_11473" result="shape"/>
+    </filter>
+  </defs>
+</svg>

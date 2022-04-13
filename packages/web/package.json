@@ -10,6 +10,7 @@
     "lint:styles": "stylelint 'src/**/*.@(ts|tsx|js)'",
     "lint:types": "tsc --noEmit",
     "precommit": "lint-staged",
+    "prepare:contracts": "cp -r ../contracts/deployments ./contracts",
     "start": "next dev"
   },
   "lint-staged": {

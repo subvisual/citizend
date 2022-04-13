@@ -1,0 +1,326 @@
+{
+  "address": "0x3527BB8581E9884Be5624950C1146FC617E04ffC",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_root",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "addDelegate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "fractalId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "addUserAddress",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "userId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "listId",
+          "type": "string"
+        }
+      ],
+      "name": "addUserToList",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "getFractalId",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "userId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "listId",
+          "type": "string"
+        }
+      ],
+      "name": "isUserInList",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "name": "removeDelegate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "userId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "listId",
+          "type": "string"
+        }
+      ],
+      "name": "removeUserFromList",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xfdac99bbecde74aae4f3d24d7566b115646b7aa3dcafecf273b11a7df3b98e00",
+  "receipt": {
+    "to": null,
+    "from": "0x0077014b4C74d9b1688847386B24Ed23Fdf14Be8",
+    "contractAddress": "0x3527BB8581E9884Be5624950C1146FC617E04ffC",
+    "transactionIndex": 0,
+    "gasUsed": "369621",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xa6bb8e044baacf3c77d441643ff0e4b068c3b88f4f8b08e7fe2f0295461dfc51",
+    "transactionHash": "0xfdac99bbecde74aae4f3d24d7566b115646b7aa3dcafecf273b11a7df3b98e00",
+    "logs": [],
+    "blockNumber": 840227,
+    "cumulativeGasUsed": "0",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0x0077014b4C74d9b1688847386B24Ed23Fdf14Be8"
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "cdf0dd7821e62d1d83c6dd6ce00e4559",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.12+commit.f00d7308\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_root\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"addDelegate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"fractalId\",\"type\":\"bytes32\"}],\"name\":\"addUserAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"userId\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"listId\",\"type\":\"string\"}],\"name\":\"addUserToList\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"getFractalId\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"userId\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"listId\",\"type\":\"string\"}],\"name\":\"isUserInList\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"removeDelegate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"userId\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"listId\",\"type\":\"string\"}],\"name\":\"removeUserFromList\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"Antoni Dikov and Shelby Doolittle\",\"kind\":\"dev\",\"methods\":{\"addDelegate(address)\":{\"params\":{\"addr\":\"is ERC20 address\"}},\"addUserAddress(address,bytes32)\":{\"params\":{\"addr\":\"is ERC20 address.\",\"fractalId\":\"is FractalId in bytes32.\"}},\"addUserToList(bytes32,string)\":{\"params\":{\"listId\":\"is the list id.\",\"userId\":\"is FractalId in bytes32.\"}},\"getFractalId(address)\":{\"params\":{\"addr\":\"is ERC20 address\"},\"returns\":{\"_0\":\"FractalId as bytes32\"}},\"isUserInList(bytes32,string)\":{\"params\":{\"listId\":\"is the list id.\",\"userId\":\"is FractalId in bytes32.\"},\"returns\":{\"_0\":\"bool if the user is the specified list.\"}},\"removeDelegate(address)\":{\"params\":{\"addr\":\"is ERC20 address\"}},\"removeUserFromList(bytes32,string)\":{\"params\":{\"listId\":\"is the list id.\",\"userId\":\"is FractalId in bytes32.\"}}},\"title\":\"Fractal registry v0\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"addDelegate(address)\":{\"notice\":\"Only root can add delegates. Delegates have mutate permissions.\"},\"addUserAddress(address,bytes32)\":{\"notice\":\"Adds a user to the mapping of ERC20 address to fractalId.\"},\"addUserToList(bytes32,string)\":{\"notice\":\"Add user by FractalId to a specific list.\"},\"isUserInList(bytes32,string)\":{\"notice\":\"Checks if a user by FractalId exists in a specific list.\"},\"removeDelegate(address)\":{\"notice\":\"Removing delegates is only posible from root or by himself.\"},\"removeUserFromList(bytes32,string)\":{\"notice\":\"Remove user by FractalId from a specific list.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/fractal_registry/FractalRegistry.sol\":\"FractalRegistry\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":300},\"remappings\":[]},\"sources\":{\"contracts/fractal_registry/FractalRegistry.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity >=0.7.0 <0.9.0;\\n\\n/// @title Fractal registry v0\\n/// @author Antoni Dikov and Shelby Doolittle\\ncontract FractalRegistry {\\n    address root;\\n    mapping(address => bool) delegates;\\n\\n    mapping(address => bytes32) fractalIdForAddress;\\n    mapping(string => mapping(bytes32 => bool)) userLists;\\n\\n    constructor(address _root) {\\n        root = _root;\\n    }\\n\\n    /// @param addr is ERC20 address\\n    /// @return FractalId as bytes32\\n    function getFractalId(address addr) public view returns (bytes32) {\\n        return fractalIdForAddress[addr];\\n    }\\n\\n    /// @notice Adds a user to the mapping of ERC20 address to fractalId.\\n    /// @param addr is ERC20 address.\\n    /// @param fractalId is FractalId in bytes32.\\n    function addUserAddress(address addr, bytes32 fractalId) public {\\n        requireMutatePermission();\\n        fractalIdForAddress[addr] = fractalId;\\n    }\\n\\n    /// @notice Checks if a user by FractalId exists in a specific list.\\n    /// @param userId is FractalId in bytes32.\\n    /// @param listId is the list id.\\n    /// @return bool if the user is the specified list.\\n    function isUserInList(bytes32 userId, string memory listId)\\n        public\\n        view\\n        returns (bool)\\n    {\\n        return userLists[listId][userId];\\n    }\\n\\n    /// @notice Add user by FractalId to a specific list.\\n    /// @param userId is FractalId in bytes32.\\n    /// @param listId is the list id.\\n    function addUserToList(bytes32 userId, string memory listId) public {\\n        requireMutatePermission();\\n        userLists[listId][userId] = true;\\n    }\\n\\n    /// @notice Remove user by FractalId from a specific list.\\n    /// @param userId is FractalId in bytes32.\\n    /// @param listId is the list id.\\n    function removeUserFromList(bytes32 userId, string memory listId) public {\\n        requireMutatePermission();\\n        delete userLists[listId][userId];\\n    }\\n\\n    /// @notice Only root can add delegates. Delegates have mutate permissions.\\n    /// @param addr is ERC20 address\\n    function addDelegate(address addr) public {\\n        require(msg.sender == root, \\\"Must be root\\\");\\n        delegates[addr] = true;\\n    }\\n\\n    /// @notice Removing delegates is only posible from root or by himself.\\n    /// @param addr is ERC20 address\\n    function removeDelegate(address addr) public {\\n        require(\\n            msg.sender == root || msg.sender == addr,\\n            \\\"Not allowed to remove address\\\"\\n        );\\n        delete delegates[addr];\\n    }\\n\\n    function requireMutatePermission() private view {\\n        require(\\n            msg.sender == root || delegates[msg.sender],\\n            \\\"Not allowed to mutate\\\"\\n        );\\n    }\\n}\\n\",\"keccak256\":\"0x6bcc4f734c1e21eb4ebc12698c0057e75e92566269ffe7167cadfed18a084187\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506040516105dc3803806105dc83398101604081905261002f91610054565b600080546001600160a01b0319166001600160a01b0392909216919091179055610084565b60006020828403121561006657600080fd5b81516001600160a01b038116811461007d57600080fd5b9392505050565b610549806100936000396000f3fe608060405234801561001057600080fd5b506004361061007d5760003560e01c8063ce8767b21161005b578063ce8767b2146100d2578063d18c216e146100e5578063e71bdf411461011c578063ef8b57731461012f57600080fd5b806367e7646f1461008257806370491d7e14610097578063a535f5e9146100aa575b600080fd5b6100956100903660046103bb565b610142565b005b6100956100a53660046103f3565b6101d5565b6100bd6100b83660046103f3565b61021e565b60405190151581526020015b60405180910390f35b6100956100e03660046103f3565b610256565b61010e6100f33660046103bb565b6001600160a01b031660009081526002602052604090205490565b6040519081526020016100c9565b61009561012a3660046103bb565b610295565b61009561013d3660046104ae565b610305565b6000546001600160a01b03163314806101635750336001600160a01b038216145b6101b45760405162461bcd60e51b815260206004820152601d60248201527f4e6f7420616c6c6f77656420746f2072656d6f7665206164647265737300000060448201526064015b60405180910390fd5b6001600160a01b03166000908152600160205260409020805460ff19169055565b6101dd610329565b60016003826040516101ef91906104d8565b90815260408051602092819003830190206000958652909152909220805460ff19169215159290921790915550565b600060038260405161023091906104d8565b908152604080516020928190038301902060009586529091529092205460ff1692915050565b61025e610329565b60038160405161026e91906104d8565b90815260408051602092819003830190206000948552909152909120805460ff1916905550565b6000546001600160a01b031633146102de5760405162461bcd60e51b815260206004820152600c60248201526b135d5cdd081899481c9bdbdd60a21b60448201526064016101ab565b6001600160a01b03166000908152600160208190526040909120805460ff19169091179055565b61030d610329565b6001600160a01b03909116600090815260026020526040902055565b6000546001600160a01b031633148061035157503360009081526001602052604090205460ff165b61039d5760405162461bcd60e51b815260206004820152601560248201527f4e6f7420616c6c6f77656420746f206d7574617465000000000000000000000060448201526064016101ab565b565b80356001600160a01b03811681146103b657600080fd5b919050565b6000602082840312156103cd57600080fd5b6103d68261039f565b9392505050565b634e487b7160e01b600052604160045260246000fd5b6000806040838503121561040657600080fd5b82359150602083013567ffffffffffffffff8082111561042557600080fd5b818501915085601f83011261043957600080fd5b81358181111561044b5761044b6103dd565b604051601f8201601f19908116603f01168101908382118183101715610473576104736103dd565b8160405282815288602084870101111561048c57600080fd5b8260208601602083013760006020848301015280955050505050509250929050565b600080604083850312156104c157600080fd5b6104ca8361039f565b946020939093013593505050565b6000825160005b818110156104f957602081860181015185830152016104df565b81811115610508576000828501525b50919091019291505056fea2646970667358221220ffbcd77fbd84de0d5ba123055db4f879e2d6f0accbdb52effe0776e6e1fdbb3364736f6c634300080c0033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061007d5760003560e01c8063ce8767b21161005b578063ce8767b2146100d2578063d18c216e146100e5578063e71bdf411461011c578063ef8b57731461012f57600080fd5b806367e7646f1461008257806370491d7e14610097578063a535f5e9146100aa575b600080fd5b6100956100903660046103bb565b610142565b005b6100956100a53660046103f3565b6101d5565b6100bd6100b83660046103f3565b61021e565b60405190151581526020015b60405180910390f35b6100956100e03660046103f3565b610256565b61010e6100f33660046103bb565b6001600160a01b031660009081526002602052604090205490565b6040519081526020016100c9565b61009561012a3660046103bb565b610295565b61009561013d3660046104ae565b610305565b6000546001600160a01b03163314806101635750336001600160a01b038216145b6101b45760405162461bcd60e51b815260206004820152601d60248201527f4e6f7420616c6c6f77656420746f2072656d6f7665206164647265737300000060448201526064015b60405180910390fd5b6001600160a01b03166000908152600160205260409020805460ff19169055565b6101dd610329565b60016003826040516101ef91906104d8565b90815260408051602092819003830190206000958652909152909220805460ff19169215159290921790915550565b600060038260405161023091906104d8565b908152604080516020928190038301902060009586529091529092205460ff1692915050565b61025e610329565b60038160405161026e91906104d8565b90815260408051602092819003830190206000948552909152909120805460ff1916905550565b6000546001600160a01b031633146102de5760405162461bcd60e51b815260206004820152600c60248201526b135d5cdd081899481c9bdbdd60a21b60448201526064016101ab565b6001600160a01b03166000908152600160208190526040909120805460ff19169091179055565b61030d610329565b6001600160a01b03909116600090815260026020526040902055565b6000546001600160a01b031633148061035157503360009081526001602052604090205460ff165b61039d5760405162461bcd60e51b815260206004820152601560248201527f4e6f7420616c6c6f77656420746f206d7574617465000000000000000000000060448201526064016101ab565b565b80356001600160a01b03811681146103b657600080fd5b919050565b6000602082840312156103cd57600080fd5b6103d68261039f565b9392505050565b634e487b7160e01b600052604160045260246000fd5b6000806040838503121561040657600080fd5b82359150602083013567ffffffffffffffff8082111561042557600080fd5b818501915085601f83011261043957600080fd5b81358181111561044b5761044b6103dd565b604051601f8201601f19908116603f01168101908382118183101715610473576104736103dd565b8160405282815288602084870101111561048c57600080fd5b8260208601602083013760006020848301015280955050505050509250929050565b600080604083850312156104c157600080fd5b6104ca8361039f565b946020939093013593505050565b6000825160005b818110156104f957602081860181015185830152016104df565b81811115610508576000828501525b50919091019291505056fea2646970667358221220ffbcd77fbd84de0d5ba123055db4f879e2d6f0accbdb52effe0776e6e1fdbb3364736f6c634300080c0033",
+  "devdoc": {
+    "author": "Antoni Dikov and Shelby Doolittle",
+    "kind": "dev",
+    "methods": {
+      "addDelegate(address)": {
+        "params": {
+          "addr": "is ERC20 address"
+        }
+      },
+      "addUserAddress(address,bytes32)": {
+        "params": {
+          "addr": "is ERC20 address.",
+          "fractalId": "is FractalId in bytes32."
+        }
+      },
+      "addUserToList(bytes32,string)": {
+        "params": {
+          "listId": "is the list id.",
+          "userId": "is FractalId in bytes32."
+        }
+      },
+      "getFractalId(address)": {
+        "params": {
+          "addr": "is ERC20 address"
+        },
+        "returns": {
+          "_0": "FractalId as bytes32"
+        }
+      },
+      "isUserInList(bytes32,string)": {
+        "params": {
+          "listId": "is the list id.",
+          "userId": "is FractalId in bytes32."
+        },
+        "returns": {
+          "_0": "bool if the user is the specified list."
+        }
+      },
+      "removeDelegate(address)": {
+        "params": {
+          "addr": "is ERC20 address"
+        }
+      },
+      "removeUserFromList(bytes32,string)": {
+        "params": {
+          "listId": "is the list id.",
+          "userId": "is FractalId in bytes32."
+        }
+      }
+    },
+    "title": "Fractal registry v0",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "addDelegate(address)": {
+        "notice": "Only root can add delegates. Delegates have mutate permissions."
+      },
+      "addUserAddress(address,bytes32)": {
+        "notice": "Adds a user to the mapping of ERC20 address to fractalId."
+      },
+      "addUserToList(bytes32,string)": {
+        "notice": "Add user by FractalId to a specific list."
+      },
+      "isUserInList(bytes32,string)": {
+        "notice": "Checks if a user by FractalId exists in a specific list."
+      },
+      "removeDelegate(address)": {
+        "notice": "Removing delegates is only posible from root or by himself."
+      },
+      "removeUserFromList(bytes32,string)": {
+        "notice": "Remove user by FractalId from a specific list."
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 3709,
+        "contract": "contracts/fractal_registry/FractalRegistry.sol:FractalRegistry",
+        "label": "root",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 3713,
+        "contract": "contracts/fractal_registry/FractalRegistry.sol:FractalRegistry",
+        "label": "delegates",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_address,t_bool)"
+      },
+      {
+        "astId": 3717,
+        "contract": "contracts/fractal_registry/FractalRegistry.sol:FractalRegistry",
+        "label": "fractalIdForAddress",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_address,t_bytes32)"
+      },
+      {
+        "astId": 3723,
+        "contract": "contracts/fractal_registry/FractalRegistry.sol:FractalRegistry",
+        "label": "userLists",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_mapping(t_string_memory_ptr,t_mapping(t_bytes32,t_bool))"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_address,t_bool)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => bool)",
+        "numberOfBytes": "32",
+        "value": "t_bool"
+      },
+      "t_mapping(t_address,t_bytes32)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => bytes32)",
+        "numberOfBytes": "32",
+        "value": "t_bytes32"
+      },
+      "t_mapping(t_bytes32,t_bool)": {
+        "encoding": "mapping",
+        "key": "t_bytes32",
+        "label": "mapping(bytes32 => bool)",
+        "numberOfBytes": "32",
+        "value": "t_bool"
+      },
+      "t_mapping(t_string_memory_ptr,t_mapping(t_bytes32,t_bool))": {
+        "encoding": "mapping",
+        "key": "t_string_memory_ptr",
+        "label": "mapping(string => mapping(bytes32 => bool))",
+        "numberOfBytes": "32",
+        "value": "t_mapping(t_bytes32,t_bool)"
+      },
+      "t_string_memory_ptr": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

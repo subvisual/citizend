@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity =0.8.12;
 
-import {ICommon} from "./ICommon.sol";
+import {ICommon} from "./interfaces/ICommon.sol";
 import {Math} from "../libraries/Math.sol";
 
 import "hardhat/console.sol";

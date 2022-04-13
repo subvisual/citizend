@@ -3,9 +3,9 @@ pragma solidity =0.8.12;
 
 import {ERC165Checker} from "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 
-import {ICommon} from "./ICommon.sol";
-import {IProject} from "./IProject.sol";
-import {IBatch} from "./IBatch.sol";
+import {ICommon} from "./interfaces/ICommon.sol";
+import {IProject} from "./interfaces/IProject.sol";
+import {IBatch} from "./interfaces/IBatch.sol";
 import {ProjectVoting} from "./ProjectVoting.sol";
 
 import "hardhat/console.sol";

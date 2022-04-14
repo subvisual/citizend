@@ -91,7 +91,7 @@ describe("Sale", () => {
     it("allows the owner to withdraw", async () => {
       await sale.connect(alice).buy(100);
       await goToTime(end + 1000);
-      await sale.setIndividualCap(100);
+      await sale.setIndividualCap(100, { gasLimit: 10000000 });
 
       const action = () => sale.connect(owner).withdraw();
 
@@ -101,7 +101,7 @@ describe("Sale", () => {
     it("only allows withdrawing once", async () => {
       await sale.connect(alice).buy(100);
       await goToTime(end + 1000);
-      await sale.setIndividualCap(100);
+      await sale.setIndividualCap(100, { gasLimit: 10000000 });
 
       const action = () => sale.connect(owner).withdraw();
 
@@ -113,7 +113,7 @@ describe("Sale", () => {
       await sale.connect(alice).buy(1000);
       await sale.connect(bob).buy(1000);
       await goToTime(end + 1000);
-      await sale.setIndividualCap(500);
+      await sale.setIndividualCap(500, { gasLimit: 10000000 });
 
       const action = () => sale.connect(owner).withdraw();
 
@@ -214,7 +214,7 @@ describe("Sale", () => {
       await sale.connect(alice).buy(100);
       await goToTime(end);
 
-      await sale.setIndividualCap(100);
+      await sale.setIndividualCap(100, { gasLimit: 10000000 });
 
       expect(await sale.individualCap()).to.equal(100);
       expect(await sale.risingTide_isValidCap()).to.equal(true);
@@ -224,7 +224,7 @@ describe("Sale", () => {
       await sale.connect(alice).buy(100);
       await goToTime(end);
 
-      await sale.setIndividualCap(50);
+      await sale.setIndividualCap(50, { gasLimit: 10000000 });
 
       expect(await sale.individualCap()).to.equal(50);
       expect(await sale.risingTide_isValidCap()).to.equal(false);
@@ -241,7 +241,7 @@ describe("Sale", () => {
       await sale.connect(bob).buy(1000);
 
       await goToTime(end);
-      await sale.setIndividualCap(800);
+      await sale.setIndividualCap(800, { gasLimit: 10000000 });
 
       expect(await sale.refundAmount(alice.address)).to.equal(0);
     });
@@ -250,7 +250,7 @@ describe("Sale", () => {
       await sale.connect(alice).buy(1001);
 
       await goToTime(end);
-      await sale.setIndividualCap(1000);
+      await sale.setIndividualCap(1000, { gasLimit: 10000000 });
 
       expect(await sale.refundAmount(alice.address)).to.equal(
         await sale.tokenToPaymentToken(1)
@@ -275,7 +275,7 @@ describe("Sale", () => {
       // set a cap of 1000 $CTND
       const cap = 1000;
       await goToTime(end);
-      await sale.setIndividualCap(cap);
+      await sale.setIndividualCap(cap, { gasLimit: 10000000 });
 
       await expect(() => sale.refund(alice.address)).to.changeTokenBalance(
         aUSD,
@@ -292,7 +292,7 @@ describe("Sale", () => {
       // set a cap of 1000 $CTND
       const cap = 1000;
       await goToTime(end);
-      await sale.setIndividualCap(cap);
+      await sale.setIndividualCap(cap, { gasLimit: 10000000 });
 
       await expect(sale.refund(alice.address))
         .to.emit(sale, "Refund")
@@ -307,7 +307,7 @@ describe("Sale", () => {
       // set a cap of 1000 $CTND
       const cap = 1000;
       await goToTime(end);
-      await sale.setIndividualCap(cap);
+      await sale.setIndividualCap(cap, { gasLimit: 10000000 });
 
       await sale.refund(alice.address);
 

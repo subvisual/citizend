@@ -79,7 +79,7 @@ describe("ctnd:risingTide task", () => {
       await applyInvestments(smallExample);
 
       const cap = await computeRisingTideCap(sale.address, 0, hre);
-      expect(cap).to.equal(54285);
+      expect(cap).to.equal(5000);
     });
   });
 

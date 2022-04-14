@@ -41,7 +41,7 @@ export async function computeRisingTideCap(
   // increase until cap is exceeded
   while (true) {
     if (capNextIdx == amounts.length) {
-      return;
+      return cap;
     }
 
     cap = amounts[capNextIdx];

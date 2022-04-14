@@ -46,19 +46,23 @@ yarn lint
 
 ## NEXT_PUBLIC_TERMS_URL
 
-It's used open the Terms of Service URL.
+Its used to open the Terms of Service URL.
 
 ## NEXT_PUBLIC_PRIVACY_POLICY_URL
 
-It's used open the Terms of Privacy Policy URL.
+Its used to open the Terms of Privacy Policy URL.
 
 ## NEXT_PUBLIC_CAP_CALCULATION_INFO_URL
 
-It's used open Sale Cap Change info URL.
+Its used to open Sale Cap Change info URL.
 
 ## NEXT_PUBLIC_CONTRIBUTE_AGAIN_INFO_URL
 
-It's used open Contribute Again info URL.
+Its used to open Contribute Again info URL.
+
+## NEXT_PUBLIC_FRACTAL_KYC_URL
+
+Its used to open Fractal KYC profile URL.
 
 ## NEXT_PUBLIC_DAO_CONTRACTS_FOLDER
 

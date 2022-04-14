@@ -3,6 +3,7 @@
  */
 
 import { Button } from 'src/components/core/button';
+import { Container } from 'src/components/core/container';
 import { HexagonShape } from 'src/components/connect/hexagon-shape';
 import { ModalConnecting } from 'src/components/connect/modal-connecting';
 import { ModalWalletConnect } from 'src/components/connect/modal-wallet-connect';
@@ -20,7 +21,7 @@ import useWalletConnect from 'src/hooks/use-wallet-connect';
  * `Grid` styled component.
  */
 
-const Grid = styled.div`
+const Grid = styled(Container)`
   display: grid;
   grid-template-areas: '. . .' 'text . hexagon' '. . . ';
   grid-template-columns: 1.5fr 1fr 1fr;
@@ -162,7 +163,7 @@ export function ConnectScreen() {
         }}
       />
 
-      <ModalConnecting isOpen={isLoading} />
+      {!!state && <ModalConnecting isOpen={isLoading} />}
     </Grid>
   );
 }

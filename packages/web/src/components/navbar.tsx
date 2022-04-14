@@ -2,10 +2,16 @@
  * Module dependencies.
  */
 
+import { Separator } from 'src/components/core/separator';
 import { Svg } from 'src/components/core/svg';
-import { Text } from 'src/components/core/text';
+import { Text, textStyles } from 'src/components/core/text';
 import { Web3Provider } from '@ethersproject/providers';
+import { ifProp } from 'styled-tools';
+import { media } from 'src/styles/breakpoints';
 import { useWeb3React } from '@web3-react/core';
+import checkSvg from 'src/assets/svgs/check.svg';
+import errorSvg from 'src/assets/svgs/error.svg';
+import hexagonalStrokeSvg from 'src/assets/svgs/hexagon-stroked.svg';
 import logotypeSvg from 'src/assets/svgs/logotype.svg';
 import styled from 'styled-components';
 import useWalletConnect from 'src/hooks/use-wallet-connect';
@@ -15,8 +21,14 @@ import useWalletConnect from 'src/hooks/use-wallet-connect';
  */
 
 type Props = {
-  kycStatus: boolean;
+  isKycApproved: boolean;
 };
+
+/**
+ * Fractal KYC URL.
+ */
+
+const fractalKycUrl = process.env.NEXT_PUBLIC_FRACTAL_KYC_URL;
 
 /**
  * `Nav` styled component.
@@ -26,9 +38,23 @@ const Nav = styled.nav`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  padding: 1.25rem var(--container-padding);
+  padding: 1.5rem var(--container-padding);
   position: relative;
   z-index: 10;
+
+  ${media.min.sm`
+    padding: 2.5rem var(--container-padding);
+  `}
+`;
+
+/**
+ * `AddressLabel` styled component.
+ */
+
+const AddressLabel = styled(Text).attrs({
+  variant: 'body'
+})`
+  font-weight: 500;
 `;
 
 /**
@@ -71,25 +97,76 @@ const Menu = styled.ul`
 `;
 
 /**
+ * `MenuTitle` styled component.
+ */
+
+const MenuTitle = styled(Text).attrs({
+  as: 'p',
+  bold: true
+})`
+  margin-bottom: 0.5rem;
+`;
+
+/**
  * `Link` styled component.
  */
 
 const Link = styled.a`
-  display: block;
+  ${textStyles.body}
 
-  :not(:last-child) {
-    padding-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding-top: 0.75rem;
 
-    ::after {
-      background-color: var(--color-blue700);
-      content: '';
-      display: block;
-      height: 1px;
-      inset: auto 0 0 0;
-      margin-top: 0.5rem;
-      opacity: 0.2;
-    }
+  &:not(:last-child) {
+    margin-bottom: 0.75rem;
   }
+
+  &:focus,
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+/**
+ * `ApprovalStateSvg` styled component.
+ */
+
+const ApprovalStateSvg = styled(Svg).attrs({
+  size: '1.25rem'
+})`
+  top: -1px;
+`;
+
+/**
+ * `HexagonalShape` styled component.
+ */
+
+const HexagonalShape = styled(Svg).attrs({
+  icon: hexagonalStrokeSvg,
+  size: '3.75rem'
+})<{ hasError: boolean }>`
+  left: -25%;
+  position: absolute;
+  top: -1.3rem;
+  transform: rotate(-90deg);
+  z-index: -1;
+
+  ${ifProp(
+    'hasError',
+    `
+    &::after {
+      background: var(--color-red500);
+      border-radius: 50%;
+      content: '';
+      height: 1.25rem;
+      inset: 0 0 auto auto;
+      position: absolute;
+      width: 1.25rem;
+    }
+  `
+  )}
 `;
 
 /**
@@ -97,7 +174,7 @@ const Link = styled.a`
  */
 
 export function Navbar(props: Props) {
-  const { kycStatus } = props;
+  const { isKycApproved } = props;
   const { account } = useWeb3React<Web3Provider>();
   const { onDisconnect } = useWalletConnect();
 
@@ -107,19 +184,25 @@ export function Navbar(props: Props) {
 
       {account?.length && (
         <MenuWrapper role={'button'}>
-          {`${account.substring(0, 4)}...${account.substring(
-            account.length - 4,
-            account.length
-          )}`}
+          <HexagonalShape hasError={!isKycApproved} />
+
+          <AddressLabel>
+            {`${account.substring(0, 4)}...${account.substring(
+              account.length - 4,
+              account.length
+            )}`}
+          </AddressLabel>
 
           <Menu>
-            <Text as={'p'} bold>
-              {'KYC Verification'}
-            </Text>
+            <MenuTitle>{'KYC Verification'}</MenuTitle>
 
-            <Link href={'/'}>
-              {'Fractal ID '} {kycStatus ? '🟢' : '🔴'}
+            <Link href={fractalKycUrl}>
+              <span>{'Fractal ID '}</span>
+
+              <ApprovalStateSvg icon={isKycApproved ? checkSvg : errorSvg} />
             </Link>
+
+            <Separator />
 
             <Link onClick={onDisconnect} role={'button'}>
               {'Disconnect'}

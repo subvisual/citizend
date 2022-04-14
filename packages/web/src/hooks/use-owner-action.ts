@@ -24,7 +24,7 @@ function bytes32(value: string): string {
  */
 
 export const ListId = bytes32('42');
-export const ListName = 'kyc';
+export const ListName = 'kycPlus';
 
 /**
  * `useOwnerAction`.

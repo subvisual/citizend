@@ -119,7 +119,7 @@ const smallStyles = {
  * Variants themes.
  */
 
-export const variantsThemes = {
+export const textStyles = {
   body: createFontStyle(bodyStyles),
   body2: createFontStyle(body2Styles),
   label: createFontStyle(labelStyles),
@@ -138,7 +138,7 @@ type Props = {
   children: ReactNode;
   noMargin?: boolean;
   uppercase?: boolean;
-  variant?: keyof typeof variantsThemes;
+  variant?: keyof typeof textStyles;
 };
 
 /**
@@ -146,7 +146,7 @@ type Props = {
  */
 
 export const Text = styled.span<Props>`
-  ${switchProp('variant', variantsThemes, variantsThemes.body)}
+  ${switchProp('variant', textStyles, textStyles.body)}
   ${ifProp('bold', 'font-weight: 700;')}
   ${ifProp('noMargin', 'margin: 0;')}
   ${ifProp('uppercase', 'text-transform: uppercase;')}

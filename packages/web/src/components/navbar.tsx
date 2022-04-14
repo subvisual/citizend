@@ -2,15 +2,21 @@
  * Module dependencies.
  */
 
-import { ListName } from 'src/hooks/use-owner-action';
 import { Svg } from 'src/components/core/svg';
 import { Text } from 'src/components/core/text';
 import { Web3Provider } from '@ethersproject/providers';
-import { useAccountKycStatus } from 'src/hooks/use-kyc-status';
 import { useWeb3React } from '@web3-react/core';
 import logotypeSvg from 'src/assets/svgs/logotype.svg';
 import styled from 'styled-components';
 import useWalletConnect from 'src/hooks/use-wallet-connect';
+
+/**
+ * `Props` type.
+ */
+
+type Props = {
+  kycStatus: boolean;
+};
 
 /**
  * `Nav` styled component.
@@ -21,8 +27,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   padding: 1.25rem var(--container-padding);
-  right: 0;
-  top: 0;
+  position: relative;
   z-index: 10;
 `;
 
@@ -91,10 +96,10 @@ const Link = styled.a`
  * Export `Navbar` component.
  */
 
-export function Navbar() {
+export function Navbar(props: Props) {
+  const { kycStatus } = props;
   const { account } = useWeb3React<Web3Provider>();
   const { onDisconnect } = useWalletConnect();
-  const kycStatus = useAccountKycStatus(ListName);
 
   return (
     <Nav>

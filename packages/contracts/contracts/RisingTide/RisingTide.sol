@@ -102,7 +102,7 @@ abstract contract RisingTide {
         risingTideState = RisingTideState.Validating;
         risingTideCache = RisingTideCache(0, 0, 0, 0);
 
-        return risingTide_validate();
+        risingTide_validate();
     }
 
     /// Continues a pending validation of the individual cap

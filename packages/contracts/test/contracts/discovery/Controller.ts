@@ -118,22 +118,49 @@ describe("Controller", () => {
       expect(await project.approvedByManager()).to.equal(true);
       expect(await project.isReadyForListing()).to.equal(true);
 
-      await expect(controller.createBatch([projectAddress], 4)).to.not.be
-        .reverted;
+      await expect(controller.createBatch([projectAddress], 1)).to.not.be.reverted;
     });
 
     it("reverts if a project is not approved", async () => {
       const tx = await controller.registerProject(
         "My Project",
-        alice.address,
+        projectToken.address,
         parseUnits("1000"),
         parseUnits("2")
       );
 
-      const event = await findEvent(tx, "RegisterProject");
+      const event = await findEvent(tx, "ProjectRegistered");
       const projectAddress = event?.args?.project;
 
-      await expect(controller.createBatch([projectAddress], 4)).to.be.reverted;
+      await expect(controller.createBatch([projectAddress], 1)).to.be.revertedWith("project not ready");
+    });
+
+    it("reverts if a project is already included in a different batch", async () => {
+      const tx = await controller.registerProject(
+        "My Project",
+        projectToken.address,
+        parseUnits("1000"),
+        parseUnits("2")
+      );
+
+      const event = await findEvent(tx, "ProjectRegistered");
+      const projectAddress = event?.args?.project;
+
+      const project = Project__factory.connect(projectAddress, owner);
+
+      await projectToken
+        .connect(owner)
+        .transfer(project.address, parseUnits("1000"));
+
+      await project.approveByLegal();
+      await project.approveByManager();
+
+      expect(await project.approvedByLegal()).to.equal(true);
+      expect(await project.approvedByManager()).to.equal(true);
+      expect(await project.isReadyForListing()).to.equal(true);
+
+      await expect(controller.createBatch([projectAddress], 1)).to.not.be.reverted;
+      await expect(controller.createBatch([projectAddress], 1)).to.be.revertedWith("already in a batch");
     });
   });
 });

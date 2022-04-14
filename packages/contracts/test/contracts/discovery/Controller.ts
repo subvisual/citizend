@@ -118,7 +118,8 @@ describe("Controller", () => {
       expect(await project.approvedByManager()).to.equal(true);
       expect(await project.isReadyForListing()).to.equal(true);
 
-      await expect(controller.createBatch([projectAddress], 1)).to.not.be.reverted;
+      await expect(controller.createBatch([projectAddress], 1)).to.not.be
+        .reverted;
     });
 
     it("reverts if a project is not approved", async () => {
@@ -132,7 +133,9 @@ describe("Controller", () => {
       const event = await findEvent(tx, "ProjectRegistered");
       const projectAddress = event?.args?.project;
 
-      await expect(controller.createBatch([projectAddress], 1)).to.be.revertedWith("project not ready");
+      await expect(
+        controller.createBatch([projectAddress], 1)
+      ).to.be.revertedWith("project not ready");
     });
 
     it("reverts if a project is already included in a different batch", async () => {
@@ -159,8 +162,11 @@ describe("Controller", () => {
       expect(await project.approvedByManager()).to.equal(true);
       expect(await project.isReadyForListing()).to.equal(true);
 
-      await expect(controller.createBatch([projectAddress], 1)).to.not.be.reverted;
-      await expect(controller.createBatch([projectAddress], 1)).to.be.revertedWith("already in a batch");
+      await expect(controller.createBatch([projectAddress], 1)).to.not.be
+        .reverted;
+      await expect(
+        controller.createBatch([projectAddress], 1)
+      ).to.be.revertedWith("already in a batch");
     });
   });
 });

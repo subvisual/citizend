@@ -1,0 +1,73 @@
+apiVersion: reviewpad.com/v0.0.2
+
+mode: silent
+
+labels:
+  small:
+    description: small changes
+    # color is the hexadecimal color code for the label, without the leading #.
+    color: "294b69"
+  medium:
+    description: small changes
+    color: "a8c3f7"
+  large:
+    description: large changes
+    color: "8a2138"
+
+rules:
+  isSmall:
+    kind: patch
+    description: small pull request
+    spec: $size() <= 90
+
+  isMedium:
+    kind: patch
+    description: medium-sized pull request
+    spec: $size() > 90 && $size() <= 300
+
+  isLarge:
+    kind: patch
+    description: large-sized pull request
+    spec: $size() > 300
+  
+  tautology:
+    kind: patch
+    description: true by default
+    spec: "true"
+
+  touchesContracts:
+    kind: patch
+    description: touches package contracts
+    spec: $hasFilePattern("packages/contracts/**")
+
+protectionGates:
+  - name: assign-naps-for-everything
+    description: By default, assign naps for every pull request
+    patchRules:
+      - rule: tautology
+    actions:
+      - $assignReviewer(["naps62"])
+  - name: assign-reviewers-contracts
+    description: Assign team to review the smart contracts
+    patchRules:
+      - rule: touchesContracts
+    actions:
+      - $assignReviewer(["naps62", "zamith", "DavideSilva"])
+  - name: label-small-pull-request
+    description: Label small pull requests with size
+    patchRules:
+      - rule: isSmall
+    actions:
+      - $addLabel("small")
+  - name: label-medium-pull-request
+    description: Label medium pull requests with size
+    patchRules:
+      - rule: isMedium
+    actions:
+      - $addLabel("medium")
+  - name: label-large-pull-request
+    description: Label large pull requests with size
+    patchRules:
+      - rule: isLarge
+    actions:
+      - $addLabel("large")

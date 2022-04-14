@@ -29,11 +29,6 @@ rules:
     kind: patch
     description: large-sized pull request
     spec: $size() > 300
-  
-  tautology:
-    kind: patch
-    description: true by default
-    spec: "true"
 
   touchesContracts:
     kind: patch
@@ -41,12 +36,6 @@ rules:
     spec: $hasFilePattern("packages/contracts/**")
 
 protectionGates:
-  - name: assign-naps-for-everything
-    description: By default, assign naps for every pull request
-    patchRules:
-      - rule: tautology
-    actions:
-      - $assignReviewer(["naps62"])
   - name: assign-reviewers-contracts
     description: Assign team to review the smart contracts
     patchRules:

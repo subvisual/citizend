@@ -20,6 +20,7 @@ type Props = {
  */
 
 const Wrapper = styled.div`
+  min-height: 100vh;
   position: relative;
 `;
 

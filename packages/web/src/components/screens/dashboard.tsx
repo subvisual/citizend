@@ -43,12 +43,12 @@ const StyledContainer = styled(Container)`
 
 export function DashboardScreen() {
   const { balance, contributions, price, raised } = useSale() as SaleState;
-  const { vestingStart } = useAppStatus();
+  const { state, vestingStart } = useAppStatus();
   const kycStatus = useAccountKycStatus(ListName);
 
   return (
     <>
-      <Navbar kycStatus={kycStatus} />
+      <Navbar isKycApproved={!!kycStatus} />
 
       <StyledContainer>
         <ProjectInfoCard
@@ -59,7 +59,9 @@ export function DashboardScreen() {
           vestingStart={formatDate(vestingStart)}
         />
 
-        <SaleForm disabled={!kycStatus} tokenPrice={price} />
+        {state === 'SALE' && (
+          <SaleForm disabled={!kycStatus} tokenPrice={price} />
+        )}
       </StyledContainer>
     </>
   );

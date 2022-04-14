@@ -59,7 +59,7 @@ class PageDocument extends Document<DocumentInitialProps> {
         <Head>
           <link
             href={
-              'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'
+              'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap'
             }
             rel={'stylesheet'}
           />

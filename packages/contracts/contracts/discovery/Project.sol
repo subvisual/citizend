@@ -71,6 +71,14 @@ contract Project is IProject, ERC165 {
         _;
     }
 
+    modifier onlyLegal(address _account) {
+        require(
+            IController(controller).hasLegalManagerRole(msg.sender),
+            "not a legal manager"
+        );
+        _;
+    }
+
     modifier onlyBatch() {
         IController(controller).isProjectInBatch(address(this), msg.sender);
         _;
@@ -96,11 +104,7 @@ contract Project is IProject, ERC165 {
     }
 
     /// @inheritdoc IProject
-    function approveByLegal()
-        public
-        override(IProject)
-        onlyManager(msg.sender)
-    {
+    function approveByLegal() public override(IProject) onlyLegal(msg.sender) {
         require(approvedByLegal == false, "already approved by legal");
 
         approvedByLegal = true;

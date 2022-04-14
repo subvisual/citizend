@@ -10,6 +10,7 @@
     "lint:styles": "stylelint 'src/**/*.@(ts|tsx|js)'",
     "lint:types": "tsc --noEmit",
     "precommit": "lint-staged",
+    "prepare:contracts": "cp -r ../contracts/deployments ./contracts",
     "start": "next dev"
   },
   "lint-staged": {
@@ -34,6 +35,7 @@
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.13",
+    "bignumber.js": "^9.0.2",
     "date-fns": "^2.28.0",
     "lodash": "^4.17.21",
     "next": "^12.0.4",

@@ -63,6 +63,10 @@ contract Staking is IStaking {
         token = _token;
     }
 
+    function hasStaked(address _account) public view returns (bool) {
+        return stakes[_account].total > 0;
+    }
+
     /// @inheritdoc IStaking
     function stake(uint256 _amount) external override(IStaking) {
         stakes[msg.sender].total += _amount;

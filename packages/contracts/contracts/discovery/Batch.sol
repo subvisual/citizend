@@ -6,6 +6,7 @@ import {ERC165Checker} from "@openzeppelin/contracts/utils/introspection/ERC165C
 import {ICommon} from "./interfaces/ICommon.sol";
 import {IProject} from "./interfaces/IProject.sol";
 import {IBatch} from "./interfaces/IBatch.sol";
+import {IStaking} from "./interfaces/IStaking.sol";
 import {ProjectVoting} from "./ProjectVoting.sol";
 
 import "hardhat/console.sol";
@@ -14,16 +15,19 @@ contract Batch is IBatch, ICommon, ProjectVoting {
     using ERC165Checker for address;
 
     /// List of addresses for the project in the batch
-    address[] public projects;
+    address[] public immutable projects;
 
     /// number of available slots
-    uint256 public slotCount;
+    uint256 public immutable slotCount;
 
     /// Period for which the batch is open for voting
     Period public votingPeriod;
 
     /// Address for the controller contract
-    address public controller;
+    address public immutable controller;
+
+    /// Address for the staking contract
+    address public immutable staking;
 
     /// duration in seconds of each slot
     uint256 public singleSlotDuration;
@@ -43,9 +47,11 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         _;
     }
 
-    constructor(address[] memory _projects, uint256 _slotCount)
-        ProjectVoting(_projects)
-    {
+    constructor(
+        address[] memory _projects,
+        uint256 _slotCount,
+        address _staking
+    ) ProjectVoting(_projects) {
         uint256 numProjects = _projects.length;
         require(numProjects > 0, "projects must not be empty");
         require(_slotCount > 0, "slotCount must be greater than 0");
@@ -63,6 +69,7 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         controller = msg.sender;
         projects = _projects;
         slotCount = _slotCount;
+        staking = _staking;
     }
 
     function projectVoting_projects()
@@ -113,6 +120,22 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         returns (int256)
     {
         return 0;
+    }
+
+    function canInvestInStakersPool(address _user, address _project)
+        external
+        view
+        returns (bool)
+    {
+        return IStaking(staking).hasStaked(_user);
+    }
+
+    function canInvestInPeoplesPool(address _user, address _project)
+        external
+        view
+        returns (bool)
+    {
+        return userHasVotedForProject[project][user];
     }
 
     function setVotingPeriod(uint256 start, uint256 end) public {

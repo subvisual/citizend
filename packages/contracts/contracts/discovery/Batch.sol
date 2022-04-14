@@ -26,9 +26,6 @@ contract Batch is IBatch, ICommon, ProjectVoting {
     /// Address for the controller contract
     address public immutable controller;
 
-    /// Address for the staking contract
-    address public immutable staking;
-
     /// duration in seconds of each slot
     uint256 public singleSlotDuration;
 
@@ -47,11 +44,9 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         _;
     }
 
-    constructor(
-        address[] memory _projects,
-        uint256 _slotCount,
-        address _staking
-    ) ProjectVoting(_projects) {
+    constructor(address[] memory _projects, uint256 _slotCount)
+        ProjectVoting(_projects)
+    {
         uint256 numProjects = _projects.length;
         require(numProjects > 0, "projects must not be empty");
         require(_slotCount > 0, "slotCount must be greater than 0");
@@ -69,7 +64,6 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         controller = msg.sender;
         projects = _projects;
         slotCount = _slotCount;
-        staking = _staking;
     }
 
     function projectVoting_projects()
@@ -122,20 +116,12 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         return 0;
     }
 
-    function canInvestInStakersPool(address _user, address _project)
+    function hasVotedForProject(address _user, address _project)
         external
         view
         returns (bool)
     {
-        return IStaking(staking).hasStaked(_user);
-    }
-
-    function canInvestInPeoplesPool(address _user, address _project)
-        external
-        view
-        returns (bool)
-    {
-        return userHasVotedForProject[project][user];
+        return userHasVotedForProject[_project][_user];
     }
 
     function setVotingPeriod(uint256 start, uint256 end) public {

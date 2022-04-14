@@ -64,7 +64,7 @@ contract Staking is IStaking {
     }
 
     function hasStaked(address _account) public view returns (bool) {
-        return stakes[_account].total > 0;
+        return stakes[_account].bonded > 0;
     }
 
     /// @inheritdoc IStaking

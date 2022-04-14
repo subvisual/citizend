@@ -31,7 +31,7 @@ const rootVariables = `
     --druke-wide-font-family: 'Druk Wide', sans-serif;
 
     /* Container */
-    --container-padding: 2rem;
+    --container-padding: 1.25rem;
 
     /* Transition */
     --transition-default-animation: cubic-bezier(0.4, 0, 0.2, 1);

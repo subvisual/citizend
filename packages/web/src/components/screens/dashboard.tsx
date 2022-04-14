@@ -3,6 +3,7 @@
  */
 
 import { Container } from 'src/components/core/container';
+import { Countdown } from 'src/components/countdown';
 import { ListName } from 'src/hooks/use-owner-action';
 import { Navbar } from 'src/components/navbar';
 import { ProjectInfoCard } from 'src/components/dashboard/project-info-card';
@@ -58,6 +59,13 @@ export function DashboardScreen() {
           raised={formatCompactNumber(raised, currencyConfig.usd)}
           vestingStart={formatDate(vestingStart)}
         />
+
+        {state === 'COUNTDOWN' && !!vestingStart && (
+          <Countdown
+            date={new Date(vestingStart).getTime()}
+            title={'Vesting period starting in:'}
+          />
+        )}
 
         {state === 'SALE' && (
           <SaleForm disabled={!kycStatus} tokenPrice={price} />

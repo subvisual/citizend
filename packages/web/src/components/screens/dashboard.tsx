@@ -3,8 +3,10 @@
  */
 
 import { Container } from 'src/components/core/container';
+import { ListName } from 'src/hooks/use-owner-action';
 import { Navbar } from 'src/components/navbar';
 import { ProjectInfoCard } from 'src/components/dashboard/project-info-card';
+import { SaleForm } from 'src/components/dashboard/sale-form';
 import { SaleState, useSale } from 'src/hooks/use-sale';
 import { currencyConfig } from 'src/core/constants';
 import {
@@ -13,8 +15,27 @@ import {
   formatDate
 } from 'src/core/utils/formatters';
 
+import { media } from 'src/styles/breakpoints';
+import { useAccountKycStatus } from 'src/hooks/use-kyc-status';
 import { useAppStatus } from 'src/hooks/use-app-status';
 import React from 'react';
+import styled from 'styled-components';
+
+/**
+ * `StyledContainer` styled component.
+ */
+
+const StyledContainer = styled(Container)`
+  display: grid;
+  grid-gap: 5rem;
+  padding-bottom: 3rem;
+  padding-top: 3rem;
+
+  ${media.min.md`
+    padding-bottom: 5rem;
+    padding-top: 5rem;
+  `}
+`;
 
 /**
  * Export `DashboardScreen` component.
@@ -23,12 +44,13 @@ import React from 'react';
 export function DashboardScreen() {
   const { balance, contributions, price, raised } = useSale() as SaleState;
   const { vestingStart } = useAppStatus();
+  const kycStatus = useAccountKycStatus(ListName);
 
   return (
     <>
-      <Navbar />
+      <Navbar kycStatus={kycStatus} />
 
-      <Container>
+      <StyledContainer>
         <ProjectInfoCard
           contributions={contributions}
           myContribution={formatCurrency(balance, currencyConfig.aUsd)}
@@ -36,7 +58,9 @@ export function DashboardScreen() {
           raised={formatCompactNumber(raised, currencyConfig.usd)}
           vestingStart={formatDate(vestingStart)}
         />
-      </Container>
+
+        <SaleForm disabled={!kycStatus} tokenPrice={price} />
+      </StyledContainer>
     </>
   );
 }

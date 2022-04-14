@@ -36,10 +36,10 @@ const contractsFolder =
   process.env.NEXT_PUBLIC_DAO_CONTRACTS_FOLDER || 'mandala';
 
 /**
- * `ContractsContext` type.
+ * Export `ContractsContext` type.
  */
 
-type ContractsContext =
+export type ContractsContext =
   | Record<ContractsNames, Contract>
   | Record<string, never>;
 

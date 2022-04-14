@@ -28,11 +28,9 @@ const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 3rem;
 
   ${media.min.md`
     flex-direction: row;
-    margin-top: 8rem;
   `}
 `;
 

@@ -44,6 +44,22 @@ yarn lint
 
 ### Environment variables
 
+## NEXT_PUBLIC_TERMS_URL
+
+It's used open the Terms of Service URL.
+
+## NEXT_PUBLIC_PRIVACY_POLICY_URL
+
+It's used open the Terms of Privacy Policy URL.
+
+## NEXT_PUBLIC_CAP_CALCULATION_INFO_URL
+
+It's used open Sale Cap Change info URL.
+
+## NEXT_PUBLIC_CONTRIBUTE_AGAIN_INFO_URL
+
+It's used open Contribute Again info URL.
+
 ## NEXT_PUBLIC_DAO_CONTRACTS_FOLDER
 
 This application will run with the `mandala (staging)` contracts by default.

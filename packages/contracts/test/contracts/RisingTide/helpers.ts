@@ -18,6 +18,7 @@ export async function expectCapValidation(
 
   tx = await contract.setCap(cap, { gasLimit: 10000000 });
   gasSpent = gasSpent.add(await getGasSpent(tx));
+  let extraCalls = 0;
 
   while (await contract.risingTide_validating()) {
     tx = await contract.risingTide_validate({ gasLimit: 100000000 });

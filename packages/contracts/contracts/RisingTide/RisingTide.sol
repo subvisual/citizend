@@ -143,7 +143,7 @@ abstract contract RisingTide {
             if (_valid) {
                 risingTideState = RisingTideState.Finished;
             } else {
-                risingTideState = RisingTideState.NotSet;
+                risingTideState = RisingTideState.Invalid;
             }
             return (_valid, true);
         } else {

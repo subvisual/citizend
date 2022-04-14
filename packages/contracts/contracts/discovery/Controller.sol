@@ -73,7 +73,7 @@ contract Controller is IController, AccessControl {
         override(IController)
         onlyRole(BATCH_MANAGER_ROLE)
     {
-        IBatch batch = new Batch(_projects, _slotCount);
+        IBatch batch = new Batch(_projects, _slotCount, staking);
 
         uint256 len = _projects.length;
         for (uint256 i = 0; i < len; i++) {

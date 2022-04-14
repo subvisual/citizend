@@ -63,21 +63,19 @@ export function useContracts(): ContractsContext {
 
 function initializeContracts(library: Web3Provider): ContractsContext {
   const contractsConfig = {
-    aUsd: require(`@discovery-dao/contracts/deployments/${contractsFolder}/aUSD.json`),
-    citizend: require(`@discovery-dao/contracts/deployments/${contractsFolder}/Citizend.json`),
-    fractal: require(`@discovery-dao/contracts/deployments/${contractsFolder}/FractalRegistry.json`),
-    sale1: require(`@discovery-dao/contracts/deployments/${contractsFolder}/Sale1.json`),
-    vesting: require(`@discovery-dao/contracts/deployments/${contractsFolder}/Vesting.json`)
+    aUsd: require(`contracts/${contractsFolder}/aUSD.json`),
+    citizend: require(`contracts/${contractsFolder}/Citizend.json`),
+    fractal: require(`contracts/${contractsFolder}/FractalRegistry.json`),
+    sale1: require(`contracts/${contractsFolder}/Sale1.json`),
+    vesting: require(`contracts/${contractsFolder}/Vesting.json`)
   };
 
-  if (
-    Object.values(contractsConfig).every(({ abi, address }) => !abi || !address)
-  ) {
+  if (Object.values(contractsConfig).every(({ address }) => !address)) {
     return {};
   }
 
   return Object.entries(contractsConfig as ContractsContext).reduce(
-    (contracts, [name, { abi, address }]) => ({
+    (contracts, [name, { abi = [], address }]) => ({
       ...contracts,
       [name]: new ethers.Contract(address, abi, library.getSigner(0))
     }),
@@ -103,7 +101,7 @@ export function ContractsProvider({ children }: Props) {
     } catch (error) {
       throw new Error(`
         Contracts Schema for '${contractsFolder}' couldn't be loaded or were wrongly generated.
-        Check the file for '/contracts/deployments/${contractsFolder}/Citizend.json'.
+        Check the files in 'contracts/${contractsFolder}/Citizend.json'.
         Also, check your 'NEXT_PUBLIC_DAO_CONTRACTS_FOLDER' environment variable if the path is not as expected.
       `);
     }

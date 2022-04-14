@@ -20,17 +20,12 @@ const localeStorageKey = 'provider';
 type Provider = keyof typeof connectors;
 
 /**
- * `ConnectStatus` type.
- */
-
-type ConnectStatus = 'loading' | 'error' | 'success';
-
-/**
  * `Result` type.
  */
 
 type Result = {
-  connectStatus: ConnectStatus | null;
+  active: boolean;
+  isLoading: boolean;
   onConnect: (provider: Provider) => void;
   onDisconnect: () => void;
 };
@@ -40,30 +35,31 @@ type Result = {
  */
 
 function useWalletConnect(): Result {
-  const { activate, deactivate } = useWeb3React<Web3Provider>();
-  const [connectStatus, setConnectStatus] = useState<ConnectStatus | null>(
-    null
-  );
-  const handleConnectProvider = useCallback(
-    (provider: Provider) => {
-      setConnectStatus('loading');
-
-      activate(connectors[provider])
-        .then(() => {
-          setConnectStatus('success');
-          window.localStorage.setItem(localeStorageKey, provider);
-        })
-        .catch(() => {
-          setConnectStatus('error');
-        });
-    },
-    [activate]
-  );
-
+  const { activate, active, deactivate } = useWeb3React<Web3Provider>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState<boolean>(false);
   const handleDisconnect = useCallback(() => {
     deactivate();
     window.localStorage.removeItem(localeStorageKey);
   }, [deactivate]);
+
+  const handleConnectProvider = useCallback(
+    (provider: Provider) => {
+      setIsLoading(true);
+
+      activate(connectors[provider]).finally(() => {
+        setIsLoading(false);
+      });
+    },
+    [activate]
+  );
+
+  useEffect(() => {
+    if (active !== isActive) {
+      setIsActive(active);
+      window.localStorage.setItem(localeStorageKey, 'metamask');
+    }
+  }, [active, isActive]);
 
   useEffect(() => {
     const provider = window.localStorage.getItem(localeStorageKey);
@@ -74,7 +70,8 @@ function useWalletConnect(): Result {
   }, [handleConnectProvider]);
 
   return {
-    connectStatus,
+    active: isActive,
+    isLoading,
     onConnect: handleConnectProvider,
     onDisconnect: handleDisconnect
   };

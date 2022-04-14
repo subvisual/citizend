@@ -123,8 +123,8 @@ const Shape = styled(Svg).attrs({
  */
 
 export function ConnectScreen() {
-  const { connectStatus, onConnect } = useWalletConnect();
-  const currentAppState = useAppStatus();
+  const { isLoading, onConnect } = useWalletConnect();
+  const { state } = useAppStatus();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleModal = useCallback(() => {
     setIsOpen(open => !open);
@@ -144,7 +144,7 @@ export function ConnectScreen() {
             {'Connect your wallet to continue'}
           </Text>
 
-          {currentAppState !== 'SOON' && (
+          {state !== 'SOON' && (
             <Button onClick={toggleModal}>{'Connect wallet'}</Button>
           )}
         </Content>
@@ -162,7 +162,7 @@ export function ConnectScreen() {
         }}
       />
 
-      <ModalConnecting isOpen={connectStatus === 'loading'} />
+      <ModalConnecting isOpen={isLoading} />
     </Grid>
   );
 }

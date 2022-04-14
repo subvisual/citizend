@@ -1,5 +1,0 @@
-# By default, notify naps62 for all reviews
-* @naps62
-
-# notify the smart contracts team for all contract reviews
-packages/contracts @naps62 @zamith @DavideSilva

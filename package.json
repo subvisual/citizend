@@ -12,8 +12,9 @@
       "**/@typechain/**",
       "**/@polkadot/**",
       "**/typechain/**",
-      "**/typescript",
-      "**/ts-node",
+      "**/typescript/**",
+      "**/ts-node/**",
+      "**/mocha/**",
       "@typescript-eslint/**"
     ]
   },

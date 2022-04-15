@@ -3,6 +3,7 @@
  */
 
 import { Button } from 'src/components/core/button';
+import { Container } from 'src/components/core/container';
 import { HexagonShape } from 'src/components/connect/hexagon-shape';
 import { ModalConnecting } from 'src/components/connect/modal-connecting';
 import { ModalWalletConnect } from 'src/components/connect/modal-wallet-connect';
@@ -20,7 +21,7 @@ import useWalletConnect from 'src/hooks/use-wallet-connect';
  * `Grid` styled component.
  */
 
-const Grid = styled.div`
+const Grid = styled(Container)`
   display: grid;
   grid-template-areas: '. . .' 'text . hexagon' '. . . ';
   grid-template-columns: 1.5fr 1fr 1fr;
@@ -123,8 +124,8 @@ const Shape = styled(Svg).attrs({
  */
 
 export function ConnectScreen() {
-  const { connectStatus, onConnect } = useWalletConnect();
-  const currentAppState = useAppStatus();
+  const { isLoading, onConnect } = useWalletConnect();
+  const { state } = useAppStatus();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleModal = useCallback(() => {
     setIsOpen(open => !open);
@@ -144,7 +145,7 @@ export function ConnectScreen() {
             {'Connect your wallet to continue'}
           </Text>
 
-          {currentAppState !== 'SOON' && (
+          {state !== 'SOON' && (
             <Button onClick={toggleModal}>{'Connect wallet'}</Button>
           )}
         </Content>
@@ -162,7 +163,7 @@ export function ConnectScreen() {
         }}
       />
 
-      <ModalConnecting isOpen={connectStatus === 'loading'} />
+      {!!state && <ModalConnecting isOpen={isLoading} />}
     </Grid>
   );
 }

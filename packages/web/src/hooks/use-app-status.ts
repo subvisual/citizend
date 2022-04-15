@@ -5,6 +5,7 @@
 import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { useContracts } from 'src/context/contracts';
+import formatISO from 'date-fns/formatISO';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import isAfter from 'date-fns/isAfter';
 import isBefore from 'date-fns/isBefore';
@@ -28,10 +29,21 @@ const appState = {
 } as const;
 
 /**
- * `Status` type.
+ * `State` type.
  */
 
-type Status = typeof appState[keyof typeof appState];
+type State = typeof appState[keyof typeof appState];
+
+/**
+ * `AppStatus` type.
+ */
+
+export type AppStatus = {
+  state: State;
+  saleStart: string;
+  saleEnd: string;
+  vestingStart: string;
+};
 
 /**
  * Normalize unix time.
@@ -46,7 +58,7 @@ function normalizeTime(unixTime: BigNumber) {
  */
 
 export function useAppStatus() {
-  const [status, setStatus] = useState<Status | undefined>();
+  const [status, setStatus] = useState<AppStatus | Record<string, never>>({});
   const contracts = useContracts();
   const getStatus = useCallback(async () => {
     if (!contracts?.sale1 || !contracts.vesting) {
@@ -60,9 +72,17 @@ export function useAppStatus() {
       const saleStartDate = normalizeTime(saleStart);
       const saleEndDate = normalizeTime(saleEnd);
       const vestingStartDate = normalizeTime(vestingStart);
+      const handleSetStatus = (state: State) => {
+        setStatus({
+          saleEnd: formatISO(saleEndDate),
+          saleStart: formatISO(saleStartDate),
+          state,
+          vestingStart: formatISO(vestingStartDate)
+        });
+      };
 
       if (isAfter(currentDate, vestingStartDate)) {
-        setStatus('VESTING');
+        handleSetStatus('VESTING');
 
         return;
       }
@@ -71,7 +91,7 @@ export function useAppStatus() {
         isAfter(currentDate, saleEndDate) &&
         isBefore(currentDate, vestingStartDate)
       ) {
-        setStatus('COUNTDOWN');
+        handleSetStatus('COUNTDOWN');
 
         return;
       }
@@ -80,16 +100,16 @@ export function useAppStatus() {
         isAfter(currentDate, saleStartDate) &&
         isBefore(currentDate, saleEndDate)
       ) {
-        setStatus('SALE');
+        handleSetStatus('SALE');
 
         return;
       }
 
-      setStatus('SOON');
+      handleSetStatus('SOON');
     } catch (error) {
       // TODO: Handle error
     }
-  }, [contracts.sale1, contracts.vesting]);
+  }, [contracts]);
 
   useEffect(() => {
     getStatus();

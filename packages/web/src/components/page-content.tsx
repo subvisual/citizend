@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 
+import { media } from 'src/styles/breakpoints';
 import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
@@ -15,13 +16,25 @@ type Props = {
 };
 
 /**
+ * `Wrapper` styled component.
+ */
+
+const Wrapper = styled.div`
+  min-height: 100vh;
+  position: relative;
+`;
+
+/**
  * `Content` styled component.
  */
 
 const Content = styled.div`
   margin: 0 auto;
-  max-width: 82%;
   position: relative;
+
+  ${media.min.ms`
+    max-width: 88%;
+  `}
 `;
 
 /**
@@ -47,7 +60,7 @@ const ImageWrapper = styled.div`
 
 export function PageContent({ children }: Props) {
   return (
-    <>
+    <Wrapper>
       <ImageWrapper>
         <Image
           aria-hidden
@@ -59,6 +72,6 @@ export function PageContent({ children }: Props) {
       </ImageWrapper>
 
       <Content>{children}</Content>
-    </>
+    </Wrapper>
   );
 }

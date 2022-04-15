@@ -94,7 +94,7 @@ const ModalGlobalStyle = createGlobalStyle`
     }
 
     &__Content {
-      max-width: 650px;
+      max-width: 620px;
       width: 90%;
 
       ${media.min.sm`

@@ -25,6 +25,7 @@
     "pre-commit": "yarn workspace @discovery-dao/web precommit",
     "web:bundle": "yarn workspace @discovery-dao/web bundle",
     "web:lint": "yarn workspace @discovery-dao/web lint",
+    "web:copy:contracts": "yarn workspace @discovery-dao/web copy:contracts",
     "web:start": "yarn workspace @discovery-dao/web start"
   },
   "devDependencies": {

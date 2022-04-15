@@ -10,7 +10,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
  */
 
 const metamask = new InjectedConnector({
-  supportedChainIds: [31337]
+  supportedChainIds: [595, 31337]
 });
 
 /**

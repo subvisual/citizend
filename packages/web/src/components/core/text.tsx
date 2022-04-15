@@ -49,6 +49,17 @@ const createFontStyle = (properties: FontProperties) => {
 };
 
 /**
+ * `body2` styles.
+ */
+
+const body2Styles = {
+  fontFamily: '--montserrat-font-family',
+  fontSize: '1.5rem',
+  fontWeight: 400,
+  lineHeight: 1.33
+} as const;
+
+/**
  * `body` styles.
  */
 
@@ -94,13 +105,26 @@ const labelStyles = {
 } as const;
 
 /**
+ * `smallStyles` styles.
+ */
+
+const smallStyles = {
+  fontFamily: '--montserrat-font-family',
+  fontSize: '0.75rem',
+  fontWeight: 400,
+  lineHeight: '1rem'
+} as const;
+
+/**
  * Variants themes.
  */
 
-export const variantsThemes = {
+export const textStyles = {
   body: createFontStyle(bodyStyles),
+  body2: createFontStyle(body2Styles),
   label: createFontStyle(labelStyles),
   lead: createFontStyle(leadStyles),
+  small: createFontStyle(smallStyles),
   title: createFontStyle(titleStyles)
 } as const;
 
@@ -110,10 +134,11 @@ export const variantsThemes = {
 
 type Props = {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'small' | 'strong';
-  children: ReactNode;
-  variant?: keyof typeof variantsThemes;
   bold?: boolean;
+  children: ReactNode;
   noMargin?: boolean;
+  uppercase?: boolean;
+  variant?: keyof typeof textStyles;
 };
 
 /**
@@ -121,7 +146,8 @@ type Props = {
  */
 
 export const Text = styled.span<Props>`
-  ${switchProp('variant', variantsThemes, variantsThemes.body)}
-  ${ifProp('noMargin', 'margin: 0;')}
+  ${switchProp('variant', textStyles, textStyles.body)}
   ${ifProp('bold', 'font-weight: 700;')}
+  ${ifProp('noMargin', 'margin: 0;')}
+  ${ifProp('uppercase', 'text-transform: uppercase;')}
 `;

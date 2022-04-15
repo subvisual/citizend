@@ -219,5 +219,5 @@ export function formatDate(date: string) {
     return '';
   }
 
-  return format(parseISO(date), 'MM/dd/yyyy HH:mm OOOO');
+  return format(parseISO(date), 'dd/MM/yyyy HH:mm OOOO');
 }

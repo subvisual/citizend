@@ -16,6 +16,15 @@ type Props = {
 };
 
 /**
+ * `Wrapper` styled component.
+ */
+
+const Wrapper = styled.div`
+  min-height: 100vh;
+  position: relative;
+`;
+
+/**
  * `Content` styled component.
  */
 
@@ -51,7 +60,7 @@ const ImageWrapper = styled.div`
 
 export function PageContent({ children }: Props) {
   return (
-    <>
+    <Wrapper>
       <ImageWrapper>
         <Image
           aria-hidden
@@ -63,6 +72,6 @@ export function PageContent({ children }: Props) {
       </ImageWrapper>
 
       <Content>{children}</Content>
-    </>
+    </Wrapper>
   );
 }

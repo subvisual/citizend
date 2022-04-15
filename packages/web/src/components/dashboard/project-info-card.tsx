@@ -3,6 +3,7 @@
  */
 
 import { Card } from 'src/components/core/card';
+import { Separator } from 'src/components/core/separator';
 import { Text } from 'src/components/core/text';
 import { media } from 'src/styles/breakpoints';
 import React from 'react';
@@ -28,11 +29,9 @@ const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 3rem;
 
   ${media.min.md`
     flex-direction: row;
-    margin-top: 8rem;
   `}
 `;
 
@@ -54,27 +53,24 @@ const Label = styled(Text).attrs({
 `;
 
 /**
+ * `StyledSeparator` styled component.
+ */
+
+const StyledSeparator = styled(Separator)`
+  margin-bottom: 1.5rem;
+
+  ${media.min.md`
+    display: none;
+  `}
+`;
+
+/**
  * `Value` styled component.
  */
 
 const Value = styled(Text).attrs({ as: 'p' })`
   ${media.max.md`
     margin-bottom: 1.75rem;
-  `}
-`;
-
-/**
- * `Separator` styled component.
- */
-
-const Separator = styled.div`
-  background-color: var(--color-white);
-  height: 1px;
-  margin-bottom: 1.5rem;
-  opacity: 0.3;
-
-  ${media.min.md`
-    display: none;
   `}
 `;
 
@@ -106,7 +102,7 @@ export function ProjectInfoCard(props: Props) {
           </>
         )}
 
-        <Separator />
+        <StyledSeparator />
       </div>
 
       <div>

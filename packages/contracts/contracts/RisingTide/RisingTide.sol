@@ -79,7 +79,7 @@ abstract contract RisingTide {
     function risingTide_totalCap() public view virtual returns (uint256);
 
     /// @return true if validation of current cap is still ongoing
-    function risingTide_validating() public view returns (bool) {
+    function risingTide_validating() external view returns (bool) {
         return risingTideState == RisingTideState.Validating;
     }
 

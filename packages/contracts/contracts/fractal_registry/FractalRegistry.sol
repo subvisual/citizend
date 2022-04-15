@@ -16,14 +16,14 @@ contract FractalRegistry {
 
     /// @param addr is ERC20 address
     /// @return FractalId as bytes32
-    function getFractalId(address addr) public view returns (bytes32) {
+    function getFractalId(address addr) external view returns (bytes32) {
         return fractalIdForAddress[addr];
     }
 
     /// @notice Adds a user to the mapping of ERC20 address to fractalId.
     /// @param addr is ERC20 address.
     /// @param fractalId is FractalId in bytes32.
-    function addUserAddress(address addr, bytes32 fractalId) public {
+    function addUserAddress(address addr, bytes32 fractalId) external {
         requireMutatePermission();
         fractalIdForAddress[addr] = fractalId;
     }
@@ -33,7 +33,7 @@ contract FractalRegistry {
     /// @param listId is the list id.
     /// @return bool if the user is the specified list.
     function isUserInList(bytes32 userId, string memory listId)
-        public
+        external
         view
         returns (bool)
     {
@@ -43,7 +43,7 @@ contract FractalRegistry {
     /// @notice Add user by FractalId to a specific list.
     /// @param userId is FractalId in bytes32.
     /// @param listId is the list id.
-    function addUserToList(bytes32 userId, string memory listId) public {
+    function addUserToList(bytes32 userId, string memory listId) external {
         requireMutatePermission();
         userLists[listId][userId] = true;
     }
@@ -51,21 +51,21 @@ contract FractalRegistry {
     /// @notice Remove user by FractalId from a specific list.
     /// @param userId is FractalId in bytes32.
     /// @param listId is the list id.
-    function removeUserFromList(bytes32 userId, string memory listId) public {
+    function removeUserFromList(bytes32 userId, string memory listId) external {
         requireMutatePermission();
         delete userLists[listId][userId];
     }
 
     /// @notice Only root can add delegates. Delegates have mutate permissions.
     /// @param addr is ERC20 address
-    function addDelegate(address addr) public {
+    function addDelegate(address addr) external {
         require(msg.sender == root, "Must be root");
         delegates[addr] = true;
     }
 
     /// @notice Removing delegates is only posible from root or by himself.
     /// @param addr is ERC20 address
-    function removeDelegate(address addr) public {
+    function removeDelegate(address addr) external {
         require(
             msg.sender == root || msg.sender == addr,
             "Not allowed to remove address"

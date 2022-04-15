@@ -65,4 +65,11 @@ interface ISale {
      * @param _who The address to query
      */
     function uncappedAllocation(address _who) external view returns (uint256);
+
+    /**
+     * Allows a privileged account to withdraw payment tokens once the sale is over
+     *
+     * @note Does not allow withdrawing funds meant for refunds
+     */
+    function withdraw() external;
 }

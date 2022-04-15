@@ -141,6 +141,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     // ISale
     //
 
+    /// @inheritdoc ISale
     function withdraw()
         external
         onlyRole(DEFAULT_ADMIN_ROLE)

@@ -91,7 +91,7 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     //
     /// @inheritdoc IVesting
     function totalAllocated(address to)
-        public
+        external
         view
         override(IVesting)
         returns (uint256)
@@ -123,7 +123,8 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
 
     /// @inheritdoc IVesting
     function refund(address to) external override(IVesting) nonReentrant {
-        for (uint256 i = 0; i < sales.length; i++) {
+        uint256 len = sales.length;
+        for (uint256 i = 0; i < len; i++) {
             address saleAddress = sales[i];
             ISale(saleAddress).refund(to);
         }
@@ -195,8 +196,9 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
 
     function totalAllocatedPublic(address to) public view returns (uint256) {
         uint256 total = 0;
+        uint256 len = sales.length;
 
-        for (uint256 i = 0; i < sales.length; i++) {
+        for (uint256 i = 0; i < len; i++) {
             total += ISale(sales[i]).allocation(to);
         }
 

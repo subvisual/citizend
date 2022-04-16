@@ -6,7 +6,7 @@ import { Svg } from 'src/components/core/svg';
 import { Text } from 'src/components/core/text';
 import { media } from 'src/styles/breakpoints';
 import React from 'react';
-import ReactCountdown from 'react-countdown';
+import ReactCountdown, { CountdownProps } from 'react-countdown';
 import hexagonSvg from 'src/assets/svgs/hexagon.svg';
 import styled from 'styled-components';
 
@@ -14,8 +14,7 @@ import styled from 'styled-components';
  * `Props` type.
  */
 
-type Props = {
-  date: number;
+type Props = CountdownProps & {
   title: string;
 };
 

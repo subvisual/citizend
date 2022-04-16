@@ -34,13 +34,25 @@ type Props = {
 const capCalculationInfoUrl = process.env.NEXT_PUBLIC_CAP_CALCULATION_INFO_URL;
 
 /**
+ * Fractal KYC URL.
+ */
+
+const fractalKycUrl = process.env.NEXT_PUBLIC_FRACTAL_KYC_URL;
+
+/**
+ * `Wrapper` styled component.
+ */
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  max-width: 37rem;
+`;
+
+/**
  * `StyledCard` styled component.
  */
 
 const StyledCard = styled(Card)<{ blurred: boolean }>`
-  margin: 0 auto;
-  max-width: 37rem;
-
   ${media.min.md`
     flex-direction: row;
   `}
@@ -100,13 +112,23 @@ export function SaleForm(props: Props) {
 
   const convertedAmount = useMemo(() => {
     return new BigNumber(amount || 0)
-      .div(tokenPrice)
+      .times(tokenPrice)
       .decimalPlaces(4)
       .toString();
   }, [amount, tokenPrice]);
 
   return (
-    <>
+    <Wrapper>
+      {disabled && (
+        <Text as={'h4'}>
+          {'Please '}
+          <Link href={fractalKycUrl}>{'verify your ID'}</Link>
+          {
+            " to be able to contribute. If you already started the verification process, you'll be able to contribute once it's finished."
+          }
+        </Text>
+      )}
+
       <StyledCard blurred={disabled}>
         <form
           onSubmit={event => {
@@ -115,7 +137,7 @@ export function SaleForm(props: Props) {
           }}
         >
           <InputField
-            autocomplete={'off'}
+            autoComplete={'off'}
             error={!!amount && isValid && 'Invalid Amount'}
             label={'My Contribution'}
             name={'amount'}
@@ -173,6 +195,6 @@ export function SaleForm(props: Props) {
         }}
         title={'Transaction failed'}
       />
-    </>
+    </Wrapper>
   );
 }

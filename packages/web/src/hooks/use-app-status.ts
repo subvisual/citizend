@@ -5,17 +5,12 @@
 import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { useContracts } from 'src/context/contracts';
+import differenceInSeconds from 'date-fns/differenceInSeconds';
 import formatISO from 'date-fns/formatISO';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import isAfter from 'date-fns/isAfter';
 import isBefore from 'date-fns/isBefore';
-
-/**
- * Current date.
- */
-
-// TODO: Should come from the server.
-const currentDate = new Date().getTime();
+import isDate from 'date-fns/isDate';
 
 /**
  * App state.
@@ -54,6 +49,32 @@ function normalizeTime(unixTime: BigNumber) {
 }
 
 /**
+ * `useReloadOnTime` hook.
+ */
+
+function useReloadOnTime(timestamp: string) {
+  useEffect(() => {
+    if (!timestamp) {
+      return;
+    }
+
+    const dateTimestamp = new Date(timestamp);
+
+    if (!isDate(dateTimestamp) || isAfter(new Date(), dateTimestamp)) {
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      window.location.reload();
+    }, Math.abs(Number(differenceInSeconds(new Date(), dateTimestamp)) * 1000));
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [timestamp]);
+}
+
+/**
  * Export `useAppStatus` hook.
  */
 
@@ -66,6 +87,7 @@ export function useAppStatus() {
     }
 
     try {
+      const currentDate = new Date().getTime();
       const saleStart = await contracts.sale1.start();
       const saleEnd = await contracts.sale1.end();
       const vestingStart = await contracts.vesting.startTime();
@@ -114,6 +136,10 @@ export function useAppStatus() {
   useEffect(() => {
     getStatus();
   }, [getStatus]);
+
+  useReloadOnTime(status.saleStart);
+  useReloadOnTime(status.saleEnd);
+  useReloadOnTime(status.vestingStart);
 
   return status;
 }

@@ -78,13 +78,32 @@ const Info = styled(Text).attrs({
 `;
 
 /**
+ * `getFieldError`.
+ */
+
+function getFieldError(amount: string) {
+  const isValid = new BigNumber(amount).isNaN();
+  const isZero = new BigNumber(amount).lte(0);
+
+  if (isValid) {
+    return 'Invalid Amount';
+  }
+
+  if (isZero) {
+    return 'Your contribution should be superior to 0';
+  }
+
+  return undefined;
+}
+
+/**
  * Export `SaleForm` component.
  */
 
 export function SaleForm(props: Props) {
   const [amount, setAmount] = useState<string>('');
   const { disabled, tokenPrice } = props;
-  const isValid = new BigNumber(amount).isNaN();
+  const fieldError = getFieldError(amount);
   const handleOnChange = useCallback(event => {
     setAmount(event.target.value.replace(/[^0-9]/g, ''));
   }, []);
@@ -138,7 +157,7 @@ export function SaleForm(props: Props) {
         >
           <InputField
             autoComplete={'off'}
-            error={!!amount && isValid && 'Invalid Amount'}
+            error={!!amount && fieldError}
             label={'My Contribution'}
             name={'amount'}
             onChange={handleOnChange}
@@ -166,7 +185,7 @@ export function SaleForm(props: Props) {
             {' .'}
           </Info>
 
-          <Button disabled={!amount && isValid} type={'submit'}>
+          <Button disabled={!!amount && !!fieldError} type={'submit'}>
             {'Contribute'}
           </Button>
         </form>

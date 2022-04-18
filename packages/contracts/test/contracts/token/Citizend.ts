@@ -23,7 +23,7 @@ describe("Citizend", () => {
 
     it("mints initial amount to the owner", async () => {
       expect(await citizend.balanceOf(owner.address)).to.equal(
-        ethers.utils.parseEther("1000000000")
+        ethers.utils.parseEther("100000000")
       );
     });
   });

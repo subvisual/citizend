@@ -100,7 +100,7 @@ contract Project is IProject, ERC165 {
 
     /// @inheritdoc IProject
     function approveByLegal() public override(IProject) onlyLegal(msg.sender) {
-        require(approvedByLegal == false, "already approved by legal");
+        require(!approvedByLegal, "already approved by legal");
 
         approvedByLegal = true;
     }

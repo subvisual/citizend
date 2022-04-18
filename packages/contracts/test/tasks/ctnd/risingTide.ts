@@ -15,7 +15,7 @@ import { currentTimestamp } from "../../../test/timeHelpers";
 
 import { computeRisingTideCap } from "../../../src/tasks/ctnd/risingTide";
 
-const { parseUnits, formatBytes32String } = ethers.utils;
+const { parseUnits } = ethers.utils;
 const { MaxUint256 } = ethers.constants;
 
 describe("ctnd:risingTide task", () => {
@@ -62,29 +62,41 @@ describe("ctnd:risingTide task", () => {
   });
 
   describe("rising tide calculation", () => {
+    const gitbookExample = [
+      50000, 100000, 75000, 50000, 100000, 75000, 20000, 100000, 80000, 100000,
+    ];
+
+    const smallExample = [5000];
+
     it("correctly computes the Gitbook example", async () => {
-      const gitbookExample = [
-        50000, 100000, 75000, 50000, 100000, 75000, 20000, 100000, 80000,
-        100000,
-      ];
-
-      for (const [i, amount] of gitbookExample.entries()) {
-        const signers = await ethers.getSigners();
-        const signer = signers[i];
-
-        await aUSD.connect(signer).mint(signer.address, parseUnits("1000"));
-        await aUSD.connect(signer).approve(sale.address, MaxUint256);
-        await registry.addUserAddress(
-          signer.address,
-          ethers.utils.randomBytes(32)
-        );
-
-        const paymentAmount = await sale.tokenToPaymentToken(amount);
-        await sale.connect(signer).buy(paymentAmount);
-      }
+      await applyInvestments(gitbookExample);
 
       const cap = await computeRisingTideCap(sale.address, 0, hre);
       expect(cap).to.equal(54285);
     });
+
+    it("finishes immediately for small investor lists", async () => {
+      await applyInvestments(smallExample);
+
+      const cap = await computeRisingTideCap(sale.address, 0, hre);
+      expect(cap).to.equal(5000);
+    });
   });
+
+  async function applyInvestments(examples: number[]) {
+    for (const [i, amount] of examples.entries()) {
+      const signers = await ethers.getSigners();
+      const signer = signers[i];
+
+      await aUSD.connect(signer).mint(signer.address, parseUnits("1000"));
+      await aUSD.connect(signer).approve(sale.address, MaxUint256);
+      await registry.addUserAddress(
+        signer.address,
+        ethers.utils.randomBytes(32)
+      );
+
+      const paymentAmount = await sale.tokenToPaymentToken(amount);
+      await sale.connect(signer).buy(paymentAmount);
+    }
+  }
 });

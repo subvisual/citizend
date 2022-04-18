@@ -8,6 +8,12 @@ interface IProject {
     /// One of the criteria for listing: has the project been approved by a project manager?
     function approvedByManager() external view returns (bool);
 
+    /// Approval function from the legal team
+    function approveByLegal() external;
+
+    /// One of the criteria for listing: has the project been approved by the legal team?
+    function approvedByLegal() external view returns (bool);
+
     /// One of the criteria for listing: does the project contract hold the sale
     /// supply already?
     function hasTokens() external view returns (bool);

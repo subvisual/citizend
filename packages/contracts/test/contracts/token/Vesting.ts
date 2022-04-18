@@ -62,7 +62,7 @@ describe("Vesting", () => {
       await acalaDeployParams()
     );
 
-    console.log("deploygin sales");
+    console.log("deploying sales");
     sale = await new MockSale__factory(owner).deploy(await acalaDeployParams());
     sale2 = await new MockSale__factory(owner).deploy(
       await acalaDeployParams()

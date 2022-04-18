@@ -41,20 +41,23 @@ protectionGates:
     patchRules:
       - rule: touchesContracts
     actions:
-      - $assignReviewer(["naps62", "zamith", "DavideSilva"])
+      - $assignReviewer(["naps62", "zamith", "DavideSilva"], 3)
   - name: label-small-pull-request
+    alwaysRun: true
     description: Label small pull requests with size
     patchRules:
       - rule: isSmall
     actions:
       - $addLabel("small")
   - name: label-medium-pull-request
+    alwaysRun: true
     description: Label medium pull requests with size
     patchRules:
       - rule: isMedium
     actions:
       - $addLabel("medium")
   - name: label-large-pull-request
+    alwaysRun: true
     description: Label large pull requests with size
     patchRules:
       - rule: isLarge

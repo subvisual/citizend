@@ -39,6 +39,9 @@ contract Project is IProject, ERC165 {
     // has the project been approved by a Citizend manager
     bool public override(IProject) approvedByManager;
 
+    // has the project been approved by the legal team
+    bool public override(IProject) approvedByLegal;
+
     constructor(
         string memory _description,
         address _token,
@@ -65,7 +68,14 @@ contract Project is IProject, ERC165 {
             IController(controller).hasProjectManagerRole(msg.sender),
             "not a project manager"
         );
+        _;
+    }
 
+    modifier onlyLegal(address _account) {
+        require(
+            IController(controller).hasLegalManagerRole(msg.sender),
+            "not a legal manager"
+        );
         _;
     }
 
@@ -83,7 +93,16 @@ contract Project is IProject, ERC165 {
         override(IProject)
         onlyManager(msg.sender)
     {
+        require(!approvedByManager, "already approved by manager");
+
         approvedByManager = true;
+    }
+
+    /// @inheritdoc IProject
+    function approveByLegal() public override(IProject) onlyLegal(msg.sender) {
+        require(!approvedByLegal, "already approved by legal");
+
+        approvedByLegal = true;
     }
 
     /// @inheritdoc IProject
@@ -100,7 +119,7 @@ contract Project is IProject, ERC165 {
         override(IProject)
         returns (bool)
     {
-        return hasTokens() && approvedByManager;
+        return hasTokens() && approvedByManager && approvedByLegal;
     }
 
     //

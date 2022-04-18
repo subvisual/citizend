@@ -24,6 +24,8 @@ contract Controller is IController, AccessControl {
         keccak256("PROJECT_MANAGER_ROLE");
     bytes32 public constant BATCH_MANAGER_ROLE =
         keccak256("BATCH_MANAGER_ROLE");
+    bytes32 public constant LEGAL_MANAGER_ROLE =
+        keccak256("LEGAL_MANAGER_ROLE");
 
     //
     // State
@@ -42,6 +44,7 @@ contract Controller is IController, AccessControl {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(PROJECT_MANAGER_ROLE, msg.sender);
         _grantRole(BATCH_MANAGER_ROLE, msg.sender);
+        _grantRole(LEGAL_MANAGER_ROLE, msg.sender);
     }
 
     //
@@ -116,6 +119,15 @@ contract Controller is IController, AccessControl {
 
     // Checks if a given account has the BATCH_MANAGER_ROLE role
     function hasBatchManagerRole(address _account)
+        external
+        view
+        returns (bool)
+    {
+        return hasRole(BATCH_MANAGER_ROLE, _account);
+    }
+
+    // Checks if a given account has the LEGAL_MANAGER_ROLE role
+    function hasLegalManagerRole(address _account)
         external
         view
         returns (bool)

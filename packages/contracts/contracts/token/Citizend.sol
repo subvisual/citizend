@@ -32,7 +32,7 @@ contract Citizend is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
     constructor(address targetOwner) ERC20("Citizend", "CTND") {
         _grantRole(DEFAULT_ADMIN_ROLE, targetOwner);
         _grantRole(PAUSER_ROLE, targetOwner);
-        _mint(msg.sender, 100e9 ether);
+        _mint(msg.sender, 1e9 ether);
     }
 
     /**

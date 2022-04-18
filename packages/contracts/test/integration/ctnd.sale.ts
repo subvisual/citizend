@@ -77,7 +77,7 @@ describe("Integration", () => {
   describe("refund", () => {
     it("reverts the transaction if there is nothing to be refunded", async () => {
       await goToTime(await sale.end());
-      await sale.connect(seller).setIndividualCap(0);
+      await sale.connect(seller).setIndividualCap(0, { gasLimit: 10000000 });
 
       await expect(sale.refund(alice.address)).to.be.revertedWith(
         "No tokens to refund"
@@ -94,7 +94,9 @@ describe("Integration", () => {
       await sale.connect(alice).buy(purchaseAmount);
 
       await goToTime(await sale.end());
-      await sale.connect(seller).setIndividualCap(fullSupply);
+      await sale
+        .connect(seller)
+        .setIndividualCap(fullSupply, { gasLimit: 10000000 });
 
       const beforeRefund = await aUSD.balanceOf(alice.address);
       await expect(sale.refund(alice.address)).to.emit(sale, "Refund");
@@ -125,8 +127,12 @@ describe("Integration", () => {
 
       await goToTime(await secondSale.end());
 
-      await sale.connect(seller).setIndividualCap(fullSupply1);
-      await secondSale.connect(seller).setIndividualCap(fullSupply2);
+      await sale
+        .connect(seller)
+        .setIndividualCap(fullSupply1, { gasLimit: 10000000 });
+      await secondSale
+        .connect(seller)
+        .setIndividualCap(fullSupply2, { gasLimit: 10000000 });
 
       const beforeRefund = await aUSD.balanceOf(alice.address);
       await vesting.refund(alice.address);
@@ -149,7 +155,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(150);
 
       await goToTime(await secondSale.end());
-      await sale.connect(seller).setIndividualCap(150);
+      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
 
       expect(await vesting.totalAllocated(alice.address)).to.equal(150);
     });
@@ -165,7 +171,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(150);
 
       await goToTime(await vesting.startTime());
-      await sale.connect(seller).setIndividualCap(150);
+      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
 
       expect(await vesting.claimed(alice.address)).to.eq(0);
       await vesting.claim(alice.address);
@@ -176,7 +182,7 @@ describe("Integration", () => {
   describe("claimable", () => {
     it("is zero for addresses with no vesting", async () => {
       await increaseTime(time.duration.days(3));
-      await sale.connect(seller).setIndividualCap(500);
+      await sale.connect(seller).setIndividualCap(500, { gasLimit: 10000000 });
       expect(await vesting.claimable(alice.address)).to.equal(0);
     });
 
@@ -185,7 +191,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(150);
 
       await goToTime(await vesting.startTime());
-      await sale.connect(seller).setIndividualCap(150);
+      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(50);
     });
@@ -196,7 +202,7 @@ describe("Integration", () => {
 
       await goToTime(await vesting.startTime());
       await increaseTime(time.duration.days(31));
-      await sale.connect(seller).setIndividualCap(150);
+      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(100);
     });
@@ -207,7 +213,7 @@ describe("Integration", () => {
 
       await goToTime(await vesting.startTime());
       await increaseTime(time.duration.days(31 * 3));
-      await sale.connect(seller).setIndividualCap(150);
+      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(150);
     });
@@ -217,7 +223,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(150);
 
       await goToTime(await sale.end());
-      await sale.connect(seller).setIndividualCap(150);
+      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
 
       await goToTime(await vesting.startTime());
       expect(await vesting.claimable(alice.address)).to.equal(50);
@@ -231,7 +237,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(150);
 
       await increaseTime(time.duration.days(200));
-      await sale.connect(seller).setIndividualCap(150);
+      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(150);
     });
@@ -241,7 +247,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(150);
 
       await goToTime(await vesting.startTime());
-      await sale.connect(seller).setIndividualCap(150);
+      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(50);
       await vesting.claim(alice.address);
@@ -253,7 +259,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(150);
 
       await goToTime(await vesting.startTime());
-      await sale.connect(seller).setIndividualCap(150);
+      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(50);
     });
@@ -267,8 +273,10 @@ describe("Integration", () => {
       await secondSale.connect(alice).buy(50);
 
       await goToTime(await secondSale.end());
-      await sale.connect(seller).setIndividualCap(150);
-      await secondSale.connect(seller).setIndividualCap(50);
+      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await secondSale
+        .connect(seller)
+        .setIndividualCap(50, { gasLimit: 10000000 });
 
       await goToTime(await vesting.startTime());
 
@@ -284,8 +292,10 @@ describe("Integration", () => {
       await secondSale.connect(alice).buy(300);
 
       await goToTime(await secondSale.end());
-      await sale.connect(seller).setIndividualCap(200);
-      await secondSale.connect(seller).setIndividualCap(300);
+      await sale.connect(seller).setIndividualCap(200, { gasLimit: 10000000 });
+      await secondSale
+        .connect(seller)
+        .setIndividualCap(300, { gasLimit: 10000000 });
 
       await goToTime(await vesting.startTime());
 
@@ -299,7 +309,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(100);
 
       await goToTime((await vesting.startTime()).sub(1000));
-      await sale.connect(seller).setIndividualCap(100);
+      await sale.connect(seller).setIndividualCap(100, { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(0);
     });
@@ -309,7 +319,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(100);
 
       await goToTime(await vesting.startTime());
-      await sale.connect(seller).setIndividualCap(100);
+      await sale.connect(seller).setIndividualCap(100, { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(33);
     });
@@ -320,7 +330,7 @@ describe("Integration", () => {
 
       await goToTime(await vesting.startTime());
       await increaseTime(time.duration.days(30 * 2 + 1));
-      await sale.connect(seller).setIndividualCap(100);
+      await sale.connect(seller).setIndividualCap(100, { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(100);
     });
@@ -330,7 +340,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(100);
 
       await increaseTime(time.duration.days(30 * 2 + 1));
-      await sale.connect(seller).setIndividualCap(100);
+      await sale.connect(seller).setIndividualCap(100, { gasLimit: 10000000 });
 
       await expect(vesting.claim(alice.address)).to.emit(
         vesting,
@@ -346,7 +356,7 @@ describe("Integration", () => {
       await sale.connect(alice).buy(150);
 
       await increaseTime(time.duration.days(30 * 3 + 1));
-      await sale.connect(seller).setIndividualCap(250);
+      await sale.connect(seller).setIndividualCap(250, { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(250);
     });

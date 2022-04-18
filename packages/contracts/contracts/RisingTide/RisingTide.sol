@@ -37,8 +37,7 @@ abstract contract RisingTide {
     //
 
     /// Min gas required to run one more cap validation iteration
-    /// TODO tweak this value
-    uint256 public constant CAP_VALIDATION_GAS_LIMIT = 50000;
+    uint256 public constant CAP_VALIDATION_GAS_LIMIT = 100000;
 
     //
     // State
@@ -91,13 +90,7 @@ abstract contract RisingTide {
     /// Internal helper to set a new cap and trigger the beginning of the validation logic
     ///
     /// @param _cap The cap to validate
-    /// @return valid true if the validation is done. false if invalid, or if not yet validated
-    /// @return finished If false, then {risingTide_validate} needs to be called
-    /// again, and the first return value can be discarded
-    function _risingTide_setCap(uint256 _cap)
-        internal
-        returns (bool valid, bool finished)
-    {
+    function _risingTide_setCap(uint256 _cap) internal {
         require(
             risingTideState == RisingTideState.NotSet ||
                 risingTideState == RisingTideState.Invalid,
@@ -108,16 +101,11 @@ abstract contract RisingTide {
         risingTideState = RisingTideState.Validating;
         risingTideCache = RisingTideCache(0, 0, 0, 0);
 
-        return risingTide_validate();
+        risingTide_validate();
     }
 
     /// Continues a pending validation of the individual cap
-    /// TODO test these return values
-    ///
-    /// @return valid true if the validation is done. false if invalid, or if not yet validated
-    /// @return finished If false, then {risingTide_validate} needs to be called
-    /// again, and the first return value can be discarded
-    function risingTide_validate() public returns (bool valid, bool finished) {
+    function risingTide_validate() public {
         require(risingTideState == RisingTideState.Validating);
 
         RisingTideCache memory validation = risingTideCache;
@@ -143,11 +131,8 @@ abstract contract RisingTide {
             if (_valid) {
                 risingTideState = RisingTideState.Finished;
             } else {
-                risingTideState = RisingTideState.NotSet;
+                risingTideState = RisingTideState.Invalid;
             }
-            return (_valid, true);
-        } else {
-            return (false, false);
         }
     }
 

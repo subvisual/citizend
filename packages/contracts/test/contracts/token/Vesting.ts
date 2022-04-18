@@ -14,6 +14,9 @@ import {
 
 import { goToTime, currentTimestamp, currentDate } from "../../timeHelpers";
 import "./matchers";
+import { Signer } from "ethers";
+
+import { acalaDeployParams } from "../../../src/acala";
 
 const { AddressZero } = ethers.constants;
 
@@ -46,20 +49,35 @@ describe("Vesting", () => {
       12
     );
     vestingStart = Math.floor(beginningOfNextMonth.getTime() / 1000);
+    console.log("deploying ausd");
 
-    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD");
-    citizend = await new Citizend__factory(owner).deploy(owner.address);
+    aUSD = await new MockERC20__factory(owner).deploy(
+      "aUSD",
+      "aUSD",
+      await acalaDeployParams()
+    );
+    console.log("deploying citizend");
+    citizend = await new Citizend__factory(owner).deploy(
+      owner.address,
+      await acalaDeployParams()
+    );
 
-    sale = await new MockSale__factory(owner).deploy();
-    sale2 = await new MockSale__factory(owner).deploy();
+    console.log("deploying sales");
+    sale = await new MockSale__factory(owner).deploy(await acalaDeployParams());
+    sale2 = await new MockSale__factory(owner).deploy(
+      await acalaDeployParams()
+    );
 
+    console.log("deploying vesting");
     vesting = await new Vesting__factory(owner).deploy(
       3,
       citizend.address,
       [sale.address],
       vestingStart,
-      10000
+      10000,
+      await acalaDeployParams()
     );
+    console.log("transfering tokens");
     await citizend.transfer(vesting.address, 1000);
   });
 

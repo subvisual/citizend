@@ -69,7 +69,7 @@ interface ISale {
     /**
      * Allows a privileged account to withdraw payment tokens once the sale is over
      *
-     * @note Does not allow withdrawing funds meant for refunds
+     * @notice Does not allow withdrawing funds meant for refunds
      */
     function withdraw() external;
 }

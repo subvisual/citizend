@@ -47,4 +47,6 @@ interface IStaking {
      * Computes how many tokens waiting for unbonding can already be withdrawn
      */
     function withdrawable(address _account) external view returns (uint256);
+
+    function hasStaked(address _account) external view returns (bool);
 }

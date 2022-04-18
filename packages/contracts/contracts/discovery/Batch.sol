@@ -9,13 +9,11 @@ import {IBatch} from "./interfaces/IBatch.sol";
 import {IStaking} from "./interfaces/IStaking.sol";
 import {ProjectVoting} from "./ProjectVoting.sol";
 
-import "hardhat/console.sol";
-
 contract Batch is IBatch, ICommon, ProjectVoting {
     using ERC165Checker for address;
 
     /// List of addresses for the project in the batch
-    address[] public immutable projects;
+    address[] public projects;
 
     /// number of available slots
     uint256 public immutable slotCount;
@@ -98,8 +96,7 @@ contract Batch is IBatch, ICommon, ProjectVoting {
 
     function projectVoting_initialBonus()
         public
-        view
-        virtual
+        pure
         override(ProjectVoting)
         returns (int256)
     {
@@ -108,8 +105,7 @@ contract Batch is IBatch, ICommon, ProjectVoting {
 
     function projectVoting_finalBonus()
         public
-        view
-        virtual
+        pure
         override(ProjectVoting)
         returns (int256)
     {
@@ -124,7 +120,7 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         return userHasVotedForProject[_project][_user];
     }
 
-    function setVotingPeriod(uint256 start, uint256 end) public {
+    function setVotingPeriod(uint256 start, uint256 end) external {
         require(start >= block.timestamp, "start must be in the future");
         require(start < end, "start must be before end");
         require(

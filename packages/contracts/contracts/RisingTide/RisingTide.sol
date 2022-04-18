@@ -37,7 +37,6 @@ abstract contract RisingTide {
     //
 
     /// Min gas required to run one more cap validation iteration
-    /// TODO tweak this value
     uint256 public constant CAP_VALIDATION_GAS_LIMIT = 100000;
 
     //

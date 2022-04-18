@@ -71,16 +71,8 @@ contract FractalRegistry {
     }
 
     /// @notice Removing delegates is only posible from root or by himself.
-<<<<<<< HEAD
-    /// @param addr is ERC20 address
-    function removeDelegate(address addr) external {
-||||||| 3b207f9
-    /// @param addr is ERC20 address
-    function removeDelegate(address addr) public {
-=======
     /// @param addr is Eth address
     function removeDelegate(address addr) external {
->>>>>>> main
         require(
             msg.sender == root || msg.sender == addr,
             "Not allowed to remove address"

@@ -93,7 +93,7 @@ contract Project is IProject, ERC165 {
         override(IProject)
         onlyManager(msg.sender)
     {
-        require(approvedByManager == false, "already approved by manager");
+        require(!approvedByManager, "already approved by manager");
 
         approvedByManager = true;
     }

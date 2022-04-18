@@ -58,6 +58,10 @@ contract MockSale is ISale, ERC165 {
         revert("not implemented");
     }
 
+    function withdraw() external pure {
+        revert("not implemented");
+    }
+
     //
     // Test functions
     //

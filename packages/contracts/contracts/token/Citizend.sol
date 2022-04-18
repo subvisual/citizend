@@ -32,7 +32,7 @@ contract Citizend is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
     constructor(address targetOwner) ERC20("Citizend", "CTND") {
         _grantRole(DEFAULT_ADMIN_ROLE, targetOwner);
         _grantRole(PAUSER_ROLE, targetOwner);
-        _mint(msg.sender, 1e9 ether);
+        _mint(msg.sender, 1e8 ether);
     }
 
     /**
@@ -44,7 +44,7 @@ contract Citizend is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
      *
      * - the caller must have the `PAUSER_ROLE`.
      */
-    function pause() public virtual onlyRole(PAUSER_ROLE) {
+    function pause() external virtual onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
@@ -57,7 +57,7 @@ contract Citizend is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
      *
      * - the caller must have the `PAUSER_ROLE`.
      */
-    function unpause() public virtual onlyRole(PAUSER_ROLE) {
+    function unpause() external virtual onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 

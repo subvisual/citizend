@@ -16,7 +16,7 @@ contract FractalRegistry {
 
     /// @param addr is Eth address
     /// @return FractalId as bytes32
-    function getFractalId(address addr) public view returns (bytes32) {
+    function getFractalId(address addr) external view returns (bytes32) {
         return fractalIdForAddress[addr];
     }
 
@@ -40,7 +40,7 @@ contract FractalRegistry {
     /// @param listId is the list id.
     /// @return bool if the user is the specified list.
     function isUserInList(bytes32 userId, string memory listId)
-        public
+        external
         view
         returns (bool)
     {

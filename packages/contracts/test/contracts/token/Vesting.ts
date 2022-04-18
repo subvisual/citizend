@@ -56,7 +56,7 @@ describe("Vesting", () => {
       "aUSD",
       await acalaDeployParams()
     );
-    console.log("deploygin citizend");
+    console.log("deploying citizend");
     citizend = await new Citizend__factory(owner).deploy(
       owner.address,
       await acalaDeployParams()

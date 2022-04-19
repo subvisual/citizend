@@ -14,8 +14,6 @@ import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
 
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
-import "hardhat/console.sol";
-
 contract Controller is IController, AccessControl {
     using SafeERC20 for IERC20;
 

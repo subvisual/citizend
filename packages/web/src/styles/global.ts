@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 
+import 'react-toastify/dist/ReactToastify.css';
 import { colors } from 'src/styles/colors';
 import { createGlobalStyle } from 'styled-components';
 import { media } from './breakpoints';
@@ -45,6 +46,12 @@ const rootVariables = `
     ${media.min.ms`
       --container-padding: 3rem;
     `}
+
+    --toastify-color-dark: var(--modal-background-color);
+    --toastify-color-error: var(--color-red500);
+    --toastify-font-family: var(--montserrat-font-family);
+
+    --toastify-toast-width: clamp(320px, 40vw, 650px);
   }
 `;
 
@@ -149,5 +156,26 @@ export const GlobalStyle = createGlobalStyle`
   #root,
   #__next {
     isolation: isolate;
+  }
+
+  .Toastify__toast {
+    ::after {
+      content: '';
+      inset: 0 auto 0 0;
+      position: absolute;
+      width: 0.25rem;
+    }
+
+    &-body {
+      white-space: pre-line;
+    }
+
+    &--error::after {
+      background: var(--toastify-color-error);
+    }
+
+    &--success::after {
+      background: var(--toastify-color-success);
+    }
   }
 `;

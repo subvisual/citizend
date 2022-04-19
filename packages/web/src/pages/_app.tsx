@@ -7,6 +7,7 @@ import { ContractsProvider } from 'src/context/contracts';
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 import { GlobalStyle } from 'src/styles/global';
 import { PageContent } from 'src/components/page-content';
+import { ToastContainer } from 'react-toastify';
 import { Web3ReactProvider } from '@web3-react/core';
 import Head from 'next/head';
 import React from 'react';
@@ -77,6 +78,14 @@ const PageApp = (props: AppProps) => {
       </Head>
 
       <GlobalStyle />
+
+      <ToastContainer
+        autoClose={10000}
+        closeOnClick
+        hideProgressBar
+        position={'top-center'}
+        theme={'dark'}
+      />
 
       <Web3ReactProvider getLibrary={getLibrary}>
         <ContractsProvider>

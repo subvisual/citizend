@@ -110,6 +110,17 @@ export const GlobalStyle = createGlobalStyle`
     font: inherit;
   }
 
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    appearance: none !important;
+    background: none !important;
+    background-color: transparent !important;
+    transition: color 9999s ease-out, background-color 9999s ease-out;
+    transition-delay: 9999s;
+  }
+
   p,
   h1,
   h2,

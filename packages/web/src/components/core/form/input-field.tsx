@@ -15,6 +15,8 @@ const Suffix = styled(Text).attrs({
   variant: 'body2'
 })`
   grid-area: suffix;
+  position: relative;
+  top: 6px;
 `;
 
 /**
@@ -53,7 +55,7 @@ export function InputField(props: any) {
     <FormField disabled={inputProps.disabled}>
       {label && <Label>{label}</Label>}
 
-      <Field>
+      <Field hasError={!!error}>
         <Input {...inputProps} />
         {suffix && <Suffix>{suffix}</Suffix>}
       </Field>

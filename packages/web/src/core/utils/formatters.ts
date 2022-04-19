@@ -100,6 +100,7 @@ export function formatNumber(
   const round = options.toRoundUp ? roundUp : roundDown;
   const [integer, decimal] = value.split('.');
   const integerParts = formatter.formatToParts(parseFloat(integer));
+  const hideDecimals = !decimal && options.skipTrailingZeros;
   const decimalParts = formatter.formatToParts(
     parseFloat(
       round(`0.${decimal ?? '0'}`, options.decimalPlacesToDisplay ?? 2)
@@ -112,7 +113,7 @@ export function formatNumber(
       ({ type }) => type !== 'decimal'
     ),
     ...dropWhile<Intl.NumberFormatPart>(
-      decimalParts,
+      !hideDecimals ? decimalParts : [],
       ({ type }) => type !== 'decimal'
     )
   ];

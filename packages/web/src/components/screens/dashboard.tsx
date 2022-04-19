@@ -9,6 +9,7 @@ import { Navbar } from 'src/components/navbar';
 import { ProjectInfoCard } from 'src/components/dashboard/project-info-card';
 import { SaleForm } from 'src/components/dashboard/sale-form';
 import { SaleState, useSale } from 'src/hooks/use-sale';
+import { Vesting } from 'src/components/vesting';
 import { currencyConfig } from 'src/core/constants';
 import {
   formatCompactNumber,
@@ -62,7 +63,7 @@ export function DashboardScreen() {
 
         {state === 'COUNTDOWN' && !!vestingStart && (
           <Countdown
-            date={new Date(vestingStart).getTime()}
+            date={vestingStart}
             title={'Vesting period starting in:'}
           />
         )}
@@ -70,6 +71,8 @@ export function DashboardScreen() {
         {state === 'SALE' && (
           <SaleForm disabled={!kycStatus} tokenPrice={price} />
         )}
+
+        {state === 'VESTING' && <Vesting />}
       </StyledContainer>
     </>
   );

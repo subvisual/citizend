@@ -52,6 +52,7 @@ const Nav = styled.nav`
  */
 
 const AddressLabel = styled(Text).attrs({
+  role: 'button',
   variant: 'body'
 })`
   font-weight: 500;
@@ -114,10 +115,14 @@ const MenuTitle = styled(Text).attrs({
 const Link = styled.a`
   ${textStyles.body}
 
+  appearance: none;
+  background: none;
+  border: none;
   display: flex;
   justify-content: space-between;
   margin: 0;
   padding-top: 0.75rem;
+  width: 100%;
 
   &:not(:last-child) {
     margin-bottom: 0.75rem;
@@ -125,6 +130,7 @@ const Link = styled.a`
 
   &:focus,
   &:hover {
+    outline: none;
     text-decoration: underline;
   }
 `;
@@ -196,7 +202,7 @@ export function Navbar(props: Props) {
           <Menu>
             <MenuTitle>{'KYC Verification'}</MenuTitle>
 
-            <Link href={fractalKycUrl}>
+            <Link href={fractalKycUrl} rel={'noopener'} target={'_blank'}>
               <span>{'Fractal ID '}</span>
 
               <ApprovalStateSvg icon={isKycApproved ? checkSvg : errorSvg} />
@@ -204,7 +210,7 @@ export function Navbar(props: Props) {
 
             <Separator />
 
-            <Link onClick={onDisconnect} role={'button'}>
+            <Link as={'button'} onClick={onDisconnect}>
               {'Disconnect'}
             </Link>
           </Menu>

@@ -34,13 +34,25 @@ type Props = {
 const capCalculationInfoUrl = process.env.NEXT_PUBLIC_CAP_CALCULATION_INFO_URL;
 
 /**
+ * Fractal KYC URL.
+ */
+
+const fractalKycUrl = process.env.NEXT_PUBLIC_FRACTAL_KYC_URL;
+
+/**
+ * `Wrapper` styled component.
+ */
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  max-width: 37rem;
+`;
+
+/**
  * `StyledCard` styled component.
  */
 
 const StyledCard = styled(Card)<{ blurred: boolean }>`
-  margin: 0 auto;
-  max-width: 37rem;
-
   ${media.min.md`
     flex-direction: row;
   `}
@@ -66,13 +78,32 @@ const Info = styled(Text).attrs({
 `;
 
 /**
+ * `getFieldError`.
+ */
+
+function getFieldError(amount: string) {
+  const isValid = new BigNumber(amount).isNaN();
+  const isZero = new BigNumber(amount).lte(0);
+
+  if (isValid) {
+    return 'Invalid Amount';
+  }
+
+  if (isZero) {
+    return 'Your contribution should be superior to 0';
+  }
+
+  return undefined;
+}
+
+/**
  * Export `SaleForm` component.
  */
 
 export function SaleForm(props: Props) {
   const [amount, setAmount] = useState<string>('');
   const { disabled, tokenPrice } = props;
-  const isValid = new BigNumber(amount).isNaN();
+  const fieldError = getFieldError(amount);
   const handleOnChange = useCallback(event => {
     setAmount(event.target.value.replace(/[^0-9]/g, ''));
   }, []);
@@ -100,13 +131,23 @@ export function SaleForm(props: Props) {
 
   const convertedAmount = useMemo(() => {
     return new BigNumber(amount || 0)
-      .div(tokenPrice)
+      .times(tokenPrice)
       .decimalPlaces(4)
       .toString();
   }, [amount, tokenPrice]);
 
   return (
-    <>
+    <Wrapper>
+      {disabled && (
+        <Text as={'h4'}>
+          {'Please '}
+          <Link href={fractalKycUrl}>{'verify your ID'}</Link>
+          {
+            " to be able to contribute. If you already started the verification process, you'll be able to contribute once it's finished."
+          }
+        </Text>
+      )}
+
       <StyledCard blurred={disabled}>
         <form
           onSubmit={event => {
@@ -115,8 +156,8 @@ export function SaleForm(props: Props) {
           }}
         >
           <InputField
-            autocomplete={'off'}
-            error={!!amount && isValid && 'Invalid Amount'}
+            autoComplete={'off'}
+            error={!!amount && fieldError}
             label={'My Contribution'}
             name={'amount'}
             onChange={handleOnChange}
@@ -144,7 +185,7 @@ export function SaleForm(props: Props) {
             {' .'}
           </Info>
 
-          <Button disabled={!amount && isValid} type={'submit'}>
+          <Button disabled={!!amount && !!fieldError} type={'submit'}>
             {'Contribute'}
           </Button>
         </form>
@@ -173,6 +214,6 @@ export function SaleForm(props: Props) {
         }}
         title={'Transaction failed'}
       />
-    </>
+    </Wrapper>
   );
 }

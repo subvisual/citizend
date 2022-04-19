@@ -6,9 +6,8 @@ import {ERC165Checker} from "@openzeppelin/contracts/utils/introspection/ERC165C
 import {ICommon} from "./interfaces/ICommon.sol";
 import {IProject} from "./interfaces/IProject.sol";
 import {IBatch} from "./interfaces/IBatch.sol";
+import {IStaking} from "./interfaces/IStaking.sol";
 import {ProjectVoting} from "./ProjectVoting.sol";
-
-import "hardhat/console.sol";
 
 contract Batch is IBatch, ICommon, ProjectVoting {
     using ERC165Checker for address;
@@ -17,13 +16,13 @@ contract Batch is IBatch, ICommon, ProjectVoting {
     address[] public projects;
 
     /// number of available slots
-    uint256 public slotCount;
+    uint256 public immutable slotCount;
 
     /// Period for which the batch is open for voting
     Period public votingPeriod;
 
     /// Address for the controller contract
-    address public controller;
+    address public immutable controller;
 
     /// duration in seconds of each slot
     uint256 public singleSlotDuration;
@@ -97,8 +96,7 @@ contract Batch is IBatch, ICommon, ProjectVoting {
 
     function projectVoting_initialBonus()
         public
-        view
-        virtual
+        pure
         override(ProjectVoting)
         returns (int256)
     {
@@ -107,15 +105,22 @@ contract Batch is IBatch, ICommon, ProjectVoting {
 
     function projectVoting_finalBonus()
         public
-        view
-        virtual
+        pure
         override(ProjectVoting)
         returns (int256)
     {
         return 0;
     }
 
-    function setVotingPeriod(uint256 start, uint256 end) public {
+    function hasVotedForProject(address _user, address _project)
+        external
+        view
+        returns (bool)
+    {
+        return userHasVotedForProject[_project][_user];
+    }
+
+    function setVotingPeriod(uint256 start, uint256 end) external {
         require(start >= block.timestamp, "start must be in the future");
         require(start < end, "start must be before end");
         require(

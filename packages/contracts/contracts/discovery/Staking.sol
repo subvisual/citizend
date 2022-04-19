@@ -63,6 +63,15 @@ contract Staking is IStaking {
         token = _token;
     }
 
+    function hasStaked(address _account)
+        external
+        view
+        override(IStaking)
+        returns (bool)
+    {
+        return stakes[_account].bonded > 0;
+    }
+
     /// @inheritdoc IStaking
     function stake(uint256 _amount) external override(IStaking) {
         stakes[msg.sender].total += _amount;
@@ -150,11 +159,7 @@ contract Staking is IStaking {
     }
 
     /// @inheritdoc IStaking
-    function withdrawable(address _account)
-        public
-        view
-        returns (uint256 amount)
-    {
+    function withdrawable(address _account) public view returns (uint256) {
         UnbondingList storage _unbondings = unbondings[_account];
 
         uint256 amount;
@@ -168,5 +173,7 @@ contract Staking is IStaking {
 
             amount += _unbondings.list[i].amount;
         }
+
+        return amount;
     }
 }

@@ -51,4 +51,20 @@ interface IController {
     function isProjectInBatch(address _project, address _batch)
         external
         returns (bool);
+
+    /// Checks if a user can invest in the staker's pool of a project
+    function canInvestInStakersPool(address _user) external view returns (bool);
+
+    /// Checks if a user can invest in the people's pool of a project
+    function canInvestInPeoplesPool(address _project, address _user)
+        external
+        view
+        returns (bool);
+
+    /// Sets the voting period for a Batch
+    function setBatchVotingPeriod(
+        address batch,
+        uint256 start,
+        uint256 end
+    ) external;
 }

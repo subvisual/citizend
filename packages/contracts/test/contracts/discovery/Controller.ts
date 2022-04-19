@@ -43,20 +43,15 @@ describe("Controller", () => {
     registry = await new FractalRegistry__factory(owner).deploy(owner.address);
     citizend = await new Citizend__factory(owner).deploy(owner.address);
     staking = await new Staking__factory(owner).deploy(citizend.address);
+    projectToken = await new MockERC20__factory(owner).deploy(
+      "ProjectToken",
+      "ProjectToken"
+    );
 
     controller = await new Controller__factory(owner).deploy(
       registry.address,
       staking.address,
       citizend.address
-    );
-  });
-
-  beforeEach(async () => {
-    await fixture();
-
-    projectToken = await new MockERC20__factory(owner).deploy(
-      "ProjectToken",
-      "ProjectToken"
     );
   });
 
@@ -80,7 +75,7 @@ describe("Controller", () => {
       await citizend.transfer(alice.address, 1000);
       await citizend.connect(alice).approve(staking.address, MaxUint256);
       await staking.connect(alice).stake(100);
-      project = await registerProject(owner, citizend);
+      project = await registerProject(owner, projectToken);
 
       expect(await controller.canInvestInStakersPool(alice.address)).to.be.true;
     });
@@ -89,7 +84,7 @@ describe("Controller", () => {
       await citizend.transfer(alice.address, 1000);
       await citizend.connect(alice).approve(staking.address, MaxUint256);
       await staking.connect(alice).stake(100);
-      project = await registerProject(owner, citizend);
+      project = await registerProject(owner, projectToken);
 
       expect(await controller.canInvestInStakersPool(alice.address)).to.be
         .false;
@@ -97,7 +92,7 @@ describe("Controller", () => {
 
     it("is false if the user does not belong to the DAO", async () => {
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
-      project = await registerProject(owner, citizend);
+      project = await registerProject(owner, projectToken);
 
       expect(await controller.canInvestInStakersPool(alice.address)).to.be
         .false;
@@ -106,7 +101,7 @@ describe("Controller", () => {
     it("is false if the user does not have staked tokens", async () => {
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
       await citizend.transfer(alice.address, 1000);
-      project = await registerProject(owner, citizend);
+      project = await registerProject(owner, projectToken);
 
       expect(await controller.canInvestInStakersPool(alice.address)).to.be
         .false;
@@ -117,8 +112,8 @@ describe("Controller", () => {
     it("is true if the user meets all the requirements", async () => {
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
       await citizend.transfer(alice.address, 1000);
-      project = await registerProject(owner, citizend);
-      await makeProjectReady(project, citizend);
+      project = await registerProject(owner, projectToken);
+      await makeProjectReady(project, projectToken);
       const batch: Batch = await setUpBatch(controller, project, owner);
       await batch.connect(alice).vote(project.address);
 
@@ -129,8 +124,8 @@ describe("Controller", () => {
 
     it("is false if the user does not have the KYC", async () => {
       await citizend.transfer(alice.address, 1000);
-      project = await registerProject(owner, citizend);
-      await makeProjectReady(project, citizend);
+      project = await registerProject(owner, projectToken);
+      await makeProjectReady(project, projectToken);
       const batch: Batch = await setUpBatch(controller, project, owner);
       await batch.connect(alice).vote(project.address);
 
@@ -141,8 +136,8 @@ describe("Controller", () => {
 
     it("is false if the user does not belong to the DAO", async () => {
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
-      project = await registerProject(owner, citizend);
-      await makeProjectReady(project, citizend);
+      project = await registerProject(owner, projectToken);
+      await makeProjectReady(project, projectToken);
       const batch: Batch = await setUpBatch(controller, project, owner);
       await batch.connect(alice).vote(project.address);
 
@@ -154,8 +149,8 @@ describe("Controller", () => {
     it("is false if the user hasn't voted in the project", async () => {
       await citizend.transfer(alice.address, 1000);
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
-      project = await registerProject(owner, citizend);
-      await makeProjectReady(project, citizend);
+      project = await registerProject(owner, projectToken);
+      await makeProjectReady(project, projectToken);
       await setUpBatch(controller, project, owner);
 
       expect(
@@ -166,11 +161,10 @@ describe("Controller", () => {
 
   describe("registerProject", () => {
     it("registers a project", async () => {
-      project = await registerProject(owner, citizend, projectToken);
+      project = await registerProject(owner, projectToken);
 
       expect(await project.description()).to.eq("My Project");
       expect(await project.token()).to.eq(projectToken.address);
-      expect(await project.token()).to.eq(citizend.address);
       expect(await project.saleSupply()).to.eq(parseUnits("1000"));
       expect(await project.rate()).to.eq(parseUnits("2"));
     });
@@ -179,7 +173,7 @@ describe("Controller", () => {
       expect(
         await controller.registerProject(
           "My Project",
-          alice.address,
+          projectToken.address,
           parseUnits("1000"),
           parseUnits("2")
         )
@@ -193,90 +187,48 @@ describe("Controller", () => {
 
   describe("createBatch", () => {
     it("creates a batch", async () => {
-      const tx = await controller.registerProject(
-        "My Project",
-        projectToken.address,
-        parseUnits("1000"),
-        parseUnits("2")
-      );
-
-      const event = await findEvent(tx, "ProjectRegistered");
-      const projectAddress = event?.args?.project;
-
-      const project = Project__factory.connect(projectAddress, owner);
-
-      await projectToken
-        .connect(owner)
-        .transfer(project.address, parseUnits("1000"));
-
-      await project.approveByLegal();
-      await project.approveByManager();
+      project = await registerProject(owner, projectToken);
+      await makeProjectReady(project, projectToken);
 
       expect(await project.approvedByLegal()).to.equal(true);
       expect(await project.approvedByManager()).to.equal(true);
       expect(await project.isReadyForListing()).to.equal(true);
 
-      await expect(controller.createBatch([projectAddress], 1)).to.not.be
+      await expect(controller.createBatch([project.address], 1)).to.not.be
         .reverted;
     });
 
     it("reverts if a project is not approved", async () => {
-      const tx = await controller.registerProject(
-        "My Project",
-        projectToken.address,
-        parseUnits("1000"),
-        parseUnits("2")
-      );
-
-      const event = await findEvent(tx, "ProjectRegistered");
-      const projectAddress = event?.args?.project;
+      project = await registerProject(owner, projectToken);
 
       await expect(
-        controller.createBatch([projectAddress], 1)
+        controller.createBatch([project.address], 1)
       ).to.be.revertedWith("project not ready");
     });
 
     it("reverts if a project is already included in a different batch", async () => {
-      const tx = await controller.registerProject(
-        "My Project",
-        projectToken.address,
-        parseUnits("1000"),
-        parseUnits("2")
-      );
-
-      const event = await findEvent(tx, "ProjectRegistered");
-      const projectAddress = event?.args?.project;
-
-      const project = Project__factory.connect(projectAddress, owner);
-
-      await projectToken
-        .connect(owner)
-        .transfer(project.address, parseUnits("1000"));
-
-      await project.approveByLegal();
-      await project.approveByManager();
+      project = await registerProject(owner, projectToken);
+      await makeProjectReady(project, projectToken);
 
       expect(await project.approvedByLegal()).to.equal(true);
       expect(await project.approvedByManager()).to.equal(true);
       expect(await project.isReadyForListing()).to.equal(true);
 
-      await expect(controller.createBatch([projectAddress], 1)).to.not.be
+      await expect(controller.createBatch([project.address], 1)).to.not.be
         .reverted;
       await expect(
-        controller.createBatch([projectAddress], 1)
+        controller.createBatch([project.address], 1)
       ).to.be.revertedWith("already in a batch");
     });
   });
 
   async function registerProject(
     owner: SignerWithAddress,
-    citizend: Citizend,
     projectToken: MockERC20
   ): Promise<Project> {
     const tx = await controller.registerProject(
       "My Project",
       projectToken.address,
-      citizend.address,
       parseUnits("1000"),
       parseUnits("2")
     );
@@ -287,9 +239,10 @@ describe("Controller", () => {
     return Project__factory.connect(projectAddress, owner);
   }
 
-  async function makeProjectReady(project: Project, citizend: Citizend) {
-    await citizend.transfer(project.address, parseUnits("1000"));
+  async function makeProjectReady(project: Project, projectToken: MockERC20) {
+    await projectToken.transfer(project.address, parseUnits("1000"));
     await project.approveByManager();
+    await project.approveByLegal();
   }
 
   async function setUpBatch(

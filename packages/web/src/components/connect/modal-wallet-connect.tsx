@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 
+import { BrowserView } from 'react-device-detect';
 import { Container } from 'src/components/core/container';
 import { Modal } from 'src/components/core/modal';
 import { Svg } from 'src/components/core/svg';
@@ -72,14 +73,16 @@ export function ModalWalletConnect(props: Props) {
       <Title>{'Connect your wallet'}</Title>
 
       <Container centered>
-        <ConnectButton
-          aria-label={'Connect wallet with Metamask'}
-          onClick={() => {
-            onConnect('metamask');
-          }}
-        >
-          <Svg icon={metamaskSvg} size={'162px'} />
-        </ConnectButton>
+        <BrowserView>
+          <ConnectButton
+            aria-label={'Connect wallet with Metamask'}
+            onClick={() => {
+              onConnect('metamask');
+            }}
+          >
+            <Svg icon={metamaskSvg} size={'162px'} />
+          </ConnectButton>
+        </BrowserView>
 
         <ConnectButton
           aria-label={'Connect wallet with WalletConnect'}

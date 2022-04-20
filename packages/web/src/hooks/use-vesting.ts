@@ -4,6 +4,11 @@
 
 import { AsyncOptions, useAsync } from 'react-async';
 import { Web3Provider } from '@ethersproject/providers';
+import {
+  onBlockchainReject,
+  onBlockchainResolve
+} from 'src/core/utils/web3-api-handlers';
+
 import { useCallback, useEffect, useState } from 'react';
 import { useContracts } from 'src/context/contracts';
 import { useWeb3React } from '@web3-react/core';
@@ -87,6 +92,8 @@ export function useClaim(options?: AsyncOptions<Record<string, any>>) {
   const contracts = useContracts();
 
   return useAsync({
+    onReject: onBlockchainReject,
+    onResolve: onBlockchainResolve(),
     ...options,
     deferFn: () => {
       if (!!contracts?.vesting && !!account) {
@@ -106,6 +113,8 @@ export function useRefund(options?: AsyncOptions<Record<string, any>>) {
   const contracts = useContracts();
 
   return useAsync({
+    onReject: onBlockchainReject,
+    onResolve: onBlockchainResolve(),
     ...options,
     deferFn: () => {
       if (!!contracts?.vesting && !!account) {

@@ -6,6 +6,11 @@ import { AsyncOptions, useAsync } from 'react-async';
 import { BigNumber, Signer, utils } from 'ethers';
 import { ContractsContext, useContracts } from 'src/context/contracts';
 import { Web3Provider } from '@ethersproject/providers';
+import {
+  onBlockchainReject,
+  onBlockchainResolve
+} from 'src/core/utils/web3-api-handlers';
+
 import { useCallback, useEffect, useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 
@@ -125,12 +130,14 @@ async function saleBuy(options: BuyPayload): Promise<Record<string, any>> {
  * Export `useSaleBuy` hook.
  */
 
-export function useSaleBuy(options: AsyncOptions<Record<string, any>>) {
+export function useSaleBuy(options?: AsyncOptions<Record<string, any>>) {
   const { account: address, library } = useWeb3React<Web3Provider>();
   const signer = library?.getSigner ? library.getSigner(0) : undefined;
   const contracts = useContracts();
 
   return useAsync({
+    onReject: onBlockchainReject,
+    onResolve: onBlockchainResolve(),
     ...options,
     deferFn: ([amount]) => saleBuy({ address, amount, contracts, signer })
   });

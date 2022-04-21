@@ -4,10 +4,10 @@
 
 import { Web3Provider } from '@ethersproject/providers';
 import { useOwnerAction } from 'src/hooks/use-owner-action';
+import { useWalletConnect } from 'src/hooks/use-wallet-connect';
 import { useWeb3React } from '@web3-react/core';
 import Metatags from 'src/components/core/metatags';
 import React, { useState } from 'react';
-import useWalletConnect from 'src/hooks/use-wallet-connect';
 
 /**
  * `OwnerActions` component.

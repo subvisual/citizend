@@ -4,7 +4,6 @@
 
 import { Button } from 'src/components/core/button';
 import { Card } from 'src/components/core/card';
-import { ErrorModal } from './error-modal';
 import { InputField } from 'src/components/core/form/input-field';
 import { Link } from 'src/components/core/link';
 import { SaleConfirmingModal } from './sale-confirming-modal';
@@ -103,35 +102,15 @@ function getFieldError(amount: string) {
 export function SaleForm(props: Props) {
   const [amount, setAmount] = useState<string>('');
   const { disabled, tokenPrice } = props;
+  const { isPending, run: buy } = useSaleBuy();
   const fieldError = getFieldError(amount);
   const handleOnChange = useCallback(event => {
     setAmount(event.target.value.replace(/[^0-9]/g, ''));
   }, []);
 
-  const {
-    error,
-    isPending,
-    run: buy,
-    setData
-  } = useSaleBuy({
-    onResolve: () => {
-      setAmount('');
-    }
-  });
-
-  const { isFundsError, isRejectByUser } = useMemo(() => {
-    const isRejectByUser = (error as any)?.code === 4001;
-    const message = (error as any)?.data?.message;
-
-    return {
-      isFundsError: !isRejectByUser && message?.includes('exceeds balance'),
-      isRejectByUser
-    };
-  }, [error]);
-
   const convertedAmount = useMemo(() => {
     return new BigNumber(amount || 0)
-      .times(tokenPrice)
+      .div(tokenPrice)
       .decimalPlaces(4)
       .toString();
   }, [amount, tokenPrice]);
@@ -195,24 +174,6 @@ export function SaleForm(props: Props) {
         amount={formatCurrency(amount, currencyConfig.aUsd)}
         isOpen={isPending}
         tokenAmount={formatCurrency(convertedAmount, currencyConfig.ctnd)}
-      />
-
-      <ErrorModal
-        isOpen={isFundsError}
-        lead={'Please add funds to your wallet and try again.'}
-        onRequestClose={() => {
-          setData(undefined);
-        }}
-        title={'Insufficient funds'}
-      />
-
-      <ErrorModal
-        isOpen={!isFundsError && !!error && !isRejectByUser}
-        lead={'Unfortunately, your transaction failed. Please try again.'}
-        onRequestClose={() => {
-          setData(undefined);
-        }}
-        title={'Transaction failed'}
       />
     </Wrapper>
   );

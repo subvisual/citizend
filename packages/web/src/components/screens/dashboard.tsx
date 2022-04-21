@@ -4,7 +4,6 @@
 
 import { Container } from 'src/components/core/container';
 import { Countdown } from 'src/components/countdown';
-import { ListName } from 'src/hooks/use-owner-action';
 import { Navbar } from 'src/components/navbar';
 import { ProjectInfoCard } from 'src/components/dashboard/project-info-card';
 import { SaleForm } from 'src/components/dashboard/sale-form';
@@ -18,8 +17,8 @@ import {
 } from 'src/core/utils/formatters';
 
 import { media } from 'src/styles/breakpoints';
-import { useAccountKycStatus } from 'src/hooks/use-kyc-status';
 import { useAppStatus } from 'src/hooks/use-app-status';
+import { useIsKYCApproved } from 'src/hooks/use-kyc-status';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -46,11 +45,11 @@ const StyledContainer = styled(Container)`
 export function DashboardScreen() {
   const { balance, contributions, price, raised } = useSale() as SaleState;
   const { state, vestingStart } = useAppStatus();
-  const kycStatus = useAccountKycStatus(ListName);
+  const kycApproved = useIsKYCApproved();
 
   return (
     <>
-      <Navbar isKycApproved={!!kycStatus} />
+      <Navbar isKycApproved={!!kycApproved} />
 
       <StyledContainer>
         <ProjectInfoCard
@@ -69,7 +68,7 @@ export function DashboardScreen() {
         )}
 
         {state === 'SALE' && (
-          <SaleForm disabled={!kycStatus} tokenPrice={price} />
+          <SaleForm disabled={!kycApproved} tokenPrice={price} />
         )}
 
         {state === 'VESTING' && <Vesting />}

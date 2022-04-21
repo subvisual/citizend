@@ -119,6 +119,7 @@ export function Modal(props: Props) {
         {...rest}
         closeTimeoutMS={200}
         onRequestClose={onRequestClose}
+        parentSelector={() => document.getElementById('modalPortal')}
         style={modalStyles}
       >
         {onRequestClose && (

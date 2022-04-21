@@ -150,16 +150,26 @@ contract Controller is IController, AccessControl {
         return
             _hasKYC(_user) &&
             _belongsToDAO(_user) &&
-            batch.hasVotedForProject(_user, _project);
+            batch.userHasVotedForProject(_project, _user);
+    }
+
+    function canVote(address _user)
+        external
+        view
+        override(IController)
+        returns (bool)
+    {
+        return _hasKYC(_user) && _belongsToDAO(_user);
     }
 
     /// @inheritdoc IController
     function setBatchVotingPeriod(
         address batch,
         uint256 start,
-        uint256 end
+        uint256 end,
+        uint256 extraInvestmentDuration
     ) external override(IController) onlyRole(BATCH_MANAGER_ROLE) {
-        Batch(batch).setVotingPeriod(start, end);
+        Batch(batch).setVotingPeriod(start, end, extraInvestmentDuration);
     }
 
     function _hasKYC(address _user) internal view returns (bool) {

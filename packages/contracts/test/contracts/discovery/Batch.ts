@@ -7,19 +7,35 @@ import {
   Batch__factory,
   Project,
   Project__factory,
+  MockERC20,
+  MockERC20__factory,
+  Controller,
+  Controller__factory,
+  FractalRegistry,
+  FractalRegistry__factory,
+  Citizend,
+  Citizend__factory,
+  Staking,
+  Staking__factory,
 } from "../../../src/types";
 
 import { goToTime, currentTimestamp } from "../../timeHelpers";
+import { registerProject, makeProjectReady, setUpBatch } from "./helpers";
 
-const { parseUnits } = ethers.utils;
+const { parseUnits, formatBytes32String } = ethers.utils;
 
 describe("Batch", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
   let bob: SignerWithAddress;
-  let fakeToken: SignerWithAddress;
+  let carol: SignerWithAddress;
 
   let batch: Batch;
+  let controller: Controller;
+  let registry: FractalRegistry;
+  let citizend: Citizend;
+  let staking: Staking;
+  let projectToken: MockERC20;
   let fakeProject: Project;
   let anotherFakeProject: Project;
   let oneDay: number;
@@ -27,31 +43,46 @@ describe("Batch", () => {
   let votingEnd: number;
 
   beforeEach(async () => {
-    [owner, alice, bob, fakeToken] = await ethers.getSigners();
+    [owner, alice, bob, carol] = await ethers.getSigners();
     oneDay = 60 * 60 * 24;
     votingStart = (await currentTimestamp()) + oneDay;
     votingEnd = votingStart + oneDay * 10;
-
-    fakeProject = await new Project__factory(owner).deploy(
-      "A project",
-      fakeToken.address,
-      1000,
-      10
+    projectToken = await new MockERC20__factory(owner).deploy(
+      "ProjectToken",
+      "ProjectToken"
     );
 
-    anotherFakeProject = await new Project__factory(owner).deploy(
-      "Another project",
-      fakeToken.address,
-      1000,
-      10
+    registry = await new FractalRegistry__factory(owner).deploy(owner.address);
+    citizend = await new Citizend__factory(owner).deploy(owner.address);
+    staking = await new Staking__factory(owner).deploy(citizend.address);
+    controller = await new Controller__factory(owner).deploy(
+      registry.address,
+      staking.address,
+      citizend.address
     );
 
-    batch = await new Batch__factory(owner).deploy(
-      [fakeProject.address, anotherFakeProject.address],
-      2
+    fakeProject = await registerProject(owner, projectToken, controller);
+    await makeProjectReady(fakeProject, projectToken);
+    anotherFakeProject = await registerProject(owner, projectToken, controller);
+    await makeProjectReady(anotherFakeProject, projectToken);
+
+    batch = await setUpBatch(
+      controller,
+      [fakeProject, anotherFakeProject],
+      owner
     );
 
-    await batch.setVotingPeriod(votingStart, votingEnd);
+    await registry.addUserAddress(alice.address, formatBytes32String("id1"));
+    await registry.addUserAddress(bob.address, formatBytes32String("id2"));
+    await citizend.transfer(alice.address, 1000);
+    await citizend.transfer(bob.address, 1000);
+
+    await controller.setBatchVotingPeriod(
+      batch.address,
+      votingStart,
+      votingEnd,
+      0
+    );
     await goToTime(votingStart);
   });
 
@@ -82,7 +113,7 @@ describe("Batch", () => {
 
     it("fails with an address that does not implement IProject", async () => {
       await expect(
-        new Batch__factory(owner).deploy([fakeToken.address], 1)
+        new Batch__factory(owner).deploy([projectToken.address], 1)
       ).to.be.revertedWith("project must be an IProject");
     });
 
@@ -95,22 +126,30 @@ describe("Batch", () => {
 
   describe("setVotingPeriod", async () => {
     it("sets the voting period", async () => {
-      await batch.setVotingPeriod(votingStart + 1 * oneDay, votingEnd);
+      await controller.setBatchVotingPeriod(
+        batch.address,
+        votingStart + 1 * oneDay,
+        votingEnd,
+        oneDay
+      );
 
       const votingPeriod = await batch.votingPeriod();
 
       expect(votingPeriod.start).to.eq(votingStart + 1 * oneDay);
       expect(votingPeriod.end).to.eq(votingEnd);
       expect(await batch.singleSlotDuration()).to.eq(4.5 * oneDay);
+      expect(await batch.investmentEnd()).to.eq(votingEnd + oneDay);
     });
 
     it("reverts if the start is in the past", async () => {
       batch = await new Batch__factory(owner).deploy([fakeProject.address], 1);
 
       await expect(
-        batch.setVotingPeriod(
+        controller.setBatchVotingPeriod(
+          batch.address,
           votingStart - 10 * oneDay,
-          votingStart + 20 * oneDay
+          votingStart + 20 * oneDay,
+          0
         )
       ).to.be.revertedWith("start must be in the future");
     });
@@ -119,16 +158,18 @@ describe("Batch", () => {
       batch = await new Batch__factory(owner).deploy([fakeProject.address], 1);
 
       await expect(
-        batch.setVotingPeriod(
+        controller.setBatchVotingPeriod(
+          batch.address,
           votingStart + 10 * oneDay,
-          votingStart - 10 * oneDay
+          votingStart - 10 * oneDay,
+          0
         )
       ).to.be.revertedWith("start must be before end");
     });
 
     it("reverts if not called by the controller", async () => {
       await expect(
-        batch.connect(alice).setVotingPeriod(votingStart + 1, votingEnd)
+        batch.connect(alice).setVotingPeriod(votingStart + 1, votingEnd, 0)
       ).to.be.revertedWith("only controller can set voting period");
     });
   });
@@ -158,6 +199,22 @@ describe("Batch", () => {
       await expect(
         batch.connect(alice).vote(fakeProject.address)
       ).to.be.revertedWith("voting period not set");
+    });
+
+    it("does not allow a user without KYC to vote", async () => {
+      await citizend.transfer(carol.address, 1000);
+
+      await expect(
+        batch.connect(carol).vote(fakeProject.address)
+      ).to.be.revertedWith("not allowed to vote");
+    });
+
+    it("does not allow a user not belonging to the DAO to vote", async () => {
+      await registry.addUserAddress(carol.address, formatBytes32String("id3"));
+
+      await expect(
+        batch.connect(carol).vote(fakeProject.address)
+      ).to.be.revertedWith("not allowed to vote");
     });
   });
 

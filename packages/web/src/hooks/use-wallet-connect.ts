@@ -3,7 +3,9 @@
  */
 
 import { Web3Provider } from '@ethersproject/providers';
+import { toast } from 'react-toastify';
 import { useCallback, useEffect, useState } from 'react';
+import { useSession } from 'src/context/session';
 import { useWeb3React } from '@web3-react/core';
 import connectors from 'src/core/utils/web3-connectors';
 
@@ -31,17 +33,19 @@ type Result = {
 };
 
 /**
- * `useWalletConnect` hook.
+ * Export `useWalletConnect` hook.
  */
 
-function useWalletConnect(): Result {
-  const { activate, active, deactivate } = useWeb3React<Web3Provider>();
+export function useWalletConnect(): Result {
+  const { account, activate, active, deactivate, error } =
+    useWeb3React<Web3Provider>();
+  const { onLogout } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
   const handleDisconnect = useCallback(() => {
     deactivate();
-    window.localStorage.removeItem(localeStorageKey);
-  }, [deactivate]);
+    onLogout();
+  }, [deactivate, onLogout]);
 
   const handleConnectProvider = useCallback(
     (provider: Provider) => {
@@ -62,12 +66,24 @@ function useWalletConnect(): Result {
   }, [active, isActive]);
 
   useEffect(() => {
+    if ((error as any)?.code === -32002) {
+      toast.info(
+        'Check your wallet permissions. There should be a pending authorization.'
+      );
+    }
+  }, [error]);
+
+  useEffect(() => {
     const provider = window.localStorage.getItem(localeStorageKey);
 
-    if (provider && Object.keys(connectors).includes(provider)) {
+    if (
+      provider &&
+      Object.keys(connectors).includes(provider) &&
+      !!window.localStorage.getItem('addresses')
+    ) {
       handleConnectProvider(provider as Provider);
     }
-  }, [handleConnectProvider]);
+  }, [account, handleConnectProvider]);
 
   return {
     active: isActive,
@@ -76,9 +92,3 @@ function useWalletConnect(): Result {
     onDisconnect: handleDisconnect
   };
 }
-
-/**
- * Export `useWalletConnect` hook.
- */
-
-export default useWalletConnect;

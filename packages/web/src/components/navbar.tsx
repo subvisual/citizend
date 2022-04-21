@@ -8,13 +8,13 @@ import { Text, textStyles } from 'src/components/core/text';
 import { Web3Provider } from '@ethersproject/providers';
 import { ifProp } from 'styled-tools';
 import { media } from 'src/styles/breakpoints';
+import { useWalletConnect } from 'src/hooks/use-wallet-connect';
 import { useWeb3React } from '@web3-react/core';
 import checkSvg from 'src/assets/svgs/check.svg';
 import errorSvg from 'src/assets/svgs/error.svg';
 import hexagonalStrokeSvg from 'src/assets/svgs/hexagon-stroked.svg';
 import logotypeSvg from 'src/assets/svgs/logotype.svg';
 import styled from 'styled-components';
-import useWalletConnect from 'src/hooks/use-wallet-connect';
 
 /**
  * `Props` type.

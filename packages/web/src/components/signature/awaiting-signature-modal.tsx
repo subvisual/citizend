@@ -5,7 +5,7 @@
 import { Container } from 'src/components/core/container';
 import { Loader } from 'src/components/core/loading';
 import { Modal } from 'src/components/core/modal';
-import { TermsAndPrivacyLink } from './terms-and-privacy-link';
+import { TermsAndPrivacyLink } from 'src/components/connect/terms-and-privacy-link';
 import { Text } from 'src/components/core/text';
 import { media } from 'src/styles/breakpoints';
 import React from 'react';
@@ -64,10 +64,10 @@ const FlexCenter = styled.div`
 `;
 
 /**
- * Export `ModalConnecting` component.
+ * Export `AwaitingSignatureModal` component.
  */
 
-export function ModalConnecting({ isOpen }: Props) {
+export function AwaitingSignatureModal({ isOpen }: Props) {
   return (
     <Modal isOpen={isOpen}>
       <Title>{'Sign the message in your wallet to continue'}</Title>

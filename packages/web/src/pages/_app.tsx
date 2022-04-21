@@ -7,11 +7,21 @@ import { ContractsProvider } from 'src/context/contracts';
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 import { GlobalStyle } from 'src/styles/global';
 import { PageContent } from 'src/components/page-content';
+import { SessionProvider } from 'src/context/session';
 import { ToastContainer } from 'react-toastify';
 import { Web3ReactProvider } from '@web3-react/core';
 import Head from 'next/head';
 import React from 'react';
 import packageJson from 'package.json';
+import styled from 'styled-components';
+
+/**
+ * `PageMainContent` styled component.
+ */
+
+const PageMainContent = styled(PageContent)`
+  overflow: hidden;
+`;
 
 /**
  * Performance debug.
@@ -79,6 +89,18 @@ const PageApp = (props: AppProps) => {
 
       <GlobalStyle />
 
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <ContractsProvider>
+          <SessionProvider>
+            <PageMainContent>
+              <Component {...pageProps} />
+            </PageMainContent>
+          </SessionProvider>
+        </ContractsProvider>
+      </Web3ReactProvider>
+
+      <div id={'modalPortal'} />
+
       <ToastContainer
         autoClose={10000}
         closeOnClick
@@ -86,14 +108,6 @@ const PageApp = (props: AppProps) => {
         position={'top-center'}
         theme={'dark'}
       />
-
-      <Web3ReactProvider getLibrary={getLibrary}>
-        <ContractsProvider>
-          <PageContent>
-            <Component {...pageProps} />
-          </PageContent>
-        </ContractsProvider>
-      </Web3ReactProvider>
     </>
   );
 };

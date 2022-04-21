@@ -13,6 +13,8 @@ import styled from 'styled-components';
 
 type Props = {
   children: JSX.Element;
+  className?: string;
+  id?: string;
 };
 
 /**
@@ -58,9 +60,9 @@ const ImageWrapper = styled.div`
  * Export `PageContent` component.
  */
 
-export function PageContent({ children }: Props) {
+export function PageContent({ children, ...rest }: Props) {
   return (
-    <Wrapper>
+    <Wrapper {...rest}>
       <ImageWrapper>
         <Image
           aria-hidden

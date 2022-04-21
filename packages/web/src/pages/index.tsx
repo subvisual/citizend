@@ -4,8 +4,7 @@
 
 import { ConnectScreen } from 'src/components/screens/connect';
 import { DashboardScreen } from 'src/components/screens/dashboard';
-import { Web3Provider } from '@ethersproject/providers';
-import { useWeb3React } from '@web3-react/core';
+import { useSession } from 'src/context/session';
 import Metatags from 'src/components/core/metatags';
 import React from 'react';
 
@@ -14,13 +13,13 @@ import React from 'react';
  */
 
 function Home() {
-  const { active } = useWeb3React<Web3Provider>();
+  const { active } = useSession();
 
   return (
     <>
       <Metatags />
 
-      {!active ? <ConnectScreen /> : <DashboardScreen />}
+      {active ? <DashboardScreen /> : <ConnectScreen />}
     </>
   );
 }

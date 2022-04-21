@@ -2,20 +2,26 @@
  * Module dependencies.
  */
 
+import { AwaitingSignatureModal } from '../signature/awaiting-signature-modal';
 import { Button } from 'src/components/core/button';
 import { Container } from 'src/components/core/container';
 import { HexagonShape } from 'src/components/connect/hexagon-shape';
-import { ModalConnecting } from 'src/components/connect/modal-connecting';
 import { ModalWalletConnect } from 'src/components/connect/modal-wallet-connect';
 import { Svg } from 'src/components/core/svg';
 import { Text } from 'src/components/core/text';
+import { Web3Provider } from '@ethersproject/providers';
 import { media } from 'src/styles/breakpoints';
+import { toast } from 'react-toastify';
 import { useAppStatus } from 'src/hooks/use-app-status';
-import React, { useCallback, useState } from 'react';
+import { useAsync } from 'react-async';
+import { useSession } from 'src/context/session';
+import { useWalletConnect } from 'src/hooks/use-wallet-connect';
+import { useWeb3React } from '@web3-react/core';
+import { verifyAccountOwnership } from 'src/core/utils/web3-signature';
+import React, { useCallback, useEffect, useState } from 'react';
 import logotypeSvg from 'src/assets/svgs/logotype.svg';
 import shapeSvg from 'src/assets/svgs/hexagon-rounded.svg';
 import styled from 'styled-components';
-import useWalletConnect from 'src/hooks/use-wallet-connect';
 
 /**
  * `Grid` styled component.
@@ -124,12 +130,53 @@ const Shape = styled(Svg).attrs({
  */
 
 export function ConnectScreen() {
-  const { isLoading, onConnect } = useWalletConnect();
+  const { account, library } = useWeb3React<Web3Provider>();
+  const { onConnect, onDisconnect } = useWalletConnect();
   const { state } = useAppStatus();
+  const { authenticate } = useSession();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleModal = useCallback(() => {
     setIsOpen(open => !open);
   }, []);
+
+  const {
+    error,
+    isPending,
+    run: verifyOwnership
+  } = useAsync({
+    deferFn: ([account, signer]) => verifyAccountOwnership(account, signer),
+    onReject: () => {
+      onDisconnect();
+      setIsOpen(false);
+      toast.error(
+        "To continue we need you to sign our message so that we can verify that you're the owner of this Ethereum address."
+      );
+    },
+    onResolve: (isOwner: boolean) => {
+      if (isOwner && account) {
+        authenticate(account);
+      }
+    }
+  });
+
+  const handleOnConnect = useCallback(
+    provider => {
+      if (!account) {
+        onConnect(provider);
+
+        return;
+      }
+
+      verifyOwnership(account, library.getSigner(0));
+    },
+    [account, library, onConnect, verifyOwnership]
+  );
+
+  useEffect(() => {
+    if (isOpen && account && library?.getSigner && !isPending && !error) {
+      verifyOwnership(account, library.getSigner(0));
+    }
+  }, [account, isOpen, error, library, isPending, verifyOwnership]);
 
   return (
     <Grid>
@@ -155,15 +202,17 @@ export function ConnectScreen() {
         <HexagonShape />
       </HexagonWrapper>
 
-      <ModalWalletConnect
-        isOpen={isOpen}
-        onConnect={onConnect}
-        onRequestClose={() => {
-          setIsOpen(false);
-        }}
-      />
-
-      {!!state && <ModalConnecting isOpen={isLoading} />}
+      {account ? (
+        <AwaitingSignatureModal isOpen={isPending} />
+      ) : (
+        <ModalWalletConnect
+          isOpen={isOpen}
+          onConnect={handleOnConnect}
+          onRequestClose={() => {
+            setIsOpen(false);
+          }}
+        />
+      )}
     </Grid>
   );
 }

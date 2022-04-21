@@ -2,7 +2,6 @@
  * Module dependencies.
  */
 
-import { last } from 'lodash/last';
 import { toast } from 'react-toastify';
 
 /**
@@ -18,23 +17,17 @@ export function onBlockchainReject(error: any) {
 
   if (message?.includes('exceeds balance')) {
     toast.error(
-      "You don't have enough funds in your wallet. Please add funds to your wallet and try again!"
+      "You don't have enough funds in your wallet. Please add funds to your wallet and try again."
     );
 
     return;
   }
 
-  const reason = last(message.split(':'));
-
-  toast.error(
-    <>
-      {'Unfortunately, your transaction failed. \n'}
-
-      {reason && (
-        <small style={{ display: 'inline-block' }}>{`Reason: ${reason}`}</small>
-      )}
-    </>
-  );
+  toast.error(`
+    Unfortunately, your transaction failed to be written to the blockchain.
+    This is usually because of network congestion.
+    Please try again.
+  `);
 }
 
 /**

@@ -63,6 +63,10 @@ contract Batch is IBatch, ICommon, ProjectVoting {
                 "project must be an IProject"
             );
         }
+        require(
+            msg.sender.supportsInterface(type(IController).interfaceId),
+            "sender must be an IController"
+        );
         controller = msg.sender;
         projects = _projects;
         slotCount = _slotCount;

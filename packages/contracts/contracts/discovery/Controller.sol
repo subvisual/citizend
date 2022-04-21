@@ -2,6 +2,8 @@
 pragma solidity =0.8.12;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import {IController} from "./interfaces/IController.sol";
@@ -12,9 +14,7 @@ import {Project} from "./Project.sol";
 import {Batch} from "./Batch.sol";
 import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
 
-import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
-
-contract Controller is IController, AccessControl {
+contract Controller is IController, ERC165, AccessControl {
     using SafeERC20 for IERC20;
 
     //
@@ -225,5 +225,21 @@ contract Controller is IController, AccessControl {
         returns (address)
     {
         return projectsToBatches[_project];
+    }
+
+    //
+    // ERC165
+    //
+
+    /// @inheritdoc ERC165
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC165, AccessControl)
+        returns (bool)
+    {
+        return
+            interfaceId == type(IController).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 }

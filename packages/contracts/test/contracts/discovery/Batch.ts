@@ -113,13 +113,13 @@ describe("Batch", () => {
 
     it("fails with an address that does not implement IProject", async () => {
       await expect(
-        new Batch__factory(owner).deploy([projectToken.address], 1)
+        controller.createBatch([projectToken.address], 1)
       ).to.be.revertedWith("project must be an IProject");
     });
 
     xit("fails if one of the projects is not whitelisted", async () => {
       await expect(
-        new Batch__factory(owner).deploy([fakeProject.address], 1)
+        setUpBatch(controller, [fakeProject], owner)
       ).to.be.revertedWith("project must be whitelisted");
     });
   });
@@ -142,8 +142,6 @@ describe("Batch", () => {
     });
 
     it("reverts if the start is in the past", async () => {
-      batch = await new Batch__factory(owner).deploy([fakeProject.address], 1);
-
       await expect(
         controller.setBatchVotingPeriod(
           batch.address,
@@ -155,8 +153,6 @@ describe("Batch", () => {
     });
 
     it("reverts if the end is before the start", async () => {
-      batch = await new Batch__factory(owner).deploy([fakeProject.address], 1);
-
       await expect(
         controller.setBatchVotingPeriod(
           batch.address,
@@ -194,10 +190,20 @@ describe("Batch", () => {
     });
 
     it("does not allow a user to vote before the voting period is set", async () => {
-      batch = await new Batch__factory(owner).deploy([fakeProject.address], 1);
+      const newProject: Project = await registerProject(
+        owner,
+        projectToken,
+        controller
+      );
+      await makeProjectReady(newProject, projectToken);
+      await controller.createBatch([newProject.address], 1);
+      batch = await Batch__factory.connect(
+        await controller.projectsToBatches(newProject.address),
+        owner
+      );
 
       await expect(
-        batch.connect(alice).vote(fakeProject.address)
+        batch.connect(alice).vote(newProject.address)
       ).to.be.revertedWith("voting period not set");
     });
 

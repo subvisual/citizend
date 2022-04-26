@@ -52,7 +52,6 @@ abstract contract ProjectVoting is ICommon {
 
     uint256 projectsWithVotesCount;
 
-
     constructor(address[] memory _projects, uint256 _voteLimit) {
         for (uint256 i = 0; i < _projects.length; i++) {
             votes.push(0);

@@ -34,6 +34,9 @@ abstract contract ProjectVoting is ICommon {
     /// user => votes
     mapping(address => uint256) public userVoteCount;
 
+    /// number of votes a user has in total
+    uint256 public voteLimit;
+
     /// project address => votes
     mapping(address => uint256) public projectVoteCount;
 
@@ -49,12 +52,14 @@ abstract contract ProjectVoting is ICommon {
 
     uint256 projectsWithVotesCount;
 
-    constructor(address[] memory _projects) {
+
+    constructor(address[] memory _projects, uint256 _voteLimit) {
         for (uint256 i = 0; i < _projects.length; i++) {
             votes.push(0);
             votesIndexToProject[i] = _projects[i];
             projectToVotesIndex[_projects[i]] = i;
         }
+        voteLimit = _voteLimit;
     }
 
     function projectVoting_projects()
@@ -84,6 +89,7 @@ abstract contract ProjectVoting is ICommon {
             !userHasVotedForProject[projectAddress][msg.sender],
             "already voted in this project"
         );
+        require(userVoteCount[msg.sender] <= voteLimit, "vote limit reached");
         _defineWinners();
         require(
             projectStatuses[projectAddress] == ProjectStatus.InProgress,

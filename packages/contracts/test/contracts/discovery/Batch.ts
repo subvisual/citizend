@@ -197,6 +197,21 @@ describe("Batch", () => {
       ).to.be.revertedWith("already voted in this project");
     });
 
+    it("does not give users more votes than slots", async () => {
+      batch = await new Batch__factory(owner).deploy(
+        [fakeProject.address, anotherFakeProject.address],
+        1
+      );
+      await batch.setVotingPeriod(votingStart, votingEnd);
+      await goToTime(votingStart);
+
+      await batch.connect(alice).vote(fakeProject.address);
+
+      await expect(
+        batch.connect(alice).vote(anotherFakeProject.address)
+      ).to.be.revertedWith("vote limit reached");
+    });
+
     it("does not allow a user to vote before the voting period is set", async () => {
       const newProject: Project = await registerProject(
         owner,

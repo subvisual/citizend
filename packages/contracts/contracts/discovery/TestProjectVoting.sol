@@ -14,7 +14,7 @@ contract TestProjectVoting is ProjectVoting {
         Period memory _votingPeriod,
         address[] memory _projects,
         uint256 _numSlots
-    ) ProjectVoting(_projects) {
+    ) ProjectVoting(_projects, _numSlots) {
         votingPeriod = _votingPeriod;
         projects = _projects;
         numSlots = _numSlots;

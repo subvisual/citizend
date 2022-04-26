@@ -47,7 +47,7 @@ contract Batch is IBatch, ICommon, ProjectVoting {
     }
 
     constructor(address[] memory _projects, uint256 _slotCount)
-        ProjectVoting(_projects)
+        ProjectVoting(_projects, _slotCount)
     {
         uint256 numProjects = _projects.length;
         require(numProjects > 0, "projects must not be empty");

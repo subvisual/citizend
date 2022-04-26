@@ -2,21 +2,21 @@ import { ethers, deployments } from "hardhat";
 import { expect } from "chai";
 
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { PeoplesPool, PeoplesPool__factory } from "../../../../src/types";
+import { TestPool, TestPool__factory } from "../../../../src/types";
 
 const { parseUnits } = ethers.utils;
 
-describe("PeoplesPool", () => {
+describe("Pool", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
   let bob: SignerWithAddress;
 
-  let pool: PeoplesPool;
+  let pool: TestPool;
 
   beforeEach(async () => {
     [owner, alice, bob] = await ethers.getSigners();
 
-    const pool = new PeoplesPool__factory(owner).deploy();
+    pool = await new TestPool__factory(owner).deploy(parseUnits("10000"));
   });
 
   describe("constructor", () => {
@@ -34,7 +34,23 @@ describe("PeoplesPool", () => {
   });
 
   describe("setIndividualCap", () => {
-    it("TODO similar tests from Sale.sol");
+    it("allows me to set the cap after investment period is over", async () => {
+      await pool.invest(alice.address, 100);
+
+      await pool.setIndividualCap(100, { gasLimit: 10000000 });
+
+      expect(await pool.individualCap()).to.equal(100);
+      expect(await pool.risingTide_isValidCap()).to.equal(true);
+    });
+
+    it("fails to validate the cap for the wrong value", async () => {
+      await pool.invest(alice.address, 100);
+
+      await pool.setIndividualCap(50, { gasLimit: 10000000 });
+
+      expect(await pool.individualCap()).to.equal(50);
+      expect(await pool.risingTide_isValidCap()).to.equal(false);
+    });
   });
 
   describe("refund", () => {

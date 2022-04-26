@@ -93,7 +93,7 @@ abstract contract Pool is IPool, RisingTide {
         override(IPool)
         returns (uint256 amount)
     {
-        revert("not yet implemented");
+        return investorBalances[_to];
     }
 
     /// @inheritdoc IPool

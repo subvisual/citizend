@@ -85,10 +85,33 @@ describe("Pool", () => {
   });
 
   describe("uncappedAllocation", () => {
-    it("TODO similar tests from Sale.sol");
+    it("is the amount that was invested", async () => {
+      await pool.invest(alice.address, 100);
+
+      expect(await pool.uncappedAllocation(alice.address)).to.equal(100);
+    });
   });
 
   describe("allocation", () => {
-    it("TODO similar tests from Sale.sol");
+    it("is 0 before the cap is calculated", async () => {
+      expect(await pool.allocation(alice.address)).to.equal(0);
+    });
+
+    it("is the amount that was invested if below cap", async () => {
+      await pool.invest(alice.address, 50);
+      await pool.invest(bob.address, 1000);
+
+      await pool.setIndividualCap(950, { gasLimit: 10000000 });
+
+      expect(await pool.allocation(alice.address)).to.equal(50);
+    });
+
+    it("is the amount that was invested if above cap", async () => {
+      await pool.invest(alice.address, 1001);
+
+      await pool.setIndividualCap(1000, { gasLimit: 10000000 });
+
+      expect(await pool.allocation(alice.address)).to.equal(1000);
+    });
   });
 });

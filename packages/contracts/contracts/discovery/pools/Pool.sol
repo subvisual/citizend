@@ -73,9 +73,17 @@ abstract contract Pool is IPool, RisingTide {
         external
         view
         override(IPool)
-        returns (uint256 amount)
+        returns (uint256)
     {
-        revert("not yet implemented");
+        // TODO: Should ignore rising tide if project lost
+        if (!risingTide_isValidCap()) {
+            return 0;
+        }
+
+        uint256 uncapped = investorBalances[_to];
+        uint256 capped = allocation(_to);
+
+        return uncapped - capped;
     }
 
     /// @inheritdoc IPool
@@ -90,12 +98,34 @@ abstract contract Pool is IPool, RisingTide {
 
     /// @inheritdoc IPool
     function allocation(address _to)
-        external
+        public
         view
         override(IPool)
         returns (uint256 amount)
     {
-        revert("not yet implemented");
+        return _applyCap(investorBalances[_to]);
+    }
+
+    //
+    // Internal API
+    //
+
+    /**
+     * Applies the individual cap to the given amount
+     *
+     * @param _amount amount to apply cap to
+     * @return capped amount
+     */
+    function _applyCap(uint256 _amount) internal view returns (uint256) {
+        if (!risingTide_isValidCap()) {
+            return 0;
+        }
+
+        if (_amount >= individualCap) {
+            return individualCap;
+        }
+
+        return _amount;
     }
 
     //

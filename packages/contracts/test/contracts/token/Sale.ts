@@ -257,7 +257,7 @@ describe("Sale", () => {
   });
 
   describe("refundAmount", () => {
-    it("is 0 before the vesting", async () => {
+    it("is 0 before the cap is calculated", async () => {
       expect(await sale.refundAmount(alice.address)).to.equal(0);
     });
 

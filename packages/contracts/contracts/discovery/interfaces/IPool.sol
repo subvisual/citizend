@@ -17,8 +17,14 @@ interface IPool {
     /// Similar to Sale.refund
     function refund(address _to) external;
 
-    /// Similar to Sale.refundAmount
-    function refundAmount(address _to) external view returns (uint256 amount);
+    /**
+     * Returns the amount of tokens (in project tokens) a user should get from
+     * a refund. It is 0 until the Rising Tide is run.
+     *
+     * @param _to The address to query
+     * @return The currently claimable amount in project tokens
+     */
+    function refundAmount(address _to) external view returns (uint256);
 
     /// Similar to Sale.uncappedAllocation
     function uncappedAllocation(address _to)
@@ -27,5 +33,5 @@ interface IPool {
         returns (uint256 amount);
 
     /// Similar to Sale.allocation
-    function allocation(address _to) external view returns (uint256 amount);
+    function allocation(address _to) external view returns (uint256);
 }

@@ -16,7 +16,7 @@ describe("Pool", () => {
   beforeEach(async () => {
     [owner, alice, bob] = await ethers.getSigners();
 
-    pool = await new TestPool__factory(owner).deploy(parseUnits("10000"));
+    pool = await new TestPool__factory(owner).deploy(1000);
   });
 
   describe("constructor", () => {
@@ -62,7 +62,26 @@ describe("Pool", () => {
   });
 
   describe("refundAmount", () => {
-    it("TODO similar tests from Sale.sol");
+    it("is 0 before the cap is calculated", async () => {
+      expect(await pool.refundAmount(alice.address)).to.equal(0);
+    });
+
+    it("is 0 if the individual cap is higher than the invested total", async () => {
+      await pool.invest(alice.address, 200);
+      await pool.invest(bob.address, 200);
+
+      await pool.setIndividualCap(800, { gasLimit: 10000000 });
+
+      expect(await pool.refundAmount(alice.address)).to.equal(0);
+    });
+
+    it("is the difference between the cap and the invested total", async () => {
+      await pool.invest(alice.address, 1001);
+
+      await pool.setIndividualCap(1000, { gasLimit: 10000000 });
+
+      expect(await pool.refundAmount(alice.address)).to.equal(1);
+    });
   });
 
   describe("uncappedAllocation", () => {

@@ -224,7 +224,7 @@ describe("ProjectVoting", () => {
         await goToTime(votingStart + oneDay);
         await projectVoting.connect(alice).test_vote(project1.address);
         await goToTime(votingStart + 2 * oneDay);
-        await projectVoting.connect(alice).test_vote(project3.address);
+        await projectVoting.connect(bob).test_vote(project3.address);
 
         await goToTime(votingStart + 5 * oneDay);
         const winners = await projectVoting.test_getWinners();

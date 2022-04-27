@@ -202,8 +202,8 @@ describe("Batch", () => {
         [fakeProject.address, anotherFakeProject.address],
         1
       );
-      await batch.setVotingPeriod(votingStart, votingEnd);
-      await goToTime(votingStart);
+      await batch.setVotingPeriod(votingStart + oneDay, votingEnd);
+      await goToTime(votingStart + oneDay);
 
       await batch.connect(alice).vote(fakeProject.address);
 

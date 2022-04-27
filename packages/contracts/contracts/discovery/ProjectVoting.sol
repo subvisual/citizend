@@ -88,7 +88,7 @@ abstract contract ProjectVoting is ICommon {
             !userHasVotedForProject[projectAddress][msg.sender],
             "already voted in this project"
         );
-        require(userVoteCount[msg.sender] <= voteLimit, "vote limit reached");
+        require(userVoteCount[msg.sender] < voteLimit, "vote limit reached");
         _defineWinners();
         require(
             projectStatuses[projectAddress] == ProjectStatus.InProgress,

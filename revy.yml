@@ -48,10 +48,16 @@ protectionGates:
     patchRules:
       - rule: isSmall
         extraActions:
+          - $removeLabel("medium")
+          - $removeLabel("large")
           - $addLabel("small")
       - rule: isMedium
         extraActions:
+          - $removeLabel("small")
+          - $removeLabel("large")
           - $addLabel("medium")
       - rule: isLarge
         extraActions:
+          - $removeLabel("small")
+          - $removeLabel("medium")
           - $addLabel("large")

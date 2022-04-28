@@ -19,12 +19,14 @@ export async function registerProject(
   owner: SignerWithAddress,
   projectToken: MockERC20,
   controller: Controller
+  investmentToken: MockERC20
 ): Promise<Project> {
   const tx = await controller.registerProject(
     "My Project",
     projectToken.address,
     parseUnits("1000"),
-    parseUnits("2")
+    parseUnits("2"),
+    investmentToken
   );
 
   const event = await findEvent(tx, "ProjectRegistered");

@@ -133,7 +133,8 @@ contract Controller is IController, AccessControl {
         returns (bool)
     {
         return
-            _hasKYC(_user) &&
+            _hasKYCLiveness(_user) &&
+            _hasKYCFull(_user) &&
             _belongsToDAO(_user) &&
             IStaking(staking).hasStaked(_user);
     }
@@ -148,7 +149,8 @@ contract Controller is IController, AccessControl {
         Batch batch = Batch(projectsToBatches[_project]);
 
         return
-            _hasKYC(_user) &&
+            _hasKYCLiveness(_user) &&
+            _hasKYCFull(_user) &&
             _belongsToDAO(_user) &&
             batch.hasVotedForProject(_user, _project);
     }
@@ -162,9 +164,28 @@ contract Controller is IController, AccessControl {
         Batch(batch).setVotingPeriod(start, end);
     }
 
-    function _hasKYC(address _user) internal view returns (bool) {
+    function _hasKYCLiveness(address _user) internal view returns (bool) {
         bytes32 fractalId = FractalRegistry(registry).getFractalId(_user);
         return fractalId != 0;
+    }
+
+    function _hasKYCFull(address _user) internal view returns (bool) {
+        bytes32 fractalId = FractalRegistry(registry).getFractalId(_user);
+        return
+            FractalRegistry(registry).isUserInList(fractalId, "plus") &&
+            !_hasKYCBlockedCountry(_user);
+    }
+
+    function _hasKYCBlockedCountry(address _user) internal view returns (bool) {
+        bytes32 fractalId = FractalRegistry(registry).getFractalId(_user);
+        return
+            FractalRegistry(registry).isUserInList(fractalId, "residency_US") ||
+            FractalRegistry(registry).isUserInList(fractalId, "residency_VG") ||
+            FractalRegistry(registry).isUserInList(fractalId, "residency_KY") ||
+            FractalRegistry(registry).isUserInList(fractalId, "residency_KP") ||
+            FractalRegistry(registry).isUserInList(fractalId, "residency_IR") ||
+            FractalRegistry(registry).isUserInList(fractalId, "residency_RU") ||
+            FractalRegistry(registry).isUserInList(fractalId, "residency_VE");
     }
 
     function _belongsToDAO(address _user) internal view returns (bool) {

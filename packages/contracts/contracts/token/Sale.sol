@@ -50,6 +50,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// Emitted for every refund given
     event Refund(address indexed to, uint256 paymentTokenAmount);
 
+    /// Emitted every time someone withdraws their funds
     event Withdraw(address indexed to, uint256 paymentTokenAmount);
 
     //

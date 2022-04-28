@@ -46,7 +46,8 @@ contract Project is IProject, ERC165 {
         string memory _description,
         address _token,
         uint256 _saleSupply,
-        uint256 _rate
+        uint256 _rate,
+        address _investmentToken
     ) {
         controller = msg.sender;
 
@@ -58,8 +59,12 @@ contract Project is IProject, ERC165 {
         uint256 stakersPoolSupply = saleSupply / 2;
         uint256 peoplesPoolSupply = saleSupply - stakersPoolSupply;
 
-        stakersPool = address(new StakersPool(stakersPoolSupply));
-        peoplesPool = address(new PeoplesPool(peoplesPoolSupply));
+        stakersPool = address(
+            new StakersPool(stakersPoolSupply, _investmentToken)
+        );
+        peoplesPool = address(
+            new PeoplesPool(peoplesPoolSupply, _investmentToken)
+        );
     }
 
     //

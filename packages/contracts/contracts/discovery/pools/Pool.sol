@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.8.12;
 
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IPool} from "../interfaces/IPool.sol";
 import {RisingTide} from "../../RisingTide/RisingTide.sol";
 
@@ -14,12 +16,33 @@ import "hardhat/console.sol";
  * TODO other than these requirements, the rest should be very similar to the CTND Sale contract
  */
 abstract contract Pool is IPool, RisingTide {
-    address project;
+    using SafeERC20 for IERC20;
+
+    struct Investor {
+        uint256 uncappedAllocation;
+        bool refunded;
+    }
+
+    //
+    // Events
+    //
+
+    /// Emitted for every refund given
+    event Refund(address indexed to, uint256 paymentTokenAmount);
+
+    //
+    // State
+    //
+
+    address public immutable project;
+
+    /// The address of the investment token contract (likely $aUSD)
+    address public immutable investmentToken;
 
     /// total unique investors
     uint256 public _investorCount;
 
-    mapping(address => uint256) investorBalances;
+    mapping(address => Investor) investors;
 
     /// incrementing index => investor address
     mapping(uint256 => address) investorByIndex;
@@ -30,13 +53,21 @@ abstract contract Pool is IPool, RisingTide {
     // Total supply of the project's token up for sale
     uint256 public immutable saleSupply;
 
-    constructor(uint256 _saleSupply) {
+    constructor(uint256 _saleSupply, address _investmentToken) {
         project = msg.sender;
         saleSupply = _saleSupply;
+        investmentToken = _investmentToken;
     }
 
     modifier onlyProject() {
         require(msg.sender == project, "not project");
+        _;
+    }
+
+    /// TODO: Should this be in RisingTide?
+    /// Ensures the individual cap is already calculated
+    modifier capCalculated() {
+        require(risingTide_isValidCap(), "cap not yet set");
         _;
     }
 
@@ -50,13 +81,18 @@ abstract contract Pool is IPool, RisingTide {
         override(IPool)
         onlyProject
     {
-        if (investorBalances[_investor] == 0) {
+        if (investors[_investor].uncappedAllocation == 0) {
             investorByIndex[_investorCount] = _investor;
             _investorCount++;
         }
 
-        investorBalances[_investor] += _amount;
+        investors[_investor].uncappedAllocation += _amount;
         totalUncappedAllocations += _amount;
+        IERC20(investmentToken).safeTransferFrom(
+            _investor,
+            address(this),
+            _amount
+        );
     }
 
     function setIndividualCap(uint256 _cap) external {
@@ -64,13 +100,22 @@ abstract contract Pool is IPool, RisingTide {
     }
 
     /// @inheritdoc IPool
-    function refund(address _to) external override(IPool) {
-        revert("not yet implemented");
+    function refund(address _to) external override(IPool) capCalculated {
+        Investor storage investor = investors[_to];
+        require(!investor.refunded, "already refunded");
+
+        uint256 amount = refundAmount(_to);
+        require(amount > 0, "No tokens to refund");
+
+        investor.refunded = true;
+        IERC20(investmentToken).transfer(_to, amount);
+
+        emit Refund(_to, amount);
     }
 
     /// @inheritdoc IPool
     function refundAmount(address _to)
-        external
+        public
         view
         override(IPool)
         returns (uint256)
@@ -80,7 +125,7 @@ abstract contract Pool is IPool, RisingTide {
             return 0;
         }
 
-        uint256 uncapped = investorBalances[_to];
+        uint256 uncapped = investors[_to].uncappedAllocation;
         uint256 capped = allocation(_to);
 
         return uncapped - capped;
@@ -93,7 +138,7 @@ abstract contract Pool is IPool, RisingTide {
         override(IPool)
         returns (uint256 amount)
     {
-        return investorBalances[_to];
+        return investors[_to].uncappedAllocation;
     }
 
     /// @inheritdoc IPool
@@ -103,7 +148,7 @@ abstract contract Pool is IPool, RisingTide {
         override(IPool)
         returns (uint256 amount)
     {
-        return _applyCap(investorBalances[_to]);
+        return _applyCap(investors[_to].uncappedAllocation);
     }
 
     //
@@ -117,6 +162,7 @@ abstract contract Pool is IPool, RisingTide {
      * @return capped amount
      */
     function _applyCap(uint256 _amount) internal view returns (uint256) {
+        /// TODO: Should this be in RisingTide?
         if (!risingTide_isValidCap()) {
             return 0;
         }
@@ -151,7 +197,7 @@ abstract contract Pool is IPool, RisingTide {
     {
         address addr = investorByIndex[i];
 
-        return investorBalances[addr];
+        return investors[addr].uncappedAllocation;
     }
 
     /// @inheritdoc RisingTide

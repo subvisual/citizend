@@ -28,7 +28,9 @@ describe("Pool", () => {
     pool = await new TestPool__factory(owner).deploy(1000, aUSD.address);
 
     await aUSD.mint(alice.address, parseUnits("10000"));
+    await aUSD.mint(bob.address, parseUnits("10000"));
     await aUSD.connect(alice).approve(pool.address, MaxUint256);
+    await aUSD.connect(bob).approve(pool.address, MaxUint256);
   });
 
   describe("constructor", () => {

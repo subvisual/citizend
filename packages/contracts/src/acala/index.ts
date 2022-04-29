@@ -20,13 +20,15 @@ export async function acalaDeploy(
     ...(await acalaDeployParams()),
   });
 
-  await execute("EVM", opts, "publishContract", result.address);
+  if (await isAcala()) {
+    await execute("EVM", opts, "publishContract", result.address);
+  }
 
   return result;
 }
 
 export async function acalaDeployParams() {
-  if (!isAcala) {
+  if (!(await isAcala())) {
     return {};
   }
 

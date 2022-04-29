@@ -47,7 +47,7 @@ contract Batch is IBatch, ICommon, ProjectVoting {
     }
 
     constructor(address[] memory _projects, uint256 _slotCount)
-        ProjectVoting(_projects, _slotCount)
+        ProjectVoting(_projects)
     {
         uint256 numProjects = _projects.length;
         require(numProjects > 0, "projects must not be empty");
@@ -124,6 +124,23 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         return
             votingPeriod.start >= block.timestamp &&
             investmentEnd <= block.timestamp;
+    }
+
+    function projectVoting_voteLimitPerUser()
+        public
+        view
+        override(ProjectVoting)
+        returns (uint256)
+    {
+        return slotCount;
+    }
+
+    function hasVotedForProject(address _user, address _project)
+        external
+        view
+        returns (bool)
+    {
+        return userHasVotedForProject[_project][_user];
     }
 
     function setVotingPeriod(

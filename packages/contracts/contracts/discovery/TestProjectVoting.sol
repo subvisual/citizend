@@ -14,7 +14,7 @@ contract TestProjectVoting is ProjectVoting {
         Period memory _votingPeriod,
         address[] memory _projects,
         uint256 _numSlots
-    ) ProjectVoting(_projects, _numSlots) {
+    ) ProjectVoting(_projects) {
         votingPeriod = _votingPeriod;
         projects = _projects;
         numSlots = _numSlots;
@@ -63,6 +63,15 @@ contract TestProjectVoting is ProjectVoting {
         returns (int256)
     {
         return 0;
+    }
+
+    function projectVoting_voteLimitPerUser()
+        public
+        view
+        override(ProjectVoting)
+        returns (uint256)
+    {
+        return numSlots;
     }
 
     function test_vote(address projectAddress) external {

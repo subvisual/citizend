@@ -105,6 +105,7 @@ const PageApp = (props: AppProps) => {
         autoClose={10000}
         closeOnClick
         hideProgressBar
+        limit={3}
         position={'top-center'}
         theme={'dark'}
       />

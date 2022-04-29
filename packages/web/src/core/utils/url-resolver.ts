@@ -13,3 +13,23 @@ export function absoluteUrlResolver(path: string): string {
 
   return resolve(url, path);
 }
+
+/**
+ * Export `addSearchParamsToUrl` util.
+ */
+
+export function addSearchParamsToUrl(
+  originalUrl: string,
+  key: string,
+  value: string
+): string {
+  if (!originalUrl) {
+    return '';
+  }
+
+  const url = new URL(originalUrl);
+
+  url.searchParams.set(key, value);
+
+  return url.toString();
+}

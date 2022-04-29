@@ -2,11 +2,11 @@
  * Module dependencies.
  */
 
-import { AwaitingSignatureModal } from '../signature/awaiting-signature-modal';
+import { AwaitingSignatureModal } from 'src/components/modals/awaiting-signature-modal';
 import { Button } from 'src/components/core/button';
+import { ConnectWalletModal } from 'src/components/modals/connect-wallet-modal';
 import { Container } from 'src/components/core/container';
 import { HexagonShape } from 'src/components/connect/hexagon-shape';
-import { ModalWalletConnect } from 'src/components/connect/modal-wallet-connect';
 import { Svg } from 'src/components/core/svg';
 import { Text } from 'src/components/core/text';
 import { Web3Provider } from '@ethersproject/providers';
@@ -20,7 +20,6 @@ import { useWeb3React } from '@web3-react/core';
 import { verifyAccountOwnership } from 'src/core/utils/web3-signature';
 import React, { useCallback, useEffect, useState } from 'react';
 import logotypeSvg from 'src/assets/svgs/logotype.svg';
-import shapeSvg from 'src/assets/svgs/hexagon-rounded.svg';
 import styled from 'styled-components';
 
 /**
@@ -32,10 +31,13 @@ const Grid = styled(Container)`
   grid-template-areas: '. . .' 'text . hexagon' '. . . ';
   grid-template-columns: 1.5fr 1fr 1fr;
   grid-template-rows: 150px auto 150px;
-  position: relative;
 
   ${media.min.sm`
     grid-template-rows: 200px auto 200px;
+  `}
+
+  ${media.max.md`
+    position: relative;
   `}
 `;
 
@@ -88,7 +90,7 @@ const HexagonWrapper = styled.div`
   justify-content: flex-end;
   position: relative;
   text-align: center;
-  top: 10%;
+  top: 20%;
 
   ${media.max.md`
     display: none;
@@ -99,30 +101,45 @@ const HexagonWrapper = styled.div`
  * `Shape` styled component.
  */
 
-const Shape = styled(Svg).attrs({
-  icon: shapeSvg,
-  size: '270%'
-})`
-  left: -115%;
+const ShapeWrapper = styled.div`
+  height: 100%;
+  inset: 20% 0 0 0;
   position: absolute;
-  top: -30%;
-  transform: scale(0.9);
+  transform: scale(1.2);
+  width: 100%;
+
+  ${media.min.xs`
+    transform: scale(1.4);
+  `}
 
   ${media.min.sm`
-    left: -100%;
-    top: -85%;
-    transform: scale(0.8);
+    left: 36%;
+    top: 40%;
+    transform: scale(1.9);
   `}
 
   ${media.min.md`
-    left: -77%;
-    top: -177%;
-    transform: none;
+    inset: 0;
+    transform: scale(1);
   `}
+`;
 
-  svg {
-    max-width: 1600px;
-  }
+/**
+ * `Shape` styled component.
+ */
+
+const Shape = styled.div`
+  backdrop-filter: blur(24px);
+  background-color: rgba(72, 88, 118, 0.56);
+  clip-path: url(#svgPathDesktop);
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+
+  ${media.max.md`
+    clip-path: url(#svgPathMobile);
+  `}
 `;
 
 /**
@@ -180,9 +197,31 @@ export function ConnectScreen() {
 
   return (
     <Grid>
-      <RightContent>
-        <Shape />
+      <svg height={'0'} width={'0'} xmlns={'http://www.w3.org/2000/svg'}>
+        <clipPath id={'svgPathDesktop'}>
+          <path
+            d={
+              'M1099 398.263V0H0V697.98l110.037 110.977A57.601 57.601 0 0 0 150.939 826h521.837a57.6 57.6 0 0 0 40.813-16.954l368.621-370.137a57.61 57.61 0 0 0 16.79-40.646Z'
+            }
+            fill={'#000'}
+          />
+        </clipPath>
 
+        <clipPath id={'svgPathMobile'}>
+          <path
+            d={
+              'M183.347 0a57.602 57.602 0 0 1 34.939 16.66l98.933 99.37A57.6 57.6 0 0 1 334 156.669v141.06a57.602 57.602 0 0 1-16.781 40.64l-98.933 99.37a57.6 57.6 0 0 1-40.819 16.96H37.533A57.6 57.6 0 0 1 .896 441.546V12.852A57.605 57.605 0 0 1 31.652 0h151.695Z'
+            }
+            fill={'#000'}
+          />
+        </clipPath>
+      </svg>
+
+      <ShapeWrapper>
+        <Shape />
+      </ShapeWrapper>
+
+      <RightContent>
         <Content>
           <Logotype />
 
@@ -205,7 +244,7 @@ export function ConnectScreen() {
       {account ? (
         <AwaitingSignatureModal isOpen={isPending} />
       ) : (
-        <ModalWalletConnect
+        <ConnectWalletModal
           isOpen={isOpen}
           onConnect={handleOnConnect}
           onRequestClose={() => {

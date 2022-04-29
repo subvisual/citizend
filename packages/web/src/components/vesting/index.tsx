@@ -4,7 +4,7 @@
 
 import { ClaimActionCard } from './styles';
 import { InfoCard } from './info-card';
-import { LoadingModal } from './loading-modal';
+import { LoadingModal } from 'src/components/modals/loading-modal';
 import { currencyConfig } from 'src/core/constants';
 import { formatCurrency } from 'src/core/utils/formatters';
 import { media } from 'src/styles/breakpoints';

@@ -5,9 +5,9 @@
 import { BrowserView } from 'react-device-detect';
 import { Container } from 'src/components/core/container';
 import { Modal } from 'src/components/core/modal';
+import { ModalTitle } from './styles';
 import { Svg } from 'src/components/core/svg';
-import { TermsAndPrivacyLink } from './terms-and-privacy-link';
-import { Text } from 'src/components/core/text';
+import { TermsAndPrivacyLink } from 'src/components/connect/terms-and-privacy-link';
 import React from 'react';
 import metamaskSvg from 'src/assets/svgs/metamask.svg';
 import styled from 'styled-components';
@@ -51,26 +51,15 @@ const ConnectButton = styled.button`
 `;
 
 /**
- * `Title` styled component.
+ * Export `ConnectWalletModal` component.
  */
 
-const Title = styled(Text).attrs({
-  as: 'p',
-  variant: 'lead'
-})`
-  margin-bottom: 5rem;
-`;
-
-/**
- * Export `ModalWalletConnect` component.
- */
-
-export function ModalWalletConnect(props: Props) {
+export function ConnectWalletModal(props: Props) {
   const { isOpen, onConnect, onRequestClose } = props;
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-      <Title>{'Connect your wallet'}</Title>
+      <ModalTitle>{'Connect your wallet'}</ModalTitle>
 
       <Container centered>
         <BrowserView>

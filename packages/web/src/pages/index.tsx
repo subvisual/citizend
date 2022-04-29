@@ -24,6 +24,9 @@ function Home() {
   );
 }
 
+// Prevents loosing context when params are being used.
+Home.getInitialProps = () => ({});
+
 /**
  * Export `Home` page.
  */

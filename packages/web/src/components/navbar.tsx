@@ -8,11 +8,16 @@ import { Text, textStyles } from 'src/components/core/text';
 import { Web3Provider } from '@ethersproject/providers';
 import { ifProp } from 'styled-tools';
 import { media } from 'src/styles/breakpoints';
+import { toast } from 'react-toastify';
+import { useFractalKYCUrl } from 'src/hooks/use-kyc-url';
+import { useReferralUrl } from 'src/hooks/use-referral-url';
 import { useWalletConnect } from 'src/hooks/use-wallet-connect';
 import { useWeb3React } from '@web3-react/core';
+import React, { useCallback } from 'react';
 import checkSvg from 'src/assets/svgs/check.svg';
 import errorSvg from 'src/assets/svgs/error.svg';
 import hexagonalStrokeSvg from 'src/assets/svgs/hexagon-stroked.svg';
+import linkSvg from 'src/assets/svgs/link.svg';
 import logotypeSvg from 'src/assets/svgs/logotype.svg';
 import styled from 'styled-components';
 
@@ -23,12 +28,6 @@ import styled from 'styled-components';
 type Props = {
   isKycApproved: boolean;
 };
-
-/**
- * Fractal KYC URL.
- */
-
-const fractalKycUrl = process.env.NEXT_PUBLIC_FRACTAL_KYC_URL;
 
 /**
  * `Nav` styled component.
@@ -74,9 +73,13 @@ const MenuWrapper = styled(Text).attrs({
  */
 
 const Menu = styled.ul`
+  ${textStyles.body}
+
   background: var(--color-white);
   box-shadow: 0px 8px 12px 4px rgba(0, 0, 0, 0.25);
   color: var(--color-blue700);
+  display: grid;
+  grid-gap: 10px 0;
   opacity: 0;
   padding: 20px;
   pointer-events: none;
@@ -86,7 +89,7 @@ const Menu = styled.ul`
   transform: translateY(0.5rem);
   transition: var(--transition-default);
   transition-property: transform, opacity;
-  width: 234px;
+  width: 285px;
 
   ${MenuWrapper}:hover &,
   ${MenuWrapper}:focus &,
@@ -98,14 +101,31 @@ const Menu = styled.ul`
 `;
 
 /**
- * `MenuTitle` styled component.
+ * `GroupLabel` styled component.
  */
 
-const MenuTitle = styled(Text).attrs({
+const GroupLabel = styled(Text).attrs({
   as: 'p',
   bold: true
 })`
-  margin-bottom: 0.5rem;
+  margin: 0;
+`;
+
+/**
+ * `FlexRow` styled component.
+ */
+
+const FlexRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+/**
+ * `StyledSeparator` styled component.
+ */
+
+const StyledSeparator = styled(Separator)`
+  margin: 0.75rem 0;
 `;
 
 /**
@@ -118,21 +138,27 @@ const Link = styled.a`
   appearance: none;
   background: none;
   border: none;
-  display: flex;
-  justify-content: space-between;
+  display: inline-block;
   margin: 0;
-  padding-top: 0.75rem;
+  text-align: left;
   width: 100%;
-
-  &:not(:last-child) {
-    margin-bottom: 0.75rem;
-  }
 
   &:focus,
   &:hover {
     outline: none;
     text-decoration: underline;
   }
+`;
+
+/**
+ * `Truncated` styled component.
+ */
+
+const Truncated = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px;
 `;
 
 /**
@@ -183,6 +209,13 @@ export function Navbar(props: Props) {
   const { isKycApproved } = props;
   const { account } = useWeb3React<Web3Provider>();
   const { onDisconnect } = useWalletConnect();
+  const kycUrl = useFractalKYCUrl();
+  const referralUrl = useReferralUrl();
+  const copyReferralToClipboard = useCallback(() => {
+    navigator.clipboard.writeText(referralUrl).then(() => {
+      toast.info('Referral URL copied to clipboard.');
+    });
+  }, [referralUrl]);
 
   return (
     <Nav>
@@ -200,15 +233,30 @@ export function Navbar(props: Props) {
           </AddressLabel>
 
           <Menu>
-            <MenuTitle>{'KYC Verification'}</MenuTitle>
+            <GroupLabel>{'KYC Verification'}</GroupLabel>
 
-            <Link href={fractalKycUrl} rel={'noopener'} target={'_blank'}>
-              <span>{'Fractal ID '}</span>
-
-              <ApprovalStateSvg icon={isKycApproved ? checkSvg : errorSvg} />
+            <Link href={kycUrl} rel={'noopener'} target={'_blank'}>
+              <FlexRow>
+                <span>{'Fractal ID'}</span>
+                <ApprovalStateSvg icon={isKycApproved ? checkSvg : errorSvg} />
+              </FlexRow>
             </Link>
 
-            <Separator />
+            <Separator style={{ color: 'transparent' }} />
+
+            <GroupLabel>{'My referral link'}</GroupLabel>
+
+            <Link
+              aria-label={'Copy referral URL to clipboard'}
+              onClick={copyReferralToClipboard}
+            >
+              <FlexRow>
+                <Truncated>{referralUrl}</Truncated>
+                <ApprovalStateSvg icon={linkSvg} />
+              </FlexRow>
+            </Link>
+
+            <StyledSeparator />
 
             <Link as={'button'} onClick={onDisconnect}>
               {'Disconnect'}

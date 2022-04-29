@@ -12,6 +12,7 @@ import { currencyConfig } from 'src/core/constants';
 import { formatCurrency } from 'src/core/utils/formatters';
 import { ifProp } from 'styled-tools';
 import { media } from 'src/styles/breakpoints';
+import { useFractalKYCUrl } from 'src/hooks/use-kyc-url';
 import { useSaleBuy } from 'src/hooks/use-sale';
 import BigNumber from 'bignumber.js';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -31,12 +32,6 @@ type Props = {
  */
 
 const capCalculationInfoUrl = process.env.NEXT_PUBLIC_CAP_CALCULATION_INFO_URL;
-
-/**
- * Fractal KYC URL.
- */
-
-const fractalKycUrl = process.env.NEXT_PUBLIC_FRACTAL_KYC_URL;
 
 /**
  * `Wrapper` styled component.
@@ -104,6 +99,7 @@ export function SaleForm(props: Props) {
   const { disabled, tokenPrice } = props;
   const { isPending, run: buy } = useSaleBuy();
   const fieldError = getFieldError(amount);
+  const kycUrl = useFractalKYCUrl();
   const handleOnChange = useCallback(event => {
     setAmount(event.target.value.replace(/[^0-9]/g, ''));
   }, []);
@@ -120,7 +116,7 @@ export function SaleForm(props: Props) {
       {disabled && (
         <Text as={'h4'}>
           {'Please '}
-          <Link href={fractalKycUrl}>{'verify your ID'}</Link>
+          <Link href={kycUrl}>{'verify your ID'}</Link>
           {
             " to be able to contribute. If you already started the verification process, you'll be able to contribute once it's finished."
           }

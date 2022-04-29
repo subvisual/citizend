@@ -32,7 +32,6 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   margin: 0 auto;
-  position: relative;
 
   ${media.min.ms`
     max-width: 88%;

@@ -6,6 +6,7 @@ import { Container } from 'src/components/core/container';
 import { Link } from 'src/components/core/link';
 import { Loader } from 'src/components/core/loading';
 import { Modal } from 'src/components/core/modal';
+import { ModalTitle } from './styles';
 import { Text } from 'src/components/core/text';
 import { media } from 'src/styles/breakpoints';
 import React from 'react';
@@ -27,17 +28,6 @@ type Props = {
   isOpen: boolean;
   label: string;
 };
-
-/**
- * `Title` styled component.
- */
-
-const Title = styled(Text).attrs({
-  as: 'p',
-  variant: 'lead'
-})`
-  margin-bottom: 3rem;
-`;
 
 /**
  * `Lead` styled component.
@@ -104,7 +94,7 @@ export function LoadingModal(props: Props) {
 
   return (
     <Modal isOpen={isOpen}>
-      <Title>{'Please confirm the transaction in your wallet'}</Title>
+      <ModalTitle>{'Please confirm the transaction in your wallet'}</ModalTitle>
 
       <Content>
         <Flex>

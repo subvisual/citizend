@@ -13,9 +13,16 @@ export async function acalaDeploy(
   name: string,
   opts: DeployOptions
 ) {
-  const { deploy } = hre.deployments;
+  const { deploy, execute } = hre.deployments;
 
-  return deploy(name, { ...opts, ...(await acalaDeployParams()) });
+  const result = await deploy(name, {
+    ...opts,
+    ...(await acalaDeployParams()),
+  });
+
+  await execute("EVM", opts, "publishContract", result.address);
+
+  return result;
 }
 
 export async function acalaDeployParams() {

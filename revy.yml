@@ -18,17 +18,17 @@ rules:
   isSmall:
     kind: patch
     description: small pull request
-    spec: $size() <= 90
+    spec: $size() <= 200
 
   isMedium:
     kind: patch
     description: medium-sized pull request
-    spec: $size() > 90 && $size() <= 300
+    spec: $size() > 200 && $size() <= 800
 
   isLarge:
     kind: patch
     description: large-sized pull request
-    spec: $size() > 300
+    spec: $size() > 800
 
   touchesContracts:
     kind: patch

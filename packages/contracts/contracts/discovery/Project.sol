@@ -15,6 +15,16 @@ contract Project is IProject, ERC165 {
     // must be deployed via the Controller
     // will have a similar role as the CTND Vesting contract
 
+    //
+    // Constants
+    //
+
+    uint256 public constant MUL = 10**18;
+
+    //
+    // State
+    //
+
     // The IController instance in control of this project
     address public immutable controller;
 
@@ -128,6 +138,26 @@ contract Project is IProject, ERC165 {
         returns (bool)
     {
         return hasTokens() && approvedByManager && approvedByLegal;
+    }
+
+    /// @inheritdoc IProject
+    function investmentTokenToToken(uint256 _amount)
+        public
+        view
+        override(IProject)
+        returns (uint256)
+    {
+        return (_amount * MUL) / rate;
+    }
+
+    /// @inheritdoc IProject
+    function tokenToInvestmentToken(uint256 _amount)
+        public
+        view
+        override(IProject)
+        returns (uint256)
+    {
+        return (_amount * rate) / MUL;
     }
 
     //

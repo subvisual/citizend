@@ -26,4 +26,14 @@ interface IProject {
     function peoplesPool() external view returns (address);
 
     function invest(uint256 _peoplesAmount, uint256 _stakersAmount) external;
+
+    function investmentTokenToToken(uint256 _amount)
+        external
+        view
+        returns (uint256);
+
+    function tokenToInvestmentToken(uint256 _amount)
+        external
+        view
+        returns (uint256);
 }

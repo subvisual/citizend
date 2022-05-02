@@ -14,17 +14,21 @@ interface IPool {
      */
     function setIndividualCap(uint256 _cap) external;
 
-    /// Similar to Sale.refund
+    /**
+     * Refunds currently refundable amount for the given address
+     *
+     * @param _to Address to refund to
+     */
     function refund(address _to) external;
 
     /**
-     * Returns the amount of tokens (in project tokens) a user should get from
-     * a refund. It is 0 until the Rising Tide is run.
+     * Returns the amount of tokens (in investment tokens) a user should get
+     * from a refund. It is 0 until the Rising Tide is run.
      *
      * @param _to The address to query
      * @return The currently claimable amount in project tokens
      */
-    function refundAmount(address _to) external view returns (uint256);
+    function refundableAmount(address _to) external view returns (uint256);
 
     /// Similar to Sale.uncappedAllocation
     function uncappedAllocation(address _to)

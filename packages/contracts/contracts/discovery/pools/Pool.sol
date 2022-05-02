@@ -3,7 +3,9 @@ pragma solidity =0.8.12;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
 import {IPool} from "../interfaces/IPool.sol";
+import {IProject} from "../interfaces/IProject.sol";
 import {RisingTide} from "../../RisingTide/RisingTide.sol";
 
 import "hardhat/console.sol";
@@ -85,9 +87,12 @@ abstract contract Pool is IPool, RisingTide {
             investorByIndex[_investorCount] = _investor;
             _investorCount++;
         }
+        uint256 investedAmount = IProject(project).investmentTokenToToken(
+            _amount
+        );
 
-        investors[_investor].uncappedAllocation += _amount;
-        totalUncappedAllocations += _amount;
+        investors[_investor].uncappedAllocation += investedAmount;
+        totalUncappedAllocations += investedAmount;
         IERC20(investmentToken).safeTransferFrom(
             _investor,
             address(this),
@@ -104,7 +109,7 @@ abstract contract Pool is IPool, RisingTide {
         Investor storage investor = investors[_to];
         require(!investor.refunded, "already refunded");
 
-        uint256 amount = refundAmount(_to);
+        uint256 amount = refundableAmount(_to);
         require(amount > 0, "No tokens to refund");
 
         investor.refunded = true;
@@ -114,7 +119,7 @@ abstract contract Pool is IPool, RisingTide {
     }
 
     /// @inheritdoc IPool
-    function refundAmount(address _to)
+    function refundableAmount(address _to)
         public
         view
         override(IPool)
@@ -128,7 +133,7 @@ abstract contract Pool is IPool, RisingTide {
         uint256 uncapped = investors[_to].uncappedAllocation;
         uint256 capped = allocation(_to);
 
-        return uncapped - capped;
+        return IProject(project).tokenToInvestmentToken(uncapped - capped);
     }
 
     /// @inheritdoc IPool
@@ -148,30 +153,7 @@ abstract contract Pool is IPool, RisingTide {
         override(IPool)
         returns (uint256 amount)
     {
-        return _applyCap(investors[_to].uncappedAllocation);
-    }
-
-    //
-    // Internal API
-    //
-
-    /**
-     * Applies the individual cap to the given amount
-     *
-     * @param _amount amount to apply cap to
-     * @return capped amount
-     */
-    function _applyCap(uint256 _amount) internal view returns (uint256) {
-        /// TODO: Should this be in RisingTide?
-        if (!risingTide_isValidCap()) {
-            return 0;
-        }
-
-        if (_amount >= individualCap) {
-            return individualCap;
-        }
-
-        return _amount;
+        return risingTide_applyCap(investors[_to].uncappedAllocation);
     }
 
     //

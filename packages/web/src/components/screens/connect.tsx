@@ -10,6 +10,8 @@ import { HexagonShape } from 'src/components/connect/hexagon-shape';
 import { Svg } from 'src/components/core/svg';
 import { Text } from 'src/components/core/text';
 import { Web3Provider } from '@ethersproject/providers';
+import { WrongChainModal } from 'src/components/modals/wrong-chain-modal';
+import { chainConfig } from 'src/core/utils/web3-connectors';
 import { media } from 'src/styles/breakpoints';
 import { toast } from 'react-toastify';
 import { useAppStatus } from 'src/hooks/use-app-status';
@@ -147,7 +149,12 @@ const Shape = styled.div`
  */
 
 export function ConnectScreen() {
-  const { account, library } = useWeb3React<Web3Provider>();
+  const {
+    account,
+    active,
+    error: web3Error,
+    library
+  } = useWeb3React<Web3Provider>();
   const { onConnect, onDisconnect } = useWalletConnect();
   const { state } = useAppStatus();
   const { authenticate } = useSession();
@@ -178,7 +185,7 @@ export function ConnectScreen() {
 
   const handleOnConnect = useCallback(
     provider => {
-      if (!account) {
+      if (!active || !account) {
         onConnect(provider);
 
         return;
@@ -186,8 +193,59 @@ export function ConnectScreen() {
 
       verifyOwnership(account, library.getSigner(0));
     },
-    [account, library, onConnect, verifyOwnership]
+    [active, account, library, onConnect, verifyOwnership]
   );
+
+  const handleNetworkChange = useCallback(async () => {
+    if (!(window as any)?.ethereum) {
+      toast.error('We could not find any library for using web3.');
+
+      return;
+    }
+
+    const { ethereum } = window as any;
+
+    try {
+      setIsOpen(false);
+
+      return await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: chainConfig.chainId }]
+      });
+    } catch (error) {
+      if (error.code !== 4902) {
+        toast.error(
+          'We could not switch your wallet to the correct network. Please try again. If persists try adding the chain configuration manually.'
+        );
+
+        return;
+      }
+
+      try {
+        await ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [chainConfig]
+        });
+      } catch (error) {
+        if (error.code === 4001) {
+          // User rejected the request.
+          return;
+        }
+
+        if (error.code === -32002) {
+          toast.info(
+            `Check your wallet network permissions. There should be a pending authorization for adding the ${chainConfig.name} network.`
+          );
+
+          return;
+        }
+
+        toast.error(
+          'We could not add our network to metamask. Try adding the chain manually or contact support.'
+        );
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (isOpen && account && library?.getSigner && !isPending && !error) {
@@ -241,17 +299,21 @@ export function ConnectScreen() {
         <HexagonShape />
       </HexagonWrapper>
 
-      {account ? (
-        <AwaitingSignatureModal isOpen={isPending} />
-      ) : (
-        <ConnectWalletModal
-          isOpen={isOpen}
-          onConnect={handleOnConnect}
-          onRequestClose={() => {
-            setIsOpen(false);
-          }}
-        />
-      )}
+      {account && <AwaitingSignatureModal isOpen={isPending} />}
+
+      <ConnectWalletModal
+        isOpen={isOpen && web3Error?.name !== 'UnsupportedChainIdError'}
+        onConnect={handleOnConnect}
+        onRequestClose={() => {
+          setIsOpen(false);
+        }}
+      />
+
+      <WrongChainModal
+        chainName={chainConfig.name}
+        isOpen={web3Error?.name === 'UnsupportedChainIdError'}
+        onChangeNetwork={handleNetworkChange}
+      />
     </Grid>
   );
 }

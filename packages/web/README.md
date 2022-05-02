@@ -64,6 +64,10 @@ Its used to open Contribute Again info URL.
 
 Its used to open Fractal KYC profile URL.
 
+## NEXT_PUBLIC_CHAIN_ID
+
+Its used to force metamask connect to this chain ID.
+
 ## NEXT_PUBLIC_DAO_CONTRACTS_FOLDER
 
 This application will run with the `mandala (staging)` contracts by default.

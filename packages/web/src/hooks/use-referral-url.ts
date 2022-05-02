@@ -11,7 +11,7 @@ import { useWeb3React } from '@web3-react/core';
  * Export `useReferralUrl` hook.
  */
 
-export function useReferralUrl() {
+export function useReferralUrl(): string | undefined {
   const { account } = useWeb3React<Web3Provider>();
 
   if (!account) {

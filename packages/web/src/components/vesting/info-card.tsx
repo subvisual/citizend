@@ -65,7 +65,7 @@ export function InfoCard(props: Props) {
         </FlexRow>
 
         <FlexRow>
-          <Text variant={'label'}>{'Next Realease'}</Text>
+          <Text variant={'label'}>{'Next Release'}</Text>
           <Text noMargin>{nextRelease}</Text>
         </FlexRow>
       </Grid>

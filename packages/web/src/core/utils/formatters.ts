@@ -215,10 +215,15 @@ export function formatCompactNumber(
  * Export `formatDate`.
  */
 
-export function formatDate(date: string) {
+export function formatDate(date: string, options?: { hideHours: boolean }) {
+  const { hideHours } = options ?? {};
+
   if (!date) {
     return '';
   }
 
-  return format(parseISO(date), 'dd/MM/yyyy HH:mm OOOO');
+  return format(
+    parseISO(date),
+    hideHours ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm OOOO'
+  );
 }

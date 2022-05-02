@@ -78,13 +78,15 @@ contract Controller is IController, AccessControl {
         string calldata _description,
         address _token,
         uint256 _saleSupply,
-        uint256 _rate
+        uint256 _rate,
+        string[] calldata _blockedCountries
     ) external override(IController) {
         IProject project = new Project(
             _description,
             _token,
             _saleSupply,
-            _rate
+            _rate,
+            _blockedCountries
         );
 
         emit ProjectRegistered(address(project));
@@ -152,6 +154,7 @@ contract Controller is IController, AccessControl {
         return
             _hasKYCLiveness(_user) &&
             _hasKYCFull(_user) &&
+            !_hasKYCBlockedCountry(_project, _user) &&
             _belongsToDAO(_user) &&
             batch.hasVotedForProject(_user, _project);
     }
@@ -172,21 +175,27 @@ contract Controller is IController, AccessControl {
 
     function _hasKYCFull(address _user) internal view returns (bool) {
         bytes32 fractalId = FractalRegistry(registry).getFractalId(_user);
-        return
-            FractalRegistry(registry).isUserInList(fractalId, "plus") &&
-            !_hasKYCBlockedCountry(_user);
+        return FractalRegistry(registry).isUserInList(fractalId, "plus");
     }
 
-    function _hasKYCBlockedCountry(address _user) internal view returns (bool) {
+    function _hasKYCBlockedCountry(address _project, address _user)
+        internal
+        view
+        returns (bool)
+    {
         bytes32 fractalId = FractalRegistry(registry).getFractalId(_user);
-        return
-            FractalRegistry(registry).isUserInList(fractalId, "residency_US") ||
-            FractalRegistry(registry).isUserInList(fractalId, "residency_VG") ||
-            FractalRegistry(registry).isUserInList(fractalId, "residency_KY") ||
-            FractalRegistry(registry).isUserInList(fractalId, "residency_KP") ||
-            FractalRegistry(registry).isUserInList(fractalId, "residency_IR") ||
-            FractalRegistry(registry).isUserInList(fractalId, "residency_RU") ||
-            FractalRegistry(registry).isUserInList(fractalId, "residency_VE");
+        string[] memory blockedRegistryLists = IProject(_project)
+            .getBlockedRegistryLists();
+        uint256 len = blockedRegistryLists.length;
+
+        for (uint256 i = 0; i < len; i++) {
+            string memory list = blockedRegistryLists[i];
+            if (FractalRegistry(registry).isUserInList(fractalId, list)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     function _belongsToDAO(address _user) internal view returns (bool) {

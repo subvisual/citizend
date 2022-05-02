@@ -181,7 +181,8 @@ describe("Controller", () => {
           "My Project",
           projectToken.address,
           parseUnits("1000"),
-          parseUnits("2")
+          parseUnits("2"),
+          []
         )
       ).to.emit(controller, "ProjectRegistered");
     });
@@ -236,7 +237,8 @@ describe("Controller", () => {
       "My Project",
       projectToken.address,
       parseUnits("1000"),
-      parseUnits("2")
+      parseUnits("2"),
+      []
     );
 
     const event = await findEvent(tx, "ProjectRegistered");

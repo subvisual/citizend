@@ -65,6 +65,8 @@ abstract contract Pool is IPool, RisingTide {
 
         investorBalances[_investor] += _amount;
         totalUncappedAllocations += _amount;
+
+        require(IERC20(paymentToken).balanceOf(address(this)) >= investedAmount + _amount);
     }
 
     function setIndividualCap(uint256 _cap) external {

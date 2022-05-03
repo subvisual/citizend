@@ -126,8 +126,12 @@ contract Project is IProject, ERC165 {
     }
 
     /// @inheritdoc IProject
-    function getPools() external view returns (address peoplesPool, address stakersPool) {
-      return (peoplesPool, stakersPool);
+    function getPools()
+        external
+        view
+        returns (address _peoplesPool, address _stakersPool)
+    {
+        return (_peoplesPool, _stakersPool);
     }
 
     //

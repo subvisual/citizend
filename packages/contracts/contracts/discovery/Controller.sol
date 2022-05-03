@@ -99,7 +99,6 @@ contract Controller is IController, ERC165, AccessControl {
         override(IController)
         onlyRole(BATCH_MANAGER_ROLE)
     {
-        // TODO: add staking contract address to the Batch
         IBatch batch = new Batch(_projects, _slotCount);
 
         uint256 len = _projects.length;
@@ -116,6 +115,64 @@ contract Controller is IController, ERC165, AccessControl {
         }
 
         emit BatchCreated(address(batch));
+    }
+
+    /// @inheritdoc IController
+    function vote(
+        address _project,
+        uint256 _peoplesPoolAmount,
+        uint256 _stakersPoolAmount
+    ) external {
+        require(canVote(msg.sender), "user can't vote");
+
+        Batch batch = getBatchForProject(_project);
+
+        IBatch(batch).vote(_project);
+
+        _invest(_project, _peoplesPoolAmount, _stakersPoolAmount);
+    }
+
+    /// @inheritdoc IController
+    function invest(
+        address _project,
+        uint256 _peoplesPoolAmount,
+        uint256 _stakersPoolAmount
+    ) public {
+        _invest(_project, _peoplesPoolAmount, _stakersPoolAmount);
+    }
+
+    function _invest(
+        address _project,
+        uint256 _peoplesPoolAmount,
+        uint256 _stakersPoolAmount
+    ) private {
+        (address peoplesPool, address stakersPool) = IProject(_project)
+            .getPools();
+
+        if (
+            _peoplesPoolAmount > 0 &&
+            canInvestInPeoplesPool(_project, msg.sender)
+        ) {
+            // TODO what is paymentToken?
+            IERC20(_paymentToken).safeTransferFrom(
+                msg.sender,
+                peoplesPool,
+                _peoplesPoolAmount
+            );
+
+            IPool(peoplesPool).invest(msg.sender, _peoplesPoolAmount);
+        }
+
+        if (_stakersPoolAmount > 0 && canInvestInStakersPool(msg.sender)) {
+            // TODO what is paymentToken?
+            IERC20(_paymentToken).safeTransferFrom(
+                msg.sender,
+                stakersPool,
+                _stakersPoolAmount
+            );
+
+            IPool(stakersPool).invest(msg.sender, _stakersPoolAmount);
+        }
     }
 
     /// @inheritdoc IController
@@ -244,54 +301,5 @@ contract Controller is IController, ERC165, AccessControl {
         return
             interfaceId == type(IController).interfaceId ||
             super.supportsInterface(interfaceId);
-    }
-
-    function vote(
-        address _project,
-        uint256 _peoplesPoolAmount,
-        uint256 _stakersPoolAmount
-    ) external {
-        // TODO require KYC
-
-        Batch batch = getBatchForProject(_project);
-
-        IBatch(batch).vote(_project, _peoplesPoolAmount, _stakersPoolAmount);
-
-        _invest(_project, _peoplesPoolAmount, _stakersPoolAmount);
-    }
-
-    function invest(
-        address _project,
-        uint256 _peoplesPoolAmount,
-        uint256 _stakersPoolAmount
-    ) public {
-      _invest(_project, _peoplesPoolAmount, _stakersPoolAmount);
-    }
-
-    function _invest(address _project, uint256 _peoplesPoolAmount, uint256 _stakersPoolAmount) private {
-        (address peoplesPool, address stakersPool) = IProject(_project)
-            .getPools();
-
-        if (_peoplesPoolAmount > 0) {
-            // TODO what is paymentToken?
-            IERC20(_paymentToken).safeTransferFrom(
-                msg.sender,
-                peoplesPool,
-                _peoplesPoolAmount
-            );
-
-            IPool(peoplesPool).invest(msg.sender, _project, getBatchForProject(_project), _peoplesPoolAmount);
-        }
-
-        if (_stakersPoolAmount > 0) {
-            // TODO what is paymentToken?
-            IERC20(_paymentToken).safeTransferFrom(
-                msg.sender,
-                stakersPool,
-                _stakersPoolAmount
-            );
-
-            IPool(stakersPool).invest(msg.sender, _project, getBatchForProject(_project), _stakersPoolAmount);
-        }
     }
 }

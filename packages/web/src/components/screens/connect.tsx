@@ -145,6 +145,17 @@ const Shape = styled.div`
 `;
 
 /**
+ * `isUnsupportedChainIdError` util.
+ */
+
+function isUnsupportedChainIdError(error: any) {
+  return (
+    error?.name === 'UnsupportedChainIdError' ||
+    error?.message.includes('Unsupported chain id')
+  );
+}
+
+/**
  * Export `ConnectScreen` component.
  */
 
@@ -208,10 +219,14 @@ export function ConnectScreen() {
     try {
       setIsOpen(false);
 
-      return await ethereum.request({
+      await ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: chainConfig.chainId }]
       });
+
+      if (!account) {
+        toast.info('Network correctly changed. Connect again to continue.');
+      }
     } catch (error) {
       if (error.code !== 4902) {
         toast.error(
@@ -245,7 +260,7 @@ export function ConnectScreen() {
         );
       }
     }
-  }, []);
+  }, [account]);
 
   useEffect(() => {
     if (isOpen && account && library?.getSigner && !isPending && !error) {
@@ -302,7 +317,7 @@ export function ConnectScreen() {
       {account && <AwaitingSignatureModal isOpen={isPending} />}
 
       <ConnectWalletModal
-        isOpen={isOpen && web3Error?.name !== 'UnsupportedChainIdError'}
+        isOpen={isOpen && !isUnsupportedChainIdError(web3Error)}
         onConnect={handleOnConnect}
         onRequestClose={() => {
           setIsOpen(false);
@@ -310,8 +325,8 @@ export function ConnectScreen() {
       />
 
       <WrongChainModal
-        chainName={chainConfig.name}
-        isOpen={web3Error?.name === 'UnsupportedChainIdError'}
+        chainName={chainConfig.chainName}
+        isOpen={isUnsupportedChainIdError(web3Error)}
         onChangeNetwork={handleNetworkChange}
       />
     </Grid>

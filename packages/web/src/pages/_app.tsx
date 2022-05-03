@@ -102,7 +102,7 @@ const PageApp = (props: AppProps) => {
       <div id={'modalPortal'} />
 
       <ToastContainer
-        autoClose={10000}
+        autoClose={4000}
         closeOnClick
         hideProgressBar
         limit={3}

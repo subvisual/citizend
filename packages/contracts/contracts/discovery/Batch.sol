@@ -5,6 +5,7 @@ import {ERC165Checker} from "@openzeppelin/contracts/utils/introspection/ERC165C
 
 import {ICommon} from "./interfaces/ICommon.sol";
 import {IProject} from "./interfaces/IProject.sol";
+import {IController} from "./interfaces/IController.sol";
 import {IBatch} from "./interfaces/IBatch.sol";
 import {IStaking} from "./interfaces/IStaking.sol";
 import {ProjectVoting} from "./ProjectVoting.sol";
@@ -20,6 +21,9 @@ contract Batch is IBatch, ICommon, ProjectVoting {
 
     /// Period for which the batch is open for voting
     Period public votingPeriod;
+
+    /// Timestamp at which the batch is closed for investment
+    uint256 public investmentEnd;
 
     /// Address for the controller contract
     address public immutable controller;
@@ -59,6 +63,10 @@ contract Batch is IBatch, ICommon, ProjectVoting {
                 "project must be an IProject"
             );
         }
+        require(
+            msg.sender.supportsInterface(type(IController).interfaceId),
+            "sender must be an IController"
+        );
         controller = msg.sender;
         projects = _projects;
         slotCount = _slotCount;
@@ -112,15 +120,17 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         return 0;
     }
 
-    function hasVotedForProject(address _user, address _project)
-        external
-        view
-        returns (bool)
-    {
-        return userHasVotedForProject[_project][_user];
+    function inInvestmentPeriod() external returns (bool) {
+        return
+            votingPeriod.start >= block.timestamp &&
+            investmentEnd <= block.timestamp;
     }
 
-    function setVotingPeriod(uint256 start, uint256 end) external {
+    function setVotingPeriod(
+        uint256 start,
+        uint256 end,
+        uint256 extraInvestmentDuration
+    ) external {
         require(start >= block.timestamp, "start must be in the future");
         require(start < end, "start must be before end");
         require(
@@ -131,6 +141,7 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         singleSlotDuration =
             (votingPeriod.end - votingPeriod.start) /
             slotCount;
+        investmentEnd = votingPeriod.end + extraInvestmentDuration;
     }
 
     function vote(address projectAddress)
@@ -138,6 +149,11 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         votingPeriodIsSet
         inVotingPeriod
     {
+        require(
+            IController(controller).canVote(msg.sender),
+            "not allowed to vote"
+        );
+
         _vote(projectAddress);
     }
 

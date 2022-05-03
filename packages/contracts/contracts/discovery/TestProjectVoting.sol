@@ -49,7 +49,7 @@ contract TestProjectVoting is ProjectVoting {
 
     function projectVoting_initialBonus()
         public
-        view
+        pure
         override(ProjectVoting)
         returns (int256)
     {
@@ -58,7 +58,7 @@ contract TestProjectVoting is ProjectVoting {
 
     function projectVoting_finalBonus()
         public
-        view
+        pure
         override(ProjectVoting)
         returns (int256)
     {

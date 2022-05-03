@@ -16,6 +16,12 @@ import styled, { createGlobalStyle } from 'styled-components';
 ReactModal.setAppElement('#__next');
 
 /**
+ * Remove modal default styles.
+ */
+
+ReactModal.defaultStyles = {};
+
+/**
  * Modal styles.
  */
 
@@ -24,13 +30,7 @@ const modalStyles = {
     backgroundColor: 'var(--modal-background-color)',
     border: 'none',
     borderRadius: '0.25rem',
-    bottom: 'auto',
-    left: '50%',
-    marginRight: '-50%',
-    padding: '5rem 1.25rem',
-    right: 'auto',
-    top: '50%',
-    transform: 'translate(-50%, -50%)'
+    padding: '5rem 1.25rem'
   },
   overlay: {
     backdropFilter: 'blur(20px)',
@@ -78,28 +78,48 @@ const CloseButton = styled.button`
  */
 
 const ModalGlobalStyle = createGlobalStyle`
-  .ReactModal {
-    &__Overlay {
-      opacity: 0;
-      text-align: center;
-      transition: opacity var(--transition-default);
+  .ReactModal__Html--open,
+  .ReactModal__Body--open {
+    overflow: hidden;
+  }
 
-      &--after-open {
-        opacity: 1;
-      }
+  .ReactModal__Overlay {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    transition: opacity var(--transition-default);
+    width: 100vw;
+    z-index: var(--modal-z-index);
 
-      &--before-close{
-        opacity: 0;
-      }
+    &--after-open {
+      opacity: 1;
     }
 
-    &__Content {
-      max-width: 620px;
-      width: 90%;
+    &--before-close{
+      opacity: 0;
+    }
+  }
 
-      ${media.min.sm`
-        width: 80%;
-      `}
+  .ReactModal__Content {
+    max-height: calc(100vh - 2rem);
+    max-width: calc(100vw - 2rem);
+    overflow-y: auto;
+    position: relative;
+    width: 90%;
+
+    ${media.min.sm`
+      max-width: 620px;
+      width: 80%;
+    `}
+
+    &:focus-visible {
+      outline: none;
     }
   }
 `;

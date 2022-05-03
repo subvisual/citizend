@@ -42,6 +42,7 @@ const rootVariables = `
     /* Modal */
     --modal-backdrop-background-color: #5463824d;
     --modal-background-color: var(--color-blue650);
+    --modal-z-index: 999998;
 
     /* Toast */
     --toastify-color-dark: var(--modal-background-color);
@@ -49,6 +50,7 @@ const rootVariables = `
     --toastify-color-info: var(--color-blue200);
     --toastify-font-family: var(--montserrat-font-family);
     --toastify-toast-width: clamp(320px, 40vw, 650px);
+    --toastify-z-index: 999999;
 
     ${media.min.ms`
       --container-padding: 3rem;

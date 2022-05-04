@@ -60,17 +60,19 @@ async function networkConfigs(chainId: number): Promise<Config> {
         1,
         12
       );
-      const now = Math.floor(date.getTime() / 1000);
+      const now = Math.floor(new Date(2022, 4, 4, 8, 0).getTime() / 1000);
+      // const now = Math.floor(date.getTime() / 1000);
+      const thirtyMinutes = 30 * 60;
       const oneDay = 60 * 60 * 24;
 
       return {
         ctndSale1: {
           start: now,
-          end: now + oneDay * 3,
+          end: now + thirtyMinutes,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: now + oneDay * 4,
+          start: now + thirtyMinutes,
         },
         ctndSale2: undefined,
       };

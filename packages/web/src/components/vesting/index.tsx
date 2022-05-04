@@ -20,6 +20,7 @@ import styled from 'styled-components';
 const Grid = styled.section`
   display: grid;
   grid-gap: 2.5rem;
+  position: relative;
 
   ${media.min.md`
     grid-gap: 1rem;

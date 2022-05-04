@@ -40,6 +40,7 @@ const capCalculationInfoUrl = process.env.NEXT_PUBLIC_CAP_CALCULATION_INFO_URL;
 const Wrapper = styled.div`
   margin: 0 auto;
   max-width: 37rem;
+  position: relative;
 `;
 
 /**
@@ -114,7 +115,7 @@ export function SaleForm(props: Props) {
   return (
     <Wrapper>
       {disabled && (
-        <Text as={'h4'}>
+        <Text as={'h4'} style={{ position: 'relative' }}>
           {'Please '}
           <Link href={kycUrl}>{'verify your ID'}</Link>
           {

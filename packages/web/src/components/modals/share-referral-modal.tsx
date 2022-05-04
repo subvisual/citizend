@@ -121,7 +121,10 @@ export function ShareReferralModal(props: Props) {
           <Text as={'p'} variant={'label'}>
             {'My referral link'}
           </Text>
-          <Text as={'p'}>{referralUrl}</Text>
+
+          <Text as={'p'} style={{ wordBreak: 'break-word' }}>
+            {referralUrl}
+          </Text>
 
           <SocialActions>
             {social.map(({ icon, label, onClick }) => (

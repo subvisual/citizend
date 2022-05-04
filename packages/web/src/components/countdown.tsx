@@ -25,6 +25,7 @@ type Props = CountdownProps & {
 const Section = styled.section`
   max-width: 100%;
   overflow: hidden;
+  position: relative;
 `;
 
 /**

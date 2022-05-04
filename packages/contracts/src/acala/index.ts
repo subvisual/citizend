@@ -13,14 +13,16 @@ export async function acalaDeploy(
   name: string,
   opts: DeployOptions
 ) {
-  const { deploy, execute } = hre.deployments;
+  const { deploy, execute, getOrNull } = hre.deployments;
+
+  const existing = getOrNull(name);
 
   const result = await deploy(name, {
     ...opts,
     ...(await acalaDeployParams()),
   });
 
-  if (await isAcala()) {
+  if ((await isAcala()) && !existing) {
     await execute("EVM", opts, "publishContract", result.address);
   }
 

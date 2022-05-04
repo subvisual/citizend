@@ -66,11 +66,11 @@ async function networkConfigs(chainId: number): Promise<Config> {
       return {
         ctndSale1: {
           start: now,
-          end: now + oneDay * 7,
+          end: now + oneDay * 3,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: beginningOfNextMonth.getTime() / 1000,
+          start: now + oneDay * 4,
         },
         ctndSale2: undefined,
       };

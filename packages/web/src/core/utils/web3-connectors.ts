@@ -28,7 +28,7 @@ export const chainConfigs = {
     chainId: utils.hexValue(595),
     chainName: 'Mandala TC7',
     nativeCurrency: {
-      decimals: 18,
+      decimals: 12,
       name: 'Acala USD',
       symbol: 'ACA'
     },
@@ -39,7 +39,7 @@ export const chainConfigs = {
     chainId: utils.hexValue(686),
     chainName: 'Karura',
     nativeCurrency: {
-      decimals: 18,
+      decimals: 12,
       name: 'Karura USD',
       symbol: 'KAR'
     },
@@ -50,7 +50,7 @@ export const chainConfigs = {
     chainId: utils.hexValue(595),
     chainName: 'Localhost',
     nativeCurrency: {
-      decimals: 18,
+      decimals: 12,
       name: 'Acala USD',
       symbol: 'ACA'
     },
@@ -63,6 +63,8 @@ export const chainConfigs = {
  */
 
 export const chainConfig = chainConfigs?.[supportedChain];
+console.log("chainConfig: ", chainConfig);
+
 
 /**
  * `metamask` connector.

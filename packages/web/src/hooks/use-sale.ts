@@ -6,6 +6,7 @@ import { AsyncOptions, useAsync } from 'react-async';
 import { BigNumber, Signer, utils } from 'ethers';
 import { ContractsContext, useContracts } from 'src/context/contracts';
 import { Web3Provider } from '@ethersproject/providers';
+import { currencyConfig } from 'src/core/constants';
 import {
   onBlockchainReject,
   onBlockchainResolve
@@ -105,7 +106,10 @@ export function useSale() {
 async function saleBuy(options: BuyPayload): Promise<Record<string, any>> {
   const { address, amount, contracts, signer } = options;
   const value = BigNumber.from(amount || '0');
-  const paymentAmount = utils.parseUnits(amount, 12);
+  const paymentAmount = utils.parseUnits(
+    amount,
+    currencyConfig.aUsd.decimalPlaces
+  );
 
   if (!contracts?.sale1 || value.lte(0)) {
     return;

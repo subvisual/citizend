@@ -46,7 +46,7 @@ type NumberOptions = Intl.NumberFormatOptions & {
  */
 
 export type CurrencyOptions = NumberOptions & {
-  fallbackSymbol?: string | null;
+  symbol?: string | null;
   toRoundUp?: boolean;
 };
 
@@ -130,8 +130,8 @@ export function formatCurrency(
   const {
     currency,
     decimalPlacesToDisplay,
-    fallbackSymbol,
     skipTrailingZeros,
+    symbol,
     toRoundUp
   } = options;
 
@@ -150,7 +150,7 @@ export function formatCurrency(
   } catch (error: any) {
     const formatter = new Intl.NumberFormat(locale);
     const formattedValue = formatter.format(Number(value));
-    const currencySymbol = fallbackSymbol ?? currency;
+    const currencySymbol = symbol ?? currency;
     const whitespace = size(currencySymbol) > 1 ? ' ' : '';
     const fallback = !currencySymbol
       ? formattedValue
@@ -189,7 +189,7 @@ export function formatCompactNumber(
   value: NullableNumber,
   options?: CurrencyOptions
 ): string {
-  const { currency, decimalPlacesToDisplay = 1 } = options ?? {};
+  const { currency, decimalPlacesToDisplay = 1, symbol } = options ?? {};
   const numericValue = convertNumberToString(value ?? '0');
   const [integer, fraction = ''] = numericValue.split('.');
   const compactSignificantDigits = integer.length % 3 || 3;
@@ -202,13 +202,29 @@ export function formatCompactNumber(
   const truncatedValue =
     Math.trunc(Number(numericValue) / 10 ** digitsToHide) * 10 ** digitsToHide;
 
-  return new Intl.NumberFormat(locale, {
-    compactDisplay: 'short',
-    currency,
-    maximumSignificantDigits,
-    notation: 'compact',
-    style: currency ? 'currency' : undefined
-  }).format(truncatedValue);
+  try {
+    return new Intl.NumberFormat(locale, {
+      compactDisplay: 'short',
+      currency,
+      maximumSignificantDigits,
+      notation: 'compact',
+      style: currency ? 'currency' : undefined
+    }).format(truncatedValue);
+  } catch (error) {
+    const whitespace = size(symbol ?? currency) > 1 ? ' ' : '';
+
+    return new Intl.NumberFormat(locale, {
+      compactDisplay: 'short',
+      currency: 'BTC',
+      maximumSignificantDigits,
+      notation: 'compact',
+      style: currency ? 'currency' : undefined
+    })
+      .format(truncatedValue)
+      .replace(/^BTC */, `${symbol ?? currency}${whitespace}`)
+      .replace(/^-BTC */, `${symbol ?? currency}${whitespace}`)
+      .replace(/ *BTC$/, `${whitespace}${symbol ?? currency}`);
+  }
 }
 
 /**

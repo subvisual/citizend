@@ -17,7 +17,7 @@ const func: DeployFunction = async function (hre) {
     contract: "MockERC20",
     log: true,
     from: deployer,
-    args: ["Acala USD", "aUSD"],
+    args: ["Acala USD", "aUSD", 12],
   });
 
   const [owner, alice, bob, carol] = await ethers.getSigners();

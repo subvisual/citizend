@@ -49,26 +49,23 @@ describe("Vesting", () => {
       12
     );
     vestingStart = Math.floor(beginningOfNextMonth.getTime() / 1000);
-    console.log("deploying ausd");
 
     aUSD = await new MockERC20__factory(owner).deploy(
       "aUSD",
       "aUSD",
+      12,
       await acalaDeployParams()
     );
-    console.log("deploying citizend");
     citizend = await new Citizend__factory(owner).deploy(
       owner.address,
       await acalaDeployParams()
     );
 
-    console.log("deploying sales");
     sale = await new MockSale__factory(owner).deploy(await acalaDeployParams());
     sale2 = await new MockSale__factory(owner).deploy(
       await acalaDeployParams()
     );
 
-    console.log("deploying vesting");
     vesting = await new Vesting__factory(owner).deploy(
       3,
       citizend.address,
@@ -77,7 +74,6 @@ describe("Vesting", () => {
       10000,
       await acalaDeployParams()
     );
-    console.log("transfering tokens");
     await citizend.transfer(vesting.address, 1000);
   });
 

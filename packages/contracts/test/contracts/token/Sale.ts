@@ -39,13 +39,13 @@ describe("Sale", () => {
     start = await currentTimestamp();
     end = start + 60 * 60 * 24;
 
-    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD");
+    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
 
     registry = await new FractalRegistry__factory(owner).deploy(owner.address);
 
     sale = await new Sale__factory(owner).deploy(
       aUSD.address,
-      parseUnits("0.3"),
+      parseUnits("0.3", 12),
       start,
       end,
       1000,
@@ -65,7 +65,7 @@ describe("Sale", () => {
   describe("constructor", () => {
     it("sets the correct params", async () => {
       expect(await sale.paymentToken()).to.equal(aUSD.address);
-      expect(await sale.rate()).to.equal(parseUnits("0.3"));
+      expect(await sale.rate()).to.equal(parseUnits("0.3", 12));
       expect(await sale.start()).to.equal(start);
       expect(await sale.end()).to.equal(end);
 

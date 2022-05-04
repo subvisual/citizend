@@ -2,6 +2,7 @@
 pragma solidity =0.8.12;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
@@ -29,7 +30,6 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     // Constants
     //
 
-    uint256 public constant MUL = 10**18;
     bytes32 public constant CAP_VALIDATOR_ROLE =
         keccak256("CAP_VALIDATOR_ROLE");
 
@@ -58,6 +58,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     /// Fixed price of token, expressed in paymentToken amount
     uint256 public immutable rate;
+
+    // multiplier used for rate conversions
+    uint256 immutable mul;
 
     /// Timestamp at which sale starts
     uint256 public immutable start;
@@ -112,6 +115,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         end = _end;
         totalTokensForSale = _totalTokensForSale;
         registry = _registry;
+        mul = 10**IERC20Metadata(_paymentToken).decimals();
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -168,7 +172,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         override(ISale)
         returns (uint256)
     {
-        return (_paymentAmount * MUL) / rate;
+        return (_paymentAmount * mul) / rate;
     }
 
     /// @inheritdoc ISale
@@ -178,7 +182,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         override(ISale)
         returns (uint256)
     {
-        return (_tokenAmount * rate) / MUL;
+        return (_tokenAmount * rate) / mul;
     }
 
     /// @inheritdoc ISale

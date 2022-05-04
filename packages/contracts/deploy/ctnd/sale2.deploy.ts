@@ -8,12 +8,13 @@ const { parseUnits } = ethers.utils;
 
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
-  const { get } = hre.deployments;
+  const { get, read } = hre.deployments;
 
   const aUSD = await get("aUSD");
   const registry = await get("FractalRegistry");
 
   const { ctndSale2 } = await getNetworkConfig();
+  const decimals = await read("aUSD", {}, "decimals");
 
   if (!ctndSale2) {
     return;
@@ -25,7 +26,7 @@ const func: DeployFunction = async function (hre) {
     from: deployer,
     args: [
       aUSD.address,
-      parseUnits("0.3"),
+      parseUnits("0.3", decimals),
       ctndSale2.start,
       ctndSale2.end,
       ctndSale2.supply,

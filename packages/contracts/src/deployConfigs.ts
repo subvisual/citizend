@@ -60,7 +60,7 @@ async function networkConfigs(chainId: number): Promise<Config> {
         1,
         12
       );
-      const now = Math.floor(new Date(2022, 4, 4, 9, 45).getTime() / 1000);
+      const now = Math.floor(new Date(2022, 4, 4, 10, 45).getTime() / 1000);
       // const now = Math.floor(date.getTime() / 1000);
       const thirtyMinutes = 30 * 60;
       const oneDay = 60 * 60 * 24;

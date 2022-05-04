@@ -49,7 +49,8 @@ describe("Batch", () => {
     votingEnd = votingStart + oneDay * 10;
     projectToken = await new MockERC20__factory(owner).deploy(
       "ProjectToken",
-      "ProjectToken"
+      "ProjectToken",
+      18
     );
 
     registry = await new FractalRegistry__factory(owner).deploy(owner.address);

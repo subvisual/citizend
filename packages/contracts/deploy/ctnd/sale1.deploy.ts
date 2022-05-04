@@ -9,12 +9,13 @@ import { getNetworkConfig } from "../../src/deployConfigs";
 
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
-  const { get } = hre.deployments;
+  const { get, read } = hre.deployments;
 
   const aUSD = await get("aUSD");
   const registry = await get("FractalRegistry");
 
   const { ctndSale1 } = await getNetworkConfig();
+  const decimals = await read("aUSD", {}, "decimals");
 
   await acalaDeploy(hre, "Sale1", {
     contract: "Sale",
@@ -22,7 +23,7 @@ const func: DeployFunction = async function (hre) {
     from: deployer,
     args: [
       aUSD.address,
-      parseUnits("0.3"),
+      parseUnits("0.3", decimals),
       ctndSale1.start,
       ctndSale1.end,
       ctndSale1.supply,

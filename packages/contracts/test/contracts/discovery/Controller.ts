@@ -44,7 +44,8 @@ describe("Controller", () => {
     staking = await new Staking__factory(owner).deploy(citizend.address);
     projectToken = await new MockERC20__factory(owner).deploy(
       "ProjectToken",
-      "ProjectToken"
+      "ProjectToken",
+      18
     );
 
     controller = await new Controller__factory(owner).deploy(

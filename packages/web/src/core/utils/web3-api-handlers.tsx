@@ -23,8 +23,7 @@ export function onBlockchainReject(error: any) {
     return;
   }
 
-  toast.error(`
-    Unfortunately, your transaction failed to be written to the blockchain.
+  toast.error(`Unfortunately, your transaction failed to be written to the blockchain.
     This is usually because of network congestion.
     Please try again.
   `);

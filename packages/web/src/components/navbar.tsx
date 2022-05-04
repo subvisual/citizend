@@ -38,6 +38,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   padding: 1.5rem var(--container-padding);
+  pointer-events: none;
   position: relative;
   z-index: 10;
 
@@ -65,6 +66,7 @@ const MenuWrapper = styled(Text).attrs({
   noMargin: true,
   variant: 'label'
 })`
+  pointer-events: all;
   position: relative;
 `;
 

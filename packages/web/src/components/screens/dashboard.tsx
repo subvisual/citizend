@@ -68,8 +68,8 @@ export function DashboardScreen() {
         <ProjectInfoCard
           contributions={contributions}
           myContribution={formatCurrency(balance, currencyConfig.aUsd)}
-          price={formatCurrency(price, currencyConfig.usd)}
-          raised={formatCompactNumber(raised, currencyConfig.usd)}
+          price={formatCurrency(price, currencyConfig.aUsd)}
+          raised={formatCompactNumber(raised, currencyConfig.aUsd)}
           vestingStart={formatDate(vestingStart)}
         />
 

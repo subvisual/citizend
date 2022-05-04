@@ -29,6 +29,7 @@ const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 
   ${media.min.md`
     flex-direction: row;

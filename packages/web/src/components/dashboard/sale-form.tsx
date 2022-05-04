@@ -114,7 +114,7 @@ export function SaleForm(props: Props) {
   return (
     <Wrapper>
       {disabled && (
-        <Text as={'h4'}>
+        <Text as={'h4'} style={{ position: 'relative' }}>
           {'Please '}
           <Link href={kycUrl}>{'verify your ID'}</Link>
           {

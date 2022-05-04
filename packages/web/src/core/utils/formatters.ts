@@ -8,9 +8,11 @@ import { NumericValue, roundDown, roundUp } from './math';
 import BigNumber from 'bignumber.js';
 import dropWhile from 'lodash/dropWhile';
 import format from 'date-fns/format';
+import formatTz from 'date-fns-tz/format';
 import parseISO from 'date-fns/parseISO';
 import size from 'lodash/size';
 import takeWhile from 'lodash/takeWhile';
+import utcToZonedTime from 'date-fns-tz/utcToZonedTime';
 
 /**
  * `locale` constant.
@@ -238,8 +240,22 @@ export function formatDate(date: string, options?: { hideHours: boolean }) {
     return '';
   }
 
-  return format(
-    parseISO(date),
-    hideHours ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm OOOO'
+  console.log("timezones: ",
+    format(
+      parseISO(date),
+      hideHours ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm OOOO'
+    ),
+   formatTz(
+      utcToZonedTime(date, 'UTC'),
+      hideHours ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm OOOO',
+      { timeZone: 'UTC' }
+    )
   );
+
+
+  return formatTz(
+      utcToZonedTime(date, 'UTC'),
+      hideHours ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm OOOO',
+      { timeZone: 'UTC' }
+    );
 }

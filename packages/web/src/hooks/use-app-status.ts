@@ -5,12 +5,14 @@
 import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { useContracts } from 'src/context/contracts';
+import React from 'react';
 import differenceInSeconds from 'date-fns/differenceInSeconds';
 import formatISO from 'date-fns/formatISO';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import isAfter from 'date-fns/isAfter';
 import isBefore from 'date-fns/isBefore';
 import isDate from 'date-fns/isDate';
+import { toast } from 'react-toastify';
 
 /**
  * App state.
@@ -82,9 +84,13 @@ export function useAppStatus() {
   const [status, setStatus] = useState<AppStatus | Record<string, never>>({});
   const contracts = useContracts();
   const getStatus = useCallback(async () => {
+    console.log('getStatus');
+
     if (!contracts?.sale1 || !contracts.vesting) {
       return;
     }
+
+    console.log('getStatus with contracts');
 
     try {
       const currentDate = new Date().getTime();
@@ -129,13 +135,26 @@ export function useAppStatus() {
 
       handleSetStatus('SOON');
     } catch (error) {
-      // TODO: Handle error
+      toast.error(`Blockchain Error
+          \`${error?.message}\``);
+
+      setStatus({
+        saleEnd: "2022-05-06T11:54:45",
+        saleStart: "2022-04-29T11:54:45",
+        state: "VESTING",
+        vestingStart: "2022-05-01T12:00:00"
+      });
+
+      return;
     }
   }, [contracts]);
 
   useEffect(() => {
     getStatus();
   }, [getStatus]);
+
+  console.log("status: ", status);
+
 
   useReloadOnTime(status.saleStart);
   useReloadOnTime(status.saleEnd);

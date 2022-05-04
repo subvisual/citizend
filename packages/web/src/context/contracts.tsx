@@ -98,6 +98,7 @@ export function ContractsProvider({ children }: Props) {
 
     try {
       setContracts(initializeContracts(library));
+      window.xxx = initializeContracts(library);
     } catch (error) {
       throw new Error(`
         Contracts Schema for '${contractsFolder}' couldn't be loaded or were wrongly generated.

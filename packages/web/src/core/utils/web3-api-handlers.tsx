@@ -9,6 +9,9 @@ import { toast } from 'react-toastify';
  */
 
 export function onBlockchainReject(error: any) {
+  // eslint-disable-next-line no-console
+  console.log("error: ", error);
+
   if (error?.code === 4001) {
     return;
   }

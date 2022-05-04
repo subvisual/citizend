@@ -137,6 +137,10 @@ export function useAppStatus() {
     getStatus();
   }, [getStatus]);
 
+  // eslint-disable-next-line no-console
+  console.log("appStatus: ", status);
+
+
   useReloadOnTime(status.saleStart);
   useReloadOnTime(status.saleEnd);
   useReloadOnTime(status.vestingStart);

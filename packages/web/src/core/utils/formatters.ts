@@ -6,13 +6,19 @@
 
 import { NumericValue, roundDown, roundUp } from './math';
 import BigNumber from 'bignumber.js';
+import dayjs from 'dayjs';
 import dropWhile from 'lodash/dropWhile';
-import format from 'date-fns/format';
-import formatTz from 'date-fns-tz/format';
-import parseISO from 'date-fns/parseISO';
 import size from 'lodash/size';
 import takeWhile from 'lodash/takeWhile';
-import utcToZonedTime from 'date-fns-tz/utcToZonedTime';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+
+/**
+ * Register `dayjs` plugins.
+ */
+
+dayjs.extend(timezone);
+dayjs.extend(utc);
 
 /**
  * `locale` constant.
@@ -234,28 +240,11 @@ export function formatCompactNumber(
  */
 
 export function formatDate(date: string, options?: { hideHours: boolean }) {
-  const { hideHours } = options ?? {};
-
   if (!date) {
     return '';
   }
 
-  console.log("timezones: ",
-    format(
-      parseISO(date),
-      hideHours ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm OOOO'
-    ),
-   formatTz(
-      utcToZonedTime(date, 'UTC'),
-      hideHours ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm OOOO',
-      { timeZone: 'UTC' }
-    )
-  );
-
-
-  return formatTz(
-      utcToZonedTime(date, 'UTC'),
-      hideHours ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm OOOO',
-      { timeZone: 'UTC' }
-    );
+  return dayjs(date)
+    .utc()
+    .format(options?.hideHours ? 'DD/MM/YYYY' : 'DD/MM/YYYY hh:mm Z');
 }

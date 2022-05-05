@@ -47,7 +47,7 @@ export const chainConfigs = {
   },
   '31337': {
     blockExplorerUrls: ['http://127.0.0.1:8545'],
-    chainId: utils.hexValue(595),
+    chainId: utils.hexValue(31337),
     chainName: 'Localhost',
     nativeCurrency: {
       decimals: 12,
@@ -63,7 +63,6 @@ export const chainConfigs = {
  */
 
 export const chainConfig = chainConfigs?.[supportedChain];
-console.log("chainConfig: ", chainConfig);
 
 
 /**

@@ -63,11 +63,11 @@ export function useContracts(): ContractsContext {
 
 function initializeContracts(library: Web3Provider): ContractsContext {
   const contractsConfig = {
-    aUsd: require(`contracts/${contractsFolder}/aUSD.json`),
-    citizend: require(`contracts/${contractsFolder}/Citizend.json`),
-    fractal: require(`contracts/${contractsFolder}/FractalRegistry.json`),
-    sale1: require(`contracts/${contractsFolder}/Sale1.json`),
-    vesting: require(`contracts/${contractsFolder}/Vesting.json`)
+    aUsd: require(`@discovery-dao/deployments/deployments/${contractsFolder}/aUSD.json`),
+    citizend: require(`@discovery-dao/deployments/deployments/${contractsFolder}/Citizend.json`),
+    fractal: require(`@discovery-dao/deployments/deployments/${contractsFolder}/FractalRegistry.json`),
+    sale1: require(`@discovery-dao/deployments/deployments/${contractsFolder}/Sale1.json`),
+    vesting: require(`@discovery-dao/deployments/deployments/${contractsFolder}/Vesting.json`)
   };
 
   if (Object.values(contractsConfig).every(({ address }) => !address)) {

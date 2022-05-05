@@ -12,7 +12,6 @@
     "moduleResolution": "node",
     "noEmit": true,
     "paths": {
-      "contracts/*": ["./contracts/*"],
       "public/*": ["./public/*"],
       "src/*": ["./src/*"]
     },

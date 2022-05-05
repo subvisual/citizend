@@ -30,6 +30,9 @@ const config = {
     outDir: "src/types",
     target: "ethers-v5",
   },
+  paths: {
+    deployments: "../deployments/deployments",
+  },
 };
 
 export default config;

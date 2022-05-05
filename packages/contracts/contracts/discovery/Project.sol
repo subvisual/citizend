@@ -58,8 +58,8 @@ contract Project is IProject, ERC165 {
         uint256 stakersPoolSupply = saleSupply / 2;
         uint256 peoplesPoolSupply = saleSupply - stakersPoolSupply;
 
-        stakersPool = address(new StakersPool(stakersPoolSupply));
-        peoplesPool = address(new PeoplesPool(peoplesPoolSupply));
+        stakersPool = address(new StakersPool(stakersPoolSupply, controller));
+        peoplesPool = address(new PeoplesPool(peoplesPoolSupply, controller));
     }
 
     //

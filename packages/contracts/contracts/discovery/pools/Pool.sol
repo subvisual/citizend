@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.8.12;
 
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 import {IPool} from "../interfaces/IPool.sol";
 import {RisingTide} from "../../RisingTide/RisingTide.sol";
 
-import "hardhat/console.sol";
+import {Controller} from "../Controller.sol";
 
 /**
  * TODO users should be able to `buy` into the pool, as long as they meet the conditions
@@ -66,7 +68,12 @@ abstract contract Pool is IPool, RisingTide {
         investorBalances[_investor] += _amount;
         totalUncappedAllocations += _amount;
 
-        require(IERC20(paymentToken).balanceOf(address(this)) >= investedAmount + _amount);
+
+        require(
+            IERC20(Controller(controller).paymentToken()).balanceOf(
+                address(this)
+            ) >= investedAmount + _amount
+        );
     }
 
     function setIndividualCap(uint256 _cap) external {

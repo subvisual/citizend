@@ -5,7 +5,7 @@ pragma solidity >=0.7.0 <0.9.0;
 /// @author Antoni Dikov and Shelby Doolittle
 contract FractalRegistry {
     address root;
-    mapping(address => bool) delegates;
+    mapping(address => bool) public delegates;
 
     mapping(address => bytes32) fractalIdForAddress;
     mapping(string => mapping(bytes32 => bool)) userLists;

@@ -2,10 +2,9 @@ import type { DeployFunction } from "hardhat-deploy/types";
 import { ethers } from "hardhat";
 
 import { acalaDeploy } from "../../src/acala";
+import { getNetworkConfig } from "../../src/deployConfigs";
 
 const { parseUnits } = ethers.utils;
-
-import { getNetworkConfig } from "../../src/deployConfigs";
 
 const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();

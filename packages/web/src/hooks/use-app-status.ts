@@ -84,6 +84,8 @@ function normalizeTime(unixTime: BigNumber) {
 
 export function useAppStatus() {
   const [status, setStatus] = useState<AppStatus | Record<string, never>>({});
+  const [requestStatus, setRequestStatus] = useState('idle');
+  const [error, setError] = useState<any>();
   const contracts = useContracts();
   const getStatus = useCallback(async () => {
     if (!contracts?.sale1 || !contracts.vesting) {
@@ -137,12 +139,30 @@ export function useAppStatus() {
   }, [contracts]);
 
   useEffect(() => {
-    getStatus();
-  }, [getStatus]);
+    if (requestStatus !== 'idle') {
+      return;
+    }
+
+    setRequestStatus('loading');
+
+    getStatus()
+      .then((error) => {
+        setRequestStatus('success');
+      })
+      .catch((error) => {
+        setRequestStatus('error');
+      });
+  }, [getStatus, requestStatus, setRequestStatus]);
+
+  console.log("requestStatus: ", requestStatus);
 
   useReloadOnTime(status.saleStart);
   useReloadOnTime(status.saleEnd);
   useReloadOnTime(status.vestingStart);
 
-  return status;
+  return {
+    ...status,
+    error,
+    isLoading: requestStatus === 'loading'
+  };
 }

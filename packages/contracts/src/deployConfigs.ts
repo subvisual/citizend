@@ -33,16 +33,16 @@ async function networkConfigs(chainId: number): Promise<Config> {
         12
       );
       const now = Math.floor(date.getTime() / 1000);
-      const oneDay = 60 * 60 * 24;
+      const thirtyMinutes = 30 * 60;
 
       return {
         ctndSale1: {
           start: now,
-          end: now + oneDay,
+          end: now + thirtyMinutes/15,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: beginningOfNextMonth.getTime() / 1000,
+          start: now + thirtyMinutes/10,
         },
         ctndSale2: {
           start: now + 60 * 60 * 24 * 2,

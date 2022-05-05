@@ -6,19 +6,10 @@
 
 import { NumericValue, roundDown, roundUp } from './math';
 import BigNumber from 'bignumber.js';
-import dayjs from 'dayjs';
+import dayjs from 'src/core/utils/dayjs';
 import dropWhile from 'lodash/dropWhile';
 import size from 'lodash/size';
 import takeWhile from 'lodash/takeWhile';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
-
-/**
- * Register `dayjs` plugins.
- */
-
-dayjs.extend(timezone);
-dayjs.extend(utc);
 
 /**
  * `locale` constant.
@@ -239,12 +230,13 @@ export function formatCompactNumber(
  * Export `formatDate`.
  */
 
-export function formatDate(date: string, options?: { hideHours: boolean }) {
+export function formatDate(date: number, options?: { hideHours: boolean }) {
   if (!date) {
     return '';
   }
 
-  return dayjs(date)
+  return dayjs
+    .unix(date)
     .utc()
     .format(options?.hideHours ? 'DD/MM/YYYY' : 'DD/MM/YYYY hh:mm Z');
 }

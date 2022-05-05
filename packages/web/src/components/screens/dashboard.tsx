@@ -23,6 +23,7 @@ import { useAppStatus } from 'src/hooks/use-app-status';
 import { useIsKYCApproved } from 'src/hooks/use-kyc-status';
 import { useWeb3React } from '@web3-react/core';
 import React, { useState } from 'react';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 
 /**
@@ -73,9 +74,9 @@ export function DashboardScreen() {
           vestingStart={formatDate(vestingStart)}
         />
 
-        {state === 'COUNTDOWN' && !!vestingStart && (
+        {state === 'COUNTDOWN' && !isNaN(vestingStart) && (
           <Countdown
-            date={vestingStart}
+            date={dayjs.unix(vestingStart).toISOString()}
             title={'Vesting period starting in:'}
           />
         )}

@@ -64,7 +64,6 @@ export const chainConfigs = {
 
 export const chainConfig = chainConfigs?.[supportedChain];
 
-
 /**
  * `metamask` connector.
  */

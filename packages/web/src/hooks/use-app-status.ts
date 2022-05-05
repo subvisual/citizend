@@ -3,24 +3,10 @@
  */
 
 import { BigNumber } from 'ethers';
+import { toast } from 'react-toastify';
 import { useCallback, useEffect, useState } from 'react';
 import { useContracts } from 'src/context/contracts';
-// import formatISO from 'date-fns/formatISO';
-// import fromUnixTime from 'date-fns/fromUnixTime';
-// import isAfter from 'date-fns/isAfter';
-// import isBefore from 'date-fns/isBefore';
-// import isDate from 'date-fns/isDate';
-import { toast } from 'react-toastify';
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
-
-/**
- * Register `dayjs` plugins.
- */
-
-dayjs.extend(timezone);
-dayjs.extend(utc);
+import dayjs from 'src/core/utils/dayjs';
 
 /**
  * App state.
@@ -45,49 +31,51 @@ type State = typeof appState[keyof typeof appState];
 
 export type AppStatus = {
   state: State;
-  saleStart: string;
-  saleEnd: string;
-  vestingStart: string;
+  saleStart: number;
+  saleEnd: number;
+  vestingStart: number;
 };
+
+
+/**
+ * `useReloadOnTime` hook.
+ */
+
+function useReloadOnTime(timestamp: number) {
+  useEffect(() => {
+    if (!timestamp) {
+      return;
+    }
+
+    const limitDate = dayjs.unix(timestamp);
+
+    if (!limitDate.isValid()) {
+      return;
+    }
+
+    const remainingTime = limitDate.diff(dayjs(), 'seconds');
+
+    // Is already in the past.
+    if (remainingTime <= 0) {
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      window.location.reload();
+    }, remainingTime);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [timestamp]);
+}
 
 /**
  * Normalize unix time.
  */
 
 function normalizeTime(unixTime: BigNumber) {
-  return dayjs.unix(unixTime.toNumber()).toISOString();
-}
-
-/**
- * `useReloadOnTime` hook.
- */
-
-function useReloadOnTime(timestamp: string) {
-  useEffect(() => {
-    if (!timestamp) {
-      return;
-    }
-
-    const limitDate = dayjs(timestamp).utc();
-
-    console.log("limitDate: ", limitDate.toISOString());
-
-
-    if (!limitDate.isValid() || limitDate.isBefore(dayjs.utc())) {
-      return;
-    }
-
-    console.log("Timezone: ", dayjs.tz.guess());
-
-
-  //   const timeout = setTimeout(() => {
-  //     window.location.reload();
-  //   }, Math.abs(Number(differenceInSeconds(new Date(), dateTimestamp)) * 1000));
-
-  //   return () => {
-  //     clearTimeout(timeout);
-  //   };
-  }, [timestamp]);
+  return dayjs.unix(unixTime.toNumber());
 }
 
 /**
@@ -103,50 +91,48 @@ export function useAppStatus() {
     }
 
     try {
-      const currentDate = new Date().getTime();
       const saleStart = await contracts.sale1.start();
       const saleEnd = await contracts.sale1.end();
       const vestingStart = await contracts.vesting.startTime();
       const saleStartDate = normalizeTime(saleStart);
-      console.log("saleStartDate: ", saleStartDate, dayjs(saleStartDate).utc().toISOString());
       const saleEndDate = normalizeTime(saleEnd);
       const vestingStartDate = normalizeTime(vestingStart);
       const handleSetStatus = (state: State) => {
         setStatus({
-          saleEnd: dayjs(saleEndDate).utc().toISOString(),
-          saleStart: dayjs(saleStartDate).utc().toISOString(),
+          saleEnd: saleEnd.toNumber(),
+          saleStart: saleStart.toNumber(),
           state,
-          vestingStart: dayjs(vestingStartDate).utc().toISOString()
+          vestingStart: vestingStart.toNumber()
         });
       };
 
-      // if (isAfter(currentDate, vestingStartDate)) {
-      //   handleSetStatus('VESTING');
+      if (dayjs().isAfter(vestingStartDate)) {
+        handleSetStatus('VESTING');
 
-      //   return;
-      // }
+        return;
+      }
 
-      // if (
-      //   isAfter(currentDate, saleEndDate) &&
-      //   isBefore(currentDate, vestingStartDate)
-      // ) {
-      //   handleSetStatus('COUNTDOWN');
+      if (
+        dayjs().isAfter(saleEndDate) &&
+        dayjs().isBefore(vestingStartDate)
+      ) {
+        handleSetStatus('COUNTDOWN');
 
-      //   return;
-      // }
+        return;
+      }
 
-      // if (
-      //   isAfter(currentDate, saleStartDate) &&
-      //   isBefore(currentDate, saleEndDate)
-      // ) {
-      //   handleSetStatus('SALE');
+      if (
+        dayjs().isAfter(saleStartDate) &&
+        dayjs().isBefore(saleEndDate)
+      ) {
+        handleSetStatus('SALE');
 
-      //   return;
-      // }
+        return;
+      }
 
       handleSetStatus('SOON');
     } catch (error) {
-      toast.error(`A blockchain error occurred.\n${error}`, );
+      toast.error(`A blockchain error occurred.\n${error}`);
     }
   }, [contracts]);
 
@@ -154,10 +140,9 @@ export function useAppStatus() {
     getStatus();
   }, [getStatus]);
 
-
   useReloadOnTime(status.saleStart);
-  // useReloadOnTime(status.saleEnd);
-  // useReloadOnTime(status.vestingStart);
+  useReloadOnTime(status.saleEnd);
+  useReloadOnTime(status.vestingStart);
 
   return status;
 }

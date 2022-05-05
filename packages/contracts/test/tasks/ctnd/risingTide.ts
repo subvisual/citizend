@@ -68,14 +68,14 @@ describe("ctnd:risingTide task", () => {
 
     const smallExample = [5000];
 
-    it.skip("correctly computes the Gitbook example", async () => {
+    it("correctly computes the Gitbook example", async () => {
       await applyInvestments(gitbookExample);
 
       const cap = await computeRisingTideCap(sale.address, 0, hre);
       expect(cap).to.equal(54285);
     });
 
-    it.skip("finishes immediately for small investor lists", async () => {
+    it("finishes immediately for small investor lists", async () => {
       await applyInvestments(smallExample);
 
       const cap = await computeRisingTideCap(sale.address, 0, hre);
@@ -88,15 +88,17 @@ describe("ctnd:risingTide task", () => {
       const signers = await ethers.getSigners();
       const signer = signers[i];
 
-      await aUSD.connect(signer).mint(signer.address, parseUnits("1000"));
+      const decimals = await aUSD.decimals();
+      await aUSD
+        .connect(signer)
+        .mint(signer.address, parseUnits("1000", decimals));
       await aUSD.connect(signer).approve(sale.address, MaxUint256);
       await registry.addUserAddress(
         signer.address,
         ethers.utils.randomBytes(32)
       );
 
-      const paymentAmount = await sale.tokenToPaymentToken(amount);
-      await sale.connect(signer).buy(paymentAmount);
+      await sale.connect(signer).buy(amount);
     }
   }
 });

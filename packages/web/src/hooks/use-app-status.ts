@@ -13,6 +13,8 @@ import isAfter from 'date-fns/isAfter';
 import isBefore from 'date-fns/isBefore';
 import isDate from 'date-fns/isDate';
 import { toast } from 'react-toastify';
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
+import { timeStamp } from 'console';
 
 /**
  * App state.
@@ -55,25 +57,25 @@ function normalizeTime(unixTime: BigNumber) {
  */
 
 function useReloadOnTime(timestamp: string) {
-  useEffect(() => {
-    if (!timestamp) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (!timestamp) {
+  //     return;
+  //   }
 
-    const dateTimestamp = new Date(timestamp);
+  //   const dateTimestamp = new Date(timestamp);
 
-    if (!isDate(dateTimestamp) || isAfter(new Date(), dateTimestamp)) {
-      return;
-    }
+  //   if (!isDate(dateTimestamp) || isAfter(new Date(), dateTimestamp)) {
+  //     return;
+  //   }
 
-    const timeout = setTimeout(() => {
-      window.location.reload();
-    }, Math.abs(Number(differenceInSeconds(new Date(), dateTimestamp)) * 1000));
+  //   const timeout = setTimeout(() => {
+  //     window.location.reload();
+  //   }, Math.abs(Number(differenceInSeconds(new Date(), dateTimestamp)) * 1000));
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [timestamp]);
+  //   return () => {
+  //     clearTimeout(timeout);
+  //   };
+  // }, [timestamp]);
 }
 
 /**
@@ -135,17 +137,7 @@ export function useAppStatus() {
 
       handleSetStatus('SOON');
     } catch (error) {
-      toast.error(`Blockchain Error
-          \`${error?.message}\``);
-
-      setStatus({
-        saleEnd: "2022-05-06T11:54:45",
-        saleStart: "2022-04-29T11:54:45",
-        state: "VESTING",
-        vestingStart: "2022-05-01T12:00:00"
-      });
-
-      return;
+      toast.error(`A blockchain error occurred.`);
     }
   }, [contracts]);
 
@@ -156,8 +148,8 @@ export function useAppStatus() {
   console.log("status: ", status);
 
 
-  useReloadOnTime(status.saleStart);
-  useReloadOnTime(status.saleEnd);
+  // useReloadOnTime(status.saleStart);
+  // useReloadOnTime(status.saleEnd);
   useReloadOnTime(status.vestingStart);
 
   return status;

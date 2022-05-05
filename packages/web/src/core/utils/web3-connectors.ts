@@ -10,7 +10,7 @@ import { utils } from 'ethers';
  * `supportedChain` environment variable.
  */
 
-const supportedChain: string = process.env.NEXT_PUBLIC_CHAIN_ID || '31337';
+const supportedChain: string = process.env.NEXT_PUBLIC_CHAIN_ID || '595';
 
 /**
  * Export `supportedChainIds`.

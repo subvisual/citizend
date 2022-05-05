@@ -39,17 +39,13 @@ async function networkConfigs(chainId: number): Promise<Config> {
       return {
         ctndSale1: {
           start: now,
-          end: now + ONE_DAY,
+          end: now + THIRTY_MIN,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: nextMonth,
+          start: now + THIRTY_MIN,
         },
-        ctndSale2: {
-          start: now + ONE_DAY * 2,
-          end: now + ONE_DAY * 3,
-          supply: parseUnits("15"),
-        },
+        ctndSale2: undefined,
         registry: {
           root: owner.address,
         },
@@ -123,4 +119,3 @@ function beginningOfNextMonthTimestamp(): number {
 }
 
 const THIRTY_MIN = 30 * 60;
-const ONE_DAY = 60 * 60 * 24;

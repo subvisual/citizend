@@ -55,6 +55,9 @@ contract Controller is IController, ERC165, AccessControl {
     // CTND token contract
     address public token;
 
+    // aUSD token contract
+    address public paymentToken;
+
     constructor(
         address _registry,
         address _staking,
@@ -73,6 +76,14 @@ contract Controller is IController, ERC165, AccessControl {
     //
     // IController
     //
+
+    /// @inheritdoc IController
+    function setPaymentToken(address _paymentToken)
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        paymentToken = _paymentToken;
+    }
 
     /// @inheritdoc IController
     function registerProject(
@@ -127,7 +138,7 @@ contract Controller is IController, ERC165, AccessControl {
     ) external {
         require(canVote(msg.sender), "user can't vote");
 
-        Batch batch = getBatchForProject(_project);
+        address batch = getBatchForProject(_project);
 
         IBatch(batch).vote(_project);
 
@@ -155,8 +166,7 @@ contract Controller is IController, ERC165, AccessControl {
             _peoplesPoolAmount > 0 &&
             canInvestInPeoplesPool(_project, msg.sender)
         ) {
-            // TODO what is paymentToken?
-            IERC20(_paymentToken).safeTransferFrom(
+            IERC20(paymentToken).safeTransferFrom(
                 msg.sender,
                 peoplesPool,
                 _peoplesPoolAmount
@@ -166,8 +176,7 @@ contract Controller is IController, ERC165, AccessControl {
         }
 
         if (_stakersPoolAmount > 0 && canInvestInStakersPool(msg.sender)) {
-            // TODO what is paymentToken?
-            IERC20(_paymentToken).safeTransferFrom(
+            IERC20(paymentToken).safeTransferFrom(
                 msg.sender,
                 stakersPool,
                 _stakersPoolAmount
@@ -189,7 +198,7 @@ contract Controller is IController, ERC165, AccessControl {
 
     /// @inheritdoc IController
     function canInvestInStakersPool(address _user)
-        external
+        public
         view
         override(IController)
         returns (bool)
@@ -202,7 +211,7 @@ contract Controller is IController, ERC165, AccessControl {
 
     /// @inheritdoc IController
     function canInvestInPeoplesPool(address _project, address _user)
-        external
+        public
         view
         override(IController)
         returns (bool)
@@ -216,7 +225,7 @@ contract Controller is IController, ERC165, AccessControl {
     }
 
     function canVote(address _user)
-        external
+        public
         view
         override(IController)
         returns (bool)

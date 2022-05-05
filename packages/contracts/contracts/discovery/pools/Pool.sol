@@ -8,7 +8,7 @@ import {IPool} from "../interfaces/IPool.sol";
 import {IProject} from "../interfaces/IProject.sol";
 import {RisingTide} from "../../RisingTide/RisingTide.sol";
 
-import "hardhat/console.sol";
+import {Controller} from "../Controller.sol";
 
 /**
  * TODO users should be able to `buy` into the pool, as long as they meet the conditions
@@ -111,8 +111,9 @@ abstract contract Pool is IPool, RisingTide {
         );
 
         require(
-            IERC20(paymentToken).balanceOf(address(this)) >=
-                investedAmount + _amount
+            IERC20(Controller(controller).paymentToken()).balanceOf(
+                address(this)
+            ) >= investedAmount + _amount
         );
     }
 

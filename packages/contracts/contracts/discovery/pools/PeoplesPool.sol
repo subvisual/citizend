@@ -6,8 +6,8 @@ import {IBatch} from "../interfaces/IBatch.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract PeoplesPool is Pool {
-    constructor(uint256 _saleSupply, address _investmentToken)
-        Pool(_saleSupply, _investmentToken)
+    constructor(uint256 _saleSupply, address _investmentToken, address _controller)
+        Pool(_saleSupply, _investmentToken, _controller)
     {}
 
     function invest(

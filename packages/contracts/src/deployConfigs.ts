@@ -45,7 +45,11 @@ async function networkConfigs(chainId: number): Promise<Config> {
         ctndVesting: {
           start: now + THIRTY_MIN,
         },
-        ctndSale2: undefined,
+        ctndSale2: {
+          start: now,
+          end: now + THIRTY_MIN,
+          supply: parseUnits("10"),
+        },
         registry: {
           root: owner.address,
         },

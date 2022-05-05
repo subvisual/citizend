@@ -195,6 +195,7 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         public
         onlyRole(DEFAULT_ADMIN_ROLE)
     {
+        require(startTime == 0, "start time already set");
         startTime = _startTime;
     }
 

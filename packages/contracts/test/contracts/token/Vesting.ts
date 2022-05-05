@@ -70,20 +70,26 @@ describe("Vesting", () => {
       3,
       citizend.address,
       [sale.address],
-      vestingStart,
       10000,
       await acalaDeployParams()
     );
+    vesting.setStartTime(vestingStart);
     await citizend.transfer(vesting.address, 1000);
   });
 
   describe("constructor", () => {
     it("sets the correct attributes", async () => {
-      expect(await vesting.startTime()).to.eq(vestingStart);
       expect(await vesting.publicSaleVestingMonths()).to.eq(3);
       expect(await vesting.publicSaleCliffMonths()).to.eq(0);
       expect(await vesting.token()).to.eq(citizend.address);
       expect(await vesting.sales(0)).to.eq(sale.address);
+    });
+  });
+
+  describe("setStartTime", () => {
+    it("sets the start time", async () => {
+      await vesting.setStartTime(vestingStart);
+      expect(await vesting.startTime()).to.eq(vestingStart);
     });
   });
 
@@ -110,7 +116,7 @@ describe("Vesting", () => {
   describe("totalAllocated", () => {
     it("sums all sales, public and private", async () => {
       await sale.test_addAllocation(alice.address, 1);
-      await vesting.createPrivateSaleVest(alice.address, 2, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 2, 0, 36, 123);
 
       expect(await vesting.totalAllocated(alice.address)).to.equal(3);
     });
@@ -124,7 +130,7 @@ describe("Vesting", () => {
     });
 
     it("is zero after a private vest is created", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 1, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 1, 0, 36, 123);
 
       expect(await vesting.totalAllocatedPublic(alice.address)).to.equal(0);
     });
@@ -136,8 +142,9 @@ describe("Vesting", () => {
 
       expect(await vesting.totalAllocatedPrivate(alice.address)).to.equal(0);
     });
+
     it("is non-zero after a private vest is created", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 1, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 1, 0, 36, 123);
 
       expect(await vesting.totalAllocatedPrivate(alice.address)).to.equal(1);
     });
@@ -161,7 +168,7 @@ describe("Vesting", () => {
     });
 
     it("does not include private sale amounts", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 300, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123);
 
       await goToTime(vestingStart - oneDay);
 
@@ -171,7 +178,7 @@ describe("Vesting", () => {
 
   describe("claimablePrivateSale", () => {
     it("allows me to claim 0 tokens before the cliff starts", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 300, 3, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 3, 36, 123);
 
       await goToTime(vestingStart - oneDay);
 
@@ -179,7 +186,7 @@ describe("Vesting", () => {
     });
 
     it("is zero during the cliff period", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 300, 3, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 3, 36, 123);
 
       await goToTime(vestingStart);
 
@@ -187,7 +194,7 @@ describe("Vesting", () => {
     });
 
     it("allows me to claim some amount tokens after the full cliff period", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 300, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123);
 
       await goToTime(vestingStart);
 
@@ -195,7 +202,7 @@ describe("Vesting", () => {
     });
 
     it("allows me to claim 100% after the full cliff and vesting period", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 300, 3, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 3, 36, 123);
       await goToTime(vestingStart + oneDay * (3 * 30 + 36 * 30));
 
       expect(await vesting.claimable(alice.address)).to.equal(300);
@@ -203,7 +210,7 @@ describe("Vesting", () => {
 
     it("does not include public sale amounts", async () => {
       await sale.test_addAllocation(alice.address, 300);
-      await vesting.createPrivateSaleVest(alice.address, 300, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123);
 
       await goToTime(vestingStart);
 
@@ -213,11 +220,29 @@ describe("Vesting", () => {
 
   describe("createPrivateSaleVest", () => {
     it("does not create vestings for used nonces", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 300, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123);
 
       await expect(
-        vesting.createPrivateSaleVest(alice.address, 300, 0, 123)
+        vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123)
       ).to.be.revertedWith("nonce already used");
+    });
+
+    it("does not create vestings for the same address with a different cliff", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123);
+
+      await expect(
+        vesting.createPrivateSaleVest(alice.address, 300, 2, 36, 124)
+      ).to.be.revertedWith("vesting already exists with different cliff");
+    });
+
+    it("does not create vestings for the same address with a different vesting period", async () => {
+      await vesting.createPrivateSaleVest(alice.address, 300, 0, 0, 123);
+
+      await expect(
+        vesting.createPrivateSaleVest(alice.address, 300, 0, 1, 124)
+      ).to.be.revertedWith(
+        "vesting already exists with different vesting period"
+      );
     });
   });
 
@@ -231,7 +256,7 @@ describe("Vesting", () => {
     });
 
     it("includes private sales", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 300, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123);
 
       await goToTime(vestingStart);
 
@@ -240,7 +265,7 @@ describe("Vesting", () => {
 
     it("sums public and private sales", async () => {
       await sale.test_addAllocation(alice.address, 300);
-      await vesting.createPrivateSaleVest(alice.address, 300, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123);
 
       await goToTime(vestingStart);
 
@@ -259,7 +284,7 @@ describe("Vesting", () => {
     });
 
     it("claims private sale claimable amounts", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 300, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123);
       await goToTime(vestingStart);
 
       await vesting.claim(alice.address);

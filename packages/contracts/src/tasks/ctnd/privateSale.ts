@@ -13,6 +13,7 @@ interface Row {
   address: string;
   amount: string;
   cliff: number;
+  vestingMonths: number;
   nonce: number;
 }
 
@@ -27,13 +28,19 @@ async function importCSV(hre: HardhatRuntimeEnvironment, file: string) {
   const rows = await readCSV(file);
 
   for (let current = 0; current < rows.length; current += 1) {
-    const { address, amount, cliff, nonce } = rows[current];
+    const { address, amount, cliff, vestingMonths, nonce } = rows[current];
 
     const amountInCents = parseUnits(amount);
 
     // TODO check nonce
     if (true) {
-      await vesting.createPrivateSaleVest(address, amountInCents, cliff, nonce);
+      await vesting.createPrivateSaleVest(
+        address,
+        amountInCents,
+        cliff,
+        vestingMonths,
+        nonce
+      );
     }
   }
 }
@@ -50,6 +57,7 @@ function readCSV(file: string): Promise<Row[]> {
           address: row.Address,
           amount: row.Amount,
           cliff: row.Cliff,
+          vestingMonths: row.Vesting,
           nonce: row.Nonce,
         })
       )

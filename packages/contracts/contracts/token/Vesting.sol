@@ -183,6 +183,7 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
             vesting.amount == 0 || vesting.vestingMonths == vestingMonths,
             "vesting already exists with different vesting period"
         );
+        require(vestingMonths >= publicSaleVestingMonths, "vesting too short");
 
         vesting.cliffMonths = cliffMonths;
         vesting.vestingMonths = vestingMonths;

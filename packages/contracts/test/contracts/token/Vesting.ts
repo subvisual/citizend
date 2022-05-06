@@ -88,6 +88,14 @@ describe("Vesting", () => {
 
   describe("setStartTime", () => {
     it("sets the start time", async () => {
+      vesting = await new Vesting__factory(owner).deploy(
+        3,
+        citizend.address,
+        [sale.address],
+        10000,
+        await acalaDeployParams()
+      );
+
       await vesting.setStartTime(vestingStart);
       expect(await vesting.startTime()).to.eq(vestingStart);
     });
@@ -236,13 +244,19 @@ describe("Vesting", () => {
     });
 
     it("does not create vestings for the same address with a different vesting period", async () => {
-      await vesting.createPrivateSaleVest(alice.address, 300, 0, 0, 123);
+      await vesting.createPrivateSaleVest(alice.address, 300, 0, 3, 123);
 
       await expect(
-        vesting.createPrivateSaleVest(alice.address, 300, 0, 1, 124)
+        vesting.createPrivateSaleVest(alice.address, 300, 0, 4, 124)
       ).to.be.revertedWith(
         "vesting already exists with different vesting period"
       );
+    });
+
+    it("does not create vestings with less vesting months than the public sale", async () => {
+      await expect(
+        vesting.createPrivateSaleVest(alice.address, 300, 0, 1, 124)
+      ).to.be.revertedWith("vesting too short");
     });
   });
 

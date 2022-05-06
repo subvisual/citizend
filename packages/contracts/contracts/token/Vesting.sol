@@ -47,8 +47,7 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     address[] public sales;
 
     uint256 public constant PRIVATE_SALE_MAX_CLIFF_MONTHS = 6;
-    bytes32 public constant PRIVATE_SELLER_ROLE =
-        keccak256("PRIVATE_SELLER_ROLE");
+    bytes32 public constant SALE_MANAGER_ROLE = keccak256("SALE_MANAGER_ROLE");
 
     event ClaimVesting(address indexed to, uint256 amount);
     event AddSale(address indexed saleContract);
@@ -64,7 +63,7 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         uint256 _privateSaleCap
     ) {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(PRIVATE_SELLER_ROLE, msg.sender);
+        _grantRole(SALE_MANAGER_ROLE, msg.sender);
 
         publicSaleVestingMonths = _publicSaleVestingMonths;
         publicSaleCliffMonths = 0;
@@ -162,7 +161,7 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     )
         external
         override(IVesting)
-        onlyRole(PRIVATE_SELLER_ROLE)
+        onlyRole(SALE_MANAGER_ROLE)
         nonReentrant
         useNonce(nonce)
     {
@@ -194,7 +193,7 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
 
     function setStartTime(uint256 _startTime)
         public
-        onlyRole(DEFAULT_ADMIN_ROLE)
+        onlyRole(SALE_MANAGER_ROLE)
     {
         require(startTime == 0, "start time already set");
         startTime = _startTime;

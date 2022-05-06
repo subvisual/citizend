@@ -26,7 +26,7 @@ async function main() {
 
   for (const { address, id } of whitelist) {
     await registry.addUserAddress(address, id);
-    await registry.addUserToList(id, "kycPlus");
+    await registry.addUserToList(id, "plus");
   }
 }
 

@@ -24,7 +24,7 @@ function bytes32(value: string): string {
  */
 
 export const ListId = bytes32('42');
-export const ListName = process.env.NEXT_PUBLIC_KYC_LIST_NAME ?? 'kycPlus';
+export const ListName = process.env.NEXT_PUBLIC_KYC_LIST_NAME ?? 'plus';
 
 /**
  * `useOwnerAction`.

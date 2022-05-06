@@ -10,7 +10,7 @@ import { utils } from 'ethers';
  * `supportedChain` environment variable.
  */
 
-const supportedChain: string = process.env.NEXT_PUBLIC_CHAIN_ID || '31337';
+const supportedChain: string = process.env.NEXT_PUBLIC_CHAIN_ID || '595';
 
 /**
  * Export `supportedChainIds`.
@@ -28,9 +28,9 @@ export const chainConfigs = {
     chainId: utils.hexValue(595),
     chainName: 'Mandala TC7',
     nativeCurrency: {
-      decimals: 18,
+      decimals: 12,
       name: 'Acala USD',
-      symbol: 'ACA'
+      symbol: 'aUSD'
     },
     rpcUrls: ['https://tc7-eth.aca-dev.network']
   },
@@ -39,7 +39,7 @@ export const chainConfigs = {
     chainId: utils.hexValue(686),
     chainName: 'Karura',
     nativeCurrency: {
-      decimals: 18,
+      decimals: 12,
       name: 'Karura USD',
       symbol: 'KAR'
     },
@@ -47,12 +47,12 @@ export const chainConfigs = {
   },
   '31337': {
     blockExplorerUrls: ['http://127.0.0.1:8545'],
-    chainId: utils.hexValue(595),
+    chainId: utils.hexValue(31337),
     chainName: 'Localhost',
     nativeCurrency: {
-      decimals: 18,
+      decimals: 12,
       name: 'Acala USD',
-      symbol: 'ACA'
+      symbol: 'aUSD'
     },
     rpcUrls: ['/']
   }

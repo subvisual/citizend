@@ -93,11 +93,9 @@ describe("ctnd:risingTide task", () => {
         .connect(signer)
         .mint(signer.address, parseUnits("1000", decimals));
       await aUSD.connect(signer).approve(sale.address, MaxUint256);
-      await registry.addUserAddress(
-        signer.address,
-        ethers.utils.randomBytes(32)
-      );
-
+      const fractalId = ethers.utils.randomBytes(32);
+      await registry.addUserAddress(signer.address, fractalId);
+      await registry.addUserToList(fractalId, "plus");
       await sale.connect(signer).buy(amount);
     }
   }

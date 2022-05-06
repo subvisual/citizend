@@ -68,7 +68,7 @@ describe("Integration", () => {
     await aUSD.connect(alice).approve(sale.address, allowance);
     await aUSD.connect(alice).approve(secondSale.address, allowance);
     await registry.addUserAddress(alice.address, formatBytes32String("id1"));
-
+    await registry.addUserToList(formatBytes32String("id1"), "plus");
     await vesting.setStartTime(ctndVesting.start);
   });
 

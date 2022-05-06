@@ -3,14 +3,11 @@
  */
 
 import { BigNumber } from 'ethers';
-import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { useAsync } from 'react-async';
+import { useCallback, useEffect } from 'react';
 import { useContracts } from 'src/context/contracts';
-import differenceInSeconds from 'date-fns/differenceInSeconds';
-import formatISO from 'date-fns/formatISO';
-import fromUnixTime from 'date-fns/fromUnixTime';
-import isAfter from 'date-fns/isAfter';
-import isBefore from 'date-fns/isBefore';
-import isDate from 'date-fns/isDate';
+import dayjs from 'src/core/utils/dayjs';
 
 /**
  * App state.
@@ -35,38 +32,37 @@ type State = typeof appState[keyof typeof appState];
 
 export type AppStatus = {
   state: State;
-  saleStart: string;
-  saleEnd: string;
-  vestingStart: string;
+  saleStart: number;
+  saleEnd: number;
+  vestingStart: number;
 };
-
-/**
- * Normalize unix time.
- */
-
-function normalizeTime(unixTime: BigNumber) {
-  return fromUnixTime(unixTime.toNumber());
-}
 
 /**
  * `useReloadOnTime` hook.
  */
 
-function useReloadOnTime(timestamp: string) {
+function useReloadOnTime(timestamp: number) {
   useEffect(() => {
     if (!timestamp) {
       return;
     }
 
-    const dateTimestamp = new Date(timestamp);
+    const limitDate = dayjs.unix(timestamp);
 
-    if (!isDate(dateTimestamp) || isAfter(new Date(), dateTimestamp)) {
+    if (!limitDate.isValid()) {
+      return;
+    }
+
+    const remainingTime = limitDate.diff(dayjs(), 'seconds');
+
+    // Is already in the past.
+    if (remainingTime <= 0) {
       return;
     }
 
     const timeout = setTimeout(() => {
       window.location.reload();
-    }, Math.abs(Number(differenceInSeconds(new Date(), dateTimestamp)) * 1000));
+    }, (remainingTime + 2) * 1000);
 
     return () => {
       clearTimeout(timeout);
@@ -75,71 +71,74 @@ function useReloadOnTime(timestamp: string) {
 }
 
 /**
+ * Normalize unix time.
+ */
+
+function normalizeTime(unixTime: BigNumber) {
+  if (!unixTime) {
+    return undefined;
+  }
+
+  return dayjs.unix(unixTime.toNumber());
+}
+
+/**
  * Export `useAppStatus` hook.
  */
 
 export function useAppStatus() {
-  const [status, setStatus] = useState<AppStatus | Record<string, never>>({});
   const contracts = useContracts();
   const getStatus = useCallback(async () => {
     if (!contracts?.sale1 || !contracts.vesting) {
       return;
     }
 
-    try {
-      const currentDate = new Date().getTime();
-      const saleStart = await contracts.sale1.start();
-      const saleEnd = await contracts.sale1.end();
-      const vestingStart = await contracts.vesting.startTime();
-      const saleStartDate = normalizeTime(saleStart);
-      const saleEndDate = normalizeTime(saleEnd);
-      const vestingStartDate = normalizeTime(vestingStart);
-      const handleSetStatus = (state: State) => {
-        setStatus({
-          saleEnd: formatISO(saleEndDate),
-          saleStart: formatISO(saleStartDate),
-          state,
-          vestingStart: formatISO(vestingStartDate)
-        });
-      };
+    const saleStart = await contracts.sale1.start();
+    const saleEnd = await contracts.sale1.end();
+    const vestingStart = await contracts.vesting.startTime();
+    const saleStartDate = normalizeTime(saleStart);
+    const saleEndDate = normalizeTime(saleEnd);
+    const vestingStartDate = normalizeTime(vestingStart);
+    const getStatus = (state: State) => ({
+      saleEnd: !!saleEnd?.toNumber && saleEnd.toNumber(),
+      saleStart: !!saleStart?.toNumber && saleStart.toNumber(),
+      state,
+      vestingStart: !!vestingStart?.toNumber && vestingStart.toNumber()
+    });
 
-      if (isAfter(currentDate, vestingStartDate)) {
-        handleSetStatus('VESTING');
-
-        return;
-      }
-
-      if (
-        isAfter(currentDate, saleEndDate) &&
-        isBefore(currentDate, vestingStartDate)
-      ) {
-        handleSetStatus('COUNTDOWN');
-
-        return;
-      }
-
-      if (
-        isAfter(currentDate, saleStartDate) &&
-        isBefore(currentDate, saleEndDate)
-      ) {
-        handleSetStatus('SALE');
-
-        return;
-      }
-
-      handleSetStatus('SOON');
-    } catch (error) {
-      // TODO: Handle error
+    if (dayjs().isAfter(vestingStartDate)) {
+      return getStatus('VESTING');
     }
+
+    if (dayjs().isAfter(saleEndDate) && dayjs().isBefore(vestingStartDate)) {
+      return getStatus('COUNTDOWN');
+    }
+
+    if (dayjs().isAfter(saleStartDate) && dayjs().isBefore(saleEndDate)) {
+      return getStatus('SALE');
+    }
+
+    return getStatus('SOON');
   }, [contracts]);
 
-  useEffect(() => {
-    getStatus();
-  }, [getStatus]);
+  const {
+    data: status,
+    error,
+    isPending
+  } = useAsync({
+    onReject: error => {
+      toast.error(`An error occurred. ${error}`);
+    },
+    promiseFn: getStatus
+  });
 
-  useReloadOnTime(status.saleStart);
-  useReloadOnTime(status.saleEnd);
-  useReloadOnTime(status.vestingStart);
+  useReloadOnTime(status?.saleStart);
+  useReloadOnTime(status?.saleEnd);
+  useReloadOnTime(status?.vestingStart);
 
-  return status;
+  return {
+    ...status,
+    error,
+    isLoading: isPending
+  };
 }

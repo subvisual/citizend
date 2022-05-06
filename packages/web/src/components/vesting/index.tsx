@@ -6,11 +6,11 @@ import { ClaimActionCard } from './styles';
 import { InfoCard } from './info-card';
 import { LoadingModal } from 'src/components/modals/loading-modal';
 import { currencyConfig } from 'src/core/constants';
-import { formatCurrency, formatDate } from 'src/core/utils/formatters';
+import { formatCurrency } from 'src/core/utils/formatters';
 import { media } from 'src/styles/breakpoints';
 import { useClaim, useRefund, useVesting } from 'src/hooks/use-vesting';
 import React, { useMemo } from 'react';
-import formatISO from 'date-fns/formatISO';
+import dayjs from 'src/core/utils/dayjs';
 import styled from 'styled-components';
 
 /**
@@ -33,9 +33,12 @@ const Grid = styled.section`
  */
 
 function getFirstDayOfNextMonth() {
-  const date = new Date();
+  const now = dayjs();
 
-  return new Date(date.getFullYear(), date.getMonth() + 1, 1);
+  return now
+    .month(now.month() + 1)
+    .date(1)
+    .format('DD/MM/YYYY');
 }
 
 /**
@@ -62,9 +65,7 @@ export function Vesting() {
   return (
     <Grid>
       <InfoCard
-        nextRelease={formatDate(formatISO(getFirstDayOfNextMonth()), {
-          hideHours: true
-        })}
+        nextRelease={getFirstDayOfNextMonth()}
         tokens={tokens}
         totalClaimed={totalClaimed}
       />

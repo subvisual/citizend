@@ -1,8 +1,5 @@
-import { ethers } from "hardhat";
 import { task } from "hardhat/config";
 import { BigNumber } from "ethers";
-
-const { formatUnits } = ethers.utils;
 
 task("ctnd:risingTide", "Compute Rising Tide cap for a $CTND sale")
   .addParam("sale", "index of the sale (first one is 1)")
@@ -18,7 +15,7 @@ task("ctnd:risingTide", "Compute Rising Tide cap for a $CTND sale")
 
     const cap = await computeRisingTideCap(saleContract, receipt!.blockNumber);
 
-    await submitRisingTideCap(sale, cap);
+    await submitRisingTideCap(ethers, sale, cap);
   });
 
 export async function computeRisingTideCap(sale: any, fromBlock: number) {
@@ -94,10 +91,14 @@ function reduceAmounts(purchases: PurchaseEvent[]): BigNumber[] {
   });
 }
 
-export async function submitRisingTideCap(sale: any, cap: BigNumber) {
+export async function submitRisingTideCap(
+  ethers: any,
+  sale: any,
+  cap: BigNumber
+) {
   const gasLimit = 10000000;
 
-  console.log(`Submitting cap: ${formatUnits(cap)}`);
+  console.log(`Submitting cap: ${ethers.utils.formatUnits(cap)}`);
   await sale.setIndividualCap(cap, { gasLimit });
 
   while (await sale.risingTide_validating()) {

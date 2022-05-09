@@ -29,7 +29,6 @@ export async function computeRisingTideCap(sale: any, fromBlock: number) {
   // compute address=>total CTND
   const amounts = reduceAmounts(purchases);
 
-  console.log(amounts);
   // calculate cap
   let cap = BigNumber.from(0);
   let capNextIdx = 0;

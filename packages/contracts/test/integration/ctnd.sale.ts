@@ -23,6 +23,7 @@ import {
   FractalRegistry,
   FractalRegistry__factory,
 } from "../../src/types";
+import { parse } from "path";
 
 const { parseUnits, formatBytes32String } = ethers.utils;
 
@@ -156,12 +157,16 @@ describe("Integration", () => {
 
     it("is 100% after the vesting", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("2"));
 
       await goToTime(await secondSale.end());
-      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });
 
-      expect(await vesting.totalAllocated(alice.address)).to.equal(150);
+      expect(await vesting.totalAllocated(alice.address)).to.equal(
+        parseUnits("2")
+      );
     });
   });
 
@@ -172,18 +177,20 @@ describe("Integration", () => {
 
     it("equals the already claimed amount after a claim", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("1.5"));
 
       await goToTime(await vesting.startTime());
-      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
       expect(await vesting.claimed(alice.address)).to.eq(0);
       await vesting.claim(alice.address);
-      expect(await vesting.claimed(alice.address)).to.eq(50);
+      expect(await vesting.claimed(alice.address)).to.eq(parseUnits("0.5"));
     });
   });
 
-  describe("claimable", () => {
+  describe.only("claimable", () => {
     it("is zero for addresses with no vesting", async () => {
       await increaseTime(time.duration.days(3));
       await sale.connect(seller).setIndividualCap(500, { gasLimit: 10000000 });
@@ -192,159 +199,184 @@ describe("Integration", () => {
 
     it("is more than zero immediately after the vesting starts", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("1.5"));
 
       await goToTime(await vesting.startTime());
-      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
-      expect(await vesting.claimable(alice.address)).to.equal(50);
+      expect(await vesting.claimable(alice.address)).to.equal(
+        parseUnits("0.5")
+      );
     });
 
     it("is 2/3 of the amount after 2/3 of vesting period", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("1.5"));
 
       await goToTime(await vesting.startTime());
       await increaseTime(time.duration.days(31));
-      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
-      expect(await vesting.claimable(alice.address)).to.equal(100);
+      expect(await vesting.claimable(alice.address)).to.equal(parseUnits("1"));
     });
 
     it("is 100% of the amount after 100% of vesting and cliff period", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("1.5"));
 
       await goToTime(await vesting.startTime());
       await increaseTime(time.duration.days(31 * 3));
-      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
-      expect(await vesting.claimable(alice.address)).to.equal(150);
+      expect(await vesting.claimable(alice.address)).to.equal(
+        parseUnits("1.5")
+      );
     });
 
     it("increases if not claimed during long periods", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("1.5"));
 
       await goToTime(await sale.end());
-      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
       await goToTime(await vesting.startTime());
-      expect(await vesting.claimable(alice.address)).to.equal(50);
+      expect(await vesting.claimable(alice.address)).to.equal(
+        parseUnits("0.5")
+      );
 
       await increaseTime(time.duration.days(70));
-      expect(await vesting.claimable(alice.address)).to.equal(150);
+      expect(await vesting.claimable(alice.address)).to.equal(
+        parseUnits("1.5")
+      );
     });
 
     it("does not go over the original total", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("1.5"));
 
       await increaseTime(time.duration.days(200));
-      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
-      expect(await vesting.claimable(alice.address)).to.equal(150);
+      expect(await vesting.claimable(alice.address)).to.equal(
+        parseUnits("1.5")
+      );
     });
 
     it("goes back to 0 after claiming", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("1.5"));
 
       await goToTime(await vesting.startTime());
-      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
-      expect(await vesting.claimable(alice.address)).to.equal(50);
+      expect(await vesting.claimable(alice.address)).to.equal(
+        parseUnits("0.5")
+      );
       await vesting.claim(alice.address);
       expect(await vesting.claimable(alice.address)).to.equal(0);
     });
 
     it("takes into account the individual cap", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("1.5"));
 
       await goToTime(await vesting.startTime());
-      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
-      expect(await vesting.claimable(alice.address)).to.equal(50);
+      expect(await vesting.claimable(alice.address)).to.equal(
+        parseUnits("0.5")
+      );
     });
 
     it("sums the total invested from multiple sales", async () => {
       await vesting.addSale(secondSale.address);
 
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("1.5"));
       await goToTime(await secondSale.start());
-      await secondSale.connect(alice).buy(50);
+      await secondSale.connect(alice).buy(parseUnits("0.5"));
 
       await goToTime(await secondSale.end());
-      await sale.connect(seller).setIndividualCap(150, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
       await secondSale
         .connect(seller)
-        .setIndividualCap(50, { gasLimit: 10000000 });
+        .setIndividualCap(parseUnits("0.5"), { gasLimit: 10000000 });
 
       await goToTime(await vesting.startTime());
 
-      expect(await vesting.claimable(alice.address)).to.equal(66);
-    });
-
-    it("takes into account each sale's individual cap", async () => {
-      await vesting.addSale(secondSale.address);
-
-      await goToTime(await sale.start());
-      await sale.connect(alice).buy(200);
-      await goToTime(await secondSale.start());
-      await secondSale.connect(alice).buy(300);
-
-      await goToTime(await secondSale.end());
-      await sale.connect(seller).setIndividualCap(200, { gasLimit: 10000000 });
-      await secondSale
-        .connect(seller)
-        .setIndividualCap(300, { gasLimit: 10000000 });
-
-      await goToTime(await vesting.startTime());
-
-      expect(await vesting.claimable(alice.address)).to.equal(166);
+      expect(await vesting.claimable(alice.address)).to.closeTo(
+        parseUnits("0.666"),
+        parseUnits("0.001")
+      );
     });
   });
 
   describe("public sale claim", () => {
     it("allows me to claim 0 tokens before the vesting starts", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(100);
+      await sale.connect(alice).buy(parseUnits("2"));
 
       await goToTime((await vesting.startTime()).sub(1000));
-      await sale.connect(seller).setIndividualCap(100, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(0);
     });
 
     it("allows me to claim 33% as soon as the vesting starts", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(100);
+      await sale.connect(alice).buy(parseUnits("2"));
 
       await goToTime(await vesting.startTime());
-      await sale.connect(seller).setIndividualCap(100, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });
 
-      expect(await vesting.claimable(alice.address)).to.equal(33);
+      expect(await vesting.claimable(alice.address)).to.be.closeTo(
+        parseUnits("0.666"),
+        parseUnits("0.001")
+      );
     });
 
     it("allows me to claim 100% of my tokens on the beginning of the 3rd month", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(100);
+      await sale.connect(alice).buy(parseUnits("2"));
 
       await goToTime(await vesting.startTime());
       await increaseTime(time.duration.days(30 * 2 + 1));
-      await sale.connect(seller).setIndividualCap(100, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });
 
-      expect(await vesting.claimable(alice.address)).to.equal(100);
+      expect(await vesting.claimable(alice.address)).to.equal(parseUnits("2"));
     });
 
     it("emits an event", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(100);
+      await sale.connect(alice).buy(parseUnits("2"));
 
       await increaseTime(time.duration.days(30 * 2 + 1));
-      await sale.connect(seller).setIndividualCap(100, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });
 
       await expect(vesting.claim(alice.address)).to.emit(
         vesting,
@@ -356,13 +388,17 @@ describe("Integration", () => {
   describe("buy allocations in the sale", async () => {
     it("can be bought in chunks", async () => {
       await goToTime(await sale.start());
-      await sale.connect(alice).buy(100);
-      await sale.connect(alice).buy(150);
+      await sale.connect(alice).buy(parseUnits("1"));
+      await sale.connect(alice).buy(parseUnits("1.5"));
 
       await increaseTime(time.duration.days(30 * 3 + 1));
-      await sale.connect(seller).setIndividualCap(250, { gasLimit: 10000000 });
+      await sale
+        .connect(seller)
+        .setIndividualCap(parseUnits("2.5"), { gasLimit: 10000000 });
 
-      expect(await vesting.claimable(alice.address)).to.equal(250);
+      expect(await vesting.claimable(alice.address)).to.equal(
+        parseUnits("2.5")
+      );
     });
   });
 });

@@ -32,7 +32,6 @@ async function networkConfigs(chainId: number): Promise<Config> {
   const [owner] = await ethers.getSigners();
 
   const now = currentTimestamp();
-  const nextMonth = beginningOfNextMonthTimestamp();
 
   switch (network) {
     case "hardhat": {
@@ -77,7 +76,6 @@ async function networkConfigs(chainId: number): Promise<Config> {
     case "acala":
     case "karura":
       throw "not yet implemented";
-      const saleStart = dayjs("2022-04-26");
     // return {
     //   ctndSale1: {
     //     start: saleStart.unix(),

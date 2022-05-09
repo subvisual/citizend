@@ -190,7 +190,7 @@ describe("Integration", () => {
     });
   });
 
-  describe.only("claimable", () => {
+  describe("claimable", () => {
     it("is zero for addresses with no vesting", async () => {
       await increaseTime(time.duration.days(3));
       await sale.connect(seller).setIndividualCap(500, { gasLimit: 10000000 });

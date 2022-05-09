@@ -2,6 +2,8 @@ import { network, ethers } from "hardhat";
 import type { BigNumber } from "ethers";
 import dayjs from "dayjs";
 
+const MANDALA_REGISTRY_ROOT = "0xC3e923e0CE5125088cDa62935056d6B5F14F234c";
+
 interface CTNDSale {
   start: number;
   end: number;
@@ -12,75 +14,68 @@ interface CTNDVesting {
   start: number;
 }
 
+interface Registry {
+  root: string;
+}
+
 interface Config {
   ctndSale1: CTNDSale;
   ctndSale2?: CTNDSale;
   ctndVesting: CTNDVesting;
+  registry: Registry;
 }
 
 const { parseUnits } = ethers.utils;
 
 async function networkConfigs(chainId: number): Promise<Config> {
   const network = await chainIdToNetwork(chainId);
+  const [owner] = await ethers.getSigners();
+
+  const now = currentTimestamp();
 
   switch (network) {
     case "hardhat": {
-      const date = new Date();
-      const beginningOfNextMonth = new Date(
-        date.getFullYear(),
-        date.getMonth() + 1,
-        1,
-        12
-      );
-      const now = Math.floor(date.getTime() / 1000);
-      const oneDay = 60 * 60 * 24;
-
       return {
         ctndSale1: {
           start: now,
-          end: now + oneDay,
+          end: now + THIRTY_MIN,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: beginningOfNextMonth.getTime() / 1000,
+          start: now + THIRTY_MIN * 2,
         },
         ctndSale2: {
-          start: now + 60 * 60 * 24 * 2,
-          end: now + 60 * 60 * 24 * 3,
-          supply: parseUnits("15"),
+          start: now + THIRTY_MIN,
+          end: now + THIRTY_MIN * 2,
+          supply: parseUnits("10"),
+        },
+        registry: {
+          root: owner.address,
         },
       };
     }
 
     case "mandala":
-      const date = new Date();
-      const beginningOfNextMonth = new Date(
-        date.getFullYear(),
-        date.getMonth() + 1,
-        1,
-        12
-      );
-      const now = Math.floor(new Date(2022, 4, 9, 10, 10).getTime() / 1000);
-      // const now = Math.floor(date.getTime() / 1000);
-      const thirtyMinutes = 30 * 60;
-      const oneDay = 60 * 60 * 24;
+      const start = Math.floor(new Date(2022, 4, 6, 17, 30).getTime() / 1000);
 
       return {
         ctndSale1: {
-          start: now,
-          end: now + 20 * 60,
+          start: start,
+          end: start + THIRTY_MIN,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: now + thirtyMinutes,
+          start: start + THIRTY_MIN,
         },
         ctndSale2: undefined,
+        registry: {
+          root: MANDALA_REGISTRY_ROOT,
+        },
       };
 
     case "acala":
     case "karura":
       throw "not yet implemented";
-      const saleStart = dayjs("2022-04-26");
     // return {
     //   ctndSale1: {
     //     start: saleStart.unix(),
@@ -107,6 +102,24 @@ const chainIdToNetwork = (chainId: number): string => {
   ]!;
 };
 
+export const getNetworkName = (): string => {
+  return chainIdToNetwork(network.config.chainId!);
+};
+
 export const getNetworkConfig = async () => {
   return await networkConfigs(network.config.chainId!);
 };
+
+function currentTimestamp(): number {
+  const date = new Date();
+  return Math.floor(date.getTime() / 1000);
+}
+
+function beginningOfNextMonthTimestamp(): number {
+  const date = new Date();
+  const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1, 12);
+
+  return Math.floor(nextMonth.getTime() / 1000);
+}
+
+const THIRTY_MIN = 30 * 60;

@@ -22,9 +22,12 @@ export async function acalaDeploy(
     ...(await acalaDeployParams()),
   });
 
-  if ((await isAcala()) && !existing) {
-    await execute("EVM", opts, "publishContract", result.address);
-  }
+  console.log("publishing");
+  await execute("EVM", opts, "publishContract", result.address);
+  // if ((await isAcala()) && !existing) {
+  //   console.log("publishing");
+  //   await execute("EVM", opts, "publishContract", result.address);
+  // }
 
   return result;
 }

@@ -71,14 +71,14 @@ describe("ctnd:risingTide task", () => {
     it("correctly computes the Gitbook example", async () => {
       await applyInvestments(gitbookExample);
 
-      const cap = await computeRisingTideCap(sale.address, 0, hre);
+      const cap = await computeRisingTideCap(sale, 0);
       expect(cap).to.equal(54285);
     });
 
     it("finishes immediately for small investor lists", async () => {
       await applyInvestments(smallExample);
 
-      const cap = await computeRisingTideCap(sale.address, 0, hre);
+      const cap = await computeRisingTideCap(sale, 0);
       expect(cap).to.equal(5000);
     });
   });

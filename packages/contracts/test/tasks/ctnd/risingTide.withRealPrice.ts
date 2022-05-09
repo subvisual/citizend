@@ -11,13 +11,14 @@ import {
   FractalRegistry__factory,
 } from "../../../src/types";
 
-import { currentTimestamp } from "../../../test/timeHelpers";
+import { currentTimestamp } from "../../timeHelpers";
+
 import { computeRisingTideCap } from "../../../src/tasks/ctnd/risingTide";
 import { applyInvestments } from "./helpers";
 
 const { parseUnits } = ethers.utils;
 
-describe("ctnd:risingTide task", () => {
+describe("ctnd:risingTide task, with correct exchange rates", () => {
   let owner: SignerWithAddress;
   let alice: SignerWithAddress;
   let bob: SignerWithAddress;
@@ -48,10 +49,10 @@ describe("ctnd:risingTide task", () => {
     );
     sale = await new Sale__factory(owner).deploy(
       aUSD.address,
-      parseUnits("1"),
+      parseUnits("0.3", await aUSD.decimals()),
       start,
       end,
-      500000,
+      parseUnits("1"),
       registry.address
     );
   });
@@ -60,25 +61,24 @@ describe("ctnd:risingTide task", () => {
     await fixture();
   });
 
-  describe("rising tide calculation", () => {
-    const gitbookExample = [
-      50000, 100000, 75000, 50000, 100000, 75000, 20000, 100000, 80000, 100000,
-    ];
+  describe("1 CTND for sale, 3 investments of 0.5 aUSD each, should cap to 0.33 CTND each", () => {
+    it("correctly computes the cap in CTND amount", async () => {
+      const decimals = await aUSD.decimals();
+      const aUSDAmounts = [
+        parseUnits("0.5", decimals),
+        parseUnits("0.5", decimals),
+        parseUnits("0.5", decimals),
+      ];
 
-    const smallExample = [5000];
+      const ctndAmounts = await Promise.all(
+        aUSDAmounts.map((amount) => sale.paymentTokenToToken(amount))
+      );
 
-    it("correctly computes the Gitbook example", async () => {
-      await applyInvestments(aUSD, registry, sale, gitbookExample);
-
-      const cap = await computeRisingTideCap(sale, 0);
-      expect(cap).to.equal(54285);
-    });
-
-    it("finishes immediately for small investor lists", async () => {
-      await applyInvestments(aUSD, registry, sale, smallExample);
+      await applyInvestments(aUSD, registry, sale, ctndAmounts);
 
       const cap = await computeRisingTideCap(sale, 0);
-      expect(cap).to.equal(5000);
+
+      expect(cap).to.be.closeTo(parseUnits("0.333"), parseUnits("0.001"));
     });
   });
 });

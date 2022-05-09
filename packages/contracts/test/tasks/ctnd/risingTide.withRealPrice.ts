@@ -62,7 +62,7 @@ describe("ctnd:risingTide task, with correct exchange rates", () => {
   });
 
   describe("1 CTND for sale, 3 investments of 0.5 aUSD each, should cap to 0.33 CTND each", () => {
-    it.only("correctly computes the cap in CTND amount", async () => {
+    it("correctly computes the cap in CTND amount", async () => {
       const decimals = await aUSD.decimals();
       const aUSDAmounts = [
         parseUnits("0.5", decimals),

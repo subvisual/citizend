@@ -33,6 +33,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     bytes32 public constant CAP_VALIDATOR_ROLE =
         keccak256("CAP_VALIDATOR_ROLE");
 
+    // multiplier used for rate conversions
+    uint256 constant MUL = 10**18;
+
     //
     // Events
     //
@@ -58,9 +61,6 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     /// Fixed price of token, expressed in paymentToken amount
     uint256 public immutable rate;
-
-    // multiplier used for rate conversions
-    uint256 immutable mul;
 
     /// Timestamp at which sale starts
     uint256 public immutable start;
@@ -115,7 +115,6 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         end = _end;
         totalTokensForSale = _totalTokensForSale;
         registry = _registry;
-        mul = 10**IERC20Metadata(_paymentToken).decimals();
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -172,7 +171,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         override(ISale)
         returns (uint256)
     {
-        return (_paymentAmount * mul) / rate;
+        return (_paymentAmount * MUL) / rate;
     }
 
     /// @inheritdoc ISale
@@ -182,7 +181,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         override(ISale)
         returns (uint256)
     {
-        return (_tokenAmount * rate) / mul;
+        return (_tokenAmount * rate) / MUL;
     }
 
     /// @inheritdoc ISale

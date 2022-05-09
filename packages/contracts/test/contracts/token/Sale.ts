@@ -29,6 +29,7 @@ describe("Sale", () => {
   let aUSD: MockERC20;
   let sale: Sale;
   let registry: FractalRegistry;
+  let aUSDDecimals: number;
 
   let start: number;
   let end: number;
@@ -39,7 +40,12 @@ describe("Sale", () => {
     start = await currentTimestamp();
     end = start + 60 * 60 * 24;
 
-    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
+    aUSDDecimals = 12;
+    aUSD = await new MockERC20__factory(owner).deploy(
+      "aUSD",
+      "aUSD",
+      aUSDDecimals
+    );
 
     registry = await new FractalRegistry__factory(owner).deploy(owner.address);
 
@@ -184,14 +190,14 @@ describe("Sale", () => {
     });
 
     it("converts 0.30 $aUSD to 1 $CTND", async () => {
-      const paymentAmount = parseUnits("0.30");
+      const paymentAmount = parseUnits("0.30", aUSDDecimals);
       const tokens = parseUnits("1");
 
       expect(await sale.paymentTokenToToken(paymentAmount)).to.equal(tokens);
     });
 
     it("converts 300 $aUSD to 1000 $CTND", async () => {
-      const paymentAmount = parseUnits("300");
+      const paymentAmount = parseUnits("300", aUSDDecimals);
       const tokens = parseUnits("1000");
 
       expect(await sale.paymentTokenToToken(paymentAmount)).to.equal(tokens);
@@ -205,7 +211,7 @@ describe("Sale", () => {
 
     it("converts 1 $CTND to 0.30 $aUSD", async () => {
       const tokens = parseUnits("1");
-      const paymentAmount = parseUnits("0.30");
+      const paymentAmount = parseUnits("0.30", aUSDDecimals);
 
       expect(await sale.tokenToPaymentToken(tokens)).to.equal(paymentAmount);
     });

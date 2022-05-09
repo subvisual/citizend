@@ -6,7 +6,6 @@ import {
   Batch,
   Batch__factory,
   Project,
-  Project__factory,
   MockERC20,
   MockERC20__factory,
   Controller,

@@ -1,5 +1,4 @@
 import { task } from "hardhat/config";
-import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { BigNumber } from "ethers";
 
 task("ctnd:risingTide", "Compute Rising Tide cap for a $CTND sale")
@@ -7,21 +6,19 @@ task("ctnd:risingTide", "Compute Rising Tide cap for a $CTND sale")
   .setAction(async ({ sale }, hre) => {
     const { address, receipt } = await hre.deployments.get(sale);
 
-    await computeRisingTideCap(address, receipt!.blockNumber, hre);
+    // need to import this dynamically, since it won't exist on the first run
+    const { Sale__factory } = await import("../../types");
+
+    const { ethers } = hre;
+    const [owner] = await ethers.getSigners();
+    const saleContract = Sale__factory.connect(address, owner);
+
+    const cap = await computeRisingTideCap(saleContract, receipt!.blockNumber);
+
+    await submitRisingTideCap(ethers, sale, cap);
   });
 
-export async function computeRisingTideCap(
-  saleAddress: string,
-  fromBlock: number,
-  hre: HardhatRuntimeEnvironment
-) {
-  // need to import this dynamically, since it won't exist on the first run
-  const { Sale__factory } = await import("../../types");
-
-  const { ethers } = hre;
-  const [owner] = await ethers.getSigners();
-  const sale = Sale__factory.connect(saleAddress, owner);
-
+export async function computeRisingTideCap(sale: any, fromBlock: number) {
   // get all Payment events
   const filter = sale.filters.Purchase();
   const purchases = await sale.queryFilter(filter, fromBlock, "latest");
@@ -91,4 +88,22 @@ function reduceAmounts(purchases: PurchaseEvent[]): BigNumber[] {
       return 0;
     }
   });
+}
+
+export async function submitRisingTideCap(
+  ethers: any,
+  sale: any,
+  cap: BigNumber
+) {
+  const gasLimit = 10000000;
+
+  console.log(`Submitting cap: ${ethers.utils.formatUnits(cap)}`);
+  await sale.setIndividualCap(cap, { gasLimit });
+
+  while (await sale.risingTide_validating()) {
+    console.log("Continuing validation...");
+    await sale.risingTide_validate({ gasLimit });
+  }
+
+  console.log("Done");
 }

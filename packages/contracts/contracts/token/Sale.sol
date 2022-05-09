@@ -194,6 +194,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
                 fractalIdToAddress[fractalId] == msg.sender,
             "id registered to another address"
         );
+        require(
+            FractalRegistry(registry).isUserInList(fractalId, "plus"),
+            "not full kyc"
+        );
 
         uint256 paymentAmount = tokenToPaymentToken(_amount);
         require(paymentAmount > 0, "can't be zero");

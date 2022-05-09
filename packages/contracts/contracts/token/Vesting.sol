@@ -39,17 +39,15 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     mapping(uint64 => bool) public usedNonces;
 
     address public immutable token;
-    uint256 public immutable startTime;
     uint256 public immutable publicSaleVestingMonths;
     uint256 public immutable publicSaleCliffMonths;
     uint256 public immutable privateSaleCap;
     uint256 public totalPrivateSales;
+    uint256 public startTime;
     address[] public sales;
 
-    uint256 public constant PRIVATE_SALE_VESTING_MONTHS = 36;
     uint256 public constant PRIVATE_SALE_MAX_CLIFF_MONTHS = 6;
-    bytes32 public constant PRIVATE_SELLER_ROLE =
-        keccak256("PRIVATE_SELLER_ROLE");
+    bytes32 public constant SALE_MANAGER_ROLE = keccak256("SALE_MANAGER_ROLE");
 
     event ClaimVesting(address indexed to, uint256 amount);
     event AddSale(address indexed saleContract);
@@ -57,22 +55,19 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     /// @param _publicSaleVestingMonths Number of months of vesting for the public sale
     /// @param _token Address for the CTND token contract
     /// @param _sales Addresses for the initial sales contracts
-    /// @param _startTime Start time of the vesting
     /// @param _privateSaleCap Total cap for the private sale
     constructor(
         uint256 _publicSaleVestingMonths,
         address _token,
         address[] memory _sales,
-        uint256 _startTime,
         uint256 _privateSaleCap
     ) {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(PRIVATE_SELLER_ROLE, msg.sender);
+        _grantRole(SALE_MANAGER_ROLE, msg.sender);
 
         publicSaleVestingMonths = _publicSaleVestingMonths;
         publicSaleCliffMonths = 0;
         token = _token;
-        startTime = _startTime;
         privateSaleCap = _privateSaleCap;
 
         for (uint256 i = 0; i < _sales.length; ++i) {
@@ -161,11 +156,12 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         address to,
         uint256 amount,
         uint16 cliffMonths,
+        uint16 vestingMonths,
         uint64 nonce
     )
         external
         override(IVesting)
-        onlyRole(PRIVATE_SELLER_ROLE)
+        onlyRole(SALE_MANAGER_ROLE)
         nonReentrant
         useNonce(nonce)
     {
@@ -182,12 +178,25 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
             vesting.amount == 0 || vesting.cliffMonths == cliffMonths,
             "vesting already exists with different cliff"
         );
+        require(
+            vesting.amount == 0 || vesting.vestingMonths == vestingMonths,
+            "vesting already exists with different vesting period"
+        );
+        require(vestingMonths >= publicSaleVestingMonths, "vesting too short");
 
         vesting.cliffMonths = cliffMonths;
-        vesting.vestingMonths = PRIVATE_SALE_VESTING_MONTHS;
+        vesting.vestingMonths = vestingMonths;
         vesting.amount += amount;
 
         totalPrivateSales += amount;
+    }
+
+    function setStartTime(uint256 _startTime)
+        public
+        onlyRole(SALE_MANAGER_ROLE)
+    {
+        require(startTime == 0, "start time already set");
+        startTime = _startTime;
     }
 
     //
@@ -269,6 +278,10 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
      * @return The number of periods elapsed since the cliff start
      */
     function _numberOfPeriodsElapsed() internal view returns (uint256) {
+        if (startTime == 0) {
+            return 0;
+        }
+
         if (block.timestamp < startTime) {
             return 0;
         } else {

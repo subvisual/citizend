@@ -56,18 +56,23 @@ export function useSale() {
     }
 
     try {
-      const balance = await contracts.sale1.uncappedAllocation(account);
-      const myContribution = await contracts.sale1.paymentTokenToToken(balance);
+      const contributionCtnd = await contracts.sale1.uncappedAllocation(
+        account
+      );
+      const contributionAusd = await contracts.sale1.tokenToPaymentToken(
+        contributionCtnd
+      );
       const investorCount = await contracts.sale1.investorCount();
       const raisedTokens = await contracts.sale1.allocated();
       const raised = await contracts.sale1.tokenToPaymentToken(raisedTokens);
       const price = await contracts.sale1.rate();
+      const aUsdDecimals = await contracts.aUsd.decimals();
 
       setState({
-        balance: utils.formatUnits(myContribution.toString()),
+        balance: utils.formatUnits(contributionAusd, aUsdDecimals),
         contributions: investorCount.toString(),
-        price: utils.formatUnits(price.toString()),
-        raised: utils.formatUnits(raised.toString())
+        price: utils.formatUnits(price, aUsdDecimals),
+        raised: utils.formatUnits(raised, aUsdDecimals)
       });
     } catch (error) {
       // Handle error

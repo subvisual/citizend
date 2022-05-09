@@ -47,7 +47,7 @@ async function networkConfigs(chainId: number): Promise<Config> {
         },
         ctndSale2: {
           start: now + THIRTY_MIN,
-          end: now + THIRTY_MIN,
+          end: now + THIRTY_MIN * 2,
           supply: parseUnits("10"),
         },
         registry: {
@@ -57,14 +57,16 @@ async function networkConfigs(chainId: number): Promise<Config> {
     }
 
     case "mandala":
+      const start = Math.floor(new Date(2022, 4, 6, 17, 30).getTime() / 1000);
+
       return {
         ctndSale1: {
-          start: now,
-          end: now + THIRTY_MIN,
+          start: start,
+          end: start + THIRTY_MIN,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: now + THIRTY_MIN,
+          start: start + THIRTY_MIN,
         },
         ctndSale2: undefined,
         registry: {

@@ -8,6 +8,7 @@ import {
   decreaseTime,
   currentDate,
 } from "../timeHelpers";
+import { getNetworkConfig } from "../../src/deployConfigs";
 
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {
@@ -39,6 +40,7 @@ describe("Integration", () => {
 
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
     await deployments.fixture(["ctnd"]);
+    const { ctndVesting } = await getNetworkConfig();
 
     [owner, alice, seller] = await ethers.getSigners();
 
@@ -66,6 +68,8 @@ describe("Integration", () => {
     await aUSD.connect(alice).approve(sale.address, allowance);
     await aUSD.connect(alice).approve(secondSale.address, allowance);
     await registry.addUserAddress(alice.address, formatBytes32String("id1"));
+    await registry.addUserToList(formatBytes32String("id1"), "plus");
+    await vesting.setStartTime(ctndVesting.start);
   });
 
   beforeEach(async () => {

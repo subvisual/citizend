@@ -50,8 +50,7 @@ interface IVesting {
 
     /**
      * Creates a new vesting with private sale parameters
-     * If the address is already registered, it does nothing. If the address
-     * has been registered in a public sale, it reverts the transaction
+     * If the address is already registered, it does nothing.
      *
      * Also checks if the private sale cap has been reached, and if so,
      * reverts.
@@ -59,12 +58,14 @@ interface IVesting {
      * @param to Beneficiary
      * @param amount Amount of tokens to vest
      * @param cliffMonths Number of months to wait before the vesting starts
+     * @param vestingMonths Number of months of vesting
      * @param nonce Nonce used to prevent the same sale from being registered twice
      **/
     function createPrivateSaleVest(
         address to,
         uint256 amount,
         uint16 cliffMonths,
+        uint16 vestingMonths,
         uint64 nonce
     ) external;
 

@@ -59,7 +59,9 @@ describe("Sale", () => {
     await aUSD.connect(bob).approve(sale.address, MaxUint256);
 
     await registry.addUserAddress(alice.address, formatBytes32String("id1"));
+    await registry.addUserToList(formatBytes32String("id1"), "plus");
     await registry.addUserAddress(bob.address, formatBytes32String("id2"));
+    await registry.addUserToList(formatBytes32String("id2"), "plus");
   });
 
   describe("constructor", () => {

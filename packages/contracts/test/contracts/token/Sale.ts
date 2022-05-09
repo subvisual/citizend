@@ -54,7 +54,7 @@ describe("Sale", () => {
       parseUnits("0.3", 12),
       start,
       end,
-      1000,
+      parseUnits("10"),
       registry.address
     );
 
@@ -90,26 +90,30 @@ describe("Sale", () => {
     });
 
     it("reverts if no cap is set", async () => {
-      await sale.connect(alice).buy(30);
+      await sale.connect(alice).buy(parseUnits("1"));
       await goToTime(end + 1000);
 
       await expect(sale.withdraw()).to.be.revertedWith("cap not yet set");
     });
 
     it("allows the owner to withdraw", async () => {
-      await sale.connect(alice).buy(100);
+      await sale.connect(alice).buy(parseUnits("2"));
       await goToTime(end + 1000);
-      await sale.setIndividualCap(100, { gasLimit: 10000000 });
+      await sale.setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });
 
       const action = () => sale.connect(owner).withdraw();
 
-      await expect(action).to.changeTokenBalance(aUSD, owner, 30);
+      await expect(action).to.changeTokenBalance(
+        aUSD,
+        owner,
+        parseUnits("0.6", 12)
+      );
     });
 
     it("only allows withdrawing once", async () => {
-      await sale.connect(alice).buy(100);
+      await sale.connect(alice).buy(parseUnits("2"));
       await goToTime(end + 1000);
-      await sale.setIndividualCap(100, { gasLimit: 10000000 });
+      await sale.setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });
 
       const action = () => sale.connect(owner).withdraw();
 
@@ -118,22 +122,29 @@ describe("Sale", () => {
     });
 
     it("does not withdraw amounts meant for refunds", async () => {
-      await sale.connect(alice).buy(1000);
-      await sale.connect(bob).buy(1000);
+      await sale.connect(alice).buy(parseUnits("10"));
+      await sale.connect(bob).buy(parseUnits("10"));
       await goToTime(end + 1000);
-      await sale.setIndividualCap(500, { gasLimit: 10000000 });
+      await sale.setIndividualCap(parseUnits("5"), { gasLimit: 10000000 });
 
       const action = () => sale.connect(owner).withdraw();
 
-      await expect(action).to.changeTokenBalance(aUSD, owner, 300);
+      await expect(action).to.changeTokenBalance(
+        aUSD,
+        owner,
+        parseUnits("3", 12)
+      );
+      expect(await aUSD.balanceOf(sale.address)).to.equal(parseUnits("3", 12));
     });
   });
 
   describe("buy", () => {
     it("registers an account", async () => {
-      await sale.connect(alice).buy(100);
+      await sale.connect(alice).buy(parseUnits("2"));
 
-      expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
+      expect(await sale.uncappedAllocation(alice.address)).to.eq(
+        parseUnits("2")
+      );
     });
 
     it("emits a Purchase event", async () => {
@@ -149,34 +160,40 @@ describe("Sale", () => {
     });
 
     it("correctly handles multiple purchases from the same account", async () => {
-      const amount = 100;
+      const amount = parseUnits("1");
 
       expect(await sale.connect(alice).buy(amount))
         .to.emit(sale, "Purchase")
-        .withArgs(alice.address, amount, 100);
+        .withArgs(alice.address, amount, parseUnits("1"));
 
       expect(await sale.connect(alice).buy(amount))
         .to.emit(sale, "Purchase")
-        .withArgs(alice.address, amount, 100);
+        .withArgs(alice.address, amount, parseUnits("1"));
 
-      expect(await sale.uncappedAllocation(alice.address)).to.eq(200);
+      expect(await sale.uncappedAllocation(alice.address)).to.eq(
+        parseUnits("2")
+      );
     });
 
     it("requires the caller to have gone through Fractal KYC", async () => {
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
 
-      await sale.connect(alice).buy(100);
-      expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
+      await sale.connect(alice).buy(parseUnits("2"));
+      expect(await sale.uncappedAllocation(alice.address)).to.eq(
+        parseUnits("2")
+      );
 
-      await expect(sale.connect(carol).buy(30)).to.be.revertedWith(
+      await expect(sale.connect(carol).buy(parseUnits("1"))).to.be.revertedWith(
         "not registered"
       );
     });
 
     it("can only use one address for a given fractal id", async () => {
       await registry.addUserAddress(carol.address, formatBytes32String("id1"));
-      await sale.connect(alice).buy(100);
-      expect(await sale.uncappedAllocation(alice.address)).to.eq(100);
+      await sale.connect(alice).buy(parseUnits("2"));
+      expect(await sale.uncappedAllocation(alice.address)).to.eq(
+        parseUnits("2")
+      );
 
       await expect(sale.connect(carol).buy(30)).to.be.revertedWith(
         "id registered to another address"
@@ -219,17 +236,17 @@ describe("Sale", () => {
 
   describe("set individual cap", () => {
     it("allows me to set the cap after sale is over", async () => {
-      await sale.connect(alice).buy(100);
+      await sale.connect(alice).buy(parseUnits("2"));
       await goToTime(end);
 
-      await sale.setIndividualCap(100, { gasLimit: 10000000 });
+      await sale.setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });
 
-      expect(await sale.individualCap()).to.equal(100);
+      expect(await sale.individualCap()).to.equal(parseUnits("2"));
       expect(await sale.risingTide_isValidCap()).to.equal(true);
     });
 
     it("fails to validate the cap for the wrong value", async () => {
-      await sale.connect(alice).buy(100);
+      await sale.connect(alice).buy(parseUnits("2"));
       await goToTime(end);
 
       await sale.setIndividualCap(50, { gasLimit: 10000000 });
@@ -245,17 +262,17 @@ describe("Sale", () => {
     });
 
     it("is 0 if the individual cap is higher than the invested total", async () => {
-      await sale.connect(alice).buy(200);
-      await sale.connect(bob).buy(1000);
+      await sale.connect(alice).buy(parseUnits("1"));
+      await sale.connect(bob).buy(parseUnits("9"));
 
       await goToTime(end);
-      await sale.setIndividualCap(800, { gasLimit: 10000000 });
+      await sale.setIndividualCap(parseUnits("9"), { gasLimit: 10000000 });
 
       expect(await sale.refundAmount(alice.address)).to.equal(0);
     });
 
     it("is the difference between the cap and the invested total", async () => {
-      await sale.connect(alice).buy(1001);
+      await sale.connect(alice).buy(parseUnits("2"));
 
       await goToTime(end);
       await sale.setIndividualCap(1000, { gasLimit: 10000000 });
@@ -268,7 +285,7 @@ describe("Sale", () => {
 
   describe("refund", () => {
     it("fails if individual cap is not yet set", async () => {
-      await sale.connect(alice).buy(1000);
+      await sale.connect(alice).buy(parseUnits("2"));
 
       await expect(sale.refund(alice.address)).to.be.revertedWith(
         "cap not yet set"
@@ -276,12 +293,12 @@ describe("Sale", () => {
     });
 
     it("refunds the correct amount once the cap is set", async () => {
-      const amount = 1000;
+      const amount = parseUnits("10");
 
-      await sale.connect(alice).buy(amount * 2);
+      await sale.connect(alice).buy(amount.mul(2));
 
       // set a cap of 1000 $CTND
-      const cap = 1000;
+      const cap = amount;
       await goToTime(end);
       await sale.setIndividualCap(cap, { gasLimit: 10000000 });
 
@@ -293,12 +310,12 @@ describe("Sale", () => {
     });
 
     it("emits an event", async () => {
-      const amount = 1000;
+      const amount = parseUnits("10");
 
-      await sale.connect(alice).buy(amount * 2);
+      await sale.connect(alice).buy(amount.mul(2));
 
       // set a cap of 1000 $CTND
-      const cap = 1000;
+      const cap = amount;
       await goToTime(end);
       await sale.setIndividualCap(cap, { gasLimit: 10000000 });
 
@@ -308,12 +325,12 @@ describe("Sale", () => {
     });
 
     it("does not allow double refunds", async () => {
-      const amount = 1000;
+      const amount = parseUnits("10");
 
-      await sale.connect(alice).buy(amount * 2);
+      await sale.connect(alice).buy(amount.mul(2));
 
       // set a cap of 1000 $CTND
-      const cap = 1000;
+      const cap = amount;
       await goToTime(end);
       await sale.setIndividualCap(cap, { gasLimit: 10000000 });
 

@@ -4,7 +4,8 @@
   "workspaces": {
     "packages": [
       "packages/contracts",
-      "packages/web"
+      "packages/web",
+      "packages/dev"
     ],
     "nohoist": [
       "**/@openzeppelin/**",
@@ -15,19 +16,21 @@
       "**/typescript/**",
       "**/ts-node/**",
       "**/mocha/**",
-      "@typescript-eslint/**"
+      "@typescript-eslint/**",
+      "concurrently"
     ]
   },
   "scripts": {
-    "contracts:dev": "yarn workspace @discovery-dao/contracts dev",
+    "dev": "yarn workspace @discovery-dao/dev all",
+    "dev:contracts": "yarn workspace @discovery-dao/contracts dev",
+    "dev:web": "yarn workspace @discovery-dao/web start",
     "contracts:export": "yarn workspace @discovery-dao/contracts export",
     "contracts:compile": "yarn workspace @discovery-dao/contracts compile",
     "prepare": "husky install",
     "pre-commit": "yarn workspace @discovery-dao/web precommit",
     "web:bundle": "yarn workspace @discovery-dao/web bundle",
     "web:lint": "yarn workspace @discovery-dao/web lint",
-    "web:copy:contracts": "yarn workspace @discovery-dao/web copy:contracts",
-    "web:start": "yarn workspace @discovery-dao/web start"
+    "web:copy:contracts": "yarn workspace @discovery-dao/web copy:contracts"
   },
   "devDependencies": {
     "husky": "^7.0.2"

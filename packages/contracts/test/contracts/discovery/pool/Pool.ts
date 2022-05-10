@@ -27,7 +27,7 @@ describe("Pool", () => {
   beforeEach(async () => {
     [owner, alice, bob] = await ethers.getSigners();
 
-    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD");
+    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
     project = await new MockProject__factory(owner).deploy();
     await project.test_createStakersPool(1000, aUSD.address);
     pool = TestPool__factory.connect(await project.stakersPool(), owner);

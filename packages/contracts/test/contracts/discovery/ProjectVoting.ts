@@ -34,7 +34,7 @@ describe("ProjectVoting", () => {
     votingStart = (await currentTimestamp()) + oneDay;
     votingEnd = votingStart + oneDay * 10;
 
-    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD");
+    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
   });
 
   describe("no projects", () => {

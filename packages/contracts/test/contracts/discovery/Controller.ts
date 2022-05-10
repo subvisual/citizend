@@ -43,7 +43,7 @@ describe("Controller", () => {
     registry = await new FractalRegistry__factory(owner).deploy(owner.address);
     citizend = await new Citizend__factory(owner).deploy(owner.address);
     staking = await new Staking__factory(owner).deploy(citizend.address);
-    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD");
+    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
     projectToken = await new MockERC20__factory(owner).deploy(
       "ProjectToken",
       "ProjectToken",

@@ -61,11 +61,17 @@ describe("Batch", () => {
       registry.address,
       staking.address,
       citizend.address
-    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD");
+    );
+    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
 
     fakeProject = await registerProject(owner, projectToken, controller, aUSD);
     await makeProjectReady(fakeProject, projectToken);
-    anotherFakeProject = await registerProject(owner, projectToken, controller, aUSD);
+    anotherFakeProject = await registerProject(
+      owner,
+      projectToken,
+      controller,
+      aUSD
+    );
     await makeProjectReady(anotherFakeProject, projectToken);
 
     batch = await setUpBatch(
@@ -195,7 +201,8 @@ describe("Batch", () => {
       const newProject: Project = await registerProject(
         owner,
         projectToken,
-        controller
+        controller,
+        aUSD
       );
       await makeProjectReady(newProject, projectToken);
       await controller.createBatch([newProject.address], 1);

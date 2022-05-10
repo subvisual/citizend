@@ -18,7 +18,7 @@ const { parseUnits } = ethers.utils;
 export async function registerProject(
   owner: SignerWithAddress,
   projectToken: MockERC20,
-  controller: Controller
+  controller: Controller,
   investmentToken: MockERC20
 ): Promise<Project> {
   const tx = await controller.registerProject(
@@ -26,7 +26,7 @@ export async function registerProject(
     projectToken.address,
     parseUnits("1000"),
     parseUnits("2"),
-    investmentToken
+    investmentToken.address
   );
 
   const event = await findEvent(tx, "ProjectRegistered");

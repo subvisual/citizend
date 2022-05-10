@@ -41,7 +41,8 @@ interface IController {
         string calldata _description,
         address _token,
         uint256 _saleSupply,
-        uint256 _rate
+        uint256 _rate,
+        address _investmentToken
     ) external;
 
     /// Checks if a project is included in the given batch

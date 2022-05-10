@@ -136,6 +136,28 @@ abstract contract RisingTide {
         }
     }
 
+    /**
+     * Applies the individual cap to the given amount
+     *
+     * @param _amount amount to apply cap to
+     * @return capped amount
+     */
+    function risingTide_applyCap(uint256 _amount)
+        public
+        view
+        returns (uint256)
+    {
+        if (!risingTide_isValidCap()) {
+            return 0;
+        }
+
+        if (_amount >= individualCap) {
+            return individualCap;
+        }
+
+        return _amount;
+    }
+
     //
     // Internal API
     //

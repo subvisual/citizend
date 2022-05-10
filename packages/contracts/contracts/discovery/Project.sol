@@ -15,6 +15,16 @@ contract Project is IProject, ERC165 {
     // must be deployed via the Controller
     // will have a similar role as the CTND Vesting contract
 
+    //
+    // Constants
+    //
+
+    uint256 public constant MUL = 10**18;
+
+    //
+    // State
+    //
+
     // The IController instance in control of this project
     address public immutable controller;
 
@@ -46,7 +56,8 @@ contract Project is IProject, ERC165 {
         string memory _description,
         address _token,
         uint256 _saleSupply,
-        uint256 _rate
+        uint256 _rate,
+        address _investmentToken
     ) {
         controller = msg.sender;
 
@@ -58,8 +69,12 @@ contract Project is IProject, ERC165 {
         uint256 stakersPoolSupply = saleSupply / 2;
         uint256 peoplesPoolSupply = saleSupply - stakersPoolSupply;
 
-        stakersPool = address(new StakersPool(stakersPoolSupply));
-        peoplesPool = address(new PeoplesPool(peoplesPoolSupply));
+        stakersPool = address(
+            new StakersPool(stakersPoolSupply, _investmentToken)
+        );
+        peoplesPool = address(
+            new PeoplesPool(peoplesPoolSupply, _investmentToken)
+        );
     }
 
     //
@@ -123,6 +138,26 @@ contract Project is IProject, ERC165 {
         returns (bool)
     {
         return hasTokens() && approvedByManager && approvedByLegal;
+    }
+
+    /// @inheritdoc IProject
+    function investmentTokenToToken(uint256 _amount)
+        public
+        view
+        override(IProject)
+        returns (uint256)
+    {
+        return (_amount * MUL) / rate;
+    }
+
+    /// @inheritdoc IProject
+    function tokenToInvestmentToken(uint256 _amount)
+        public
+        view
+        override(IProject)
+        returns (uint256)
+    {
+        return (_amount * rate) / MUL;
     }
 
     //

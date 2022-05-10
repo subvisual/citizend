@@ -6,6 +6,7 @@ import {
   Batch,
   Batch__factory,
   Project,
+  Project__factory,
   MockERC20,
   MockERC20__factory,
   Controller,
@@ -37,6 +38,7 @@ describe("Batch", () => {
   let projectToken: MockERC20;
   let fakeProject: Project;
   let anotherFakeProject: Project;
+  let aUSD: MockERC20;
   let oneDay: number;
   let votingStart: number;
   let votingEnd: number;
@@ -60,10 +62,16 @@ describe("Batch", () => {
       staking.address,
       citizend.address
     );
+    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
 
-    fakeProject = await registerProject(owner, projectToken, controller);
+    fakeProject = await registerProject(owner, projectToken, controller, aUSD);
     await makeProjectReady(fakeProject, projectToken);
-    anotherFakeProject = await registerProject(owner, projectToken, controller);
+    anotherFakeProject = await registerProject(
+      owner,
+      projectToken,
+      controller,
+      aUSD
+    );
     await makeProjectReady(anotherFakeProject, projectToken);
 
     batch = await setUpBatch(
@@ -193,7 +201,8 @@ describe("Batch", () => {
       const newProject: Project = await registerProject(
         owner,
         projectToken,
-        controller
+        controller,
+        aUSD
       );
       await makeProjectReady(newProject, projectToken);
       await controller.createBatch([newProject.address], 1);

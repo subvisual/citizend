@@ -7,6 +7,8 @@ import {
   TestProjectVoting__factory,
   Project,
   Project__factory,
+  MockERC20,
+  MockERC20__factory,
 } from "../../../src/types";
 
 import { goToTime, currentTimestamp } from "../../timeHelpers";
@@ -20,6 +22,7 @@ describe("ProjectVoting", () => {
   let carol: SignerWithAddress;
   let fakeToken: SignerWithAddress;
 
+  let aUSD: MockERC20;
   let projectVoting: TestProjectVoting;
   let oneDay: number;
   let votingStart: number;
@@ -30,6 +33,8 @@ describe("ProjectVoting", () => {
     oneDay = 60 * 60 * 24;
     votingStart = (await currentTimestamp()) + oneDay;
     votingEnd = votingStart + oneDay * 10;
+
+    aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
   });
 
   describe("no projects", () => {
@@ -250,7 +255,8 @@ describe("ProjectVoting", () => {
       name,
       fakeToken.address,
       1000,
-      10
+      10,
+      aUSD.address
     );
   }
 });

@@ -1,0 +1,30 @@
+name: Contracts - Foundry Test Suite
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  contracts-test-suite:
+    runs-on: ubuntu-latest
+
+    env:
+      FORCE_COLOR: true
+      REPORT_GAS: true
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - run: forge test -vvv
+        working-directory: packages/contracts

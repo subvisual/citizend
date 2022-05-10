@@ -79,10 +79,20 @@ abstract contract ProjectVoting is ICommon {
 
     function projectVoting_finalBonus() public view virtual returns (int256);
 
+    function projectVoting_voteLimitPerUser()
+        public
+        view
+        virtual
+        returns (uint256);
+
     function _vote(address projectAddress) internal {
         require(
             !userHasVotedForProject[projectAddress][msg.sender],
             "already voted in this project"
+        );
+        require(
+            userVoteCount[msg.sender] < projectVoting_voteLimitPerUser(),
+            "vote limit reached"
         );
         _defineWinners();
         require(

@@ -126,6 +126,23 @@ contract Batch is IBatch, ICommon, ProjectVoting {
             investmentEnd <= block.timestamp;
     }
 
+    function projectVoting_voteLimitPerUser()
+        public
+        view
+        override(ProjectVoting)
+        returns (uint256)
+    {
+        return slotCount;
+    }
+
+    function hasVotedForProject(address _user, address _project)
+        external
+        view
+        returns (bool)
+    {
+        return userHasVotedForProject[_project][_user];
+    }
+
     function setVotingPeriod(
         uint256 start,
         uint256 end,

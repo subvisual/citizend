@@ -65,6 +65,15 @@ contract TestProjectVoting is ProjectVoting {
         return 0;
     }
 
+    function projectVoting_voteLimitPerUser()
+        public
+        view
+        override(ProjectVoting)
+        returns (uint256)
+    {
+        return numSlots;
+    }
+
     function test_vote(address projectAddress) external {
         _vote(projectAddress);
     }

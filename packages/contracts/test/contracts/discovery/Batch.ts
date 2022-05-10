@@ -197,6 +197,42 @@ describe("Batch", () => {
       ).to.be.revertedWith("already voted in this project");
     });
 
+    it("does not give users more votes than slots", async () => {
+      fakeProject = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD
+      );
+      await makeProjectReady(fakeProject, projectToken);
+      anotherFakeProject = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD
+      );
+      await makeProjectReady(anotherFakeProject, projectToken);
+      batch = await setUpBatch(
+        controller,
+        [fakeProject, anotherFakeProject],
+        owner,
+        1
+      );
+      await controller.setBatchVotingPeriod(
+        batch.address,
+        votingStart + oneDay,
+        votingEnd,
+        0
+      );
+      await goToTime(votingStart + oneDay);
+
+      await batch.connect(alice).vote(fakeProject.address);
+
+      await expect(
+        batch.connect(alice).vote(anotherFakeProject.address)
+      ).to.be.revertedWith("vote limit reached");
+    });
+
     it("does not allow a user to vote before the voting period is set", async () => {
       const newProject: Project = await registerProject(
         owner,

@@ -198,11 +198,32 @@ describe("Batch", () => {
     });
 
     it("does not give users more votes than slots", async () => {
-      batch = await new Batch__factory(owner).deploy(
-        [fakeProject.address, anotherFakeProject.address],
+      fakeProject = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD
+      );
+      await makeProjectReady(fakeProject, projectToken);
+      anotherFakeProject = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD
+      );
+      await makeProjectReady(anotherFakeProject, projectToken);
+      batch = await setUpBatch(
+        controller,
+        [fakeProject, anotherFakeProject],
+        owner,
         1
       );
-      await batch.setVotingPeriod(votingStart + oneDay, votingEnd);
+      await controller.setBatchVotingPeriod(
+        batch.address,
+        votingStart + oneDay,
+        votingEnd,
+        0
+      );
       await goToTime(votingStart + oneDay);
 
       await batch.connect(alice).vote(fakeProject.address);

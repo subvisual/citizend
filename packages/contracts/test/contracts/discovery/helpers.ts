@@ -47,11 +47,12 @@ export async function makeProjectReady(
 export async function setUpBatch(
   controller: Controller,
   projects: Project[],
-  owner: SignerWithAddress
+  owner: SignerWithAddress,
+  slotCount?: number
 ): Promise<Batch> {
   await controller.createBatch(
     projects.map((project) => project.address),
-    projects.length
+    slotCount || projects.length
   );
   const batch: Batch = await Batch__factory.connect(
     await controller.projectsToBatches(projects[0].address),

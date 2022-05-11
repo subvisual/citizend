@@ -152,7 +152,7 @@ describe("Pool", () => {
 
     it("is the full amount if the project has lost", async () => {
       await project.connect(alice).invest(0, 200);
-      await batch.test_setProjectStatus(project.address, 2);
+      await batch.mock_setProjectStatus(project.address, 2);
 
       expect(await pool.refundableAmount(alice.address)).to.equal(200);
     });

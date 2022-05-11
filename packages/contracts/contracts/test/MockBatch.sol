@@ -56,7 +56,7 @@ contract MockBatch is IBatch {
         return projectsStatus[projectAddress];
     }
 
-    function test_setProjectStatus(address projectAddress, uint256 status)
+    function mock_setProjectStatus(address projectAddress, uint256 status)
         external
     {
         projectsStatus[projectAddress] = ProjectStatus(status);

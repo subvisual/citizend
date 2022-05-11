@@ -6,9 +6,8 @@
 
 import { NumericValue, roundDown, roundUp } from './math';
 import BigNumber from 'bignumber.js';
+import dayjs from 'src/core/utils/dayjs';
 import dropWhile from 'lodash/dropWhile';
-import format from 'date-fns/format';
-import parseISO from 'date-fns/parseISO';
 import size from 'lodash/size';
 import takeWhile from 'lodash/takeWhile';
 
@@ -228,18 +227,13 @@ export function formatCompactNumber(
 }
 
 /**
- * Export `formatDate`.
+ * Export `formatFromUnix`.
  */
 
-export function formatDate(date: string, options?: { hideHours: boolean }) {
-  const { hideHours } = options ?? {};
-
+export function formatFromUnix(date: number) {
   if (!date) {
     return '';
   }
 
-  return format(
-    parseISO(date),
-    hideHours ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm OOOO'
-  );
+  return dayjs.unix(date).utc().format('DD/MM/YYYY hh:mm Z');
 }

@@ -13,7 +13,7 @@ async function main() {
     signer
   )) as Vesting;
 
-  const now = Math.floor(new Date(2022, 4, 10, 21, 0).getTime() / 1000);
+  const now = Math.floor(new Date(2022, 4, 11, 10, 40).getTime() / 1000);
   await vesting.setStartTime(now);
 }
 

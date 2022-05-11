@@ -15,7 +15,7 @@ import { currencyConfig } from 'src/core/constants';
 import {
   formatCompactNumber,
   formatCurrency,
-  formatDate
+  formatFromUnix
 } from 'src/core/utils/formatters';
 
 import { media } from 'src/styles/breakpoints';
@@ -23,6 +23,7 @@ import { useAppStatus } from 'src/hooks/use-app-status';
 import { useIsKYCApproved } from 'src/hooks/use-kyc-status';
 import { useWeb3React } from '@web3-react/core';
 import React, { useState } from 'react';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 
 /**
@@ -54,7 +55,7 @@ const getReferralStorageKey = (address: string) => `referralCode${address}`;
 export function DashboardScreen() {
   const { account } = useWeb3React<Web3Provider>();
   const { balance, contributions, price, raised } = useSale() as SaleState;
-  const { state, vestingStart } = useAppStatus();
+  const { isLoading, state, vestingStart } = useAppStatus();
   const kycApproved = useIsKYCApproved();
   const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(() => {
     return !window.localStorage.getItem(getReferralStorageKey(account));
@@ -67,24 +68,25 @@ export function DashboardScreen() {
       <StyledContainer>
         <ProjectInfoCard
           contributions={contributions}
+          isLoading={isLoading}
           myContribution={formatCurrency(balance, currencyConfig.aUsd)}
           price={formatCurrency(price, currencyConfig.aUsd)}
           raised={formatCompactNumber(raised, currencyConfig.aUsd)}
-          vestingStart={formatDate(vestingStart)}
+          vestingStart={formatFromUnix(vestingStart)}
         />
 
-        {state === 'COUNTDOWN' && !!vestingStart && (
+        {!isLoading && state === 'COUNTDOWN' && !isNaN(vestingStart) && (
           <Countdown
-            date={vestingStart}
+            date={dayjs.unix(vestingStart).toISOString()}
             title={'Vesting period starting in:'}
           />
         )}
 
-        {state === 'SALE' && (
+        {!isLoading && state === 'SALE' && (
           <SaleForm disabled={!kycApproved} tokenPrice={price} />
         )}
 
-        {state === 'VESTING' && <Vesting />}
+        {!isLoading && state === 'VESTING' && <Vesting />}
       </StyledContainer>
 
       <ShareReferralModal

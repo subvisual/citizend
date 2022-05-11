@@ -105,12 +105,13 @@ export function useSale() {
 async function saleBuy(options: BuyPayload): Promise<Record<string, any>> {
   const { address, amount, contracts, signer } = options;
   const value = BigNumber.from(amount || '0');
-  const paymentAmount = utils.parseUnits(amount, 12);
 
   if (!contracts?.sale1 || value.lte(0)) {
     return;
   }
 
+  const aUsdDecimals = await contracts.aUsd.decimals();
+  const paymentAmount = utils.parseUnits(amount, aUsdDecimals);
   const allowance = await contracts.aUsd.allowance(
     address,
     contracts.sale1.address

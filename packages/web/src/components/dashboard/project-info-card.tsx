@@ -128,7 +128,7 @@ export function ProjectInfoCard(props: Props) {
           {'Citizend token sale'}
         </Text>
 
-        {vestingStart && (
+        {!!vestingStart && (
           <>
             <Text noMargin variant={'small'}>
               {'Vesting starting at:'}

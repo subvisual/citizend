@@ -8,7 +8,7 @@ export const currencyConfig = {
     decimalPlaces: 12,
     decimalPlacesToDisplay: 6,
     skipTrailingZeros: true,
-    symbol: '$'
+    symbol: undefined
   },
   ctnd: {
     currency: 'CTND',

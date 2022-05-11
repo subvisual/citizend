@@ -10,7 +10,6 @@ import { formatCurrency } from 'src/core/utils/formatters';
 import { media } from 'src/styles/breakpoints';
 import { useClaim, useRefund, useVesting } from 'src/hooks/use-vesting';
 import React, { useMemo } from 'react';
-import dayjs from 'src/core/utils/dayjs';
 import styled from 'styled-components';
 
 /**
@@ -27,19 +26,6 @@ const Grid = styled.section`
     grid-template-columns: 2fr 1fr 1fr;
   `}
 `;
-
-/**
- * `getFirstDayOfNextMonth`.
- */
-
-function getFirstDayOfNextMonth() {
-  const now = dayjs();
-
-  return now
-    .month(now.month() + 1)
-    .date(1)
-    .format('DD/MM/YYYY');
-}
 
 /**
  * Export `Vesting` component.
@@ -65,7 +51,7 @@ export function Vesting() {
   return (
     <Grid>
       <InfoCard
-        nextRelease={getFirstDayOfNextMonth()}
+        nextRelease={vestingState.nextRelease}
         tokens={tokens}
         totalClaimed={totalClaimed}
       />

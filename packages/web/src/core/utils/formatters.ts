@@ -59,12 +59,53 @@ export type DateTimeOptions = {
 };
 
 /**
+ * `replaceCryptoSymbol` util.
+ */
+
+function replaceCryptoSymbol(value: string, options: CurrencyOptions) {
+  const { currency, symbol } = options;
+  const currencySymbol = symbol ?? currency;
+  const whitespace = size(symbol ?? currency) > 1 ? ' ' : '';
+
+  return value
+    .replace(/^BTC */, `${currencySymbol}${whitespace}`)
+    .replace(/^-BTC */, `${currencySymbol}${whitespace}`)
+    .replace(/ *BTC$/, `${whitespace}${currencySymbol}`);
+}
+
+/**
+ * `formatCryptoParts` util.
+ */
+
+function formatCryptoParts(
+  formattedParts: Intl.NumberFormatPart[],
+  options: CurrencyOptions
+) {
+  const [currencyPart, literalPart, ...rest] = formattedParts;
+
+  // Force currency to the right side.
+  if (currencyPart.type === 'currency' && literalPart.type === 'literal') {
+    const switchedParts = [
+      ...rest.map(({ value }) => value),
+      literalPart?.value,
+      currencyPart?.value
+    ];
+
+    return replaceCryptoSymbol(switchedParts.join(''), options);
+  }
+
+  return replaceCryptoSymbol(
+    formattedParts.map(({ value }) => value).join(''),
+    options
+  );
+}
+
+/**
  * Currency formatter.
  */
 
 function currencyFormatter(options: NumberOptions): Intl.NumberFormat {
   const { decimalPlacesToDisplay, skipTrailingZeros, ...rest } = options;
-
   const maximumFractionDigits = Math.min(
     decimalPlacesToDisplay ?? 2,
     maximumDecimalPlaces
@@ -168,12 +209,7 @@ export function formatCurrency(
         style: 'currency'
       });
 
-      return formattedParts
-        .map(({ value }) => value)
-        .join('')
-        .replace(/^BTC */, `${currencySymbol}${whitespace}`)
-        .replace(/^-BTC */, `${currencySymbol}${whitespace}`)
-        .replace(/ *BTC$/, `${whitespace}${currencySymbol}`);
+      return formatCryptoParts(formattedParts, options);
     } catch (error) {
       return fallback;
     }
@@ -188,7 +224,7 @@ export function formatCompactNumber(
   value: NullableNumber,
   options?: CurrencyOptions
 ): string {
-  const { currency, decimalPlacesToDisplay = 1, symbol } = options ?? {};
+  const { currency, decimalPlacesToDisplay = 1 } = options ?? {};
   const numericValue = convertNumberToString(value ?? '0');
   const [integer, fraction = ''] = numericValue.split('.');
   const compactSignificantDigits = integer.length % 3 || 3;
@@ -210,19 +246,15 @@ export function formatCompactNumber(
       style: currency ? 'currency' : undefined
     }).format(truncatedValue);
   } catch (error) {
-    const whitespace = size(symbol ?? currency) > 1 ? ' ' : '';
-
-    return new Intl.NumberFormat(locale, {
+    const formattedParts = new Intl.NumberFormat(locale, {
       compactDisplay: 'short',
       currency: 'BTC',
       maximumSignificantDigits,
       notation: 'compact',
       style: currency ? 'currency' : undefined
-    })
-      .format(truncatedValue)
-      .replace(/^BTC */, `${symbol ?? currency}${whitespace}`)
-      .replace(/^-BTC */, `${symbol ?? currency}${whitespace}`)
-      .replace(/ *BTC$/, `${whitespace}${symbol ?? currency}`);
+    }).formatToParts(truncatedValue);
+
+    return formatCryptoParts(formattedParts, options);
   }
 }
 

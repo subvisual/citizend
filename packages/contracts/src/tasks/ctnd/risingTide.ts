@@ -15,7 +15,7 @@ task("ctnd:risingTide", "Compute Rising Tide cap for a $CTND sale")
 
     const cap = await computeRisingTideCap(saleContract, receipt!.blockNumber);
 
-    await submitRisingTideCap(ethers, sale, cap);
+    await submitRisingTideCap(ethers, saleContract, cap);
   });
 
 export async function computeRisingTideCap(sale: any, fromBlock: number) {

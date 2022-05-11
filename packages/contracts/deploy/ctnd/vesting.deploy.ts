@@ -7,11 +7,12 @@ const func: DeployFunction = async function (hre) {
   const { get } = hre.deployments;
 
   const citizend = await get("Citizend");
+  const sale1 = await get("Sale1");
 
   await acalaDeploy(hre, "Vesting", {
     log: true,
     from: deployer,
-    args: [3, citizend.address, [], 10000], // TODO input correct private sale value
+    args: [3, citizend.address, [sale1.address], 10000], // TODO input correct private sale value
   });
 };
 

@@ -12,6 +12,7 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { useContracts } from 'src/context/contracts';
 import { useWeb3React } from '@web3-react/core';
+import dayjs from 'src/core/utils/dayjs';
 
 /**
  * Export `VestingState` type.
@@ -26,6 +27,19 @@ export type VestingState = {
   refundable: string;
   tokens: string;
 };
+
+/**
+ * `getFirstDayOfNextMonth`.
+ */
+
+function getFirstDayOfNextMonth() {
+  const now = dayjs();
+
+  return now
+    .month(now.month() + 1)
+    .date(1)
+    .format('DD/MM/YYYY');
+}
 
 /**
  * Export `useVesting` hook.
@@ -45,25 +59,23 @@ export function useVesting() {
   const { account } = useWeb3React<Web3Provider>();
   const contracts = useContracts();
   const getVestingState = useCallback(async () => {
-    if (!contracts?.vesting) {
+    if (!contracts?.vesting || !contracts?.sale1 || !contracts?.citizend) {
       return;
     }
 
     try {
+      const claimableTotal = await contracts.vesting.claimable(account);
       const claimed = await contracts.vesting.claimed(account);
-      const claimablePublic = await contracts.vesting.claimablePublic(account);
+      const refundable = await contracts.sale1.refundAmount(account);
       const tokens = await contracts.citizend.balanceOf(account);
-      const claimablePrivate = await contracts.vesting.claimablePrivate(
-        account
-      );
 
       setState({
         alreadyClaimed: claimed.toString(),
-        claimEnabled: claimablePublic.gt(0),
-        claimable: claimablePublic.toString(),
-        nextRelease: 'TODO',
-        refundEnabled: claimablePrivate.gt(0),
-        refundable: claimablePrivate.toString(),
+        claimEnabled: claimableTotal.gt(0),
+        claimable: claimableTotal.toString(),
+        nextRelease: getFirstDayOfNextMonth(),
+        refundEnabled: refundable.gt(0),
+        refundable: refundable.toString(),
         tokens: tokens.toString()
       });
     } catch (error) {

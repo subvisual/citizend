@@ -17,7 +17,8 @@ const appState = {
   comingSoon: 'SOON',
   countdown: 'COUNTDOWN',
   sale: 'SALE',
-  vesting: 'VESTING'
+  vesting: 'VESTING',
+  vestingUnknown: 'VESTING_UNKNOWN'
 } as const;
 
 /**
@@ -106,16 +107,20 @@ export function useAppStatus() {
       vestingStart: !!vestingStart?.toNumber && vestingStart.toNumber()
     });
 
-    if (dayjs().isAfter(vestingStartDate)) {
-      return getStatus('VESTING');
+    if (dayjs().isAfter(saleStartDate) && dayjs().isBefore(saleEndDate)) {
+      return getStatus('SALE');
+    }
+
+    if (vestingStart.eq(0)) {
+      return getStatus('VESTING_UNKNOWN');
     }
 
     if (dayjs().isAfter(saleEndDate) && dayjs().isBefore(vestingStartDate)) {
       return getStatus('COUNTDOWN');
     }
 
-    if (dayjs().isAfter(saleStartDate) && dayjs().isBefore(saleEndDate)) {
-      return getStatus('SALE');
+    if (dayjs().isAfter(vestingStartDate)) {
+      return getStatus('VESTING');
     }
 
     return getStatus('SOON');

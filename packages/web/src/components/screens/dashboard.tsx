@@ -9,6 +9,7 @@ import { ProjectInfoCard } from 'src/components/dashboard/project-info-card';
 import { SaleForm } from 'src/components/dashboard/sale-form';
 import { SaleState, useSale } from 'src/hooks/use-sale';
 import { ShareReferralModal } from 'src/components/modals/share-referral-modal';
+import { UnknownDate } from 'src/components/unknown-date';
 import { Vesting } from 'src/components/vesting';
 import { Web3Provider } from '@ethersproject/providers';
 import { currencyConfig } from 'src/core/constants';
@@ -72,7 +73,9 @@ export function DashboardScreen() {
           myContribution={formatCurrency(balance, currencyConfig.aUsd)}
           price={formatCurrency(price, currencyConfig.aUsd)}
           raised={formatCompactNumber(raised, currencyConfig.aUsd)}
-          vestingStart={formatFromUnix(vestingStart)}
+          vestingStart={
+            vestingStart === 0 ? undefined : formatFromUnix(vestingStart)
+          }
         />
 
         {!isLoading && state === 'COUNTDOWN' && !isNaN(vestingStart) && (
@@ -82,6 +85,7 @@ export function DashboardScreen() {
           />
         )}
 
+        {!isLoading && state === 'VESTING_UNKNOWN' && <UnknownDate />}
         {!isLoading && state === 'SALE' && (
           <SaleForm disabled={!kycApproved} tokenPrice={price} />
         )}

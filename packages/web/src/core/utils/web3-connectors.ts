@@ -29,8 +29,8 @@ export const chainConfigs = {
     chainName: 'Mandala TC7',
     nativeCurrency: {
       decimals: 12,
-      name: 'Acala USD',
-      symbol: 'aUSD'
+      name: 'Acala',
+      symbol: 'ACA'
     },
     rpcUrls: ['https://tc7-eth.aca-dev.network']
   },
@@ -40,7 +40,7 @@ export const chainConfigs = {
     chainName: 'Karura',
     nativeCurrency: {
       decimals: 12,
-      name: 'Karura USD',
+      name: 'Karura',
       symbol: 'KAR'
     },
     rpcUrls: ['https://eth-rpc-karura.aca-api.network/']
@@ -51,8 +51,8 @@ export const chainConfigs = {
     chainName: 'Localhost',
     nativeCurrency: {
       decimals: 12,
-      name: 'Acala USD',
-      symbol: 'aUSD'
+      name: 'Acala',
+      symbol: 'ACA'
     },
     rpcUrls: ['/']
   }

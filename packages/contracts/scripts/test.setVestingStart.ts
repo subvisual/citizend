@@ -13,8 +13,14 @@ async function main() {
     signer
   )) as Vesting;
 
-  const now = Math.floor(new Date(2022, 4, 11, 10, 40).getTime() / 1000);
-  await vesting.setStartTime(now);
+  await vesting.setStartTime(beginningOfNextMonthTimestamp());
+}
+
+function beginningOfNextMonthTimestamp(): number {
+  const date = new Date();
+  const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1, 12);
+
+  return Math.floor(nextMonth.getTime() / 1000);
 }
 
 main()

@@ -6,7 +6,7 @@ const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
   const { execute, read } = hre.deployments;
 
-  if (getNetworkName() != "mandala") {
+  if (!["mandala", "hardhat"].includes(getNetworkName())) {
     return;
   }
 
@@ -29,7 +29,8 @@ const func: DeployFunction = async function (hre) {
   );
 };
 
-func.id = "fractal-registry.delegate";
-func.dependencies = ["fractal-registry", "fractal-registry.registry"];
+func.id = "fractal-registry.test.delegate";
+func.tags = ["fractal-registry", "fractal-registry.test.delegate"];
+func.dependencies = ["fractal-registry.deploy"];
 
 export default func;

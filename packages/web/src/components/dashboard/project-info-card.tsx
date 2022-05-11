@@ -3,6 +3,7 @@
  */
 
 import { Card } from 'src/components/core/card';
+import { Loader } from 'src/components/core/loading';
 import { Separator } from 'src/components/core/separator';
 import { Text } from 'src/components/core/text';
 import { media } from 'src/styles/breakpoints';
@@ -14,8 +15,9 @@ import styled from 'styled-components';
  */
 
 type Props = {
-  myContribution: string;
   contributions: string;
+  isLoading: boolean;
+  myContribution: string;
   price: string;
   raised: string;
   vestingStart: string;
@@ -34,6 +36,20 @@ const StyledCard = styled(Card)`
   ${media.min.md`
     flex-direction: row;
   `}
+`;
+
+/**
+ * `LoadingCard` styled component.
+ */
+
+const LoadingCard = styled(Card)`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 2rem;
+  justify-content: center;
+  padding-top: 5rem;
+  position: relative;
 `;
 
 /**
@@ -80,7 +96,28 @@ const Value = styled(Text).attrs({ as: 'p' })`
  */
 
 export function ProjectInfoCard(props: Props) {
-  const { contributions, myContribution, price, raised, vestingStart } = props;
+  const {
+    contributions,
+    isLoading,
+    myContribution,
+    price,
+    raised,
+    vestingStart
+  } = props;
+
+  if (isLoading) {
+    return (
+      <LoadingCard>
+        <Text as={'p'} variant={'body2'}>
+          {'Loading'}
+        </Text>
+        <Loader size={1} />
+        <Text as={'p'} variant={'body'}>
+          {'We are fetching blockchain data...'}
+        </Text>
+      </LoadingCard>
+    );
+  }
 
   return (
     <StyledCard>

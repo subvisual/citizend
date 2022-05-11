@@ -38,15 +38,15 @@ async function networkConfigs(chainId: number): Promise<Config> {
       return {
         ctndSale1: {
           start: now,
-          end: now + THIRTY_MIN,
+          end: now + TEN_MIN,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: now + THIRTY_MIN * 2,
+          start: now + TEN_MIN,
         },
         ctndSale2: {
-          start: now + THIRTY_MIN,
-          end: now + THIRTY_MIN * 2,
+          start: now + TEN_MIN,
+          end: now + TEN_MIN * 2,
           supply: parseUnits("10"),
         },
         registry: {
@@ -122,4 +122,5 @@ function beginningOfNextMonthTimestamp(): number {
   return Math.floor(nextMonth.getTime() / 1000);
 }
 
+const TEN_MIN = 30 * 60;
 const THIRTY_MIN = 30 * 60;

@@ -261,6 +261,18 @@ describe("Sale", () => {
       expect(await sale.refundAmount(alice.address)).to.equal(0);
     });
 
+    it("is 0 if the amount has already been refunded", async () => {
+      const amount = parseUnits("10");
+
+      await sale.connect(alice).buy(amount.mul(2));
+
+      await goToTime(end);
+      await sale.setIndividualCap(amount, { gasLimit: 10000000 });
+      await sale.refund(alice.address);
+
+      expect(await sale.refundAmount(alice.address)).to.equal(0);
+    });
+
     it("is 0 if the individual cap is higher than the invested total", async () => {
       await sale.connect(alice).buy(parseUnits("1"));
       await sale.connect(bob).buy(parseUnits("9"));

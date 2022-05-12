@@ -252,7 +252,12 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
             return 0;
         }
 
-        uint256 uncapped = accounts[to].uncappedAllocation;
+        Account memory account = accounts[to];
+        if (account.refunded) {
+            return 0;
+        }
+
+        uint256 uncapped = account.uncappedAllocation;
         uint256 capped = allocation(to);
 
         return tokenToPaymentToken(uncapped - capped);

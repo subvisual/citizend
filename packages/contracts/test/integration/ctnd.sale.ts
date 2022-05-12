@@ -66,8 +66,6 @@ describe("Integration", () => {
 
   beforeEach(async () => {
     await fixture();
-
-    await vesting.addSale(sale.address);
   });
 
   describe("refund", () => {

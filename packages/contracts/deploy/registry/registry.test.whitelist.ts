@@ -57,3 +57,5 @@ const func: DeployFunction = async function (hre) {
 func.id = "fractal-registry.test.whitelist";
 func.tags = ["fractal-registry", "fractal-registry.test.whitelist"];
 func.dependencies = ["fractal-registry.deploy"];
+
+export default func;

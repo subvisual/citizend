@@ -15,7 +15,7 @@ export async function acalaDeploy(
 ) {
   const { deploy, execute, getOrNull } = hre.deployments;
 
-  const existing = getOrNull(name);
+  const existing = await getOrNull(name);
 
   const result = await deploy(name, {
     ...opts,

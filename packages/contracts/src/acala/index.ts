@@ -22,6 +22,9 @@ export async function acalaDeploy(
     ...(await acalaDeployParams()),
   });
 
+  if (name === "FractalRegistry") {
+    return;
+  }
   // if ((await isAcala()) && !existing) {
   await execute("EVM", opts, "publishContract", result.address);
   // }

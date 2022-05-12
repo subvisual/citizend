@@ -55,7 +55,7 @@ async function networkConfigs(chainId: number): Promise<Config> {
     }
 
     case "mandala":
-      const start = Math.floor(new Date(2022, 4, 8, 15, 0).getTime() / 1000);
+      const start = Math.floor(new Date(2022, 4, 12, 8, 30).getTime() / 1000);
 
       return {
         ctndSale1: {

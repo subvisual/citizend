@@ -7,8 +7,8 @@ const { hexZeroPad, hexlify } = ethers.utils;
 
 const devWhitelist = [
   "0x74319C333f26677688e58a72C4C0DafC508728d8",
-  "0x0054A49C85a8C8403EDD80f50f520E5104F88Da6",
-  "0x607A1097771bD015Bb32f16C596c8D995b7eaC72",
+  // "0x0054A49C85a8C8403EDD80f50f520E5104F88Da6",
+  // "0x607A1097771bD015Bb32f16C596c8D995b7eaC72",
 ];
 
 const func: DeployFunction = async function (hre) {
@@ -57,5 +57,3 @@ const func: DeployFunction = async function (hre) {
 func.id = "fractal-registry.test.whitelist";
 func.tags = ["fractal-registry", "fractal-registry.test.whitelist"];
 func.dependencies = ["fractal-registry.deploy"];
-
-export default func;

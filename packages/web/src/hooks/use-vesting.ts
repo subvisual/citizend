@@ -12,6 +12,7 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { useContracts } from 'src/context/contracts';
 import { useWeb3React } from '@web3-react/core';
+import { utils } from 'ethers';
 import dayjs from 'src/core/utils/dayjs';
 
 /**
@@ -69,14 +70,17 @@ export function useVesting() {
       const refundable = await contracts.sale1.refundAmount(account);
       const tokens = await contracts.citizend.balanceOf(account);
 
+      const ctndDecimals = await contracts.citizend.decimals();
+      const aUsdDecimals = await contracts.aUsd.decimals();
+
       setState({
-        alreadyClaimed: claimed.toString(),
+        alreadyClaimed: utils.formatUnits(claimed, ctndDecimals),
         claimEnabled: claimableTotal.gt(0),
-        claimable: claimableTotal.toString(),
+        claimable: utils.formatUnits(claimableTotal, ctndDecimals),
         nextRelease: getFirstDayOfNextMonth(),
         refundEnabled: refundable.gt(0),
-        refundable: refundable.toString(),
-        tokens: tokens.toString()
+        refundable: utils.formatUnits(refundable, aUsdDecimals),
+        tokens: utils.formatUnits(tokens, ctndDecimals)
       });
     } catch (error) {
       // Handle error

@@ -1,6 +1,15 @@
 import { network, ethers } from "hardhat";
 import type { BigNumber } from "ethers";
 import dayjs from "dayjs";
+// import utc from "dayjs/plugin/utc";
+// import timezone from "dayjs/plugin/utc";
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+console.log(dayjs().tz("Europe/Lisbon"));
 
 const MANDALA_REGISTRY_ROOT = "0xC3e923e0CE5125088cDa62935056d6B5F14F234c";
 
@@ -30,23 +39,31 @@ const { parseUnits } = ethers.utils;
 async function networkConfigs(chainId: number): Promise<Config> {
   const network = await chainIdToNetwork(chainId);
   const [owner] = await ethers.getSigners();
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
 
-  const now = currentTimestamp();
+  const now = dayjs();
 
   switch (network) {
     case "hardhat": {
+      const saleStart = now;
+      const saleEnd = saleStart.add(5, "minutes");
+      const sale2Start = saleStart.add(2, "minutes");
+      const sale2End = saleEnd;
+      const vestingStart = saleEnd;
+
       return {
         ctndSale1: {
-          start: now,
-          end: now + FIVE_MIN,
+          start: saleStart.unix(),
+          end: saleEnd.unix(),
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: now + FIVE_MIN,
+          start: vestingStart.unix(),
         },
         ctndSale2: {
-          start: now + FIVE_MIN,
-          end: now + FIVE_MIN * 2,
+          start: sale2Start.unix(),
+          end: sale2End.unix(),
           supply: parseUnits("10"),
         },
         registry: {
@@ -56,16 +73,18 @@ async function networkConfigs(chainId: number): Promise<Config> {
     }
 
     case "mandala":
-      const start = Math.floor(new Date(2022, 4, 6, 17, 30).getTime() / 1000);
+      const saleStart = dayjs(); //.tz("2022-5-12 09:00", "Europe/Lisbon");
+      const saleEnd = saleStart.add(20, "minutes");
+      const vestingStart = saleEnd;
 
       return {
         ctndSale1: {
-          start: start,
-          end: start + THIRTY_MIN,
+          start: saleStart.unix(),
+          end: saleEnd.unix(),
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: start + THIRTY_MIN,
+          start: vestingStart.unix(),
         },
         ctndSale2: undefined,
         registry: {
@@ -109,18 +128,3 @@ export const getNetworkName = (): string => {
 export const getNetworkConfig = async () => {
   return await networkConfigs(network.config.chainId!);
 };
-
-function currentTimestamp(): number {
-  const date = new Date();
-  return Math.floor(date.getTime() / 1000);
-}
-
-function beginningOfNextMonthTimestamp(): number {
-  const date = new Date();
-  const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1, 12);
-
-  return Math.floor(nextMonth.getTime() / 1000);
-}
-
-const FIVE_MIN = 5 * 60;
-const THIRTY_MIN = 30 * 60;

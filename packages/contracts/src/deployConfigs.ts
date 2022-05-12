@@ -1,6 +1,5 @@
 import { network, ethers } from "hardhat";
 import type { BigNumber } from "ethers";
-import dayjs from "dayjs";
 
 const MANDALA_REGISTRY_ROOT = "0xC3e923e0CE5125088cDa62935056d6B5F14F234c";
 
@@ -38,15 +37,15 @@ async function networkConfigs(chainId: number): Promise<Config> {
       return {
         ctndSale1: {
           start: now,
-          end: now + THIRTY_MIN,
+          end: now + FIVE_MIN,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: now + THIRTY_MIN * 2,
+          start: now + FIVE_MIN * 2,
         },
         ctndSale2: {
-          start: now + THIRTY_MIN,
-          end: now + THIRTY_MIN * 2,
+          start: now + FIVE_MIN,
+          end: now + FIVE_MIN * 2,
           supply: parseUnits("10"),
         },
         registry: {
@@ -56,16 +55,16 @@ async function networkConfigs(chainId: number): Promise<Config> {
     }
 
     case "mandala":
-      const start = Math.floor(new Date(2022, 4, 6, 17, 30).getTime() / 1000);
+      const start = Math.floor(new Date(2022, 4, 8, 0, 0).getTime() / 1000);
 
       return {
         ctndSale1: {
           start: start,
-          end: start + THIRTY_MIN,
+          end: start + TWENTY_MIN,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: start + THIRTY_MIN,
+          start: start + TWENTY_MIN,
         },
         ctndSale2: undefined,
         registry: {
@@ -122,4 +121,5 @@ function beginningOfNextMonthTimestamp(): number {
   return Math.floor(nextMonth.getTime() / 1000);
 }
 
-const THIRTY_MIN = 30 * 60;
+const FIVE_MIN = 5 * 60;
+const TWENTY_MIN = 30 * 60;

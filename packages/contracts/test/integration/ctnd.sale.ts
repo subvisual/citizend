@@ -1,14 +1,8 @@
-import { ethers, deployments, network } from "hardhat";
+import { ethers, deployments } from "hardhat";
 import { expect } from "chai";
 
 import { time } from "@openzeppelin/test-helpers";
-import {
-  goToTime,
-  increaseTime,
-  decreaseTime,
-  currentDate,
-} from "../timeHelpers";
-import { getNetworkConfig } from "../../src/deployConfigs";
+import { goToTime, increaseTime } from "../timeHelpers";
 
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {
@@ -23,7 +17,6 @@ import {
   FractalRegistry,
   FractalRegistry__factory,
 } from "../../src/types";
-import { parse } from "path";
 
 const { parseUnits, formatBytes32String } = ethers.utils;
 
@@ -41,7 +34,6 @@ describe("Integration", () => {
 
   const fixture = deployments.createFixture(async ({ deployments, ethers }) => {
     await deployments.fixture(["ctnd"]);
-    const { ctndVesting } = await getNetworkConfig();
 
     [owner, alice, seller] = await ethers.getSigners();
 
@@ -70,13 +62,10 @@ describe("Integration", () => {
     await aUSD.connect(alice).approve(secondSale.address, allowance);
     await registry.addUserAddress(alice.address, formatBytes32String("id1"));
     await registry.addUserToList(formatBytes32String("id1"), "plus");
-    await vesting.setStartTime(ctndVesting.start);
   });
 
   beforeEach(async () => {
     await fixture();
-
-    await vesting.addSale(sale.address);
   });
 
   describe("refund", () => {
@@ -333,7 +322,7 @@ describe("Integration", () => {
       await goToTime(await sale.start());
       await sale.connect(alice).buy(parseUnits("2"));
 
-      await goToTime((await vesting.startTime()).sub(1000));
+      await goToTime((await vesting.startTime()).sub(60));
       await sale
         .connect(seller)
         .setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });

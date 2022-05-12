@@ -16,7 +16,7 @@
     "typescript": "^4.6.3"
   },
   "scripts": {
-    "all": "concurrently -n contracts,web \"yarn run contracts\" \"yarn run web\"",
+    "all": "concurrently -n contracts,web \"yarn run contracts\" \"yarn run web\" \"yarn run listen\"",
     "contracts": "yarn workspace @discovery-dao/contracts dev",
     "web": "yarn workspace @discovery-dao/web start",
     "listen": "ts-node index.ts"

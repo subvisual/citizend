@@ -55,16 +55,16 @@ async function networkConfigs(chainId: number): Promise<Config> {
     }
 
     case "mandala":
-      const start = Math.floor(new Date(2022, 4, 8, 10, 0).getTime() / 1000);
+      const start = Math.floor(new Date(2022, 4, 8, 15, 0).getTime() / 1000);
 
       return {
         ctndSale1: {
           start: start,
-          end: start + TWENTY_MIN,
+          end: start + THIRTY_MIN,
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: start + TWENTY_MIN,
+          start: start + THIRTY_MIN,
         },
         ctndSale2: undefined,
         registry: {
@@ -121,13 +121,6 @@ function beginningOfNextMonthTimestamp(): number {
   return Math.floor(nextMonth.getTime() / 1000);
 }
 
-<<<<<<< HEAD
 const FIVE_MIN = 5 * 60;
 const TWENTY_MIN = 30 * 60;
 const THIRTY_MIN = 30 * 60;
-||||||| c0b1d10
-const THIRTY_MIN = 30 * 60;
-=======
-const FIVE_MIN = 5 * 60;
-const TWENTY_MIN = 30 * 60;
->>>>>>> main

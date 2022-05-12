@@ -6,7 +6,7 @@ const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
   const { execute, read } = hre.deployments;
 
-  if (!["mandala", "hardhat"].includes(getNetworkName())) {
+  if (!["hardhat"].includes(getNetworkName())) {
     return;
   }
 

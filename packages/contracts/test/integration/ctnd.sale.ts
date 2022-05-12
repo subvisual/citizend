@@ -322,7 +322,7 @@ describe("Integration", () => {
       await goToTime(await sale.start());
       await sale.connect(alice).buy(parseUnits("2"));
 
-      await goToTime((await vesting.startTime()).sub(1000));
+      await goToTime((await vesting.startTime()).sub(60));
       await sale
         .connect(seller)
         .setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });

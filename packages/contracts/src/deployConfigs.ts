@@ -41,7 +41,7 @@ async function networkConfigs(chainId: number): Promise<Config> {
           supply: parseUnits("10"),
         },
         ctndVesting: {
-          start: now + FIVE_MIN,
+          start: now + FIVE_MIN * 2,
         },
         ctndSale2: {
           start: now + FIVE_MIN,

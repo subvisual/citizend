@@ -15,7 +15,14 @@ import { media } from 'src/styles/breakpoints';
 import { useFractalKYCUrl } from 'src/hooks/use-kyc-url';
 import { useSaleBuy } from 'src/hooks/use-sale';
 import BigNumber from 'bignumber.js';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+
 import styled from 'styled-components';
 
 /**
@@ -92,6 +99,14 @@ function getFieldError(amount: string) {
 }
 
 /**
+ * `getEventValue` util.
+ */
+
+function getEventValue(event: ChangeEvent<HTMLInputElement>) {
+  return event.target.value.replace(/[^0-9.]/g, '');
+}
+
+/**
  * Export `SaleForm` component.
  */
 
@@ -102,8 +117,21 @@ export function SaleForm(props: Props) {
   const fieldError = getFieldError(amount);
   const kycUrl = useFractalKYCUrl();
   const handleOnChange = useCallback(event => {
-    setAmount(event.target.value.replace(/[^0-9]/g, ''));
+    setAmount(getEventValue(event));
   }, []);
+
+  const handleTokenOnChange = useCallback(
+    event => {
+      const value = getEventValue(event);
+      const convertedValue = new BigNumber(tokenPrice)
+        .times(value || 0)
+        .decimalPlaces(4)
+        .toString();
+
+      setAmount(convertedValue);
+    },
+    [tokenPrice]
+  );
 
   const convertedAmount = useMemo(() => {
     return new BigNumber(amount || 0)
@@ -149,9 +177,9 @@ export function SaleForm(props: Props) {
           />
 
           <InputField
-            disabled
             label={'CTND amount'}
             name={'converted'}
+            onChange={handleTokenOnChange}
             placeholder={0}
             suffix={'CTND'}
             value={convertedAmount || 0}

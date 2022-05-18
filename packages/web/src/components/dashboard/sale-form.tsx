@@ -15,7 +15,7 @@ import { media } from 'src/styles/breakpoints';
 import { useFractalKYCUrl } from 'src/hooks/use-kyc-url';
 import { useSaleBuy } from 'src/hooks/use-sale';
 import BigNumber from 'bignumber.js';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -98,7 +98,7 @@ function getFieldError(amount: string) {
 export function SaleForm(props: Props) {
   const [amount, setAmount] = useState<string>('');
   const { disabled, tokenPrice } = props;
-  const { isPending, run: buy } = useSaleBuy();
+  const { isPending, isResolved, run: buy } = useSaleBuy();
   const fieldError = getFieldError(amount);
   const kycUrl = useFractalKYCUrl();
   const handleOnChange = useCallback(event => {
@@ -111,6 +111,12 @@ export function SaleForm(props: Props) {
       .decimalPlaces(4)
       .toString();
   }, [amount, tokenPrice]);
+
+  useEffect(() => {
+    if (isResolved) {
+      setAmount('');
+    }
+  }, [isResolved]);
 
   return (
     <Wrapper>

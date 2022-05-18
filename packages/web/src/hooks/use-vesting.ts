@@ -103,20 +103,37 @@ export function useVesting() {
  */
 
 export function useClaim(options?: AsyncOptions<Record<string, any>>) {
+  const [isConfirming, setIsConfirming] = useState<boolean>(false);
   const { account, library } = useWeb3React<Web3Provider>();
   const signer = library?.getSigner ? library.getSigner(0) : undefined;
   const contracts = useContracts();
-
-  return useAsync({
+  const state = useAsync({
     onReject: onBlockchainReject,
     onResolve: onBlockchainResolve(),
     ...options,
-    deferFn: () => {
+    deferFn: async () => {
+      setIsConfirming(true);
+
       if (!!contracts?.vesting && !!account) {
-        return contracts.vesting.connect(signer).claim(account);
+        try {
+          const tx = await contracts.vesting.connect(signer).claim(account);
+
+          tx.finally(() => {
+            setIsConfirming(false);
+          });
+
+          return tx;
+        } finally {
+          setIsConfirming(false);
+        }
       }
     }
   });
+
+  return {
+    ...state,
+    isConfirming
+  };
 }
 
 /**
@@ -124,18 +141,35 @@ export function useClaim(options?: AsyncOptions<Record<string, any>>) {
  */
 
 export function useRefund(options?: AsyncOptions<Record<string, any>>) {
+  const [isConfirming, setIsConfirming] = useState<boolean>(false);
   const { account, library } = useWeb3React<Web3Provider>();
   const signer = library?.getSigner ? library.getSigner(0) : undefined;
   const contracts = useContracts();
-
-  return useAsync({
+  const state = useAsync({
     onReject: onBlockchainReject,
     onResolve: onBlockchainResolve(),
     ...options,
-    deferFn: () => {
+    deferFn: async () => {
+      setIsConfirming(true);
+
       if (!!contracts?.vesting && !!account) {
-        return contracts.vesting.connect(signer).refund(account);
+        try {
+          const tx = await contracts.vesting.connect(signer).refund(account);
+
+          tx.finally(() => {
+            setIsConfirming(false);
+          });
+
+          return tx;
+        } finally {
+          setIsConfirming(false);
+        }
       }
     }
   });
+
+  return {
+    ...state,
+    isConfirming
+  };
 }

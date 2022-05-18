@@ -33,8 +33,8 @@ const Grid = styled.section`
 
 export function Vesting() {
   const vestingState = useVesting();
-  const { isPending: isRefundLoading, run: refund } = useRefund();
-  const { isPending: isClaimLoading, run: claim } = useClaim();
+  const refund = useRefund();
+  const claim = useClaim();
   const { claimable, refundable, tokens, totalClaimed } = useMemo(
     () => ({
       claimable: formatCurrency(vestingState.claimable, currencyConfig.ctnd),
@@ -57,30 +57,36 @@ export function Vesting() {
       />
 
       <ClaimActionCard
-        isDisabled={!vestingState.claimEnabled}
-        onClick={claim}
+        isConfirming={claim.isConfirming}
+        isDisabled={!!vestingState.claimEnabled}
+        onClick={() => {
+          claim.run();
+        }}
         title={'Available to claim'}
         value={claimable}
       />
 
       <LoadingModal
         amount={claimable}
-        isOpen={isClaimLoading}
+        isOpen={claim.isPending}
         label={'Claimed value'}
       />
 
       {vestingState.refundEnabled && (
         <>
           <ClaimActionCard
-            isDisabled={!vestingState.refundEnabled}
-            onClick={refund}
+            isConfirming={refund.isConfirming}
+            isDisabled={!!vestingState.refundEnabled}
+            onClick={() => {
+              refund.run();
+            }}
             title={'Refund available'}
             value={refundable}
           />
 
           <LoadingModal
             amount={refundable}
-            isOpen={isRefundLoading}
+            isOpen={refund.isPending}
             label={'Refund after cap calculations'}
           />
         </>

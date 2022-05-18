@@ -70,6 +70,18 @@ const Label = styled(Text).attrs({
 `;
 
 /**
+ * `Lead` styled component.
+ */
+
+const Lead = styled(Text).attrs({
+  as: 'p',
+  variant: 'body2'
+})`
+  position: relative;
+  top: -0.55rem;
+`;
+
+/**
  * `StyledSeparator` styled component.
  */
 
@@ -124,9 +136,7 @@ export function ProjectInfoCard(props: Props) {
       <div>
         <Label>{'Project'}</Label>
 
-        <Text as={'p'} variant={'body2'}>
-          {'Citizend token sale'}
-        </Text>
+        <Lead>{'Citizend token sale'}</Lead>
 
         {!!vestingStart && (
           <>

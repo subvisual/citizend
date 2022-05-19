@@ -15,7 +15,7 @@ contract MockProject is IProject {
     address public override(IProject) peoplesPool;
 
     /// Approval function from an eligible project manager
-    function approveByManager() external {
+    function approveByManager() external pure {
         revert("not implemented");
     }
 
@@ -25,7 +25,7 @@ contract MockProject is IProject {
     }
 
     /// Approval function from the legal team
-    function approveByLegal() external {
+    function approveByLegal() external pure {
         revert("not implemented");
     }
 
@@ -57,7 +57,7 @@ contract MockProject is IProject {
 
     function investmentTokenToToken(uint256 _amount)
         external
-        view
+        pure
         override(IProject)
         returns (uint256)
     {
@@ -73,15 +73,35 @@ contract MockProject is IProject {
         return _amount;
     }
 
-    function test_createStakersPool(uint256 _supply, address _investmentToken)
-        external
-    {
-        stakersPool = address(new TestPool(_supply, _investmentToken));
+    function test_createStakersPool(
+        uint256 _supply,
+        address _investmentToken,
+        uint256 _cliffMonths,
+        uint256 _vestingMonths
+    ) external {
+        stakersPool = address(
+            new TestPool(
+                _supply,
+                _investmentToken,
+                _cliffMonths,
+                _vestingMonths
+            )
+        );
     }
 
-    function test_createPeoplesPool(uint256 _supply, address _investmentToken)
-        external
-    {
-        peoplesPool = address(new TestPool(_supply, _investmentToken));
+    function test_createPeoplesPool(
+        uint256 _supply,
+        address _investmentToken,
+        uint256 _cliffMonths,
+        uint256 _vestingMonths
+    ) external {
+        peoplesPool = address(
+            new TestPool(
+                _supply,
+                _investmentToken,
+                _cliffMonths,
+                _vestingMonths
+            )
+        );
     }
 }

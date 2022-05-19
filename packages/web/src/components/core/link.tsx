@@ -9,10 +9,16 @@ import styled from 'styled-components';
  * Export `Link` styled component.
  */
 
-export const Link = styled.a.attrs({
-  rel: 'noopener',
-  target: '_blank'
-})`
+export const Link = styled.a.attrs(({ onClick }) =>
+  onClick
+    ? {
+        role: 'button'
+      }
+    : {
+        rel: 'noopener',
+        target: '_blank'
+      }
+)`
   ${textStyles.body}
 
   font-weight: bold;

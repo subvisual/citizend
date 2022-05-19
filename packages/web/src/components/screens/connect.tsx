@@ -208,18 +208,16 @@ export function ConnectScreen() {
   );
 
   const handleNetworkChange = useCallback(async () => {
-    if (!(window as any)?.ethereum) {
+    if (!window?.ethereum) {
       toast.error('We could not find any library for using web3.');
 
       return;
     }
 
-    const { ethereum } = window as any;
-
     try {
       setIsOpen(false);
 
-      await ethereum.request({
+      await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: chainConfig.chainId }]
       });
@@ -237,7 +235,7 @@ export function ConnectScreen() {
       }
 
       try {
-        await ethereum.request({
+        await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [chainConfig]
         });

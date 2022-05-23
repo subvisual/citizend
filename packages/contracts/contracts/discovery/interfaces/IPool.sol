@@ -31,14 +31,6 @@ interface IPool {
     function refundableAmount(address _to) external view returns (uint256);
 
     /**
-     * Withdraws currently withdrawable amount for the
-     * given address
-     *
-     * @param to Address to withdraw to
-     */
-    function withdraw(address to) external;
-
-    /**
      * Calculates withdrawable amount of tokens for an address.
      * This should take into account:
      *   - total vested amount
@@ -61,4 +53,6 @@ interface IPool {
 
     /// Similar to Sale.allocation
     function allocation(address _to) external view returns (uint256);
+
+    function withdrawn(address _to) external view returns (uint256);
 }

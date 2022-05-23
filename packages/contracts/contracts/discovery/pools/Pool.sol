@@ -57,7 +57,6 @@ abstract contract Pool is IPool, RisingTide {
     // Total supply of the project's token up for sale
     uint256 public immutable saleSupply;
 
-    mapping(address => uint256) public withdrawn;
     uint256 public cliffMonths;
     uint256 public vestingMonths;
     uint256 public vestingStart;
@@ -151,15 +150,23 @@ abstract contract Pool is IPool, RisingTide {
         return IProject(project).tokenToInvestmentToken(uncapped - capped);
     }
 
-    function withdraw(address to) external override(IPool) {}
+    function withdrawn(address _to)
+        public
+        view
+        virtual
+        override(IPool)
+        returns (uint256)
+    {
+        revert("not implemented");
+    }
 
     function withdrawable(address to)
-        external
+        public
         view
         override(IPool)
         returns (uint256)
     {
-        uint256 localWithrawn = withdrawn[to];
+        uint256 localWithdrawn = withdrawn(to);
         uint256 total = allocation(to);
         uint256 elapsed = _numberOfPeriodsElapsed();
         uint256 cliff = cliffMonths;
@@ -174,11 +181,11 @@ abstract contract Pool is IPool, RisingTide {
         }
 
         if (elapsed >= vesting + cliff) {
-            return total - localWithrawn;
+            return total - localWithdrawn;
         }
 
         uint256 perMonth = total / vesting;
-        return (perMonth * (elapsed - cliff)) - localWithrawn;
+        return (perMonth * (elapsed - cliff)) - localWithdrawn;
     }
 
     /// @inheritdoc IPool

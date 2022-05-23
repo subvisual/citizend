@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.8.12;
 
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 import {IProject} from "../discovery/interfaces/IProject.sol";
 import {IPool} from "../discovery/interfaces/IPool.sol";
 import {TestPool} from "../discovery/pools/TestPool.sol";
@@ -8,11 +10,16 @@ import {TestPool} from "../discovery/pools/TestPool.sol";
 import "hardhat/console.sol";
 
 contract MockProject is IProject {
-    /// @inheritdoc IProject
     address public override(IProject) stakersPool;
-
-    /// @inheritdoc IProject
     address public override(IProject) peoplesPool;
+    address public immutable override(IProject) token;
+
+    mapping(address => uint256) _withdrawnPeoplesPool;
+    mapping(address => uint256) _withdrawnStakersPool;
+
+    constructor(address _token) {
+        token = _token;
+    }
 
     /// Approval function from an eligible project manager
     function approveByManager() external pure {
@@ -43,6 +50,40 @@ contract MockProject is IProject {
     /// True if project fulfills all criteria to be included in an upcoming batch
     function isReadyForListing() external pure returns (bool) {
         return true;
+    }
+
+    function withdraw(address to) external {
+        uint256 withdrawablePeople = (peoplesPool != address(0))
+            ? IPool(peoplesPool).withdrawable(to)
+            : 0;
+        uint256 withdrawableStakers = (stakersPool != address(0))
+            ? IPool(stakersPool).withdrawable(to)
+            : 0;
+        uint256 withdrawableAmount = withdrawablePeople + withdrawableStakers;
+        require(withdrawableAmount > 0, "No withdrawable amount");
+
+        _withdrawnPeoplesPool[to] += withdrawablePeople;
+        _withdrawnStakersPool[to] += withdrawableStakers;
+
+        IERC20(token).transfer(to, withdrawableAmount);
+    }
+
+    function withdrawnPeoplesPool(address to)
+        external
+        view
+        override(IProject)
+        returns (uint256)
+    {
+        return _withdrawnPeoplesPool[to];
+    }
+
+    function withdrawnStakersPool(address to)
+        external
+        view
+        override(IProject)
+        returns (uint256)
+    {
+        return _withdrawnStakersPool[to];
     }
 
     function invest(uint256 _peoplesAmount, uint256 _stakersAmount) external {

@@ -29,7 +29,7 @@ contract Project is IProject, ERC165 {
     address public immutable controller;
 
     // The token to be listed for sale
-    address public immutable token;
+    address public immutable override(IProject) token;
 
     // Total supply of {token} up for sale
     uint256 public immutable saleSupply;
@@ -51,6 +51,9 @@ contract Project is IProject, ERC165 {
 
     // has the project been approved by the legal team
     bool public override(IProject) approvedByLegal;
+
+    mapping(address => uint256) _withdrawnPeoplesPool;
+    mapping(address => uint256) _withdrawnStakersPool;
 
     constructor(
         string memory _description,
@@ -170,6 +173,37 @@ contract Project is IProject, ERC165 {
         returns (uint256)
     {
         return (_amount * rate) / MUL;
+    }
+
+    /// @inheritdoc IProject
+    function withdraw(address to) external override(IProject) {
+        uint256 withdrawablePeople = PeoplesPool(peoplesPool).withdrawable(to);
+        uint256 withdrawableStakers = StakersPool(stakersPool).withdrawable(to);
+        uint256 withdrawableAmount = withdrawablePeople + withdrawableStakers;
+        require(withdrawableAmount > 0, "No withdrawable amount");
+
+        _withdrawnPeoplesPool[to] += withdrawablePeople;
+        _withdrawnStakersPool[to] += withdrawableStakers;
+
+        IERC20(token).transfer(to, withdrawableAmount);
+    }
+
+    function withdrawnPeoplesPool(address to)
+        external
+        view
+        override(IProject)
+        returns (uint256)
+    {
+        return _withdrawnPeoplesPool[to];
+    }
+
+    function withdrawnStakersPool(address to)
+        external
+        view
+        override(IProject)
+        returns (uint256)
+    {
+        return _withdrawnStakersPool[to];
     }
 
     //

@@ -13,6 +13,14 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
 /**
+ * `Props` type.
+ */
+
+type Props = {
+  canClaim: boolean;
+};
+
+/**
  * `Grid` styled component.
  */
 
@@ -31,7 +39,7 @@ const Grid = styled.section`
  * Export `Vesting` component.
  */
 
-export function Vesting() {
+export function Vesting({ canClaim }: Props) {
   const vestingState = useVesting();
   const refund = useRefund();
   const claim = useClaim();
@@ -58,7 +66,7 @@ export function Vesting() {
 
       <ClaimActionCard
         isConfirming={claim.isConfirming}
-        isDisabled={!!vestingState.claimEnabled}
+        isDisabled={!vestingState.claimEnabled && !canClaim}
         onClick={() => {
           claim.run();
         }}
@@ -72,25 +80,21 @@ export function Vesting() {
         label={'Claimed value'}
       />
 
-      {vestingState.refundEnabled && (
-        <>
-          <ClaimActionCard
-            isConfirming={refund.isConfirming}
-            isDisabled={!!vestingState.refundEnabled}
-            onClick={() => {
-              refund.run();
-            }}
-            title={'Refund available'}
-            value={refundable}
-          />
+      <ClaimActionCard
+        isConfirming={refund.isConfirming}
+        isDisabled={!vestingState.refundEnabled}
+        onClick={() => {
+          refund.run();
+        }}
+        title={'Refund available'}
+        value={refundable}
+      />
 
-          <LoadingModal
-            amount={refundable}
-            isOpen={refund.isPending}
-            label={'Refund after cap calculations'}
-          />
-        </>
-      )}
+      <LoadingModal
+        amount={refundable}
+        isOpen={refund.isPending}
+        label={'Refund after cap calculations'}
+      />
     </Grid>
   );
 }

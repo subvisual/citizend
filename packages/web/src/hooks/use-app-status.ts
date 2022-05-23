@@ -32,6 +32,7 @@ type State = typeof appState[keyof typeof appState];
  */
 
 export type AppStatus = {
+  isCapCalculated: boolean;
   state: State;
   saleStart: number;
   saleEnd: number;
@@ -96,11 +97,13 @@ export function useAppStatus() {
 
     const saleStart = await contracts.sale1.start();
     const saleEnd = await contracts.sale1.end();
+    const isCapCalculated = await contracts.sale1.risingTide_isValidCap();
     const vestingStart = await contracts.vesting.startTime();
     const saleStartDate = normalizeTime(saleStart);
     const saleEndDate = normalizeTime(saleEnd);
     const vestingStartDate = normalizeTime(vestingStart);
     const getStatus = (state: State) => ({
+      isCapCalculated,
       saleEnd: !!saleEnd?.toNumber && saleEnd.toNumber(),
       saleStart: !!saleStart?.toNumber && saleStart.toNumber(),
       state,

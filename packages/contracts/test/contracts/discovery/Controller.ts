@@ -77,7 +77,14 @@ describe("Controller", () => {
       await citizend.transfer(alice.address, 1000);
       await citizend.connect(alice).approve(staking.address, MaxUint256);
       await staking.connect(alice).stake(100);
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
 
       expect(await controller.canInvestInStakersPool(alice.address)).to.be.true;
     });
@@ -86,7 +93,14 @@ describe("Controller", () => {
       await citizend.transfer(alice.address, 1000);
       await citizend.connect(alice).approve(staking.address, MaxUint256);
       await staking.connect(alice).stake(100);
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
 
       expect(await controller.canInvestInStakersPool(alice.address)).to.be
         .false;
@@ -94,7 +108,14 @@ describe("Controller", () => {
 
     it("is false if the user does not belong to the DAO", async () => {
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
 
       expect(await controller.canInvestInStakersPool(alice.address)).to.be
         .false;
@@ -103,7 +124,14 @@ describe("Controller", () => {
     it("is false if the user does not have staked tokens", async () => {
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
       await citizend.transfer(alice.address, 1000);
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
 
       expect(await controller.canInvestInStakersPool(alice.address)).to.be
         .false;
@@ -114,7 +142,14 @@ describe("Controller", () => {
     it("is true if the user meets all the requirements", async () => {
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
       await citizend.transfer(alice.address, 1000);
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
       await makeProjectReady(project, projectToken);
       const batch: Batch = await setUpBatch(controller, [project], owner);
       await batch.connect(alice).vote(project.address);
@@ -126,7 +161,14 @@ describe("Controller", () => {
 
     it("is false if the user does not have the KYC", async () => {
       await citizend.transfer(alice.address, 1000);
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
       await makeProjectReady(project, projectToken);
       const batch: Batch = await setUpBatch(controller, [project], owner);
 
@@ -137,7 +179,14 @@ describe("Controller", () => {
 
     it("is false if the user does not belong to the DAO", async () => {
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
       await makeProjectReady(project, projectToken);
       const batch: Batch = await setUpBatch(controller, [project], owner);
 
@@ -149,7 +198,14 @@ describe("Controller", () => {
     it("is false if the user hasn't voted in the project", async () => {
       await citizend.transfer(alice.address, 1000);
       await registry.addUserAddress(alice.address, formatBytes32String("id1"));
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
       await makeProjectReady(project, projectToken);
       await setUpBatch(controller, [project], owner);
 
@@ -161,7 +217,14 @@ describe("Controller", () => {
 
   describe("registerProject", () => {
     it("registers a project", async () => {
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
 
       expect(await project.description()).to.eq("My Project");
       expect(await project.token()).to.eq(projectToken.address);
@@ -176,7 +239,9 @@ describe("Controller", () => {
           projectToken.address,
           parseUnits("1000"),
           parseUnits("2"),
-          aUSD.address
+          aUSD.address,
+          0,
+          3
         )
       ).to.emit(controller, "ProjectRegistered");
     });
@@ -188,7 +253,14 @@ describe("Controller", () => {
 
   describe("createBatch", () => {
     it("creates a batch", async () => {
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
       await makeProjectReady(project, projectToken);
 
       expect(await project.approvedByLegal()).to.equal(true);
@@ -200,7 +272,14 @@ describe("Controller", () => {
     });
 
     it("reverts if a project is not approved", async () => {
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
 
       await expect(
         controller.createBatch([project.address], 1)
@@ -208,7 +287,14 @@ describe("Controller", () => {
     });
 
     it("reverts if a project is already included in a different batch", async () => {
-      project = await registerProject(owner, projectToken, controller, aUSD);
+      project = await registerProject(
+        owner,
+        projectToken,
+        controller,
+        aUSD,
+        0,
+        3
+      );
       await makeProjectReady(project, projectToken);
 
       expect(await project.approvedByLegal()).to.equal(true);

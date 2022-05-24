@@ -56,7 +56,7 @@ const getReferralStorageKey = (address: string) => `referralCode${address}`;
 export function DashboardScreen() {
   const { account } = useWeb3React<Web3Provider>();
   const { balance, contributions, price, raised } = useSale() as SaleState;
-  const { isLoading, state, vestingStart } = useAppStatus();
+  const { isCapCalculated, isLoading, state, vestingStart } = useAppStatus();
   const kycApproved = useIsKYCApproved();
   const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(() => {
     return !window.localStorage.getItem(getReferralStorageKey(account));
@@ -90,7 +90,9 @@ export function DashboardScreen() {
           <SaleForm disabled={!kycApproved} tokenPrice={price} />
         )}
 
-        {!isLoading && state === 'VESTING' && <Vesting />}
+        {!isLoading &&
+          ['VESTING', 'COUNTDOWN'].includes(state) &&
+          isCapCalculated && <Vesting canClaim={state === 'VESTING'} />}
       </StyledContainer>
 
       <ShareReferralModal

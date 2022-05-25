@@ -68,11 +68,11 @@ abstract contract Pool is IPool, RisingTide {
         investorBalances[_investor] += _amount;
         totalUncappedAllocations += _amount;
 
-
         require(
             IERC20(Controller(controller).paymentToken()).balanceOf(
                 address(this)
-            ) >= investedAmount + _amount
+            ) >= investedAmount + _amount,
+            "no tokens were transfered"
         );
     }
 

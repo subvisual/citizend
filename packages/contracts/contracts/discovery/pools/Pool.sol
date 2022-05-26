@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.8.12;
 
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import {IPool} from "../interfaces/IPool.sol";
@@ -77,6 +76,7 @@ abstract contract Pool is IPool, RisingTide {
     /// Ensures the individual cap is already calculated
     modifier capCalculated() {
         require(risingTide_isValidCap(), "cap not yet set");
+        _;
     }
 
     modifier onlyController() {

@@ -7,6 +7,8 @@ import "hardhat-gas-reporter";
 import "./src/tasks";
 import { networks } from "./src/hardhat";
 
+require("@nomicfoundation/hardhat-foundry");
+
 const config = {
   solidity: {
     version: "0.8.12",

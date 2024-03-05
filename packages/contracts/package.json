@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-foundry": "^1.1.1",
-    "@openzeppelin/test-helpers": "^0.5.15"
+    "@openzeppelin/test-helpers": "^0.5.15",
+    "@wagmi/cli": "^2.1.2"
   }
 }

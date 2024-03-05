@@ -1,5 +1,5 @@
 import { defineConfig } from '@wagmi/cli'
-import { foundry, react } from "@wagmi/cli/plugins";
+import { foundry } from "@wagmi/cli/plugins";
 
 export default defineConfig({
   out: '../web/wagmi.generated.ts',
@@ -7,6 +7,8 @@ export default defineConfig({
   plugins: [
     foundry({
       exclude: [
+        // We have a MockERC20.sol contract that is conflicting with the MockERC20 contract from forge
+        // Until we refactor, we need to ignore it for the wagmi compilation to succeed
         'MockERC20.sol',
       ],
       project: "./",

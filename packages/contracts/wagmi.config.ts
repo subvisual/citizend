@@ -6,10 +6,8 @@ export default defineConfig({
   plugins: [
     foundry({
       project: "./",
-      exclude: [
-        "MockERC20.sol",
-      ],
+      exclude: ["MockERC20.sol"],
     }),
     react(),
-  ]
+  ],
 });

@@ -78,7 +78,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     mapping(uint256 => address) investorByIndex;
 
     /// total unique investors
-    uint256 public _investorCount;
+    uint256 _investorCount;
 
     /// How many tokens have been allocated, before cap calculation
     uint256 public totalUncappedAllocations;

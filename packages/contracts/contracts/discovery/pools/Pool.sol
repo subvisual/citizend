@@ -42,7 +42,7 @@ abstract contract Pool is IPool, RisingTide {
     address public immutable investmentToken;
 
     /// total unique investors
-    uint256 public _investorCount;
+    uint256 _investorCount;
 
     mapping(address => Investor) investors;
 

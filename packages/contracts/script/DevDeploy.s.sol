@@ -5,6 +5,7 @@ import {Script} from "lib/forge-std/src/Script.sol";
 
 import {Citizend} from "contracts/token/Citizend.sol";
 import {Staking} from "contracts/discovery/Staking.sol";
+import {Project} from "contracts/discovery/Project.sol";
 
 contract DevDeployScript is Script {
     address alice = address(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266);
@@ -25,6 +26,8 @@ contract DevDeployScript is Script {
 
       Citizend citizend = new Citizend(alice);
       Staking staking = new Staking(address(citizend));
+
+      Project project = new Project("token sale project", address(citizend), 1000, 1, address(0));
 
       for (uint256 i; i < testAccounts.length; i++) {
         address addr = testAccounts[i];

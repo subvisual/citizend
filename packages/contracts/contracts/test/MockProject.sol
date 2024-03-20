@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity =0.8.12;
+pragma solidity ^0.8.20;
 
 import {IProject} from "../discovery/interfaces/IProject.sol";
 import {IPool} from "../discovery/interfaces/IPool.sol";
@@ -45,7 +45,7 @@ contract MockProject is IProject {
         return true;
     }
 
-    function invest(uint256 _peoplesAmount, uint256 _stakersAmount) external {
+    function invest(uint256 _peoplesAmount, uint256 _stakersAmount, string calldata _id, bytes32[] calldata _merkleProof) external {
         if (stakersPool != address(0)) {
             IPool(stakersPool).invest(msg.sender, _stakersAmount);
         }

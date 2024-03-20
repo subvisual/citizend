@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity =0.8.12;
+pragma solidity ^0.8.20;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
@@ -53,14 +53,18 @@ contract Controller is IController, ERC165, AccessControl {
     // CTND token contract
     address public token;
 
+    bytes32 public merkleRoot;
+
     constructor(
         address _registry,
         address _staking,
-        address _token
+        address _token,
+        bytes32 _merkleRoot
     ) {
         registry = _registry;
         staking = _staking;
         token = _token;
+        merkleRoot = _merkleRoot;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(PROJECT_MANAGER_ROLE, msg.sender);
@@ -85,7 +89,8 @@ contract Controller is IController, ERC165, AccessControl {
             _token,
             _saleSupply,
             _rate,
-            _investmentToken
+            _investmentToken,
+            merkleRoot
         );
 
         emit ProjectRegistered(address(project));

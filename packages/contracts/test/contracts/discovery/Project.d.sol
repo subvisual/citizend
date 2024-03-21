@@ -22,10 +22,10 @@ contract ProjectTest is Test {
   function setUp() public {
     vm.startPrank(alice);
 
-    bytes32 merkleRoot = 0x8e7ccfa471d15a7917e49017f94715d09cb940a6d5f088f516e16b0da32ff610;
+    bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
     proofs[alice] = [
-      bytes32(0xd3f793615f8d887594ece7ec035678d9b82bc492d243cdf3d4d54a007dfab520),
-      bytes32(0x6c31f90dc2f54aacc0a676de83d706f1e0fdd99e31867640d8c87a6af1a1dd86)
+      bytes32(0x00314e565e0574cb412563df634608d76f5c59d9f817e85966100ec1d48005c0),
+      bytes32(0x347dce04eb339ca70588960730ef0cada966bb1d5e10a9b9489a3e0ba47dc1b6)
     ];
 
     citizend = new Citizend(alice);
@@ -37,16 +37,16 @@ contract ProjectTest is Test {
   function testInvest() public {
     vm.startPrank(alice);
 
-    project.invest(1,1,"ID", proofs[alice]);
+    project.invest(1,1, proofs[alice]);
 
     vm.stopPrank();
   }
 
-  function testInvestShouldRevertWithInvalidCrendetial() public {
+  function testInvestShouldRevertWithInvalidProof() public {
     vm.startPrank(alice);
 
     vm.expectRevert();
-    project.invest(1,1,"NOID", proofs[alice]);
+    project.invest(1,1, proofs[bob]);
 
     vm.stopPrank();
   }

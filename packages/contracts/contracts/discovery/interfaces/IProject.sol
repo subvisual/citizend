@@ -28,7 +28,6 @@ interface IProject {
     function invest(
         uint256 _peoplesAmount,
         uint256 _stakersAmount,
-        string calldata _id,
         bytes32[] calldata _merkleProof
     ) external;
 

@@ -10,7 +10,7 @@ const func: DeployFunction = async function (hre) {
   const citizend = await get("Citizend");
   const staking = await get("Staking");
   const merkleRoot =
-    "0x8e7ccfa471d15a7917e49017f94715d09cb940a6d5f088f516e16b0da32ff610";
+    "0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49";
 
   await acalaDeploy(hre, "Controller", {
     from: deployer,

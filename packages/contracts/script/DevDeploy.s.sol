@@ -27,7 +27,7 @@ contract DevDeployScript is Script {
       Citizend citizend = new Citizend(alice);
       Staking staking = new Staking(address(citizend));
 
-      bytes32 merkleRoot = 0x8e7ccfa471d15a7917e49017f94715d09cb940a6d5f088f516e16b0da32ff610;
+      bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
       Project project = new Project("token sale project", address(citizend), 1000, 1, address(0), merkleRoot);
 
       for (uint256 i; i < testAccounts.length; i++) {

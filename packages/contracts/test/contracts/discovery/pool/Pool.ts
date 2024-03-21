@@ -25,16 +25,14 @@ describe("Pool", () => {
 
   let pool: TestPool;
 
-  let id: string;
   let merkleProof: BytesLike[];
 
   beforeEach(async () => {
     [owner, alice, bob] = await ethers.getSigners();
 
-    id = "ID";
     merkleProof = [
-      "0xd3f793615f8d887594ece7ec035678d9b82bc492d243cdf3d4d54a007dfab520",
-      "0x6c31f90dc2f54aacc0a676de83d706f1e0fdd99e31867640d8c87a6af1a1dd86",
+      "0x00314e565e0574cb412563df634608d76f5c59d9f817e85966100ec1d48005c0",
+      "0x347dce04eb339ca70588960730ef0cada966bb1d5e10a9b9489a3e0ba47dc1b6",
     ];
 
     aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
@@ -64,7 +62,7 @@ describe("Pool", () => {
 
   describe("setIndividualCap", () => {
     it("allows me to set the cap after investment period is over", async () => {
-      await project.connect(alice).invest(0, 100, id, merkleProof);
+      await project.connect(alice).invest(0, 100, merkleProof);
 
       await pool.setIndividualCap(100, { gasLimit: 10000000 });
 
@@ -73,7 +71,7 @@ describe("Pool", () => {
     });
 
     it("fails to validate the cap for the wrong value", async () => {
-      await project.connect(alice).invest(0, 100, id, merkleProof);
+      await project.connect(alice).invest(0, 100, merkleProof);
 
       await pool.setIndividualCap(50, { gasLimit: 10000000 });
 
@@ -84,7 +82,7 @@ describe("Pool", () => {
 
   describe("refund", () => {
     it("fails if individual cap is not yet set", async () => {
-      await project.connect(alice).invest(0, 100, id, merkleProof);
+      await project.connect(alice).invest(0, 100, merkleProof);
 
       await expect(pool.refund(alice.address)).to.be.revertedWith(
         "cap not yet set"
@@ -94,7 +92,7 @@ describe("Pool", () => {
     it("refunds the correct amount once the cap is set", async () => {
       const cap = 1000;
       const amount = cap + 1000;
-      await project.connect(alice).invest(0, amount, id, merkleProof);
+      await project.connect(alice).invest(0, amount, merkleProof);
       await pool.setIndividualCap(cap, { gasLimit: 10000000 });
 
       await expect(() => pool.refund(alice.address)).to.changeTokenBalance(
@@ -107,7 +105,7 @@ describe("Pool", () => {
     it("emits an event", async () => {
       const cap = 1000;
       const amount = cap + 1000;
-      await project.connect(alice).invest(0, amount, id, merkleProof);
+      await project.connect(alice).invest(0, amount, merkleProof);
       await pool.setIndividualCap(cap, { gasLimit: 10000000 });
 
       await expect(pool.refund(alice.address))
@@ -118,7 +116,7 @@ describe("Pool", () => {
     it("does not allow double refunds", async () => {
       const cap = 1000;
       const amount = cap + 1000;
-      await project.connect(alice).invest(0, amount, id, merkleProof);
+      await project.connect(alice).invest(0, amount, merkleProof);
       await pool.setIndividualCap(cap, { gasLimit: 10000000 });
 
       await pool.refund(alice.address);
@@ -139,8 +137,8 @@ describe("Pool", () => {
     });
 
     it("is 0 if the individual cap is higher than the invested total", async () => {
-      await project.connect(alice).invest(0, 200, id, merkleProof);
-      await project.connect(bob).invest(0, 200, id, merkleProof);
+      await project.connect(alice).invest(0, 200, merkleProof);
+      await project.connect(bob).invest(0, 200, merkleProof);
 
       await pool.setIndividualCap(800, { gasLimit: 10000000 });
 
@@ -148,7 +146,7 @@ describe("Pool", () => {
     });
 
     it("is the difference between the cap and the invested total", async () => {
-      await project.connect(alice).invest(0, 1001, id, merkleProof);
+      await project.connect(alice).invest(0, 1001, merkleProof);
 
       await pool.setIndividualCap(1000, { gasLimit: 10000000 });
 
@@ -158,7 +156,7 @@ describe("Pool", () => {
 
   describe("uncappedAllocation", () => {
     it("is the amount that was invested", async () => {
-      await project.connect(alice).invest(0, 100, id, merkleProof);
+      await project.connect(alice).invest(0, 100, merkleProof);
 
       expect(await pool.uncappedAllocation(alice.address)).to.equal(100);
     });
@@ -170,8 +168,8 @@ describe("Pool", () => {
     });
 
     it("is the amount that was invested if below cap", async () => {
-      await project.connect(alice).invest(0, 50, id, merkleProof);
-      await project.connect(bob).invest(0, 1000, id, merkleProof);
+      await project.connect(alice).invest(0, 50, merkleProof);
+      await project.connect(bob).invest(0, 1000, merkleProof);
 
       await pool.setIndividualCap(950, { gasLimit: 10000000 });
 
@@ -179,7 +177,7 @@ describe("Pool", () => {
     });
 
     it("is the amount that was invested if above cap", async () => {
-      await project.connect(alice).invest(0, 1001, id, merkleProof);
+      await project.connect(alice).invest(0, 1001, merkleProof);
 
       await pool.setIndividualCap(1000, { gasLimit: 10000000 });
 

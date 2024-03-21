@@ -60,7 +60,8 @@ describe("Batch", () => {
     controller = await new Controller__factory(owner).deploy(
       registry.address,
       staking.address,
-      citizend.address
+      citizend.address,
+      "0x8e7ccfa471d15a7917e49017f94715d09cb940a6d5f088f516e16b0da32ff610"
     );
     aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
 

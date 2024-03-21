@@ -5,8 +5,6 @@ import {IProject} from "../discovery/interfaces/IProject.sol";
 import {IPool} from "../discovery/interfaces/IPool.sol";
 import {TestPool} from "../discovery/pools/TestPool.sol";
 
-import "hardhat/console.sol";
-
 contract MockProject is IProject {
     /// @inheritdoc IProject
     address public override(IProject) stakersPool;

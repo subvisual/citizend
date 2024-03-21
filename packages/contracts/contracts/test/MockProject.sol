@@ -45,7 +45,12 @@ contract MockProject is IProject {
         return true;
     }
 
-    function invest(uint256 _peoplesAmount, uint256 _stakersAmount, string calldata _id, bytes32[] calldata _merkleProof) external {
+    function invest(
+        uint256 _peoplesAmount,
+        uint256 _stakersAmount,
+        string calldata _id,
+        bytes32[] calldata _merkleProof
+    ) external {
         if (stakersPool != address(0)) {
             IPool(stakersPool).invest(msg.sender, _stakersAmount);
         }

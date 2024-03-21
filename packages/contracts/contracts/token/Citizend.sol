@@ -35,8 +35,12 @@ contract Citizend is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
         _mint(msg.sender, 1e8 ether);
     }
 
-    function _update(address from, address to, uint256 value) internal virtual override(ERC20, ERC20Pausable) {
-      super._update(from, to, value);
+    function _update(
+        address from,
+        address to,
+        uint256 value
+    ) internal virtual override(ERC20, ERC20Pausable) {
+        super._update(from, to, value);
     }
 
     /**

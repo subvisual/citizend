@@ -110,16 +110,16 @@ contract Project is IProject, ERC165 {
     //
 
     /// @inheritdoc IProject
-    function invest(uint256 _peoplesAmount, uint256 _stakersAmount, string calldata _id, bytes32[] calldata _merkleProof) public override(IProject) {
+    function invest(
+        uint256 _peoplesAmount,
+        uint256 _stakersAmount,
+        string calldata _id,
+        bytes32[] calldata _merkleProof
+    ) public override(IProject) {
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender, _id));
-        bool isValidLeaf = MerkleProof.verify(
-          _merkleProof,
-          merkleRoot,
-          leaf
-        );
+        bool isValidLeaf = MerkleProof.verify(_merkleProof, merkleRoot, leaf);
         if (!isValidLeaf) revert InvalidLeaf();
     }
-
 
     /// @inheritdoc IProject
     function approveByManager()

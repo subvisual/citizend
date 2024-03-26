@@ -31,7 +31,7 @@ describe("Pool", () => {
     [owner, alice, bob] = await ethers.getSigners();
 
     merkleProof = [
-      "0x00314e565e0574cb412563df634608d76f5c59d9f817e85966100ec1d48005c0",
+      "0xe9707d0e6171f728f7473c24cc0432a9b07eaaf1efed6a137a4a8c12c79552d9",
       "0x347dce04eb339ca70588960730ef0cada966bb1d5e10a9b9489a3e0ba47dc1b6",
     ];
 

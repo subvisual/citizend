@@ -47,7 +47,7 @@ eth:
   # just test
   sleep 0.2 && just eth-deploy &
   just wagmi &
-  anvil --host 0.0.0.0
+  anvil --code-size-limit 100000 --host 0.0.0.0
 
 build-contracts:
   forge build
@@ -79,6 +79,7 @@ forge-script script:
   forge script \
     $1 \
     --fork-url http://localhost:8545 \
+    --code-size-limit 100000 \
     --broadcast \
     --mnemonics "{{ mnemonic }}" \
     --sender "{{ sender }}" \

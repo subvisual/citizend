@@ -161,13 +161,13 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         investmentEnd = votingPeriod.end + extraInvestmentDuration;
     }
 
-    function vote(address projectAddress)
+    function vote(address projectAddress, bytes32[] calldata _merkleProof)
         external
         votingPeriodIsSet
         inVotingPeriod
     {
         require(
-            IController(controller).canVote(msg.sender),
+            IController(controller).canVote(msg.sender, _merkleProof),
             "not allowed to vote"
         );
 

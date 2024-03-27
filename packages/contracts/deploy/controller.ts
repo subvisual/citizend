@@ -6,7 +6,6 @@ const func: DeployFunction = async function (hre) {
   const { deployer } = await hre.getNamedAccounts();
   const { get } = hre.deployments;
 
-  const registry = await get("FractalRegistry");
   const citizend = await get("Citizend");
   const staking = await get("Staking");
   const merkleRoot =
@@ -14,13 +13,13 @@ const func: DeployFunction = async function (hre) {
 
   await acalaDeploy(hre, "Controller", {
     from: deployer,
-    args: [registry.address, staking.address, citizend.address, merkleRoot],
+    args: [staking.address, citizend.address, merkleRoot],
     log: true,
   });
 };
 
 func.id = "controller";
 func.tags = ["controller"];
-func.dependencies = ["ctnd.token", "staking", "fractal-registry"];
+func.dependencies = ["ctnd.token", "staking"];
 
 export default func;

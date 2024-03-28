@@ -131,9 +131,25 @@ const UnlockIdosExternal = ({ close }: TCloseProp) => {
 
 const UnlockedIdos = () => {
   const { close } = useDialog();
-
   const { country, id, approved, isLoading } = useFetchKycData();
-  const { data: grants } = useFetchGrants();
+  const { data: grants, refetch } = useFetchGrants();
+  const hasGrant = grants && grants.length > 1;
+
+  console.log(
+    '%c==>',
+    'color: green; background: yellow; font-size: 20px',
+    grants,
+  );
+
+  useEffect(() => {
+    if (!hasGrant) {
+      const interval = setInterval(() => {
+        refetch();
+      }, 10000);
+
+      return () => clearInterval(interval);
+    }
+  }, [hasGrant, refetch]);
 
   if (isLoading) return <UnlockIdosExternal close={close} />;
 
@@ -141,17 +157,17 @@ const UnlockedIdos = () => {
 
   if (country !== 'PT') return <BlockedCountry close={close} />;
 
-  if (id && grants && grants.length < 10)
+  if (id && grants && !hasGrant)
     return <IssueAccessGrant id={id} close={close} />;
 
   return (
     <div>
       <div className="mt-3 text-center sm:mt-5">
         <Dialog.Title as="h3" className="text-gray-900">
-          Contributing to:
+          Success
         </Dialog.Title>
         <div className="mt-2">
-          <p className="text-sm text-gray-500">---- Contribution form ----</p>
+          <p className="text-sm text-gray-500">{`You've successfully applied for this project sale`}</p>
         </div>
       </div>
     </div>

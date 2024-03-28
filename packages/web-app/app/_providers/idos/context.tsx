@@ -5,6 +5,7 @@ type TIdOSContextValue = {
   sdk: idOS | null;
   address: string | undefined;
   hasProfile: boolean;
+  hasSigner: boolean;
   getProviderUrl: (address: string) => string;
   reset: () => Promise<void>;
 };

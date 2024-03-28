@@ -14,6 +14,7 @@ import { getProviderUrl } from './get-provider-url';
 
 export const IdOsProvider = ({ children }: PropsWithChildren) => {
   const [hasProfile, setHasProfile] = useState(false);
+  const [hasSigner, setHasSigner] = useState(false);
   const [sdk, setSdk] = useState<idOS | null>(null);
   const ethSigner = useEthersSigner();
   const { address: userAddress, isConnected } = useAccount();
@@ -40,6 +41,7 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
       // Authenticate by signing a message
       if (profile) {
         await sdk.setSigner('EVM', ethSigner);
+        setHasSigner(true);
         return;
       }
     };
@@ -50,6 +52,7 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
   const handleDisconnect = useCallback(async () => {
     await sdk?.reset({ enclave: true });
     setHasProfile(false);
+    setHasSigner(false);
     // setSdk(null);
   }, [sdk]);
 
@@ -70,13 +73,14 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
     return {
       sdk,
       hasProfile,
+      hasSigner,
       address: userAddress,
       getProviderUrl,
       reset: async () => {
         await sdk?.reset({ enclave: true });
       },
     };
-  }, [sdk, hasProfile, userAddress]);
+  }, [sdk, hasProfile, userAddress, hasSigner]);
 
   return <IdOSContext.Provider value={state}>{children}</IdOSContext.Provider>;
 };

@@ -63,6 +63,7 @@ wagmi:
 # restart `just eth` when contracts change
 eth-watch:
   watchexec \
+    --project-origin . \
     --watch contracts \
     --watch test \
     --watch foundry.toml \

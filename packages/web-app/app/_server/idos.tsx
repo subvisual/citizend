@@ -2,7 +2,6 @@
 
 // adapted from https://github.dev/idos-network/idos-sdk-js/tree/main/apps/idos-example-dapp
 
-import { idOS } from '@idos-network/idos-sdk';
 import { WebKwil } from '@kwilteam/kwil-js';
 import type { SignerSupplier } from '@kwilteam/kwil-js/dist/core/builders.d';
 import * as Base64Codec from '@stablelib/base64';
@@ -14,7 +13,7 @@ import { Grant, KwilSigner, PublicInfo } from './types';
 const ENCRYPTION_SECRET_KEY = Base64Codec.decode(
   process.env.NEXT_ENCRYPTION_SECRET_KEY,
 );
-const EVM_GRANTEE_PRIVATE_KEY = process.env.NEXT_EVM_GRANTEE_PRIVATE_KEY;
+const EVM_GRANTEE_PRIVATE_KEY = process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY;
 
 const ENCRYPTION_KEY_PAIR = nacl.box.keyPair.fromSecretKey(
   ENCRYPTION_SECRET_KEY,
@@ -117,7 +116,7 @@ export const getAccessGrantsContentDecrypted = async (dataId: string) => {
 const publicInfo: PublicInfo = {
   grantee: evmGrantee.address,
   encryptionPublicKey: Base64Codec.encode(ENCRYPTION_KEY_PAIR.publicKey),
-  lockTimeSpanSeconds: 3600, // one hour
+  lockTimeSpanSeconds: 3600 * 24 * 365, // one year?
 };
 
 export const getPublicInfo = (): Promise<PublicInfo> =>

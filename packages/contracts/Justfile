@@ -44,7 +44,7 @@ eth:
   #!/bin/bash
   killall -9 anvil
   just build-contracts
-  # just test
+  just test
   sleep 0.2 && just eth-deploy &
   just wagmi &
   anvil --code-size-limit 100000 --host 0.0.0.0

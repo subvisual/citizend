@@ -1,40 +1,52 @@
 'use client';
 import { Button } from '..';
 import { PublicInfo } from '@/app/_server/types';
-import { useIdOS } from '@/app/_providers/idos';
-import { useAcquireAccessGrantMutation } from '@/app/_lib/actions';
+import { useSignDelegatedAccessGrant } from '@/app/_lib/actions';
+import { useTransaction } from 'wagmi';
 
 type AcquireAccessGrantButton = {
   id: string;
   serverInfo: PublicInfo;
 };
 
+const Done = ({ hash }: { hash: `0x${string}` }) => {
+  const test = useTransaction({ hash });
+
+  console.log(
+    '%c==>',
+    'color: green; background: yellow; font-size: 20px',
+    test?.data,
+  );
+
+  return (
+    <>
+      <p>Waiting for the grant to be propagated in the blockchain</p>
+    </>
+  );
+};
+
 export const AcquireAccessGrantButton = ({ id }: { id: string }) => {
-  const { sdk } = useIdOS();
-  const acquireAccessGrant = useAcquireAccessGrantMutation();
+  const {
+    sign,
+    dataId,
+    isSignPending,
+    isServerPending,
+    isSuccess,
+    transactionHash,
+  } = useSignDelegatedAccessGrant();
 
-  if (!sdk) return null;
+  if (!dataId) return <p>Waiting for you wallet</p>;
 
-  const onClick = async () => {
-    try {
-      const grant = await acquireAccessGrant.mutateAsync({
-        id,
-      });
-    } catch (error) {
-      console.log(
-        '%c==>',
-        'color: green; background: red; font-size: 20px',
-        error,
-      );
-    }
-  };
-
-  if (acquireAccessGrant.isPending)
+  if (isSignPending || isServerPending)
     return (
       <Button variant="primary-disabled" disabled>
         Creating...
       </Button>
     );
 
-  return <Button onClick={onClick}>Create Access Grant</Button>;
+  if (isSuccess && transactionHash) {
+    return <Done hash={transactionHash} />;
+  }
+
+  return <Button onClick={sign}>Create Access Grant</Button>;
 };

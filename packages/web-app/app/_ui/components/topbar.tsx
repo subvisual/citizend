@@ -33,7 +33,7 @@ export function Topbar() {
     <header
       className={clsx(
         'sticky top-0 transition-all duration-100',
-        scrollPosition > 40 && 'bg-navy-dark',
+        scrollPosition > 40 && 'bg-mono-950',
       )}
     >
       <div className="mx-auto flex max-w-6xl flex-row justify-between px-6 py-5 md:justify-normal md:py-6">

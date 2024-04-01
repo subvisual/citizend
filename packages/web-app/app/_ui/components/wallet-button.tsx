@@ -13,7 +13,7 @@ const Button = ({ children, onClick }: TButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className="group flex text-[#3865FD] hover:text-blue-light"
+      className="group flex text-blue-500 hover:text-blue-400"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ const Button = ({ children, onClick }: TButtonProps) => {
           fill="currentColor"
         />
       </svg>
-      <div className="bor flex h-14 w-48 items-center justify-center bg-[#3865FD] px-2 font-medium text-white group-hover:bg-blue-light">
+      <div className="bor flex h-14 w-48 items-center justify-center bg-blue-500 px-2 font-medium text-mono-50 group-hover:bg-blue-400">
         {children}
       </div>
       <svg

@@ -112,12 +112,15 @@ const NavigationItem = ({ name, href, icon: Icon }: TNavigationItem) => {
   return (
     <li key={name}>
       {Icon ? (
-        <a href={href} className="font-medium text-grey-dark hover:text-blue">
+        <a
+          href={href}
+          className="text-mono-200-dark hover:text-blue font-medium"
+        >
           <span className="sr-only">{name}</span>
           <Icon className="h-10 w-10" aria-hidden="true" />
         </a>
       ) : (
-        <a href={href} className="text-base text-grey hover:text-white">
+        <a href={href} className="text-base text-mono-200 hover:text-mono-50">
           {name}
         </a>
       )}
@@ -134,7 +137,7 @@ type TNavigationMenu = {
 const NavigationMenu = ({ title, items, row }: TNavigationMenu) => {
   return (
     <div>
-      <h4 className="hidden text-base font-medium text-white md:block">
+      <h4 className="hidden text-base font-medium text-mono-50 md:block">
         {title}
       </h4>
       <ul
@@ -174,13 +177,13 @@ export function Footer() {
         </div>
       </div>
       <div className="flex flex-col items-center gap-2 px-6 pb-6 pt-12 md:flex-row-reverse md:justify-end md:gap-0 md:px-27 md:py-14">
-        <span className="font-medium text-white md:ml-14 md:font-medium md:text-grey">
+        <span className="font-medium text-mono-50 md:ml-14 md:font-medium md:text-mono-200">
           Privacy Policy
         </span>
-        <span className="font-medium text-white md:ml-36 md:font-medium md:text-grey">
+        <span className="font-medium text-mono-50 md:ml-36 md:font-medium md:text-mono-200">
           Terms & Conditions
         </span>
-        <span className=" text-grey">
+        <span className=" text-mono-200">
           © 2022 citizend. All rights reserved.
         </span>
       </div>

@@ -17,7 +17,7 @@ const Close = ({ onClick }: TCloseProps) => {
   return (
     <button
       onClick={onClick}
-      className="absolute right-0 h-6 w-6 hover:text-grey"
+      className="absolute right-0 h-6 w-6 hover:text-mono-200"
       aria-hidden="true"
     >
       <svg
@@ -73,7 +73,7 @@ export function SettingsDialog() {
     <>
       <Dialog.Title
         as="h4"
-        className="relative flex w-full justify-center text-navy-dark"
+        className="relative flex w-full justify-center text-mono-950"
       >
         <div className="">Settings</div>
         <Close onClick={close} />

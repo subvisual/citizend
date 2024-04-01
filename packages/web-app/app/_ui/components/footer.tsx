@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import clsx from 'clsx';
+import { InternalNavigation } from './internal-navigation';
+import { Resources } from './resources';
 
 const navigation = {
   information: [
@@ -157,33 +159,38 @@ const NavigationMenu = ({ title, items, row }: TNavigationMenu) => {
 
 export function Footer() {
   return (
-    <footer className="bg-background-pattern" aria-labelledby="footer-heading">
-      <div className="flex flex-col flex-wrap items-center p-6 md:flex-row md:items-start md:justify-between md:px-27 md:py-14">
+    <footer
+      className="bg-mono-900 bg-cover bg-no-repeat px-6 py-14 md:bg-transparent md:bg-background-footer-desktop"
+      aria-labelledby="footer-heading"
+    >
+      <div className="flex flex-col flex-wrap md:flex-row md:items-start md:justify-between">
         <h2 id="footer-heading" className="sr-only">
           Footer
         </h2>
         <Image
-          src="/citizend-logo-framed.svg"
+          src="/citizend-logo-footer.svg"
           alt="Citizend logo"
-          width={260}
-          height={228}
+          width={102}
+          height={104}
           priority
-          className="w-[169px] md:w-[260px]"
+          className="w-[54px] md:w-[102px]"
         />
+        <div className="grid grid-cols-2 gap-6 py-14">
+          <InternalNavigation />
+          <Resources />
+        </div>
         <div className="mt-11 flex flex-col items-center md:mt-10 md:flex-row md:items-start md:gap-16 xl:mt-0">
-          <NavigationMenu title="Information" items={navigation.information} />
-          <NavigationMenu title="Resources" items={navigation.resources} />
           <NavigationMenu title="Social" items={navigation.social} row />
         </div>
       </div>
       <div className="flex flex-col items-center gap-2 px-6 pb-6 pt-12 md:flex-row-reverse md:justify-end md:gap-0 md:px-27 md:py-14">
-        <span className="font-medium text-mono-50 md:ml-14 md:font-medium md:text-mono-200">
+        <span className="font-medium text-mono-400 md:ml-14 md:font-medium md:text-mono-200">
           Privacy Policy
         </span>
-        <span className="font-medium text-mono-50 md:ml-36 md:font-medium md:text-mono-200">
+        <span className="font-medium text-mono-400 md:ml-36 md:font-medium md:text-mono-200">
           Terms & Conditions
         </span>
-        <span className=" text-mono-200">
+        <span className=" text-mono-50">
           © 2022 citizend. All rights reserved.
         </span>
       </div>

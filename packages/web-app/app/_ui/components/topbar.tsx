@@ -59,7 +59,7 @@ export function Topbar() {
           <NavLink href="/projects/my-projects" name="My Projects" />
         </nav>
         <WalletButton />
-        <NavigationMobile classNames="md:hidden" />
+        <NavigationMobile className="md:hidden" />
       </div>
     </header>
   );

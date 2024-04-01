@@ -9,8 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        'background-pattern': 'url("/background-pattern.png")',
-        'background-pattern-overlay': 'url("/background-pattern-overlay.png")',
+        'background-desktop': 'url("/background-desktop.png")',
+        'background-mobile': 'url("/background-mobile.png")',
+        'background-footer-desktop': 'url("/background-footer-desktop.svg")',
       },
       fontSize: {
         sm: ['0.875rem', '1.5rem'],

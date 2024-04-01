@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply text-font-color;
+  @apply text-mono-50;
   @apply text-base;
   @apply font-light;
 }
@@ -11,25 +11,32 @@ body {
 h1 {
   @apply text-5.75xl;
   @apply font-medium;
-  @apply text-white;
 }
 
 h2 {
   @apply text-3.5xl;
   @apply font-medium;
-  @apply text-white;
 }
 
 h3 {
   @apply font-medium;
   @apply text-base;
   @apply uppercase;
-  @apply text-white;
 }
 
 h4 {
   @apply font-medium;
   @apply text-base;
+}
+
+button {
+  @apply font-medium;
+}
+
+label {
+  @apply font-medium;
+  @apply text-sm;
+  @apply uppercase;
 }
 
 input[type='number'] {

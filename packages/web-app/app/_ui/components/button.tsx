@@ -20,13 +20,13 @@ export function Button({
 }: TButtonProps) {
   const variantClasses = {
     primary:
-      'hover:bg-blue-dark bg-blue text-white focus-visible:outline focus-visible:outline-grey-dark min-w-[14rem]',
+      'hover:bg-blue-600 bg-blue-500 text-mono-50 focus-visible:outline focus-visible:outline-mono-200-dark min-w-[14rem]',
     'primary-disabled':
-      'bg-blue-light text-white pointer-events-none cursor-not-allowed min-w-[14rem]',
+      'bg-blue-400 text-mono-50 pointer-events-none cursor-not-allowed min-w-[14rem]',
     secondary:
-      'bg-white text-blue hover:text-blue-dark min-w-0 focus-visible:outline-2 focus-visible:outline-blue',
+      'bg-white text-blue-500 hover:text-blue-600 min-w-0 focus-visible:outline-2 focus-visible:outline-blue',
     dropdown:
-      'bg-white outline outline-1 outline-blue font-normal text-grey-dark hover:text-blue-dark focus-visible:outline-blue-dark min-w-[14rem]',
+      'bg-white outline outline-1 outline-blue-500 font-normal text-mono-200-dark hover:text-blue-600 focus-visible:outline-blue-600 min-w-[14rem]',
   };
   return (
     <button

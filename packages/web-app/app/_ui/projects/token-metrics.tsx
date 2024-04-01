@@ -23,8 +23,8 @@ export const TokenMetrics = ({
   }).format(targetedDate);
 
   return (
-    <div className="flex w-full flex-col rounded-lg bg-white-anti-flash">
-      <h4 className="border-b border-grey-lightest p-6 font-medium uppercase">
+    <div className="flex w-full flex-col rounded-lg bg-mono-50">
+      <h4 className="border-b border-blue-100 p-6 font-medium uppercase">
         Token Metrics
       </h4>
       <div className="grid grid-cols-1 gap-12 p-6 md:grid-cols-2">

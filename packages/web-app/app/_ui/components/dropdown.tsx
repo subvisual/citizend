@@ -76,7 +76,7 @@ export function Dropdown({ children, classNames }: TDropdownProps) {
       className={clsx('relative inline-block text-left', classNames)}
     >
       <div className="flex h-full content-center items-center">
-        <Menu.Button className="items-cente flex text-[#3865FD] hover:text-blue-light focus:outline-none focus:ring-2 focus:ring-[#3865FD]">
+        <Menu.Button className="flex items-center text-blue-500 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
           <span className="sr-only">Open navigation menu</span>
           <BurgerMenu />
         </Menu.Button>

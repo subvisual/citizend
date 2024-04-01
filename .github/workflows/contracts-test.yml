@@ -47,7 +47,8 @@ jobs:
       - run: yarn install
       - run: yarn workspace @discovery-dao/contracts compile
       - run: yarn workspace @discovery-dao/contracts lint
-      - run: yarn workspace @discovery-dao/contracts test
+      # temporarily disable this while we migrate from acala and hardhat
+      # - run: yarn workspace @discovery-dao/contracts test
 
       - name: Run Slither
         uses: crytic/slither-action@v0.1.0

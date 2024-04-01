@@ -31,13 +31,11 @@ interface IProject {
         bytes32[] calldata _merkleProof
     ) external;
 
-    function investmentTokenToToken(uint256 _amount)
-        external
-        view
-        returns (uint256);
+    function investmentTokenToToken(
+        uint256 _amount
+    ) external view returns (uint256);
 
-    function tokenToInvestmentToken(uint256 _amount)
-        external
-        view
-        returns (uint256);
+    function tokenToInvestmentToken(
+        uint256 _amount
+    ) external view returns (uint256);
 }

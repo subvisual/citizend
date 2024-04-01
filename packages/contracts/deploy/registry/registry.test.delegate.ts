@@ -14,7 +14,7 @@ const func: DeployFunction = async function (hre) {
     "FractalRegistry",
     {},
     "delegates",
-    deployer
+    deployer,
   );
 
   if (alreadyDelegate) {
@@ -25,7 +25,7 @@ const func: DeployFunction = async function (hre) {
     "FractalRegistry",
     { from: deployer, log: true },
     "addDelegate",
-    deployer
+    deployer,
   );
 };
 

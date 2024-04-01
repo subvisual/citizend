@@ -46,7 +46,7 @@ describe("Vesting", () => {
       now.getFullYear(),
       now.getMonth() + 1,
       1,
-      12
+      12,
     );
     vestingStart = Math.floor(beginningOfNextMonth.getTime() / 1000);
 
@@ -54,16 +54,16 @@ describe("Vesting", () => {
       "aUSD",
       "aUSD",
       12,
-      await acalaDeployParams()
+      await acalaDeployParams(),
     );
     citizend = await new Citizend__factory(owner).deploy(
       owner.address,
-      await acalaDeployParams()
+      await acalaDeployParams(),
     );
 
     sale = await new MockSale__factory(owner).deploy(await acalaDeployParams());
     sale2 = await new MockSale__factory(owner).deploy(
-      await acalaDeployParams()
+      await acalaDeployParams(),
     );
 
     vesting = await new Vesting__factory(owner).deploy(
@@ -71,7 +71,7 @@ describe("Vesting", () => {
       citizend.address,
       [sale.address],
       10000,
-      await acalaDeployParams()
+      await acalaDeployParams(),
     );
     vesting.setStartTime(vestingStart);
     await citizend.transfer(vesting.address, 1000);
@@ -93,7 +93,7 @@ describe("Vesting", () => {
         citizend.address,
         [sale.address],
         10000,
-        await acalaDeployParams()
+        await acalaDeployParams(),
       );
 
       await vesting.setStartTime(vestingStart);
@@ -111,7 +111,7 @@ describe("Vesting", () => {
 
     it("does not allow contracts that do not implement ISale", async () => {
       await expect(vesting.addSale(vesting.address)).to.be.revertedWith(
-        "not an ISale"
+        "not an ISale",
       );
     });
 
@@ -231,7 +231,7 @@ describe("Vesting", () => {
       await vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123);
 
       await expect(
-        vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123)
+        vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123),
       ).to.be.revertedWith("nonce already used");
     });
 
@@ -239,7 +239,7 @@ describe("Vesting", () => {
       await vesting.createPrivateSaleVest(alice.address, 300, 0, 36, 123);
 
       await expect(
-        vesting.createPrivateSaleVest(alice.address, 300, 2, 36, 124)
+        vesting.createPrivateSaleVest(alice.address, 300, 2, 36, 124),
       ).to.be.revertedWith("vesting already exists with different cliff");
     });
 
@@ -247,15 +247,15 @@ describe("Vesting", () => {
       await vesting.createPrivateSaleVest(alice.address, 300, 0, 3, 123);
 
       await expect(
-        vesting.createPrivateSaleVest(alice.address, 300, 0, 4, 124)
+        vesting.createPrivateSaleVest(alice.address, 300, 0, 4, 124),
       ).to.be.revertedWith(
-        "vesting already exists with different vesting period"
+        "vesting already exists with different vesting period",
       );
     });
 
     it("does not create vestings with less vesting months than the public sale", async () => {
       await expect(
-        vesting.createPrivateSaleVest(alice.address, 300, 0, 1, 124)
+        vesting.createPrivateSaleVest(alice.address, 300, 0, 1, 124),
       ).to.be.revertedWith("vesting too short");
     });
   });

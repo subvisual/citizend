@@ -25,10 +25,10 @@ describe("RisingTide", () => {
 
     beforeEach(async () => {
       WithCustomAmounts = await ethers.getContractFactory(
-        "TestRisingTideWithCustomAmounts"
+        "TestRisingTideWithCustomAmounts",
       );
       contract = (await WithCustomAmounts.deploy(
-        5000
+        5000,
       )) as TestRisingTideWithCustomAmounts;
       await contract.deployed();
     });
@@ -59,10 +59,10 @@ describe("RisingTide", () => {
 
     beforeEach(async () => {
       WithCustomAmounts = await ethers.getContractFactory(
-        "TestRisingTideWithCustomAmounts"
+        "TestRisingTideWithCustomAmounts",
       );
       contract = (await WithCustomAmounts.deploy(
-        5000
+        5000,
       )) as TestRisingTideWithCustomAmounts;
       await contract.deployed();
     });
@@ -77,7 +77,7 @@ describe("RisingTide", () => {
 
       expect(extraCalls).to.eq(0);
       expect(await contract.risingTideState()).to.equal(
-        RisingTideState.Finished
+        RisingTideState.Finished,
       );
     });
 
@@ -87,7 +87,7 @@ describe("RisingTide", () => {
       await expectCapValidation(contract, cap + 1, false);
 
       expect(await contract.risingTideState()).to.equal(
-        RisingTideState.Invalid
+        RisingTideState.Invalid,
       );
     });
   });
@@ -97,7 +97,7 @@ describe("RisingTide", () => {
 
     beforeEach(async () => {
       WithStaticAmounts = await ethers.getContractFactory(
-        "TestRisingTideWithStaticAmounts"
+        "TestRisingTideWithStaticAmounts",
       );
     });
 
@@ -107,7 +107,7 @@ describe("RisingTide", () => {
       contract = (await WithStaticAmounts.deploy(
         1000,
         cap,
-        5000
+        5000,
       )) as TestRisingTideWithStaticAmounts;
       await contract.deployed();
 
@@ -115,13 +115,13 @@ describe("RisingTide", () => {
         contract,
         cap,
         true,
-        500000
+        500000,
       );
 
       expect(extraCalls).to.be.gte(1);
 
       expect(await contract.risingTideState()).to.equal(
-        RisingTideState.Finished
+        RisingTideState.Finished,
       );
     });
 
@@ -129,14 +129,14 @@ describe("RisingTide", () => {
       contract = (await WithStaticAmounts.deploy(
         1000,
         cap,
-        5000
+        5000,
       )) as TestRisingTideWithStaticAmounts;
       await contract.deployed();
 
       await expectCapValidation(contract, cap + 1, false);
 
       expect(await contract.risingTideState()).to.equal(
-        RisingTideState.Invalid
+        RisingTideState.Invalid,
       );
     });
   });

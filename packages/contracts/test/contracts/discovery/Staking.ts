@@ -80,7 +80,7 @@ describe("Staking", () => {
 
     it("requires enough funds to have been staked", async () => {
       await expect(staking.connect(alice).unbond(100)).to.be.revertedWith(
-        "not enough funds"
+        "not enough funds",
       );
     });
 
@@ -127,7 +127,7 @@ describe("Staking", () => {
       await staking.connect(alice).unbond(20);
 
       await expect(staking.connect(alice).rebond(40)).to.be.revertedWith(
-        "not enough unbonding funds"
+        "not enough unbonding funds",
       );
     });
 
@@ -160,7 +160,7 @@ describe("Staking", () => {
       await staking.connect(alice).unbond(amount);
 
       await expect(staking.connect(alice).withdraw()).to.be.revertedWith(
-        "nothing to withdraw"
+        "nothing to withdraw",
       );
     });
 
@@ -181,7 +181,7 @@ describe("Staking", () => {
       await staking.connect(alice).unbond(amount);
 
       await expect(staking.connect(alice).withdraw()).to.be.revertedWith(
-        "nothing to withdraw"
+        "nothing to withdraw",
       );
 
       await increaseTime(await staking.UNBONDING_PERIOD());

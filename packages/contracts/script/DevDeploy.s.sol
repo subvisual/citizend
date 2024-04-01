@@ -23,24 +23,34 @@ contract DevDeployScript is Script {
     }
 
     function run() public {
-      vm.startBroadcast();
+        vm.startBroadcast();
 
-      bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
+        bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
 
-      Citizend citizend = new Citizend(alice);
-      Staking staking = new Staking(address(citizend));
+        Citizend citizend = new Citizend(alice);
+        Staking staking = new Staking(address(citizend));
 
-      Controller controller = new Controller(address(staking), address(citizend), merkleRoot);
+        Controller controller = new Controller(
+            address(staking),
+            address(citizend),
+            merkleRoot
+        );
 
-      Project project = new Project("token sale project", address(citizend), 1000, 1, address(0), merkleRoot);
+        Project project = new Project(
+            "token sale project",
+            address(citizend),
+            1000,
+            1,
+            address(0),
+            merkleRoot
+        );
 
-      for (uint256 i; i < testAccounts.length; i++) {
-        address addr = testAccounts[i];
-        (bool success,) = addr.call{value: 10 ether}("");
-        require(success, "transfer failed");
-      }
+        for (uint256 i; i < testAccounts.length; i++) {
+            address addr = testAccounts[i];
+            (bool success, ) = addr.call{value: 10 ether}("");
+            require(success, "transfer failed");
+        }
 
-      vm.stopBroadcast();
+        vm.stopBroadcast();
     }
-
 }

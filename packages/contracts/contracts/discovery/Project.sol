@@ -20,7 +20,7 @@ contract Project is IProject, ERC165 {
     // Constants
     //
 
-    uint256 public constant MUL = 10**18;
+    uint256 public constant MUL = 10 ** 18;
 
     //
     // State
@@ -156,22 +156,16 @@ contract Project is IProject, ERC165 {
     }
 
     /// @inheritdoc IProject
-    function investmentTokenToToken(uint256 _amount)
-        public
-        view
-        override(IProject)
-        returns (uint256)
-    {
+    function investmentTokenToToken(
+        uint256 _amount
+    ) public view override(IProject) returns (uint256) {
         return (_amount * MUL) / rate;
     }
 
     /// @inheritdoc IProject
-    function tokenToInvestmentToken(uint256 _amount)
-        public
-        view
-        override(IProject)
-        returns (uint256)
-    {
+    function tokenToInvestmentToken(
+        uint256 _amount
+    ) public view override(IProject) returns (uint256) {
         return (_amount * rate) / MUL;
     }
 
@@ -180,12 +174,9 @@ contract Project is IProject, ERC165 {
     //
 
     /// @inheritdoc ERC165
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC165)
-        returns (bool)
-    {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view override(ERC165) returns (bool) {
         return
             interfaceId == type(IProject).interfaceId ||
             super.supportsInterface(interfaceId);

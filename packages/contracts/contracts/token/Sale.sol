@@ -34,7 +34,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         keccak256("CAP_VALIDATOR_ROLE");
 
     // multiplier used for rate conversions
-    uint256 constant MUL = 10**18;
+    uint256 constant MUL = 10 ** 18;
 
     //
     // Events
@@ -166,22 +166,16 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     /// @inheritdoc ISale
-    function paymentTokenToToken(uint256 _paymentAmount)
-        public
-        view
-        override(ISale)
-        returns (uint256)
-    {
+    function paymentTokenToToken(
+        uint256 _paymentAmount
+    ) public view override(ISale) returns (uint256) {
         return (_paymentAmount * MUL) / rate;
     }
 
     /// @inheritdoc ISale
-    function tokenToPaymentToken(uint256 _tokenAmount)
-        public
-        view
-        override(ISale)
-        returns (uint256)
-    {
+    function tokenToPaymentToken(
+        uint256 _tokenAmount
+    ) public view override(ISale) returns (uint256) {
         return (_tokenAmount * rate) / MUL;
     }
 
@@ -223,12 +217,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     /// @inheritdoc ISale
-    function refund(address to)
-        external
-        override(ISale)
-        capCalculated
-        nonReentrant
-    {
+    function refund(
+        address to
+    ) external override(ISale) capCalculated nonReentrant {
         Account storage account = accounts[to];
         require(!account.refunded, "already refunded");
 
@@ -242,12 +233,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     /// @inheritdoc ISale
-    function refundAmount(address to)
-        public
-        view
-        override(ISale)
-        returns (uint256)
-    {
+    function refundAmount(
+        address to
+    ) public view override(ISale) returns (uint256) {
         if (!risingTide_isValidCap()) {
             return 0;
         }
@@ -263,22 +251,16 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         return tokenToPaymentToken(uncapped - capped);
     }
 
-    function uncappedAllocation(address _to)
-        public
-        view
-        override(ISale)
-        returns (uint256)
-    {
+    function uncappedAllocation(
+        address _to
+    ) public view override(ISale) returns (uint256) {
         return accounts[_to].uncappedAllocation;
     }
 
     /// @inheritdoc ISale
-    function allocation(address _to)
-        public
-        view
-        override(ISale)
-        returns (uint256)
-    {
+    function allocation(
+        address _to
+    ) public view override(ISale) returns (uint256) {
         return _applyCap(uncappedAllocation(_to));
     }
 
@@ -297,12 +279,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     /// @inheritdoc RisingTide
-    function investorAmountAt(uint256 i)
-        public
-        view
-        override(RisingTide)
-        returns (uint256)
-    {
+    function investorAmountAt(
+        uint256 i
+    ) public view override(RisingTide) returns (uint256) {
         address addr = investorByIndex[i];
         Account storage account = accounts[addr];
 
@@ -337,12 +316,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// @dev Can only be called once
     ///
     /// @param _cap new individual cap
-    function setIndividualCap(uint256 _cap)
-        external
-        onlyRole(CAP_VALIDATOR_ROLE)
-        afterSale
-        nonReentrant
-    {
+    function setIndividualCap(
+        uint256 _cap
+    ) external onlyRole(CAP_VALIDATOR_ROLE) afterSale nonReentrant {
         _risingTide_setCap(_cap);
     }
 
@@ -351,13 +327,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     //
 
     /// @inheritdoc ERC165
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        virtual
-        override(ERC165, AccessControl)
-        returns (bool)
-    {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view virtual override(ERC165, AccessControl) returns (bool) {
         return
             interfaceId == type(ISale).interfaceId ||
             super.supportsInterface(interfaceId);

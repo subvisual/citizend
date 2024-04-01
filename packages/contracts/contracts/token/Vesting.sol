@@ -85,22 +85,16 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
     // IVesting
     //
     /// @inheritdoc IVesting
-    function totalAllocated(address to)
-        external
-        view
-        override(IVesting)
-        returns (uint256)
-    {
+    function totalAllocated(
+        address to
+    ) external view override(IVesting) returns (uint256) {
         return totalAllocatedPublic(to) + totalAllocatedPrivate(to);
     }
 
     /// @inheritdoc IVesting
-    function claimable(address to)
-        public
-        view
-        override(IVesting)
-        returns (uint256)
-    {
+    function claimable(
+        address to
+    ) public view override(IVesting) returns (uint256) {
         return claimablePublic(to) + claimablePrivate(to);
     }
 
@@ -136,11 +130,9 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
      *
      * @param _sale The address of the sale contract
      */
-    function addSale(address _sale)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-        nonReentrant
-    {
+    function addSale(
+        address _sale
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
         require(
             _sale.supportsInterface(type(ISale).interfaceId),
             "not an ISale"
@@ -191,10 +183,9 @@ contract Vesting is IVesting, AccessControl, ReentrancyGuard {
         totalPrivateSales += amount;
     }
 
-    function setStartTime(uint256 _startTime)
-        public
-        onlyRole(SALE_MANAGER_ROLE)
-    {
+    function setStartTime(
+        uint256 _startTime
+    ) public onlyRole(SALE_MANAGER_ROLE) {
         require(startTime == 0, "start time already set");
         startTime = _startTime;
     }

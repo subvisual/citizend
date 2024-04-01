@@ -53,11 +53,7 @@ contract Controller is IController, ERC165, AccessControl {
     // Merkle root to pass to the projects
     bytes32 public merkleRoot;
 
-    constructor(
-        address _staking,
-        address _token,
-        bytes32 _merkleRoot
-    ) {
+    constructor(address _staking, address _token, bytes32 _merkleRoot) {
         staking = _staking;
         token = _token;
         merkleRoot = _merkleRoot;
@@ -95,11 +91,10 @@ contract Controller is IController, ERC165, AccessControl {
     }
 
     /// @inheritdoc IController
-    function createBatch(address[] calldata _projects, uint256 _slotCount)
-        external
-        override(IController)
-        onlyRole(BATCH_MANAGER_ROLE)
-    {
+    function createBatch(
+        address[] calldata _projects,
+        uint256 _slotCount
+    ) external override(IController) onlyRole(BATCH_MANAGER_ROLE) {
         IBatch batch = new Batch(_projects, _slotCount);
 
         uint256 len = _projects.length;
@@ -119,12 +114,10 @@ contract Controller is IController, ERC165, AccessControl {
     }
 
     /// @inheritdoc IController
-    function isProjectInBatch(address _project, address _batch)
-        external
-        view
-        override(IController)
-        returns (bool)
-    {
+    function isProjectInBatch(
+        address _project,
+        address _batch
+    ) external view override(IController) returns (bool) {
         return projectsToBatches[_project] == _batch;
     }
 
@@ -153,12 +146,10 @@ contract Controller is IController, ERC165, AccessControl {
             batch.userHasVotedForProject(_project, _user);
     }
 
-    function canVote(address _user, bytes32[] calldata _merkleProof)
-        external
-        view
-        override(IController)
-        returns (bool)
-    {
+    function canVote(
+        address _user,
+        bytes32[] calldata _merkleProof
+    ) external view override(IController) returns (bool) {
         return _hasKYC(_user, _merkleProof) && _belongsToDAO(_user);
     }
 
@@ -172,11 +163,10 @@ contract Controller is IController, ERC165, AccessControl {
         Batch(batch).setVotingPeriod(start, end, extraInvestmentDuration);
     }
 
-    function _hasKYC(address _user, bytes32[] calldata _merkleProof)
-        internal
-        view
-        returns (bool)
-    {
+    function _hasKYC(
+        address _user,
+        bytes32[] calldata _merkleProof
+    ) internal view returns (bool) {
         bytes32 leaf = keccak256(abi.encodePacked(_user));
         bool isValid = MerkleProof.verify(_merkleProof, merkleRoot, leaf);
 
@@ -194,29 +184,23 @@ contract Controller is IController, ERC165, AccessControl {
     //
 
     // Checks if a given account has the PROJECT_MANAGER_ROLE role
-    function hasProjectManagerRole(address _account)
-        external
-        view
-        returns (bool)
-    {
+    function hasProjectManagerRole(
+        address _account
+    ) external view returns (bool) {
         return hasRole(PROJECT_MANAGER_ROLE, _account);
     }
 
     // Checks if a given account has the BATCH_MANAGER_ROLE role
-    function hasBatchManagerRole(address _account)
-        external
-        view
-        returns (bool)
-    {
+    function hasBatchManagerRole(
+        address _account
+    ) external view returns (bool) {
         return hasRole(BATCH_MANAGER_ROLE, _account);
     }
 
     // Checks if a given account has the LEGAL_MANAGER_ROLE role
-    function hasLegalManagerRole(address _account)
-        external
-        view
-        returns (bool)
-    {
+    function hasLegalManagerRole(
+        address _account
+    ) external view returns (bool) {
         return hasRole(BATCH_MANAGER_ROLE, _account);
     }
 
@@ -225,11 +209,9 @@ contract Controller is IController, ERC165, AccessControl {
     //
 
     /// @inheritdoc IController
-    function getBatchForProject(address _project)
-        external
-        view
-        returns (address)
-    {
+    function getBatchForProject(
+        address _project
+    ) external view returns (address) {
         return projectsToBatches[_project];
     }
 
@@ -238,12 +220,9 @@ contract Controller is IController, ERC165, AccessControl {
     //
 
     /// @inheritdoc ERC165
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC165, AccessControl)
-        returns (bool)
-    {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view override(ERC165, AccessControl) returns (bool) {
         return
             interfaceId == type(IController).interfaceId ||
             super.supportsInterface(interfaceId);

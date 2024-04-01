@@ -18,21 +18,15 @@ contract MockSale is ISale, ERC165 {
 
     address public paymentToken;
 
-    function paymentTokenToToken(uint256 _x)
-        external
-        pure
-        override(ISale)
-        returns (uint256)
-    {
+    function paymentTokenToToken(
+        uint256 _x
+    ) external pure override(ISale) returns (uint256) {
         return _x;
     }
 
-    function tokenToPaymentToken(uint256 _x)
-        external
-        pure
-        override(ISale)
-        returns (uint256)
-    {
+    function tokenToPaymentToken(
+        uint256 _x
+    ) external pure override(ISale) returns (uint256) {
         return _x;
     }
 
@@ -45,12 +39,9 @@ contract MockSale is ISale, ERC165 {
         return;
     }
 
-    function uncappedAllocation(address to)
-        external
-        view
-        override(ISale)
-        returns (uint256)
-    {
+    function uncappedAllocation(
+        address to
+    ) external view override(ISale) returns (uint256) {
         return allocation[to];
     }
 
@@ -74,24 +65,19 @@ contract MockSale is ISale, ERC165 {
         refundAmount[to] += amount;
     }
 
-    function test_Called(string calldata name, uint256 amount)
-        external
-        view
-        returns (bool)
-    {
+    function test_Called(
+        string calldata name,
+        uint256 amount
+    ) external view returns (bool) {
         return calls[name] == amount;
     }
 
     //
     // ERC165
     //
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        virtual
-        override(ERC165)
-        returns (bool)
-    {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view virtual override(ERC165) returns (bool) {
         return
             interfaceId == type(ISale).interfaceId ||
             super.supportsInterface(interfaceId);

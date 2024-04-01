@@ -57,33 +57,29 @@ contract MockProject is IProject {
         }
     }
 
-    function investmentTokenToToken(uint256 _amount)
-        external
-        view
-        override(IProject)
-        returns (uint256)
-    {
+    function investmentTokenToToken(
+        uint256 _amount
+    ) external view override(IProject) returns (uint256) {
         return _amount;
     }
 
-    function tokenToInvestmentToken(uint256 _amount)
-        external
-        pure
-        override(IProject)
-        returns (uint256)
-    {
+    function tokenToInvestmentToken(
+        uint256 _amount
+    ) external pure override(IProject) returns (uint256) {
         return _amount;
     }
 
-    function test_createStakersPool(uint256 _supply, address _investmentToken)
-        external
-    {
+    function test_createStakersPool(
+        uint256 _supply,
+        address _investmentToken
+    ) external {
         stakersPool = address(new TestPool(_supply, _investmentToken));
     }
 
-    function test_createPeoplesPool(uint256 _supply, address _investmentToken)
-        external
-    {
+    function test_createPeoplesPool(
+        uint256 _supply,
+        address _investmentToken
+    ) external {
         peoplesPool = address(new TestPool(_supply, _investmentToken));
     }
 }

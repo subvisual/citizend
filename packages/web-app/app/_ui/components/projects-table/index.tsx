@@ -166,7 +166,7 @@ export function ProjectsTable() {
   return (
     <>
       <DesktopTable />
-      <MobileTable />
+      {/* <MobileTable /> */}
     </>
   );
 }

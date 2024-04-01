@@ -7,7 +7,7 @@ import { NavLink } from './nav-link';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Dropdown } from './dropdown';
-import { NavigationOverlay } from './navigation-overlay';
+import { NavigationMobile } from './navigation-mobile';
 
 export const useScrollPosition = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -59,11 +59,7 @@ export function Topbar() {
           <NavLink href="/projects/my-projects" name="My Projects" />
         </nav>
         <WalletButton />
-        {/* <Dropdown classNames="md:hidden">
-          <Dropdown.Item href="/" name="All Projects" />
-          <Dropdown.Item href="/projects/my-projects" name="My Projects" />
-        </Dropdown> */}
-        <NavigationOverlay />
+        <NavigationMobile classNames="md:hidden" />
       </div>
     </header>
   );

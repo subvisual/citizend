@@ -12,20 +12,18 @@ type TNavLinkProps = {
 
 export const NavLink = ({ href, name, className }: TNavLinkProps) => {
   const pathname = usePathname();
+  const active = pathname === href;
 
   return (
     <Link
       href={href}
-      className={clsx('p-3 font-medium uppercase text-mono-50', className)}
+      className={clsx(
+        'rounded-lg px-4 py-3 font-medium text-mono-400 hover:text-mono-50 focus-visible:text-mono-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-mono-50',
+        active && 'bg-blue-500 text-mono-50',
+        className,
+      )}
     >
-      <span
-        className={clsx({
-          'relative flex items-center text-mono-50 before:absolute before:-left-4 before:top-1.5 before:block before:h-2 before:w-2 before:rotate-45 before:bg-blue-500':
-            pathname === href,
-        })}
-      >
-        {name}
-      </span>
+      {name}
     </Link>
   );
 };

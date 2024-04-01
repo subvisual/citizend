@@ -45,36 +45,34 @@ describe("ProjectVoting", () => {
           end: votingEnd,
         },
         [],
-        2
+        2,
       );
     });
 
     describe("calculateWeightedVote", async () => {
       it("is equal to the initial bonus when the voting starts", async () => {
-        const weight = await projectVoting.test_calculateWeightedVote(
-          votingStart
-        );
+        const weight =
+          await projectVoting.test_calculateWeightedVote(votingStart);
 
         expect(weight).to.eq(parseUnits("0.05"));
       });
 
       it("is equal to the final bonus when the voting ends", async () => {
-        const weight = await projectVoting.test_calculateWeightedVote(
-          votingEnd
-        );
+        const weight =
+          await projectVoting.test_calculateWeightedVote(votingEnd);
 
         expect(weight).to.be.closeTo(parseUnits("0"), parseUnits("0.001"));
       });
 
       it("goes down linerarly as time goes by", async () => {
         expect(
-          await projectVoting.test_calculateWeightedVote(votingStart + oneDay)
+          await projectVoting.test_calculateWeightedVote(votingStart + oneDay),
         ).to.be.closeTo(parseUnits("0.045"), parseUnits("0.001"));
 
         expect(
           await projectVoting.test_calculateWeightedVote(
-            votingStart + oneDay * 8
-          )
+            votingStart + oneDay * 8,
+          ),
         ).to.be.closeTo(parseUnits("0.01"), parseUnits("0.001"));
       });
     });
@@ -124,7 +122,7 @@ describe("ProjectVoting", () => {
           end: votingEnd,
         },
         [project1.address, project2.address, project3.address],
-        3
+        3,
       );
     });
 
@@ -174,7 +172,7 @@ describe("ProjectVoting", () => {
           project4.address,
           project5.address,
         ],
-        2
+        2,
       );
     });
 
@@ -257,7 +255,7 @@ describe("ProjectVoting", () => {
       1000,
       10,
       aUSD.address,
-      "0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49"
+      "0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49",
     );
   }
 });

@@ -39,7 +39,7 @@ async function importCSV(hre: HardhatRuntimeEnvironment, file: string) {
         amountInCents,
         cliff,
         vestingMonths,
-        nonce
+        nonce,
       );
     }
   }
@@ -59,7 +59,7 @@ function readCSV(file: string): Promise<Row[]> {
           cliff: row.Cliff,
           vestingMonths: row.Vesting,
           nonce: row.Nonce,
-        })
+        }),
       )
       .on("end", () => resolve(result));
   });

@@ -16,7 +16,7 @@ if (process.env.RISING_TIDE_GAS_ESTIMATES) {
 
     beforeEach(async () => {
       WithStaticAmounts = await ethers.getContractFactory(
-        "TestRisingTideWithStaticAmounts"
+        "TestRisingTideWithStaticAmounts",
       );
     });
 

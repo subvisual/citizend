@@ -28,7 +28,7 @@
     "contracts:compile": "yarn workspace @discovery-dao/contracts compile",
     "prepare": "husky install",
     "pre-commit": "yarn workspace @discovery-dao/web-app precommit",
-    "web:bundle": "yarn workspace @discovery-dao/webapp bundle",
+    "web:bundle": "yarn workspace @discovery-dao/web-app bundle",
     "web:lint": "yarn workspace @discovery-dao/web-app lint"
   },
   "devDependencies": {

@@ -45,7 +45,7 @@ describe("ctnd:risingTide task, with correct exchange rates", () => {
     aUSD = MockERC20__factory.connect(aUSDDeployment.address, owner);
     registry = FractalRegistry__factory.connect(
       registryDeployment.address,
-      owner
+      owner,
     );
     sale = await new Sale__factory(owner).deploy(
       aUSD.address,
@@ -53,7 +53,7 @@ describe("ctnd:risingTide task, with correct exchange rates", () => {
       start,
       end,
       parseUnits("1"),
-      registry.address
+      registry.address,
     );
   });
 
@@ -71,7 +71,7 @@ describe("ctnd:risingTide task, with correct exchange rates", () => {
       ];
 
       const ctndAmounts = await Promise.all(
-        aUSDAmounts.map((amount) => sale.paymentTokenToToken(amount))
+        aUSDAmounts.map((amount) => sale.paymentTokenToToken(amount)),
       );
 
       await applyInvestments(aUSD, registry, sale, ctndAmounts);

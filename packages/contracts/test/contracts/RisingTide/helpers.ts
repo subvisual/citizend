@@ -12,7 +12,7 @@ export async function expectCapValidation(
   contract: TestRisingTideWithCustomAmounts | TestRisingTideWithStaticAmounts,
   cap: number,
   expectation: boolean,
-  gasLimit?: number
+  gasLimit?: number,
 ) {
   let gasSpent = BigNumber.from(0);
   let tx;
@@ -41,7 +41,7 @@ async function getGasSpent(tx: ContractTransaction) {
 
 export async function applyInvestments(
   contract: TestRisingTideWithCustomAmounts,
-  investments: number[]
+  investments: number[],
 ) {
   for (let i = 0; i < investments.length; ++i) {
     await contract.test_invest(i, investments[i]);

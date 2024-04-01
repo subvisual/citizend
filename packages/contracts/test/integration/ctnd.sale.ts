@@ -48,7 +48,7 @@ describe("Integration", () => {
     citizend = Citizend__factory.connect(citizendDeployment.address, owner);
     registry = FractalRegistry__factory.connect(
       registryDeployment.address,
-      owner
+      owner,
     );
     sale = Sale__factory.connect(saleDeployment.address, owner);
     secondSale = Sale__factory.connect(secondSaleDeployment.address, owner);
@@ -74,7 +74,7 @@ describe("Integration", () => {
       await sale.connect(seller).setIndividualCap(0, { gasLimit: 10000000 });
 
       await expect(sale.refund(alice.address)).to.be.revertedWith(
-        "No tokens to refund"
+        "No tokens to refund",
       );
     });
 
@@ -82,7 +82,7 @@ describe("Integration", () => {
       const fullSupply = await sale.totalTokensForSale();
       const refundAmount = parseUnits("1");
       const purchaseAmount = fullSupply.add(
-        await sale.paymentTokenToToken(refundAmount)
+        await sale.paymentTokenToToken(refundAmount),
       );
       await goToTime(await sale.start());
       await sale.connect(alice).buy(purchaseAmount);
@@ -104,12 +104,12 @@ describe("Integration", () => {
       const fullSupply1 = await sale.totalTokensForSale();
       const refundAmount1 = parseUnits("1");
       const purchaseAmount1 = fullSupply1.add(
-        await sale.paymentTokenToToken(refundAmount1)
+        await sale.paymentTokenToToken(refundAmount1),
       );
       const fullSupply2 = await secondSale.totalTokensForSale();
       const refundAmount2 = parseUnits("1");
       const purchaseAmount2 = fullSupply2.add(
-        await sale.paymentTokenToToken(refundAmount2)
+        await sale.paymentTokenToToken(refundAmount2),
       );
 
       await vesting.addSale(secondSale.address);
@@ -134,7 +134,7 @@ describe("Integration", () => {
 
       expect(afterRefund.sub(beforeRefund)).to.be.closeTo(
         refundAmount1.add(refundAmount2),
-        2
+        2,
       );
     });
   });
@@ -154,7 +154,7 @@ describe("Integration", () => {
         .setIndividualCap(parseUnits("2"), { gasLimit: 10000000 });
 
       expect(await vesting.totalAllocated(alice.address)).to.equal(
-        parseUnits("2")
+        parseUnits("2"),
       );
     });
   });
@@ -196,7 +196,7 @@ describe("Integration", () => {
         .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(
-        parseUnits("0.5")
+        parseUnits("0.5"),
       );
     });
 
@@ -224,7 +224,7 @@ describe("Integration", () => {
         .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(
-        parseUnits("1.5")
+        parseUnits("1.5"),
       );
     });
 
@@ -239,12 +239,12 @@ describe("Integration", () => {
 
       await goToTime(await vesting.startTime());
       expect(await vesting.claimable(alice.address)).to.equal(
-        parseUnits("0.5")
+        parseUnits("0.5"),
       );
 
       await increaseTime(time.duration.days(70));
       expect(await vesting.claimable(alice.address)).to.equal(
-        parseUnits("1.5")
+        parseUnits("1.5"),
       );
     });
 
@@ -258,7 +258,7 @@ describe("Integration", () => {
         .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(
-        parseUnits("1.5")
+        parseUnits("1.5"),
       );
     });
 
@@ -272,7 +272,7 @@ describe("Integration", () => {
         .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(
-        parseUnits("0.5")
+        parseUnits("0.5"),
       );
       await vesting.claim(alice.address);
       expect(await vesting.claimable(alice.address)).to.equal(0);
@@ -288,7 +288,7 @@ describe("Integration", () => {
         .setIndividualCap(parseUnits("1.5"), { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(
-        parseUnits("0.5")
+        parseUnits("0.5"),
       );
     });
 
@@ -312,7 +312,7 @@ describe("Integration", () => {
 
       expect(await vesting.claimable(alice.address)).to.closeTo(
         parseUnits("0.666"),
-        parseUnits("0.001")
+        parseUnits("0.001"),
       );
     });
   });
@@ -341,7 +341,7 @@ describe("Integration", () => {
 
       expect(await vesting.claimable(alice.address)).to.be.closeTo(
         parseUnits("0.666"),
-        parseUnits("0.001")
+        parseUnits("0.001"),
       );
     });
 
@@ -369,7 +369,7 @@ describe("Integration", () => {
 
       await expect(vesting.claim(alice.address)).to.emit(
         vesting,
-        "ClaimVesting"
+        "ClaimVesting",
       );
     });
   });
@@ -386,7 +386,7 @@ describe("Integration", () => {
         .setIndividualCap(parseUnits("2.5"), { gasLimit: 10000000 });
 
       expect(await vesting.claimable(alice.address)).to.equal(
-        parseUnits("2.5")
+        parseUnits("2.5"),
       );
     });
   });

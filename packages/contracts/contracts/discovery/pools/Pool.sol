@@ -76,11 +76,10 @@ abstract contract Pool is IPool, RisingTide {
     //
 
     /// @inheritdoc IPool
-    function invest(address _investor, uint256 _amount)
-        external
-        override(IPool)
-        onlyProject
-    {
+    function invest(
+        address _investor,
+        uint256 _amount
+    ) external override(IPool) onlyProject {
         if (investors[_investor].uncappedAllocation == 0) {
             investorByIndex[_investorCount] = _investor;
             _investorCount++;
@@ -117,12 +116,9 @@ abstract contract Pool is IPool, RisingTide {
     }
 
     /// @inheritdoc IPool
-    function refundableAmount(address _to)
-        public
-        view
-        override(IPool)
-        returns (uint256)
-    {
+    function refundableAmount(
+        address _to
+    ) public view override(IPool) returns (uint256) {
         // TODO: Should ignore rising tide if project lost
         if (!risingTide_isValidCap()) {
             return 0;
@@ -135,22 +131,16 @@ abstract contract Pool is IPool, RisingTide {
     }
 
     /// @inheritdoc IPool
-    function uncappedAllocation(address _to)
-        external
-        view
-        override(IPool)
-        returns (uint256 amount)
-    {
+    function uncappedAllocation(
+        address _to
+    ) external view override(IPool) returns (uint256 amount) {
         return investors[_to].uncappedAllocation;
     }
 
     /// @inheritdoc IPool
-    function allocation(address _to)
-        public
-        view
-        override(IPool)
-        returns (uint256 amount)
-    {
+    function allocation(
+        address _to
+    ) public view override(IPool) returns (uint256 amount) {
         return risingTide_applyCap(investors[_to].uncappedAllocation);
     }
 
@@ -169,12 +159,9 @@ abstract contract Pool is IPool, RisingTide {
     }
 
     /// @inheritdoc RisingTide
-    function investorAmountAt(uint256 i)
-        public
-        view
-        override(RisingTide)
-        returns (uint256)
-    {
+    function investorAmountAt(
+        uint256 i
+    ) public view override(RisingTide) returns (uint256) {
         address addr = investorByIndex[i];
 
         return investors[addr].uncappedAllocation;

@@ -10,7 +10,7 @@ const func: DeployFunction = async function (hre) {
     "Citizend",
     { from: deployer },
     "balanceOf",
-    deployer,
+    deployer
   );
 
   if (balance.gt(0)) {
@@ -19,7 +19,7 @@ const func: DeployFunction = async function (hre) {
       { from: deployer, log: true },
       "transfer",
       vesting.address,
-      balance,
+      balance
     );
   }
 };

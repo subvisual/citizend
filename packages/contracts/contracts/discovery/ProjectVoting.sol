@@ -248,11 +248,9 @@ abstract contract ProjectVoting is ICommon {
             projectVoting_singleSlotDuration();
     }
 
-    function _sortVotes(SortableVote[] memory _votes)
-        internal
-        view
-        returns (SortableVote[] memory)
-    {
+    function _sortVotes(
+        SortableVote[] memory _votes
+    ) internal view returns (SortableVote[] memory) {
         _quickSort(_votes, int256(0), int256(_votes.length - 1));
         return _votes;
     }
@@ -284,11 +282,9 @@ abstract contract ProjectVoting is ICommon {
         if (i < right) _quickSort(_votes, i, right);
     }
 
-    function _calculateWeightedVote(uint256 currentTime)
-        internal
-        view
-        returns (uint256)
-    {
+    function _calculateWeightedVote(
+        uint256 currentTime
+    ) internal view returns (uint256) {
         int256 bonusDelta = int256(
             projectVoting_finalBonus() - projectVoting_initialBonus()
         );

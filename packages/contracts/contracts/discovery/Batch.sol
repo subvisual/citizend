@@ -46,9 +46,10 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         _;
     }
 
-    constructor(address[] memory _projects, uint256 _slotCount)
-        ProjectVoting(_projects)
-    {
+    constructor(
+        address[] memory _projects,
+        uint256 _slotCount
+    ) ProjectVoting(_projects) {
         uint256 numProjects = _projects.length;
         require(numProjects > 0, "projects must not be empty");
         require(_slotCount > 0, "slotCount must be greater than 0");
@@ -108,7 +109,7 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         override(ProjectVoting)
         returns (int256)
     {
-        return 0.05 * 10**18;
+        return 0.05 * 10 ** 18;
     }
 
     function projectVoting_finalBonus()
@@ -135,11 +136,10 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         return slotCount;
     }
 
-    function hasVotedForProject(address _user, address _project)
-        external
-        view
-        returns (bool)
-    {
+    function hasVotedForProject(
+        address _user,
+        address _project
+    ) external view returns (bool) {
         return userHasVotedForProject[_project][_user];
     }
 
@@ -161,11 +161,10 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         investmentEnd = votingPeriod.end + extraInvestmentDuration;
     }
 
-    function vote(address projectAddress, bytes32[] calldata _merkleProof)
-        external
-        votingPeriodIsSet
-        inVotingPeriod
-    {
+    function vote(
+        address projectAddress,
+        bytes32[] calldata _merkleProof
+    ) external votingPeriodIsSet inVotingPeriod {
         require(
             IController(controller).canVote(msg.sender, _merkleProof),
             "not allowed to vote"
@@ -183,12 +182,9 @@ contract Batch is IBatch, ICommon, ProjectVoting {
         return _getWinners();
     }
 
-    function getProjectStatus(address projectAddress)
-        external
-        view
-        votingPeriodIsSet
-        returns (ProjectStatus)
-    {
+    function getProjectStatus(
+        address projectAddress
+    ) external view votingPeriodIsSet returns (ProjectStatus) {
         address[] memory computedWinners = _getWinners();
 
         for (uint256 i = 0; i < computedWinners.length; i++) {

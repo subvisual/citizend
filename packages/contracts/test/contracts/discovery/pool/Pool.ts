@@ -85,7 +85,7 @@ describe("Pool", () => {
       await project.connect(alice).invest(0, 100, merkleProof);
 
       await expect(pool.refund(alice.address)).to.be.revertedWith(
-        "cap not yet set",
+        "cap not yet set"
       );
     });
 
@@ -98,7 +98,7 @@ describe("Pool", () => {
       await expect(() => pool.refund(alice.address)).to.changeTokenBalance(
         aUSD,
         alice,
-        amount - cap,
+        amount - cap
       );
     });
 
@@ -122,7 +122,7 @@ describe("Pool", () => {
       await pool.refund(alice.address);
 
       await expect(pool.refund(alice.address)).to.be.revertedWith(
-        "already refunded",
+        "already refunded"
       );
     });
   });

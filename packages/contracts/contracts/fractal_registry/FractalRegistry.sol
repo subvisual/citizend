@@ -39,11 +39,10 @@ contract FractalRegistry {
     /// @param userId is FractalId in bytes32.
     /// @param listId is the list id.
     /// @return bool if the user is the specified list.
-    function isUserInList(bytes32 userId, string memory listId)
-        external
-        view
-        returns (bool)
-    {
+    function isUserInList(
+        bytes32 userId,
+        string memory listId
+    ) external view returns (bool) {
         return userLists[listId][userId];
     }
 

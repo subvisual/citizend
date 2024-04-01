@@ -63,12 +63,9 @@ contract Staking is IStaking {
         token = _token;
     }
 
-    function hasStaked(address _account)
-        external
-        view
-        override(IStaking)
-        returns (bool)
-    {
+    function hasStaked(
+        address _account
+    ) external view override(IStaking) returns (bool) {
         return stakes[_account].bonded > 0;
     }
 

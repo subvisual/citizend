@@ -4,3 +4,4 @@ cache
 typechain-types
 deployments
 src/types
+lib

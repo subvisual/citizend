@@ -23,7 +23,7 @@ const func: DeployFunction = async function (hre) {
     "FractalRegistry",
     {},
     "getFractalId",
-    deployer,
+    deployer
   );
 
   if (alreadyDelegate != ethers.constants.HashZero) {
@@ -41,14 +41,14 @@ const func: DeployFunction = async function (hre) {
       { from: deployer, log: true },
       "addUserAddress",
       address,
-      hexID,
+      hexID
     );
     await execute(
       "FractalRegistry",
       { from: deployer, log: true },
       "addUserToList",
       hexID,
-      "plus",
+      "plus"
     );
     id++;
   }

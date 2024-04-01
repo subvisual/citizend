@@ -31,10 +31,9 @@ interface IPool {
     function refundableAmount(address _to) external view returns (uint256);
 
     /// Similar to Sale.uncappedAllocation
-    function uncappedAllocation(address _to)
-        external
-        view
-        returns (uint256 amount);
+    function uncappedAllocation(
+        address _to
+    ) external view returns (uint256 amount);
 
     /// Similar to Sale.allocation
     function allocation(address _to) external view returns (uint256);

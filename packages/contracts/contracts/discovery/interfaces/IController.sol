@@ -10,10 +10,9 @@ interface IController {
     // Checks if a given account has the PROJECT_MANAGER_ROLE role
     /// @param _account Account to check
     /// @return true if account is a project manager
-    function hasProjectManagerRole(address _account)
-        external
-        view
-        returns (bool);
+    function hasProjectManagerRole(
+        address _account
+    ) external view returns (bool);
 
     // Checks if a given account has the LEGAL_MANAGER_ROLE role
     /// @param _account Account to check
@@ -22,10 +21,9 @@ interface IController {
 
     /// @param _project address of the project
     /// @return Batch address
-    function getBatchForProject(address _project)
-        external
-        view
-        returns (address);
+    function getBatchForProject(
+        address _project
+    ) external view returns (address);
 
     /// Creates a new batch with
     ///
@@ -33,8 +31,10 @@ interface IController {
     ///
     /// @dev Batches are created in order, and with no overlap.
     ///   i.e.: when creating batch #3, its start date must be after the end date of batch #2
-    function createBatch(address[] calldata projects, uint256 _slotCount)
-        external;
+    function createBatch(
+        address[] calldata projects,
+        uint256 _slotCount
+    ) external;
 
     /// Registers a new Project
     function registerProject(
@@ -46,9 +46,10 @@ interface IController {
     ) external;
 
     /// Checks if a project is included in the given batch
-    function isProjectInBatch(address _project, address _batch)
-        external
-        returns (bool);
+    function isProjectInBatch(
+        address _project,
+        address _batch
+    ) external returns (bool);
 
     /// Checks if a user can invest in the staker's pool of a project
     function canInvestInStakersPool(
@@ -64,10 +65,10 @@ interface IController {
     ) external view returns (bool);
 
     /// Checks if a user can vote
-    function canVote(address _user, bytes32[] calldata _merkleProof)
-        external
-        view
-        returns (bool);
+    function canVote(
+        address _user,
+        bytes32[] calldata _merkleProof
+    ) external view returns (bool);
 
     /// Sets the voting period for a Batch
     function setBatchVotingPeriod(

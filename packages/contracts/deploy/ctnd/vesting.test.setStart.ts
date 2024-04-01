@@ -23,7 +23,7 @@ const func: DeployFunction = async function (hre) {
       from: deployer,
     },
     "setStartTime",
-    ctndVesting.start,
+    ctndVesting.start
   );
 };
 

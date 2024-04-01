@@ -46,7 +46,7 @@ describe("Controller", () => {
     projectToken = await new MockERC20__factory(owner).deploy(
       "ProjectToken",
       "ProjectToken",
-      18,
+      18
     );
     merkleRoot =
       "0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49";
@@ -58,7 +58,7 @@ describe("Controller", () => {
     controller = await new Controller__factory(owner).deploy(
       staking.address,
       citizend.address,
-      merkleRoot,
+      merkleRoot
     );
   });
 
@@ -69,8 +69,8 @@ describe("Controller", () => {
       expect(
         await controller.hasRole(
           await controller.DEFAULT_ADMIN_ROLE(),
-          owner.address,
-        ),
+          owner.address
+        )
       ).to.be.true;
       expect(await controller.merkleRoot()).to.eq(merkleRoot);
     });
@@ -84,10 +84,7 @@ describe("Controller", () => {
       project = await registerProject(owner, projectToken, controller, aUSD);
 
       expect(
-        await controller.canInvestInStakersPool(
-          alice.address,
-          aliceMerkleProof,
-        ),
+        await controller.canInvestInStakersPool(alice.address, aliceMerkleProof)
       ).to.be.true;
     });
 
@@ -105,10 +102,7 @@ describe("Controller", () => {
       project = await registerProject(owner, projectToken, controller, aUSD);
 
       expect(
-        await controller.canInvestInStakersPool(
-          alice.address,
-          aliceMerkleProof,
-        ),
+        await controller.canInvestInStakersPool(alice.address, aliceMerkleProof)
       ).to.be.false;
     });
 
@@ -117,10 +111,7 @@ describe("Controller", () => {
       project = await registerProject(owner, projectToken, controller, aUSD);
 
       expect(
-        await controller.canInvestInStakersPool(
-          alice.address,
-          aliceMerkleProof,
-        ),
+        await controller.canInvestInStakersPool(alice.address, aliceMerkleProof)
       ).to.be.false;
     });
   });
@@ -137,8 +128,8 @@ describe("Controller", () => {
         await controller.canInvestInPeoplesPool(
           project.address,
           alice.address,
-          aliceMerkleProof,
-        ),
+          aliceMerkleProof
+        )
       ).to.be.true;
     });
 
@@ -152,8 +143,8 @@ describe("Controller", () => {
         await controller.canInvestInPeoplesPool(
           project.address,
           alice.address,
-          aliceMerkleProof,
-        ),
+          aliceMerkleProof
+        )
       ).to.be.false;
     });
 
@@ -166,8 +157,8 @@ describe("Controller", () => {
         await controller.canInvestInPeoplesPool(
           project.address,
           alice.address,
-          aliceMerkleProof,
-        ),
+          aliceMerkleProof
+        )
       ).to.be.false;
     });
 
@@ -181,8 +172,8 @@ describe("Controller", () => {
         await controller.canInvestInPeoplesPool(
           project.address,
           alice.address,
-          aliceMerkleProof,
-        ),
+          aliceMerkleProof
+        )
       ).to.be.false;
     });
   });
@@ -204,8 +195,8 @@ describe("Controller", () => {
           projectToken.address,
           parseUnits("1000"),
           parseUnits("2"),
-          aUSD.address,
-        ),
+          aUSD.address
+        )
       ).to.emit(controller, "ProjectRegistered");
     });
 
@@ -231,7 +222,7 @@ describe("Controller", () => {
       project = await registerProject(owner, projectToken, controller, aUSD);
 
       await expect(
-        controller.createBatch([project.address], 1),
+        controller.createBatch([project.address], 1)
       ).to.be.revertedWith("project not ready");
     });
 
@@ -246,7 +237,7 @@ describe("Controller", () => {
       await expect(controller.createBatch([project.address], 1)).to.not.be
         .reverted;
       await expect(
-        controller.createBatch([project.address], 1),
+        controller.createBatch([project.address], 1)
       ).to.be.revertedWith("already in a batch");
     });
   });

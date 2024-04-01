@@ -11,7 +11,7 @@ export async function applyInvestments(
   paymentToken: MockERC20,
   registry: FractalRegistry,
   sale: Sale,
-  examples: BigNumberish[],
+  examples: BigNumberish[]
 ) {
   for (const [i, amount] of examples.entries()) {
     const signers = await ethers.getSigners();

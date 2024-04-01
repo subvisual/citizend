@@ -77,8 +77,8 @@ function reduceAmounts(purchases: PurchaseEvent[]): BigNumber[] {
 
         return accounts;
       },
-      {},
-    ),
+      {}
+    )
   ).sort((a1, a2) => {
     if (a1.lt(a2)) {
       return -1;
@@ -93,7 +93,7 @@ function reduceAmounts(purchases: PurchaseEvent[]): BigNumber[] {
 export async function submitRisingTideCap(
   ethers: any,
   sale: any,
-  cap: BigNumber,
+  cap: BigNumber
 ) {
   const gasLimit = 10000000;
 

@@ -23,12 +23,9 @@ contract TestRisingTideWithCustomAmounts is RisingTide {
         return totalInvestors;
     }
 
-    function investorAmountAt(uint256 i)
-        public
-        view
-        override(RisingTide)
-        returns (uint256)
-    {
+    function investorAmountAt(
+        uint256 i
+    ) public view override(RisingTide) returns (uint256) {
         return investors[i];
     }
 

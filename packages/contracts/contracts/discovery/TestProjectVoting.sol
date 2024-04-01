@@ -51,7 +51,7 @@ contract TestProjectVoting is ProjectVoting {
         override(ProjectVoting)
         returns (int256)
     {
-        return 0.05 * 10**18;
+        return 0.05 * 10 ** 18;
     }
 
     function projectVoting_finalBonus()
@@ -80,19 +80,15 @@ contract TestProjectVoting is ProjectVoting {
         return _getWinners();
     }
 
-    function test_calculateWeightedVote(uint256 currentTime)
-        external
-        view
-        returns (uint256)
-    {
+    function test_calculateWeightedVote(
+        uint256 currentTime
+    ) external view returns (uint256) {
         return _calculateWeightedVote(currentTime);
     }
 
-    function test_sortVotes(SortableVote[] memory votes)
-        external
-        view
-        returns (SortableVote[] memory)
-    {
+    function test_sortVotes(
+        SortableVote[] memory votes
+    ) external view returns (SortableVote[] memory) {
         return _sortVotes(votes);
     }
 }

@@ -44,7 +44,7 @@ describe("ctnd:risingTide task", () => {
     aUSD = MockERC20__factory.connect(aUSDDeployment.address, owner);
     registry = FractalRegistry__factory.connect(
       registryDeployment.address,
-      owner,
+      owner
     );
     sale = await new Sale__factory(owner).deploy(
       aUSD.address,
@@ -52,7 +52,7 @@ describe("ctnd:risingTide task", () => {
       start,
       end,
       500000,
-      registry.address,
+      registry.address
     );
   });
 

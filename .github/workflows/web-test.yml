@@ -36,6 +36,9 @@ jobs:
       - name: Lint next
         run: yarn workspace @discovery-dao/web-app lint:next
 
+      - name: Generate wagmi
+        run: yarn workspace @discovery-dao/contracts wagmi:generate
+
       - name: Lint types
         run: yarn workspace @discovery-dao/web-app lint:tsc
 

@@ -40,6 +40,7 @@
   "scripts": {
     "compile": "TS_NODE_TRANSPILE_ONLY=1 hardhat compile",
     "dev": "hardhat node",
+    "wagmi:generate": "wagmi generate",
     "test": "hardhat test --deploy-fixture --parallel",
     "lint": "solhint contracts/**/*.sol && prettier --check . contracts/**/*.sol"
   },

@@ -11,7 +11,7 @@ export async function isAcala() {
 export async function acalaDeploy(
   hre: HardhatRuntimeEnvironment,
   name: string,
-  opts: DeployOptions
+  opts: DeployOptions,
 ) {
   const { deploy, execute, getOrNull } = hre.deployments;
 

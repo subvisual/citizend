@@ -54,7 +54,7 @@ describe("Batch", () => {
     projectToken = await new MockERC20__factory(owner).deploy(
       "ProjectToken",
       "ProjectToken",
-      18
+      18,
     );
     merkleRoot =
       "0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49";
@@ -72,7 +72,7 @@ describe("Batch", () => {
     controller = await new Controller__factory(owner).deploy(
       staking.address,
       citizend.address,
-      merkleRoot
+      merkleRoot,
     );
     aUSD = await new MockERC20__factory(owner).deploy("aUSD", "aUSD", 12);
 
@@ -82,14 +82,14 @@ describe("Batch", () => {
       owner,
       projectToken,
       controller,
-      aUSD
+      aUSD,
     );
     await makeProjectReady(anotherFakeProject, projectToken);
 
     batch = await setUpBatch(
       controller,
       [fakeProject, anotherFakeProject],
-      owner
+      owner,
     );
 
     await citizend.transfer(alice.address, 1000);
@@ -99,7 +99,7 @@ describe("Batch", () => {
       batch.address,
       votingStart,
       votingEnd,
-      0
+      0,
     );
     await goToTime(votingStart);
   });
@@ -113,31 +113,31 @@ describe("Batch", () => {
 
     it("fails with an empty list of projects", async () => {
       await expect(new Batch__factory(owner).deploy([], 0)).to.be.revertedWith(
-        "projects must not be empty"
+        "projects must not be empty",
       );
     });
 
     it("fails with no slots", async () => {
       await expect(
-        new Batch__factory(owner).deploy([fakeProject.address], 0)
+        new Batch__factory(owner).deploy([fakeProject.address], 0),
       ).to.be.revertedWith("slotCount must be greater than 0");
     });
 
     it("fails with more slots than projects", async () => {
       await expect(
-        new Batch__factory(owner).deploy([fakeProject.address], 2)
+        new Batch__factory(owner).deploy([fakeProject.address], 2),
       ).to.be.revertedWith("cannot have more slots than projects");
     });
 
     it("fails with an address that does not implement IProject", async () => {
       await expect(
-        controller.createBatch([projectToken.address], 1)
+        controller.createBatch([projectToken.address], 1),
       ).to.be.revertedWith("project must be an IProject");
     });
 
     xit("fails if one of the projects is not whitelisted", async () => {
       await expect(
-        setUpBatch(controller, [fakeProject], owner)
+        setUpBatch(controller, [fakeProject], owner),
       ).to.be.revertedWith("project must be whitelisted");
     });
   });
@@ -148,7 +148,7 @@ describe("Batch", () => {
         batch.address,
         votingStart + 1 * oneDay,
         votingEnd,
-        oneDay
+        oneDay,
       );
 
       const votingPeriod = await batch.votingPeriod();
@@ -165,8 +165,8 @@ describe("Batch", () => {
           batch.address,
           votingStart - 10 * oneDay,
           votingStart + 20 * oneDay,
-          0
-        )
+          0,
+        ),
       ).to.be.revertedWith("start must be in the future");
     });
 
@@ -176,14 +176,14 @@ describe("Batch", () => {
           batch.address,
           votingStart + 10 * oneDay,
           votingStart - 10 * oneDay,
-          0
-        )
+          0,
+        ),
       ).to.be.revertedWith("start must be before end");
     });
 
     it("reverts if not called by the controller", async () => {
       await expect(
-        batch.connect(alice).setVotingPeriod(votingStart + 1, votingEnd, 0)
+        batch.connect(alice).setVotingPeriod(votingStart + 1, votingEnd, 0),
       ).to.be.revertedWith("only controller can set voting period");
     });
   });
@@ -195,7 +195,7 @@ describe("Batch", () => {
       expect(await batch.userVoteCount(alice.address)).to.eq(1);
       expect(await batch.projectVoteCount(fakeProject.address)).to.eq(1);
       expect(
-        await batch.userHasVotedForProject(fakeProject.address, alice.address)
+        await batch.userHasVotedForProject(fakeProject.address, alice.address),
       ).to.be.true;
     });
 
@@ -203,7 +203,7 @@ describe("Batch", () => {
       await batch.connect(alice).vote(fakeProject.address, aliceMerkleProof);
 
       await expect(
-        batch.connect(alice).vote(fakeProject.address, aliceMerkleProof)
+        batch.connect(alice).vote(fakeProject.address, aliceMerkleProof),
       ).to.be.revertedWith("already voted in this project");
     });
 
@@ -212,34 +212,34 @@ describe("Batch", () => {
         owner,
         projectToken,
         controller,
-        aUSD
+        aUSD,
       );
       await makeProjectReady(fakeProject, projectToken);
       anotherFakeProject = await registerProject(
         owner,
         projectToken,
         controller,
-        aUSD
+        aUSD,
       );
       await makeProjectReady(anotherFakeProject, projectToken);
       batch = await setUpBatch(
         controller,
         [fakeProject, anotherFakeProject],
         owner,
-        1
+        1,
       );
       await controller.setBatchVotingPeriod(
         batch.address,
         votingStart + oneDay,
         votingEnd,
-        0
+        0,
       );
       await goToTime(votingStart + oneDay);
 
       await batch.connect(alice).vote(fakeProject.address, aliceMerkleProof);
 
       await expect(
-        batch.connect(alice).vote(anotherFakeProject.address, aliceMerkleProof)
+        batch.connect(alice).vote(anotherFakeProject.address, aliceMerkleProof),
       ).to.be.revertedWith("vote limit reached");
     });
 
@@ -248,17 +248,17 @@ describe("Batch", () => {
         owner,
         projectToken,
         controller,
-        aUSD
+        aUSD,
       );
       await makeProjectReady(newProject, projectToken);
       await controller.createBatch([newProject.address], 1);
       batch = await Batch__factory.connect(
         await controller.projectsToBatches(newProject.address),
-        owner
+        owner,
       );
 
       await expect(
-        batch.connect(alice).vote(newProject.address, aliceMerkleProof)
+        batch.connect(alice).vote(newProject.address, aliceMerkleProof),
       ).to.be.revertedWith("voting period not set");
     });
 
@@ -266,13 +266,13 @@ describe("Batch", () => {
       await citizend.transfer(carol.address, 1000);
 
       await expect(
-        batch.connect(carol).vote(fakeProject.address, aliceMerkleProof)
+        batch.connect(carol).vote(fakeProject.address, aliceMerkleProof),
       ).to.be.revertedWith("not allowed to vote");
     });
 
     it("does not allow a user not belonging to the DAO to vote", async () => {
       await expect(
-        batch.connect(carol).vote(fakeProject.address, aliceMerkleProof)
+        batch.connect(carol).vote(fakeProject.address, aliceMerkleProof),
       ).to.be.revertedWith("not allowed to vote");
     });
   });
@@ -398,14 +398,14 @@ describe("Batch", () => {
       await batch.connect(alice).vote(fakeProject.address, aliceMerkleProof);
 
       expect(
-        await batch.weightedProjectVoteCount(fakeProject.address)
+        await batch.weightedProjectVoteCount(fakeProject.address),
       ).to.be.closeTo(parseUnits("0.045"), parseUnits("0.0001"));
 
       await goToTime(votingStart + 4 * oneDay);
       await batch.connect(bob).vote(fakeProject.address, bobMerkleProof);
 
       expect(
-        await batch.weightedProjectVoteCount(fakeProject.address)
+        await batch.weightedProjectVoteCount(fakeProject.address),
       ).to.be.closeTo(parseUnits("0.075"), parseUnits("0.0001"));
     });
   });

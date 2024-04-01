@@ -44,7 +44,7 @@ describe("Sale", () => {
     aUSD = await new MockERC20__factory(owner).deploy(
       "aUSD",
       "aUSD",
-      aUSDDecimals
+      aUSDDecimals,
     );
 
     registry = await new FractalRegistry__factory(owner).deploy(owner.address);
@@ -55,7 +55,7 @@ describe("Sale", () => {
       start,
       end,
       parseUnits("10"),
-      registry.address
+      registry.address,
     );
 
     await aUSD.mint(alice.address, parseUnits("1000"));
@@ -106,7 +106,7 @@ describe("Sale", () => {
       await expect(action).to.changeTokenBalance(
         aUSD,
         owner,
-        parseUnits("0.6", 12)
+        parseUnits("0.6", 12),
       );
     });
 
@@ -132,7 +132,7 @@ describe("Sale", () => {
       await expect(action).to.changeTokenBalance(
         aUSD,
         owner,
-        parseUnits("3", 12)
+        parseUnits("3", 12),
       );
       expect(await aUSD.balanceOf(sale.address)).to.equal(parseUnits("3", 12));
     });
@@ -143,7 +143,7 @@ describe("Sale", () => {
       await sale.connect(alice).buy(parseUnits("2"));
 
       expect(await sale.uncappedAllocation(alice.address)).to.eq(
-        parseUnits("2")
+        parseUnits("2"),
       );
     });
 
@@ -155,7 +155,7 @@ describe("Sale", () => {
         .withArgs(
           alice.address,
           amount,
-          await sale.paymentTokenToToken(amount)
+          await sale.paymentTokenToToken(amount),
         );
     });
 
@@ -171,7 +171,7 @@ describe("Sale", () => {
         .withArgs(alice.address, amount, parseUnits("1"));
 
       expect(await sale.uncappedAllocation(alice.address)).to.eq(
-        parseUnits("2")
+        parseUnits("2"),
       );
     });
 
@@ -180,11 +180,11 @@ describe("Sale", () => {
 
       await sale.connect(alice).buy(parseUnits("2"));
       expect(await sale.uncappedAllocation(alice.address)).to.eq(
-        parseUnits("2")
+        parseUnits("2"),
       );
 
       await expect(sale.connect(carol).buy(parseUnits("1"))).to.be.revertedWith(
-        "not registered"
+        "not registered",
       );
     });
 
@@ -192,11 +192,11 @@ describe("Sale", () => {
       await registry.addUserAddress(carol.address, formatBytes32String("id1"));
       await sale.connect(alice).buy(parseUnits("2"));
       expect(await sale.uncappedAllocation(alice.address)).to.eq(
-        parseUnits("2")
+        parseUnits("2"),
       );
 
       await expect(sale.connect(carol).buy(30)).to.be.revertedWith(
-        "id registered to another address"
+        "id registered to another address",
       );
     });
   });
@@ -290,7 +290,7 @@ describe("Sale", () => {
       await sale.setIndividualCap(1000, { gasLimit: 10000000 });
 
       expect(await sale.refundAmount(alice.address)).to.equal(
-        await sale.tokenToPaymentToken(1)
+        await sale.tokenToPaymentToken(1),
       );
     });
   });
@@ -300,7 +300,7 @@ describe("Sale", () => {
       await sale.connect(alice).buy(parseUnits("2"));
 
       await expect(sale.refund(alice.address)).to.be.revertedWith(
-        "cap not yet set"
+        "cap not yet set",
       );
     });
 
@@ -317,7 +317,7 @@ describe("Sale", () => {
       await expect(() => sale.refund(alice.address)).to.changeTokenBalance(
         aUSD,
         alice,
-        await sale.tokenToPaymentToken(amount)
+        await sale.tokenToPaymentToken(amount),
       );
     });
 
@@ -349,7 +349,7 @@ describe("Sale", () => {
       await sale.refund(alice.address);
 
       await expect(sale.refund(alice.address)).to.be.revertedWith(
-        "already refunded"
+        "already refunded",
       );
     });
   });

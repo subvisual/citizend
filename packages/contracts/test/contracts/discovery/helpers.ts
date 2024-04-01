@@ -19,14 +19,14 @@ export async function registerProject(
   owner: SignerWithAddress,
   projectToken: MockERC20,
   controller: Controller,
-  investmentToken: MockERC20
+  investmentToken: MockERC20,
 ): Promise<Project> {
   const tx = await controller.registerProject(
     "My Project",
     projectToken.address,
     parseUnits("1000"),
     parseUnits("2"),
-    investmentToken.address
+    investmentToken.address,
   );
 
   const event = await findEvent(tx, "ProjectRegistered");
@@ -37,7 +37,7 @@ export async function registerProject(
 
 export async function makeProjectReady(
   project: Project,
-  projectToken: MockERC20
+  projectToken: MockERC20,
 ) {
   await projectToken.transfer(project.address, parseUnits("1000"));
   await project.approveByManager();
@@ -48,22 +48,22 @@ export async function setUpBatch(
   controller: Controller,
   projects: Project[],
   owner: SignerWithAddress,
-  slotCount?: number
+  slotCount?: number,
 ): Promise<Batch> {
   await controller.createBatch(
     projects.map((project) => project.address),
-    slotCount || projects.length
+    slotCount || projects.length,
   );
   const batch: Batch = await Batch__factory.connect(
     await controller.projectsToBatches(projects[0].address),
-    owner
+    owner,
   );
   const startTime: number = (await currentTimestamp()) + 100;
   await controller.setBatchVotingPeriod(
     batch.address,
     startTime,
     startTime + 60 * 60 * 24,
-    0
+    0,
   );
   await goToTime(startTime);
 

@@ -30,6 +30,10 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
       - name: Install module dependencies
         run: yarn install --frozen-lockfile
 

@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        footer: 'repeat(2, minmax(0, 31rem))',
+      },
       backgroundImage: {
         'background-desktop': 'url("/background-desktop.png")',
         'background-mobile': 'url("/background-mobile.png")',
@@ -41,6 +44,7 @@ const config: Config = {
         '17': '4.25rem',
         '27': '6.75rem',
         '31': '7.75rem',
+        '280': '70rem',
       },
       boxShadow: {
         'projects-table': '0px 4px 16px 0px #DADFED',

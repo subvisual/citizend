@@ -1,5 +1,6 @@
 import { TClassNameProps } from '@/app/_types';
 import clsx from 'clsx';
+import Link from 'next/link';
 
 const resources = [
   {
@@ -12,6 +13,7 @@ const resources = [
         viewBox="0 0 52 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         <rect
           x="0.5"
@@ -58,6 +60,7 @@ const resources = [
         viewBox="0 0 51 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         <rect
           x="0.5"
@@ -84,6 +87,7 @@ const resources = [
         viewBox="0 0 51 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         <rect
           x="0.5"
@@ -110,6 +114,7 @@ const resources = [
         viewBox="0 0 52 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         <rect
           x="0.5"
@@ -131,16 +136,19 @@ const resources = [
 type TNavigationItem = {
   name: string;
   href: string;
-  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  icon: () => JSX.Element;
 };
 
 const NavigationItem = ({ name, href, icon: Icon }: TNavigationItem) => {
   return (
     <li key={name}>
-      <a href={href} className="font-medium text-mono-200 hover:text-blue-500">
+      <Link
+        href={href}
+        className="font-medium text-mono-200 hover:text-blue-500"
+      >
         <span className="sr-only">{name}</span>
-        <Icon className="h-10 w-10" aria-hidden="true" />
-      </a>
+        <Icon />
+      </Link>
     </li>
   );
 };
@@ -150,7 +158,7 @@ export const SocialResources = ({ className }: TClassNameProps) => {
     <div>
       <ul
         role="list"
-        className={clsx('flex flex-row items-start gap-4', className)}
+        className={clsx('flex flex-row items-start gap-8', className)}
       >
         {resources.map((item) => (
           <NavigationItem key={item.name} {...item} />

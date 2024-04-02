@@ -2,6 +2,7 @@ import { Fragment, PropsWithChildren } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { TClassNameProps } from '@/app/_types';
 
 const BurgerMenu = () => {
   return (
@@ -65,18 +66,16 @@ function DropdownItem({ href, name }: TDropdownItemProps) {
   );
 }
 
-type TDropdownProps = PropsWithChildren & {
-  classNames?: string;
-};
+type TDropdownProps = PropsWithChildren & TClassNameProps;
 
-export function Dropdown({ children, classNames }: TDropdownProps) {
+export function Dropdown({ children, className }: TDropdownProps) {
   return (
     <Menu
       as="div"
-      className={clsx('relative inline-block text-left', classNames)}
+      className={clsx('relative inline-block text-left', className)}
     >
       <div className="flex h-full content-center items-center">
-        <Menu.Button className="items-cente flex text-[#3865FD] hover:text-blue-light focus:outline-none focus:ring-2 focus:ring-[#3865FD]">
+        <Menu.Button className="flex items-center text-blue-500 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
           <span className="sr-only">Open navigation menu</span>
           <BurgerMenu />
         </Menu.Button>

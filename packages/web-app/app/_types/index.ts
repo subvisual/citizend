@@ -13,3 +13,7 @@ export type Project = {
   endDate: Date;
   startDate: Date;
 };
+
+export type TClassNameProps = {
+  className?: string;
+};

@@ -52,7 +52,7 @@ const DesktopTable = () => {
   });
 
   return (
-    <table className="hidden w-full rounded-md border-grey-lightest bg-white-anti-flash md:table">
+    <table className="hidden w-full rounded-md border-blue-100 bg-mono-50 md:table">
       <thead>
         {table.getHeaderGroups()?.map((headerGroup) => (
           <tr key={headerGroup.id}>
@@ -60,7 +60,7 @@ const DesktopTable = () => {
               return (
                 <td
                   key={header.id}
-                  className="p-6 font-medium uppercase text-font-color-light"
+                  className="p-6 font-medium uppercase text-mono-800"
                 >
                   {flexRender(
                     header.column.columnDef.header,
@@ -73,9 +73,9 @@ const DesktopTable = () => {
         ))}
       </thead>
       {table.getRowCount() ? (
-        <tbody className="border-t border-grey-light">
+        <tbody className="border-t border-blue-400">
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className="hover:bg-grey-light">
+            <tr key={row.id} className="hover:bg-blue-400">
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className="p-6">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -101,7 +101,7 @@ const MobileTable = () => {
   });
 
   return (
-    <table className="w-full overflow-hidden rounded-md border-grey-lightest bg-white-anti-flash md:hidden">
+    <table className="w-full overflow-hidden rounded-md border-blue-100 bg-mono-50 md:hidden">
       <thead>
         {table.getHeaderGroups()?.map((headerGroup) => (
           <tr key={`${headerGroup.id}-mobile`}>
@@ -109,7 +109,7 @@ const MobileTable = () => {
               return (
                 <td
                   key={`${header.id}-mobile`}
-                  className="p-4 text-xs font-medium uppercase leading-4 text-font-color-light"
+                  className="p-4 text-xs font-medium uppercase leading-4 text-mono-800"
                 >
                   {flexRender(
                     header.column.columnDef.header,
@@ -125,14 +125,11 @@ const MobileTable = () => {
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <>
-              <tr
-                key={`${row.id}-row-mobile`}
-                className="hover:bg-grey-lightest"
-              >
+              <tr key={`${row.id}-row-mobile`} className="hover:bg-blue-100">
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={`${cell.id}-cell-mobile`}
-                    className="border-t border-grey-lightest p-6"
+                    className="border-t border-blue-100 p-6"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
@@ -169,7 +166,7 @@ export function ProjectsTable() {
   return (
     <>
       <DesktopTable />
-      <MobileTable />
+      {/* <MobileTable /> */}
     </>
   );
 }

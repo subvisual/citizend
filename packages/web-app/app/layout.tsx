@@ -39,11 +39,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${nohemi.className}`}>
         <Providers>
-          <div className="flex min-h-screen flex-col bg-background-pattern-overlay bg-cover bg-no-repeat antialiased">
+          <div className="flex min-h-screen flex-col bg-background-mobile bg-cover bg-fixed bg-no-repeat antialiased md:bg-background-desktop">
             <Topbar />
             <div className="grow bg-cover py-14 md:p-20">
               <div id="idos"></div>
-              <div className="mx-auto max-w-6xl px-6">{children}</div>
+              <div className="mx-auto max-w-280 px-6">{children}</div>
             </div>
             <Footer />
           </div>

@@ -3,13 +3,13 @@ import localFont from 'next/font/local';
 export const nohemi = localFont({
   src: [
     {
-      path: './nohemi-light.woff2',
-      weight: '300',
+      path: './nohemi-medium.woff2',
+      weight: '500',
       style: 'normal',
     },
     {
-      path: './nohemi-medium.woff2',
-      weight: '500',
+      path: './nohemi-normal.woff2',
+      weight: '400',
       style: 'normal',
     },
   ],

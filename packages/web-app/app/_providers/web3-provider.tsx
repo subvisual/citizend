@@ -3,7 +3,7 @@
 import { WagmiProvider } from 'wagmi';
 import {
   RainbowKitProvider,
-  lightTheme,
+  darkTheme,
   type Theme,
 } from '@rainbow-me/rainbowkit';
 import { TChildren } from '@/app/_types';
@@ -12,9 +12,9 @@ import merge from 'lodash.merge';
 import { wagmiConfig } from './wagmi-config';
 
 const customTheme = merge(
-  lightTheme({
+  darkTheme({
     overlayBlur: 'small',
-    accentColor: '#3F69F5',
+    accentColor: '#3865FD',
     accentColorForeground: '#FFF',
   }),
   {
@@ -27,7 +27,11 @@ const customTheme = merge(
 export function Web3Provider({ children }: TChildren) {
   return (
     <WagmiProvider config={wagmiConfig}>
-      <RainbowKitProvider showRecentTransactions={true} theme={customTheme}>
+      <RainbowKitProvider
+        showRecentTransactions={true}
+        theme={customTheme}
+        modalSize="compact"
+      >
         {children}
       </RainbowKitProvider>
     </WagmiProvider>

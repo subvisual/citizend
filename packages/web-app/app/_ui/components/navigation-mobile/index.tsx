@@ -1,16 +1,22 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { Overlay } from './overlay';
 import { BurgerMenu } from './burger-menu';
-import Link from 'next/link';
 import clsx from 'clsx';
 import { InternalNavigation } from '../internal-navigation';
 import { TClassNameProps } from '@/app/_types';
 import { Resources } from '../resources';
+import { usePathname } from 'next/navigation';
 
 export const NavigationMobile = ({ className }: TClassNameProps) => {
   const [open, setOpen] = useState(false);
+  const pathName = usePathname();
+
+  // close modal on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathName]);
 
   return (
     <>

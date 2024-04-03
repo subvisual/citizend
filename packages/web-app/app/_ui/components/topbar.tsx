@@ -6,7 +6,6 @@ import { WalletButton } from '@/app/_ui/components';
 import { NavLink } from './nav-link';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { Dropdown } from './dropdown';
 import { NavigationMobile } from './navigation-mobile';
 
 export const useScrollPosition = () => {

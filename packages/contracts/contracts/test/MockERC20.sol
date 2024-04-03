@@ -14,7 +14,6 @@ contract MockERC20 is ERC20 {
         string memory _symbol,
         uint8 __decimals
     ) ERC20(_name, _symbol) {
-        _mint(msg.sender, 1e9 ether);
         _decimals = __decimals;
     }
 

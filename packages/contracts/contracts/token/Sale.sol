@@ -10,7 +10,6 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 
 import {ISale} from "./ISale.sol";
 import {RisingTide} from "../RisingTide/RisingTide.sol";
-import {FractalRegistry} from "../fractal_registry/FractalRegistry.sol";
 import {Math} from "../libraries/Math.sol";
 
 /// Citizend token sale contract
@@ -34,7 +33,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         keccak256("CAP_VALIDATOR_ROLE");
 
     // multiplier used for rate conversions
-    uint256 constant MUL = 10 ** 18;
+    uint256 constant MUL = 1 ether;
 
     //
     // Events
@@ -63,6 +62,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// Fixed price of token, expressed in paymentToken amount
     uint256 public immutable rate;
 
+    /// Minimum amount per contribution, expressed in paymentToken amount
+    uint256 public min_contribution;
+
     /// Timestamp at which sale starts
     uint256 public immutable start;
 
@@ -83,26 +85,20 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// How many tokens have been allocated, before cap calculation
     uint256 public totalUncappedAllocations;
 
-    /// Fractal Registry address
-    address public immutable registry;
-
     /// Did the admins already withdraw all aUSD from sales
     bool public withdrawn;
-
-    /// Fractal Id associated with the address to be used in this sale
-    mapping(bytes32 => address) public fractalIdToAddress;
 
     /// @param _paymentToken Token accepted as payment
     /// @param _rate token:paymentToken exchange rate, multiplied by 10e18
     /// @param _start Start timestamp
     /// @param _end End timestamp
+    /// @param _totalTokensForSale Total amount of tokens for sale
     constructor(
         address _paymentToken,
         uint256 _rate,
         uint256 _start,
         uint256 _end,
-        uint256 _totalTokensForSale,
-        address _registry
+        uint256 _totalTokensForSale
     ) {
         require(_rate > 0, "can't be zero");
         require(_paymentToken != address(0), "can't be zero");
@@ -115,7 +111,6 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         start = _start;
         end = _end;
         totalTokensForSale = _totalTokensForSale;
-        registry = _registry;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -181,17 +176,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     /// @inheritdoc ISale
     function buy(uint256 _amount) external override(ISale) inSale nonReentrant {
-        bytes32 fractalId = FractalRegistry(registry).getFractalId(msg.sender);
-        require(fractalId != 0, "not registered");
-        require(
-            fractalIdToAddress[fractalId] == address(0) ||
-                fractalIdToAddress[fractalId] == msg.sender,
-            "id registered to another address"
-        );
-        require(
-            FractalRegistry(registry).isUserInList(fractalId, "plus"),
-            "not full kyc"
-        );
+        // TODO send merkleProof and check for valid leaf
+
+        require(_amount >= min_contribution, "can't be below minimum");
 
         uint256 paymentAmount = tokenToPaymentToken(_amount);
         require(paymentAmount > 0, "can't be zero");
@@ -205,7 +192,6 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
         accounts[msg.sender].uncappedAllocation += _amount;
         totalUncappedAllocations += _amount;
-        fractalIdToAddress[fractalId] = msg.sender;
 
         emit Purchase(msg.sender, paymentAmount, _amount);
 
@@ -320,6 +306,12 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _cap
     ) external onlyRole(CAP_VALIDATOR_ROLE) afterSale nonReentrant {
         _risingTide_setCap(_cap);
+    }
+
+    function setMinContribution(
+        uint256 _minContribution
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
+        min_contribution = _minContribution;
     }
 
     //

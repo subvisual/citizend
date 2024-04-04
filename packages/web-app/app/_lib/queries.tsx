@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { useIdOS } from '../_providers/idos';
-import { idOSCredential } from '../_types/idos';
+import { idOSCredential, idOSCredentialStatus } from '../_types/idos';
 import { useMemo } from 'react';
-import { compareAddresses } from './utils';
+import { compareAddresses, isValidGrant } from './utils';
 import { getPublicInfo } from '../_server/idos';
 import { getProjectGrants } from '../_server/grants';
+import { TProjectInfoArgs, getProjectPublicInfo } from '../_server/projects';
+import { useKyc } from '../_providers/kyc/context';
 
 export const usePublicInfo = () => {
   return useQuery({
@@ -12,6 +14,17 @@ export const usePublicInfo = () => {
     queryFn: async () => {
       return await getPublicInfo();
     },
+  });
+};
+
+export const useProjectPublicInfo = (projectId?: TProjectInfoArgs) => {
+  return useQuery({
+    queryKey: ['project-public-info', projectId],
+    queryFn: async () => {
+      if (!projectId) return null;
+      return await getProjectPublicInfo(projectId);
+    },
+    enabled: !!projectId,
   });
 };
 
@@ -87,119 +100,21 @@ export const useFetchWallets = () => {
   });
 };
 
-export const useFetchGrants = () => {
+export const useFetchGrants = (grantee: string | undefined) => {
   const { sdk, address, hasSigner } = useIdOS();
-  const { data: publicInfo, isSuccess: isServerQuerySuccess } = usePublicInfo();
 
   return useQuery({
-    queryKey: ['grants', address],
+    queryKey: ['grants', address, grantee],
     queryFn: async () => {
-      return sdk?.grants.list({ owner: address, grantee: publicInfo?.grantee });
+      if (!address || !grantee) return null;
+      return sdk?.grants.list({ owner: address, grantee });
     },
-    enabled: !!(
-      sdk &&
-      hasSigner &&
-      address &&
-      isServerQuerySuccess &&
-      publicInfo
-    ),
+    enabled: !!(sdk && hasSigner && address && grantee),
   });
 };
 
-export const useFetchKycCredential = () => {
-  const {
-    data: credentials,
-    isLoading,
-    error,
-    isSuccess,
-  } = useFetchCredentials();
-
-  const credential = useMemo(() => {
-    if (!credentials) return null;
-
-    return credentials.find((c) => c.credential_type === 'kyc');
-  }, [credentials]);
-
-  return {
-    credential,
-    id: credential?.id,
-    approved: credential?.credential_status === 'approved',
-    isLoading,
-    error,
-    isSuccess,
-  };
-};
-
-type TCredentialContent = {
-  country: string | undefined;
-  wallet:
-    | {
-        address: string;
-        verified: boolean;
-      }
-    | undefined;
-  id: string | undefined;
-  approved: boolean | undefined;
-  isLoading: boolean;
-  error: any;
-};
-
-type TWallet = {
-  address: string;
-  verified: boolean;
-};
-
-export const useFetchKycData = () => {
-  const { address } = useIdOS();
-  const {
-    id,
-    approved,
-    isLoading: kycLoading,
-    error: kycError,
-    isSuccess: kycSuccess,
-  } = useFetchKycCredential();
-  const {
-    data: credentialContent,
-    isLoading: contentLoading,
-    error: contentError,
-    isSuccess: contentSuccess,
-  } = useFetchCredentialContent(id);
-
-  const credential: TCredentialContent = useMemo(() => {
-    return {
-      id: id,
-      approved,
-      country:
-        credentialContent?.credentialSubject?.residential_address_country,
-      wallet: credentialContent?.credentialSubject?.wallets.find(
-        (wallet: TWallet) => {
-          return (
-            address &&
-            compareAddresses(wallet.address, address) &&
-            wallet.verified
-          );
-        },
-      ),
-      isLoading: kycLoading || contentLoading,
-      error: kycError || contentError,
-      isSuccess: kycSuccess && contentSuccess,
-    };
-  }, [
-    credentialContent,
-    address,
-    id,
-    approved,
-    kycLoading,
-    contentLoading,
-    kycError,
-    contentError,
-    kycSuccess,
-    contentSuccess,
-  ]);
-
-  return credential;
-};
-
+// Not used at the moment
+// maybe usefull to get grants through our server and avoid a modal
 export const useFetchProjectGrants = () => {
   return useQuery({
     queryKey: ['grants-contract'],
@@ -211,31 +126,41 @@ export const useFetchProjectGrants = () => {
   });
 };
 
+type TFetchNewDataId = {
+  grantee: string;
+  encryptionPublicKey: string;
+  lockTimeSpanSeconds: number;
+};
+
 /**
  * Get a new dataId from idOS to be used in the grant process
  */
-export const useFetchNewDataId = () => {
+export const useFetchNewDataId = (
+  grantee: string,
+  encryptionPublicKey: string,
+) => {
   const { sdk, address: owner, hasSigner } = useIdOS();
-  const { data: publicInfo, isSuccess: isServerQuerySuccess } = usePublicInfo();
-  const { id } = useFetchKycData();
+  const { id, status } = useKyc();
 
   return useQuery({
     queryKey: [
       'insert-grant-by-signature-message',
       owner,
       id,
-      publicInfo?.grantee,
-      publicInfo?.lockTimeSpanSeconds,
-      publicInfo?.encryptionPublicKey,
+      grantee,
+      encryptionPublicKey,
     ],
     queryFn: async () => {
-      if (!owner || !sdk || !id || !publicInfo) return null;
-
-      const { grantee, lockTimeSpanSeconds, encryptionPublicKey } = publicInfo;
+      if (
+        !owner ||
+        !sdk ||
+        !id ||
+        !encryptionPublicKey ||
+        status !== 'approved'
+      )
+        return null;
 
       try {
-        const expiration = Math.floor(Date.now() / 1000) + lockTimeSpanSeconds;
-
         // generate a dataId on idOS side
         const { id: dataId } = await sdk.data.share(
           'credentials',
@@ -243,16 +168,11 @@ export const useFetchNewDataId = () => {
           encryptionPublicKey,
         );
 
-        return {
-          owner,
-          grantee,
-          dataId,
-          expiration,
-        };
+        return dataId;
       } catch (error) {
         return null;
       }
     },
-    enabled: !!(hasSigner && owner && isServerQuerySuccess && id && publicInfo),
+    enabled: !!(hasSigner && owner && encryptionPublicKey && id && grantee),
   });
 };

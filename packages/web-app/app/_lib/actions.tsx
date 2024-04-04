@@ -4,7 +4,9 @@ import { getPublicInfo } from '../_server/idos';
 import { insertGrantBySignature } from '../_server/grants';
 import { useFetchGrantMessage } from './contract-queries';
 import { useSignMessage } from 'wagmi';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useKyc } from '../_providers/kyc/context';
+import { useFetchNewDataId } from './queries';
 
 export const useAcquireAccessGrantMutation = () => {
   const { sdk } = useIdOS();
@@ -35,21 +37,23 @@ export const useAcquireAccessGrantMutation = () => {
 };
 
 export const useInsertGrantBySignatureMutation = () => {
+  const { address: owner } = useIdOS();
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async ({
-      owner,
       grantee,
       dataId,
       signature,
       expiration,
     }: {
-      owner: string;
       grantee: string;
       dataId: string;
       signature: string;
       expiration: number;
     }) => {
+      if (!owner) return null;
+
       const hash = await insertGrantBySignature({
         owner,
         grantee,
@@ -60,26 +64,82 @@ export const useInsertGrantBySignatureMutation = () => {
 
       return hash;
     },
-    onSuccess: () => {
+    onSuccess: (_data, { grantee }) => {
       // queryClient.invalidateQueries({ queryKey: ['credentials'] });
       // queryClient.invalidateQueries({ queryKey: ['credential-content'] });
       // invalidate queries after 10 seconds
       setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: ['grants'] });
+        // update once we know the id
+        queryClient.invalidateQueries({ queryKey: ['grants', owner, grantee] });
       }, 10000);
     },
   });
 };
 
-export const useSignDelegatedAccessGrant = () => {
+type TNewDataIdMutation = {
+  id: string;
+  encryptionPublicKey: string;
+};
+
+// export const useGenerateNewDataIdMutation = () => {
+//   const { sdk, hasSigner } = useIdOS();
+
+//   return useMutation({
+//     mutationFn: async ({ id, encryptionPublicKey }: TNewDataIdMutation) => {
+//       if (!sdk || !hasSigner) return null;
+
+//       console.log(
+//         '%c==>',
+//         'color: green; background: yellow; font-size: 20px',
+//         id,
+//         encryptionPublicKey,
+//       );
+
+//       try {
+//         const { id: dataId } = await sdk.data.share(
+//           'credentials',
+//           id,
+//           encryptionPublicKey,
+//         );
+
+//         return dataId;
+//       } catch (error) {
+//         console.log(
+//           '%c==>',
+//           'color: green; background: purple; font-size: 20px',
+//           error,
+//         );
+
+//         return null;
+//       }
+//     },
+//   });
+// };
+
+export const useSignDelegatedAccessGrant = (
+  grantee: string,
+  encryptionPublicKey: string,
+  lockTimeSpanSeconds: number,
+) => {
+  const expiration = useMemo(
+    () => Math.floor(Date.now() / 1000) + lockTimeSpanSeconds,
+    [lockTimeSpanSeconds],
+  );
+  const { id, status: kycStatus } = useKyc();
+
   const {
-    mutate,
+    mutate: insertGrant,
     isPending: isServerPending,
-    isSuccess,
+    isSuccess: isGrantInsertSuccess,
     data: transactionHash,
   } = useInsertGrantBySignatureMutation();
-  const { owner, grantee, dataId, expiration, message } =
-    useFetchGrantMessage();
+  const {
+    data: dataId,
+    // isPending: isDataIdPending,
+    // isSuccess: isDataIdSuccess,
+  } = useFetchNewDataId(grantee, encryptionPublicKey);
+  const { data: message, isSuccess: isMessageRequestSuccess } =
+    useFetchGrantMessage(grantee, expiration, dataId);
   const {
     data: signature,
     signMessage,
@@ -87,21 +147,51 @@ export const useSignDelegatedAccessGrant = () => {
   } = useSignMessage();
 
   useEffect(() => {
-    if (owner && grantee && dataId && expiration && signature && !isSuccess) {
-      mutate({
-        owner,
+    if (
+      grantee &&
+      dataId &&
+      expiration &&
+      signature &&
+      !isGrantInsertSuccess &&
+      !isServerPending
+    ) {
+      console.log(
+        '%c==>',
+        'color: green; background: yellow; font-size: 20px',
+        'INSERT GRANT',
+      );
+
+      insertGrant({
         grantee,
         dataId,
         signature,
         expiration,
       });
     }
-  }, [signature, mutate, isSuccess, owner, grantee, dataId, expiration]);
+  }, [
+    signature,
+    insertGrant,
+    isGrantInsertSuccess,
+    grantee,
+    dataId,
+    expiration,
+    isServerPending,
+  ]);
+
+  useEffect(() => {
+    if (message && !signature && !isSignPending && isMessageRequestSuccess) {
+      try {
+        signMessage({ message: message as string });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [message, signature, isSignPending, isMessageRequestSuccess, signMessage]);
 
   const sign = useCallback(async () => {
     try {
       if (!message) return;
-      signMessage({ message });
+      signMessage({ message: message as string });
     } catch (error) {
       console.log(error);
     }
@@ -112,7 +202,7 @@ export const useSignDelegatedAccessGrant = () => {
     dataId,
     isServerPending,
     isSignPending,
-    isSuccess,
+    isGrantInsertSuccess,
     transactionHash,
   };
 };

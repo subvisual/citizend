@@ -70,7 +70,7 @@ export const useInsertGrantBySignatureMutation = () => {
       // invalidate queries after 10 seconds
       setTimeout(() => {
         // update once we know the id
-        queryClient.invalidateQueries({ queryKey: ['grants', owner, grantee] });
+        queryClient.invalidateQueries({ queryKey: ['grants', owner] });
       }, 10000);
     },
   });
@@ -80,41 +80,6 @@ type TNewDataIdMutation = {
   id: string;
   encryptionPublicKey: string;
 };
-
-// export const useGenerateNewDataIdMutation = () => {
-//   const { sdk, hasSigner } = useIdOS();
-
-//   return useMutation({
-//     mutationFn: async ({ id, encryptionPublicKey }: TNewDataIdMutation) => {
-//       if (!sdk || !hasSigner) return null;
-
-//       console.log(
-//         '%c==>',
-//         'color: green; background: yellow; font-size: 20px',
-//         id,
-//         encryptionPublicKey,
-//       );
-
-//       try {
-//         const { id: dataId } = await sdk.data.share(
-//           'credentials',
-//           id,
-//           encryptionPublicKey,
-//         );
-
-//         return dataId;
-//       } catch (error) {
-//         console.log(
-//           '%c==>',
-//           'color: green; background: purple; font-size: 20px',
-//           error,
-//         );
-
-//         return null;
-//       }
-//     },
-//   });
-// };
 
 export const useSignDelegatedAccessGrant = (
   grantee: string,
@@ -155,12 +120,6 @@ export const useSignDelegatedAccessGrant = (
       !isGrantInsertSuccess &&
       !isServerPending
     ) {
-      console.log(
-        '%c==>',
-        'color: green; background: yellow; font-size: 20px',
-        'INSERT GRANT',
-      );
-
       insertGrant({
         grantee,
         dataId,

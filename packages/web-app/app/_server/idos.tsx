@@ -119,7 +119,7 @@ const publicInfo: PublicInfo = {
   lockTimeSpanSeconds: 3600 * 24 * 365, // one year?
 };
 
-export const getPublicInfo = (): Promise<PublicInfo> =>
+export const getPublicInfo = async (): Promise<PublicInfo> =>
   new Promise((resolve) => {
     resolve(publicInfo);
   });

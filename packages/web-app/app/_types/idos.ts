@@ -1,4 +1,4 @@
-type idOSCredentialStatus =
+export type idOSCredentialStatus =
   | 'pending'
   | 'contacted'
   | 'approved'

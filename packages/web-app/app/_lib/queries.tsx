@@ -100,16 +100,16 @@ export const useFetchWallets = () => {
   });
 };
 
-export const useFetchGrants = (grantee: string | undefined) => {
+export const useFetchGrants = () => {
   const { sdk, address, hasSigner } = useIdOS();
 
   return useQuery({
-    queryKey: ['grants', address, grantee],
+    queryKey: ['grants', address],
     queryFn: async () => {
-      if (!address || !grantee) return null;
-      return sdk?.grants.list({ owner: address, grantee });
+      if (!address) return null;
+      return sdk?.grants.list({ owner: address });
     },
-    enabled: !!(sdk && hasSigner && address && grantee),
+    enabled: !!(sdk && hasSigner && address),
   });
 };
 

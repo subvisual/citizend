@@ -7,7 +7,7 @@ import { useAccount, useBalance, useDisconnect } from 'wagmi';
 import { formatEther } from 'viem';
 import { useIdOS } from '@/app/_providers/idos';
 import Link from 'next/link';
-import { useFetchKycCredential } from '@/app/_lib/queries';
+import { useKyc } from '@/app/_providers/kyc/context';
 
 type TCloseProps = {
   onClick: () => void;
@@ -39,11 +39,11 @@ const Close = ({ onClick }: TCloseProps) => {
 };
 
 const Credentials = () => {
-  const { isLoading, approved } = useFetchKycCredential();
+  const { isLoading, status } = useKyc();
 
   if (isLoading) return <div>Loading...</div>;
 
-  if (approved) return <div>Verified</div>;
+  if (status === 'approved') return <div>Verified</div>;
 
   return <div>Awaiting Approval</div>;
 };

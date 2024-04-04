@@ -47,20 +47,31 @@ export const useKycCredential = () => {
 };
 
 export const useHasCitizendGrant = () => {
-  const { shares, isLoading, error, isSuccess } = useKyc();
-  const { data: citizendPublicInfo, isSuccess: isServerQuerySuccess } =
-    usePublicInfo();
   const {
-    data: citizendGrants,
-    isLoading: isLoadingGrants,
-    error: grantsError,
-    isSuccess: isGrantsSuccess,
-    refetch,
-  } = useFetchGrants(citizendPublicInfo?.grantee);
+    shares,
+    grants,
+    isLoading: isKycLoading,
+    error: kycError,
+    isSuccess: isKycSucces,
+  } = useKyc();
+  const {
+    data: citizendPublicInfo,
+    isLoading: isProjectInfoLoading,
+    isSuccess: isServerQuerySuccess,
+  } = usePublicInfo();
+  const isLoading = isKycLoading || isProjectInfoLoading;
+  const error = kycError;
+  const isSuccess = isKycSucces && isServerQuerySuccess;
+
+  const citizendGrants = useMemo(
+    () =>
+      grants?.filter((grant) => grant.grantee === citizendPublicInfo?.grantee),
+    [grants, citizendPublicInfo],
+  );
 
   // check if at least one of the citizendGrants dataId exists in the credential shares array
   const hasGrant = useMemo(() => {
-    if (!citizendGrants || !shares) return false;
+    if (!citizendGrants?.length || !shares) return false;
 
     return citizendGrants.some(
       (grant) =>
@@ -68,30 +79,39 @@ export const useHasCitizendGrant = () => {
     );
   }, [citizendGrants, shares]);
 
-  return {
-    hasGrant,
-    isLoading: isLoading || isLoadingGrants,
-    error: error || grantsError,
-    isSuccess: isSuccess && isServerQuerySuccess && isGrantsSuccess,
-    refetch,
-  };
+  return useMemo(() => {
+    return {
+      hasGrant,
+      isLoading,
+      error,
+      isSuccess,
+    };
+  }, [hasGrant, isLoading, error, isSuccess]);
 };
 
 export const useHasProjectGrant = (projectId: string) => {
-  const { shares, isLoading, error, isSuccess } = useKyc();
+  const {
+    shares,
+    grants,
+    isLoading: isKycLoading,
+    error: kycError,
+    isSuccess: isKycSucces,
+  } = useKyc();
   const { data: projectPublicInfo, isSuccess: isProjectSuccess } =
     useProjectPublicInfo(projectId as TProjectInfoArgs);
-  const {
-    data: projectGrants,
-    isLoading: isLoadingGrants,
-    error: grantsError,
-    isSuccess: isGrantsSuccess,
-    refetch,
-  } = useFetchGrants(projectPublicInfo?.address);
+  const isLoading = isKycLoading || !projectPublicInfo;
+  const error = kycError;
+  const isSuccess = isKycSucces && isProjectSuccess;
+
+  const projectGrants = useMemo(
+    () =>
+      grants?.filter((grant) => grant.grantee === projectPublicInfo?.address),
+    [grants, projectPublicInfo],
+  );
 
   // check if at least one of the projectGrants dataId exists in the credential shares array
   const hasGrant = useMemo(() => {
-    if (!projectGrants || !shares) return false;
+    if (!projectGrants?.length || !shares) return false;
 
     return projectGrants.some(
       (grant) =>
@@ -99,11 +119,12 @@ export const useHasProjectGrant = (projectId: string) => {
     );
   }, [projectGrants, shares]);
 
-  return {
-    hasGrant,
-    isLoading: isLoading || isLoadingGrants,
-    error: error || grantsError,
-    isSuccess: isSuccess && isProjectSuccess && isGrantsSuccess,
-    refetch,
-  };
+  return useMemo(() => {
+    return {
+      hasGrant,
+      isLoading,
+      error,
+      isSuccess,
+    };
+  }, [hasGrant, isLoading, error, isSuccess]);
 };

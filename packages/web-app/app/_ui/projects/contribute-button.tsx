@@ -2,30 +2,52 @@
 
 import { useIdOS } from '@/app/_providers/idos';
 import { Button } from '../components';
-import { ContributeDialog } from '../components/dialogs';
+import { ApplyDialog } from '../components/dialogs';
 import { useDialog } from '@/app/_providers/dialog/context';
+import { useProject } from '@/app/_providers/project/context';
+
+const ConnectedButton = () => {
+  const { open } = useDialog();
+  const { projectId } = useProject();
+  // check the stage we are on the token sale for this specific project
+  const stage = 'apply';
+
+  if (stage === 'apply') {
+    return (
+      <Button onClick={() => open(ApplyDialog.displayName, { projectId })}>
+        Apply to participate
+      </Button>
+    );
+  }
+
+  if (stage === 'contribute') {
+    return (
+      <Button
+      // onClick={() => open(ApplyDialog.displayName)}
+      >
+        Contribute
+      </Button>
+    );
+  }
+
+  return (
+    <Button disabled variant="primary-disabled">
+      Closed
+    </Button>
+  );
+};
 
 export const ContributeButton = () => {
   const { address } = useIdOS();
-  const { open } = useDialog();
+
+  // should split connect, apply & contribute buttons
 
   if (!address)
     return (
-      <Button
-        disabled
-        className="rounded-none rounded-b-lg"
-        variant="primary-disabled"
-      >
+      <Button disabled variant="primary-disabled">
         Connect wallet first
       </Button>
     );
 
-  return (
-    <Button
-      className="rounded-none rounded-b-lg"
-      onClick={() => open(ContributeDialog.displayName)}
-    >
-      Contribute
-    </Button>
-  );
+  return <ConnectedButton />;
 };

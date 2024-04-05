@@ -49,6 +49,9 @@ const config: Config = {
       boxShadow: {
         'projects-table': '0px 4px 16px 0px #DADFED',
       },
+      borderRadius: {
+        '2.5xl': '1.125rem',
+      },
     },
     keyframes: {
       shimmer: {

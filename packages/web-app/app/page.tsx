@@ -1,4 +1,4 @@
-import { ProjectsTable } from './_ui/components/projects-table';
+import { UpcomingProjects } from './_ui/projects/upcoming-projects';
 
 export default function Home() {
   return (
@@ -7,7 +7,7 @@ export default function Home() {
       <p className="mx-6 mb-14 text-mono-50 md:mx-0 md:mb-20">
         The community-curated token launch platform of web3.
       </p>
-      <ProjectsTable />
+      <UpcomingProjects />
     </div>
   );
 }

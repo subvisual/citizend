@@ -33,7 +33,9 @@ export default function Project({ params }: TProjectProps) {
             targetRaiseRange="2.M - 8M ETH"
             totalSupply="800 000 000 CTND"
             targetedDate={new Date('2024-04-29')}
-            contractAddress="0x02323430947"
+            minPricePerToken="0.10$"
+            maxPricePerToken="10.00$"
+            totalSupplyDistributed="10%"
           />
           <ContributeButton />
         </div>

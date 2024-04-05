@@ -16,3 +16,13 @@ export interface PublicInfo {
   encryptionPublicKey: string;
   lockTimeSpanSeconds: number;
 }
+
+export type TProjectPublicInfo = {
+  id: string;
+  address: string;
+  publicKey: string;
+};
+
+export type TProjectsPublicInfo = {
+  [key: string]: TProjectPublicInfo;
+};

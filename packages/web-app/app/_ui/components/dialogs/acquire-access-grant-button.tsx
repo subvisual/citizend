@@ -3,6 +3,8 @@ import { Button } from '..';
 import { PublicInfo } from '@/app/_server/types';
 import { useSignDelegatedAccessGrant } from '@/app/_lib/actions';
 import { useTransaction } from 'wagmi';
+import { useKyc } from '@/app/_providers/kyc/context';
+import { useEffect } from 'react';
 
 type AcquireAccessGrantButton = {
   id: string;
@@ -10,13 +12,23 @@ type AcquireAccessGrantButton = {
 };
 
 const Done = ({ hash }: { hash: `0x${string}` }) => {
-  const test = useTransaction({ hash });
+  const { data, refetch } = useTransaction({ hash });
+  const { refetchGrants } = useKyc();
 
   console.log(
     '%c==>',
     'color: green; background: yellow; font-size: 20px',
-    test?.data,
+    data,
   );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetchGrants();
+      refetch();
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [refetchGrants, refetch]);
 
   return (
     <>
@@ -25,15 +37,29 @@ const Done = ({ hash }: { hash: `0x${string}` }) => {
   );
 };
 
-export const AcquireAccessGrantButton = ({ id }: { id: string }) => {
+type TIssueAccessGrantProps = {
+  grantee: string;
+  encryptionPublicKey: string;
+  lockTimeSpanSeconds: number;
+};
+
+export const AcquireAccessGrantButton = ({
+  grantee,
+  encryptionPublicKey,
+  lockTimeSpanSeconds,
+}: TIssueAccessGrantProps) => {
   const {
     sign,
     dataId,
     isSignPending,
     isServerPending,
-    isSuccess,
+    isGrantInsertSuccess,
     transactionHash,
-  } = useSignDelegatedAccessGrant();
+  } = useSignDelegatedAccessGrant(
+    grantee,
+    encryptionPublicKey,
+    lockTimeSpanSeconds,
+  );
 
   if (!dataId) return <p>Waiting for you wallet</p>;
 
@@ -44,9 +70,13 @@ export const AcquireAccessGrantButton = ({ id }: { id: string }) => {
       </Button>
     );
 
-  if (isSuccess && transactionHash) {
+  if (isGrantInsertSuccess && transactionHash) {
     return <Done hash={transactionHash} />;
   }
 
-  return <Button onClick={sign}>Create Access Grant</Button>;
+  return (
+    <Button variant="primary" onClick={sign}>
+      Create Access Grant
+    </Button>
+  );
 };

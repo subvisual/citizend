@@ -1,38 +1,50 @@
 import { useMemo, useState, PropsWithChildren } from 'react';
-import { DialogContext } from './context';
+import { DialogContext, TProps } from './context';
 import { DialogWrapper } from '@/app/_ui/components/dialogs/dialog-wrapper';
-import { ContributeDialog, SettingsDialog } from '@/app/_ui/components/dialogs';
+import { ApplyDialog, SettingsDialog } from '@/app/_ui/components/dialogs';
 
 type TDialogComponent = {
-  (): JSX.Element;
   displayName: string;
+  (props: TProps): JSX.Element;
 };
 
-const dialogComponents: TDialogComponent[] = [SettingsDialog, ContributeDialog];
+const dialogComponents: TDialogComponent[] = [SettingsDialog, ApplyDialog];
+
+const emptyProps = {};
 
 export const DialogProvider = ({ children }: PropsWithChildren) => {
   const [openDialog, setOpenDialog] = useState('');
+  const [props, setProps] = useState(emptyProps);
 
   const state = useMemo(() => {
     return {
       openDialog,
-      open: setOpenDialog,
+      open: (name: string, props?: TProps) => {
+        setOpenDialog(name);
+        if (props) setProps(props);
+      },
       close: () => {
         setOpenDialog('');
+        // clear props after 300 ms to avoid flashes
+        if (props !== emptyProps) {
+          setTimeout(() => {
+            setProps(emptyProps);
+          }, 300);
+        }
       },
     };
-  }, [openDialog]);
+  }, [openDialog, props]);
 
   return (
     <DialogContext.Provider value={state}>
       {children}
-      {dialogComponents.map((DialogComponent, index) => (
+      {dialogComponents.map((DialogComponent) => (
         <DialogWrapper
           key={DialogComponent.displayName}
           show={openDialog === DialogComponent.displayName}
           close={state.close}
         >
-          <DialogComponent />
+          <DialogComponent {...props} />
         </DialogWrapper>
       ))}
     </DialogContext.Provider>

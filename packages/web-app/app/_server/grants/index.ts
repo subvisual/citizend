@@ -76,12 +76,6 @@ export const getProjectGrants = async (granteeAddress: string) => {
       WILDCARD_DATA_ID,
     ]);
 
-    console.log(
-      '%c==>',
-      'color: green; background: yellow; font-size: 20px',
-      result,
-    );
-
     return result;
   } catch (error) {
     console.log(

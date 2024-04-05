@@ -1,9 +1,13 @@
 //create a dialog manager context
-import { createContext, useContext, PropsWithChildren } from 'react';
+import { createContext, useContext } from 'react';
+
+export type TProps = {
+  [key: string]: string;
+};
 
 type TDialogContextValue = {
   openDialog: string;
-  open: (name: string) => void;
+  open: (name: string, props?: TProps) => void;
   close: () => void;
 };
 

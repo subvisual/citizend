@@ -25,40 +25,34 @@ export const ProjectDescription = () => {
       />
       <h2 className="mt-6">Citizend Community Sale</h2>
       <p className="pt-2">
-        A Polkadot-native token launch platform, by and for the community
+        The community-curated token launch platform of web3.
       </p>
       <p>{data}</p>
-      <div className="mb-9 mt-12 border-t border-mono-50" />
+      <div className="my-8 border-t border-mono-400" />
       <h3 className="mb-8">Description</h3>
-      <p>
-        Citizend brings top projects and contributors together to equitably
-        catalyze growth in the Polkadot ecosystem. Get pitched by pre-screened
-        projects before they list their tokens and vote—one vote per member—for
-        the most promising one.
+      <p className="text-mono-400">
+        Citizend provides a community-curated filter mechanism able to identify
+        high-quality projects, and aligning incentives between projects and web3
+        users.
       </p>
       <br />
-      <p>
-        No matter if you have $2M $CTND tokens or $200 you get an equal vote in
-        what projects launch. Have your voice heard and rally community support
-        for projects you love.
+      <p className="text-mono-400">
+        Projects hoping to distribute tokens on citizend must garner the
+        greatest number of votes from the community to win a slot, with each
+        member of the community being able to cast only one vote, among multiple
+        competing projects in each batch. To do so, projects must convince the
+        community of their worth, as community members only receive allocations
+        if their chosen project is elected, they are incentivized to research
+        and select the projects with the highest potential.
       </p>
-      <br />
-      <p>
-        If you vote for winning projects, you get an early stake in the project.
-        Setting the standard for a more fair, safe, and transparent
-        contribution.
-      </p>
-      <br />
-      <p>
-        Citizend is a Polkadot-native token launch platform backed by a
-        status-free community that leads the curation of projects to ensure
-        fairness, transparency, and true project value.
-      </p>
-      <br />
-      <p>
-        Citizend offers projects access to community support as well as
-        liquidity, setting token-launching projects up for success within the
-        Polkadot ecosystem.
+      <h3 className="my-8">Key partners</h3>
+      <p className="text-mono-400">
+        Citizend is brought to you by Fractal ID and Outlier Ventures, with
+        additional supporting partners like Subvisual and Unique Network. We aim
+        to build a token funding platform that complies with all regulatory
+        standards, while we ensure people are in control of their data. We walk
+        the talk by progressively decentralizing the project from the start and
+        allowing everyone to participate.
       </p>
     </div>
   );

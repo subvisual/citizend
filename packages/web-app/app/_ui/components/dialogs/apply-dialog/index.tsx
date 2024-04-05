@@ -27,34 +27,47 @@ type TProjectIdProps = {
   projectId: string;
 };
 
-// const IssueAccessGrant = ({ grantee, encryptionPublicKey }) => {
-//   const { close } = useDialog();
+type TIssueGrantProps = {
+  grantee: string;
+  encryptionPublicKey: string;
+  lockTimeSpanSeconds: number;
+};
 
-//   return (
-//     <div>
-//       <div className="mt-3 text-center sm:mt-5">
-//         <Dialog.Title as="h2" className="text-gray-900">
-//           Verify your ID
-//         </Dialog.Title>
-//         <div className="mt-2">
-//           <p className="text-sm text-gray-500">
-//             You have successfully verified your ID. Issue an Access Grant to
-//             citizend so you can contribute to this project.
-//           </p>
-//         </div>
-//         <div className="mt-8 flex flex-col">
-//           <AcquireAccessGrantButton id={id} />
-//           <Button variant="secondary" onClick={close}>
-//             Close
-//           </Button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+const IssueAccessGrant = ({
+  grantee,
+  encryptionPublicKey,
+  lockTimeSpanSeconds,
+}: TIssueGrantProps) => {
+  const { close } = useDialog();
+
+  return (
+    <div>
+      <div className="mt-3 text-center sm:mt-5">
+        <Dialog.Title as="h2" className="text-gray-900">
+          Verify your ID
+        </Dialog.Title>
+        <div className="mt-2">
+          <p className="text-sm text-gray-500">
+            You have successfully verified your ID. Issue an Access Grant to
+            citizend so you can contribute to this project.
+          </p>
+        </div>
+        <div className="mt-8 flex flex-col">
+          <AcquireAccessGrantButton
+            grantee={grantee}
+            encryptionPublicKey={encryptionPublicKey}
+            lockTimeSpanSeconds={lockTimeSpanSeconds}
+          />
+          <Button variant="secondary" onClick={close}>
+            Close
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const IssueCitizendGrant = () => {
-  const { close } = useDialog();
   const { data, isLoading, isError } = usePublicInfo();
 
   if (isLoading) return <p>Loading...</p>;
@@ -66,35 +79,10 @@ const IssueCitizendGrant = () => {
   )
     return <p>Something went wrong</p>;
 
-  return (
-    <div>
-      <div className="mt-3 text-center sm:mt-5">
-        <Dialog.Title as="h2" className="text-gray-900">
-          Issue Access Grant
-        </Dialog.Title>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">
-            You have successfully verified your ID. Issue an Access Grant to
-            citizend so you can contribute to this project.
-          </p>
-        </div>
-        <div className="mt-8 flex flex-col">
-          <AcquireAccessGrantButton
-            grantee={data.grantee}
-            encryptionPublicKey={data.encryptionPublicKey}
-            lockTimeSpanSeconds={data.lockTimeSpanSeconds}
-          />
-          <Button variant="secondary" onClick={close}>
-            Close
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
+  return <IssueAccessGrant {...data} />;
 };
 
 const IssueProjectGrant = ({ projectId }: TProjectIdProps) => {
-  const { close } = useDialog();
   const { data: citizendData } = usePublicInfo();
   // fix type
   const { data, isLoading, isError } = useProjectPublicInfo(
@@ -111,29 +99,11 @@ const IssueProjectGrant = ({ projectId }: TProjectIdProps) => {
     return <p>Something went wrong</p>;
 
   return (
-    <div>
-      <div className="mt-3 text-center sm:mt-5">
-        <Dialog.Title as="h2" className="text-gray-900">
-          Issue Access Grant
-        </Dialog.Title>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">
-            You have successfully verified your ID. Issue an Access Grant to
-            citizend so you can contribute to this project.
-          </p>
-        </div>
-        <div className="mt-8 flex flex-col">
-          <AcquireAccessGrantButton
-            grantee={data.address}
-            encryptionPublicKey={data.publicKey}
-            lockTimeSpanSeconds={citizendData.lockTimeSpanSeconds}
-          />
-          <Button variant="secondary" onClick={close}>
-            Close
-          </Button>
-        </div>
-      </div>
-    </div>
+    <IssueAccessGrant
+      grantee={data.address}
+      encryptionPublicKey={data.publicKey}
+      lockTimeSpanSeconds={citizendData.lockTimeSpanSeconds}
+    />
   );
 };
 
@@ -153,23 +123,6 @@ const ContributionAllowed = ({ projectId }: TProjectIdProps) => {
   if (!hasProjectGrant) {
     return <IssueProjectGrant projectId={projectId} />;
   }
-
-  // console.log(
-  //   '%c==>',
-  //   'color: green; background: yellow; font-size: 20px',
-  //   hasCitizendGrant,
-  //   hasProjectGrant,
-  // );
-
-  // useEffect(() => {
-  //   if (!hasGrant) {
-  //     const interval = setInterval(() => {
-  //       refetch();
-  //     }, 10000);
-
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [hasCitizendGrant, refetch]);
 
   return (
     <div>

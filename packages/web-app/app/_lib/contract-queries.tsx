@@ -23,12 +23,6 @@ export const useFetchGrantMessage = (
 ) => {
   const { address: owner } = useIdOS();
 
-  // const {
-  //   data: message,
-  //   isSuccess,
-  //   isError,
-  //   isLoading,
-  // } = useReadContract({
   return useReadContract({
     abi: grantsAbi,
     address: process.env.NEXT_PUBLIC_IDOS_CONTRACT_ADDRESS,
@@ -38,26 +32,4 @@ export const useFetchGrantMessage = (
       enabled: !!(owner && grantee && dataId && expiration),
     },
   });
-
-  // return useMemo(() => {
-  //   return {
-  //     owner: owner,
-  //     grantee: grantee,
-  //     dataId: dataId,
-  //     expiration: expiration,
-  //     message: message as string | undefined, //review later
-  //     isSuccess,
-  //     isError,
-  //     isLoading,
-  //   };
-  // }, [
-  //   message,
-  //   isSuccess,
-  //   isError,
-  //   isLoading,
-  //   owner,
-  //   grantee,
-  //   dataId,
-  //   expiration,
-  // ]);
 };

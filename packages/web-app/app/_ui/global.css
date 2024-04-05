@@ -64,5 +64,5 @@ div#idos {
   display: none;
 }
 div#idos.visible {
-  display: block;
+  display: flex;
 }

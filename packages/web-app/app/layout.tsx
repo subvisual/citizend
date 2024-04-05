@@ -40,7 +40,6 @@ export default function RootLayout({
           <div className="flex min-h-screen flex-col bg-background-mobile bg-cover bg-fixed bg-no-repeat antialiased md:bg-background-desktop">
             <Topbar />
             <div className="grow bg-cover py-14 md:p-20">
-              <div id="idos"></div>
               <div className="mx-auto max-w-280 px-6">{children}</div>
             </div>
             <Footer />

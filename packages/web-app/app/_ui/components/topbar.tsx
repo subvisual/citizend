@@ -57,6 +57,7 @@ export function Topbar() {
           <NavLink href="/" name="All Projects" topbar />
           <NavLink href="/projects/my-projects" name="My Projects" topbar />
         </nav>
+        <div id="idos" className="mr-3 h-12 self-center" />
         <WalletButton />
         <NavigationMobile className="md:hidden" />
       </div>

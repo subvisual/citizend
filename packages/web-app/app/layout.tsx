@@ -10,14 +10,12 @@ export const metadata: Metadata = {
     template: '%s | Citizend',
     default: 'Citizend',
   },
-  description:
-    'A polkador-native token launch platform, by and for the community',
+  description: 'The community-curated token launch platform of web3',
   keywords: [
     'Launchpad',
     'Web3',
     'Defi',
     'Citizend',
-    'Polkadot',
     'Token',
     'Sale',
     'IDO',
@@ -27,7 +25,7 @@ export const metadata: Metadata = {
     'Citizend Token Sale',
     'Citizend Token Launch',
   ],
-  metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
+  // metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
 
 export default function RootLayout({

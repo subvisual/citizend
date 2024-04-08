@@ -7,7 +7,7 @@ export const ProjectHeader = () => {
   //   if (isLoading) return <p className="load">Loading...</p>;
 
   return (
-    <div className="max-w-2xl text-mono-50">
+    <div className="text-mono-50">
       <Image
         src="/citizend-logo-circle.svg"
         alt="Citizend Logo"

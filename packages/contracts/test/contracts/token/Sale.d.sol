@@ -86,4 +86,21 @@ contract SaleTest is Test {
 
         vm.stopPrank();
     }
+
+    function testBuyAboveMaximum() public {
+        vm.prank(owner);
+
+        sale.setMaxContribution(2 ether);
+
+        vm.startPrank(alice);
+
+        vm.expectRevert(bytes("can't be above maximum"));
+        sale.buy(3 ether);
+
+        sale.buy(2 ether);
+
+        require(sale.risingTide_totalAllocatedUncapped() == 2 ether);
+
+        vm.stopPrank();
+    }
 }

@@ -111,7 +111,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         require(_end > _start, "end must be after start");
         require(_totalTokensForSale > 0, "total cannot be 0");
         require(_minTarget > 0, "_minTarget cannot be 0");
-        require(_maxTarget > _minTarget, "_maxTarget cannot be lower than _minTarget");
+        require(
+            _maxTarget > _minTarget,
+            "_maxTarget cannot be lower than _minTarget"
+        );
 
         paymentToken = _paymentToken;
         rate = _rate;

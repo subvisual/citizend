@@ -42,6 +42,8 @@ jobs:
 
       - name: Generate wagmi
         run: yarn workspace @discovery-dao/contracts wagmi:generate
+        env:
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
 
       - name: Lint types
         run: yarn workspace @discovery-dao/web-app lint:tsc

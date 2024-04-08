@@ -1,10 +1,8 @@
 'use client';
 
 import { ProjectProvider } from '@/app/_providers/project';
-import { ContributeButton } from '@/app/_ui/projects/contribute-button';
-import { ProjectDescription } from '@/app/_ui/projects/project-description';
-import { ProjectInformation } from '@/app/_ui/projects/project-information';
-import { TokenMetrics } from '@/app/_ui/projects/token-metrics';
+import { ProjectContent } from '@/app/_ui/project/project-content';
+import { ProjectHeader } from '@/app/_ui/project/project-header';
 import { useMemo } from 'react';
 
 type TProjectProps = {
@@ -25,26 +23,10 @@ export default function Project({ params }: TProjectProps) {
   }
 
   return (
-    <main className="grid grid-cols-1 gap-x-17 gap-y-9 lg:grid-cols-2">
+    <main>
       <ProjectProvider value={project}>
-        <ProjectDescription />
-        <div className="display flex flex-col gap-8 lg:pt-27">
-          <ProjectInformation
-            saleDate={new Date('2024-05-05T00:00:00+00:00')}
-            registrationsStartDate={new Date('2024-04-24T00:00:00+00:00')}
-            registrationsEndDate={new Date('2024-05-04T00:00:00+00:00')}
-          />
-          <TokenMetrics
-            token="CTND"
-            targetRaiseRange="2.M - 8M ETH"
-            totalSupply="800 000 000 CTND"
-            targetedDate={new Date('2024-04-29')}
-            minPricePerToken="0.10$"
-            maxPricePerToken="10.00$"
-            totalSupplyDistributed="10%"
-          />
-          <ContributeButton />
-        </div>
+        <ProjectHeader />
+        <ProjectContent />
       </ProjectProvider>
     </main>
   );

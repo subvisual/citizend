@@ -1,36 +1,8 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { useReadProjectDescription } from '@/wagmi.generated';
-import Image from 'next/image';
-
 export const ProjectDescription = () => {
-  const [isSSR, setIsSSR] = useState(true);
-  const { data, isLoading } = useReadProjectDescription();
-
-  useEffect(() => {
-    setIsSSR(false);
-  }, []);
-
-  if (isSSR || isLoading) return <p className="load">Loading...</p>;
-
   return (
-    <div className="max-w-2xl max-w-prose text-mono-50">
-      <Image
-        src="/citizend-logo-circle.svg"
-        alt="Citizend Logo"
-        width={80}
-        height={80}
-        priority
-      />
-      <h2 className="mt-6">Citizend Community Sale</h2>
-      <p className="pt-2">
-        The community-curated token launch platform of web3.
-      </p>
-      <p>{data}</p>
-      <div className="my-8 border-t border-mono-400" />
-      <h3 className="mb-8">Description</h3>
-      <p className="text-mono-400">
+    <div className="max-w-2xl text-mono-50">
+      <h3 className="hidden md:block">Description</h3>
+      <p className="pt-8 text-mono-400">
         Citizend provides a community-curated filter mechanism able to identify
         high-quality projects, and aligning incentives between projects and web3
         users.

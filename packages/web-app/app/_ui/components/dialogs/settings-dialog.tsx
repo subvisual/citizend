@@ -8,7 +8,6 @@ import { formatEther } from 'viem';
 import { useIdOS } from '@/app/_providers/idos';
 import Link from 'next/link';
 import { useKyc } from '@/app/_providers/kyc/context';
-import { KycProvider } from '@/app/_providers/kyc';
 
 type TCloseProps = {
   onClick: () => void;
@@ -71,7 +70,7 @@ export function SettingsDialog() {
   const { disconnect } = useDisconnect();
 
   return (
-    <KycProvider>
+    <>
       <Dialog.Title
         as="h4"
         className="relative flex w-full justify-center text-mono-950"
@@ -96,7 +95,7 @@ export function SettingsDialog() {
       >
         Disconnect
       </Button>
-    </KycProvider>
+    </>
   );
 }
 

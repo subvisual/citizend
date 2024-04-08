@@ -3,6 +3,7 @@
 import { ProjectProvider } from '@/app/_providers/project';
 import { ContributeButton } from '@/app/_ui/projects/contribute-button';
 import { ProjectDescription } from '@/app/_ui/projects/project-description';
+import { ProjectInformation } from '@/app/_ui/projects/project-information';
 import { TokenMetrics } from '@/app/_ui/projects/token-metrics';
 import { useMemo } from 'react';
 
@@ -28,6 +29,11 @@ export default function Project({ params }: TProjectProps) {
       <ProjectProvider value={project}>
         <ProjectDescription />
         <div className="display flex flex-col gap-8 lg:pt-27">
+          <ProjectInformation
+            saleDate={new Date('2024-05-05T00:00:00+00:00')}
+            registrationsStartDate={new Date('2024-04-24T00:00:00+00:00')}
+            registrationsEndDate={new Date('2024-05-04T00:00:00+00:00')}
+          />
           <TokenMetrics
             token="CTND"
             targetRaiseRange="2.M - 8M ETH"

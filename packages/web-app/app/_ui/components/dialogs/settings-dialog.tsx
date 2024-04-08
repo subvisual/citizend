@@ -130,7 +130,6 @@ const Divider = () => (
 );
 
 export function SettingsDialog() {
-  const { close } = useDialog();
   const { disconnect } = useDisconnect();
 
   return (
@@ -140,7 +139,6 @@ export function SettingsDialog() {
         className="relative flex w-full justify-center pb-6 text-mono-950"
       >
         <div className="">Settings</div>
-        <Close onClick={close} />
       </Dialog.Title>
       <div className="flex flex-col divide-y divide-mono-300">
         <div className="flex items-center gap-3 pb-6">

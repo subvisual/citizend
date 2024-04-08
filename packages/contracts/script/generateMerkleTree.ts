@@ -40,7 +40,7 @@ async function main(address: string) {
   const key = [address];
   console.log(`\n\nProof for ${key}:`);
   console.log(
-    merkleTree.getHexProof(keccak256(encodePacked(["address"], key))),
+    merkleTree.getHexProof(keccak256(encodePacked(["address"], key)))
   );
 }
 

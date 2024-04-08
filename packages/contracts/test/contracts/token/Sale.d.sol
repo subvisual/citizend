@@ -38,6 +38,8 @@ contract SaleTest is Test {
             2000000
         );
 
+        sale.setMaxContribution(4 ether);
+
         vm.stopPrank();
 
         vm.startPrank(alice);
@@ -72,7 +74,6 @@ contract SaleTest is Test {
 
     function testBuyBelowMinimum() public {
         vm.prank(owner);
-
         sale.setMinContribution(2 ether);
 
         vm.startPrank(alice);

@@ -44,7 +44,15 @@ contract DevDeployScript is Script {
         end = start + 60 * 60 * 24;
 
         MockERC20 token = new MockERC20("USDC", "USDC", 18);
-        Sale sale = new Sale(address(token), 1 ** 18, start, end, 1000);
+        Sale sale = new Sale(
+            address(token),
+            1 ** 18,
+            start,
+            end,
+            1000,
+            1000000,
+            2000000
+        );
 
         bool success = token.approve(address(sale), 1000 ether);
         require(success, "approve failed");

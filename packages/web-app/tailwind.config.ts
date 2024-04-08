@@ -31,6 +31,7 @@ const config: Config = {
         'mono-50': '#FFF',
         'mono-200': '#D5DBE8',
         'mono-400': '#7891B5',
+        'mono-300': '#DADFED',
         'mono-800': '#536580',
         'mono-900': '#1A2330',
         'mono-950': '#0B1018',

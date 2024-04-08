@@ -6,7 +6,7 @@ export const Close = ({ onClick }: TCloseProps) => {
   return (
     <button
       onClick={onClick}
-      className="absolute right-0 h-6 w-6 hover:text-mono-200"
+      className="absolute right-0 h-6 w-6 text-mono-950 hover:text-mono-800"
       aria-hidden="true"
     >
       <svg

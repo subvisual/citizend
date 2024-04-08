@@ -73,6 +73,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     uint256 public immutable totalTokensForSale;
 
+    uint256 public immutable minTarget;
+    uint256 public immutable maxTarget;
+
     /// Token allocations committed by each buyer
     mapping(address => Account) accounts;
 
@@ -98,19 +101,25 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _rate,
         uint256 _start,
         uint256 _end,
-        uint256 _totalTokensForSale
+        uint256 _totalTokensForSale,
+        uint256 _minTarget,
+        uint256 _maxTarget
     ) {
         require(_rate > 0, "can't be zero");
         require(_paymentToken != address(0), "can't be zero");
         require(_start > 0, "can't be zero");
         require(_end > _start, "end must be after start");
         require(_totalTokensForSale > 0, "total cannot be 0");
+        require(_minTarget > 0, "_minTarget cannot be 0");
+        require(_maxTarget > _minTarget, "_maxTarget cannot be lower than _minTarget");
 
         paymentToken = _paymentToken;
         rate = _rate;
         start = _start;
         end = _end;
         totalTokensForSale = _totalTokensForSale;
+        minTarget = _minTarget;
+        maxTarget = _maxTarget;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);

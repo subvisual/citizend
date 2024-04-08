@@ -28,7 +28,7 @@ contract SaleTest is Test {
         end = start + 60 * 60 * 24;
 
         paymentToken = new MockERC20("USDC", "USDC", 18);
-        sale = new Sale(address(paymentToken), 1 ** 18, start, end, 100);
+        sale = new Sale(address(paymentToken), 1 ** 18, start, end, 100, 1000000, 2000000);
 
         vm.stopPrank();
 

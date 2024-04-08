@@ -18,7 +18,6 @@ import {
   PendingApproval,
   UnlockIdosExternal,
 } from './kyc-flows';
-import { KycProvider } from '@/app/_providers/kyc';
 import { useKyc } from '@/app/_providers/kyc/context';
 import { useHasCitizendGrant, useHasProjectGrant } from '@/app/_lib/hooks';
 import { TProjectInfoArgs } from '@/app/_server/projects';
@@ -193,11 +192,7 @@ export const ApplyDialog = ({ projectId }: TProps) => {
     return <KycOnIdosRedirect />;
   }
 
-  return (
-    <KycProvider>
-      <UnlockKycData projectId={projectId} />
-    </KycProvider>
-  );
+  return <UnlockKycData projectId={projectId} />;
 };
 
 ApplyDialog.displayName = 'applyDialog';

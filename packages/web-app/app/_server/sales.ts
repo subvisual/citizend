@@ -16,6 +16,8 @@ const contract = getContract({
   client,
 });
 
+export type TProjectStatus = 'completed' | 'upcoming' | 'live';
+
 const projectStatus = async () => {
   const start = await contract.read.start();
   const end = await contract.read.end();
@@ -34,7 +36,7 @@ const projectStatus = async () => {
 
 export type TProjectSaleDetails = {
   project: string;
-  status: string;
+  status: TProjectStatus;
   url: string;
   logo: string;
   background: string;

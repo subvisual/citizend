@@ -1,6 +1,7 @@
 'use server';
 
 import { ctzndSaleAbi, ctzndSaleAddress } from '@/wagmi.generated';
+import { headers } from 'next/headers';
 import { createWalletClient, getContract, http, publicActions } from 'viem';
 import { sepolia } from 'viem/chains';
 
@@ -15,11 +16,35 @@ const contract = getContract({
   client,
 });
 
+const projectStatus = async () => {
+  const start = await contract.read.start();
+  const end = await contract.read.end();
+  const current = Date.now();
+
+  if (current > end) {
+    return 'completed';
+  }
+
+  if (current < start) {
+    return 'upcoming';
+  }
+
+  return 'live';
+};
+
 export const saleDetails = async () => {
   try {
+    const headersList = headers();
+    const host = headersList.get('host');
+
     return [
       {
         project: 'Citizend',
+        status: await projectStatus(),
+        url: `${host}/projects/citizend`,
+        logo: `${host}/citizend-logo-circle.svg`,
+        background: `${host}/citizend-card-desktop.png`,
+        backgroundMobile: `${host}/citizend-card-mobile.png`,
         rate: await contract.read.rate(),
         minTarget: await contract.read.minTarget(),
         maxTarget: await contract.read.maxTarget(),

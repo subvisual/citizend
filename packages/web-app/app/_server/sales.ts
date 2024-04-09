@@ -25,7 +25,8 @@ export const saleDetails = async () => {
         maxTarget: await contract.read.maxTarget(),
         start: await contract.read.start(),
         end: await contract.read.end(),
-        minContribution: await contract.read.min_contribution(),
+        minContribution: await contract.read.minContribution(),
+        maxContribution: await contract.read.maxContribution(),
         totalTokensForSale: await contract.read.totalTokensForSale(),
       },
     ];

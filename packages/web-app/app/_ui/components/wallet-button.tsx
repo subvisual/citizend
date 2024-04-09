@@ -28,46 +28,50 @@ const ConnectedButton = ({ displayBalance }: TConnectedButtonProps) => {
 
 export function WalletButton() {
   return (
-    <ConnectButton.Custom>
-      {({
-        account,
-        chain,
-        openAccountModal,
-        openChainModal,
-        openConnectModal,
-        mounted,
-      }) => {
-        const connected = mounted && account && chain;
+    <div className="h-14">
+      <ConnectButton.Custom>
+        {({
+          account,
+          chain,
+          openAccountModal,
+          openChainModal,
+          openConnectModal,
+          mounted,
+        }) => {
+          const connected = mounted && account && chain;
 
-        if (!mounted)
-          // TODO: Disabled
-          return (
-            <EdgeButton onClick={() => {}}>
-              <span>Connect</span>
-              <span className="hidden pl-1 md:flex">Wallet</span>
-            </EdgeButton>
-          );
-
-        return (() => {
-          if (!connected) {
+          if (!mounted)
+            // TODO: Disabled
             return (
-              <EdgeButton onClick={openConnectModal}>
+              <EdgeButton onClick={() => {}}>
                 <span>Connect</span>
                 <span className="hidden pl-1 md:flex">Wallet</span>
               </EdgeButton>
             );
-          }
-          if (chain.unsupported) {
-            return (
-              <EdgeButton onClick={openChainModal}>Wrong network</EdgeButton>
-            );
-          }
 
-          if (account.displayBalance) {
-            return <ConnectedButton displayBalance={account.displayBalance} />;
-          }
-        })();
-      }}
-    </ConnectButton.Custom>
+          return (() => {
+            if (!connected) {
+              return (
+                <EdgeButton onClick={openConnectModal}>
+                  <span>Connect</span>
+                  <span className="hidden pl-1 md:flex">Wallet</span>
+                </EdgeButton>
+              );
+            }
+            if (chain.unsupported) {
+              return (
+                <EdgeButton onClick={openChainModal}>Wrong network</EdgeButton>
+              );
+            }
+
+            if (account.displayBalance) {
+              return (
+                <ConnectedButton displayBalance={account.displayBalance} />
+              );
+            }
+          })();
+        }}
+      </ConnectButton.Custom>
+    </div>
   );
 }

@@ -40,6 +40,7 @@ const config: Config = {
         'blue-500': '#3865FD',
         'blue-600': '#1E40F2',
         'red-700': '#D6043E',
+        'yellow-500': '#FCC738',
       },
       spacing: {
         '17': '4.25rem',

@@ -4,42 +4,76 @@ import { useKyc } from '@/app/_providers/kyc/context';
 import { ID } from '../../svg/id';
 import { useIdOS } from '@/app/_providers/idos';
 import Link from 'next/link';
+import { Check } from '../../svg/check';
+import { idOSCredentialStatus } from '@/app/_types/idos';
 
-const Credentials = () => {
-  const { isLoading, status } = useKyc();
-
-  if (isLoading) return <div>Loading...</div>;
-
-  if (status === 'approved') return <div>Verified</div>;
-
-  return <div>Awaiting Approval</div>;
+const getNotVerifiedMessage = (status: idOSCredentialStatus | undefined) => {
+  if (status === 'expired') return 'KYC expired';
+  if (status === 'rejected') return 'KYC rejected';
+  return 'Not verified';
 };
 
 const Status = () => {
-  const { hasProfile, getProviderUrl, address } = useIdOS();
+  const { getProviderUrl, address } = useIdOS();
+  const { status, error, isSuccess, isLoading } = useKyc();
 
-  if (!address) return;
+  if (!address) return 'wallet not connected';
+  if (isLoading) return 'Loading...';
+  if (error || !isSuccess) return 'Something went wrong';
 
-  if (!hasProfile) {
+  const providerUrl = getProviderUrl(address);
+
+  if (status === 'pending' || status === 'contacted') {
     return (
       <>
-        <div className="absolute right-0 top-7 h-3 w-3 rounded-full bg-red-700"></div>
-        <h4>Not verified</h4>
+        <div className="absolute right-0 top-7 h-3 w-3 rounded-full bg-yellow-500"></div>
+        <h4>Verification in progress</h4>
         <p className="text-start">
-          To be able to contribute to this project, you must complete ID Basic
-          verification.
+          Your information is currently being verified.
         </p>
         <Link
-          href={getProviderUrl(address)}
-          className="select-none rounded-md text-blue-500 hover:text-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mono-400"
+          href={providerUrl}
+          className="select-none rounded-md text-xs text-blue-500 hover:text-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mono-400"
         >
-          Verify my ID
+          Manage my ID
         </Link>
       </>
     );
   }
 
-  return <Credentials />;
+  if (status === 'approved') {
+    return (
+      <>
+        <div className="flex items-center gap-2">
+          <h4>Verified</h4>
+          <Check />
+        </div>
+        <Link
+          href={providerUrl}
+          className="select-none rounded-md text-xs text-blue-500 hover:text-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mono-400"
+        >
+          Manage my ID
+        </Link>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className="absolute right-0 top-7 h-3 w-3 rounded-full bg-red-700"></div>
+      <h4>{getNotVerifiedMessage(status)}</h4>
+      <p className="text-start">
+        To be able to contribute to this project, you must complete ID Plus
+        verification.
+      </p>
+      <Link
+        href={providerUrl}
+        className="select-none rounded-md text-xs text-blue-500 hover:text-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mono-400"
+      >
+        Verify my ID
+      </Link>
+    </>
+  );
 };
 
 export const IdStatus = () => (

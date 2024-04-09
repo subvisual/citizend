@@ -38,6 +38,8 @@ contract SaleTest is Test {
             2000000
         );
 
+        sale.setMaxContribution(4 ether);
+
         vm.stopPrank();
 
         vm.startPrank(alice);
@@ -72,13 +74,29 @@ contract SaleTest is Test {
 
     function testBuyBelowMinimum() public {
         vm.prank(owner);
-
         sale.setMinContribution(2 ether);
 
         vm.startPrank(alice);
 
         vm.expectRevert(bytes("can't be below minimum"));
         sale.buy(1 ether);
+
+        sale.buy(2 ether);
+
+        require(sale.risingTide_totalAllocatedUncapped() == 2 ether);
+
+        vm.stopPrank();
+    }
+
+    function testBuyAboveMaximum() public {
+        vm.prank(owner);
+
+        sale.setMaxContribution(2 ether);
+
+        vm.startPrank(alice);
+
+        vm.expectRevert(bytes("can't be above maximum"));
+        sale.buy(3 ether);
 
         sale.buy(2 ether);
 

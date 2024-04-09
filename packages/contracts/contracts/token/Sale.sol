@@ -63,7 +63,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     uint256 public immutable rate;
 
     /// Minimum amount per contribution, expressed in paymentToken amount
-    uint256 public min_contribution;
+    uint256 public minContribution;
+
+    /// Maximum amount per contribution, expressed in paymentToken amount
+    uint256 public maxContribution;
 
     /// Timestamp at which sale starts
     uint256 public immutable start;
@@ -71,9 +74,13 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// Timestamp at which sale ends
     uint256 public immutable end;
 
+    /// Total tokens available for sale
     uint256 public immutable totalTokensForSale;
 
+    /// Minimum amount to be raised
     uint256 public immutable minTarget;
+
+    /// Maximum amount to be raised
     uint256 public immutable maxTarget;
 
     /// Token allocations committed by each buyer
@@ -190,7 +197,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     function buy(uint256 _amount) external override(ISale) inSale nonReentrant {
         // TODO send merkleProof and check for valid leaf
 
-        require(_amount >= min_contribution, "can't be below minimum");
+        require(_amount >= minContribution, "can't be below minimum");
+        require(_amount <= maxContribution, "can't be above maximum");
 
         uint256 paymentAmount = tokenToPaymentToken(_amount);
         require(paymentAmount > 0, "can't be zero");
@@ -323,7 +331,13 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     function setMinContribution(
         uint256 _minContribution
     ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
-        min_contribution = _minContribution;
+        minContribution = _minContribution;
+    }
+
+    function setMaxContribution(
+        uint256 _maxContribution
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
+        maxContribution = _maxContribution;
     }
 
     //

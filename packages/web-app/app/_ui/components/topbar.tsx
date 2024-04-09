@@ -36,7 +36,7 @@ export function Topbar() {
         scrollPosition > 40 && 'bg-mono-950',
       )}
     >
-      <div className="mx-auto flex max-w-280 flex-row justify-between px-6 py-5 md:justify-normal md:py-6">
+      <div className="mx-auto flex max-w-280 flex-row flex-wrap justify-between px-6 py-5 md:justify-normal md:py-6">
         <Image
           src="/citizend-logo.svg"
           alt="Citizend Logo"
@@ -57,9 +57,11 @@ export function Topbar() {
           <NavLink href="/" name="All Projects" topbar />
           <NavLink href="/projects/my-projects" name="My Projects" topbar />
         </nav>
-        <div id="idos" className="mr-3 h-12 self-center" />
-        <WalletButton />
-        <NavigationMobile className="md:hidden" />
+        <div className="ml-auto flex flex-row gap-6">
+          <div id="idos" className="mr-3 h-12 md:self-center" />
+          <WalletButton />
+          <NavigationMobile className="md:hidden" />
+        </div>
       </div>
     </header>
   );

@@ -2,6 +2,7 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import { Close } from '../svg/close';
 
 type TDialogWrapperProps = {
   show: boolean;
@@ -37,6 +38,9 @@ export function DialogWrapper({ show, close, children }: TDialogWrapperProps) {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-md border border-mono-50 bg-white px-4 pb-4 pt-5 text-mono-900 shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                 {children}
+                <div className="absolute right-4 top-5 md:right-6 md:top-6">
+                  <Close onClick={close} />
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

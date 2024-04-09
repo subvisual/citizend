@@ -1,6 +1,15 @@
 import { TChildren } from '@/app/_types';
 import Link from 'next/link';
 
+interface IButtonProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+}
+
+interface IEdgeBorderProps extends IButtonProps {
+  avatar: React.ReactNode;
+}
+
 const Edge = ({ children }: TChildren) => (
   <>
     <svg
@@ -35,7 +44,11 @@ const Edge = ({ children }: TChildren) => (
   </>
 );
 
-export const EdgeBorderButton = ({ children, onClick }: TButtonProps) => {
+export const EdgeBorderButton = ({
+  children,
+  onClick,
+  avatar,
+}: IEdgeBorderProps) => {
   return (
     <button
       onClick={onClick}
@@ -47,6 +60,7 @@ export const EdgeBorderButton = ({ children, onClick }: TButtonProps) => {
         viewBox="0 0 16 56"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden md:block"
       >
         <path
           d="M12.6833 2.01625L2.33594 11.2549C1.48597 12.0138 1 13.0992 1 14.2387V51C1 53.2091 2.79086 55 5 55H15V1.0151C14.1431 1.08977 13.3295 1.43925 12.6833 2.01625Z"
@@ -55,36 +69,9 @@ export const EdgeBorderButton = ({ children, onClick }: TButtonProps) => {
           strokeWidth="2"
         />
       </svg>
-      <div className="z-10 -mx-0.5 flex h-14 items-center justify-center border-b-2 border-t-2 border-blue-500 bg-mono-900 px-6 py-2 font-medium text-mono-50 group-hover:bg-mono-800">
-        <span className="mr-3">{children}</span>
-        <svg
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="16"
-            cy="16"
-            r="16"
-            fill="url(#paint0_linear_4614_37514)"
-          />
-          <defs>
-            <linearGradient
-              id="paint0_linear_4614_37514"
-              x1="0"
-              y1="0"
-              x2="32"
-              y2="32"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#1E40F2" />
-              <stop offset="0.500579" stopColor="#3865FD" />
-              <stop offset="1" stopColor="#94B6FC" />
-            </linearGradient>
-          </defs>
-        </svg>
+      <div className="z-10 flex h-14 items-center justify-center py-2 font-medium text-mono-50 group-hover:bg-mono-800 md:-mx-0.5 md:border-b-2 md:border-t-2 md:border-blue-500 md:bg-mono-900 md:px-6">
+        <span className="mr-3 hidden md:block">{children}</span>
+        {avatar}
       </div>
       <svg
         width="16"
@@ -92,6 +79,7 @@ export const EdgeBorderButton = ({ children, onClick }: TButtonProps) => {
         viewBox="0 0 16 56"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden md:block"
       >
         <path
           d="M3.31673 53.9838L13.6641 44.7451C14.514 43.9862 15 42.9008 15 41.7613V5C15 2.79086 13.2091 1 11 1H1V54.9849C1.85693 54.9102 2.67049 54.5608 3.31673 53.9838Z"
@@ -104,14 +92,7 @@ export const EdgeBorderButton = ({ children, onClick }: TButtonProps) => {
   );
 };
 
-type TButtonProps = {
-  children: React.ReactNode;
-  onClick?: () => void;
-  as?: 'button' | typeof Link;
-  href?: string;
-};
-
-export const EdgeButton = ({ children, onClick }: TButtonProps) => {
+export const EdgeButton = ({ children, onClick }: IButtonProps) => {
   return (
     <button
       onClick={onClick}

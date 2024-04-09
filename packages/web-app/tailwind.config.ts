@@ -31,6 +31,7 @@ const config: Config = {
         'mono-50': '#FFF',
         'mono-200': '#D5DBE8',
         'mono-400': '#7891B5',
+        'mono-300': '#DADFED',
         'mono-800': '#536580',
         'mono-900': '#1A2330',
         'mono-950': '#0B1018',
@@ -39,6 +40,7 @@ const config: Config = {
         'blue-500': '#3865FD',
         'blue-600': '#1E40F2',
         'red-700': '#D6043E',
+        'yellow-500': '#FCC738',
       },
       spacing: {
         '17': '4.25rem',

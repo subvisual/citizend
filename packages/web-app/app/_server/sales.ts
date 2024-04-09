@@ -32,36 +32,62 @@ const projectStatus = async () => {
   return 'live';
 };
 
-export const saleDetails = async () => {
+export type TProjectSaleDetails = {
+  project: string;
+  status: string;
+  url: string;
+  logo: string;
+  background: string;
+  backgroundMobile: string;
+  rate: BigInt;
+  minTarget: BigInt;
+  maxTarget: BigInt;
+  start: BigInt;
+  end: BigInt;
+  minContribution: BigInt;
+  maxContribution: BigInt;
+  totalTokensForSale: BigInt;
+};
+
+export const saleDetails = async (): Promise<
+  TProjectSaleDetails[] | unknown
+> => {
   try {
     const headersList = headers();
     const host = headersList.get('host');
 
+    // run requests in parallel
+    const contractResults = await Promise.all([
+      await projectStatus(),
+      contract.read.rate(),
+      contract.read.minTarget(),
+      contract.read.maxTarget(),
+      contract.read.start(),
+      contract.read.end(),
+      contract.read.minContribution(),
+      contract.read.maxContribution(),
+      contract.read.totalTokensForSale(),
+    ]);
+
     return [
       {
         project: 'Citizend',
-        status: await projectStatus(),
+        status: contractResults[0],
+        rate: contractResults[1],
+        minTarget: contractResults[2],
+        maxTarget: contractResults[3],
+        start: contractResults[4],
+        end: contractResults[5],
+        minContribution: contractResults[6],
+        maxContribution: contractResults[7],
+        totalTokensForSale: contractResults[8],
         url: `https://${host}/projects/citizend`,
         logo: `https://${host}/project-citizend-logo.svg`,
         background: `https://${host}/citizend-card-desktop.png`,
-        backgroundMobile: `$https://{host}/citizend-card-mobile.png`,
-        rate: await contract.read.rate(),
-        minTarget: await contract.read.minTarget(),
-        maxTarget: await contract.read.maxTarget(),
-        start: await contract.read.start(),
-        end: await contract.read.end(),
-        minContribution: await contract.read.minContribution(),
-        maxContribution: await contract.read.maxContribution(),
-        totalTokensForSale: await contract.read.totalTokensForSale(),
+        backgroundMobile: `https://${host}/citizend-card-mobile.png`,
       },
     ];
   } catch (error) {
-    console.log(
-      '%c==>',
-      'color: green; background: yellow; font-size: 20px',
-      error,
-    );
-
     return error;
   }
 };

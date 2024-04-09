@@ -1491,7 +1491,7 @@ export const controllerAbi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const ctzndSaleAbi = [
   {
@@ -1741,6 +1741,13 @@ export const ctzndSaleAbi = [
   {
     type: 'function',
     inputs: [],
+    name: 'maxContribution',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
     name: 'maxTarget',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
@@ -1748,14 +1755,14 @@ export const ctzndSaleAbi = [
   {
     type: 'function',
     inputs: [],
-    name: 'minTarget',
+    name: 'minContribution',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
   },
   {
     type: 'function',
     inputs: [],
-    name: 'min_contribution',
+    name: 'minTarget',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
   },
@@ -1893,6 +1900,15 @@ export const ctzndSaleAbi = [
   {
     type: 'function',
     inputs: [
+      { name: '_maxContribution', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'setMaxContribution',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
       { name: '_minContribution', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'setMinContribution',
@@ -1960,14 +1976,14 @@ export const ctzndSaleAbi = [
 ] as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const ctzndSaleAddress = {
-  11155111: '0x834a6861665E734057b226bB8576bF84203FC587',
+  11155111: '0x5613C3007f77a5095702f887B7E863cC5B5192A6',
 } as const
 
 /**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const ctzndSaleConfig = {
   address: ctzndSaleAddress,
@@ -5963,6 +5979,13 @@ export const saleAbi = [
   {
     type: 'function',
     inputs: [],
+    name: 'maxContribution',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
     name: 'maxTarget',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
@@ -5970,14 +5993,14 @@ export const saleAbi = [
   {
     type: 'function',
     inputs: [],
-    name: 'minTarget',
+    name: 'minContribution',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
   },
   {
     type: 'function',
     inputs: [],
-    name: 'min_contribution',
+    name: 'minTarget',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
   },
@@ -6109,6 +6132,15 @@ export const saleAbi = [
     type: 'function',
     inputs: [{ name: '_cap', internalType: 'uint256', type: 'uint256' }],
     name: 'setIndividualCap',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_maxContribution', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'setMaxContribution',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -6474,6 +6506,13 @@ export const saleTestAbi = [
     type: 'function',
     inputs: [],
     name: 'testBuy',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'testBuyAboveMaximum',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -14435,7 +14474,7 @@ export const useWatchControllerRoleRevokedEvent =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSale = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -14445,7 +14484,7 @@ export const useReadCtzndSale = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleCapValidationGasLimit =
   /*#__PURE__*/ createUseReadContract({
@@ -14457,7 +14496,7 @@ export const useReadCtzndSaleCapValidationGasLimit =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"CAP_VALIDATOR_ROLE"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleCapValidatorRole =
   /*#__PURE__*/ createUseReadContract({
@@ -14469,7 +14508,7 @@ export const useReadCtzndSaleCapValidatorRole =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleDefaultAdminRole =
   /*#__PURE__*/ createUseReadContract({
@@ -14481,7 +14520,7 @@ export const useReadCtzndSaleDefaultAdminRole =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"allocated"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleAllocated = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -14492,7 +14531,7 @@ export const useReadCtzndSaleAllocated = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"allocation"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleAllocation = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -14503,7 +14542,7 @@ export const useReadCtzndSaleAllocation = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"end"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleEnd = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -14514,7 +14553,7 @@ export const useReadCtzndSaleEnd = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"getRoleAdmin"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleGetRoleAdmin = /*#__PURE__*/ createUseReadContract(
   {
@@ -14527,7 +14566,7 @@ export const useReadCtzndSaleGetRoleAdmin = /*#__PURE__*/ createUseReadContract(
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"hasRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleHasRole = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -14538,7 +14577,7 @@ export const useReadCtzndSaleHasRole = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"individualCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleIndividualCap =
   /*#__PURE__*/ createUseReadContract({
@@ -14550,7 +14589,7 @@ export const useReadCtzndSaleIndividualCap =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"investorAmountAt"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleInvestorAmountAt =
   /*#__PURE__*/ createUseReadContract({
@@ -14562,7 +14601,7 @@ export const useReadCtzndSaleInvestorAmountAt =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"investorCount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleInvestorCount =
   /*#__PURE__*/ createUseReadContract({
@@ -14572,9 +14611,21 @@ export const useReadCtzndSaleInvestorCount =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"maxContribution"`
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
+ */
+export const useReadCtzndSaleMaxContribution =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleAbi,
+    address: ctzndSaleAddress,
+    functionName: 'maxContribution',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"maxTarget"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleMaxTarget = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -14583,9 +14634,21 @@ export const useReadCtzndSaleMaxTarget = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"minContribution"`
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
+ */
+export const useReadCtzndSaleMinContribution =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleAbi,
+    address: ctzndSaleAddress,
+    functionName: 'minContribution',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"minTarget"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleMinTarget = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -14594,21 +14657,9 @@ export const useReadCtzndSaleMinTarget = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"min_contribution"`
- *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
- */
-export const useReadCtzndSaleMinContribution =
-  /*#__PURE__*/ createUseReadContract({
-    abi: ctzndSaleAbi,
-    address: ctzndSaleAddress,
-    functionName: 'min_contribution',
-  })
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"paymentToken"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSalePaymentToken = /*#__PURE__*/ createUseReadContract(
   {
@@ -14621,7 +14672,7 @@ export const useReadCtzndSalePaymentToken = /*#__PURE__*/ createUseReadContract(
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"paymentTokenToToken"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSalePaymentTokenToToken =
   /*#__PURE__*/ createUseReadContract({
@@ -14633,7 +14684,7 @@ export const useReadCtzndSalePaymentTokenToToken =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"rate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleRate = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -14644,7 +14695,7 @@ export const useReadCtzndSaleRate = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"refundAmount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleRefundAmount = /*#__PURE__*/ createUseReadContract(
   {
@@ -14657,7 +14708,7 @@ export const useReadCtzndSaleRefundAmount = /*#__PURE__*/ createUseReadContract(
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTideCache"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleRisingTideCache =
   /*#__PURE__*/ createUseReadContract({
@@ -14669,7 +14720,7 @@ export const useReadCtzndSaleRisingTideCache =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTideState"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleRisingTideState =
   /*#__PURE__*/ createUseReadContract({
@@ -14681,7 +14732,7 @@ export const useReadCtzndSaleRisingTideState =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_applyCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleRisingTideApplyCap =
   /*#__PURE__*/ createUseReadContract({
@@ -14693,7 +14744,7 @@ export const useReadCtzndSaleRisingTideApplyCap =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_isValidCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleRisingTideIsValidCap =
   /*#__PURE__*/ createUseReadContract({
@@ -14705,7 +14756,7 @@ export const useReadCtzndSaleRisingTideIsValidCap =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleRisingTideTotalAllocatedUncapped =
   /*#__PURE__*/ createUseReadContract({
@@ -14717,7 +14768,7 @@ export const useReadCtzndSaleRisingTideTotalAllocatedUncapped =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_totalCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleRisingTideTotalCap =
   /*#__PURE__*/ createUseReadContract({
@@ -14729,7 +14780,7 @@ export const useReadCtzndSaleRisingTideTotalCap =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_validating"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleRisingTideValidating =
   /*#__PURE__*/ createUseReadContract({
@@ -14741,7 +14792,7 @@ export const useReadCtzndSaleRisingTideValidating =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"start"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleStart = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -14752,7 +14803,7 @@ export const useReadCtzndSaleStart = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"supportsInterface"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleSupportsInterface =
   /*#__PURE__*/ createUseReadContract({
@@ -14764,7 +14815,7 @@ export const useReadCtzndSaleSupportsInterface =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"tokenToPaymentToken"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleTokenToPaymentToken =
   /*#__PURE__*/ createUseReadContract({
@@ -14776,7 +14827,7 @@ export const useReadCtzndSaleTokenToPaymentToken =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"totalTokensForSale"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleTotalTokensForSale =
   /*#__PURE__*/ createUseReadContract({
@@ -14788,7 +14839,7 @@ export const useReadCtzndSaleTotalTokensForSale =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"totalUncappedAllocations"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleTotalUncappedAllocations =
   /*#__PURE__*/ createUseReadContract({
@@ -14800,7 +14851,7 @@ export const useReadCtzndSaleTotalUncappedAllocations =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"uncappedAllocation"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleUncappedAllocation =
   /*#__PURE__*/ createUseReadContract({
@@ -14812,7 +14863,7 @@ export const useReadCtzndSaleUncappedAllocation =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"withdrawn"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useReadCtzndSaleWithdrawn = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -14823,7 +14874,7 @@ export const useReadCtzndSaleWithdrawn = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWriteCtzndSale = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -14833,7 +14884,7 @@ export const useWriteCtzndSale = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"buy"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWriteCtzndSaleBuy = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -14844,7 +14895,7 @@ export const useWriteCtzndSaleBuy = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"grantRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWriteCtzndSaleGrantRole = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -14855,7 +14906,7 @@ export const useWriteCtzndSaleGrantRole = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"refund"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWriteCtzndSaleRefund = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -14866,7 +14917,7 @@ export const useWriteCtzndSaleRefund = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"renounceRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWriteCtzndSaleRenounceRole =
   /*#__PURE__*/ createUseWriteContract({
@@ -14878,7 +14929,7 @@ export const useWriteCtzndSaleRenounceRole =
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"revokeRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWriteCtzndSaleRevokeRole = /*#__PURE__*/ createUseWriteContract(
   { abi: ctzndSaleAbi, address: ctzndSaleAddress, functionName: 'revokeRole' },
@@ -14887,7 +14938,7 @@ export const useWriteCtzndSaleRevokeRole = /*#__PURE__*/ createUseWriteContract(
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_validate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWriteCtzndSaleRisingTideValidate =
   /*#__PURE__*/ createUseWriteContract({
@@ -14899,7 +14950,7 @@ export const useWriteCtzndSaleRisingTideValidate =
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setIndividualCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWriteCtzndSaleSetIndividualCap =
   /*#__PURE__*/ createUseWriteContract({
@@ -14909,9 +14960,21 @@ export const useWriteCtzndSaleSetIndividualCap =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMaxContribution"`
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
+ */
+export const useWriteCtzndSaleSetMaxContribution =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleAbi,
+    address: ctzndSaleAddress,
+    functionName: 'setMaxContribution',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMinContribution"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWriteCtzndSaleSetMinContribution =
   /*#__PURE__*/ createUseWriteContract({
@@ -14923,7 +14986,7 @@ export const useWriteCtzndSaleSetMinContribution =
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"withdraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWriteCtzndSaleWithdraw = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -14934,7 +14997,7 @@ export const useWriteCtzndSaleWithdraw = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useSimulateCtzndSale = /*#__PURE__*/ createUseSimulateContract({
   abi: ctzndSaleAbi,
@@ -14944,7 +15007,7 @@ export const useSimulateCtzndSale = /*#__PURE__*/ createUseSimulateContract({
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"buy"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useSimulateCtzndSaleBuy = /*#__PURE__*/ createUseSimulateContract({
   abi: ctzndSaleAbi,
@@ -14955,7 +15018,7 @@ export const useSimulateCtzndSaleBuy = /*#__PURE__*/ createUseSimulateContract({
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"grantRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useSimulateCtzndSaleGrantRole =
   /*#__PURE__*/ createUseSimulateContract({
@@ -14967,7 +15030,7 @@ export const useSimulateCtzndSaleGrantRole =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"refund"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useSimulateCtzndSaleRefund =
   /*#__PURE__*/ createUseSimulateContract({
@@ -14979,7 +15042,7 @@ export const useSimulateCtzndSaleRefund =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"renounceRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useSimulateCtzndSaleRenounceRole =
   /*#__PURE__*/ createUseSimulateContract({
@@ -14991,7 +15054,7 @@ export const useSimulateCtzndSaleRenounceRole =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"revokeRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useSimulateCtzndSaleRevokeRole =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15003,7 +15066,7 @@ export const useSimulateCtzndSaleRevokeRole =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_validate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useSimulateCtzndSaleRisingTideValidate =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15015,7 +15078,7 @@ export const useSimulateCtzndSaleRisingTideValidate =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setIndividualCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useSimulateCtzndSaleSetIndividualCap =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15025,9 +15088,21 @@ export const useSimulateCtzndSaleSetIndividualCap =
   })
 
 /**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMaxContribution"`
+ *
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
+ */
+export const useSimulateCtzndSaleSetMaxContribution =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleAbi,
+    address: ctzndSaleAddress,
+    functionName: 'setMaxContribution',
+  })
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMinContribution"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useSimulateCtzndSaleSetMinContribution =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15039,7 +15114,7 @@ export const useSimulateCtzndSaleSetMinContribution =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"withdraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useSimulateCtzndSaleWithdraw =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15051,7 +15126,7 @@ export const useSimulateCtzndSaleWithdraw =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWatchCtzndSaleEvent = /*#__PURE__*/ createUseWatchContractEvent(
   { abi: ctzndSaleAbi, address: ctzndSaleAddress },
@@ -15060,7 +15135,7 @@ export const useWatchCtzndSaleEvent = /*#__PURE__*/ createUseWatchContractEvent(
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"Purchase"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWatchCtzndSalePurchaseEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -15072,7 +15147,7 @@ export const useWatchCtzndSalePurchaseEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"Refund"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWatchCtzndSaleRefundEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -15084,7 +15159,7 @@ export const useWatchCtzndSaleRefundEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"RoleAdminChanged"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWatchCtzndSaleRoleAdminChangedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -15096,7 +15171,7 @@ export const useWatchCtzndSaleRoleAdminChangedEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"RoleGranted"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWatchCtzndSaleRoleGrantedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -15108,7 +15183,7 @@ export const useWatchCtzndSaleRoleGrantedEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"RoleRevoked"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWatchCtzndSaleRoleRevokedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -15120,7 +15195,7 @@ export const useWatchCtzndSaleRoleRevokedEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"Withdraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x834a6861665E734057b226bB8576bF84203FC587)
+ * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x5613c3007f77a5095702f887b7e863cc5b5192a6)
  */
 export const useWatchCtzndSaleWithdrawEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -19735,6 +19810,14 @@ export const useReadSaleInvestorCount = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"maxContribution"`
+ */
+export const useReadSaleMaxContribution = /*#__PURE__*/ createUseReadContract({
+  abi: saleAbi,
+  functionName: 'maxContribution',
+})
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"maxTarget"`
  */
 export const useReadSaleMaxTarget = /*#__PURE__*/ createUseReadContract({
@@ -19743,19 +19826,19 @@ export const useReadSaleMaxTarget = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"minContribution"`
+ */
+export const useReadSaleMinContribution = /*#__PURE__*/ createUseReadContract({
+  abi: saleAbi,
+  functionName: 'minContribution',
+})
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"minTarget"`
  */
 export const useReadSaleMinTarget = /*#__PURE__*/ createUseReadContract({
   abi: saleAbi,
   functionName: 'minTarget',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"min_contribution"`
- */
-export const useReadSaleMinContribution = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  functionName: 'min_contribution',
 })
 
 /**
@@ -19977,6 +20060,15 @@ export const useWriteSaleSetIndividualCap =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMaxContribution"`
+ */
+export const useWriteSaleSetMaxContribution =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleAbi,
+    functionName: 'setMaxContribution',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMinContribution"`
  */
 export const useWriteSaleSetMinContribution =
@@ -20057,6 +20149,15 @@ export const useSimulateSaleSetIndividualCap =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleAbi,
     functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMaxContribution"`
+ */
+export const useSimulateSaleSetMaxContribution =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleAbi,
+    functionName: 'setMaxContribution',
   })
 
 /**
@@ -20263,6 +20364,15 @@ export const useWriteSaleTestTestBuy = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyAboveMaximum"`
+ */
+export const useWriteSaleTestTestBuyAboveMaximum =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'testBuyAboveMaximum',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyBelowMinimum"`
  */
 export const useWriteSaleTestTestBuyBelowMinimum =
@@ -20310,6 +20420,15 @@ export const useSimulateSaleTestTestBuy =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleTestAbi,
     functionName: 'testBuy',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyAboveMaximum"`
+ */
+export const useSimulateSaleTestTestBuyAboveMaximum =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'testBuyAboveMaximum',
   })
 
 /**

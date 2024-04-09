@@ -42,7 +42,7 @@ export const saleDetails = async () => {
         project: 'Citizend',
         status: await projectStatus(),
         url: `${host}/projects/citizend`,
-        logo: `${host}/citizend-logo-circle.svg`,
+        logo: `${host}/project-citizend-logo.svg`,
         background: `${host}/citizend-card-desktop.png`,
         backgroundMobile: `${host}/citizend-card-mobile.png`,
         rate: await contract.read.rate(),

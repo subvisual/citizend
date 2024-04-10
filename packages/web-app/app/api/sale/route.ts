@@ -13,5 +13,11 @@ BigInt.prototype.toJSON = function () {
 export async function GET(_request: Request) {
   const details = await saleDetails();
 
+  if (typeof details === 'object' && details instanceof Error) {
+    return new Response(`Sales details error: ${details.message}`, {
+      status: 500,
+    });
+  }
+
   return Response.json(details);
 }

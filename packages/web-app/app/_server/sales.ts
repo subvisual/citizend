@@ -4,6 +4,7 @@ import { ctzndSaleAbi, ctzndSaleAddress } from '@/wagmi.generated';
 import { headers } from 'next/headers';
 import { createWalletClient, getContract, http, publicActions } from 'viem';
 import { sepolia } from 'viem/chains';
+import { TProjectSaleDetails, TProjectStatus } from '../_types';
 
 const client = createWalletClient({
   chain: sepolia,
@@ -16,9 +17,7 @@ const contract = getContract({
   client,
 });
 
-export type TProjectStatus = 'completed' | 'upcoming' | 'live';
-
-const projectStatus = async () => {
+const projectStatus = async (): Promise<TProjectStatus> => {
   const start = await contract.read.start();
   const end = await contract.read.end();
   const current = Date.now();
@@ -34,26 +33,7 @@ const projectStatus = async () => {
   return 'live';
 };
 
-export type TProjectSaleDetails = {
-  project: string;
-  status: TProjectStatus;
-  url: string;
-  logo: string;
-  background: string;
-  backgroundMobile: string;
-  rate: BigInt;
-  minTarget: BigInt;
-  maxTarget: BigInt;
-  start: BigInt;
-  end: BigInt;
-  minContribution: BigInt;
-  maxContribution: BigInt;
-  totalTokensForSale: BigInt;
-};
-
-export const saleDetails = async (): Promise<
-  TProjectSaleDetails[] | unknown
-> => {
+export const saleDetails = async (): Promise<TProjectSaleDetails[] | Error> => {
   try {
     const headersList = headers();
     const host = headersList.get('host');
@@ -90,6 +70,13 @@ export const saleDetails = async (): Promise<
       },
     ];
   } catch (error) {
-    return error;
+    console.error(error);
+
+    if (error instanceof Error) {
+      console.error(error.message);
+      return error;
+    }
+
+    return new Error('Error fetching sale details from contract');
   }
 };

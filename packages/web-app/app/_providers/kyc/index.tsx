@@ -1,3 +1,5 @@
+'use client';
+
 import { PropsWithChildren, useMemo } from 'react';
 import { KycContext, TKycContextValue, TWallet } from './context';
 import { useKycCredential } from '@/app/_lib/hooks';

@@ -10,6 +10,8 @@ contract SaleTest is Test {
     MockERC20 paymentToken;
     uint256 start;
     uint256 end;
+    uint256 startRegistration;
+    uint256 endRegistration;
 
     address owner = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
     address alice = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8;
@@ -24,6 +26,9 @@ contract SaleTest is Test {
     function setUp() public {
         vm.startPrank(owner);
 
+        startRegistration = 1714089600;
+        endRegistration = 1714694400;
+
         start = vm.getBlockTimestamp();
         end = start + 60 * 60 * 24;
 
@@ -35,7 +40,9 @@ contract SaleTest is Test {
             end,
             100,
             1000000,
-            2000000
+            2000000,
+            startRegistration,
+            endRegistration
         );
 
         sale.setMaxContribution(4 ether);

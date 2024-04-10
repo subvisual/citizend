@@ -5930,6 +5930,13 @@ export const saleAbi = [
   },
   {
     type: 'function',
+    inputs: [],
+    name: 'endRegistration',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
     name: 'getRoleAdmin',
     outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
@@ -6157,6 +6164,13 @@ export const saleAbi = [
     type: 'function',
     inputs: [],
     name: 'start',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'startRegistration',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
   },
@@ -19770,6 +19784,14 @@ export const useReadSaleEnd = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"endRegistration"`
+ */
+export const useReadSaleEndRegistration = /*#__PURE__*/ createUseReadContract({
+  abi: saleAbi,
+  functionName: 'endRegistration',
+})
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"getRoleAdmin"`
  */
 export const useReadSaleGetRoleAdmin = /*#__PURE__*/ createUseReadContract({
@@ -19942,6 +19964,13 @@ export const useReadSaleStart = /*#__PURE__*/ createUseReadContract({
   abi: saleAbi,
   functionName: 'start',
 })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"startRegistration"`
+ */
+export const useReadSaleStartRegistration = /*#__PURE__*/ createUseReadContract(
+  { abi: saleAbi, functionName: 'startRegistration' },
+)
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"supportsInterface"`

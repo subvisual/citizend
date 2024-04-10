@@ -74,6 +74,12 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// Timestamp at which sale ends
     uint256 public immutable end;
 
+    /// Timestamp at which registration period starts
+    uint256 public immutable startRegistration;
+
+    /// Timestamp at which registration period ends
+    uint256 public immutable endRegistration;
+
     /// Total tokens available for sale
     uint256 public immutable totalTokensForSale;
 
@@ -103,6 +109,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// @param _start Start timestamp
     /// @param _end End timestamp
     /// @param _totalTokensForSale Total amount of tokens for sale
+    /// @param _minTarget Minimum target for the sale
+    /// @param _maxTarget Maximum target for the sale
+    /// @param _startRegistration Registration period start timestamp
+    /// @param _endRegistration Registration period end timestamp
     constructor(
         address _paymentToken,
         uint256 _rate,
@@ -110,7 +120,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _end,
         uint256 _totalTokensForSale,
         uint256 _minTarget,
-        uint256 _maxTarget
+        uint256 _maxTarget,
+        uint256 _startRegistration,
+        uint256 _endRegistration
     ) {
         require(_rate > 0, "can't be zero");
         require(_paymentToken != address(0), "can't be zero");
@@ -122,6 +134,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
             _maxTarget > _minTarget,
             "_maxTarget cannot be lower than _minTarget"
         );
+        require(
+            _endRegistration > _startRegistration,
+            "_endRegistration cannot be lower than _startRegistration"
+        );
 
         paymentToken = _paymentToken;
         rate = _rate;
@@ -130,6 +146,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         totalTokensForSale = _totalTokensForSale;
         minTarget = _minTarget;
         maxTarget = _maxTarget;
+        startRegistration = _startRegistration;
+        endRegistration = _endRegistration;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);

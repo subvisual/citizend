@@ -21,6 +21,8 @@ contract DevDeployScript is Script {
 
     uint256 start;
     uint256 end;
+    uint256 startRegistration;
+    uint256 endRegistration;
 
     function setUp() public {
         testAccounts = new address[](3);
@@ -34,16 +36,14 @@ contract DevDeployScript is Script {
 
         bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
 
-        // Citizend citizend = new Citizend(owner);
-        // Staking staking = new Staking(address(citizend));
-        //
-        // Controller controller = new Controller(address(staking), address(citizend), merkleRoot);
-        // Project project = new Project("token sale project", address(citizend), 1000, 1, address(0), merkleRoot);
+        startRegistration = 1714089600;
+        endRegistration = 1714694400;
 
         start = vm.getBlockTimestamp();
         end = start + 60 * 60 * 24;
 
         MockERC20 token = new MockERC20("USDC", "USDC", 18);
+        Citizend citizend = new Citizend(owner);
         Sale sale = new Sale(
             address(token),
             1 ** 18,
@@ -51,7 +51,9 @@ contract DevDeployScript is Script {
             end,
             1000,
             1000000,
-            2000000
+            2000000,
+            startRegistration,
+            endRegistration
         );
 
         bool success = token.approve(address(sale), 1000 ether);

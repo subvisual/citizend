@@ -32,7 +32,7 @@ export function Topbar() {
   return (
     <header
       className={clsx(
-        'sticky top-0 transition-all duration-100',
+        'sticky top-0 z-10 transition-all duration-100',
         scrollPosition > 40 && 'bg-mono-950',
       )}
     >

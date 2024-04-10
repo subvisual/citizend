@@ -49,6 +49,8 @@ export const saleDetails = async (): Promise<TProjectSaleDetails[] | Error> => {
       contract.read.minContribution(),
       contract.read.maxContribution(),
       contract.read.totalTokensForSale(),
+      contract.read.startRegistration(),
+      contract.read.endRegistration(),
     ]);
 
     return [
@@ -63,6 +65,8 @@ export const saleDetails = async (): Promise<TProjectSaleDetails[] | Error> => {
         minContribution: contractResults[6],
         maxContribution: contractResults[7],
         totalTokensForSale: contractResults[8],
+        startRegistration: contractResults[9],
+        endRegistration: contractResults[10],
         url: `https://${host}/projects/citizend`,
         logo: `https://${host}/project-citizend-logo.svg`,
         background: `https://${host}/citizend-card-desktop.png`,

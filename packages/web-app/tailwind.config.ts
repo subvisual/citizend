@@ -39,6 +39,7 @@ const config: Config = {
         'blue-400': '#527AFF',
         'blue-500': '#3865FD',
         'blue-600': '#1E40F2',
+        'green-500': '#38FC50',
         'red-700': '#D6043E',
         'yellow-500': '#FCC738',
       },
@@ -54,12 +55,8 @@ const config: Config = {
       borderRadius: {
         '2.5xl': '1.125rem',
       },
-    },
-    keyframes: {
-      shimmer: {
-        '100%': {
-          transform: 'translateX(100%)',
-        },
+      animation: {
+        'spin-slow': 'spin 2s linear infinite',
       },
     },
   },

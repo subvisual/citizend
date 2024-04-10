@@ -14,7 +14,7 @@ import {Math} from "../libraries/Math.sol";
 
 /// Citizend token sale contract
 ///
-/// Users interact with this contract to deposit $aUSD in exchange for $CTND.
+/// Users interact with this contract to deposit $USDC in exchange for $CTND.
 /// The contract should hold all $CTND tokens meant to be distributed in the public sale
 contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     using SafeERC20 for IERC20;

@@ -1,3 +1,5 @@
+'use client';
+
 import { idOS } from '@idos-network/idos-sdk';
 import {
   PropsWithChildren,

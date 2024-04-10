@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { useIdOS } from '../_providers/idos';
-import { idOSCredential, idOSCredentialStatus } from '../_types/idos';
-import { useMemo } from 'react';
-import { compareAddresses, isValidGrant } from './utils';
+import { idOSCredential } from '../_types/idos';
 import { getPublicInfo } from '../_server/idos';
 import { getProjectGrants } from '../_server/grants';
 import { TProjectInfoArgs, getProjectPublicInfo } from '../_server/projects';
 import { useKyc } from '../_providers/kyc/context';
+import { saleDetails } from '../_server/sales';
 
 export const usePublicInfo = () => {
   return useQuery({
@@ -25,6 +24,21 @@ export const useProjectPublicInfo = (projectId?: TProjectInfoArgs) => {
       return await getProjectPublicInfo(projectId);
     },
     enabled: !!projectId,
+  });
+};
+
+export const useFetchProjectsSaleDetails = () => {
+  return useQuery({
+    queryKey: ['projects-sale-details'],
+    queryFn: async () => {
+      const projectSaleDetails = await saleDetails();
+
+      if (projectSaleDetails instanceof Error) {
+        throw projectSaleDetails;
+      }
+
+      return projectSaleDetails;
+    },
   });
 };
 

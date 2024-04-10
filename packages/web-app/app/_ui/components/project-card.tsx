@@ -1,12 +1,9 @@
 import Image from 'next/image';
 import { CitizenBlackBackgroundLogo } from './svg/citizend-black-background-logo';
 import Link from 'next/link';
+import { TProjectSaleDetails, TProjectStatus } from '@/app/_types';
 
-type TStatus = {
-  status: string;
-};
-
-const Status = ({ status }: TStatus) => {
+const Status = ({ status }: { status: TProjectStatus }) => {
   return (
     <div className="absolute -top-7 left-1/2 flex -translate-x-1/2 content-center items-center justify-center">
       <div className="rounded-lg bg-blue-500 px-9 py-3">{status}</div>
@@ -38,23 +35,55 @@ const BannerImage = () => (
   </div>
 );
 
-export const ProjectCard = ({}) => {
+export const ProjectCard = ({
+  project,
+  status,
+  rate,
+  minTarget,
+  maxTarget,
+  start,
+  end,
+  minContribution,
+  maxContribution,
+  totalTokensForSale,
+  url,
+  logo,
+  background,
+  backgroundMobile,
+}: TProjectSaleDetails) => {
+  //substring get the last segment after the last slash
+  const href = 'projects/' + url.substring(url.lastIndexOf('/') + 1);
+  const rangeFormatter = new Intl.NumberFormat('default', {
+    style: 'currency',
+    currency: 'USD',
+    maximumSignificantDigits: 1,
+  });
+  const targetedRaise = rangeFormatter.formatRange(minTarget, maxTarget);
+  const dateFormatter = new Intl.DateTimeFormat('default', {
+    month: 'short',
+    day: 'numeric',
+    year: '2-digit',
+  });
+
+  // needs to be updated as this is actually investment period
+  const registerPeriod = dateFormatter.formatRange(start, end);
+
   return (
     <Link
       className="relative flex flex-col gap-4 rounded-2.5xl bg-mono-900 p-8"
-      href="projects/citizend"
+      href={href}
     >
-      <Status status="Upcoming" />
+      <Status status={status} />
       <BannerImage />
-      <div className="lead mt-11 self-center text-xl">Citizend</div>
+      <div className="lead mt-11 self-center text-xl">{project}</div>
       <ul className="mt-8 flex flex-col gap-4">
         <li className="flex flex-col justify-between gap-3 md:flex-row">
           <span className="text-mono-400">Targeted Raise</span>
-          <span>$1,000,000 - $2,000,000</span>
+          <span>{targetedRaise}</span>
         </li>
         <li className="flex flex-col justify-between gap-3 md:flex-row">
           <span className="text-mono-400">Register period</span>
-          <span>26/04/24 - 03/05/24</span>
+          <span>{registerPeriod}</span>
         </li>
       </ul>
     </Link>

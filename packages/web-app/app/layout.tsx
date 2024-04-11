@@ -56,7 +56,10 @@ export default function RootLayout({
           className="fixed left-0 top-0 -z-10 h-screen w-screen antialiased"
         />
         <Providers>
-          <div className="flex h-screen w-screen flex-col overflow-y-auto">
+          <div
+            id="visible-area"
+            className="flex h-screen w-screen flex-col overflow-y-auto"
+          >
             <Topbar />
             <div className="grow bg-cover py-14 md:p-20">
               <div className="mx-auto max-w-280 px-6">{children}</div>

@@ -11,13 +11,18 @@ import { CitizendLogo } from './svg/citizend-logo';
 
 export const useScrollPosition = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [isSsr, setIsSsr] = useState(true);
 
   useEffect(() => {
     const updatePosition = () => {
-      setScrollPosition(window.scrollY);
+      setScrollPosition(
+        document.getElementById('visible-area')?.scrollTop || 0,
+      );
     };
 
-    window.addEventListener('scroll', updatePosition);
+    document
+      .getElementById('visible-area')
+      ?.addEventListener('scroll', updatePosition);
 
     updatePosition();
 
@@ -37,8 +42,8 @@ export function Topbar() {
         scrollPosition > 40 && 'bg-mono-950',
       )}
     >
-      <div className="mx-auto flex max-w-280 flex-row flex-wrap justify-between px-6 py-5 md:justify-normal md:py-6">
-        <CitizendLogo className=" h-8 w-24 md:h-[52px] md:w-[157px]" />
+      <div className="mx-auto flex max-w-280 flex-row flex-wrap items-center justify-between px-6 py-5 md:justify-normal md:py-6">
+        <CitizendLogo className="h-8 w-24 md:h-[52px] md:w-[157px]" />
         <nav className="ml-20 hidden flex-grow items-center gap-8 md:flex">
           <NavLink href="/" name="All Projects" topbar />
           <NavLink href="/projects/my-projects" name="My Projects" topbar />

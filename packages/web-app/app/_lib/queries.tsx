@@ -1,3 +1,5 @@
+'use client';
+
 import { useQuery } from '@tanstack/react-query';
 import { useIdOS } from '../_providers/idos';
 import { idOSCredential } from '../_types/idos';
@@ -33,8 +35,11 @@ export const useFetchProjectsSaleDetails = () => {
     queryFn: async () => {
       const projectSaleDetails = await saleDetails();
 
-      if (projectSaleDetails instanceof Error) {
-        throw projectSaleDetails;
+      if (
+        typeof projectSaleDetails === 'object' &&
+        'error' in projectSaleDetails
+      ) {
+        throw new Error(projectSaleDetails.error);
       }
 
       return projectSaleDetails;

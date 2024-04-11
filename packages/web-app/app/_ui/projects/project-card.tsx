@@ -1,12 +1,27 @@
 'use client';
 
 import Link from 'next/link';
-import { TProjectSaleDetails, TProjectStatus } from '@/app/_types';
+import { TProjectSaleDetails } from '@/app/_types';
 import { useCountdown } from '../hooks/useCountdown';
 import { ArrowRight } from '../components/svg/arrow-right';
 import { getRelativePath } from '../utils/getRelativePath';
 import { BannerImage } from './banner-image';
 import { Status } from './status';
+
+const formatDateRange = (start: bigint, end: bigint) => {
+  try {
+    const dateFormatter = new Intl.DateTimeFormat('default', {
+      month: 'short',
+      day: 'numeric',
+      year: '2-digit',
+    });
+
+    return dateFormatter.formatRange(start, end);
+  } catch (error) {
+    console.error(error);
+    return '';
+  }
+};
 
 const Upcoming = ({
   minTarget,
@@ -21,15 +36,7 @@ const Upcoming = ({
     maximumSignificantDigits: 1,
   });
   const targetedRaise = rangeFormatter.formatRange(minTarget, maxTarget);
-  const dateFormatter = new Intl.DateTimeFormat('default', {
-    month: 'short',
-    day: 'numeric',
-    year: '2-digit',
-  });
-  const registerPeriod = dateFormatter.formatRange(
-    parseInt(startRegistration.toLocaleString()),
-    parseInt(endRegistration.toLocaleString()),
-  );
+  const registerPeriod = formatDateRange(startRegistration, endRegistration);
   const { days, hours, minutes, seconds } = useCountdown(start);
 
   return (

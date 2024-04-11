@@ -12,8 +12,8 @@ contract DeployScript is Script {
 
         uint256 start = vm.unixTime();
         uint256 end = start + 60 * 60 * 24 * 7;
-        uint256 startRegistration = 1714089600;
-        uint256 endRegistration = 1714694400;
+        uint256 startRegistration = 1714089600000;
+        uint256 endRegistration = 1714694400000;
 
         MockERC20 token = new MockERC20("USDC", "USDC", 18);
         Sale sale = new Sale(

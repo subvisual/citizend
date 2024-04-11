@@ -46,6 +46,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 tokenAmount
     );
 
+    /// Emitted for every claim
+    event Claim(address indexed to, uint256 tokenAmount);
+
     /// Emitted for every refund given
     event Refund(address indexed to, uint256 paymentTokenAmount);
 
@@ -55,6 +58,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     //
     // State
     //
+
+    /// See {ISale.token}
+    address public override(ISale) token;
 
     /// See {ISale.paymentToken}
     address public immutable override(ISale) paymentToken;
@@ -153,6 +159,11 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
     }
 
+    modifier beforeSale() {
+        require(block.timestamp <= start, "sale active");
+        _;
+    }
+
     /// Ensures we're running during the set sale period
     modifier inSale() {
         require(
@@ -240,10 +251,25 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         );
     }
 
+    function claim() external capCalculated nonReentrant {
+        Account storage account = accounts[msg.sender];
+        require(!account.refunded, "already claimed");
+
+        if (refundAmount(msg.sender) != 0) {
+            refund(msg.sender);
+        }
+
+        uint256 capped = allocation(msg.sender);
+
+        IERC20(token).transfer(msg.sender, capped);
+
+        emit Claim(msg.sender, capped);
+    }
+
     /// @inheritdoc ISale
     function refund(
         address to
-    ) external override(ISale) capCalculated nonReentrant {
+    ) public override(ISale) capCalculated nonReentrant {
         Account storage account = accounts[to];
         require(!account.refunded, "already refunded");
 
@@ -335,6 +361,12 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     //
     // Admin API
     //
+
+    function setToken(
+        address _token
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
+        token = _token;
+    }
 
     /// Sets the individual cap
     /// @dev Can only be called once

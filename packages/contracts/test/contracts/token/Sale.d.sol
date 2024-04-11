@@ -3,10 +3,12 @@ pragma solidity ^0.8.20;
 import "forge-std/Test.sol";
 
 import {Sale} from "../../../contracts/token/Sale.sol";
+import {Citizend} from "../../../contracts/token/Citizend.sol";
 import {MockERC20} from "../../../contracts/test/MockERC20.sol";
 
 contract SaleTest is Test {
     Sale sale;
+    Citizend token;
     MockERC20 paymentToken;
     uint256 start;
     uint256 end;
@@ -23,6 +25,8 @@ contract SaleTest is Test {
         uint256 tokenAmount
     );
 
+    event Claim(address indexed to, uint256 tokenAmount);
+
     function setUp() public {
         vm.startPrank(owner);
 
@@ -33,19 +37,23 @@ contract SaleTest is Test {
         end = start + 60 * 60 * 24;
 
         paymentToken = new MockERC20("USDC", "USDC", 18);
+        token = new Citizend(owner);
         sale = new Sale(
             address(paymentToken),
             1 ** 18,
             start,
             end,
-            100,
+            1000000000000000000000000,
             1000000,
             2000000,
             startRegistration,
             endRegistration
         );
 
+        sale.setToken(address(token));
         sale.setMaxContribution(4 ether);
+
+        token.transfer(address(sale), 1000000 ether);
 
         vm.stopPrank();
 
@@ -110,5 +118,30 @@ contract SaleTest is Test {
         require(sale.risingTide_totalAllocatedUncapped() == 2 ether);
 
         vm.stopPrank();
+    }
+
+    function testBuyAndClaim() public {
+        require(token.balanceOf(alice) == 0 ether);
+
+        vm.prank(alice);
+        sale.buy(2 ether);
+
+        vm.warp(end + 1000);
+
+        require(sale.uncappedAllocation(address(alice)) == 2 ether);
+
+        vm.prank(owner);
+        sale.setIndividualCap(2 ether);
+
+        require(sale.risingTide_isValidCap(), "not valid cap");
+        require(sale.allocation(address(alice)) == 2 ether);
+
+        vm.expectEmit();
+        emit Claim(address(alice), 2 ether);
+
+        vm.prank(alice);
+        sale.claim();
+
+        require(token.balanceOf(alice) == 2 ether);
     }
 }

@@ -9,6 +9,7 @@ import { ContributeButton } from './contribute-button';
 import { useFetchProjectsSaleDetails } from '@/app/_lib/queries';
 import { useProject } from '@/app/_providers/project/context';
 import { Spinner } from '../components/svg/spinner';
+import { ProjectContribution } from './project-contribution';
 
 const generateTabClassName = ({ selected }: { selected: boolean }) =>
   clsx(
@@ -61,11 +62,16 @@ export const ProjectContent = () => {
               <ProjectDescription />
             </Tab.Panel>
             <Tab.Panel className="flex flex-col gap-8 focus:outline-none">
-              <ProjectInformation
-                saleDate={start}
-                startRegistration={startRegistration}
-                endRegistration={endRegistration}
-              />
+              {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
+                <ProjectContribution />
+              ) : null}
+              {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+                <ProjectInformation
+                  saleDate={start}
+                  startRegistration={startRegistration}
+                  endRegistration={endRegistration}
+                />
+              ) : null}
               <TokenMetrics
                 minTarget={minTarget}
                 maxTarget={maxTarget}
@@ -73,19 +79,28 @@ export const ProjectContent = () => {
                 maxContribution={maxContribution}
                 totalTokensForSale={totalTokensForSale}
               />
-              <ContributeButton />
+              {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+                <ContributeButton />
+              ) : null}
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
       </div>
       <div className="hidden grid-cols-2 gap-x-8 md:grid">
-        <ProjectDescription />
+        <div className="flex flex-col gap-16">
+          {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
+            <ProjectContribution />
+          ) : null}
+          <ProjectDescription />
+        </div>
         <div className="display flex flex-col gap-8">
-          <ProjectInformation
-            saleDate={start}
-            startRegistration={startRegistration}
-            endRegistration={endRegistration}
-          />
+          {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+            <ProjectInformation
+              saleDate={start}
+              startRegistration={startRegistration}
+              endRegistration={endRegistration}
+            />
+          ) : null}
           <TokenMetrics
             minTarget={minTarget}
             maxTarget={maxTarget}
@@ -93,7 +108,9 @@ export const ProjectContent = () => {
             maxContribution={maxContribution}
             totalTokensForSale={totalTokensForSale}
           />
-          <ContributeButton />
+          {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+            <ContributeButton />
+          ) : null}
         </div>
       </div>
     </>

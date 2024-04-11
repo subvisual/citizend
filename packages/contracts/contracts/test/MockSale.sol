@@ -16,6 +16,7 @@ contract MockSale is ISale, ERC165 {
     mapping(address => uint256) public override(ISale) refundAmount;
     mapping(string => uint256) public calls;
 
+    address public token;
     address public paymentToken;
 
     function paymentTokenToToken(

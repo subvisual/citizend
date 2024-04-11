@@ -36,8 +36,8 @@ contract DevDeployScript is Script {
 
         bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
 
-        startRegistration = 1714089600;
-        endRegistration = 1714694400;
+        startRegistration = 1714089600000;
+        endRegistration = 1714694400000;
 
         start = vm.getBlockTimestamp();
         end = start + 60 * 60 * 24;
@@ -49,12 +49,14 @@ contract DevDeployScript is Script {
             1 ** 18,
             start,
             end,
-            1000,
+            100000000000000000000,
             1000000,
             2000000,
             startRegistration,
             endRegistration
         );
+
+        bool sucesss = citizend.transfer(address(sale), 1000 ether);
 
         bool success = token.approve(address(sale), 1000 ether);
         require(success, "approve failed");

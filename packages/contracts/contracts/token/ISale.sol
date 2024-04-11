@@ -2,7 +2,10 @@
 pragma solidity ^0.8.20;
 
 interface ISale {
-    /// The $aUSD token
+    /// The $CTND token
+    function token() external view returns (address);
+
+    /// The $USDC token
     function paymentToken() external view returns (address);
 
     /// How many $CTND will be received for the given payment amount

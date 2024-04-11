@@ -3997,6 +3997,13 @@ export const iSaleAbi = [
   },
   {
     type: 'function',
+    inputs: [],
+    name: 'token',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [
       { name: '_tokenAmount', internalType: 'uint256', type: 'uint256' },
     ],
@@ -4552,6 +4559,13 @@ export const mockSaleAbi = [
     name: 'test_addRefund',
     outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'token',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -5942,6 +5956,13 @@ export const saleAbi = [
   {
     type: 'function',
     inputs: [],
+    name: 'claim',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
     name: 'end',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
@@ -6180,6 +6201,13 @@ export const saleAbi = [
   },
   {
     type: 'function',
+    inputs: [{ name: '_token', internalType: 'address', type: 'address' }],
+    name: 'setToken',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
     inputs: [],
     name: 'start',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
@@ -6197,6 +6225,13 @@ export const saleAbi = [
     inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
     name: 'supportsInterface',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'token',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
     stateMutability: 'view',
   },
   {
@@ -6242,6 +6277,20 @@ export const saleAbi = [
     name: 'withdrawn',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'view',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'tokenAmount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Claim',
   },
   {
     type: 'event',
@@ -6551,6 +6600,13 @@ export const saleTestAbi = [
   {
     type: 'function',
     inputs: [],
+    name: 'testBuyAndClaim',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
     name: 'testBuyBelowMinimum',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -6561,6 +6617,20 @@ export const saleTestAbi = [
     name: 'testConstructor',
     outputs: [],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'tokenAmount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Claim',
   },
   {
     type: 'event',
@@ -17399,6 +17469,14 @@ export const useReadISaleRefundAmount = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"token"`
+ */
+export const useReadISaleToken = /*#__PURE__*/ createUseReadContract({
+  abi: iSaleAbi,
+  functionName: 'token',
+})
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"tokenToPaymentToken"`
  */
 export const useReadISaleTokenToPaymentToken =
@@ -18206,6 +18284,14 @@ export const useReadMockSaleSupportsInterface =
 export const useReadMockSaleTestCalled = /*#__PURE__*/ createUseReadContract({
   abi: mockSaleAbi,
   functionName: 'test_Called',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"token"`
+ */
+export const useReadMockSaleToken = /*#__PURE__*/ createUseReadContract({
+  abi: mockSaleAbi,
+  functionName: 'token',
 })
 
 /**
@@ -20022,6 +20108,14 @@ export const useReadSaleSupportsInterface = /*#__PURE__*/ createUseReadContract(
 )
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"token"`
+ */
+export const useReadSaleToken = /*#__PURE__*/ createUseReadContract({
+  abi: saleAbi,
+  functionName: 'token',
+})
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"tokenToPaymentToken"`
  */
 export const useReadSaleTokenToPaymentToken =
@@ -20078,6 +20172,14 @@ export const useWriteSale = /*#__PURE__*/ createUseWriteContract({
 export const useWriteSaleBuy = /*#__PURE__*/ createUseWriteContract({
   abi: saleAbi,
   functionName: 'buy',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"claim"`
+ */
+export const useWriteSaleClaim = /*#__PURE__*/ createUseWriteContract({
+  abi: saleAbi,
+  functionName: 'claim',
 })
 
 /**
@@ -20149,6 +20251,14 @@ export const useWriteSaleSetMinContribution =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setToken"`
+ */
+export const useWriteSaleSetToken = /*#__PURE__*/ createUseWriteContract({
+  abi: saleAbi,
+  functionName: 'setToken',
+})
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"withdraw"`
  */
 export const useWriteSaleWithdraw = /*#__PURE__*/ createUseWriteContract({
@@ -20169,6 +20279,14 @@ export const useSimulateSale = /*#__PURE__*/ createUseSimulateContract({
 export const useSimulateSaleBuy = /*#__PURE__*/ createUseSimulateContract({
   abi: saleAbi,
   functionName: 'buy',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"claim"`
+ */
+export const useSimulateSaleClaim = /*#__PURE__*/ createUseSimulateContract({
+  abi: saleAbi,
+  functionName: 'claim',
 })
 
 /**
@@ -20241,6 +20359,14 @@ export const useSimulateSaleSetMinContribution =
   })
 
 /**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setToken"`
+ */
+export const useSimulateSaleSetToken = /*#__PURE__*/ createUseSimulateContract({
+  abi: saleAbi,
+  functionName: 'setToken',
+})
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"withdraw"`
  */
 export const useSimulateSaleWithdraw = /*#__PURE__*/ createUseSimulateContract({
@@ -20254,6 +20380,13 @@ export const useSimulateSaleWithdraw = /*#__PURE__*/ createUseSimulateContract({
 export const useWatchSaleEvent = /*#__PURE__*/ createUseWatchContractEvent({
   abi: saleAbi,
 })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleAbi}__ and `eventName` set to `"Claim"`
+ */
+export const useWatchSaleClaimEvent = /*#__PURE__*/ createUseWatchContractEvent(
+  { abi: saleAbi, eventName: 'Claim' },
+)
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleAbi}__ and `eventName` set to `"Purchase"`
@@ -20444,6 +20577,15 @@ export const useWriteSaleTestTestBuyAboveMaximum =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyAndClaim"`
+ */
+export const useWriteSaleTestTestBuyAndClaim =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'testBuyAndClaim',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyBelowMinimum"`
  */
 export const useWriteSaleTestTestBuyBelowMinimum =
@@ -20503,6 +20645,15 @@ export const useSimulateSaleTestTestBuyAboveMaximum =
   })
 
 /**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyAndClaim"`
+ */
+export const useSimulateSaleTestTestBuyAndClaim =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'testBuyAndClaim',
+  })
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyBelowMinimum"`
  */
 export const useSimulateSaleTestTestBuyBelowMinimum =
@@ -20526,6 +20677,15 @@ export const useSimulateSaleTestTestConstructor =
 export const useWatchSaleTestEvent = /*#__PURE__*/ createUseWatchContractEvent({
   abi: saleTestAbi,
 })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"Claim"`
+ */
+export const useWatchSaleTestClaimEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: saleTestAbi,
+    eventName: 'Claim',
+  })
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"Purchase"`

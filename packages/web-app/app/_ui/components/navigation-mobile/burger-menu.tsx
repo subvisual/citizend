@@ -7,6 +7,8 @@ export const BurgerMenu = ({ openDialog }: TBurgerMenuProps) => {
     <button
       className="bg-transparent focus:outline-none focus:ring-2 focus:ring-mono-50"
       onClick={openDialog}
+      id="navigation-mobile-button"
+      aria-label="Open navigation menu"
     >
       <svg
         width="24"

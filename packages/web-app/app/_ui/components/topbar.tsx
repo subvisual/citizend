@@ -11,7 +11,6 @@ import { CitizendLogo } from './svg/citizend-logo';
 
 export const useScrollPosition = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [isSsr, setIsSsr] = useState(true);
 
   useEffect(() => {
     const updatePosition = () => {

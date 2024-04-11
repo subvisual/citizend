@@ -64,11 +64,6 @@ export const useFetchCredentials = () => {
     queryKey: ['credentials'],
     queryFn: async ({ queryKey: [tableName] }) => {
       if (!sdk || !hasSigner) return null;
-      console.log(
-        '%c==>',
-        'color: green; background: yellow; font-size: 20px',
-        'credentials',
-      );
 
       const credentials = await sdk.data.list<idOSCredential>(tableName);
       return credentials.map((credential) => ({

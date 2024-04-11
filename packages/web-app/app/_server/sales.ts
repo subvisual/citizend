@@ -5,6 +5,7 @@ import { headers } from 'next/headers';
 import { createWalletClient, getContract, http, publicActions } from 'viem';
 import { sepolia } from 'viem/chains';
 import { TProjectSaleDetails, TProjectStatus } from '../_types';
+import { TInternalError } from './types';
 
 const client = createWalletClient({
   chain: sepolia,
@@ -33,7 +34,9 @@ const projectStatus = async (): Promise<TProjectStatus> => {
   return 'live';
 };
 
-export const saleDetails = async (): Promise<TProjectSaleDetails[] | Error> => {
+export const saleDetails = async (): Promise<
+  TProjectSaleDetails[] | TInternalError
+> => {
   try {
     const headersList = headers();
     const host = headersList.get('host');
@@ -78,9 +81,9 @@ export const saleDetails = async (): Promise<TProjectSaleDetails[] | Error> => {
 
     if (error instanceof Error) {
       console.error(error.message);
-      return error;
+      return { error: error.message };
     }
 
-    return new Error('Error fetching sale details from contract');
+    return { error: 'Error fetching sale details from contract' };
   }
 };

@@ -1,3 +1,5 @@
+'use client';
+
 import { useQuery } from '@tanstack/react-query';
 import { useIdOS } from '../_providers/idos';
 import { idOSCredential } from '../_types/idos';
@@ -33,8 +35,11 @@ export const useFetchProjectsSaleDetails = () => {
     queryFn: async () => {
       const projectSaleDetails = await saleDetails();
 
-      if (projectSaleDetails instanceof Error) {
-        throw projectSaleDetails;
+      if (
+        typeof projectSaleDetails === 'object' &&
+        'error' in projectSaleDetails
+      ) {
+        throw new Error(projectSaleDetails.error);
       }
 
       return projectSaleDetails;
@@ -59,6 +64,11 @@ export const useFetchCredentials = () => {
     queryKey: ['credentials'],
     queryFn: async ({ queryKey: [tableName] }) => {
       if (!sdk || !hasSigner) return null;
+      console.log(
+        '%c==>',
+        'color: green; background: yellow; font-size: 20px',
+        'credentials',
+      );
 
       const credentials = await sdk.data.list<idOSCredential>(tableName);
       return credentials.map((credential) => ({

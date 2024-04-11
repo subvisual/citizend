@@ -6,6 +6,9 @@ import { ProjectDescription } from './project-description';
 import { ProjectInformation } from './project-information';
 import { TokenMetrics } from './token-metrics';
 import { ContributeButton } from './contribute-button';
+import { useFetchProjectsSaleDetails } from '@/app/_lib/queries';
+import { useProject } from '@/app/_providers/project/context';
+import { Spinner } from '../components/svg/spinner';
 
 const generateTabClassName = ({ selected }: { selected: boolean }) =>
   clsx(
@@ -14,7 +17,36 @@ const generateTabClassName = ({ selected }: { selected: boolean }) =>
   );
 
 export const ProjectContent = () => {
+  const { projectId } = useProject();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { data, isLoading, isError, error } = useFetchProjectsSaleDetails();
+  const project = data?.find(
+    (project) => project.project.toLowerCase() === projectId,
+  );
+
+  if (isLoading || (!data && !isError)) {
+    return <Spinner className="h-40 w-40 animate-spin-slow" />;
+  }
+
+  if (isError)
+    return (
+      <div>
+        <p>Something went wrong...</p>
+        <p>{error.message}</p>
+      </div>
+    );
+  if (!project) return <div>Project not found</div>;
+
+  const {
+    start,
+    startRegistration,
+    endRegistration,
+    minTarget,
+    maxTarget,
+    minContribution,
+    maxContribution,
+    totalTokensForSale,
+  } = project;
 
   return (
     <>
@@ -30,16 +62,16 @@ export const ProjectContent = () => {
             </Tab.Panel>
             <Tab.Panel className="flex flex-col gap-8 focus:outline-none">
               <ProjectInformation
-                saleDate={new Date('2024-05-05T00:00:00+00:00')}
-                registrationsStartDate={new Date('2024-04-24T00:00:00+00:00')}
-                registrationsEndDate={new Date('2024-05-04T00:00:00+00:00')}
+                saleDate={start}
+                startRegistration={startRegistration}
+                endRegistration={endRegistration}
               />
               <TokenMetrics
-                targetRaiseRange="2.M - 8M ETH"
-                totalSupply="800 000 000 CTND"
-                minPricePerToken="0.10$"
-                maxPricePerToken="10.00$"
-                totalSupplyDistributed="10%"
+                minTarget={minTarget}
+                maxTarget={maxTarget}
+                minContribution={minContribution}
+                maxContribution={maxContribution}
+                totalTokensForSale={totalTokensForSale}
               />
               <ContributeButton />
             </Tab.Panel>
@@ -50,16 +82,16 @@ export const ProjectContent = () => {
         <ProjectDescription />
         <div className="display flex flex-col gap-8">
           <ProjectInformation
-            saleDate={new Date('2024-05-05T00:00:00+00:00')}
-            registrationsStartDate={new Date('2024-04-24T00:00:00+00:00')}
-            registrationsEndDate={new Date('2024-05-04T00:00:00+00:00')}
+            saleDate={start}
+            startRegistration={startRegistration}
+            endRegistration={endRegistration}
           />
           <TokenMetrics
-            targetRaiseRange="2.M - 8M ETH"
-            totalSupply="800 000 000 CTND"
-            minPricePerToken="0.10$"
-            maxPricePerToken="10.00$"
-            totalSupplyDistributed="10%"
+            minTarget={minTarget}
+            maxTarget={maxTarget}
+            minContribution={minContribution}
+            maxContribution={maxContribution}
+            totalTokensForSale={totalTokensForSale}
           />
           <ContributeButton />
         </div>

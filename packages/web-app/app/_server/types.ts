@@ -26,3 +26,7 @@ export type TProjectPublicInfo = {
 export type TProjectsPublicInfo = {
   [key: string]: TProjectPublicInfo;
 };
+
+export type TInternalError = {
+  error: string;
+};

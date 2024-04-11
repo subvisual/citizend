@@ -3,6 +3,7 @@ import { InternalNavigation } from './internal-navigation';
 import { Resources } from './resources';
 import { SocialResources } from './social-resources';
 import Link from 'next/link';
+import { CitizendLogoFooter } from './svg/citizend-logo-footer';
 
 export function Footer() {
   return (
@@ -15,14 +16,7 @@ export function Footer() {
           <h2 id="footer-heading" className="sr-only">
             Footer
           </h2>
-          <Image
-            src="/citizend-logo-footer.svg"
-            alt="Citizend logo"
-            width={102}
-            height={104}
-            priority
-            className="w-[54px] md:w-[102px]"
-          />
+          <CitizendLogoFooter className="w-[54px] md:w-[102px]" />
           <div className="mt-8 grid grid-cols-1 md:mt-14 md:grid-cols-footer md:gap-31">
             <p className="md:leading-1 text-2xl md:text-3.5xl">
               Subscribe to our <span className="text-blue-500">newsletter</span>{' '}

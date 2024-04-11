@@ -1145,15 +1145,15 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-2.0.2.tgz#d9fae00a2d5cb40f92cfe64b47ad749fbc38f917"
   integrity sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==
 
-"@idos-network/idos-sdk@^0.0.39":
-  version "0.0.39"
-  resolved "https://registry.yarnpkg.com/@idos-network/idos-sdk/-/idos-sdk-0.0.39.tgz#996075713d99fe506458353c1d4c091a294fe1bc"
-  integrity sha512-vm6GTw53kbiiJpMQ3WrrAJZkJ9DEQqvOFP3gM8TXlolZvtEImZgY389ia9zUagb8lKRLRKyQSBKiH25lz6KJDg==
+"@idos-network/idos-sdk@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@idos-network/idos-sdk/-/idos-sdk-0.2.2.tgz#976a636d92e342e079205981423a5205e922b567"
+  integrity sha512-wLRCl59/QoLSPOLaOM6L5ow/OlpssyT6F6jQKwdI9O18MQeEML3Yv2QR6F7vCaLnTil8FMeq1tiW7yYe3PW3cg==
   dependencies:
     "@digitalbazaar/ed25519-signature-2020" "^5.2.0"
     "@digitalbazaar/ed25519-verification-key-2020" "^4.1.0"
     "@digitalbazaar/vc" "^6.0.2"
-    "@kwilteam/kwil-js" "0.3.0"
+    "@kwilteam/kwil-js" "0.5.6"
     "@stablelib/base64" "^1.0.1"
     "@stablelib/binary" "^1.0.1"
     "@stablelib/bytes" "^1.0.1"
@@ -1214,14 +1214,14 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kwilteam/kwil-js@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@kwilteam/kwil-js/-/kwil-js-0.3.0.tgz#97eb6f5bd0252df6c7b245b29b14660fb13f2164"
-  integrity sha512-SS+Emn4XqiWX2L3pcfEflAXVVv+eceHBVAtnXbgDW/8Owqw34YVNWE/LRhApREedqzZo/GPoGvaSQRMjHHkyaA==
+"@kwilteam/kwil-js@0.5.6":
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/@kwilteam/kwil-js/-/kwil-js-0.5.6.tgz#0c23716a668871e069c632b715502fa098f543c2"
+  integrity sha512-ELn1iiTgUdDyN25tQyU68kM8erGQu9xQPm13hHBKEZ/etAQv873VCbSWmgSrWIWcqPPtrL5GS67abxCy+qNR8A==
   dependencies:
     axios "^0.27.2"
     dotenv "^16.0.3"
-    ethers "^6.7.1"
+    ethers "^6.9.1"
     ethers5 "npm:ethers@^5.7.2"
     jssha "^3.2.0"
     long "^5.2.1"
@@ -7854,7 +7854,7 @@ ethers@^4.0.32:
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
 
-ethers@^6.11.1, ethers@^6.7.1:
+ethers@^6.11.1, ethers@^6.9.1:
   version "6.11.1"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-6.11.1.tgz#96aae00b627c2e35f9b0a4d65c7ab658259ee6af"
   integrity sha512-mxTAE6wqJQAbp5QAe/+o+rXOID7Nw91OZXvgpjDa1r4fAbq2Nu314oEZSbjoRLacuCzs7kUC3clEvkCQowffGg==

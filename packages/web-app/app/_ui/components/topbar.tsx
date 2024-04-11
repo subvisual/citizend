@@ -7,6 +7,7 @@ import { NavLink } from './nav-link';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { NavigationMobile } from './navigation-mobile';
+import { CitizendLogo } from './svg/citizend-logo';
 
 export const useScrollPosition = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -37,22 +38,7 @@ export function Topbar() {
       )}
     >
       <div className="mx-auto flex max-w-280 flex-row flex-wrap justify-between px-6 py-5 md:justify-normal md:py-6">
-        <Image
-          src="/citizend-logo.svg"
-          alt="Citizend Logo"
-          width={157}
-          height={52}
-          priority
-          className="hidden md:block"
-        />
-        <Image
-          src="/citizend-logo.svg"
-          alt="Citizend Logo"
-          width={96}
-          height={31}
-          priority
-          className="md:hidden"
-        />
+        <CitizendLogo className=" h-8 w-24 md:h-[52px] md:w-[157px]" />
         <nav className="ml-20 hidden flex-grow items-center gap-8 md:flex">
           <NavLink href="/" name="All Projects" topbar />
           <NavLink href="/projects/my-projects" name="My Projects" topbar />

@@ -3,6 +3,7 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
+import { CitizendLogo } from '../svg/citizend-logo';
 
 type TOverlayProps = {
   open: boolean;
@@ -62,14 +63,7 @@ export function Overlay({ open, setOpen, children }: TOverlayProps) {
                     <div className="px-6 pb-5">
                       <div className="flex items-start items-center justify-between">
                         <Dialog.Title className="text-gray-900">
-                          <Image
-                            src="/citizend-logo.svg"
-                            alt="Citizend Logo"
-                            width={96}
-                            height={31}
-                            priority
-                            className="md:hidden"
-                          />
+                          <CitizendLogo className=" h-8 w-24" />
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <Close setOpen={setOpen} />

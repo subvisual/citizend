@@ -2,13 +2,13 @@
 
 // adapted from https://github.dev/idos-network/idos-sdk-js/tree/main/apps/idos-example-dapp
 
-import { WebKwil } from '@kwilteam/kwil-js';
+import { WebKwil, KwilSigner, Utils } from '@kwilteam/kwil-js';
 import type { SignerSupplier } from '@kwilteam/kwil-js/dist/core/builders.d';
 import * as Base64Codec from '@stablelib/base64';
 import * as Utf8Codec from '@stablelib/utf8';
 import { ethers } from 'ethers';
 import nacl from 'tweetnacl';
-import { Grant, KwilSigner, PublicInfo } from './types';
+import { Grant, PublicInfo } from './types';
 
 const ENCRYPTION_SECRET_KEY = Base64Codec.decode(
   process.env.NEXT_ENCRYPTION_SECRET_KEY,
@@ -27,7 +27,7 @@ const evmGrantee = new ethers.Wallet(
 
 const kwilSigner: KwilSigner = {
   signer: evmGrantee as unknown as SignerSupplier,
-  publicKey: evmGrantee.signingKey.publicKey,
+  identifier: Base64Codec.decode(evmGrantee.address),
   signatureType: 'secp256k1_ep',
 };
 

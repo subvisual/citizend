@@ -1145,10 +1145,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-2.0.2.tgz#d9fae00a2d5cb40f92cfe64b47ad749fbc38f917"
   integrity sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==
 
-"@idos-network/idos-sdk@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@idos-network/idos-sdk/-/idos-sdk-0.2.2.tgz#976a636d92e342e079205981423a5205e922b567"
-  integrity sha512-wLRCl59/QoLSPOLaOM6L5ow/OlpssyT6F6jQKwdI9O18MQeEML3Yv2QR6F7vCaLnTil8FMeq1tiW7yYe3PW3cg==
+"@idos-network/idos-sdk@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@idos-network/idos-sdk/-/idos-sdk-0.2.3.tgz#0d0f10b8f14e7fd69353b4cbd7f71f88c7381094"
+  integrity sha512-9EhD8LFWJzlhcqP9uZ8eUd7w+CIm3fmxq0583RSpa6pkxuQgWjWe4VOjUd+MWj/HxOyrbFNzgdlAEBKThdhtEw==
   dependencies:
     "@digitalbazaar/ed25519-signature-2020" "^5.2.0"
     "@digitalbazaar/ed25519-verification-key-2020" "^4.1.0"
@@ -1223,6 +1223,17 @@
     dotenv "^16.0.3"
     ethers "^6.9.1"
     ethers5 "npm:ethers@^5.7.2"
+    jssha "^3.2.0"
+    long "^5.2.1"
+
+"@kwilteam/kwil-js@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@kwilteam/kwil-js/-/kwil-js-0.6.0.tgz#05910dc28314ba3e1dd037665c9e8edbd615202a"
+  integrity sha512-9wzMucdkGzpVhzH6KOaDHxZvYzQu+6I+kTEfueg7W/1AqVKlbpp41wChgT34Ux7jN9taNeHtFs2+HFL6PnwQLA==
+  dependencies:
+    axios "^0.27.2"
+    dotenv "^16.0.3"
+    ethers "^6.9.1"
     jssha "^3.2.0"
     long "^5.2.1"
 

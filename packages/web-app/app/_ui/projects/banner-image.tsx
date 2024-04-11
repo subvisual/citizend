@@ -22,12 +22,14 @@ export const BannerImage = ({
         width={363}
         height={210}
         sizes="33vw"
+        priority
         className="hidden rounded-xl md:block"
       />
       <Image
         src={backgroundMobileHref}
         alt="Project banner"
         sizes="90vw"
+        priority
         width={278}
         height={161}
         className="rounded-xl md:hidden"

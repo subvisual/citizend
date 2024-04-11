@@ -37,14 +37,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`relative ${nohemi.className} overflow-hidden`}>
+      <body
+        className={`relative ${nohemi.className} overflow-hidden bg-mono-900`}
+      >
         <Image
           alt="background"
           src={backgroundDesktop}
           placeholder="blur"
           quality={100}
           fill
-          sizes="100vw"
+          sizes="(max-width: 768px) 40vw, 100vw"
           style={{
             objectFit: 'cover',
             backgroundSize: 'cover',

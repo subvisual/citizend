@@ -46,7 +46,7 @@ export default function RootLayout({
           placeholder="blur"
           quality={100}
           fill
-          sizes="(max-width: 768px) 40vw, 100vw"
+          sizes="100vw"
           style={{
             objectFit: 'cover',
             backgroundSize: 'cover',

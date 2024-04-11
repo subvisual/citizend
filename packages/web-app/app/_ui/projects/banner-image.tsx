@@ -21,25 +21,19 @@ export const BannerImage = ({
         alt="Project banner"
         width={363}
         height={210}
-        priority
+        sizes="33vw"
         className="hidden rounded-xl md:block"
       />
       <Image
         src={backgroundMobileHref}
         alt="Project banner"
+        sizes="90vw"
         width={278}
         height={161}
-        priority
         className="rounded-xl md:hidden"
       />
       <div className="absolute -bottom-11 left-1/2 -translate-x-1/2">
-        <Image
-          src={logoHref}
-          alt="Project Logo"
-          width={92}
-          height={92}
-          priority
-        />
+        <Image src={logoHref} alt="Project Logo" width={92} height={92} />
       </div>
     </div>
   );

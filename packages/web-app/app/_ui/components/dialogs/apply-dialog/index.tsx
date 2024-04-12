@@ -24,12 +24,14 @@ type TProjectIdProps = {
 };
 
 type TIssueGrantProps = {
+  name: string;
   grantee: string;
   encryptionPublicKey: string;
   lockTimeSpanSeconds: number;
 };
 
 const IssueAccessGrant = ({
+  name,
   grantee,
   encryptionPublicKey,
   lockTimeSpanSeconds,
@@ -44,8 +46,8 @@ const IssueAccessGrant = ({
         </Dialog.Title>
         <div className="mt-2">
           <p className="text-sm text-gray-500">
-            You have successfully verified your ID. Issue an Access Grant to
-            citizend so you can contribute to this project.
+            You have successfully verified your ID. Issue an Access Grant to{' '}
+            {name} so you can contribute.
           </p>
         </div>
         <div className="mt-8 flex flex-col">
@@ -65,7 +67,6 @@ const IssueAccessGrant = ({
 
 const IssueCitizendGrant = () => {
   const { data, isLoading, isError } = usePublicInfo();
-
   if (isLoading) return <p>Loading...</p>;
   if (
     isError ||
@@ -75,7 +76,7 @@ const IssueCitizendGrant = () => {
   )
     return <p>Something went wrong</p>;
 
-  return <IssueAccessGrant {...data} />;
+  return <IssueAccessGrant name="Citizend" {...data} />;
 };
 
 const IssueProjectGrant = ({ projectId }: TProjectIdProps) => {
@@ -96,6 +97,7 @@ const IssueProjectGrant = ({ projectId }: TProjectIdProps) => {
 
   return (
     <IssueAccessGrant
+      name="this Project"
       grantee={data.address}
       encryptionPublicKey={data.publicKey}
       lockTimeSpanSeconds={citizendData.lockTimeSpanSeconds}

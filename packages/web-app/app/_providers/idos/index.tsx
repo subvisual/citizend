@@ -8,17 +8,20 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useAccount, useAccountEffect } from 'wagmi';
+import { useAccount, useDisconnect } from 'wagmi';
 import { useEthersSigner } from './use-ethers-signer';
 import { IdOSContext } from './context';
 import { idOsConfig } from './config';
 import { getProviderUrl } from './get-provider-url';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const IdOsProvider = ({ children }: PropsWithChildren) => {
+  const queryClient = useQueryClient();
   const [hasProfile, setHasProfile] = useState(false);
   const [hasSigner, setHasSigner] = useState(false);
   const [sdk, setSdk] = useState<idOS | null>(null);
   const ethSigner = useEthersSigner();
+  const { disconnect } = useDisconnect();
   const { address: userAddress, isConnected } = useAccount();
 
   // Load SDK once wallet is connected
@@ -33,7 +36,6 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
     }
   }, [isConnected, sdk]);
 
-  // Initialize user once SDK is loaded
   useEffect(() => {
     const initialize = async () => {
       if (!ethSigner || !userAddress || !sdk) return;
@@ -53,24 +55,13 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
   }, [ethSigner, userAddress, sdk]);
 
   const handleDisconnect = useCallback(async () => {
+    if (!sdk || !isConnected) return;
+    disconnect();
+    queryClient.removeQueries();
     await sdk?.reset({ enclave: true });
     setHasProfile(false);
     setHasSigner(false);
-    // setSdk(null);
-  }, [sdk]);
-
-  useAccountEffect({
-    onConnect(data) {
-      // if (data?.address) {
-      //   setIsConnected(true);
-      // }
-    },
-    onDisconnect() {
-      // setHumanId(undefined);
-      // setIsConnected(false);
-      handleDisconnect();
-    },
-  });
+  }, [sdk, queryClient, disconnect, isConnected]);
 
   const state = useMemo(() => {
     return {
@@ -79,11 +70,12 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
       hasSigner,
       address: userAddress,
       getProviderUrl,
+      disconnect: handleDisconnect,
       reset: async () => {
         await sdk?.reset({ enclave: true });
       },
     };
-  }, [sdk, hasProfile, userAddress, hasSigner]);
+  }, [sdk, hasProfile, userAddress, hasSigner, handleDisconnect]);
 
   return <IdOSContext.Provider value={state}>{children}</IdOSContext.Provider>;
 };

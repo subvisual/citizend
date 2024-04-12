@@ -52,7 +52,7 @@ export const EdgeBorderButton = ({
   return (
     <button
       onClick={onClick}
-      className="group relative flex text-mono-900 hover:text-mono-800"
+      className="md:focus-visible:outlin-2 group relative flex rounded-lg text-mono-900 hover:text-mono-800 focus:outline-none md:focus:outline md:focus-visible:outline-mono-50"
     >
       <svg
         width="16"

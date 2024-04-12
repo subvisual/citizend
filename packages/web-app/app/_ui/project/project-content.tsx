@@ -13,7 +13,7 @@ import { ProjectContribution } from './project-contribution';
 
 const generateTabClassName = ({ selected }: { selected: boolean }) =>
   clsx(
-    'px-6 py-2 text-sm font-medium uppercase text-mono-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mono-400',
+    'px-6 py-2 text-sm font-medium uppercase text-mono-400 transition-all duration-200 ease-in-out focus:outline-none',
     selected && ' rounded-md text-mono-50 ring-1 ring-mono-50',
   );
 

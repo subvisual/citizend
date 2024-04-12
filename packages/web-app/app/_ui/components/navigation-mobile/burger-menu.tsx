@@ -5,7 +5,7 @@ type TBurgerMenuProps = {
 export const BurgerMenu = ({ openDialog }: TBurgerMenuProps) => {
   return (
     <button
-      className="bg-transparent focus:outline-none focus:ring-2 focus:ring-mono-50"
+      className="bg-transparent focus:outline-none"
       onClick={openDialog}
       id="navigation-mobile-button"
       aria-label="Open navigation menu"

@@ -27,7 +27,7 @@ export const useCountdown = (targetDate: bigint | number) => {
   const countDownDate =
     typeof targetDate === 'number'
       ? targetDate
-      : parseInt(targetDate.toLocaleString());
+      : parseInt(targetDate.toString());
   const [countDown, setCountDown] = useState(
     countDownDate - new Date().getTime(),
   );

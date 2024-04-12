@@ -5,7 +5,7 @@ import { TProjectPublicInfo, TProjectsPublicInfo } from './types';
 const projectInfo: TProjectsPublicInfo = {
   citizend: {
     id: 'citizendProject',
-    address: '0x13526CeE07B6903DAFBC32d5093bc2cC2626381D',
+    address: '0x2a1a131b7f95bbee473c9d682e101c5deb77460f',
     publicKey: 'UeniAEcuLfG5uXqxu00frjkzS9DTFnQFnCwG+FsMmxk',
   },
   idos: {

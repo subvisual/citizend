@@ -33,7 +33,9 @@ export const ProjectContent = () => {
   );
 
   if (isLoading || (!data && !isError)) {
-    return <Spinner className="h-40 w-40 animate-spin-slow text-mono-50" />;
+    return (
+      <Spinner className="mx-auto h-40 w-40 animate-spin-slow text-mono-50" />
+    );
   }
 
   if (isError)

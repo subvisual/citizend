@@ -11,7 +11,7 @@ type TProjectInformationProps = {
 
 const formatDate = (date: bigint) => {
   try {
-    const numberDate = parseInt(date.toLocaleString());
+    const numberDate = parseInt(date.toString());
 
     return new Intl.DateTimeFormat('en-US', {
       month: 'long',
@@ -37,7 +37,10 @@ const formatDateRange = (start: bigint, end: bigint) => {
       timeZoneName: 'short',
     });
 
-    const result = dateFormatter.formatRange(start, end);
+    const startDate = parseInt(start.toString());
+    const endDate = parseInt(end.toString());
+
+    const result = dateFormatter.formatRange(startDate, endDate);
 
     return result.replace('–', 'to');
   } catch (error) {

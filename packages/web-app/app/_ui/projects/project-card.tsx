@@ -15,8 +15,10 @@ const formatDateRange = (start: bigint, end: bigint) => {
       day: 'numeric',
       year: '2-digit',
     });
+    const startDate = Number(start);
+    const endDate = Number(end);
 
-    return dateFormatter.formatRange(start, end);
+    return dateFormatter.formatRange(startDate, endDate);
   } catch (error) {
     console.error(error);
     return '';
@@ -121,7 +123,7 @@ const Live = (props: TProjectSaleDetails) => {
             {days}d {hours}h {minutes}m {seconds}s
           </span>
         </div>
-        <ArrowRight className="ml-auto" />
+        <ArrowRight className="ml-auto items-center text-transparent" />
       </li>
     </>
   );

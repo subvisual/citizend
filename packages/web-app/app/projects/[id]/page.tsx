@@ -23,7 +23,7 @@ export default function Project({ params }: TProjectProps) {
   }
 
   return (
-    <main>
+    <main className="mb-56">
       <ProjectProvider value={project}>
         <ProjectHeader />
         <ProjectContent />

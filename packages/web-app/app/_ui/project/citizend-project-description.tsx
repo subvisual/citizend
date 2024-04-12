@@ -1,4 +1,4 @@
-export const ProjectDescription = () => {
+export const CitizendProjectDescription = () => {
   return (
     <div className="max-w-2xl text-mono-50">
       <h3 className="hidden md:block">Description</h3>

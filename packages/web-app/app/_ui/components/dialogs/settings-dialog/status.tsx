@@ -17,8 +17,6 @@ const Status = () => {
   const { getProviderUrl, address, hasProfile } = useIdOS();
   const { status, error, isSuccess, isLoading } = useKyc();
   if (!address) return 'wallet not connected';
-  if (isLoading) return 'Loading...';
-  if (error || (!isSuccess && hasProfile)) return 'Something went wrong';
 
   const providerUrl = getProviderUrl(address);
 
@@ -56,6 +54,9 @@ const Status = () => {
       </>
     );
   }
+
+  if (!status && isLoading) return 'Loading...';
+  if (error || (!isSuccess && hasProfile)) return 'Something went wrong';
 
   return (
     <>

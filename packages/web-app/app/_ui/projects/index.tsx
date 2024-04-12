@@ -8,7 +8,7 @@ export const Projects = () => {
   const { data, isLoading, isError } = useFetchProjectsSaleDetails();
 
   if (isLoading || (!data && !isError)) {
-    return <Spinner className="h-40 w-40 animate-spin-slow" />;
+    return <Spinner className="h-40 w-40 animate-spin-slow text-mono-50" />;
   }
 
   if (isError) return <div>Something went wrong...</div>;

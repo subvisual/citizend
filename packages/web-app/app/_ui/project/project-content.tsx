@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import clsx from 'clsx';
-import { ProjectDescription } from './project-description';
+import { CitizendProjectDescription } from './citizend-project-description';
 import { ProjectInformation } from './project-information';
 import { TokenMetrics } from './token-metrics';
 import { ContributeButton } from './contribute-button';
@@ -10,6 +10,8 @@ import { useFetchProjectsSaleDetails } from '@/app/_lib/queries';
 import { useProject } from '@/app/_providers/project/context';
 import { Spinner } from '../components/svg/spinner';
 import { ProjectContribution } from './project-contribution';
+import { useHasProjectGrant } from '@/app/_lib/hooks';
+import { AppliedSuccess } from './applied-success';
 
 const generateTabClassName = ({ selected }: { selected: boolean }) =>
   clsx(
@@ -21,12 +23,19 @@ export const ProjectContent = () => {
   const { projectId } = useProject();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { data, isLoading, isError, error } = useFetchProjectsSaleDetails();
+  const {
+    hasGrant,
+    isLoading: isLoadingGrant,
+    error: errorLoadingGrant,
+  } = useHasProjectGrant(projectId);
   const project = data?.find(
     (project) => project.project.toLowerCase() === projectId,
   );
 
   if (isLoading || (!data && !isError)) {
-    return <Spinner className="h-40 w-40 animate-spin-slow" />;
+    return (
+      <Spinner className="mx-auto h-40 w-40 animate-spin-slow text-mono-50" />
+    );
   }
 
   if (isError)
@@ -59,7 +68,7 @@ export const ProjectContent = () => {
           </Tab.List>
           <Tab.Panels className="pb-64">
             <Tab.Panel className="focus:outline-none">
-              <ProjectDescription />
+              <CitizendProjectDescription />
             </Tab.Panel>
             <Tab.Panel className="flex flex-col gap-8 focus:outline-none">
               {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
@@ -70,6 +79,7 @@ export const ProjectContent = () => {
                   saleDate={start}
                   startRegistration={startRegistration}
                   endRegistration={endRegistration}
+                  applied={!!hasGrant}
                 />
               ) : null}
               <TokenMetrics
@@ -79,8 +89,12 @@ export const ProjectContent = () => {
                 maxContribution={maxContribution}
                 totalTokensForSale={totalTokensForSale}
               />
-              {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
-                <ContributeButton />
+              {hasGrant ? <AppliedSuccess /> : null}
+              {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !hasGrant ? (
+                <ContributeButton
+                  isLoading={isLoadingGrant}
+                  error={!!errorLoadingGrant}
+                />
               ) : null}
             </Tab.Panel>
           </Tab.Panels>
@@ -91,7 +105,7 @@ export const ProjectContent = () => {
           {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
             <ProjectContribution />
           ) : null}
-          <ProjectDescription />
+          <CitizendProjectDescription />
         </div>
         <div className="display flex flex-col gap-8">
           {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
@@ -99,6 +113,7 @@ export const ProjectContent = () => {
               saleDate={start}
               startRegistration={startRegistration}
               endRegistration={endRegistration}
+              applied={!!hasGrant}
             />
           ) : null}
           <TokenMetrics
@@ -108,8 +123,12 @@ export const ProjectContent = () => {
             maxContribution={maxContribution}
             totalTokensForSale={totalTokensForSale}
           />
-          {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
-            <ContributeButton />
+          {hasGrant ? <AppliedSuccess /> : null}
+          {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !hasGrant ? (
+            <ContributeButton
+              isLoading={isLoading}
+              error={!!errorLoadingGrant}
+            />
           ) : null}
         </div>
       </div>

@@ -5,6 +5,7 @@ import { useDialog } from '@/app/_providers/dialog/context';
 import { SettingsDialog } from './dialogs';
 import { EdgeBorderButton, EdgeButton } from './edge';
 import { Avatar } from './avatar';
+import { useAccount } from 'wagmi';
 
 type TConnectedButtonProps = {
   displayBalance: string;
@@ -27,6 +28,8 @@ const ConnectedButton = ({ displayBalance }: TConnectedButtonProps) => {
 };
 
 export function WalletButton() {
+  const { isConnected } = useAccount();
+
   return (
     <div className="h-14">
       <ConnectButton.Custom>
@@ -38,7 +41,7 @@ export function WalletButton() {
           openConnectModal,
           mounted,
         }) => {
-          const connected = mounted && account && chain;
+          const connected = mounted && account && chain && isConnected;
 
           if (!mounted)
             // TODO: Disabled

@@ -5,43 +5,32 @@ import { Button } from '../components';
 import { ApplyDialog } from '../components/dialogs';
 import { useDialog } from '@/app/_providers/dialog/context';
 import { useProject } from '@/app/_providers/project/context';
+import { Spinner } from '../components/svg/spinner';
 
-const ConnectedButton = () => {
-  const { open } = useDialog();
-  const { projectId } = useProject();
-  // check the stage we are on the token sale for this specific project
-  const stage = 'apply';
-
-  if (stage === 'apply') {
-    return (
-      <Button onClick={() => open(ApplyDialog.displayName, { projectId })}>
-        Apply to participate
-      </Button>
-    );
-  }
-
-  if (stage === 'contribute') {
-    return (
-      <Button
-      // onClick={() => open(ApplyDialog.displayName)}
-      >
-        Contribute
-      </Button>
-    );
-  }
-
-  return (
-    <Button disabled variant="primary-disabled">
-      Closed
-    </Button>
-  );
+type TContributeButtonProps = {
+  isLoading: boolean;
+  error: boolean;
 };
 
-export const ContributeButton = () => {
+export const ContributeButton = ({
+  isLoading,
+  error,
+}: TContributeButtonProps) => {
   const { address } = useIdOS();
+  const { projectId } = useProject();
+  const { open } = useDialog();
 
-  // should split connect, apply & contribute buttons
-  if (process.env.NEXT_PUBLIC_APPLY_OPEN !== 'true') return null;
+  if (isLoading || error) {
+    return (
+      <Button disabled variant="primary-disabled">
+        {isLoading ? (
+          <Spinner className="animate-spin" />
+        ) : (
+          'Something went wrong'
+        )}
+      </Button>
+    );
+  }
 
   if (!address)
     return (
@@ -50,5 +39,9 @@ export const ContributeButton = () => {
       </Button>
     );
 
-  return <ConnectedButton />;
+  return (
+    <Button onClick={() => open(ApplyDialog.displayName, { projectId })}>
+      Apply to participate
+    </Button>
+  );
 };

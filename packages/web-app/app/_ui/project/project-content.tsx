@@ -27,7 +27,6 @@ export const ProjectContent = () => {
     hasGrant,
     isLoading: isLoadingGrant,
     error: errorLoadingGrant,
-    isSuccess: successLoadingGrant,
   } = useHasProjectGrant(projectId);
   const project = data?.find(
     (project) => project.project.toLowerCase() === projectId,

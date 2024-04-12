@@ -41,6 +41,7 @@ export const ContributeButton = () => {
   const { address } = useIdOS();
 
   // should split connect, apply & contribute buttons
+  if (process.env.NEXT_PUBLIC_APPLY_OPEN !== 'true') return null;
 
   if (!address)
     return (

@@ -11,6 +11,8 @@ declare global {
       NEXT_PUBLIC_IDOS_CHAIN_ID: string;
       NEXT_ENCRYPTION_SECRET_KEY: string;
       NEXT_CITIZEND_WALLET_PRIVATE_KEY: `0x${string}`;
+      NEXT_PUBLIC_CONTRIBUTE_OPEN: string;
+      NEXT_PUBLIC_APPLY_OPEN: string;
     }
   }
 }

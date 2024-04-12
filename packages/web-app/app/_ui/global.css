@@ -37,6 +37,7 @@ label {
   @apply font-medium;
   @apply text-sm;
   @apply uppercase;
+  @apply text-mono-800
 }
 
 input[type='number'] {

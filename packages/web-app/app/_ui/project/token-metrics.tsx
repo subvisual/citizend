@@ -16,11 +16,13 @@ export const TokenMetrics = ({
   const rangeFormatter = new Intl.NumberFormat('default', {
     style: 'currency',
     currency: 'USD',
+    currencyDisplay: 'narrowSymbol',
     maximumSignificantDigits: 1,
   });
   const valueFormatter = new Intl.NumberFormat('default', {
     style: 'currency',
     currency: 'USD',
+    currencyDisplay: 'narrowSymbol',
   });
   const targetRaiseRange = rangeFormatter.formatRange(minTarget, maxTarget);
   const maxPrice = valueFormatter.format(maxContribution);

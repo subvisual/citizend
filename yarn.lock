@@ -1152,7 +1152,7 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-2.0.2.tgz#d9fae00a2d5cb40f92cfe64b47ad749fbc38f917"
   integrity sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==
 
-"@idos-network/idos-sdk@^0.2.3":
+"@idos-network/idos-sdk@0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@idos-network/idos-sdk/-/idos-sdk-0.2.3.tgz#0d0f10b8f14e7fd69353b4cbd7f71f88c7381094"
   integrity sha512-9EhD8LFWJzlhcqP9uZ8eUd7w+CIm3fmxq0583RSpa6pkxuQgWjWe4VOjUd+MWj/HxOyrbFNzgdlAEBKThdhtEw==

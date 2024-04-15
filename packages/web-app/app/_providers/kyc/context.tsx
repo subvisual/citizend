@@ -23,6 +23,22 @@ export type TKycContextValue = {
   refetchGrants: (
     options?: RefetchOptions | undefined,
   ) => Promise<QueryObserverResult<Grant[] | null | undefined, Error>>;
+  refetchKyc: (options?: RefetchOptions | undefined) => Promise<
+    QueryObserverResult<
+      | {
+          shares: string[];
+          credential_type: string;
+          human_id: string;
+          id: string;
+          issuer: string;
+          original_id: string;
+          credential_level: string;
+          credential_status: idOSCredentialStatus;
+        }[]
+      | null,
+      Error
+    >
+  >;
 };
 
 export const KycContext = createContext<TKycContextValue | null>(null);

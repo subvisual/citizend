@@ -13,7 +13,7 @@ type AcquireAccessGrantButton = {
 
 const Done = ({ hash }: { hash: `0x${string}` }) => {
   const { data, refetch } = useTransaction({ hash });
-  const { refetchGrants } = useKyc();
+  const { refetchGrants, grants } = useKyc();
 
   console.log(
     '%c==>',
@@ -21,9 +21,16 @@ const Done = ({ hash }: { hash: `0x${string}` }) => {
     data,
   );
 
+  console.log(
+    '%c==>',
+    'color: green; background: yellow; font-size: 20px',
+    grants,
+  );
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      refetchGrants();
+    const interval = setInterval(async () => {
+      const x = await refetchGrants();
+
       refetch();
     }, 10000);
 

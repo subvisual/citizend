@@ -19,86 +19,60 @@ import { useKyc } from '@/app/_providers/kyc/context';
 import { useHasCitizendGrant, useHasProjectGrant } from '@/app/_lib/hooks';
 import { TProjectInfoArgs } from '@/app/_server/projects';
 import { ERRORS } from '@/app/_providers/kyc';
+import { Check } from '../../svg/check';
+import { Spinner } from '../../svg/spinner';
+import { Error } from '../../svg/error';
 
 type TProjectIdProps = {
   projectId: string;
 };
 
-type TIssueGrantProps = {
-  name: string;
-  grantee: string;
-  encryptionPublicKey: string;
-  lockTimeSpanSeconds: number;
-};
-
-const IssueAccessGrant = ({
-  name,
-  grantee,
-  encryptionPublicKey,
-  lockTimeSpanSeconds,
-}: TIssueGrantProps) => {
-  const { close } = useDialog();
-
-  return (
-    <div>
-      <div className="mt-3 text-center sm:mt-5">
-        <Dialog.Title as="h2" className="text-gray-900">
-          Verify your ID
-        </Dialog.Title>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">
-            You have successfully verified your ID. Issue an Access Grant to{' '}
-            {name} so you can contribute.
-          </p>
-        </div>
-        <div className="mt-8 flex flex-col">
-          <AcquireAccessGrantButton
-            grantee={grantee}
-            encryptionPublicKey={encryptionPublicKey}
-            lockTimeSpanSeconds={lockTimeSpanSeconds}
-          />
-          <Button variant="secondary" onClick={close}>
-            Close
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const IssueCitizendGrant = () => {
+  const { hasGrant: hasCitizendGrant, isLoading: isLoadingCitizendGrant } =
+    useHasCitizendGrant();
   const { data, isLoading, isError } = usePublicInfo();
-  if (isLoading) return <p>Loading...</p>;
+
+  if (isLoading || isLoadingCitizendGrant)
+    return <Spinner className="h-5 w-5" />;
+
   if (
     isError ||
     !data?.grantee ||
     !data?.encryptionPublicKey ||
     !data?.lockTimeSpanSeconds
   )
-    return <p>Something went wrong</p>;
+    return <Error className="h-4 w-4 text-blue-500" />;
 
-  return <IssueAccessGrant name="Citizend" {...data} />;
+  if (hasCitizendGrant) return <Check />;
+
+  return <AcquireAccessGrantButton {...data} />;
 };
 
 const IssueProjectGrant = ({ projectId }: TProjectIdProps) => {
+  const { hasGrant: hasCitizendGrant } = useHasCitizendGrant();
   const { data: citizendData } = usePublicInfo();
+  const { hasGrant: hasProjectGrant, isLoading: isLoadingProjectGrant } =
+    useHasProjectGrant(projectId);
   // fix type
   const { data, isLoading, isError } = useProjectPublicInfo(
     projectId as TProjectInfoArgs,
   );
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading || isLoadingProjectGrant || !hasCitizendGrant)
+    return <Spinner className="h-5 w-5" />;
+
   if (
     isError ||
     !data?.address ||
     !data?.publicKey ||
     !citizendData?.lockTimeSpanSeconds
   )
-    return <p>Something went wrong</p>;
+    return <Error className="h-4 w-4 text-blue-500" />;
+
+  if (hasProjectGrant) return <Check />;
 
   return (
-    <IssueAccessGrant
-      name="this Project"
+    <AcquireAccessGrantButton
       grantee={data.address}
       encryptionPublicKey={data.publicKey}
       lockTimeSpanSeconds={citizendData.lockTimeSpanSeconds}
@@ -107,30 +81,25 @@ const IssueProjectGrant = ({ projectId }: TProjectIdProps) => {
 };
 
 const ContributionAllowed = ({ projectId }: TProjectIdProps) => {
-  const { close } = useDialog();
-  const { hasGrant: hasCitizendGrant, isLoading: isLoadingCitizendGrant } =
-    useHasCitizendGrant();
-  const { hasGrant: hasProjectGrant, isLoading: isLoadingProjectGrant } =
-    useHasProjectGrant(projectId);
-
-  if (isLoadingCitizendGrant || isLoadingProjectGrant) return <p>Loading...</p>;
-
-  if (!hasCitizendGrant) {
-    return <IssueCitizendGrant />;
-  }
-
-  if (!hasProjectGrant) {
-    return <IssueProjectGrant projectId={projectId} />;
-  }
-
   return (
     <div>
       <div className="mt-3 text-center sm:mt-5">
-        <Dialog.Title as="h3" className="text-gray-900">
+        <Dialog.Title as="h2" className="text-gray-900">
           Success
         </Dialog.Title>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">{`You've successfully applied for this project sale`}</p>
+        <div className="mt-2 flex flex-col items-start gap-3">
+          <p className="mb-2 text-sm">
+            To ble able to contribute to projects you must issue an Access Grant
+            to Citizend and to the project. Proceed in your wallet.
+          </p>
+          <p className="flex items-center gap-5">
+            <IssueCitizendGrant />
+            <span>Citizend Access Grant</span>
+          </p>
+          <p className="flex items-center gap-5">
+            <IssueProjectGrant projectId={projectId} />{' '}
+            <span>Project Access Grant</span>
+          </p>
         </div>
       </div>
     </div>

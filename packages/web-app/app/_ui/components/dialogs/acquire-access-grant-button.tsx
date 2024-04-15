@@ -1,10 +1,11 @@
 'use client';
-import { Button } from '..';
 import { PublicInfo } from '@/app/_server/types';
 import { useSignDelegatedAccessGrant } from '@/app/_lib/actions';
 import { useTransaction } from 'wagmi';
 import { useKyc } from '@/app/_providers/kyc/context';
 import { useEffect } from 'react';
+import { Spinner } from '../svg/spinner';
+import { Check } from '../svg/check';
 
 type AcquireAccessGrantButton = {
   id: string;
@@ -12,34 +13,27 @@ type AcquireAccessGrantButton = {
 };
 
 const Done = ({ hash }: { hash: `0x${string}` }) => {
-  const { data, refetch } = useTransaction({ hash });
-  const { refetchGrants, grants } = useKyc();
-
-  console.log(
-    '%c==>',
-    'color: green; background: yellow; font-size: 20px',
-    data,
-  );
-
-  console.log(
-    '%c==>',
-    'color: green; background: yellow; font-size: 20px',
-    grants,
-  );
+  const { refetch, data } = useTransaction({ hash });
+  const { refetchGrants, refetchKyc } = useKyc();
 
   useEffect(() => {
     const interval = setInterval(async () => {
-      const x = await refetchGrants();
+      await refetchGrants();
+      await refetchKyc();
 
-      refetch();
+      await refetch();
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [refetchGrants, refetch]);
+  }, [refetchGrants, refetch, refetchKyc]);
+
+  if (data?.blockHash) {
+    return <Check />;
+  }
 
   return (
     <>
-      <p>Waiting for the grant to be propagated in the blockchain</p>
+      <Spinner className="h-5 w-5" /> <span>Validating... </span>
     </>
   );
 };
@@ -56,7 +50,6 @@ export const AcquireAccessGrantButton = ({
   lockTimeSpanSeconds,
 }: TIssueAccessGrantProps) => {
   const {
-    sign,
     dataId,
     isSignPending,
     isServerPending,
@@ -68,13 +61,11 @@ export const AcquireAccessGrantButton = ({
     lockTimeSpanSeconds,
   );
 
-  if (!dataId) return <p>Waiting for you wallet</p>;
-
-  if (isSignPending || isServerPending)
+  if (!dataId || isSignPending || isServerPending)
     return (
-      <Button variant="primary-disabled" disabled>
-        Creating...
-      </Button>
+      <>
+        <Spinner className="h-5 w-5" /> <span>Signing... </span>
+      </>
     );
 
   if (isGrantInsertSuccess && transactionHash) {
@@ -82,8 +73,8 @@ export const AcquireAccessGrantButton = ({
   }
 
   return (
-    <Button variant="primary" onClick={sign}>
-      Create Access Grant
-    </Button>
+    <>
+      <Spinner className="h-5 w-5" /> <span>Creating...</span>
+    </>
   );
 };

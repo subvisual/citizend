@@ -1,4 +1,5 @@
 import { TClassNameProps } from '@/app/_types';
+import clsx from 'clsx';
 
 export const Spinner = ({ className }: TClassNameProps) => (
   <svg
@@ -7,7 +8,7 @@ export const Spinner = ({ className }: TClassNameProps) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={clsx('animate-spin', className)}
   >
     <path
       opacity="0.6"

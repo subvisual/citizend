@@ -29,6 +29,7 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
     isLoading: kycLoading,
     error: kycError,
     isSuccess: kycSuccess,
+    refetch: refetchKyc,
   } = useKycCredential();
   const {
     data: credentialContent,
@@ -74,6 +75,7 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
       shares,
       grants,
       refetchGrants,
+      refetchKyc,
     };
   }, [
     id,
@@ -86,6 +88,7 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
     shares,
     grants,
     refetchGrants,
+    refetchKyc,
   ]);
 
   return <KycContext.Provider value={state}>{children}</KycContext.Provider>;

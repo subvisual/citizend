@@ -15,6 +15,7 @@ export const useKycCredential = () => {
     isLoading,
     error,
     isSuccess,
+    refetch,
   } = useFetchCredentials();
 
   const credential = useMemo(() => {
@@ -42,6 +43,7 @@ export const useKycCredential = () => {
     isLoading,
     error,
     isSuccess,
+    refetch,
   };
 };
 

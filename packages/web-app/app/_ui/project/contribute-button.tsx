@@ -6,10 +6,11 @@ import { ApplyDialog } from '../components/dialogs';
 import { useDialog } from '@/app/_providers/dialog/context';
 import { useProject } from '@/app/_providers/project/context';
 import { Spinner } from '../components/svg/spinner';
+import { ERRORS } from '@/app/_providers/kyc';
 
 type TContributeButtonProps = {
   isLoading: boolean;
-  error: boolean;
+  error: string | null;
 };
 
 export const ContributeButton = ({
@@ -20,7 +21,7 @@ export const ContributeButton = ({
   const { projectId } = useProject();
   const { open } = useDialog();
 
-  if (isLoading || error) {
+  if (isLoading || (error && error !== ERRORS.MISSING_FRACTAL_AG)) {
     return (
       <Button disabled variant="primary-disabled">
         {isLoading ? (

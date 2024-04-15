@@ -6,7 +6,7 @@ import {
   usePublicInfo,
 } from './queries';
 import { useKyc } from '../_providers/kyc/context';
-import { isValidGrant } from './utils';
+import { compareAddresses, isValidGrant } from './utils';
 import { TProjectInfoArgs } from '../_server/projects';
 
 export const useKycCredential = () => {
@@ -39,7 +39,6 @@ export const useKycCredential = () => {
   return {
     credential,
     id: credential?.id,
-    status: credential?.credential_status,
     isLoading,
     error,
     isSuccess,
@@ -65,7 +64,9 @@ export const useHasCitizendGrant = () => {
 
   const citizendGrants = useMemo(
     () =>
-      grants?.filter((grant) => grant.grantee === citizendPublicInfo?.grantee),
+      grants?.filter((grant) =>
+        compareAddresses(grant.grantee, citizendPublicInfo?.grantee || ''),
+      ),
     [grants, citizendPublicInfo],
   );
 
@@ -105,7 +106,9 @@ export const useHasProjectGrant = (projectId: string) => {
 
   const projectGrants = useMemo(
     () =>
-      grants?.filter((grant) => grant.grantee === projectPublicInfo?.address),
+      grants?.filter((grant) =>
+        compareAddresses(grant.grantee, projectPublicInfo?.address || ''),
+      ),
     [grants, projectPublicInfo],
   );
 

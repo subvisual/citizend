@@ -145,12 +145,6 @@ export const useFetchProjectGrants = () => {
   });
 };
 
-type TFetchNewDataId = {
-  grantee: string;
-  encryptionPublicKey: string;
-  lockTimeSpanSeconds: number;
-};
-
 /**
  * Get a new dataId from idOS to be used in the grant process
  */

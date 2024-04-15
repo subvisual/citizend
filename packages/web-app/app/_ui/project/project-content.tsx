@@ -10,7 +10,7 @@ import { useFetchProjectsSaleDetails } from '@/app/_lib/queries';
 import { useProject } from '@/app/_providers/project/context';
 import { Spinner } from '../components/svg/spinner';
 import { ProjectContribution } from './project-contribution';
-import { useHasProjectGrant } from '@/app/_lib/hooks';
+import { useHasCitizendGrant, useHasProjectGrant } from '@/app/_lib/hooks';
 import { AppliedSuccess } from './applied-success';
 
 const generateTabClassName = ({ selected }: { selected: boolean }) =>
@@ -23,14 +23,16 @@ export const ProjectContent = () => {
   const { projectId } = useProject();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { data, isLoading, isError, error } = useFetchProjectsSaleDetails();
+  const { hasGrant: hasCitizendGrant } = useHasCitizendGrant();
   const {
-    hasGrant,
+    hasGrant: hasProjectGrant,
     isLoading: isLoadingGrant,
     error: errorLoadingGrant,
   } = useHasProjectGrant(projectId);
   const project = data?.find(
     (project) => project.project.toLowerCase() === projectId,
   );
+  const hasGrant = hasProjectGrant && hasCitizendGrant;
 
   if (isLoading || (!data && !isError)) {
     return (

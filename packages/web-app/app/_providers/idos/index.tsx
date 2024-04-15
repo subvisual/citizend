@@ -14,12 +14,6 @@ import { IdOSContext } from './context';
 import { idOsConfig } from './config';
 import { getProviderUrl } from './get-provider-url';
 
-/***** 🔨 solution for idOS to work on test env *****/
-idOS.kwil.chainId = 'kwil-chain-F0vBA5Uu';
-idOS.kwil.kwilProvider = process.env.NEXT_PUBLIC_IDOS_NODE_URL;
-idOS.kwil.dbId = process.env.NEXT_PUBLIC_IDOS_DB_ID;
-/***** ---------------------------------------- *****/
-
 export const IdOsProvider = ({ children }: PropsWithChildren) => {
   const [hasProfile, setHasProfile] = useState(false);
   const [hasSigner, setHasSigner] = useState(false);

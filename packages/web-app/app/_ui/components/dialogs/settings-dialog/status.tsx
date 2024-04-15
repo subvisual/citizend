@@ -6,6 +6,7 @@ import { useIdOS } from '@/app/_providers/idos';
 import Link from 'next/link';
 import { Check } from '../../svg/check';
 import { idOSCredentialStatus } from '@/app/_types/idos';
+import { ERRORS } from '@/app/_providers/kyc';
 
 const getNotVerifiedMessage = (status: idOSCredentialStatus | undefined) => {
   if (status === 'expired') return 'KYC expired';
@@ -56,7 +57,8 @@ const Status = () => {
   }
 
   if (!status && isLoading) return 'Loading...';
-  if (error || (!isSuccess && hasProfile)) return 'Something went wrong';
+  if (error && error !== ERRORS.MISSING_FRACTAL_AG)
+    return 'Something went wrong';
 
   return (
     <>

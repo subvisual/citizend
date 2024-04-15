@@ -18,6 +18,7 @@ import {
 import { useKyc } from '@/app/_providers/kyc/context';
 import { useHasCitizendGrant, useHasProjectGrant } from '@/app/_lib/hooks';
 import { TProjectInfoArgs } from '@/app/_server/projects';
+import { ERRORS } from '@/app/_providers/kyc';
 
 type TProjectIdProps = {
   projectId: string;
@@ -140,7 +141,7 @@ const blockedCountriesList = ['US', 'CN', 'KR', 'IR', 'KP', 'SY', 'CU'];
 
 // 2 step -> User has verified their ID externally and now has to unlock IdOs and enclave
 const UnlockKycData = ({ projectId }: TProjectIdProps) => {
-  const { country, id, status, isLoading: isLoadingKyc } = useKyc();
+  const { country, id, status, isLoading: isLoadingKyc, error } = useKyc();
   const isBlockedCountry = useMemo(() => {
     if (!country) return true;
     return blockedCountriesList.find(
@@ -152,7 +153,8 @@ const UnlockKycData = ({ projectId }: TProjectIdProps) => {
   if (isLoadingKyc) return <UnlockIdosExternal />;
 
   // Doesn't have kyc plus credential, so needs to be redirected to IdOs
-  if (!id) return <KycOnIdosRedirect />;
+  // or doesn't have issue an AG to the app
+  if (!id || error === ERRORS.MISSING_FRACTAL_AG) return <KycOnIdosRedirect />;
 
   if (status === 'rejected') return <KycRejected />;
   if (status === 'pending' || status === 'contacted')

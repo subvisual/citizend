@@ -39,7 +39,6 @@ export const useKycCredential = () => {
   return {
     credential,
     id: credential?.id,
-    status: credential?.credential_status,
     isLoading,
     error,
     isSuccess,

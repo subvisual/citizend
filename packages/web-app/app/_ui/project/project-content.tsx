@@ -93,7 +93,7 @@ export const ProjectContent = () => {
               {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !hasGrant ? (
                 <ContributeButton
                   isLoading={isLoadingGrant}
-                  error={!!errorLoadingGrant}
+                  error={errorLoadingGrant}
                 />
               ) : null}
             </Tab.Panel>
@@ -125,10 +125,7 @@ export const ProjectContent = () => {
           />
           {hasGrant ? <AppliedSuccess /> : null}
           {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !hasGrant ? (
-            <ContributeButton
-              isLoading={isLoading}
-              error={!!errorLoadingGrant}
-            />
+            <ContributeButton isLoading={isLoading} error={errorLoadingGrant} />
           ) : null}
         </div>
       </div>

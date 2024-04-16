@@ -138,7 +138,9 @@ const UnlockKycData = ({ projectId }: TProjectIdProps) => {
   }
 
   return (
-    <p>Something went wrong and we could not retrieve your Kyc credentials</p>
+    <p className="mt-4">
+      Something went wrong and we could not retrieve your Kyc credentials
+    </p>
   );
 };
 

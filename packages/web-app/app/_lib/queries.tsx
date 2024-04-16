@@ -58,14 +58,14 @@ export const useFetchIdOSProfile = () => {
 };
 
 export const useFetchCredentials = () => {
-  const { sdk, hasSigner } = useIdOS();
+  const { sdk, hasSigner, address } = useIdOS();
 
   return useQuery({
-    queryKey: ['credentials'],
-    queryFn: async ({ queryKey: [tableName] }) => {
-      if (!sdk || !hasSigner) return null;
+    queryKey: ['credentials', address],
+    queryFn: async () => {
+      if (!sdk || !hasSigner || !address) return null;
 
-      const credentials = await sdk.data.list<idOSCredential>(tableName);
+      const credentials = await sdk.data.list<idOSCredential>('credentials');
       return credentials.map((credential) => ({
         ...credential,
         shares: credentials
@@ -76,7 +76,7 @@ export const useFetchCredentials = () => {
     select: (credentials) =>
       credentials &&
       credentials.filter((credential) => !credential.original_id),
-    enabled: !!(sdk && hasSigner),
+    enabled: !!(sdk && hasSigner && address),
   });
 };
 

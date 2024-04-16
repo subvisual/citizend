@@ -9,12 +9,13 @@ import * as Utf8Codec from '@stablelib/utf8';
 import { ethers } from 'ethers';
 import nacl from 'tweetnacl';
 import { Grant, PublicInfo } from './types';
+import { hexToBytes } from 'viem';
 
-const ENCRYPTION_SECRET_KEY = Base64Codec.decode(
-  process.env.NEXT_ENCRYPTION_SECRET_KEY,
+const ENCRYPTION_SECRET_KEY = hexToBytes(
+  process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY,
 );
-const EVM_GRANTEE_PRIVATE_KEY = process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY;
 
+const EVM_GRANTEE_PRIVATE_KEY = process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY;
 const ENCRYPTION_KEY_PAIR = nacl.box.keyPair.fromSecretKey(
   ENCRYPTION_SECRET_KEY,
 );

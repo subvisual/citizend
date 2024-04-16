@@ -7,9 +7,10 @@ import {
   http,
   publicActions,
 } from 'viem';
-import { sepolia } from 'viem/chains';
+import { arbitrumSepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import { grantsAbi } from './abi';
+import { TInternalError } from '../types';
 
 const serverAccount =
   '0xb217fdfe3b8bbf98da8cda18b1cef6f422187feffca83289d715f46bc62abbd1';
@@ -17,7 +18,7 @@ const account = privateKeyToAccount(serverAccount);
 
 const client = createWalletClient({
   account,
-  chain: sepolia,
+  chain: arbitrumSepolia,
   transport: http(),
 }).extend(publicActions);
 
@@ -43,7 +44,7 @@ export const insertGrantBySignature = async ({
   dataId,
   expiration,
   signature,
-}: TInsertGrantBySignature): Promise<Hash | null> => {
+}: TInsertGrantBySignature): Promise<Hash | TInternalError> => {
   try {
     const { request } = await contract.simulate.insertGrantBySignature([
       owner,
@@ -54,18 +55,20 @@ export const insertGrantBySignature = async ({
     ]);
 
     if (!request) {
-      return null;
+      return { error: 'Error simulating insert grant' };
     }
     const hash = await client.writeContract(request);
 
     return hash;
   } catch (error) {
-    console.log(
-      '%c==>',
-      'color: green; background: yellow; font-size: 20px',
-      error,
-    );
-    return null;
+    console.error(error);
+
+    if (error instanceof Error) {
+      console.error(error.message);
+      return { error: error.message };
+    }
+
+    return { error: 'Error inserting grant' };
   }
 };
 

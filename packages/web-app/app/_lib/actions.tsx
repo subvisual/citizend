@@ -62,6 +62,10 @@ export const useInsertGrantBySignatureMutation = () => {
         signature,
       });
 
+      if (typeof hash === 'object' && 'error' in hash) {
+        throw new Error(hash.error);
+      }
+
       return hash;
     },
     onSuccess: (_data, { grantee }) => {
@@ -76,11 +80,6 @@ export const useInsertGrantBySignatureMutation = () => {
   });
 };
 
-type TNewDataIdMutation = {
-  id: string;
-  encryptionPublicKey: string;
-};
-
 export const useSignDelegatedAccessGrant = (
   grantee: string,
   encryptionPublicKey: string,
@@ -90,19 +89,14 @@ export const useSignDelegatedAccessGrant = (
     () => Math.floor(Date.now() / 1000) + lockTimeSpanSeconds,
     [lockTimeSpanSeconds],
   );
-  const { id, status: kycStatus } = useKyc();
-
   const {
     mutate: insertGrant,
     isPending: isServerPending,
     isSuccess: isGrantInsertSuccess,
     data: transactionHash,
+    error: insertError,
   } = useInsertGrantBySignatureMutation();
-  const {
-    data: dataId,
-    // isPending: isDataIdPending,
-    // isSuccess: isDataIdSuccess,
-  } = useFetchNewDataId(grantee, encryptionPublicKey);
+  const { data: dataId } = useFetchNewDataId(grantee, encryptionPublicKey);
   const { data: message, isSuccess: isMessageRequestSuccess } =
     useFetchGrantMessage(grantee, expiration, dataId);
   const {
@@ -163,5 +157,6 @@ export const useSignDelegatedAccessGrant = (
     isSignPending,
     isGrantInsertSuccess,
     transactionHash,
+    insertError,
   };
 };

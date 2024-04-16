@@ -6,6 +6,7 @@ import { useKyc } from '@/app/_providers/kyc/context';
 import { useEffect } from 'react';
 import { Spinner } from '../svg/spinner';
 import { Check } from '../svg/check';
+import { Error } from '../svg/error';
 
 type AcquireAccessGrantButton = {
   id: string;
@@ -55,11 +56,19 @@ export const AcquireAccessGrantButton = ({
     isServerPending,
     isGrantInsertSuccess,
     transactionHash,
+    insertError,
   } = useSignDelegatedAccessGrant(
     grantee,
     encryptionPublicKey,
     lockTimeSpanSeconds,
   );
+
+  if (insertError)
+    return (
+      <>
+        <Error className="h-5 w-5" /> <span>{insertError.message}</span>
+      </>
+    );
 
   if (!dataId || isSignPending || isServerPending)
     return (

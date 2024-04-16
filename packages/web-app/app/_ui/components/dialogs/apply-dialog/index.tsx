@@ -105,8 +105,9 @@ const Complete = () => (
 
 const ContributionAllowed = ({ projectId }: TProjectIdProps) => {
   const { hasGrant: hasProjectGrant } = useHasProjectGrant(projectId);
+  const { hasGrant: hasCitizendGrant } = useHasCitizendGrant();
 
-  if (hasProjectGrant) return <Complete />;
+  if (hasProjectGrant && hasCitizendGrant) return <Complete />;
 
   return (
     <div>

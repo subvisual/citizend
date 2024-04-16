@@ -6,6 +6,25 @@ import { Button } from '../..';
 import { EdgeLink } from '../../edge';
 import { getProviderUrl } from '@/app/_providers/idos/get-provider-url';
 import { useIdOS } from '@/app/_providers/idos';
+import { Error } from '../../svg/error';
+import { Spinner } from '../../svg/spinner';
+
+export const MissingIdosData = () => {
+  return (
+    <div>
+      <div className="text-center">
+        <Dialog.Title
+          as="h2"
+          className="flex flex-col items-center pb-3 pt-8 text-gray-950"
+        >
+          <Error className="my-4 h-8 w-8 text-blue-500" />
+          Missing ID
+        </Dialog.Title>
+        <p>Something went wrong. Please try again later or contact support.</p>
+      </div>
+    </div>
+  );
+};
 
 export const UnlockIdosExternal = () => {
   const { close } = useDialog();
@@ -14,38 +33,45 @@ export const UnlockIdosExternal = () => {
 
   return (
     <div>
-      <div className="mt-3 text-center sm:mt-5">
-        <Dialog.Title as="h2" className="text-gray-900">
+      <div className="text-center">
+        <Dialog.Title as="h2" className="pb-3 pt-8 text-gray-950">
           Verify your ID
         </Dialog.Title>
-        <Button variant="secondary" onClick={close}>
-          {isVisible
-            ? `Unlock idOs on main window`
-            : `Unlock idOs on your wallet's modal`}
-        </Button>
+        <div>
+          <p>
+            To be able to contribute to projects, you must unlock your idOS
+            data.
+          </p>
+        </div>
+        <div className="mb-3 mt-8 flex justify-center">
+          <Button variant="secondary" onClick={close}>
+            {isVisible
+              ? `Unlock idOs on main window`
+              : `Unlock idOs on your wallet's modal`}
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
 
 export const BlockedCountry = () => {
-  const { close } = useDialog();
-
   return (
     <div>
-      <div className="mt-3 text-center sm:mt-5">
-        <Dialog.Title as="h2" className="text-gray-900">
-          Ooops
+      <div className="text-center">
+        <Dialog.Title
+          as="h2"
+          className="mt-8 flex flex-col items-center text-gray-950"
+        >
+          <Error className="my-4 h-8 w-8 text-blue-500" />
+          Not allowed
         </Dialog.Title>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">
-            Sadly you are not allowed to contribute to this project due to
-            country restrictions.
+        <div className="mt-8">
+          <p>
+            Unfortunately, you’re not eligible to participate due to project’s
+            list of restricted countries.
           </p>
         </div>
-        <Button variant="secondary" onClick={close}>
-          Close
-        </Button>
       </div>
     </div>
   );
@@ -59,21 +85,23 @@ export const KycRejected = () => {
 
   return (
     <div>
-      <div className="mt-3 text-center sm:mt-5">
-        <Dialog.Title as="h2" className="text-gray-900">
+      <div className="text-center">
+        <Dialog.Title as="h2" className="pb-3 pt-8 text-gray-950">
           Verify your ID
         </Dialog.Title>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">
-            Your kyc has been rejected. Please try again, or contact idOS
-            support.
+        <div>
+          <p>Your ID has been rejected.</p>
+          <p>
+            To be able to contribute to projects, you must complete ID Plus
+            verification.
           </p>
+          <p>Do you wish to verify your ID again?</p>
         </div>
         <div className="mb-3 mt-8 flex justify-center">
           <EdgeLink href={getProviderUrl(address)}>Verify ID</EdgeLink>
         </div>
         <Button variant="secondary" onClick={close}>
-          Close
+          Skip for now
         </Button>
       </div>
     </div>
@@ -88,21 +116,23 @@ export const KycExpired = () => {
 
   return (
     <div>
-      <div className="mt-3 text-center sm:mt-5">
-        <Dialog.Title as="h2" className="text-gray-900">
+      <div className="text-center">
+        <Dialog.Title as="h2" className="pb-3 pt-8 text-gray-950">
           Verify your ID
         </Dialog.Title>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">
-            Your kyc has expired. To be able to Contribute to this project, you
-            must complete ID basic verification.
+        <div>
+          <p>Your ID verification has expired.</p>
+          <p>
+            To be able to contribute to projects, you must complete ID Plus
+            verification.
           </p>
+          <p>Do you wish to verify your ID?</p>
         </div>
         <div className="mb-3 mt-8 flex justify-center">
           <EdgeLink href={getProviderUrl(address)}>Verify ID</EdgeLink>
         </div>
         <Button variant="secondary" onClick={close}>
-          Close
+          Skip for now
         </Button>
       </div>
     </div>
@@ -110,22 +140,22 @@ export const KycExpired = () => {
 };
 
 export const PendingApproval = () => {
-  const { close } = useDialog();
-
   return (
     <div>
-      <div className="mt-3 text-center sm:mt-5">
-        <Dialog.Title as="h2" className="text-gray-900">
-          Verify your ID
+      <div className="text-center">
+        <Dialog.Title
+          as="h2"
+          className="flex flex-col items-center py-8 text-gray-950"
+        >
+          <Spinner className="mb-4 h-8 w-8 text-blue-500" />
+          ID verification pending
         </Dialog.Title>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">
-            Your kyc is being reviewed. Please try again once it is approved.
+        <div className="text-sm text-mono-800">
+          <p>
+            Please wait for Fractal ID verification specialists to verify you.
           </p>
+          <p>You will receive an email from Fractal ID once it’s completed.</p>
         </div>
-        <Button variant="secondary" onClick={close}>
-          Close
-        </Button>
       </div>
     </div>
   );
@@ -139,15 +169,16 @@ export const KycOnIdosRedirect = () => {
 
   return (
     <div>
-      <div className="mt-3 text-center sm:mt-5">
-        <Dialog.Title as="h2" className="text-gray-900">
+      <div className="text-center">
+        <Dialog.Title as="h2" className="pb-3 pt-8 text-gray-950">
           Verify your ID
         </Dialog.Title>
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">
-            To be able to Contribute to this project, you must complete ID basic
+        <div>
+          <p>
+            To be able to contribute to projects, you must complete ID Plus
             verification.
           </p>
+          <p>Do you wish to verify your ID?</p>
         </div>
         <div className="mb-3 mt-8 flex justify-center">
           <EdgeLink href={getProviderUrl(address)}>Verify ID</EdgeLink>

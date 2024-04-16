@@ -121,7 +121,7 @@ const ContributionAllowed = ({ projectId }: TProjectIdProps) => {
         </Dialog.Title>
         <div className="mt-2 flex flex-col items-start gap-3">
           <p className="mb-2 text-sm">
-            To ble able to contribute to projects you must issue an access grant
+            To be able to contribute to projects you must issue an access grant
             to Citizend and to the project.
           </p>
           <p className="flex items-center gap-5">

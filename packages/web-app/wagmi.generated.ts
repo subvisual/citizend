@@ -7070,6 +7070,20 @@ export const saleTestAbi = [
   {
     type: 'function',
     inputs: [],
+    name: 'testBuyMaximum',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'testBuyMinimum',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
     name: 'testConstructor',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -21521,6 +21535,24 @@ export const useWriteSaleTestTestBuyBelowMinimum =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyMaximum"`
+ */
+export const useWriteSaleTestTestBuyMaximum =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'testBuyMaximum',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyMinimum"`
+ */
+export const useWriteSaleTestTestBuyMinimum =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'testBuyMinimum',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testConstructor"`
  */
 export const useWriteSaleTestTestConstructor =
@@ -21586,6 +21618,24 @@ export const useSimulateSaleTestTestBuyBelowMinimum =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleTestAbi,
     functionName: 'testBuyBelowMinimum',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyMaximum"`
+ */
+export const useSimulateSaleTestTestBuyMaximum =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'testBuyMaximum',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyMinimum"`
+ */
+export const useSimulateSaleTestTestBuyMinimum =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'testBuyMinimum',
   })
 
 /**

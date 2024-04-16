@@ -40,7 +40,7 @@ contract SaleTest is Test {
         token = new Citizend(owner);
         sale = new Sale(
             address(paymentToken),
-            1 ** 18,
+            5 ether,
             start,
             end,
             1000000000000000000000000,
@@ -67,7 +67,7 @@ contract SaleTest is Test {
 
     function testConstructor() public {
         require(sale.paymentToken() == address(paymentToken));
-        require(sale.rate() == 1);
+        require(sale.rate() == 5 ether);
         require(sale.start() == start);
         require(sale.end() == end);
         require(sale.hasRole(sale.DEFAULT_ADMIN_ROLE(), owner));
@@ -78,11 +78,24 @@ contract SaleTest is Test {
         vm.startPrank(alice);
         vm.expectEmit();
 
-        emit Purchase(address(alice), 1, 1 ether);
+        emit Purchase(address(alice), 5 ether, 1 ether);
 
         sale.buy(1 ether);
 
         require(sale.risingTide_totalAllocatedUncapped() == 1 ether);
+
+        vm.stopPrank();
+    }
+
+    function testBuyMinimum() public {
+        vm.startPrank(alice);
+        vm.expectEmit();
+
+        emit Purchase(address(alice), 1 ether, 0.2 ether);
+
+        sale.buy(0.2 ether);
+
+        require(sale.risingTide_totalAllocatedUncapped() == 0.2 ether);
 
         vm.stopPrank();
     }
@@ -99,6 +112,19 @@ contract SaleTest is Test {
         sale.buy(2 ether);
 
         require(sale.risingTide_totalAllocatedUncapped() == 2 ether);
+
+        vm.stopPrank();
+    }
+
+    function testBuyMaximum() public {
+        vm.startPrank(alice);
+        vm.expectEmit();
+
+        emit Purchase(address(alice), 2 ether, 0.4 ether);
+
+        sale.buy(0.4 ether);
+
+        require(sale.risingTide_totalAllocatedUncapped() == 0.4 ether);
 
         vm.stopPrank();
     }

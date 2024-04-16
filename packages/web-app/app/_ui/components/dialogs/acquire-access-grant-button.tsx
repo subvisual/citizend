@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { Spinner } from '../svg/spinner';
 import { Check } from '../svg/check';
 import { Error } from '../svg/error';
+import { arbitrum, arbitrumSepolia } from 'viem/chains';
 
 type AcquireAccessGrantButton = {
   id: string;
@@ -14,7 +15,12 @@ type AcquireAccessGrantButton = {
 };
 
 const Done = ({ hash }: { hash: `0x${string}` }) => {
-  const { refetch, data } = useTransaction({ hash });
+  const { refetch, data } = useTransaction({
+    hash,
+    chainId: process.env.NEXT_PUBLIC_ENABLE_TESTNETS
+      ? arbitrumSepolia.id
+      : arbitrum.id,
+  });
   const { refetchGrants, refetchKyc } = useKyc();
 
   useEffect(() => {
@@ -65,9 +71,10 @@ export const AcquireAccessGrantButton = ({
 
   if (insertError)
     return (
-      <>
-        <Error className="h-5 w-5" /> <span>{insertError.message}</span>
-      </>
+      <div className="flex gap-3">
+        <Error className="h-5 w-5 text-red-700" />{' '}
+        <div className="align-left flex text-sm">Failed</div>
+      </div>
     );
 
   if (!dataId || isSignPending || isServerPending)

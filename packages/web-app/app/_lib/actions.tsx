@@ -112,7 +112,8 @@ export const useSignDelegatedAccessGrant = (
       expiration &&
       signature &&
       !isGrantInsertSuccess &&
-      !isServerPending
+      !isServerPending &&
+      !insertError
     ) {
       insertGrant({
         grantee,
@@ -129,6 +130,7 @@ export const useSignDelegatedAccessGrant = (
     dataId,
     expiration,
     isServerPending,
+    insertError,
   ]);
 
   useEffect(() => {

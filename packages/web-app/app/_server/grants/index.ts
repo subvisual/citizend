@@ -12,9 +12,9 @@ import { privateKeyToAccount } from 'viem/accounts';
 import { grantsAbi } from './abi';
 import { TInternalError } from '../types';
 
-const serverAccount =
-  '0xb217fdfe3b8bbf98da8cda18b1cef6f422187feffca83289d715f46bc62abbd1';
-const account = privateKeyToAccount(serverAccount);
+const account = privateKeyToAccount(
+  process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY,
+);
 
 const client = createWalletClient({
   account,

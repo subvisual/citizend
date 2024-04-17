@@ -10,6 +10,8 @@ BigInt.prototype.toJSON = function () {
   return this.toString();
 };
 
+export const dynamic = 'force-static';
+
 export async function GET(_request: Request) {
   const details = await saleDetails();
 

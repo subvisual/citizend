@@ -6,11 +6,6 @@ export interface KwilSigner {
   signatureType: string;
 }
 
-export interface Grant {
-  content: string;
-  encryption_public_key: string;
-}
-
 export interface PublicInfo {
   grantee: string;
   encryptionPublicKey: string;

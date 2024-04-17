@@ -1,7 +1,6 @@
 'use client';
 
-import { idOSCredentialStatus } from '@/app/_types/idos';
-import { Grant } from '@idos-network/idos-sdk';
+import { Grant, idOSCredentialStatus } from '@/app/_types/idos';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { createContext, useContext } from 'react';
 

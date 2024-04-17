@@ -8,13 +8,19 @@ import * as Base64Codec from '@stablelib/base64';
 import * as Utf8Codec from '@stablelib/utf8';
 import { ethers } from 'ethers';
 import nacl from 'tweetnacl';
-import { Grant, PublicInfo } from './types';
+import { PublicInfo } from './types';
+import { hexToBytes } from 'viem';
 
-const ENCRYPTION_SECRET_KEY = Base64Codec.decode(
-  process.env.NEXT_ENCRYPTION_SECRET_KEY,
+export interface idOSGrant {
+  content: string;
+  encryption_public_key: string;
+}
+
+const ENCRYPTION_SECRET_KEY = hexToBytes(
+  process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY,
 );
-const EVM_GRANTEE_PRIVATE_KEY = process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY;
 
+const EVM_GRANTEE_PRIVATE_KEY = process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY;
 const ENCRYPTION_KEY_PAIR = nacl.box.keyPair.fromSecretKey(
   ENCRYPTION_SECRET_KEY,
 );
@@ -70,7 +76,7 @@ const decrypt = async (
 const fetchAccessGrantDataFromIdos = async (
   signer: KwilSigner,
   dataId: string,
-): Promise<Grant> => {
+): Promise<idOSGrant> => {
   const kwilClient = new WebKwil({
     kwilProvider: process.env.NEXT_PUBLIC_IDOS_NODE_URL as string,
     chainId: process.env.NEXT_PUBLIC_IDOS_CHAIN_ID as string,
@@ -92,7 +98,7 @@ const fetchAccessGrantDataFromIdos = async (
       `Programming error: access grant for credential ${dataId} exists in the smart contract, but the credential does not exist in idOS.`,
     );
 
-  return res.data.result[0] as unknown as Grant;
+  return res.data.result[0] as unknown as idOSGrant;
 };
 
 export const getAccessGrantsContentDecrypted = async (dataId: string) => {

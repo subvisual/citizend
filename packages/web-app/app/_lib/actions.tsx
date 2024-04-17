@@ -5,7 +5,6 @@ import { insertGrantBySignature } from '../_server/grants';
 import { useFetchGrantMessage } from './contract-queries';
 import { useSignMessage } from 'wagmi';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useKyc } from '../_providers/kyc/context';
 import { useFetchNewDataId } from './queries';
 
 export const useAcquireAccessGrantMutation = () => {
@@ -62,6 +61,10 @@ export const useInsertGrantBySignatureMutation = () => {
         signature,
       });
 
+      if (typeof hash === 'object' && 'error' in hash) {
+        throw new Error(hash.error);
+      }
+
       return hash;
     },
     onSuccess: (_data, { grantee }) => {
@@ -76,11 +79,6 @@ export const useInsertGrantBySignatureMutation = () => {
   });
 };
 
-type TNewDataIdMutation = {
-  id: string;
-  encryptionPublicKey: string;
-};
-
 export const useSignDelegatedAccessGrant = (
   grantee: string,
   encryptionPublicKey: string,
@@ -90,21 +88,19 @@ export const useSignDelegatedAccessGrant = (
     () => Math.floor(Date.now() / 1000) + lockTimeSpanSeconds,
     [lockTimeSpanSeconds],
   );
-  const { id, status: kycStatus } = useKyc();
-
   const {
     mutate: insertGrant,
     isPending: isServerPending,
     isSuccess: isGrantInsertSuccess,
     data: transactionHash,
+    error: insertError,
   } = useInsertGrantBySignatureMutation();
+  const { data: dataId } = useFetchNewDataId(grantee, encryptionPublicKey);
   const {
-    data: dataId,
-    // isPending: isDataIdPending,
-    // isSuccess: isDataIdSuccess,
-  } = useFetchNewDataId(grantee, encryptionPublicKey);
-  const { data: message, isSuccess: isMessageRequestSuccess } =
-    useFetchGrantMessage(grantee, expiration, dataId);
+    data: message,
+    error: messageError,
+    isSuccess: isMessageRequestSuccess,
+  } = useFetchGrantMessage(grantee, expiration, dataId);
   const {
     data: signature,
     signMessage,
@@ -118,7 +114,8 @@ export const useSignDelegatedAccessGrant = (
       expiration &&
       signature &&
       !isGrantInsertSuccess &&
-      !isServerPending
+      !isServerPending &&
+      !insertError
     ) {
       insertGrant({
         grantee,
@@ -135,17 +132,31 @@ export const useSignDelegatedAccessGrant = (
     dataId,
     expiration,
     isServerPending,
+    insertError,
   ]);
 
   useEffect(() => {
-    if (message && !signature && !isSignPending && isMessageRequestSuccess) {
+    if (
+      message &&
+      !signature &&
+      !isSignPending &&
+      !messageError &&
+      isMessageRequestSuccess
+    ) {
       try {
         signMessage({ message: message as string });
       } catch (error) {
         console.log(error);
       }
     }
-  }, [message, signature, isSignPending, isMessageRequestSuccess, signMessage]);
+  }, [
+    message,
+    signature,
+    isSignPending,
+    isMessageRequestSuccess,
+    signMessage,
+    messageError,
+  ]);
 
   const sign = useCallback(async () => {
     try {
@@ -163,5 +174,6 @@ export const useSignDelegatedAccessGrant = (
     isSignPending,
     isGrantInsertSuccess,
     transactionHash,
+    insertError,
   };
 };

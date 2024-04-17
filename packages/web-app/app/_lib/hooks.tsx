@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import {
   useFetchCredentials,
-  useFetchGrants,
   useProjectPublicInfo,
   usePublicInfo,
 } from './queries';

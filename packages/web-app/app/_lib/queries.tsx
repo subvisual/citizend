@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useIdOS } from '../_providers/idos';
 import { idOSCredential } from '../_types/idos';
 import { getPublicInfo } from '../_server/idos';
-import { getProjectGrants } from '../_server/grants';
+import { getGrants } from '../_server/grants';
 import { TProjectInfoArgs, getProjectPublicInfo } from '../_server/projects';
 import { useKyc } from '../_providers/kyc/context';
 import { saleDetails } from '../_server/sales';
@@ -119,6 +119,8 @@ export const useFetchWallets = () => {
   });
 };
 
+// Not used at the moment
+// maybe usefull to get grants through our server and avoid a modal
 export const useFetchGrants = () => {
   const { sdk, address, hasSigner } = useIdOS();
 
@@ -126,22 +128,16 @@ export const useFetchGrants = () => {
     queryKey: ['grants', address],
     queryFn: async () => {
       if (!address) return null;
-      return sdk?.grants.list({ owner: address });
+
+      const result = await getGrants({ owner: address });
+
+      if (typeof result === 'object' && 'error' in result) {
+        throw new Error(result.error);
+      }
+
+      return result;
     },
     enabled: !!(sdk && hasSigner && address),
-  });
-};
-
-// Not used at the moment
-// maybe usefull to get grants through our server and avoid a modal
-export const useFetchProjectGrants = () => {
-  return useQuery({
-    queryKey: ['grants-contract'],
-    queryFn: async () => {
-      const { grantee } = await getPublicInfo();
-
-      return getProjectGrants(grantee);
-    },
   });
 };
 
@@ -156,13 +152,7 @@ export const useFetchNewDataId = (
   const { id, status } = useKyc();
 
   return useQuery({
-    queryKey: [
-      'insert-grant-by-signature-message',
-      owner,
-      id,
-      grantee,
-      encryptionPublicKey,
-    ],
+    queryKey: ['fetch-new-data-id', owner, id, grantee, encryptionPublicKey],
     queryFn: async () => {
       if (
         !owner ||

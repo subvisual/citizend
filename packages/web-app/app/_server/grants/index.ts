@@ -6,11 +6,14 @@ import {
   getContract,
   http,
   publicActions,
+  zeroAddress,
 } from 'viem';
 import { arbitrumSepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import { grantsAbi } from './abi';
 import { TInternalError } from '../types';
+import { z } from 'zod';
+import { Grant } from '@/app/_types/idos';
 
 const account = privateKeyToAccount(
   process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY,
@@ -23,7 +26,7 @@ const client = createWalletClient({
 }).extend(publicActions);
 
 const contract = getContract({
-  address: process.env.NEXT_PUBLIC_IDOS_CONTRACT_ADDRESS,
+  address: process.env.NEXT_PUBLIC_IDOS_CONTRACT_ADDRESS_ARBITRUM,
   abi: grantsAbi,
   client,
 });
@@ -72,21 +75,41 @@ export const insertGrantBySignature = async ({
   }
 };
 
-export const getProjectGrants = async (granteeAddress: string) => {
+const grantSchema = z.object({
+  owner: z.string(),
+  grantee: z.string(),
+  dataId: z.string(),
+  lockedUntil: z.bigint(),
+});
+const grantsSchema = z.array(grantSchema);
+
+export const getGrants = async ({
+  owner,
+  grantee,
+  dataId,
+}: {
+  owner: string;
+  grantee?: string;
+  dataId?: string;
+}) => {
   try {
-    const result = await contract.read.grantsFor([
-      granteeAddress,
-      WILDCARD_DATA_ID,
+    const result = await contract.read.findGrants([
+      owner,
+      grantee || zeroAddress,
+      dataId || WILDCARD_DATA_ID,
     ]);
 
-    return result;
-  } catch (error) {
-    console.log(
-      '%c==>',
-      'color: green; background: yellow; font-size: 20px',
-      error,
-    );
+    const grants: Grant[] = grantsSchema.parse(result);
 
-    return error;
+    return grants;
+  } catch (error) {
+    console.error(error);
+
+    if (error instanceof Error) {
+      console.error(error.message);
+      return { error: error.message };
+    }
+
+    return { error: 'Error retrieving grant' };
   }
 };

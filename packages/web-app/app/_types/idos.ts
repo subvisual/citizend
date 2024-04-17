@@ -16,9 +16,9 @@ export type idOSCredential = {
   shares: string[];
 };
 
-export type idOSGrant = {
+export interface Grant {
   owner: string;
   grantee: string;
   dataId: string;
-  lockedUntil: number;
-};
+  lockedUntil: bigint;
+}

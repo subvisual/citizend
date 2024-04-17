@@ -5,7 +5,6 @@ import { insertGrantBySignature } from '../_server/grants';
 import { useFetchGrantMessage } from './contract-queries';
 import { useSignMessage } from 'wagmi';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useKyc } from '../_providers/kyc/context';
 import { useFetchNewDataId } from './queries';
 
 export const useAcquireAccessGrantMutation = () => {
@@ -97,8 +96,11 @@ export const useSignDelegatedAccessGrant = (
     error: insertError,
   } = useInsertGrantBySignatureMutation();
   const { data: dataId } = useFetchNewDataId(grantee, encryptionPublicKey);
-  const { data: message, isSuccess: isMessageRequestSuccess } =
-    useFetchGrantMessage(grantee, expiration, dataId);
+  const {
+    data: message,
+    error: messageError,
+    isSuccess: isMessageRequestSuccess,
+  } = useFetchGrantMessage(grantee, expiration, dataId);
   const {
     data: signature,
     signMessage,
@@ -134,14 +136,27 @@ export const useSignDelegatedAccessGrant = (
   ]);
 
   useEffect(() => {
-    if (message && !signature && !isSignPending && isMessageRequestSuccess) {
+    if (
+      message &&
+      !signature &&
+      !isSignPending &&
+      !messageError &&
+      isMessageRequestSuccess
+    ) {
       try {
         signMessage({ message: message as string });
       } catch (error) {
         console.log(error);
       }
     }
-  }, [message, signature, isSignPending, isMessageRequestSuccess, signMessage]);
+  }, [
+    message,
+    signature,
+    isSignPending,
+    isMessageRequestSuccess,
+    signMessage,
+    messageError,
+  ]);
 
   const sign = useCallback(async () => {
     try {

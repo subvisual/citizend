@@ -1,15 +1,14 @@
-'use server';
-
 // adapted from https://github.dev/idos-network/idos-sdk-js/tree/main/apps/idos-example-dapp
 
 import * as Base64Codec from '@stablelib/base64';
 import { ethers } from 'ethers';
 import nacl from 'tweetnacl';
-import { PublicInfo } from './types';
+import { ServerPublicInfo } from '../types';
 import { hexToBytes } from 'viem';
 import { getGrants, getProjectApplicants } from './grants';
-import { addressesListSchema, grantsSchema } from '../_types/schemas';
-import { isValidGrant } from '../_lib/utils';
+import { addressesListSchema, grantsSchema } from '../../_types/schemas';
+import { isValidGrant } from '@/app/_lib/utils';
+import { blockedCountries } from '../blocked-countries';
 import { idOSGrantee } from './idos-grantee';
 
 export interface idOSGrant {
@@ -43,25 +42,19 @@ const userFilter = async (grantee: idOSGrantee, userAddress: string) => {
 
   if (!grants.length) throw new Error('No valid grants found');
 
-  console.log(
-    '%c==>DATAID',
-    'color: green; background: yellow; font-size: 20px',
+  const country = await grantee.fetchUserCountryFromSharedCredential(
     grants[0].dataId,
   );
 
-  const content = await grantee.getSharedCredentialContentDecrypted(
-    grants[0].dataId,
+  if (!country) throw new Error('No country found');
+
+  const isBlockedCountry = blockedCountries.some(
+    (blockedCountry) => blockedCountry === country,
   );
 
-  console.log(
-    '%c==>GRANTS',
-    'color: green; background: yellow; font-size: 20px',
-    content,
-  );
+  if (isBlockedCountry) return null;
 
-  if (grants) return userAddress;
-
-  return null;
+  return userAddress;
 };
 
 export const getAllowedProjectApplicants = async (projectAddress: string) => {
@@ -77,7 +70,7 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
       addresses.map(async (address) => userFilter(grantee, address)),
     ).then((results) => results.filter((element) => element !== null));
 
-    return result;
+    return result as string[];
   } catch (error) {
     console.error(error);
 
@@ -90,16 +83,8 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
   }
 };
 
-// test project address
-getAllowedProjectApplicants('0x2a1a131b7f95bbee473c9d682e101c5deb77460f');
-
-const publicInfo: PublicInfo = {
+export const serverPublicInfo: ServerPublicInfo = {
   grantee: evmGrantee.address,
   encryptionPublicKey: Base64Codec.encode(ENCRYPTION_KEY_PAIR.publicKey),
   lockTimeSpanSeconds: 3600 * 24 * 365, // one year?
 };
-
-export const getPublicInfo = async (): Promise<PublicInfo> =>
-  new Promise((resolve) => {
-    resolve(publicInfo);
-  });

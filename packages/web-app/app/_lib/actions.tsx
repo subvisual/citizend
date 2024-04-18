@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useIdOS } from '../_providers/idos';
-import { getPublicInfo } from '../_server/idos';
-import { insertGrantBySignature } from '../_server/grants';
+import { insertGrantBySignature } from '../_server/idos/grants';
 import { useFetchGrantMessage } from './contract-queries';
 import { useSignMessage } from 'wagmi';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useFetchNewDataId } from './queries';
+import { getServerPublicInfo } from '../_server/info';
 
 export const useAcquireAccessGrantMutation = () => {
   const { sdk } = useIdOS();
@@ -15,7 +15,7 @@ export const useAcquireAccessGrantMutation = () => {
     mutationFn: async ({ id }: { id: string }) => {
       if (!sdk) return;
 
-      const serverInfo = await getPublicInfo();
+      const serverInfo = await getServerPublicInfo();
 
       if (!serverInfo) return;
 

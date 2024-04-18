@@ -1,5 +1,5 @@
 import { useReadContract } from 'wagmi';
-import { grantsAbi } from '../_server/grants/abi';
+import { grantsAbi } from '../_server/idos/grants/abi';
 import { useIdOS } from '../_providers/idos';
 import { arbitrum, arbitrumSepolia } from 'viem/chains';
 

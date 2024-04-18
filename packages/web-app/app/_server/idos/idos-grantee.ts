@@ -4,6 +4,7 @@ import * as Utf8Codec from '@stablelib/utf8';
 import { ethers } from 'ethers';
 import nacl from 'tweetnacl';
 import { decodeBase58, toBeHex } from 'ethers';
+import { EthSigner } from '@kwilteam/kwil-js/dist/core/builders';
 
 export function implicitAddressFromPublicKey(publicKey: string) {
   const key_without_prefix = publicKey.replace(/^ed25519:/, '');
@@ -59,13 +60,6 @@ export class NoncedBox {
   }
 }
 
-const buildKwilSignerAndGrantee = (
-  granteeSigner: ethers.Wallet,
-): [KwilSigner, string] => {
-  const signer = granteeSigner as ethers.Wallet;
-  return [new KwilSigner(signer, signer.address), signer.address];
-};
-
 interface idOSGranteeInitParams {
   encryptionSecret: Uint8Array;
   nodeUrl?: string;
@@ -107,15 +101,17 @@ export class idOSGrantee {
       throwError("Can't discover dbId. You must pass it explicitly.");
 
     const nodeKwil = new NodeKwil({ kwilProvider: nodeUrl, chainId });
-
-    const [kwilSigner, address] = buildKwilSignerAndGrantee(granteeSigner);
+    const kwilSigner = new KwilSigner(
+      granteeSigner as unknown as EthSigner,
+      granteeSigner.address,
+    );
 
     return new idOSGrantee(
       NoncedBox.fromBase64SecretKey(encryptionSecret),
       nodeKwil,
       kwilSigner,
       dbId,
-      address,
+      granteeSigner.address,
     );
   }
 
@@ -159,6 +155,16 @@ export class idOSGrantee {
       credentialCopy.content,
       credentialCopy.encryption_public_key,
     );
+  }
+
+  async fetchUserCountryFromSharedCredential(
+    dataId: string,
+  ): Promise<string | undefined> {
+    const credentialString =
+      await this.getSharedCredentialContentDecrypted(dataId);
+    const credential = JSON.parse(credentialString);
+
+    return credential?.credentialSubject?.residential_address_country;
   }
 
   get grantee() {

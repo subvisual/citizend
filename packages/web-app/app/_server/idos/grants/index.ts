@@ -11,7 +11,7 @@ import {
 import { arbitrumSepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import { grantsAbi } from './abi';
-import { TInternalError } from '../types';
+import { TInternalError } from '../../types';
 import { Grant } from '@/app/_types/idos';
 import { grantsSchema } from '@/app/_types/schemas';
 

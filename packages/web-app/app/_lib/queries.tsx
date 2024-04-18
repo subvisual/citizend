@@ -11,7 +11,7 @@ import { getServerPublicInfo } from '../_server/info';
 
 export const usePublicInfo = () => {
   return useQuery({
-    queryKey: ['public-info'],
+    queryKey: ['server-public-info'],
     queryFn: async () => {
       return await getServerPublicInfo();
     },

@@ -38,8 +38,7 @@ export const saleDetails = async (): Promise<
   TProjectSaleDetails[] | TInternalError
 > => {
   try {
-    const headersList = headers();
-    const host = headersList.get('host');
+    const host = process.env.NEXT_PUBLIC_DAPP_HOST;
 
     // run requests in parallel
     const contractResults = await Promise.all([
@@ -70,10 +69,10 @@ export const saleDetails = async (): Promise<
         totalTokensForSale: contractResults[8],
         startRegistration: contractResults[9],
         endRegistration: contractResults[10],
-        url: `https://${host}/projects/citizend`,
-        logo: `https://${host}/project-citizend-logo.svg`,
-        background: `https://${host}/citizend-card-desktop.png`,
-        backgroundMobile: `https://${host}/citizend-card-mobile.png`,
+        url: `${host}/projects/citizend`,
+        logo: `${host}/project-citizend-logo.svg`,
+        background: `${host}/citizend-card-desktop.png`,
+        backgroundMobile: `${host}/citizend-card-mobile.png`,
       },
     ];
   } catch (error) {

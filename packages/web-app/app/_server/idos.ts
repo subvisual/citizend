@@ -2,14 +2,15 @@
 
 // adapted from https://github.dev/idos-network/idos-sdk-js/tree/main/apps/idos-example-dapp
 
-import { WebKwil, KwilSigner, Utils } from '@kwilteam/kwil-js';
-import type { SignerSupplier } from '@kwilteam/kwil-js/dist/core/builders.d';
 import * as Base64Codec from '@stablelib/base64';
-import * as Utf8Codec from '@stablelib/utf8';
 import { ethers } from 'ethers';
 import nacl from 'tweetnacl';
 import { PublicInfo } from './types';
 import { hexToBytes } from 'viem';
+import { getGrants, getProjectApplicants } from './grants';
+import { addressesListSchema, grantsSchema } from '../_types/schemas';
+import { isValidGrant } from '../_lib/utils';
+import { idOSGrantee } from './idos-grantee';
 
 export interface idOSGrant {
   content: string;
@@ -31,93 +32,66 @@ const evmGrantee = new ethers.Wallet(
   new ethers.JsonRpcProvider(EVM_NODE_URL),
 );
 
-const kwilSigner: KwilSigner = {
-  signer: evmGrantee as unknown as SignerSupplier,
-  identifier: Base64Codec.decode(evmGrantee.address),
-  signatureType: 'secp256k1_ep',
-};
-
-const decrypt = async (
-  b64FullMessage: string,
-  b64SenderPublicKey: string,
-): Promise<string> => {
-  const fullMessage = Base64Codec.decode(b64FullMessage);
-  const senderPublicKey = Base64Codec.decode(b64SenderPublicKey);
-
-  const nonce = fullMessage.slice(0, nacl.box.nonceLength);
-  const message = fullMessage.slice(nacl.box.nonceLength, fullMessage.length);
-
-  const decrypted = nacl.box.open(
-    message,
-    nonce,
-    senderPublicKey,
-    ENCRYPTION_KEY_PAIR.secretKey,
-  );
-
-  if (!decrypted) {
-    throw Error(
-      `Couldn't decrypt. ${JSON.stringify(
-        {
-          fullMessage: Base64Codec.encode(fullMessage),
-          message: Base64Codec.encode(message),
-          nonce: Base64Codec.encode(nonce),
-          senderPublicKey: Base64Codec.encode(senderPublicKey),
-          serverPublicKey: Base64Codec.encode(ENCRYPTION_KEY_PAIR.publicKey),
-        },
-        null,
-        2,
-      )}`,
-    );
-  }
-
-  return Utf8Codec.decode(decrypted);
-};
-
-const fetchAccessGrantDataFromIdos = async (
-  signer: KwilSigner,
-  dataId: string,
-): Promise<idOSGrant> => {
-  const kwilClient = new WebKwil({
-    kwilProvider: process.env.NEXT_PUBLIC_IDOS_NODE_URL as string,
-    chainId: process.env.NEXT_PUBLIC_IDOS_CHAIN_ID as string,
+const userFilter = async (grantee: idOSGrantee, userAddress: string) => {
+  const grantsResult = await getGrants({
+    owner: userAddress,
+    grantee: evmGrantee.address,
   });
+  const grants = grantsSchema
+    .parse(grantsResult)
+    ?.filter((grant) => isValidGrant(grant.lockedUntil));
 
-  const res = await kwilClient.call(
-    {
-      dbid: process.env.NEXT_PUBLIC_IDOS_DB_ID as string,
-      action: 'get_credential_shared',
-      inputs: [{ $id: dataId }],
-    },
-    signer,
+  if (!grants.length) throw new Error('No valid grants found');
+
+  console.log(
+    '%c==>DATAID',
+    'color: green; background: yellow; font-size: 20px',
+    grants[0].dataId,
   );
 
-  if (!res.data || !res.data.result) throw new Error(res.toString());
+  const content = await grantee.getSharedCredentialContentDecrypted(
+    grants[0].dataId,
+  );
 
-  if (!res.data.result[0])
-    throw new Error(
-      `Programming error: access grant for credential ${dataId} exists in the smart contract, but the credential does not exist in idOS.`,
-    );
+  console.log(
+    '%c==>GRANTS',
+    'color: green; background: yellow; font-size: 20px',
+    content,
+  );
 
-  return res.data.result[0] as unknown as idOSGrant;
+  if (grants) return userAddress;
+
+  return null;
 };
 
-export const getAccessGrantsContentDecrypted = async (dataId: string) => {
+export const getAllowedProjectApplicants = async (projectAddress: string) => {
   try {
-    const credentialCopy = await fetchAccessGrantDataFromIdos(
-      kwilSigner,
-      dataId,
-    );
+    const applicantsResult = await getProjectApplicants(projectAddress);
+    const addresses = addressesListSchema.parse(applicantsResult);
+    const grantee = await idOSGrantee.init({
+      granteeSigner: evmGrantee,
+      encryptionSecret: ENCRYPTION_SECRET_KEY,
+    });
 
-    const decryptedContent = await decrypt(
-      credentialCopy.content,
-      credentialCopy.encryption_public_key,
-    );
+    const result = await Promise.all(
+      addresses.map(async (address) => userFilter(grantee, address)),
+    ).then((results) => results.filter((element) => element !== null));
 
-    return { content: decryptedContent };
-  } catch (error: any) {
-    return { content: 'error', errors: error?.message };
+    return result;
+  } catch (error) {
+    console.error(error);
+
+    if (error instanceof Error) {
+      console.error(error.message);
+      return { error: error.message };
+    }
+
+    return { error: 'Error retrieving applied addresses' };
   }
 };
+
+// test project address
+getAllowedProjectApplicants('0x2a1a131b7f95bbee473c9d682e101c5deb77460f');
 
 const publicInfo: PublicInfo = {
   grantee: evmGrantee.address,

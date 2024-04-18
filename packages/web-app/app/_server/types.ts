@@ -6,7 +6,7 @@ export interface KwilSigner {
   signatureType: string;
 }
 
-export interface PublicInfo {
+export interface ServerPublicInfo {
   grantee: string;
   encryptionPublicKey: string;
   lockTimeSpanSeconds: number;

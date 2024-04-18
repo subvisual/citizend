@@ -11,9 +11,9 @@ import {
 import { arbitrumSepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import { grantsAbi } from './abi';
-import { TInternalError } from '../types';
-import { z } from 'zod';
+import { TInternalError } from '../../types';
 import { Grant } from '@/app/_types/idos';
+import { grantsSchema } from '@/app/_types/schemas';
 
 const account = privateKeyToAccount(
   process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY,
@@ -75,26 +75,21 @@ export const insertGrantBySignature = async ({
   }
 };
 
-const grantSchema = z.object({
-  owner: z.string(),
-  grantee: z.string(),
-  dataId: z.string(),
-  lockedUntil: z.bigint(),
-});
-const grantsSchema = z.array(grantSchema);
-
 export const getGrants = async ({
   owner,
   grantee,
   dataId,
 }: {
-  owner: string;
+  owner?: string;
   grantee?: string;
   dataId?: string;
 }) => {
   try {
+    if (!owner && !grantee)
+      throw new Error('Owner or grantee must be provided');
+
     const result = await contract.read.findGrants([
-      owner,
+      owner || zeroAddress,
       grantee || zeroAddress,
       dataId || WILDCARD_DATA_ID,
     ]);
@@ -111,5 +106,24 @@ export const getGrants = async ({
     }
 
     return { error: 'Error retrieving grant' };
+  }
+};
+
+export const getProjectApplicants = async (projectAddress: string) => {
+  try {
+    const getGrantsResult = await getGrants({ grantee: projectAddress });
+    const projectGrants: Grant[] = grantsSchema.parse(getGrantsResult);
+    const userAddresses = projectGrants.map((grant) => grant.owner);
+
+    return userAddresses;
+  } catch (error) {
+    console.error(error);
+
+    if (error instanceof Error) {
+      console.error(error.message);
+      return { error: error.message };
+    }
+
+    return { error: 'Error retrieving applied addresses' };
   }
 };

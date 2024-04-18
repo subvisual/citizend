@@ -3,17 +3,17 @@
 import { useQuery } from '@tanstack/react-query';
 import { useIdOS } from '../_providers/idos';
 import { idOSCredential } from '../_types/idos';
-import { getPublicInfo } from '../_server/idos';
-import { getGrants } from '../_server/grants';
+import { getGrants } from '../_server/idos/grants';
 import { TProjectInfoArgs, getProjectPublicInfo } from '../_server/projects';
 import { useKyc } from '../_providers/kyc/context';
 import { saleDetails } from '../_server/sales';
+import { getServerPublicInfo } from '../_server/info';
 
 export const usePublicInfo = () => {
   return useQuery({
-    queryKey: ['public-info'],
+    queryKey: ['server-public-info'],
     queryFn: async () => {
-      return await getPublicInfo();
+      return await getServerPublicInfo();
     },
   });
 };

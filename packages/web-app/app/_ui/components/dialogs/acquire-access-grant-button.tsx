@@ -1,5 +1,5 @@
 'use client';
-import { PublicInfo } from '@/app/_server/types';
+import { ServerPublicInfo } from '@/app/_server/types';
 import { useSignDelegatedAccessGrant } from '@/app/_lib/actions';
 import { useTransaction } from 'wagmi';
 import { useKyc } from '@/app/_providers/kyc/context';
@@ -11,7 +11,7 @@ import { arbitrum, arbitrumSepolia } from 'viem/chains';
 
 type AcquireAccessGrantButton = {
   id: string;
-  serverInfo: PublicInfo;
+  serverInfo: ServerPublicInfo;
 };
 
 const Done = ({ hash }: { hash: `0x${string}` }) => {

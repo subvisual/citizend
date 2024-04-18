@@ -1233,16 +1233,6 @@
     jssha "^3.2.0"
     long "^5.2.1"
 
-"@kwilteam/kwil-js@^0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@kwilteam/kwil-js/-/kwil-js-0.6.1.tgz#3039ae07a98dac4d0a0fe8b097a3bd4491c9e58c"
-  integrity sha512-aCA+WpVs/jrzFXuO7PngguRd2Cc283wSqgmVRgNEKfdDogtGyR5UmB7wp6z3LEwVgOr729YQa7PF723lvw3BzQ==
-  dependencies:
-    axios "^0.27.2"
-    ethers "^6.9.1"
-    jssha "^3.2.0"
-    long "^5.2.1"
-
 "@lit-labs/ssr-dom-shim@^1.0.0", "@lit-labs/ssr-dom-shim@^1.1.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.2.0.tgz#353ce4a76c83fadec272ea5674ede767650762fd"

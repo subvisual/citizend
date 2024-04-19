@@ -7,6 +7,7 @@ import { usdRange } from '../utils/intl-formaters/usd-range';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getRelativePath } from '../utils/getRelativePath';
+import { NoProjects } from './no-projects';
 
 const ProjectRow = ({
   logo,
@@ -53,7 +54,7 @@ export default function MyProjects() {
       </div>
     );
 
-  if (!data.length) return <div>You have not applied for a project yet</div>;
+  if (!data.length) return <NoProjects />;
 
   return (
     <div className="mb-44 mt-14 rounded-md bg-mono-50 px-4 py-6">

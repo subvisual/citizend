@@ -35,11 +35,28 @@ export function Footer() {
           <div className="pt-14 font-medium text-mono-50 md:pt-0">
             citizend © 2024 All rights reserved.
           </div>
-          <div className="flex flex-wrap gap-6 text-mono-400 md:text-mono-200">
-            <Link href="/">Privacy Policy</Link>
-            <Link href="/">Terms of Service</Link>
-            <Link href="/">AML Policy</Link>
-            <Link href="/">Refund Policy</Link>
+          <div
+            className="flex flex-wrap gap-6 text-mono-400 md:text-mono-200"
+            role="list"
+          >
+            <Link
+              href="https://citizend.xyz/legal/privacy-policy"
+              role="listitem"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="https://citizend.xyz/legal/terms-conditions"
+              role="listitem"
+            >
+              Terms of Service
+            </Link>
+            <Link href="/" role="listitem">
+              AML Policy
+            </Link>
+            <Link href="/" role="listitem">
+              Refund Policy
+            </Link>
           </div>
         </div>
       </div>

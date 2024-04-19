@@ -1,8 +1,8 @@
 'use client';
 
 import { ProjectProvider } from '@/app/_providers/project';
-import { ProjectContent } from '@/app/_ui/project/project-content';
-import { ProjectHeader } from '@/app/_ui/project/project-header';
+import { MyProject } from '@/app/_ui/my-projects/my-project';
+import { ProjectGrantCheck } from '@/app/_ui/my-projects/project-grant-check';
 import { useMemo } from 'react';
 
 type TProjectProps = {
@@ -11,22 +11,19 @@ type TProjectProps = {
   };
 };
 
-export default function Project({ params }: TProjectProps) {
+export default function MyProjectPage({ params }: TProjectProps) {
   const project = useMemo(() => {
     return {
       projectId: params.id?.toLowerCase(),
     };
   }, [params.id]);
 
-  if (project.projectId !== 'citizend') {
-    return '404 Not Found';
-  }
-
   return (
     <main className="mb-56">
       <ProjectProvider value={project}>
-        <ProjectHeader />
-        <ProjectContent />
+        <ProjectGrantCheck>
+          <MyProject />
+        </ProjectGrantCheck>
       </ProjectProvider>
     </main>
   );

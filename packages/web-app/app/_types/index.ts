@@ -21,6 +21,8 @@ export type TClassNameProps = {
 export type TProjectStatus = 'completed' | 'upcoming' | 'live';
 
 export type TProjectSaleDetails = {
+  address: string;
+  publicKey: string;
   project: string;
   status: TProjectStatus;
   url: string;

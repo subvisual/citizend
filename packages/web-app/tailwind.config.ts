@@ -54,6 +54,7 @@ const config: Config = {
       },
       borderRadius: {
         '2.5xl': '1.125rem',
+        md: '0.3125rem',
       },
       animation: {
         'spin-slow': 'spin 2s linear infinite',

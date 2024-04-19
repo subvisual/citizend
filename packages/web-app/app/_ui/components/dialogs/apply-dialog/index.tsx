@@ -18,12 +18,12 @@ import {
 } from './kyc-flows';
 import { useKyc } from '@/app/_providers/kyc/context';
 import { useHasCitizendGrant, useHasProjectGrant } from '@/app/_lib/hooks';
-import { TProjectInfoArgs } from '@/app/_server/projects';
 import { ERRORS } from '@/app/_providers/kyc';
 import { Check } from '../../svg/check';
 import { Spinner } from '../../svg/spinner';
 import { Error } from '../../svg/error';
 import { blockedCountries } from '@/app/_server/blocked-countries';
+import { TProjectInfoArgs } from '@/app/_server/info';
 
 type TProjectIdProps = {
   projectId: string;

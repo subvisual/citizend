@@ -4,10 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useIdOS } from '../_providers/idos';
 import { idOSCredential } from '../_types/idos';
 import { getGrants } from '../_server/idos/grants';
-import { TProjectInfoArgs, getProjectPublicInfo } from '../_server/projects';
 import { useKyc } from '../_providers/kyc/context';
 import { saleDetails } from '../_server/sales';
-import { getServerPublicInfo } from '../_server/info';
+import {
+  TProjectInfoArgs,
+  getProjectPublicInfo,
+  getServerPublicInfo,
+} from '../_server/info';
 
 export const usePublicInfo = () => {
   return useQuery({
@@ -18,12 +21,19 @@ export const usePublicInfo = () => {
   });
 };
 
+export const PROJECT_NOT_FOUND = 'Project not found';
 export const useProjectPublicInfo = (projectId?: TProjectInfoArgs) => {
   return useQuery({
     queryKey: ['project-public-info', projectId],
     queryFn: async () => {
       if (!projectId) return null;
-      return await getProjectPublicInfo(projectId);
+      const result = await getProjectPublicInfo(projectId);
+
+      if (typeof result === 'object' && 'error' in result) {
+        throw new Error(PROJECT_NOT_FOUND);
+      }
+
+      return result;
     },
     enabled: !!projectId,
   });

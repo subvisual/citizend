@@ -1,3 +1,6 @@
+import { usdRange } from '../utils/intl-formaters/usd-range';
+import { usdValue } from '../utils/intl-formaters/usd-value';
+
 type TTokenMetricsProps = {
   minTarget: bigint;
   maxTarget: bigint;
@@ -13,20 +16,9 @@ export const TokenMetrics = ({
   minContribution,
   maxContribution,
 }: TTokenMetricsProps) => {
-  const rangeFormatter = new Intl.NumberFormat('default', {
-    style: 'currency',
-    currency: 'USD',
-    currencyDisplay: 'narrowSymbol',
-    maximumSignificantDigits: 1,
-  });
-  const valueFormatter = new Intl.NumberFormat('default', {
-    style: 'currency',
-    currency: 'USD',
-    currencyDisplay: 'narrowSymbol',
-  });
-  const targetRaiseRange = rangeFormatter.formatRange(minTarget, maxTarget);
-  const maxPrice = valueFormatter.format(maxContribution);
-  const minPrice = valueFormatter.format(minContribution);
+  const targetRaiseRange = usdRange(minTarget, maxTarget);
+  const maxPrice = usdValue(maxContribution);
+  const minPrice = usdValue(minContribution);
   const totalTokens = new Intl.NumberFormat('default').format(
     totalTokensForSale,
   );

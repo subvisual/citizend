@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
 import {
   useFetchCredentials,
+  useFetchProjectsSaleDetails,
   useProjectPublicInfo,
   usePublicInfo,
 } from './queries';
 import { useKyc } from '../_providers/kyc/context';
 import { compareAddresses, isValidGrant } from './utils';
-import { TProjectInfoArgs } from '../_server/projects';
+import { TProjectInfoArgs } from '../_server/info';
 
 export const useKycCredential = () => {
   const {
@@ -91,19 +92,63 @@ export const useHasCitizendGrant = () => {
   }, [hasGrant, isLoading, error, isSuccess]);
 };
 
+const emptyArray = [] as const;
+export const useMyProjects = () => {
+  const {
+    data: saleDetails,
+    isLoading,
+    error: saleDetailsError,
+    isSuccess,
+  } = useFetchProjectsSaleDetails();
+  const {
+    shares,
+    grants,
+    isLoading: isKycLoading,
+    error: kycError,
+    isSuccess: isKycSuccess,
+  } = useKyc();
+
+  const myProjects = useMemo(() => {
+    if (!saleDetails || !shares) return [];
+
+    return saleDetails.filter((project) => {
+      const projectGrants = grants?.filter((grant) =>
+        compareAddresses(grant.grantee, project.address),
+      );
+      if (!projectGrants?.length) return false;
+
+      return projectGrants.some(
+        (grant) =>
+          shares.includes(grant.dataId) && isValidGrant(grant.lockedUntil),
+      );
+    });
+  }, [saleDetails, shares, grants]);
+
+  return {
+    data: myProjects?.length ? myProjects : emptyArray,
+    isLoading: isLoading || isKycLoading,
+    error: kycError || saleDetailsError,
+    isSuccess: isKycSuccess && isSuccess,
+  };
+};
+
 export const useHasProjectGrant = (projectId: string) => {
   const {
     shares,
     grants,
     isLoading: isKycLoading,
     error: kycError,
-    isSuccess: isKycSucces,
+    isSuccess: isKycSuccess,
   } = useKyc();
-  const { data: projectPublicInfo, isSuccess: isProjectSuccess } =
-    useProjectPublicInfo(projectId as TProjectInfoArgs);
-  const isLoading = isKycLoading || !projectPublicInfo;
-  const error = kycError;
-  const isSuccess = isKycSucces && isProjectSuccess;
+  const {
+    data: projectPublicInfo,
+    isLoading: isProjectInfoLoading,
+    isSuccess: isProjectSuccess,
+    error: projectError,
+  } = useProjectPublicInfo(projectId as TProjectInfoArgs);
+  const isLoading = isKycLoading || isProjectInfoLoading;
+  const error = kycError || projectError;
+  const isSuccess = isKycSuccess && isProjectSuccess;
 
   const projectGrants = useMemo(
     () =>

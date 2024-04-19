@@ -8,7 +8,7 @@ export const InternalNavigation = ({ className }: TClassNameProps) => {
       <h3 className="text-sm text-mono-400">Navigation</h3>
       <nav className="mt-6 flex flex-col gap-6 md:mt-2 md:gap-3">
         <NavLink href="/" name="All Projects" />
-        <NavLink href="/projects/my-projects" name="My Projects" />
+        <NavLink href="/my-projects" name="My Projects" />
       </nav>
     </div>
   );

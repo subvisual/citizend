@@ -1,11 +1,11 @@
 'use server';
 
 import { ctzndSaleAbi, ctzndSaleAddress } from '@/wagmi.generated';
-import { headers } from 'next/headers';
 import { createWalletClient, getContract, http, publicActions } from 'viem';
 import { sepolia } from 'viem/chains';
 import { TProjectSaleDetails, TProjectStatus } from '../_types';
 import { TInternalError } from './types';
+import { projectsInfo } from './projects/project-info';
 
 const client = createWalletClient({
   chain: sepolia,
@@ -57,6 +57,8 @@ export const saleDetails = async (): Promise<
 
     return [
       {
+        address: projectsInfo.citizend.address,
+        publicKey: projectsInfo.citizend.publicKey,
         project: 'Citizend',
         status: contractResults[0],
         rate: contractResults[1],

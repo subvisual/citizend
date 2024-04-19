@@ -48,9 +48,9 @@ export default function MyProjects() {
 
   if (error)
     return (
-      <div>
+      <div className="mt-14">
         <p>Something went wrong...</p>
-        <p>{error.message}</p>
+        <p>{typeof error === 'object' ? error?.message : ''}</p>
       </div>
     );
 

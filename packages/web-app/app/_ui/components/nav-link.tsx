@@ -18,7 +18,10 @@ export const NavLink = ({
   className,
 }: TNavLinkProps) => {
   const pathname = usePathname();
-  const active = pathname === href;
+  const active =
+    href === '/'
+      ? href === pathname || pathname.startsWith('/projects')
+      : pathname.startsWith(href);
 
   return (
     <Link

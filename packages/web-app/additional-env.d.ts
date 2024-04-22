@@ -12,6 +12,7 @@ declare global {
       NEXT_PUBLIC_CONTRIBUTE_OPEN: string;
       NEXT_PUBLIC_APPLY_OPEN: string;
       NEXT_ACTIVE_CAMPAIGN_API_KEY: string;
+      NEXT_ACTIVE_CAMPAIGN_ACCOUNT_NAME: string;
     }
   }
 }

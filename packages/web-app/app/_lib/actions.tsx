@@ -6,6 +6,7 @@ import { useSignMessage } from 'wagmi';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useFetchNewDataId } from './queries';
 import { getServerPublicInfo } from '../_server/info';
+import { subscribeToNewsletter } from '../_server/active-campaign';
 
 export const useAcquireAccessGrantMutation = () => {
   const { sdk } = useIdOS();
@@ -31,6 +32,20 @@ export const useAcquireAccessGrantMutation = () => {
       queryClient.invalidateQueries({ queryKey: ['credentials'] });
       queryClient.invalidateQueries({ queryKey: ['credential-content'] });
       queryClient.invalidateQueries({ queryKey: ['grants'] });
+    },
+  });
+};
+
+export const useSubscribeNewsletterMutation = () => {
+  return useMutation({
+    mutationFn: async ({ email }: { email: string }) => {
+      const result = await subscribeToNewsletter(email);
+
+      if (typeof result === 'object' && 'error' in result) {
+        throw new Error(result.error);
+      }
+
+      return result;
     },
   });
 };

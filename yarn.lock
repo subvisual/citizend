@@ -1152,22 +1152,24 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-2.0.2.tgz#d9fae00a2d5cb40f92cfe64b47ad749fbc38f917"
   integrity sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==
 
-"@idos-network/idos-sdk@0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@idos-network/idos-sdk/-/idos-sdk-0.2.6.tgz#c6964e3ec9cc8c95bafe9a7e76b12e5455457427"
-  integrity sha512-L5GPIRWsgohdrcScu1xALucyVZQxNxkQ1LdrdKSyL9c9umw0JUNE1vtD+JVLKVB+9BwZHFD03i7HDuq3lOaAVA==
+"@idos-network/idos-sdk@0.2.10":
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/@idos-network/idos-sdk/-/idos-sdk-0.2.10.tgz#85e83c71c024db41718f56e226694f2b60f91b2b"
+  integrity sha512-2nAcwBQ8j4pMRCa3NJ1pwkLxAdygBwNkbfF56xpNtv5iabqw9ujHnBZ+xRGOkrskVXLtf/yH1ptkWsOCUZH4cQ==
   dependencies:
     "@digitalbazaar/ed25519-signature-2020" "^5.2.0"
     "@digitalbazaar/ed25519-verification-key-2020" "^4.1.0"
     "@digitalbazaar/vc" "^6.0.2"
-    "@kwilteam/kwil-js" "0.5.8"
+    "@kwilteam/kwil-js" "0.5.10"
     "@stablelib/base64" "^1.0.1"
     "@stablelib/binary" "^1.0.1"
     "@stablelib/bytes" "^1.0.1"
+    "@stablelib/sha256" "^1.0.1"
     "@stablelib/utf8" "^1.0.1"
     borsh "^1.0.0"
     jsonld "^8.3.1"
     jsonld-document-loader "^2.0.0"
+    tweetnacl "^1.0.3"
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
@@ -1220,6 +1222,18 @@
   dependencies:
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
+
+"@kwilteam/kwil-js@0.5.10":
+  version "0.5.10"
+  resolved "https://registry.yarnpkg.com/@kwilteam/kwil-js/-/kwil-js-0.5.10.tgz#1c69fb487c2655734257ab9fe36902254a5e1223"
+  integrity sha512-wUEt9Uo3tZt/O0UHOMh66PcSvYbn4/mlJNinzp/+bgMZK1D5BeCXsKmm6TbPp0MbZoFrlfzLpC81HKYoLEx6Ng==
+  dependencies:
+    axios "^0.27.2"
+    dotenv "^16.0.3"
+    ethers "^6.9.1"
+    ethers5 "npm:ethers@^5.7.2"
+    jssha "^3.2.0"
+    long "^5.2.1"
 
 "@kwilteam/kwil-js@0.5.8":
   version "0.5.8"
@@ -2458,7 +2472,7 @@
     "@stablelib/binary" "^1.0.1"
     "@stablelib/wipe" "^1.0.1"
 
-"@stablelib/sha256@1.0.1":
+"@stablelib/sha256@1.0.1", "@stablelib/sha256@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@stablelib/sha256/-/sha256-1.0.1.tgz#77b6675b67f9b0ea081d2e31bda4866297a3ae4f"
   integrity sha512-GIIH3e6KH+91FqGV42Kcj71Uefd/QEe7Dy42sBTeqppXV95ggCcxLTk39bEr+lZfJmp+ghsR07J++ORkRELsBQ==

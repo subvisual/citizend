@@ -28,8 +28,8 @@ contract Citizend is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
     error TooEarly(uint time);
 
     modifier onlyAfter(uint time) {
-      if (block.timestamp <= time) revert TooEarly(time);
-      _;
+        if (block.timestamp <= time) revert TooEarly(time);
+        _;
     }
 
     /**
@@ -75,7 +75,12 @@ contract Citizend is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
      *
      * - the caller must have the `PAUSER_ROLE`.
      */
-    function unpause() external virtual onlyRole(PAUSER_ROLE) onlyAfter(lockEnd) {
+    function unpause()
+        external
+        virtual
+        onlyRole(PAUSER_ROLE)
+        onlyAfter(lockEnd)
+    {
         _unpause();
     }
 

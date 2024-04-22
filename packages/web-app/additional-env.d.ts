@@ -11,6 +11,7 @@ declare global {
       NEXT_CITIZEND_WALLET_PRIVATE_KEY: `0x${string}`;
       NEXT_PUBLIC_CONTRIBUTE_OPEN: string;
       NEXT_PUBLIC_APPLY_OPEN: string;
+      NEXT_ACTIVE_CAMPAIGN_API_KEY: string;
     }
   }
 }

@@ -19,6 +19,7 @@ export const ProjectContribution = () => {
       </h4>
       <div className="grid grid-cols-2 gap-x-6 gap-y-8 p-4">
         <Input
+          variant="number"
           onChange={updateAmount}
           label="Your Contribution"
           type="number"

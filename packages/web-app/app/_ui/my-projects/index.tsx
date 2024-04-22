@@ -18,7 +18,7 @@ const ProjectRow = ({
   return (
     <Link
       href={`/my-projects/${project}`}
-      className="col-span-2 hover:bg-blue-100 md:col-span-4"
+      className="col-span-2 -mx-4 -my-6 rounded-md px-4 py-6 hover:bg-blue-100 md:col-span-4"
     >
       <div className="grid grid-cols-2 gap-x-6 md:grid-cols-4">
         <div className="flex gap-3">

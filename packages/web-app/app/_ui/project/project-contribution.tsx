@@ -1,6 +1,7 @@
 'use client';
 import { useCallback, useState } from 'react';
 import { Input } from '../components/input';
+import { Button } from '../components';
 
 export const ProjectContribution = () => {
   const [amount, setAmount] = useState(0);
@@ -17,7 +18,7 @@ export const ProjectContribution = () => {
       <h4 className="border-b border-mono-200 px-8 py-6 font-medium uppercase">
         Your Contribution
       </h4>
-      <div className="grid grid-cols-2 gap-x-6 gap-y-8 p-4">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-8 p-4 md:p-6">
         <Input
           variant="number"
           onChange={updateAmount}
@@ -29,7 +30,6 @@ export const ProjectContribution = () => {
           className="col-span-2 md:col-span-1"
         />
         <Input
-          onChange={updateAmount}
           label="You Get"
           type="number"
           id="ctnd-amount"
@@ -54,10 +54,13 @@ export const ProjectContribution = () => {
           <p>10000</p>
         </div>
         <p className="col-span-2 text-mono-800">
-          *Price you pay/amount of tokens you get fluctuates depending on the
-          number of contributors and their desired contribution.
+          *Contribution amount/token allocation amount fluctuates depending on
+          the number of contributors and their desired contribution.
         </p>
       </div>
+      <Button variant="primary" className="w-full rounded-none">
+        Contribute
+      </Button>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { CitizendProjectDescription } from './citizend-project-description';
 import { ProjectInformation } from './project-information';
 import { TokenMetrics } from './token-metrics';
-import { ContributeButton } from './contribute-button';
+import { ApplyButton } from './apply-button';
 import { useFetchProjectsSaleDetails } from '@/app/_lib/queries';
 import { useProject } from '@/app/_providers/project/context';
 import { Spinner } from '../components/svg/spinner';
@@ -93,7 +93,7 @@ export const ProjectContent = () => {
               />
               {hasGrant ? <AppliedSuccess /> : null}
               {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !hasGrant ? (
-                <ContributeButton
+                <ApplyButton
                   isLoading={isLoadingGrant}
                   error={errorLoadingGrant}
                 />
@@ -127,7 +127,7 @@ export const ProjectContent = () => {
           />
           {hasGrant ? <AppliedSuccess /> : null}
           {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !hasGrant ? (
-            <ContributeButton isLoading={isLoading} error={errorLoadingGrant} />
+            <ApplyButton isLoading={isLoading} error={errorLoadingGrant} />
           ) : null}
         </div>
       </div>

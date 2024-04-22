@@ -8,15 +8,12 @@ import { useProject } from '@/app/_providers/project/context';
 import { Spinner } from '../components/svg/spinner';
 import { ERRORS } from '@/app/_providers/kyc';
 
-type TContributeButtonProps = {
+type TApplyButtonProps = {
   isLoading: boolean;
   error: string | null;
 };
 
-export const ContributeButton = ({
-  isLoading,
-  error,
-}: TContributeButtonProps) => {
+export const ApplyButton = ({ isLoading, error }: TApplyButtonProps) => {
   const { address } = useIdOS();
   const { projectId } = useProject();
   const { open } = useDialog();

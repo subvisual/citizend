@@ -5,8 +5,8 @@ type TTokenMetricsProps = {
   minTarget: bigint;
   maxTarget: bigint;
   totalTokensForSale: bigint;
-  minContribution: bigint;
-  maxContribution: bigint;
+  minContribution: string;
+  maxContribution: string;
 };
 
 const ProgressBar = ({

@@ -7,23 +7,9 @@ import { ArrowRight } from '../components/svg/arrow-right';
 import { getRelativePath } from '../utils/getRelativePath';
 import { BannerImage } from './banner-image';
 import { Status } from './status';
-
-const formatDateRange = (start: bigint, end: bigint) => {
-  try {
-    const dateFormatter = new Intl.DateTimeFormat('default', {
-      month: 'short',
-      day: 'numeric',
-      year: '2-digit',
-    });
-    const startDate = Number(start);
-    const endDate = Number(end);
-
-    return dateFormatter.formatRange(startDate, endDate);
-  } catch (error) {
-    console.error(error);
-    return '';
-  }
-};
+import { usdValue } from '../utils/intl-formaters/usd-value';
+import { usdRange } from '../utils/intl-formaters/usd-range';
+import { shortDateRange } from '../utils/intl-formaters/date-range';
 
 const Upcoming = ({
   minTarget,
@@ -32,14 +18,8 @@ const Upcoming = ({
   endRegistration,
   start,
 }: TProjectSaleDetails) => {
-  const rangeFormatter = new Intl.NumberFormat('default', {
-    style: 'currency',
-    currency: 'USD',
-    currencyDisplay: 'narrowSymbol',
-    maximumSignificantDigits: 1,
-  });
-  const targetedRaise = rangeFormatter.formatRange(minTarget, maxTarget);
-  const registerPeriod = formatDateRange(startRegistration, endRegistration);
+  const targetedRaise = usdRange(minTarget, maxTarget);
+  const registerPeriod = shortDateRange(startRegistration, endRegistration);
   const { days, hours, minutes, seconds } = useCountdown(start);
 
   return (
@@ -72,20 +52,9 @@ const FullData = ({
   maxContribution,
   totalTokensForSale,
 }: TProjectSaleDetails) => {
-  const rangeFormatter = new Intl.NumberFormat('default', {
-    style: 'currency',
-    currency: 'USD',
-    currencyDisplay: 'narrowSymbol',
-    maximumSignificantDigits: 1,
-  });
-  const valueFormatter = new Intl.NumberFormat('default', {
-    style: 'currency',
-    currency: 'USD',
-    currencyDisplay: 'narrowSymbol',
-  });
-  const targetedRaise = rangeFormatter.formatRange(minTarget, maxTarget);
-  const maxPrice = valueFormatter.format(maxContribution);
-  const minPrice = valueFormatter.format(minContribution);
+  const targetedRaise = usdRange(minTarget, maxTarget);
+  const maxPrice = usdValue(maxContribution);
+  const minPrice = usdValue(minContribution);
   const totalTokens = new Intl.NumberFormat('default').format(
     totalTokensForSale,
   );
@@ -145,7 +114,7 @@ export const ProjectCard = (props: TProjectSaleDetails) => {
 
   return (
     <Link
-      className="relative flex flex-col gap-4 rounded-2.5xl bg-mono-900 p-6 md:p-8"
+      className="relative flex flex-col gap-4 rounded-2.5xl bg-mono-900 p-6 md:max-w-md md:p-8"
       href={href}
     >
       <Status status={status} />

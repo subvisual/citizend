@@ -23,16 +23,26 @@ import {ERC20Pausable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC2
 contract Citizend is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
+    uint public lockEnd;
+
+    error TooEarly(uint time);
+
+    modifier onlyAfter(uint time) {
+        if (block.timestamp <= time) revert TooEarly(time);
+        _;
+    }
+
     /**
      * Grants `DEFAULT_ADMIN_ROLE` and `PAUSER_ROLE` to the target owner
      * that is passed in as an argument.
      *
      * See {ERC20-constructor}.
      */
-    constructor(address targetOwner) ERC20("Citizend", "CTND") {
-        _grantRole(DEFAULT_ADMIN_ROLE, targetOwner);
-        _grantRole(PAUSER_ROLE, targetOwner);
+    constructor(address _targetOwner, uint _lockEnd) ERC20("Citizend", "CTND") {
+        _grantRole(DEFAULT_ADMIN_ROLE, _targetOwner);
+        _grantRole(PAUSER_ROLE, _targetOwner);
         _mint(msg.sender, 1e8 ether);
+        lockEnd = _lockEnd;
     }
 
     function _update(
@@ -65,7 +75,25 @@ contract Citizend is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
      *
      * - the caller must have the `PAUSER_ROLE`.
      */
-    function unpause() external virtual onlyRole(PAUSER_ROLE) {
+    function unpause()
+        external
+        virtual
+        onlyRole(PAUSER_ROLE)
+        onlyAfter(lockEnd)
+    {
+        _unpause();
+    }
+
+    /**
+     * Unpauses all token transfers.
+     *
+     * See {ERC20Pausable} and {Pausable-_unpause}.
+     *
+     * Requirements:
+     *
+     * - the time must be after the lockEnd
+     */
+    function unpausePublic() external virtual onlyAfter(lockEnd) {
         _unpause();
     }
 }

@@ -43,7 +43,7 @@ contract DevDeployScript is Script {
         end = start + 60 * 60 * 24;
 
         MockERC20 token = new MockERC20("USDC", "USDC", 18);
-        Citizend citizend = new Citizend(owner);
+        Citizend citizend = new Citizend(owner, end);
         Sale sale = new Sale(
             address(token),
             5 ether,

@@ -31,7 +31,7 @@ contract ProjectTest is Test {
             )
         ];
 
-        citizend = new Citizend(alice);
+        citizend = new Citizend(alice, 0);
         project = new Project(
             "test project",
             address(citizend),

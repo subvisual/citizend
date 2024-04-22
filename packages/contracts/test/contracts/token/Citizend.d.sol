@@ -8,14 +8,14 @@ contract CitizendConstructorTest is Test {
     address constant alice = address(0x1);
 
     function testSetsCorrectParameters() public {
-        Citizend ctnd = new Citizend(alice);
+        Citizend ctnd = new Citizend(alice, 0);
 
         require(_stringEq(ctnd.name(), "Citizend"));
         require(_stringEq(ctnd.symbol(), "CTND"));
     }
 
     function testInitialMint() public {
-        Citizend ctnd = new Citizend(alice);
+        Citizend ctnd = new Citizend(alice, 0);
 
         uint256 expectedSupply = 1e8 ether;
         require(ctnd.totalSupply() == expectedSupply, "wrong supply");

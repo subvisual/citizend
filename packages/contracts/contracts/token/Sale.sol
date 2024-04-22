@@ -251,21 +251,6 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         );
     }
 
-    function claim() external capCalculated nonReentrant {
-        Account storage account = accounts[msg.sender];
-        require(!account.refunded, "already claimed");
-
-        if (refundAmount(msg.sender) != 0) {
-            refund(msg.sender);
-        }
-
-        uint256 capped = allocation(msg.sender);
-
-        IERC20(token).transfer(msg.sender, capped);
-
-        emit Claim(msg.sender, capped);
-    }
-
     /// @inheritdoc ISale
     function refund(
         address to

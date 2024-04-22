@@ -395,7 +395,10 @@ export const batchAbi = [
 export const citizendAbi = [
   {
     type: 'constructor',
-    inputs: [{ name: 'targetOwner', internalType: 'address', type: 'address' }],
+    inputs: [
+      { name: '_targetOwner', internalType: 'address', type: 'address' },
+      { name: '_lockEnd', internalType: 'uint256', type: 'uint256' },
+    ],
     stateMutability: 'nonpayable',
   },
   {
@@ -493,6 +496,13 @@ export const citizendAbi = [
   {
     type: 'function',
     inputs: [],
+    name: 'lockEnd',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
     name: 'name',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
     stateMutability: 'view',
@@ -577,6 +587,13 @@ export const citizendAbi = [
     type: 'function',
     inputs: [],
     name: 'unpause',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'unpausePublic',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -755,6 +772,11 @@ export const citizendAbi = [
   },
   { type: 'error', inputs: [], name: 'EnforcedPause' },
   { type: 'error', inputs: [], name: 'ExpectedPause' },
+  {
+    type: 'error',
+    inputs: [{ name: 'time', internalType: 'uint256', type: 'uint256' }],
+    name: 'TooEarly',
+  },
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -6412,13 +6434,6 @@ export const saleAbi = [
   {
     type: 'function',
     inputs: [],
-    name: 'claim',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
     name: 'end',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
@@ -7050,13 +7065,6 @@ export const saleTestAbi = [
     type: 'function',
     inputs: [],
     name: 'testBuyAboveMaximum',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'testBuyAndClaim',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -14068,6 +14076,14 @@ export const useReadCitizendHasRole = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"lockEnd"`
+ */
+export const useReadCitizendLockEnd = /*#__PURE__*/ createUseReadContract({
+  abi: citizendAbi,
+  functionName: 'lockEnd',
+})
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"name"`
  */
 export const useReadCitizendName = /*#__PURE__*/ createUseReadContract({
@@ -14198,6 +14214,15 @@ export const useWriteCitizendUnpause = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"unpausePublic"`
+ */
+export const useWriteCitizendUnpausePublic =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: citizendAbi,
+    functionName: 'unpausePublic',
+  })
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__
  */
 export const useSimulateCitizend = /*#__PURE__*/ createUseSimulateContract({
@@ -14289,6 +14314,15 @@ export const useSimulateCitizendUnpause =
   /*#__PURE__*/ createUseSimulateContract({
     abi: citizendAbi,
     functionName: 'unpause',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"unpausePublic"`
+ */
+export const useSimulateCitizendUnpausePublic =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: citizendAbi,
+    functionName: 'unpausePublic',
   })
 
 /**
@@ -21115,14 +21149,6 @@ export const useWriteSaleBuy = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"claim"`
- */
-export const useWriteSaleClaim = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  functionName: 'claim',
-})
-
-/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"grantRole"`
  */
 export const useWriteSaleGrantRole = /*#__PURE__*/ createUseWriteContract({
@@ -21219,14 +21245,6 @@ export const useSimulateSale = /*#__PURE__*/ createUseSimulateContract({
 export const useSimulateSaleBuy = /*#__PURE__*/ createUseSimulateContract({
   abi: saleAbi,
   functionName: 'buy',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"claim"`
- */
-export const useSimulateSaleClaim = /*#__PURE__*/ createUseSimulateContract({
-  abi: saleAbi,
-  functionName: 'claim',
 })
 
 /**
@@ -21517,15 +21535,6 @@ export const useWriteSaleTestTestBuyAboveMaximum =
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyAndClaim"`
- */
-export const useWriteSaleTestTestBuyAndClaim =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: saleTestAbi,
-    functionName: 'testBuyAndClaim',
-  })
-
-/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyBelowMinimum"`
  */
 export const useWriteSaleTestTestBuyBelowMinimum =
@@ -21600,15 +21609,6 @@ export const useSimulateSaleTestTestBuyAboveMaximum =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleTestAbi,
     functionName: 'testBuyAboveMaximum',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyAndClaim"`
- */
-export const useSimulateSaleTestTestBuyAndClaim =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: saleTestAbi,
-    functionName: 'testBuyAndClaim',
   })
 
 /**

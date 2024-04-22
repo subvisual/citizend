@@ -37,7 +37,7 @@ contract SaleTest is Test {
         end = start + 60 * 60 * 24;
 
         paymentToken = new MockERC20("USDC", "USDC", 18);
-        token = new Citizend(owner);
+        token = new Citizend(owner, end);
         sale = new Sale(
             address(paymentToken),
             5 ether,
@@ -144,30 +144,5 @@ contract SaleTest is Test {
         require(sale.risingTide_totalAllocatedUncapped() == 2 ether);
 
         vm.stopPrank();
-    }
-
-    function testBuyAndClaim() public {
-        require(token.balanceOf(alice) == 0 ether);
-
-        vm.prank(alice);
-        sale.buy(2 ether);
-
-        vm.warp(end + 1000);
-
-        require(sale.uncappedAllocation(address(alice)) == 2 ether);
-
-        vm.prank(owner);
-        sale.setIndividualCap(2 ether);
-
-        require(sale.risingTide_isValidCap(), "not valid cap");
-        require(sale.allocation(address(alice)) == 2 ether);
-
-        vm.expectEmit();
-        emit Claim(address(alice), 2 ether);
-
-        vm.prank(alice);
-        sale.claim();
-
-        require(token.balanceOf(alice) == 2 ether);
     }
 }

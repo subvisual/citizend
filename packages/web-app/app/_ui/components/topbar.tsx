@@ -1,13 +1,12 @@
 'use client';
 
-import Image from 'next/image';
-
 import { WalletButton } from '@/app/_ui/components';
 import { NavLink } from './nav-link';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { NavigationMobile } from './navigation-mobile';
 import { CitizendLogo } from './svg/citizend-logo';
+import { MyProjectsLink } from './internal-navigation';
 
 export const useScrollPosition = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -45,7 +44,7 @@ export function Topbar() {
         <CitizendLogo className="h-8 w-24 md:h-[52px] md:w-[157px]" />
         <nav className="ml-20 hidden flex-grow items-center gap-8 md:flex">
           <NavLink href="/" name="All Projects" topbar />
-          <NavLink href="/projects/my-projects" name="My Projects" topbar />
+          <MyProjectsLink topbar />
         </nav>
         <div className="ml-auto flex flex-row gap-6">
           <div id="idos" className="mr-3 h-12 md:self-center" />

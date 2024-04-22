@@ -6,7 +6,7 @@ import { Twitter } from './svg/Twitter';
 const resources = [
   {
     name: 'Website',
-    href: '#',
+    href: 'https://citizend.xyz/',
     icon: () => (
       <svg
         width="52"
@@ -53,7 +53,7 @@ const resources = [
   },
   {
     name: 'Discord',
-    href: '#',
+    href: 'https://discord.gg/sXDnhmQM',
     icon: () => (
       <svg
         width="51"
@@ -80,12 +80,12 @@ const resources = [
   },
   {
     name: 'X',
-    href: '#',
+    href: 'https://twitter.com/citizendxyz',
     icon: Twitter,
   },
   {
     name: 'Telegram',
-    href: '#',
+    href: 'https://t.me/+QcSyoxz9bpYyZDhk',
     icon: () => (
       <svg
         width="52"

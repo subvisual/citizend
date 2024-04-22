@@ -1,52 +1,14 @@
 import Link from 'next/link';
 import { Twitter } from '../components/svg/Twitter';
 import { Fractal } from '../components/svg/Fractal';
+import { dateRange } from '../utils/intl-formaters/date-range';
+import { formatDate } from '../utils/intl-formaters/date';
 
 type TProjectInformationProps = {
   saleDate: bigint;
   startRegistration: bigint;
   endRegistration: bigint;
   applied: boolean;
-};
-
-const formatDate = (date: bigint) => {
-  try {
-    const numberDate = parseInt(date.toString());
-
-    return new Intl.DateTimeFormat('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      hour12: true,
-      timeZoneName: 'short',
-    }).format(numberDate);
-  } catch (error) {
-    console.log(error);
-    return '';
-  }
-};
-
-const formatDateRange = (start: bigint, end: bigint) => {
-  try {
-    const dateFormatter = new Intl.DateTimeFormat('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour12: true,
-      timeZoneName: 'short',
-    });
-
-    const startDate = parseInt(start.toString());
-    const endDate = parseInt(end.toString());
-
-    const result = dateFormatter.formatRange(startDate, endDate);
-
-    return result.replace('–', 'to');
-  } catch (error) {
-    console.error(error);
-    return '';
-  }
 };
 
 export const ProjectInformation = ({
@@ -56,7 +18,7 @@ export const ProjectInformation = ({
   applied,
 }: TProjectInformationProps) => {
   const sale = formatDate(saleDate);
-  const registrations = formatDateRange(startRegistration, endRegistration);
+  const registrations = dateRange(startRegistration, endRegistration);
 
   return (
     <div className="flex w-full flex-col rounded-lg bg-mono-50 text-mono-950">

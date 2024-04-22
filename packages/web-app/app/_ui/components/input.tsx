@@ -29,6 +29,16 @@ const Units = ({ units }: { units: string | JSX.Element }) => {
   return units;
 };
 
+const getBaseStyles = (disabled: boolean, transparent: boolean) => {
+  if (disabled) {
+    return 'bg-mono-200 text-mono-800';
+  }
+  if (transparent) {
+    return 'border-mono-800 bg-transparent text-mono-50 placeholder:text-mono-400 focus:text-mono-50 active:text-mono-50';
+  }
+  return 'hover:border-mono-400 focus:text-mono-950 focus:ring-blue-500 active:border-blue-500 active:text-mono-950 border-mono-200 text-mono-800';
+};
+
 export const Input = memo(
   ({
     label,
@@ -36,7 +46,7 @@ export const Input = memo(
     onChange,
     error,
     units,
-    disabled,
+    disabled = false,
     className,
     variant = 'text',
     hideLabel = false,
@@ -79,12 +89,7 @@ export const Input = memo(
             disabled={disabled}
             className={clsx(
               'w-full rounded-md border px-6 py-4 pr-2 transition-colors duration-200 ease-in-out',
-              disabled
-                ? 'bg-mono-200 text-mono-800'
-                : ' hover:border-mono-400 focus:text-mono-950 focus:ring-blue-500 active:border-blue-500 active:text-mono-950',
-              transparent && !disabled
-                ? 'border-mono-800 bg-transparent text-mono-50 placeholder:text-mono-400 focus:text-mono-50 active:text-mono-50'
-                : 'border-mono-200 text-mono-800',
+              getBaseStyles(disabled, transparent),
               error && 'border-red-700',
             )}
             id={id}

@@ -1,13 +1,13 @@
 'use client';
 
 import { TProjectSaleDetails } from '@/app/_types';
-import { Spinner } from '../components/svg/spinner';
 import { useMyProjects } from '@/app/_lib/hooks';
 import { usdRange } from '../utils/intl-formaters/usd-range';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getRelativePath } from '../utils/getRelativePath';
 import { NoProjects } from './no-projects';
+import { MyProjectSkeleton } from './my-project';
 
 const ProjectRow = ({
   logo,
@@ -41,9 +41,7 @@ const ProjectRow = ({
 export default function MyProjects() {
   const { data, isLoading, error } = useMyProjects();
   if (isLoading || (!data && !error)) {
-    return (
-      <Spinner className="mx-auto h-40 w-40 animate-spin-slow text-mono-50" />
-    );
+    return <MyProjectSkeleton />;
   }
 
   if (error)

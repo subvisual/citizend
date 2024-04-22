@@ -8,7 +8,7 @@ export const Projects = () => {
   const { data, isLoading, isError } = useFetchProjectsSaleDetails();
 
   if (isLoading || (!data && !isError)) {
-    return <CardSkeleton height={'532px'} width={'433px'} />;
+    return <CardSkeleton className="h-[532px] md:w-[433px]" />;
   }
 
   if (isError) return <div>Something went wrong...</div>;

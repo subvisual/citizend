@@ -1,6 +1,4 @@
-import { useHasProjectGrant } from '@/app/_lib/hooks';
 import { useProject } from '@/app/_providers/project/context';
-import { Spinner } from '../components/svg/spinner';
 import { useFetchProjectsSaleDetails } from '@/app/_lib/queries';
 import { NavLink } from '../components/nav-link';
 import { Right } from '../components/svg/right';
@@ -10,6 +8,7 @@ import { getRelativePath } from '../utils/getRelativePath';
 import { usdRange } from '../utils/intl-formaters/usd-range';
 import { formatDate } from '../utils/intl-formaters/date';
 import { EdgeLink } from '../components/edge';
+import { CardSkeleton } from '../components/skeletons/card-skeleton';
 
 const Header = ({
   project,
@@ -82,6 +81,19 @@ const MyTokens = () => {
   );
 };
 
+export const MyProjectSkeleton = () => (
+  <div className="display flex flex-col gap-8">
+    <div className="mb-6 h-12 w-1/2 animate-pulse rounded-md bg-gradient-to-r from-mono-800 to-mono-900" />
+    <CardSkeleton className="h-[12rem] rounded-md" />
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+      <CardSkeleton className="h-[12rem] rounded-md" />
+      <div className="md:col-span-2">
+        <CardSkeleton className="h-[12rem] rounded-md" />
+      </div>
+    </div>
+  </div>
+);
+
 export const MyProject = () => {
   const { projectId } = useProject();
   const {
@@ -96,9 +108,7 @@ export const MyProject = () => {
   const error = detailsError;
 
   if (isLoading || (!saleDetails && !error)) {
-    return (
-      <Spinner className="mx-auto h-40 w-40 animate-spin-slow text-mono-50" />
-    );
+    return <MyProjectSkeleton />;
   }
 
   if (error)

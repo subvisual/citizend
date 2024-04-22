@@ -13,6 +13,7 @@ import {
 } from '@/wagmi.generated';
 import { formatEther } from 'viem';
 import { usdValue } from '../utils/intl-formaters/usd-value';
+import { Spinner } from '../components/svg/spinner';
 
 const useMaxParticipants = () => {
   const { data: maxTarget } = useReadCtzndSaleMaxTarget();
@@ -61,6 +62,7 @@ export const ProjectContribution = () => {
     useWriteCtzndSaleBuy();
   const maxParticipants = useMaxParticipants();
   const onSubmit = () => {
+    if (amount <= 0) return;
     writeContract({ args: [BigInt(amount)] });
   };
 
@@ -82,6 +84,8 @@ export const ProjectContribution = () => {
           error={errorMessage}
           className="col-span-2 md:col-span-1"
           onSubmit={onSubmit}
+          defaultValue={amount}
+          min={0}
         />
         <Input
           label="You Get"
@@ -118,11 +122,12 @@ export const ProjectContribution = () => {
         </p>
       </div>
       <Button
-        variant="primary"
         className="w-full rounded-none"
         onClick={onSubmit}
+        disabled={amount <= 0}
+        variant={amount <= 0 ? 'primary-disabled' : 'primary'}
       >
-        Contribute
+        {isPending ? <Spinner /> : 'Contribute'}
       </Button>
     </div>
   );

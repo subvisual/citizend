@@ -55,13 +55,6 @@ export const Input = memo(
     ...props
   }: IInputProps) => {
     const handleChange = useDebounce(onChange || defaultOnChange, 300);
-    const defaults =
-      variant === 'number'
-        ? { type: 'number', defaultValue: 0, min: 0 }
-        : {
-            type: 'text',
-            defaultValue: '',
-          };
 
     // handle enter key to submit form
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -84,7 +77,6 @@ export const Input = memo(
         </label>
         <div className="relative">
           <input
-            {...defaults}
             onKeyDown={handleKeyDown}
             disabled={disabled}
             className={clsx(

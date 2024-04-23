@@ -2,11 +2,21 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useIdOS } from '../_providers/idos';
 import { insertGrantBySignature } from '../_server/idos/grants';
 import { useFetchGrantMessage } from './contract-queries';
-import { useSignMessage } from 'wagmi';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useAccount, useSignMessage } from 'wagmi';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFetchNewDataId } from './queries';
 import { getServerPublicInfo } from '../_server/info';
 import { subscribeToNewsletter } from '../_server/active-campaign';
+import {
+  ctzndSaleAddress,
+  useReadCtzndSalePaymentToken,
+  useReadCtzndSalePaymentTokenToToken,
+  useReadErc20Allowance,
+  useWriteCtzndSaleBuy,
+  useWriteErc20Approve,
+} from '@/wagmi.generated';
+import { sepolia } from 'viem/chains';
+import { formatEther, parseEther } from 'viem';
 
 export const useAcquireAccessGrantMutation = () => {
   const { sdk } = useIdOS();
@@ -190,5 +200,78 @@ export const useSignDelegatedAccessGrant = (
     isGrantInsertSuccess,
     transactionHash,
     insertError,
+  };
+};
+
+export const useContributeToCtznd = (address: `0x${string}`) => {
+  const [state, setState] = useState();
+  const [amount, setAmount] = useState(0);
+  const amountInWei = useMemo(() => parseEther(amount.toString()), [amount]);
+
+  const {
+    writeContract: writeBuy,
+    data: contributionTxHash,
+    isPending: isWritePending,
+    error: buyError,
+  } = useWriteCtzndSaleBuy();
+  const {
+    writeContract: approveContract,
+    data: allowanceTxHash,
+    error: allowanceError,
+    isPending: isApprovePending,
+  } = useWriteErc20Approve();
+  const { data: paymentToken } = useReadCtzndSalePaymentToken();
+  const saleAddress = ctzndSaleAddress[sepolia.id];
+  const { data: allowance } = useReadErc20Allowance({
+    address: paymentToken,
+    args: [address, saleAddress],
+    query: {
+      refetchInterval: 1000,
+    },
+  });
+  const { data: tokensToBuy, error: tokenError } =
+    useReadCtzndSalePaymentTokenToToken({
+      args: [amountInWei],
+    });
+
+  const diffToAllowance = useMemo(
+    () => (allowance || BigInt(0)) - amountInWei,
+    [allowance, amountInWei],
+  );
+
+  const submit = () => {
+    if (
+      amount <= 0 ||
+      allowance === undefined ||
+      paymentToken === undefined ||
+      tokensToBuy === undefined
+    ) {
+      return;
+    }
+
+    if (diffToAllowance < 0) {
+      return approveContract({
+        address: paymentToken,
+        args: [saleAddress, amountInWei],
+      });
+    }
+
+    writeBuy({ args: [tokensToBuy] });
+  };
+
+  return {
+    contributionTxHash,
+    allowanceTxHash,
+    diffToAllowance,
+    amount,
+    amountInWei,
+    setAmount,
+    tokensToBuy,
+    isPending: isApprovePending || isWritePending,
+    error: buyError || allowanceError || tokenError,
+    buyError,
+    allowanceError,
+    tokenError,
+    submit,
   };
 };

@@ -10,7 +10,7 @@ export default defineConfig({
       contracts: [
         {
           name: "CtzndSale",
-          address: "0xb27D23387324401F829C8C0B73a3Df10a72c4080",
+          address: "0x15F25822d5E12B07A44790d72BD7FA4c4Bdf6453",
         },
       ],
     }),

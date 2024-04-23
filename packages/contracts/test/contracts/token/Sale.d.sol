@@ -76,11 +76,18 @@ contract SaleTest is Test {
 
     function testBuy() public {
         vm.startPrank(alice);
+
+        uint256 beforeBalance = paymentToken.balanceOf(alice);
+        require(beforeBalance == 100 ether);
+
         vm.expectEmit();
 
         emit Purchase(address(alice), 5 ether, 1 ether);
 
         sale.buy(1 ether);
+
+        uint256 afterBalance = paymentToken.balanceOf(alice);
+        require(afterBalance == 95 ether);
 
         require(sale.risingTide_totalAllocatedUncapped() == 1 ether);
 

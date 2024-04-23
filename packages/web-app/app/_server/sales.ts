@@ -1,7 +1,13 @@
 'use server';
 
 import { ctzndSaleAbi, ctzndSaleAddress } from '@/wagmi.generated';
-import { createWalletClient, getContract, http, publicActions } from 'viem';
+import {
+  createWalletClient,
+  formatEther,
+  getContract,
+  http,
+  publicActions,
+} from 'viem';
 import { sepolia } from 'viem/chains';
 import { TProjectSaleDetails, TProjectStatus } from '../_types';
 import { TInternalError } from './types';
@@ -66,8 +72,8 @@ export const saleDetails = async (): Promise<
         maxTarget: contractResults[3],
         start: contractResults[4],
         end: contractResults[5],
-        minContribution: contractResults[6],
-        maxContribution: contractResults[7],
+        minContribution: formatEther(contractResults[6]),
+        maxContribution: formatEther(contractResults[7]),
         totalTokensForSale: contractResults[8],
         startRegistration: contractResults[9],
         endRegistration: contractResults[10],

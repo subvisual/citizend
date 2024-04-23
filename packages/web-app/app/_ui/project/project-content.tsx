@@ -8,10 +8,10 @@ import { TokenMetrics } from './token-metrics';
 import { ApplyButton } from './apply-button';
 import { useFetchProjectsSaleDetails } from '@/app/_lib/queries';
 import { useProject } from '@/app/_providers/project/context';
-import { Spinner } from '../components/svg/spinner';
 import { ProjectContribution } from './project-contribution';
 import { useHasCitizendGrant, useHasProjectGrant } from '@/app/_lib/hooks';
 import { AppliedSuccess } from './applied-success';
+import { CardSkeleton } from '../components/skeletons/card-skeleton';
 
 const generateTabClassName = ({ selected }: { selected: boolean }) =>
   clsx(
@@ -36,7 +36,14 @@ export const ProjectContent = () => {
 
   if (isLoading || (!data && !isError)) {
     return (
-      <Spinner className="mx-auto h-40 w-40 animate-spin-slow text-mono-50" />
+      <div className="grid grid-cols-1 gap-6  md:grid-cols-2">
+        <CardSkeleton className="h-[544px]" />
+        <div className="flex flex-col gap-6">
+          <CardSkeleton className="h-36" />
+          <CardSkeleton className="h-80" />
+          <CardSkeleton className="h-24" />
+        </div>
+      </div>
     );
   }
 
@@ -125,7 +132,9 @@ export const ProjectContent = () => {
             maxContribution={maxContribution}
             totalTokensForSale={totalTokensForSale}
           />
-          {hasGrant ? <AppliedSuccess /> : null}
+          {hasGrant && process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+            <AppliedSuccess />
+          ) : null}
           {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !hasGrant ? (
             <ApplyButton isLoading={isLoading} error={errorLoadingGrant} />
           ) : null}

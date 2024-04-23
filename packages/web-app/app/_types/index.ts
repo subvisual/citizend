@@ -34,8 +34,8 @@ export type TProjectSaleDetails = {
   maxTarget: bigint;
   start: bigint;
   end: bigint;
-  minContribution: bigint;
-  maxContribution: bigint;
+  minContribution: string;
+  maxContribution: string;
   totalTokensForSale: bigint;
   startRegistration: bigint;
   endRegistration: bigint;

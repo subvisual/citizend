@@ -33,14 +33,7 @@ export function WalletButton() {
   return (
     <div className="h-14">
       <ConnectButton.Custom>
-        {({
-          account,
-          chain,
-          openAccountModal,
-          openChainModal,
-          openConnectModal,
-          mounted,
-        }) => {
+        {({ account, chain, openChainModal, openConnectModal, mounted }) => {
           const connected = mounted && account && chain && isConnected;
 
           if (!mounted)
@@ -72,6 +65,10 @@ export function WalletButton() {
                 <ConnectedButton displayBalance={account.displayBalance} />
               );
             }
+
+            return (
+              <div className="h-14 w-44 animate-pulse rounded-md bg-gradient-to-br from-mono-800 to-mono-900" />
+            );
           })();
         }}
       </ConnectButton.Custom>

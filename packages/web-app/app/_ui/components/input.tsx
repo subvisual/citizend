@@ -31,7 +31,7 @@ const Units = ({ units }: { units: string | JSX.Element }) => {
 
 const getBaseStyles = (disabled: boolean, transparent: boolean) => {
   if (disabled) {
-    return 'bg-mono-200 text-mono-800';
+    return 'bg-blue-100 text-mono-800 border-mono-200';
   }
   if (transparent) {
     return 'border-mono-800 bg-transparent text-mono-50 placeholder:text-mono-400 focus:text-mono-50 active:text-mono-50';
@@ -55,13 +55,6 @@ export const Input = memo(
     ...props
   }: IInputProps) => {
     const handleChange = useDebounce(onChange || defaultOnChange, 300);
-    const defaults =
-      variant === 'number'
-        ? { type: 'number', defaultValue: 0, min: 0 }
-        : {
-            type: 'text',
-            defaultValue: '',
-          };
 
     // handle enter key to submit form
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -84,7 +77,6 @@ export const Input = memo(
         </label>
         <div className="relative">
           <input
-            {...defaults}
             onKeyDown={handleKeyDown}
             disabled={disabled}
             className={clsx(

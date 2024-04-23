@@ -33,7 +33,7 @@ export function Button({
       disabled={disabled}
       onClick={onClick}
       className={clsx(
-        'inline-flex select-none items-center justify-center gap-1 rounded-md px-6 py-4 font-medium',
+        'inline-flex select-none items-center justify-center gap-1 rounded-md px-6 py-4 font-medium transition-all duration-500 ease-in-out',
         variantClasses[variant],
         !disabled &&
           'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mono-400',

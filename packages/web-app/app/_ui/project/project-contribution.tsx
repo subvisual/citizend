@@ -10,11 +10,14 @@ import {
   useReadCtzndSaleMinTarget,
   useWriteCtzndSaleBuy,
   useReadCtzndSaleRate,
+  useWriteErc20Approve,
+  ctzndSaleAddress,
 } from '@/wagmi.generated';
-import { formatEther } from 'viem';
+import { formatEther, parseEther } from 'viem';
 import { usdValue } from '../utils/intl-formaters/usd-value';
 import { Spinner } from '../components/svg/spinner';
 import { number } from '../utils/intl-formaters/number';
+import { sepolia } from 'viem/chains';
 
 const useMaxParticipants = () => {
   const { data: maxTarget } = useReadCtzndSaleMaxTarget();
@@ -61,12 +64,24 @@ export const ProjectContribution = () => {
 
   const { writeContract, data, isError, isPending, isPaused, error } =
     useWriteCtzndSaleBuy();
+  const { writeContract: approveContract, isError: isApproveError } =
+    useWriteErc20Approve();
+
   const maxParticipants = useMaxParticipants();
+
   const onSubmit = () => {
     if (amount <= 0) return;
-    writeContract({ args: [BigInt(amount)] });
+    const value = parseEther(amount.toString());
+    const address = ctzndSaleAddress[sepolia.id] as `0x${string}`;
+    approveContract({
+      address,
+      args: [address, value],
+    });
+    writeContract({ args: [value] });
   };
+
   const errorMessage = getErrorMessage(amount, error);
+  console.log(error);
 
   return (
     <div className="flex w-full flex-col rounded-lg bg-mono-50 text-mono-950">

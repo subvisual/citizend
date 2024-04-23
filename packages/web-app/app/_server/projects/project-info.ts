@@ -1,9 +1,11 @@
+import { sepolia } from 'viem/chains';
 import { TProjectsPublicInfo } from '../types';
+import { ctzndSaleAddress } from '@/wagmi.generated';
 
 export const projectsInfo: TProjectsPublicInfo = {
   citizend: {
     id: 'citizendProject',
-    address: '0x2a1a131b7f95bbee473c9d682e101c5deb77460f',
+    address: ctzndSaleAddress[sepolia.id],
     publicKey: 'UeniAEcuLfG5uXqxu00frjkzS9DTFnQFnCwG+FsMmxk',
   },
   idos: {

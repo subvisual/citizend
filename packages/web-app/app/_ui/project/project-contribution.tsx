@@ -14,6 +14,7 @@ import {
 import { formatEther } from 'viem';
 import { usdValue } from '../utils/intl-formaters/usd-value';
 import { Spinner } from '../components/svg/spinner';
+import { number } from '../utils/intl-formaters/number';
 
 const useMaxParticipants = () => {
   const { data: maxTarget } = useReadCtzndSaleMaxTarget();
@@ -65,7 +66,6 @@ export const ProjectContribution = () => {
     if (amount <= 0) return;
     writeContract({ args: [BigInt(amount)] });
   };
-
   const errorMessage = getErrorMessage(amount, error);
 
   return (
@@ -102,19 +102,27 @@ export const ProjectContribution = () => {
         </div>
         <div>
           <p className="text-mono-800">Min. contribution</p>
-          <p>{minContribution ? usdValue(formatEther(minContribution)) : ''}</p>
+          <p>
+            {minContribution !== undefined
+              ? usdValue(formatEther(minContribution))
+              : ''}
+          </p>
         </div>
         <div>
           <p className="text-mono-800">Max. contribution</p>
-          <p>{maxContribution ? usdValue(formatEther(maxContribution)) : ''}</p>
+          <p>
+            {maxContribution !== undefined
+              ? usdValue(formatEther(maxContribution))
+              : ''}
+          </p>
         </div>
         <div>
           <p className="text-mono-800">Current contributors</p>
-          <p>{investorCount?.toString()}</p>
+          <p>{number(investorCount || 0)}</p>
         </div>
         <div>
           <p className="text-mono-800">Max. participants</p>
-          <p>{maxParticipants.toString()}</p>
+          <p>{number(maxParticipants)}</p>
         </div>
         <p className="col-span-2 text-mono-800">
           *Contribution amount/token allocation amount fluctuates depending on

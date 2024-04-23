@@ -36,11 +36,13 @@ contract DevDeployScript is Script {
 
         bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
 
-        startRegistration = 1714089600000;
-        endRegistration = 1714694400000;
+        startRegistration = 1713866628;
+        endRegistration = 1714780799;
+        start = 1713866628;
+        end = 1714780799;
 
-        start = vm.getBlockTimestamp();
-        end = start + 60 * 60 * 24;
+        // start = vm.getBlockTimestamp();
+        // end = start + 60 * 60 * 24;
 
         MockERC20 token = new MockERC20("USDC", "USDC", 18);
         Citizend citizend = new Citizend(owner, end);

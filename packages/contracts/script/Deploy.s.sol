@@ -10,10 +10,10 @@ contract DeployScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        uint256 start = 1713744000000;
-        uint256 end = 1713830400000;
-        uint256 startRegistration = 1712930400000;
-        uint256 endRegistration = 1713535200000;
+        uint256 start = 1713866628;
+        uint256 end = 1714780799;
+        uint256 startRegistration = 1713866628;
+        uint256 endRegistration = 1714780799;
 
         MockERC20 token = new MockERC20("USDC", "USDC", 18);
         Sale sale = new Sale(

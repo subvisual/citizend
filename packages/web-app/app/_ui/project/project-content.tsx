@@ -12,6 +12,7 @@ import { ProjectContribution } from './project-contribution';
 import { useHasCitizendGrant, useHasProjectGrant } from '@/app/_lib/hooks';
 import { AppliedSuccess } from './applied-success';
 import { CardSkeleton } from '../components/skeletons/card-skeleton';
+import { useAccount } from 'wagmi';
 
 const generateTabClassName = ({ selected }: { selected: boolean }) =>
   clsx(
@@ -20,6 +21,7 @@ const generateTabClassName = ({ selected }: { selected: boolean }) =>
   );
 
 export const ProjectContent = () => {
+  const { address } = useAccount();
   const { projectId } = useProject();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { data, isLoading, isError, error } = useFetchProjectsSaleDetails();
@@ -34,7 +36,7 @@ export const ProjectContent = () => {
   );
   const hasGrant = hasProjectGrant && hasCitizendGrant;
 
-  if (isLoading || (!data && !isError)) {
+  if (isLoading || isLoadingGrant || (!data && !isError)) {
     return (
       <div className="grid grid-cols-1 gap-6  md:grid-cols-2">
         <CardSkeleton className="h-[544px]" />
@@ -80,8 +82,10 @@ export const ProjectContent = () => {
               <CitizendProjectDescription />
             </Tab.Panel>
             <Tab.Panel className="flex flex-col gap-8 focus:outline-none">
-              {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
-                <ProjectContribution />
+              {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' &&
+              hasGrant &&
+              address ? (
+                <ProjectContribution userAddress={address} />
               ) : null}
               {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
                 <ProjectInformation
@@ -98,7 +102,9 @@ export const ProjectContent = () => {
                 maxContribution={maxContribution}
                 totalTokensForSale={totalTokensForSale}
               />
-              {hasGrant ? <AppliedSuccess /> : null}
+              {hasGrant && process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+                <AppliedSuccess />
+              ) : null}
               {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !hasGrant ? (
                 <ApplyButton
                   isLoading={isLoadingGrant}
@@ -111,8 +117,10 @@ export const ProjectContent = () => {
       </div>
       <div className="hidden grid-cols-2 gap-x-8 md:grid">
         <div className="flex flex-col gap-16">
-          {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
-            <ProjectContribution />
+          {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' &&
+          hasGrant &&
+          address ? (
+            <ProjectContribution userAddress={address} />
           ) : null}
           <CitizendProjectDescription />
         </div>

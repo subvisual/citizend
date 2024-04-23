@@ -9,6 +9,12 @@ import { usdRange } from '../utils/intl-formaters/usd-range';
 import { formatDate } from '../utils/intl-formaters/date';
 import { EdgeLink } from '../components/edge';
 import { CardSkeleton } from '../components/skeletons/card-skeleton';
+import {
+  useReadCtzndSaleInvestorCount,
+  useReadCtzndSaleUncappedAllocation,
+} from '@/wagmi.generated';
+import { useAccount } from 'wagmi';
+import { formatEther } from 'viem';
 
 const Header = ({
   project,
@@ -16,6 +22,9 @@ const Header = ({
   minTarget,
   maxTarget,
 }: TProjectSaleDetails) => {
+  const { data: contributions } = useReadCtzndSaleInvestorCount();
+  const totalContributions = contributions ? contributions.toString() : 0;
+
   return (
     <div className="flex flex-col rounded-md bg-mono-50 px-6 py-8 text-mono-950">
       <h2 className="flex items-center gap-4 text-2xl">
@@ -30,7 +39,7 @@ const Header = ({
       <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-3 md:px-14 md:pt-8">
         <div className="flex flex-col gap-2 md:border-r md:border-mono-200">
           <h3 className="text-sm text-mono-800">Contributions</h3>
-          <div>0</div>
+          <div>{totalContributions}</div>
         </div>
         <div className="flex flex-col gap-2 md:border-r md:border-mono-200">
           <h3 className="text-sm text-mono-800">Target Raise</h3>
@@ -47,10 +56,18 @@ const Header = ({
 
 const MyContribution = () => {
   const { projectId } = useProject();
+
+  const { address } = useAccount();
+  const { data: contributions } = useReadCtzndSaleUncappedAllocation({
+    args: [address!],
+  });
+
+  const myContributions = contributions ? formatEther(contributions!) : 0;
+
   return (
     <div className="flex flex-col gap-2 rounded-md bg-mono-50 px-6 py-8 text-mono-950">
       <h3 className="text-sm text-mono-800">Contributions</h3>
-      <div className="text-3.5xl">0 USDC</div>
+      <div className="text-3.5xl">{`${myContributions} USDC`}</div>
       <div className="self-center pt-6">
         <EdgeLink href={`/projects/${projectId}`}>New Contribution</EdgeLink>
       </div>

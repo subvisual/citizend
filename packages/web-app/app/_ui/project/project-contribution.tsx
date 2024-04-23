@@ -1,32 +1,12 @@
 'use client';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback } from 'react';
 import { Input } from '../components/input';
 import { Button } from '../components';
-import {
-  useReadCtzndSaleMaxContribution,
-  useReadCtzndSaleMinContribution,
-  useReadCtzndSaleInvestorCount,
-  useReadCtzndSaleMaxTarget,
-  useReadCtzndSaleMinTarget,
-  useWriteCtzndSaleBuy,
-  useReadCtzndSaleRate,
-  useWriteErc20Approve,
-  ctzndSaleAddress,
-} from '@/wagmi.generated';
-import { formatEther, parseEther } from 'viem';
-import { usdValue } from '../utils/intl-formaters/usd-value';
+
 import { Spinner } from '../components/svg/spinner';
-import { number } from '../utils/intl-formaters/number';
-import { sepolia } from 'viem/chains';
-
-const useMaxParticipants = () => {
-  const { data: maxTarget } = useReadCtzndSaleMaxTarget();
-  const { data: minTarget } = useReadCtzndSaleMinTarget();
-
-  if (!maxTarget || !minTarget) return 0;
-
-  return BigInt(maxTarget) - BigInt(minTarget);
-};
+import { DataFields } from './contribution/DataFields';
+import { useContributeToCtznd } from '@/app/_lib/actions';
+import { formatEther } from 'viem';
 
 const getErrorMessage = (amount: number, error: any) => {
   if (amount < 0) {
@@ -44,44 +24,33 @@ const getErrorMessage = (amount: number, error: any) => {
   return null;
 };
 
-export const ProjectContribution = () => {
-  const [amount, setAmount] = useState(0);
+type TProjectContribution = {
+  userAddress: `0x${string}`;
+};
+
+export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
+  const {
+    diffToAllowance,
+    contributionTxHash,
+    amount,
+    tokensToBuy,
+    tokenError,
+    setAmount,
+    buyError,
+    allowanceError,
+    isPending,
+    submit: onSubmit,
+  } = useContributeToCtznd(userAddress);
+
   const updateAmount = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = evt.target;
       setAmount(Number(value));
     },
-    [],
-  );
-  const { data: maxContribution } = useReadCtzndSaleMaxContribution();
-  const { data: minContribution } = useReadCtzndSaleMinContribution();
-  const { data: investorCount } = useReadCtzndSaleInvestorCount();
-  const { data: saleRate } = useReadCtzndSaleRate();
-  const ctndTokens = useMemo(
-    () => (saleRate && amount ? BigInt(amount) * BigInt(saleRate) : 0),
-    [saleRate, amount],
+    [setAmount],
   );
 
-  const { writeContract, data, isError, isPending, isPaused, error } =
-    useWriteCtzndSaleBuy();
-  const { writeContract: approveContract, isError: isApproveError } =
-    useWriteErc20Approve();
-
-  const maxParticipants = useMaxParticipants();
-
-  const onSubmit = () => {
-    if (amount <= 0) return;
-    const value = parseEther(amount.toString());
-    const address = ctzndSaleAddress[sepolia.id] as `0x${string}`;
-    approveContract({
-      address,
-      args: [address, value],
-    });
-    writeContract({ args: [value] });
-  };
-
-  const errorMessage = getErrorMessage(amount, error);
-  console.log(error);
+  const errorMessage = getErrorMessage(amount, buyError || allowanceError);
 
   return (
     <div className="flex w-full flex-col rounded-lg bg-mono-50 text-mono-950">
@@ -108,50 +77,37 @@ export const ProjectContribution = () => {
           id="ctnd-amount"
           units="CTND*"
           disabled
-          value={ctndTokens.toString()}
+          value={tokensToBuy ? formatEther(tokensToBuy).toString() : 0}
+          error={tokenError?.shortMessage || tokenError?.message}
           className="col-span-2 md:col-span-1"
         />
-        <div className="md:col-span-2">
-          <p className="text-mono-800">Current price</p>
-          <p>0.1 USDC*</p>
-        </div>
-        <div>
-          <p className="text-mono-800">Min. contribution</p>
-          <p>
-            {minContribution !== undefined
-              ? usdValue(formatEther(minContribution))
-              : ''}
-          </p>
-        </div>
-        <div>
-          <p className="text-mono-800">Max. contribution</p>
-          <p>
-            {maxContribution !== undefined
-              ? usdValue(formatEther(maxContribution))
-              : ''}
-          </p>
-        </div>
-        <div>
-          <p className="text-mono-800">Current contributors</p>
-          <p>{number(investorCount || 0)}</p>
-        </div>
-        <div>
-          <p className="text-mono-800">Max. participants</p>
-          <p>{number(maxParticipants)}</p>
-        </div>
+        <DataFields />
         <p className="col-span-2 text-mono-800">
           *Contribution amount/token allocation amount fluctuates depending on
           the number of contributors and their desired contribution.
         </p>
       </div>
-      <Button
-        className="w-full rounded-none"
-        onClick={onSubmit}
-        disabled={amount <= 0}
-        variant={amount <= 0 ? 'primary-disabled' : 'primary'}
-      >
-        {isPending ? <Spinner /> : 'Contribute'}
-      </Button>
+      {contributionTxHash ? (
+        <div className="rounded-b-md bg-green-600 p-4 text-center text-mono-50">
+          Contribution submitted
+          <p className="break-words text-xs">{contributionTxHash}</p>
+        </div>
+      ) : (
+        <Button
+          className="w-full rounded-none"
+          onClick={onSubmit}
+          disabled={amount <= 0}
+          variant={amount <= 0 ? 'primary-disabled' : 'primary'}
+        >
+          {isPending ? (
+            <Spinner />
+          ) : diffToAllowance < 0 ? (
+            'Allow contribution'
+          ) : (
+            'Contribute'
+          )}
+        </Button>
+      )}
     </div>
   );
 };

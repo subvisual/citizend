@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { getRelativePath } from '../utils/getRelativePath';
 import { NoProjects } from './no-projects';
 import { MyProjectSkeleton } from './my-project';
+import { useReadCtzndSaleInvestorCount } from '@/wagmi.generated';
 
 const ProjectRow = ({
   logo,
@@ -15,6 +16,9 @@ const ProjectRow = ({
   minTarget,
   maxTarget,
 }: TProjectSaleDetails) => {
+  const { data: contributions } = useReadCtzndSaleInvestorCount();
+  const totalContributions = contributions ? contributions.toString() : 0;
+
   return (
     <Link
       href={`/my-projects/${project}`}
@@ -30,7 +34,7 @@ const ProjectRow = ({
           />
           {project}
         </div>
-        <div className="hidden md:block">0</div>
+        <div className="hidden md:block">{totalContributions}</div>
         <div className="hidden md:block">{usdRange(minTarget, maxTarget)}</div>
         <div>0 USDC</div>
       </div>

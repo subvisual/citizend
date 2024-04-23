@@ -12,6 +12,7 @@ import {
   useReadCtzndSaleRate,
   useWriteErc20Approve,
   ctzndSaleAddress,
+  useReadCtzndSalePaymentToken,
 } from '@/wagmi.generated';
 import { formatEther, parseEther } from 'viem';
 import { usdValue } from '../utils/intl-formaters/usd-value';
@@ -53,6 +54,7 @@ export const ProjectContribution = () => {
     },
     [],
   );
+  const { data: paymentToken } = useReadCtzndSalePaymentToken();
   const { data: maxContribution } = useReadCtzndSaleMaxContribution();
   const { data: minContribution } = useReadCtzndSaleMinContribution();
   const { data: investorCount } = useReadCtzndSaleInvestorCount();
@@ -74,7 +76,7 @@ export const ProjectContribution = () => {
     const value = parseEther(amount.toString());
     const address = ctzndSaleAddress[sepolia.id] as `0x${string}`;
     approveContract({
-      address,
+      address: paymentToken as `0x${string}`,
       args: [address, value],
     });
     writeContract({ args: [value] });

@@ -25,8 +25,8 @@ const contract = getContract({
 });
 
 const projectStatus = async (): Promise<TProjectStatus> => {
-  const start = await contract.read.start();
-  const end = await contract.read.end();
+  const start = (await contract.read.start()) * 1000n;
+  const end = (await contract.read.end()) * 1000n;
   const current = Date.now();
 
   if (current > end) {
@@ -70,13 +70,13 @@ export const saleDetails = async (): Promise<
         rate: contractResults[1],
         minTarget: contractResults[2],
         maxTarget: contractResults[3],
-        start: contractResults[4],
-        end: contractResults[5],
+        start: contractResults[4] * 1000n,
+        end: contractResults[5] * 1000n,
         minContribution: formatEther(contractResults[6]),
         maxContribution: formatEther(contractResults[7]),
         totalTokensForSale: contractResults[8],
-        startRegistration: contractResults[9],
-        endRegistration: contractResults[10],
+        startRegistration: contractResults[9] * 1000n,
+        endRegistration: contractResults[10] * 1000n,
         url: `${host}/projects/citizend`,
         logo: `${host}/project-citizend-logo.svg`,
         background: `${host}/citizend-card-desktop.png`,

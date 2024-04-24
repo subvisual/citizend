@@ -15,12 +15,13 @@ contract DeployScript is Script {
         uint256 startRegistration = 1713866628;
         uint256 endRegistration = 1714780799;
 
-        MockERC20 token = new MockERC20("USDC", "USDC", 18);
+        // MockERC20 token = new MockERC20("USDC", "USDC", 18);
 
         bytes32 merkleRoot = 0x8f01d3093ac8686620cade48849cf16f17ebf59fa84357bd5512541e33806424;
+        address token = 0x1fD476786D370219F94fF2421cD7f5D7C8CA86c0;
 
         Sale sale = new Sale(
-            address(token),
+            token,
             5 ether,
             start,
             end,

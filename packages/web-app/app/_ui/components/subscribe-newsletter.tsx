@@ -40,6 +40,7 @@ export const SubscribeNewsletter = () => {
   return (
     <div>
       <Input
+        autoComplete="email"
         hideLabel
         label="Email"
         id="email"

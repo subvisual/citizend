@@ -231,7 +231,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     /// @inheritdoc ISale
-    function buy(uint256 _amount, bytes32[] calldata _merkleProof) external override(ISale) inSale nonReentrant {
+    function buy(
+        uint256 _amount,
+        bytes32[] calldata _merkleProof
+    ) external override(ISale) inSale nonReentrant {
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
         bool isValidLeaf = MerkleProof.verify(_merkleProof, merkleRoot, leaf);
         if (!isValidLeaf) revert InvalidLeaf();
@@ -364,9 +367,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     function setMerkleRoot(
-      bytes32 _merkleRoot
+        bytes32 _merkleRoot
     ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
-      merkleRoot = _merkleRoot;
+        merkleRoot = _merkleRoot;
     }
 
     /// Sets the individual cap

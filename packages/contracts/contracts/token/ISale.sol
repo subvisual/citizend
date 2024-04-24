@@ -25,7 +25,10 @@ interface ISale {
     /// @dev Needs to be approved by Fractal via the Registry
     ///
     /// @param _paymentAmount amount in payment token to commit
-    function buy(uint256 _paymentAmount, bytes32[] calldata _merkleProof) external;
+    function buy(
+        uint256 _paymentAmount,
+        bytes32[] calldata _merkleProof
+    ) external;
 
     /**
      * Refunds currently refundable amount for the given address

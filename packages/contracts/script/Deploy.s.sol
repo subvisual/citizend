@@ -17,7 +17,7 @@ contract DeployScript is Script {
 
         // MockERC20 token = new MockERC20("USDC", "USDC", 18);
 
-        bytes32 merkleRoot = 0x8f01d3093ac8686620cade48849cf16f17ebf59fa84357bd5512541e33806424;
+        bytes32 merkleRoot = 0x56dc9b99234caefd2202e000b075dd65d221f7e17d06f7e083a07907a7b7548a;
         address token = 0x1fD476786D370219F94fF2421cD7f5D7C8CA86c0;
 
         Sale sale = new Sale(

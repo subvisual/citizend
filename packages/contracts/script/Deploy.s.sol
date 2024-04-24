@@ -16,6 +16,9 @@ contract DeployScript is Script {
         uint256 endRegistration = 1714780799;
 
         MockERC20 token = new MockERC20("USDC", "USDC", 18);
+
+        bytes32 merkleRoot = 0x8f01d3093ac8686620cade48849cf16f17ebf59fa84357bd5512541e33806424;
+
         Sale sale = new Sale(
             address(token),
             5 ether,
@@ -25,7 +28,8 @@ contract DeployScript is Script {
             1000000,
             2000000,
             startRegistration,
-            endRegistration
+            endRegistration,
+            merkleRoot
         );
 
         vm.stopBroadcast();

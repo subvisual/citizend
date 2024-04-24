@@ -55,7 +55,8 @@ contract DevDeployScript is Script {
             1000000,
             2000000,
             startRegistration,
-            endRegistration
+            endRegistration,
+            merkleRoot
         );
 
         bool sucesss = citizend.transfer(address(sale), 1000 ether);

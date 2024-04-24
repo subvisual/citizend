@@ -4003,6 +4003,7 @@ export const iSaleAbi = [
     type: 'function',
     inputs: [
       { name: '_paymentAmount', internalType: 'uint256', type: 'uint256' },
+      { name: '_merkleProof', internalType: 'bytes32[]', type: 'bytes32[]' },
     ],
     name: 'buy',
     outputs: [],
@@ -4526,7 +4527,10 @@ export const mockSaleAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    inputs: [
+      { name: '', internalType: 'uint256', type: 'uint256' },
+      { name: '', internalType: 'bytes32[]', type: 'bytes32[]' },
+    ],
     name: 'buy',
     outputs: [],
     stateMutability: 'pure',
@@ -6379,6 +6383,7 @@ export const saleAbi = [
       { name: '_maxTarget', internalType: 'uint256', type: 'uint256' },
       { name: '_startRegistration', internalType: 'uint256', type: 'uint256' },
       { name: '_endRegistration', internalType: 'uint256', type: 'uint256' },
+      { name: '_merkleRoot', internalType: 'bytes32', type: 'bytes32' },
     ],
     stateMutability: 'nonpayable',
   },
@@ -6419,7 +6424,10 @@ export const saleAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '_amount', internalType: 'uint256', type: 'uint256' }],
+    inputs: [
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+      { name: '_merkleProof', internalType: 'bytes32[]', type: 'bytes32[]' },
+    ],
     name: 'buy',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -6498,6 +6506,13 @@ export const saleAbi = [
     inputs: [],
     name: 'maxTarget',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'merkleRoot',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
     stateMutability: 'view',
   },
   {
@@ -6651,6 +6666,13 @@ export const saleAbi = [
       { name: '_maxContribution', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'setMaxContribution',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_merkleRoot', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'setMerkleRoot',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -6884,6 +6906,7 @@ export const saleAbi = [
     name: 'AddressInsufficientBalance',
   },
   { type: 'error', inputs: [], name: 'FailedInnerCall' },
+  { type: 'error', inputs: [], name: 'InvalidLeaf' },
   { type: 'error', inputs: [], name: 'ReentrancyGuardReentrantCall' },
   {
     type: 'error',
@@ -7087,7 +7110,7 @@ export const saleTestAbi = [
     inputs: [],
     name: 'testConstructor',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
   },
   {
     type: 'event',
@@ -20920,6 +20943,14 @@ export const useReadSaleMaxTarget = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"merkleRoot"`
+ */
+export const useReadSaleMerkleRoot = /*#__PURE__*/ createUseReadContract({
+  abi: saleAbi,
+  functionName: 'merkleRoot',
+})
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"minContribution"`
  */
 export const useReadSaleMinContribution = /*#__PURE__*/ createUseReadContract({
@@ -21178,6 +21209,14 @@ export const useWriteSaleSetMaxContribution =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMerkleRoot"`
+ */
+export const useWriteSaleSetMerkleRoot = /*#__PURE__*/ createUseWriteContract({
+  abi: saleAbi,
+  functionName: 'setMerkleRoot',
+})
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMinContribution"`
  */
 export const useWriteSaleSetMinContribution =
@@ -21275,6 +21314,15 @@ export const useSimulateSaleSetMaxContribution =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleAbi,
     functionName: 'setMaxContribution',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMerkleRoot"`
+ */
+export const useSimulateSaleSetMerkleRoot =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleAbi,
+    functionName: 'setMerkleRoot',
   })
 
 /**
@@ -21465,6 +21513,15 @@ export const useReadSaleTestTargetSenders = /*#__PURE__*/ createUseReadContract(
 )
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testConstructor"`
+ */
+export const useReadSaleTestTestConstructor =
+  /*#__PURE__*/ createUseReadContract({
+    abi: saleTestAbi,
+    functionName: 'testConstructor',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__
  */
 export const useWriteSaleTest = /*#__PURE__*/ createUseWriteContract({
@@ -21529,15 +21586,6 @@ export const useWriteSaleTestTestBuyMinimum =
   /*#__PURE__*/ createUseWriteContract({
     abi: saleTestAbi,
     functionName: 'testBuyMinimum',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testConstructor"`
- */
-export const useWriteSaleTestTestConstructor =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: saleTestAbi,
-    functionName: 'testConstructor',
   })
 
 /**
@@ -21606,15 +21654,6 @@ export const useSimulateSaleTestTestBuyMinimum =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleTestAbi,
     functionName: 'testBuyMinimum',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testConstructor"`
- */
-export const useSimulateSaleTestTestConstructor =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: saleTestAbi,
-    functionName: 'testConstructor',
   })
 
 /**

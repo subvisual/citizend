@@ -10,6 +10,14 @@ let test_addresses = [
   "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
 ];
 
+let sale_addresses = [
+  '0xf74EF6B5968591AaBCD659bba221c1bB1F80E131',
+  '0x1D031AF0A9c0cD58e7ECe27a1b4de370AFF57D6c',
+  '0x895B0bC0f28CAACDfAc33f747a2bC714edfb04Eb'
+]
+
+const root = 0x8f01d3093ac8686620cade48849cf16f17ebf59fa84357bd5512541e33806424;
+
 async function main(address: string) {
   let addresses: string[][];
 

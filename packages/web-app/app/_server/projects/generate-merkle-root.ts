@@ -6,7 +6,7 @@ import { projectsInfo } from './project-info';
 import { keccak256, encodePacked } from 'viem';
 import { MerkleTree } from 'merkletreejs';
 
-const generateRoot = async (addresses: string[]) => {
+const generateTree = (addresses: string[]): MerkleTree => {
   const data = addresses.map((addr: string) => {
     return {
       address: addr as `0x${string}`,
@@ -16,20 +16,48 @@ const generateRoot = async (addresses: string[]) => {
 
   const leafs = data.map(({ leaf }: any) => leaf);
   const merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });
-  return merkleTree.getHexRoot();
+  return merkleTree;
 };
 
-export const generateMerkleRoot = async (): Promise<
-  string | TInternalError
-> => {
+export const generateProof = async (address: string) => {
   const result = await getAllowedProjectApplicants(
     projectsInfo.citizend.address,
   );
 
   if (Array.isArray(result)) {
-    const root = await generateRoot(result);
+    const merkleTree = generateTree(result);
+    return merkleTree.getHexProof(
+      keccak256(encodePacked(['address'], [address as `0x${string}`])),
+    );
+  } else {
+    const { error } = result;
+    console.error(error);
+    return { error: error };
+  }
+};
 
-    return root;
+type TMerkleRoot = {
+  root: string;
+  addresses: string[];
+};
+
+export const generateMerkleRoot = async (): Promise<
+  TMerkleRoot | TInternalError
+> => {
+  const result = await getAllowedProjectApplicants(
+    projectsInfo.citizend.address,
+  );
+
+  console.log(projectsInfo.citizend.address);
+  console.log(result);
+
+  if (Array.isArray(result)) {
+    const root = generateTree(result).getHexRoot();
+
+    return {
+      root: root,
+      addresses: result,
+    };
   } else {
     const { error } = result;
     console.error(error);

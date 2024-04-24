@@ -67,6 +67,9 @@ export const useFetchIdOSProfile = () => {
   });
 };
 
+const filterCredentials = (credentials: idOSCredential[] | null) =>
+  credentials && credentials.filter((credential) => !credential.original_id);
+
 export const useFetchCredentials = () => {
   const { sdk, hasSigner, address } = useIdOS();
 
@@ -83,9 +86,7 @@ export const useFetchCredentials = () => {
           .map((c) => c.id),
       }));
     },
-    select: (credentials) =>
-      credentials &&
-      credentials.filter((credential) => !credential.original_id),
+    select: filterCredentials,
     enabled: !!(sdk && hasSigner && address),
   });
 };

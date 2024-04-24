@@ -19,7 +19,8 @@ contract SaleTest is Test {
     address alice = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8;
     address bob = 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC;
 
-    bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
+    bytes32 merkleRoot =
+        0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
     bytes32[] merkleProof = new bytes32[](2);
 
     event Purchase(
@@ -39,8 +40,12 @@ contract SaleTest is Test {
         start = vm.getBlockTimestamp();
         end = start + 60 * 60 * 24;
 
-        merkleProof[0] = bytes32(0xe9707d0e6171f728f7473c24cc0432a9b07eaaf1efed6a137a4a8c12c79552d9);
-        merkleProof[1] = bytes32(0x347dce04eb339ca70588960730ef0cada966bb1d5e10a9b9489a3e0ba47dc1b6);
+        merkleProof[0] = bytes32(
+            0xe9707d0e6171f728f7473c24cc0432a9b07eaaf1efed6a137a4a8c12c79552d9
+        );
+        merkleProof[1] = bytes32(
+            0x347dce04eb339ca70588960730ef0cada966bb1d5e10a9b9489a3e0ba47dc1b6
+        );
 
         paymentToken = new MockERC20("USDC", "USDC", 18);
         token = new Citizend(owner, end);

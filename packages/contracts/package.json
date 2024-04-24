@@ -42,7 +42,8 @@
     "dev": "hardhat node",
     "wagmi:generate": "wagmi generate",
     "test": "hardhat test --deploy-fixture --parallel",
-    "lint": "solhint contracts/**/*.sol && prettier --check . contracts/**/*.sol"
+    "lint": "solhint contracts/**/*.sol && prettier --check . contracts/**/*.sol",
+    "lint:fix": "solhint contracts/**/*.sol && prettier --write . contracts/**/*.sol"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-foundry": "^1.1.1",

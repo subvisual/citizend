@@ -32,16 +32,16 @@ export const fetchAndGenerateProof = async (address: string) => {
     projectsInfo.citizend.address,
   );
 
-  if (Array.isArray(result)) {
-    const merkleTree = generateTree(result);
-    return merkleTree.getHexProof(
-      keccak256(encodePacked(['address'], [address as `0x${string}`])),
-    );
-  } else {
-    const { error } = result;
-    console.error(error);
-    return { error: error };
+  //forward the error
+  if (typeof result === 'object' && 'error' in result) {
+    return result;
   }
+
+  const merkleTree = generateTree(result);
+
+  return merkleTree.getHexProof(
+    keccak256(encodePacked(['address'], [address as `0x${string}`])),
+  );
 };
 
 type TMerkleRoot = {

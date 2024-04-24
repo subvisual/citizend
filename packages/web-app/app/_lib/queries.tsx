@@ -11,6 +11,7 @@ import {
   getProjectPublicInfo,
   getServerPublicInfo,
 } from '../_server/info';
+import { fetchAndGenerateProof } from '../_server/projects/generate-merkle-root';
 
 export const usePublicInfo = () => {
   return useQuery({
@@ -188,5 +189,25 @@ export const useFetchNewDataId = (
       }
     },
     enabled: !!(hasSigner && owner && encryptionPublicKey && id && grantee),
+  });
+};
+
+export const useFetchMerkleProof = () => {
+  const { address } = useIdOS();
+
+  return useQuery({
+    queryKey: ['merkle-proof', address],
+    queryFn: async () => {
+      if (!address) return undefined;
+
+      const result = await fetchAndGenerateProof(address);
+
+      if (typeof result === 'object' && 'error' in result) {
+        throw new Error(result.error);
+      }
+
+      return result as `0x${string}`[];
+    },
+    enabled: !!address,
   });
 };

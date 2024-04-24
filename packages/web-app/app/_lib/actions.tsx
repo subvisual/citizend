@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useIdOS } from '../_providers/idos';
 import { insertGrantBySignature } from '../_server/idos/grants';
 import { useFetchGrantMessage } from './contract-queries';
-import { useAccount, useSignMessage } from 'wagmi';
+import { useSignMessage } from 'wagmi';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useFetchNewDataId } from './queries';
+import { useFetchMerkleProof, useFetchNewDataId } from './queries';
 import { getServerPublicInfo } from '../_server/info';
 import { subscribeToNewsletter } from '../_server/active-campaign';
 import {
@@ -207,6 +207,7 @@ export const useContributeToCtznd = (address: `0x${string}`) => {
   const [state, setState] = useState();
   const [amount, setAmount] = useState(0);
   const amountInWei = useMemo(() => parseEther(amount.toString()), [amount]);
+  const { data: merkleProof } = useFetchMerkleProof();
 
   const {
     writeContract: writeBuy,
@@ -244,7 +245,8 @@ export const useContributeToCtznd = (address: `0x${string}`) => {
       amount <= 0 ||
       allowance === undefined ||
       paymentToken === undefined ||
-      tokensToBuy === undefined
+      tokensToBuy === undefined ||
+      merkleProof === undefined
     ) {
       return;
     }
@@ -256,7 +258,7 @@ export const useContributeToCtznd = (address: `0x${string}`) => {
       });
     }
 
-    writeBuy({ args: [tokensToBuy] });
+    writeBuy({ args: [tokensToBuy, merkleProof] });
   };
 
   return {

@@ -12,9 +12,10 @@ import { CardSkeleton } from '../components/skeletons/card-skeleton';
 import {
   useReadCtzndSaleInvestorCount,
   useReadCtzndSaleUncappedAllocation,
+  useReadCtzndSaleRate,
 } from '@/wagmi.generated';
 import { useAccount } from 'wagmi';
-import { formatEther } from 'viem';
+import { formatEther, parseEther } from 'viem';
 
 const Header = ({
   project,
@@ -55,19 +56,21 @@ const Header = ({
 };
 
 const MyContribution = () => {
-  const { projectId } = useProject();
-
   const { address } = useAccount();
-  const { data: contributions } = useReadCtzndSaleUncappedAllocation({
+  const { projectId } = useProject();
+  const { data: tokens } = useReadCtzndSaleUncappedAllocation({
     args: [address!],
   });
-
-  const myContributions = contributions ? formatEther(contributions!) : 0;
+  const { data: rate } = useReadCtzndSaleRate();
+  const usdcValue =
+    tokens && rate
+      ? parseFloat(formatEther(tokens)) * parseFloat(formatEther(rate))
+      : 0;
 
   return (
     <div className="flex flex-col gap-2 rounded-md bg-mono-50 px-6 py-8 text-mono-950">
       <h3 className="text-sm text-mono-800">Contributions</h3>
-      <div className="text-3.5xl">{`${myContributions} USDC`}</div>
+      <div className="text-3.5xl">{`${usdcValue} USDC`}</div>
       <div className="self-center pt-6">
         <EdgeLink href={`/projects/${projectId}`}>New Contribution</EdgeLink>
       </div>
@@ -76,10 +79,16 @@ const MyContribution = () => {
 };
 
 const MyTokens = () => {
+  const { address } = useAccount();
+  const { data: tokens } = useReadCtzndSaleUncappedAllocation({
+    args: [address!],
+  });
+  const myTokens = tokens ? formatEther(tokens!) : 0;
+
   return (
     <div className="flex flex-col gap-2 rounded-md bg-mono-50 px-6 py-8 text-mono-950">
       <h3 className="text-sm text-mono-800">My tokens</h3>
-      <div className="text-3.5xl">0 CTND</div>
+      <div className="text-3.5xl">{myTokens} CTND</div>
       <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-3">
         <div className="flex flex-col gap-2">
           <h3 className="text-sm text-mono-800">Total Claimed</h3>

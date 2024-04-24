@@ -19,7 +19,15 @@ const generateTree = (addresses: string[]): MerkleTree => {
   return merkleTree;
 };
 
-export const generateProof = async (address: string) => {
+export const generateProof = async (addresses: string[], address: string) => {
+  const merkleTree = generateTree(addresses);
+  return merkleTree.getHexProof(
+    keccak256(encodePacked(['address'], [address as `0x${string}`])),
+  );
+};
+
+// For testing purposes, to be removed
+export const fetchAndGenerateProof = async (address: string) => {
   const result = await getAllowedProjectApplicants(
     projectsInfo.citizend.address,
   );
@@ -47,9 +55,6 @@ export const generateMerkleRoot = async (): Promise<
   const result = await getAllowedProjectApplicants(
     projectsInfo.citizend.address,
   );
-
-  console.log(projectsInfo.citizend.address);
-  console.log(result);
 
   if (Array.isArray(result)) {
     const root = generateTree(result).getHexRoot();

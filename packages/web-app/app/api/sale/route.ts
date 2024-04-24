@@ -21,5 +21,18 @@ export async function GET(_request: Request) {
     });
   }
 
-  return Response.json(details);
+  const tempDetails = details.map((project) => {
+    return {
+      ...project,
+      status: 'Coming soon',
+      start: 'TBD',
+      end: 'TBD',
+      startRegistration: 'TBD',
+      endRegistration: 'TBD',
+      minTarget: 'TBD',
+      maxTarget: 'TBD',
+    };
+  });
+
+  return Response.json(tempDetails);
 }

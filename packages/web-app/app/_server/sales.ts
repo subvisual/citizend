@@ -65,7 +65,7 @@ export const saleDetails = async (): Promise<
       {
         address: projectsInfo.citizend.address,
         publicKey: projectsInfo.citizend.publicKey,
-        project: 'Citizend',
+        project: 'citizend',
         status: contractResults[0],
         rate: contractResults[1],
         minTarget: contractResults[2],

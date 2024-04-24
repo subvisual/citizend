@@ -26,6 +26,8 @@
     "dev:web": "yarn workspace @discovery-dao/web-app dev",
     "contracts:export": "yarn workspace @discovery-dao/contracts export",
     "contracts:compile": "yarn workspace @discovery-dao/contracts compile",
+    "contracts:lint": "yarn workspace @discovery-dao/contracts lint",
+    "contracts:lint:fix": "yarn workspace @discovery-dao/contracts lint:fix",
     "prepare": "husky install",
     "pre-commit": "yarn workspace @discovery-dao/web-app precommit",
     "web:bundle": "yarn workspace @discovery-dao/web-app bundle",

@@ -7,6 +7,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {MerkleProof} from "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
 import {ISale} from "./ISale.sol";
 import {RisingTide} from "../RisingTide/RisingTide.sol";
@@ -110,6 +111,11 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// Did the admins already withdraw all aUSD from sales
     bool public withdrawn;
 
+    // Merkle root for contributions validation
+    bytes32 public merkleRoot;
+
+    error InvalidLeaf();
+
     /// @param _paymentToken Token accepted as payment
     /// @param _rate token:paymentToken exchange rate, multiplied by 10e18
     /// @param _start Start timestamp
@@ -128,7 +134,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _minTarget,
         uint256 _maxTarget,
         uint256 _startRegistration,
-        uint256 _endRegistration
+        uint256 _endRegistration,
+        bytes32 _merkleRoot
     ) {
         require(_rate > 0, "can't be zero");
         require(_paymentToken != address(0), "can't be zero");
@@ -154,6 +161,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         maxTarget = _maxTarget;
         startRegistration = _startRegistration;
         endRegistration = _endRegistration;
+        merkleRoot = _merkleRoot;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -223,8 +231,13 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     /// @inheritdoc ISale
-    function buy(uint256 _amount) external override(ISale) inSale nonReentrant {
-        // TODO send merkleProof and check for valid leaf
+    function buy(
+        uint256 _amount,
+        bytes32[] calldata _merkleProof
+    ) external override(ISale) inSale nonReentrant {
+        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
+        bool isValidLeaf = MerkleProof.verify(_merkleProof, merkleRoot, leaf);
+        if (!isValidLeaf) revert InvalidLeaf();
 
         require(_amount >= minContribution, "can't be below minimum");
         require(_amount <= maxContribution, "can't be above maximum");
@@ -351,6 +364,12 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         address _token
     ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
         token = _token;
+    }
+
+    function setMerkleRoot(
+        bytes32 _merkleRoot
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
+        merkleRoot = _merkleRoot;
     }
 
     /// Sets the individual cap

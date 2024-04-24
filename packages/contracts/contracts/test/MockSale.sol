@@ -31,7 +31,7 @@ contract MockSale is ISale, ERC165 {
         return _x;
     }
 
-    function buy(uint256) external pure {
+    function buy(uint256, bytes32[] calldata) external pure {
         revert("not implemented");
     }
 

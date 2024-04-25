@@ -114,6 +114,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     // Merkle root for contributions validation
     bytes32 public merkleRoot;
 
+    error MaxTargetReached();
     error InvalidLeaf();
 
     /// @param _paymentToken Token accepted as payment
@@ -137,8 +138,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _endRegistration,
         bytes32 _merkleRoot
     ) {
-        require(_rate > 0, "can't be zero");
         require(_paymentToken != address(0), "can't be zero");
+        require(_rate > 0, "can't be zero");
         require(_start > 0, "can't be zero");
         require(_end > _start, "end must be after start");
         require(_totalTokensForSale > 0, "total cannot be 0");
@@ -235,6 +236,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _amount,
         bytes32[] calldata _merkleProof
     ) external override(ISale) inSale nonReentrant {
+        if (totalUncappedAllocations >= maxTarget) revert MaxTargetReached();
+
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
         bool isValidLeaf = MerkleProof.verify(_merkleProof, merkleRoot, leaf);
         if (!isValidLeaf) revert InvalidLeaf();

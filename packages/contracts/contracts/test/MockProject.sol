@@ -20,7 +20,7 @@ contract MockProject is IProject {
     error InvalidLeaf();
 
     /// Approval function from an eligible project manager
-    function approveByManager() pure external {
+    function approveByManager() external pure {
         revert("not implemented");
     }
 
@@ -30,7 +30,7 @@ contract MockProject is IProject {
     }
 
     /// Approval function from the legal team
-    function approveByLegal() pure external {
+    function approveByLegal() external pure {
         revert("not implemented");
     }
 

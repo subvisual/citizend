@@ -20,7 +20,7 @@ contract DeployScript is Script {
         bytes32 merkleRoot = 0x56dc9b99234caefd2202e000b075dd65d221f7e17d06f7e083a07907a7b7548a;
         address token = 0x1fD476786D370219F94fF2421cD7f5D7C8CA86c0;
 
-        Sale sale = new Sale(
+        new Sale(
             token,
             5 ether,
             start,

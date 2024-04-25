@@ -21,9 +21,8 @@ alias d := dev
 # 2. next.js
 dev:
   #!/bin/bash -ue
-  trap 'kill %1; kill %2' SIGINT
+  trap 'kill %1' SIGINT
   just eth-watch | sed -e 's/^/\x1b[0;31m[node]\x1b[0m /' &
-  just web 2>&1 | sed -e 's/^/\x1b[0;32m[next]\x1b[0m /' &
   wait
 
 watch-test:
@@ -47,14 +46,10 @@ eth:
   just test
   sleep 0.2 && just eth-deploy &
   just wagmi &
-  anvil --code-size-limit 100000 --host 0.0.0.0
+  anvil --host 0.0.0.0
 
 build-contracts:
   forge build
-
-# start next.js dev server
-web:
-  yarn dev
 
 # generate wagmi
 wagmi:
@@ -80,7 +75,6 @@ forge-script script:
   forge script \
     $1 \
     --fork-url http://localhost:8545 \
-    --code-size-limit 100000 \
     --broadcast \
     --mnemonics "{{ mnemonic }}" \
     --sender "{{ sender }}" \

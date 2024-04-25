@@ -3,7 +3,9 @@ src = 'contracts'
 out = 'out'
 libs = ['lib', 'node_modules']
 test = 'test'
+solc = '0.8.20'
 cache_path  = 'cache_forge'
+
 
 [rpc_endpoints]
 sepolia = "${ETH_RPC_URL}"

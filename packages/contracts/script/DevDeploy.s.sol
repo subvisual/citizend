@@ -59,13 +59,12 @@ contract DevDeployScript is Script {
             merkleRoot
         );
 
-        bool sucesss = citizend.transfer(address(sale), 1000 ether);
+        citizend.transfer(address(sale), 1000 ether);
 
         bool success = token.approve(address(sale), 1000 ether);
         require(success, "approve failed");
 
         for (uint256 i; i < testAccounts.length; i++) {
-            address addr = testAccounts[i];
             token.mint(testAccounts[i], 1000 ether);
         }
         vm.stopBroadcast();

@@ -366,6 +366,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     function setToken(
         address _token
     ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
+        require(_token != address(0), "can't be zero");
         token = _token;
     }
 

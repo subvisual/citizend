@@ -21,19 +21,13 @@
     ]
   },
   "scripts": {
-    "dev": "yarn workspace @discovery-dao/dev all",
-    "dev:contracts": "yarn workspace @discovery-dao/contracts dev",
-    "dev:web": "yarn workspace @discovery-dao/web-app dev",
+    "contracts:dev": "yarn workspace @discovery-dao/contracts dev",
     "contracts:export": "yarn workspace @discovery-dao/contracts export",
     "contracts:compile": "yarn workspace @discovery-dao/contracts compile",
     "contracts:lint": "yarn workspace @discovery-dao/contracts lint",
     "contracts:lint:fix": "yarn workspace @discovery-dao/contracts lint:fix",
-    "prepare": "husky install",
-    "pre-commit": "yarn workspace @discovery-dao/web-app precommit",
     "web:bundle": "yarn workspace @discovery-dao/web-app bundle",
+    "web:dev": "yarn workspace @discovery-dao/web-app dev",
     "web:lint": "yarn workspace @discovery-dao/web-app lint"
-  },
-  "devDependencies": {
-    "husky": "^7.0.2"
   }
 }

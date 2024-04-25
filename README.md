@@ -6,6 +6,12 @@
 
 ## Development
 
+### Prerequisites
+
+- [Foundry](https://getfoundry.sh/) development toolchain
+- [Just](https://github.com/casey/just) command runner
+- [asdf](https://github.com/asdf-vm/asdf) version manager
+
 1. Clone the project and install dependencies
 
 ```
@@ -14,22 +20,14 @@ cd discoveryDAO
 yarn install
 ```
 
-2. `yarn contracts:dev` boots the local development chain (`hardhat node`), with a test contract
-
 ## Contracts
 
-A [hardhat][hardhat] project. Details to be added in the future
+Solidity smart contracts are found in `./packages/contracts`
+
+`yarn contracts:dev`, or `yarn dev` inside the `./packages/contracts` folder boots the local development chain
 
 ## Web
 
-To start the project locally run:
+NextJS web application that serves as the frontend is found in `./packages/web-app`
 
-```sh
-yarn web:start
-```
-
-To bundle the project run:
-
-```sh
-yarn web:bundle
-```
+`yarn web:dev, or `yarn dev` inside the `./packages/web-app` folder starts the project locally

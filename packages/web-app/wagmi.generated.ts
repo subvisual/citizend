@@ -217,7 +217,7 @@ export const batchAbi = [
     inputs: [],
     name: 'inInvestmentPeriod',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -4434,14 +4434,14 @@ export const mockProjectAbi = [
     inputs: [],
     name: 'approveByLegal',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'pure',
   },
   {
     type: 'function',
     inputs: [],
     name: 'approveByManager',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'pure',
   },
   {
     type: 'function',
@@ -4480,7 +4480,7 @@ export const mockProjectAbi = [
     inputs: [{ name: '_amount', internalType: 'uint256', type: 'uint256' }],
     name: 'investmentTokenToToken',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
+    stateMutability: 'pure',
   },
   {
     type: 'function',
@@ -4488,6 +4488,13 @@ export const mockProjectAbi = [
     name: 'isReadyForListing',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'merkleRoot',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -4530,6 +4537,7 @@ export const mockProjectAbi = [
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'pure',
   },
+  { type: 'error', inputs: [], name: 'InvalidLeaf' },
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5309,416 +5317,6 @@ export const projectHelpersAbi = [
     name: 'MUL',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
-  },
-] as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ProjectTest
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const projectTestAbi = [
-  {
-    type: 'function',
-    inputs: [],
-    name: 'IS_TEST',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'excludeArtifacts',
-    outputs: [
-      {
-        name: 'excludedArtifacts_',
-        internalType: 'string[]',
-        type: 'string[]',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'excludeContracts',
-    outputs: [
-      {
-        name: 'excludedContracts_',
-        internalType: 'address[]',
-        type: 'address[]',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'excludeSenders',
-    outputs: [
-      {
-        name: 'excludedSenders_',
-        internalType: 'address[]',
-        type: 'address[]',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'failed',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: '', internalType: 'address', type: 'address' },
-      { name: '', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'proofs',
-    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'setUp',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'targetArtifactSelectors',
-    outputs: [
-      {
-        name: 'targetedArtifactSelectors_',
-        internalType: 'struct StdInvariant.FuzzSelector[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'addr', internalType: 'address', type: 'address' },
-          { name: 'selectors', internalType: 'bytes4[]', type: 'bytes4[]' },
-        ],
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'targetArtifacts',
-    outputs: [
-      {
-        name: 'targetedArtifacts_',
-        internalType: 'string[]',
-        type: 'string[]',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'targetContracts',
-    outputs: [
-      {
-        name: 'targetedContracts_',
-        internalType: 'address[]',
-        type: 'address[]',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'targetInterfaces',
-    outputs: [
-      {
-        name: 'targetedInterfaces_',
-        internalType: 'struct StdInvariant.FuzzInterface[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'addr', internalType: 'address', type: 'address' },
-          { name: 'artifacts', internalType: 'string[]', type: 'string[]' },
-        ],
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'targetSelectors',
-    outputs: [
-      {
-        name: 'targetedSelectors_',
-        internalType: 'struct StdInvariant.FuzzSelector[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'addr', internalType: 'address', type: 'address' },
-          { name: 'selectors', internalType: 'bytes4[]', type: 'bytes4[]' },
-        ],
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'targetSenders',
-    outputs: [
-      {
-        name: 'targetedSenders_',
-        internalType: 'address[]',
-        type: 'address[]',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'testInvest',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'testInvestShouldRevertWithInvalidProof',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: '', internalType: 'string', type: 'string', indexed: false },
-    ],
-    name: 'log',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: '', internalType: 'address', type: 'address', indexed: false },
-    ],
-    name: 'log_address',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'val',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
-    ],
-    name: 'log_array',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'val',
-        internalType: 'int256[]',
-        type: 'int256[]',
-        indexed: false,
-      },
-    ],
-    name: 'log_array',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'val',
-        internalType: 'address[]',
-        type: 'address[]',
-        indexed: false,
-      },
-    ],
-    name: 'log_array',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: '', internalType: 'bytes', type: 'bytes', indexed: false },
-    ],
-    name: 'log_bytes',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: '', internalType: 'bytes32', type: 'bytes32', indexed: false },
-    ],
-    name: 'log_bytes32',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: '', internalType: 'int256', type: 'int256', indexed: false },
-    ],
-    name: 'log_int',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'val', internalType: 'address', type: 'address', indexed: false },
-    ],
-    name: 'log_named_address',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      {
-        name: 'val',
-        internalType: 'uint256[]',
-        type: 'uint256[]',
-        indexed: false,
-      },
-    ],
-    name: 'log_named_array',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      {
-        name: 'val',
-        internalType: 'int256[]',
-        type: 'int256[]',
-        indexed: false,
-      },
-    ],
-    name: 'log_named_array',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      {
-        name: 'val',
-        internalType: 'address[]',
-        type: 'address[]',
-        indexed: false,
-      },
-    ],
-    name: 'log_named_array',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'val', internalType: 'bytes', type: 'bytes', indexed: false },
-    ],
-    name: 'log_named_bytes',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'val', internalType: 'bytes32', type: 'bytes32', indexed: false },
-    ],
-    name: 'log_named_bytes32',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
-      {
-        name: 'decimals',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'log_named_decimal_int',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
-      {
-        name: 'decimals',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'log_named_decimal_uint',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
-    ],
-    name: 'log_named_int',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'val', internalType: 'string', type: 'string', indexed: false },
-    ],
-    name: 'log_named_string',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'key', internalType: 'string', type: 'string', indexed: false },
-      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
-    name: 'log_named_uint',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: '', internalType: 'string', type: 'string', indexed: false },
-    ],
-    name: 'log_string',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: '', internalType: 'uint256', type: 'uint256', indexed: false },
-    ],
-    name: 'log_uint',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: '', internalType: 'bytes', type: 'bytes', indexed: false },
-    ],
-    name: 'logs',
   },
 ] as const
 
@@ -6926,6 +6524,7 @@ export const saleAbi = [
   },
   { type: 'error', inputs: [], name: 'FailedInnerCall' },
   { type: 'error', inputs: [], name: 'InvalidLeaf' },
+  { type: 'error', inputs: [], name: 'MaxTargetReached' },
   { type: 'error', inputs: [], name: 'ReentrancyGuardReentrantCall' },
   {
     type: 'error',
@@ -7092,44 +6691,156 @@ export const saleTestAbi = [
   {
     type: 'function',
     inputs: [],
-    name: 'testBuy',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'testBuyAboveMaximum',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'testBuyBelowMinimum',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'testBuyMaximum',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'testBuyMinimum',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
     name: 'testConstructor',
     outputs: [],
     stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_Buy',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_BuyMultiplePurchasesSameAccount',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_BuyRevertsAfterReachingMaxTarget',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_BuyRevertsWhenAboveMaximum',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_BuyRevertsWhenBelowMinimum',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_BuyRevertsWhenInvalidMerkleProof',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_PaymentTokenToToken',
+    outputs: [],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_RefundAmountIsZeroBeforeSale',
+    outputs: [],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_RefundAmountIsZeroIfAlreadyRefunded',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_RefundAmountIsZeroIfIndividualCapIsHigherThanInvestedTotal',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_RefundReturnsCorrectAmmount',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_RefundRevertsIfDoubleRefund',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_RefundRevertsWhenCapIsNotSet',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_SetIndividualCap',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_SetIndividualCapFailsValidateForWrongValue',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_TokenToPaymentToken',
+    outputs: [],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_Withdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_WithdrawDoesNotWithdrawRefunds',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_WithdrawOnlyOnce',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_WithdrawRevertsIfNoCapSet',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_WithdrawRevertsIfNotOwner',
+    outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
     type: 'event',
@@ -7164,6 +6875,20 @@ export const saleTestAbi = [
       },
     ],
     name: 'Purchase',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'to', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'paymentTokenAmount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Refund',
   },
   {
     type: 'event',
@@ -13827,6 +13552,15 @@ export const useReadBatchHasVotedForProject =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"inInvestmentPeriod"`
+ */
+export const useReadBatchInInvestmentPeriod =
+  /*#__PURE__*/ createUseReadContract({
+    abi: batchAbi,
+    functionName: 'inInvestmentPeriod',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"investmentEnd"`
  */
 export const useReadBatchInvestmentEnd = /*#__PURE__*/ createUseReadContract({
@@ -13988,15 +13722,6 @@ export const useWriteBatch = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"inInvestmentPeriod"`
- */
-export const useWriteBatchInInvestmentPeriod =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: batchAbi,
-    functionName: 'inInvestmentPeriod',
-  })
-
-/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"setVotingPeriod"`
  */
 export const useWriteBatchSetVotingPeriod =
@@ -14019,15 +13744,6 @@ export const useWriteBatchVote = /*#__PURE__*/ createUseWriteContract({
 export const useSimulateBatch = /*#__PURE__*/ createUseSimulateContract({
   abi: batchAbi,
 })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"inInvestmentPeriod"`
- */
-export const useSimulateBatchInInvestmentPeriod =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: batchAbi,
-    functionName: 'inInvestmentPeriod',
-  })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"setVotingPeriod"`
@@ -18651,6 +18367,24 @@ export const useReadMockProject = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approveByLegal"`
+ */
+export const useReadMockProjectApproveByLegal =
+  /*#__PURE__*/ createUseReadContract({
+    abi: mockProjectAbi,
+    functionName: 'approveByLegal',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approveByManager"`
+ */
+export const useReadMockProjectApproveByManager =
+  /*#__PURE__*/ createUseReadContract({
+    abi: mockProjectAbi,
+    functionName: 'approveByManager',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approvedByLegal"`
  */
 export const useReadMockProjectApprovedByLegal =
@@ -18695,6 +18429,13 @@ export const useReadMockProjectIsReadyForListing =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"merkleRoot"`
+ */
+export const useReadMockProjectMerkleRoot = /*#__PURE__*/ createUseReadContract(
+  { abi: mockProjectAbi, functionName: 'merkleRoot' },
+)
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"peoplesPool"`
  */
 export const useReadMockProjectPeoplesPool =
@@ -18729,24 +18470,6 @@ export const useWriteMockProject = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approveByLegal"`
- */
-export const useWriteMockProjectApproveByLegal =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: mockProjectAbi,
-    functionName: 'approveByLegal',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approveByManager"`
- */
-export const useWriteMockProjectApproveByManager =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: mockProjectAbi,
-    functionName: 'approveByManager',
-  })
-
-/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"invest"`
  */
 export const useWriteMockProjectInvest = /*#__PURE__*/ createUseWriteContract({
@@ -18778,24 +18501,6 @@ export const useWriteMockProjectTestCreateStakersPool =
 export const useSimulateMockProject = /*#__PURE__*/ createUseSimulateContract({
   abi: mockProjectAbi,
 })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approveByLegal"`
- */
-export const useSimulateMockProjectApproveByLegal =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockProjectAbi,
-    functionName: 'approveByLegal',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approveByManager"`
- */
-export const useSimulateMockProjectApproveByManager =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockProjectAbi,
-    functionName: 'approveByManager',
-  })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"invest"`
@@ -19859,362 +19564,6 @@ export const useReadProjectHelpersMul = /*#__PURE__*/ createUseReadContract({
   abi: projectHelpersAbi,
   functionName: 'MUL',
 })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__
- */
-export const useReadProjectTest = /*#__PURE__*/ createUseReadContract({
-  abi: projectTestAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"IS_TEST"`
- */
-export const useReadProjectTestIsTest = /*#__PURE__*/ createUseReadContract({
-  abi: projectTestAbi,
-  functionName: 'IS_TEST',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"excludeArtifacts"`
- */
-export const useReadProjectTestExcludeArtifacts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
-    functionName: 'excludeArtifacts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"excludeContracts"`
- */
-export const useReadProjectTestExcludeContracts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
-    functionName: 'excludeContracts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"excludeSenders"`
- */
-export const useReadProjectTestExcludeSenders =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
-    functionName: 'excludeSenders',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"proofs"`
- */
-export const useReadProjectTestProofs = /*#__PURE__*/ createUseReadContract({
-  abi: projectTestAbi,
-  functionName: 'proofs',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
- */
-export const useReadProjectTestTargetArtifactSelectors =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
-    functionName: 'targetArtifactSelectors',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetArtifacts"`
- */
-export const useReadProjectTestTargetArtifacts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
-    functionName: 'targetArtifacts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetContracts"`
- */
-export const useReadProjectTestTargetContracts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
-    functionName: 'targetContracts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetInterfaces"`
- */
-export const useReadProjectTestTargetInterfaces =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
-    functionName: 'targetInterfaces',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetSelectors"`
- */
-export const useReadProjectTestTargetSelectors =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
-    functionName: 'targetSelectors',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetSenders"`
- */
-export const useReadProjectTestTargetSenders =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
-    functionName: 'targetSenders',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectTestAbi}__
- */
-export const useWriteProjectTest = /*#__PURE__*/ createUseWriteContract({
-  abi: projectTestAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"failed"`
- */
-export const useWriteProjectTestFailed = /*#__PURE__*/ createUseWriteContract({
-  abi: projectTestAbi,
-  functionName: 'failed',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"setUp"`
- */
-export const useWriteProjectTestSetUp = /*#__PURE__*/ createUseWriteContract({
-  abi: projectTestAbi,
-  functionName: 'setUp',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"testInvest"`
- */
-export const useWriteProjectTestTestInvest =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: projectTestAbi,
-    functionName: 'testInvest',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"testInvestShouldRevertWithInvalidProof"`
- */
-export const useWriteProjectTestTestInvestShouldRevertWithInvalidProof =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: projectTestAbi,
-    functionName: 'testInvestShouldRevertWithInvalidProof',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectTestAbi}__
- */
-export const useSimulateProjectTest = /*#__PURE__*/ createUseSimulateContract({
-  abi: projectTestAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"failed"`
- */
-export const useSimulateProjectTestFailed =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: projectTestAbi,
-    functionName: 'failed',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"setUp"`
- */
-export const useSimulateProjectTestSetUp =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: projectTestAbi,
-    functionName: 'setUp',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"testInvest"`
- */
-export const useSimulateProjectTestTestInvest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: projectTestAbi,
-    functionName: 'testInvest',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"testInvestShouldRevertWithInvalidProof"`
- */
-export const useSimulateProjectTestTestInvestShouldRevertWithInvalidProof =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: projectTestAbi,
-    functionName: 'testInvestShouldRevertWithInvalidProof',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__
- */
-export const useWatchProjectTestEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: projectTestAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log"`
- */
-export const useWatchProjectTestLogEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_address"`
- */
-export const useWatchProjectTestLogAddressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_address',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_array"`
- */
-export const useWatchProjectTestLogArrayEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_array',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_bytes"`
- */
-export const useWatchProjectTestLogBytesEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_bytes',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_bytes32"`
- */
-export const useWatchProjectTestLogBytes32Event =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_bytes32',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_int"`
- */
-export const useWatchProjectTestLogIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_address"`
- */
-export const useWatchProjectTestLogNamedAddressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_address',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_array"`
- */
-export const useWatchProjectTestLogNamedArrayEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_array',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_bytes"`
- */
-export const useWatchProjectTestLogNamedBytesEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_bytes',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_bytes32"`
- */
-export const useWatchProjectTestLogNamedBytes32Event =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_bytes32',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
- */
-export const useWatchProjectTestLogNamedDecimalIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_decimal_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
- */
-export const useWatchProjectTestLogNamedDecimalUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_decimal_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_int"`
- */
-export const useWatchProjectTestLogNamedIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_string"`
- */
-export const useWatchProjectTestLogNamedStringEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_string',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_uint"`
- */
-export const useWatchProjectTestLogNamedUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_string"`
- */
-export const useWatchProjectTestLogStringEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_string',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_uint"`
- */
-export const useWatchProjectTestLogUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"logs"`
- */
-export const useWatchProjectTestLogsEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'logs',
-  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__
@@ -21576,6 +20925,33 @@ export const useReadSaleTestTestConstructor =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_PaymentTokenToToken"`
+ */
+export const useReadSaleTestTestPaymentTokenToToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: saleTestAbi,
+    functionName: 'test_PaymentTokenToToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundAmountIsZeroBeforeSale"`
+ */
+export const useReadSaleTestTestRefundAmountIsZeroBeforeSale =
+  /*#__PURE__*/ createUseReadContract({
+    abi: saleTestAbi,
+    functionName: 'test_RefundAmountIsZeroBeforeSale',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_TokenToPaymentToken"`
+ */
+export const useReadSaleTestTestTokenToPaymentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: saleTestAbi,
+    functionName: 'test_TokenToPaymentToken',
+  })
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__
  */
 export const useWriteSaleTest = /*#__PURE__*/ createUseWriteContract({
@@ -21599,47 +20975,165 @@ export const useWriteSaleTestSetUp = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuy"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_Buy"`
  */
 export const useWriteSaleTestTestBuy = /*#__PURE__*/ createUseWriteContract({
   abi: saleTestAbi,
-  functionName: 'testBuy',
+  functionName: 'test_Buy',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyAboveMaximum"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_BuyMultiplePurchasesSameAccount"`
  */
-export const useWriteSaleTestTestBuyAboveMaximum =
+export const useWriteSaleTestTestBuyMultiplePurchasesSameAccount =
   /*#__PURE__*/ createUseWriteContract({
     abi: saleTestAbi,
-    functionName: 'testBuyAboveMaximum',
+    functionName: 'test_BuyMultiplePurchasesSameAccount',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyBelowMinimum"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_BuyRevertsAfterReachingMaxTarget"`
  */
-export const useWriteSaleTestTestBuyBelowMinimum =
+export const useWriteSaleTestTestBuyRevertsAfterReachingMaxTarget =
   /*#__PURE__*/ createUseWriteContract({
     abi: saleTestAbi,
-    functionName: 'testBuyBelowMinimum',
+    functionName: 'test_BuyRevertsAfterReachingMaxTarget',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyMaximum"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_BuyRevertsWhenAboveMaximum"`
  */
-export const useWriteSaleTestTestBuyMaximum =
+export const useWriteSaleTestTestBuyRevertsWhenAboveMaximum =
   /*#__PURE__*/ createUseWriteContract({
     abi: saleTestAbi,
-    functionName: 'testBuyMaximum',
+    functionName: 'test_BuyRevertsWhenAboveMaximum',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyMinimum"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_BuyRevertsWhenBelowMinimum"`
  */
-export const useWriteSaleTestTestBuyMinimum =
+export const useWriteSaleTestTestBuyRevertsWhenBelowMinimum =
   /*#__PURE__*/ createUseWriteContract({
     abi: saleTestAbi,
-    functionName: 'testBuyMinimum',
+    functionName: 'test_BuyRevertsWhenBelowMinimum',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_BuyRevertsWhenInvalidMerkleProof"`
+ */
+export const useWriteSaleTestTestBuyRevertsWhenInvalidMerkleProof =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_BuyRevertsWhenInvalidMerkleProof',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundAmountIsZeroIfAlreadyRefunded"`
+ */
+export const useWriteSaleTestTestRefundAmountIsZeroIfAlreadyRefunded =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_RefundAmountIsZeroIfAlreadyRefunded',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundAmountIsZeroIfIndividualCapIsHigherThanInvestedTotal"`
+ */
+export const useWriteSaleTestTestRefundAmountIsZeroIfIndividualCapIsHigherThanInvestedTotal =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName:
+      'test_RefundAmountIsZeroIfIndividualCapIsHigherThanInvestedTotal',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundReturnsCorrectAmmount"`
+ */
+export const useWriteSaleTestTestRefundReturnsCorrectAmmount =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_RefundReturnsCorrectAmmount',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundRevertsIfDoubleRefund"`
+ */
+export const useWriteSaleTestTestRefundRevertsIfDoubleRefund =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_RefundRevertsIfDoubleRefund',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundRevertsWhenCapIsNotSet"`
+ */
+export const useWriteSaleTestTestRefundRevertsWhenCapIsNotSet =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_RefundRevertsWhenCapIsNotSet',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_SetIndividualCap"`
+ */
+export const useWriteSaleTestTestSetIndividualCap =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_SetIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_SetIndividualCapFailsValidateForWrongValue"`
+ */
+export const useWriteSaleTestTestSetIndividualCapFailsValidateForWrongValue =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_SetIndividualCapFailsValidateForWrongValue',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_Withdraw"`
+ */
+export const useWriteSaleTestTestWithdraw =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_Withdraw',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_WithdrawDoesNotWithdrawRefunds"`
+ */
+export const useWriteSaleTestTestWithdrawDoesNotWithdrawRefunds =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_WithdrawDoesNotWithdrawRefunds',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_WithdrawOnlyOnce"`
+ */
+export const useWriteSaleTestTestWithdrawOnlyOnce =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_WithdrawOnlyOnce',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_WithdrawRevertsIfNoCapSet"`
+ */
+export const useWriteSaleTestTestWithdrawRevertsIfNoCapSet =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_WithdrawRevertsIfNoCapSet',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_WithdrawRevertsIfNotOwner"`
+ */
+export const useWriteSaleTestTestWithdrawRevertsIfNotOwner =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: saleTestAbi,
+    functionName: 'test_WithdrawRevertsIfNotOwner',
   })
 
 /**
@@ -21666,48 +21160,166 @@ export const useSimulateSaleTestSetUp = /*#__PURE__*/ createUseSimulateContract(
 )
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuy"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_Buy"`
  */
 export const useSimulateSaleTestTestBuy =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleTestAbi,
-    functionName: 'testBuy',
+    functionName: 'test_Buy',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyAboveMaximum"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_BuyMultiplePurchasesSameAccount"`
  */
-export const useSimulateSaleTestTestBuyAboveMaximum =
+export const useSimulateSaleTestTestBuyMultiplePurchasesSameAccount =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleTestAbi,
-    functionName: 'testBuyAboveMaximum',
+    functionName: 'test_BuyMultiplePurchasesSameAccount',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyBelowMinimum"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_BuyRevertsAfterReachingMaxTarget"`
  */
-export const useSimulateSaleTestTestBuyBelowMinimum =
+export const useSimulateSaleTestTestBuyRevertsAfterReachingMaxTarget =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleTestAbi,
-    functionName: 'testBuyBelowMinimum',
+    functionName: 'test_BuyRevertsAfterReachingMaxTarget',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyMaximum"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_BuyRevertsWhenAboveMaximum"`
  */
-export const useSimulateSaleTestTestBuyMaximum =
+export const useSimulateSaleTestTestBuyRevertsWhenAboveMaximum =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleTestAbi,
-    functionName: 'testBuyMaximum',
+    functionName: 'test_BuyRevertsWhenAboveMaximum',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"testBuyMinimum"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_BuyRevertsWhenBelowMinimum"`
  */
-export const useSimulateSaleTestTestBuyMinimum =
+export const useSimulateSaleTestTestBuyRevertsWhenBelowMinimum =
   /*#__PURE__*/ createUseSimulateContract({
     abi: saleTestAbi,
-    functionName: 'testBuyMinimum',
+    functionName: 'test_BuyRevertsWhenBelowMinimum',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_BuyRevertsWhenInvalidMerkleProof"`
+ */
+export const useSimulateSaleTestTestBuyRevertsWhenInvalidMerkleProof =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_BuyRevertsWhenInvalidMerkleProof',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundAmountIsZeroIfAlreadyRefunded"`
+ */
+export const useSimulateSaleTestTestRefundAmountIsZeroIfAlreadyRefunded =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_RefundAmountIsZeroIfAlreadyRefunded',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundAmountIsZeroIfIndividualCapIsHigherThanInvestedTotal"`
+ */
+export const useSimulateSaleTestTestRefundAmountIsZeroIfIndividualCapIsHigherThanInvestedTotal =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName:
+      'test_RefundAmountIsZeroIfIndividualCapIsHigherThanInvestedTotal',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundReturnsCorrectAmmount"`
+ */
+export const useSimulateSaleTestTestRefundReturnsCorrectAmmount =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_RefundReturnsCorrectAmmount',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundRevertsIfDoubleRefund"`
+ */
+export const useSimulateSaleTestTestRefundRevertsIfDoubleRefund =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_RefundRevertsIfDoubleRefund',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_RefundRevertsWhenCapIsNotSet"`
+ */
+export const useSimulateSaleTestTestRefundRevertsWhenCapIsNotSet =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_RefundRevertsWhenCapIsNotSet',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_SetIndividualCap"`
+ */
+export const useSimulateSaleTestTestSetIndividualCap =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_SetIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_SetIndividualCapFailsValidateForWrongValue"`
+ */
+export const useSimulateSaleTestTestSetIndividualCapFailsValidateForWrongValue =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_SetIndividualCapFailsValidateForWrongValue',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_Withdraw"`
+ */
+export const useSimulateSaleTestTestWithdraw =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_Withdraw',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_WithdrawDoesNotWithdrawRefunds"`
+ */
+export const useSimulateSaleTestTestWithdrawDoesNotWithdrawRefunds =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_WithdrawDoesNotWithdrawRefunds',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_WithdrawOnlyOnce"`
+ */
+export const useSimulateSaleTestTestWithdrawOnlyOnce =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_WithdrawOnlyOnce',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_WithdrawRevertsIfNoCapSet"`
+ */
+export const useSimulateSaleTestTestWithdrawRevertsIfNoCapSet =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_WithdrawRevertsIfNoCapSet',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_WithdrawRevertsIfNotOwner"`
+ */
+export const useSimulateSaleTestTestWithdrawRevertsIfNotOwner =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: saleTestAbi,
+    functionName: 'test_WithdrawRevertsIfNotOwner',
   })
 
 /**
@@ -21733,6 +21345,15 @@ export const useWatchSaleTestPurchaseEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: saleTestAbi,
     eventName: 'Purchase',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"Refund"`
+ */
+export const useWatchSaleTestRefundEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: saleTestAbi,
+    eventName: 'Refund',
   })
 
 /**

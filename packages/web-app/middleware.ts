@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const allowedOrigins = [
   'https://citizend-staging.webflow.io',
   'https://citizend.xyz',
+  'https://www.citizend.xyz',
 ];
 
 const corsOptions = {

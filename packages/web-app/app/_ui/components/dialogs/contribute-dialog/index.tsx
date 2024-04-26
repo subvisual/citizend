@@ -59,13 +59,15 @@ type TAllowFundsProps = {
   allowance: bigint;
 };
 
-const AllowFunds = ({ amount, amountInWei, allowance }: TAllowFundsProps) => {
+const AllowFunds = ({ amountInWei, allowance }: TAllowFundsProps) => {
   const { error, setAllowance, isPending, allowanceTxHash } =
     useSetPaymentTokenAllowance();
 
   const handleClick = useCallback(() => {
     setAllowance(amountInWei);
   }, [setAllowance, amountInWei]);
+
+  console.log(error);
 
   return (
     <div className="flex flex-col text-sm">
@@ -88,9 +90,19 @@ const AllowFunds = ({ amount, amountInWei, allowance }: TAllowFundsProps) => {
   );
 };
 
-const Contribute = ({ tokensToBuyInWei }: { tokensToBuyInWei: bigint }) => {
-  const { contributionTxHash, buyCtzndTokens, error } = useBuyCtzndTokens();
+type TContributeProps = {
+  tokensToBuyInWei: bigint;
+  contributionTxHash?: `0x${string}`;
+  buyCtzndTokens: (tokensToBuyInWei: bigint) => void;
+  error: any;
+};
 
+const Contribute = ({
+  tokensToBuyInWei,
+  contributionTxHash,
+  buyCtzndTokens,
+  error,
+}: TContributeProps) => {
   useEffect(() => {
     if (!tokensToBuyInWei || contributionTxHash) return;
     buyCtzndTokens(tokensToBuyInWei);
@@ -164,19 +176,29 @@ export function ContributeDialog({
 }: TContributeDialogProps) {
   const { allowance, isLoading, error } =
     useCtzndPaymentTokenAllowance(userAddress);
+  const {
+    contributionTxHash,
+    buyCtzndTokens,
+    error: buyError,
+  } = useBuyCtzndTokens();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return null;
   if (error || allowance === undefined) return <div>{error?.message}</div>;
 
   const hasEnoughAllowance = allowance && allowance >= amountInWei;
-  if (hasEnoughAllowance)
+  if (hasEnoughAllowance || contributionTxHash)
     return (
       <>
         <Dialog.Title
           as="h2"
           className="relative flex w-full flex-col items-center justify-center gap-4 p-8 text-mono-950"
         >
-          <Contribute tokensToBuyInWei={tokensToBuyInWei} />
+          <Contribute
+            tokensToBuyInWei={tokensToBuyInWei}
+            contributionTxHash={contributionTxHash}
+            buyCtzndTokens={buyCtzndTokens}
+            error={buyError}
+          />
         </Dialog.Title>
         <div className="-mt-6 flex flex-col">
           <Description amount={amount} tokensToBuy={tokensToBuy} />

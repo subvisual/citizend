@@ -391,7 +391,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     /// Sets the maximum contribution
-    /// @param _mmaxContribution new maximum contribution
+    /// @param _maxContribution new maximum contribution
     function setMaxContribution(
         uint256 _maxContribution
     ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {

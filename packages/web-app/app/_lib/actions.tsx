@@ -204,7 +204,6 @@ export const useSignDelegatedAccessGrant = (
 };
 
 export const useContributeToCtznd = (address: `0x${string}`) => {
-  const [state, setState] = useState();
   const [amount, setAmount] = useState(0);
   const amountInWei = useMemo(() => parseEther(amount.toString()), [amount]);
   const { data: merkleProof } = useFetchMerkleProof();

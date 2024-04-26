@@ -4,9 +4,9 @@ import { useSignDelegatedAccessGrant } from '@/app/_lib/actions';
 import { useTransaction } from 'wagmi';
 import { useKyc } from '@/app/_providers/kyc/context';
 import { useEffect } from 'react';
-import { Spinner } from '../svg/spinner';
-import { Check } from '../svg/check';
-import { Error } from '../svg/error';
+import { Spinner } from '../../svg/spinner';
+import { Check } from '../../svg/check';
+import { Error } from '../../svg/error';
 import { arbitrum, arbitrumSepolia } from 'viem/chains';
 
 type AcquireAccessGrantButton = {

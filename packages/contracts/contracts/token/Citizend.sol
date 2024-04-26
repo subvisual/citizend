@@ -23,7 +23,7 @@ import {ERC20Pausable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC2
 contract Citizend is ERC20, ERC20Burnable, ERC20Pausable, AccessControl {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
-    uint public lockEnd;
+    uint public immutable lockEnd;
 
     error TooEarly(uint time);
 

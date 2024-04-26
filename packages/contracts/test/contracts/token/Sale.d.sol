@@ -67,11 +67,12 @@ contract SaleTest is Test {
             5 ether,
             15 ether,
             startRegistration,
-            endRegistration,
-            merkleRoot
+            endRegistration
         );
 
+        sale.setMerkleRoot(merkleRoot);
         sale.setToken(address(token));
+        sale.setMinContribution(0.2 ether);
         sale.setMaxContribution(10 ether);
 
         token.transfer(address(sale), 1000000 ether);

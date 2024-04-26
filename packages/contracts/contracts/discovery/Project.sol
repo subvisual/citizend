@@ -7,6 +7,7 @@ import {MerkleProof} from "@openzeppelin/contracts/utils/cryptography/MerkleProo
 
 import {IController} from "./interfaces/IController.sol";
 import {IProject} from "./interfaces/IProject.sol";
+import {IPool} from "../discovery/interfaces/IPool.sol";
 
 import {StakersPool} from "./pools/StakersPool.sol";
 import {PeoplesPool} from "./pools/PeoplesPool.sol";
@@ -118,6 +119,14 @@ contract Project is IProject, ERC165 {
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
         bool isValidLeaf = MerkleProof.verify(_merkleProof, merkleRoot, leaf);
         if (!isValidLeaf) revert InvalidLeaf();
+
+        if (stakersPool != address(0)) {
+            IPool(stakersPool).invest(msg.sender, _stakersAmount);
+        }
+
+        if (peoplesPool != address(0)) {
+            IPool(peoplesPool).invest(msg.sender, _peoplesAmount);
+        }
     }
 
     /// @inheritdoc IProject

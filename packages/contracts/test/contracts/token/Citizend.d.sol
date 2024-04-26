@@ -28,7 +28,7 @@ contract CitizendConstructorTest is Test {
     function _stringEq(
         string memory s1,
         string memory s2
-    ) internal returns (bool) {
+    ) internal pure returns (bool) {
         return
             keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
     }

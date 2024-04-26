@@ -5,6 +5,8 @@ import {IProject} from "../discovery/interfaces/IProject.sol";
 import {IPool} from "../discovery/interfaces/IPool.sol";
 import {TestPool} from "../discovery/pools/TestPool.sol";
 
+import {MerkleProof} from "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
+
 contract MockProject is IProject {
     /// @inheritdoc IProject
     address public override(IProject) stakersPool;
@@ -12,8 +14,13 @@ contract MockProject is IProject {
     /// @inheritdoc IProject
     address public override(IProject) peoplesPool;
 
+    // Merkle root for contributions validation
+    bytes32 public merkleRoot;
+
+    error InvalidLeaf();
+
     /// Approval function from an eligible project manager
-    function approveByManager() external {
+    function approveByManager() external pure {
         revert("not implemented");
     }
 
@@ -23,7 +30,7 @@ contract MockProject is IProject {
     }
 
     /// Approval function from the legal team
-    function approveByLegal() external {
+    function approveByLegal() external pure {
         revert("not implemented");
     }
 
@@ -48,6 +55,10 @@ contract MockProject is IProject {
         uint256 _stakersAmount,
         bytes32[] calldata _merkleProof
     ) external {
+        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
+        bool isValidLeaf = MerkleProof.verify(_merkleProof, merkleRoot, leaf);
+        if (!isValidLeaf) revert InvalidLeaf();
+
         if (stakersPool != address(0)) {
             IPool(stakersPool).invest(msg.sender, _stakersAmount);
         }
@@ -59,7 +70,7 @@ contract MockProject is IProject {
 
     function investmentTokenToToken(
         uint256 _amount
-    ) external view override(IProject) returns (uint256) {
+    ) external pure override(IProject) returns (uint256) {
         return _amount;
     }
 

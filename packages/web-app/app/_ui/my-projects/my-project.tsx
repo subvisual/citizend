@@ -1,5 +1,8 @@
 import { useProject } from '@/app/_providers/project/context';
-import { useFetchProjectsSaleDetails } from '@/app/_lib/queries';
+import {
+  useFetchProjectsSaleDetails,
+  useUserTotalInvestedUsdcCtznd,
+} from '@/app/_lib/queries';
 import { NavLink } from '../components/nav-link';
 import { Right } from '../components/svg/right';
 import Image from 'next/image';
@@ -58,14 +61,7 @@ const Header = ({
 const MyContribution = () => {
   const { address } = useAccount();
   const { projectId } = useProject();
-  const { data: tokens } = useReadCtzndSaleUncappedAllocation({
-    args: [address!],
-  });
-  const { data: rate } = useReadCtzndSaleRate();
-  const usdcValue =
-    tokens && rate
-      ? parseFloat(formatEther(tokens)) * parseFloat(formatEther(rate))
-      : 0;
+  const usdcValue = useUserTotalInvestedUsdcCtznd(address!);
 
   return (
     <div className="flex flex-col gap-2 rounded-md bg-mono-50 px-6 py-8 text-mono-950">

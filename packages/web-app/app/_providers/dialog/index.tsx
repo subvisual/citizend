@@ -2,13 +2,18 @@ import { useMemo, useState, PropsWithChildren } from 'react';
 import { DialogContext, TProps } from './context';
 import { DialogWrapper } from '@/app/_ui/components/dialogs/dialog-wrapper';
 import { ApplyDialog, SettingsDialog } from '@/app/_ui/components/dialogs';
+import { ContributeDialog } from '@/app/_ui/components/dialogs/contribute-dialog';
 
 type TDialogComponent = {
   displayName: string;
   (props: TProps): JSX.Element;
 };
 
-const dialogComponents: TDialogComponent[] = [SettingsDialog, ApplyDialog];
+const dialogComponents: TDialogComponent[] = [
+  SettingsDialog,
+  ApplyDialog,
+  ContributeDialog,
+];
 
 const emptyProps = {};
 

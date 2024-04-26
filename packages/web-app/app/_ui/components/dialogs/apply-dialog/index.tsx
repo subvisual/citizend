@@ -190,7 +190,9 @@ export const ApplyDialog = ({ projectId }: TProps) => {
     return <KycOnIdosRedirect />;
   }
 
-  return <UnlockKycData projectId={projectId} />;
+  if (typeof projectId === 'string') {
+    return <UnlockKycData projectId={projectId} />;
+  }
 };
 
 ApplyDialog.displayName = 'applyDialog';

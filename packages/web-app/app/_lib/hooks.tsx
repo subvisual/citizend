@@ -1,13 +1,23 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   useFetchCredentials,
   useFetchProjectsSaleDetails,
+  usePaymentTokenBalance,
   useProjectPublicInfo,
   usePublicInfo,
 } from './queries';
 import { useKyc } from '../_providers/kyc/context';
 import { compareAddresses, isValidGrant } from './utils';
 import { TProjectInfoArgs } from '../_server/info';
+import {
+  ctzndSaleAddress,
+  useReadCtzndSalePaymentToken,
+  useReadCtzndSalePaymentTokenToToken,
+  useReadErc20Allowance,
+  useWriteErc20Approve,
+} from '@/wagmi.generated';
+import { formatEther, parseEther } from 'viem';
+import { sepolia } from 'viem/chains';
 
 export const useKycCredential = () => {
   const {
@@ -176,4 +186,47 @@ export const useHasProjectGrant = (projectId: string) => {
       isSuccess,
     };
   }, [hasGrant, isLoading, error, isSuccess]);
+};
+
+export const useCtzndPaymentTokenAllowance = (userAddress: `0x${string}`) => {
+  const saleAddress = ctzndSaleAddress[sepolia.id];
+  const { data: paymentToken } = useReadCtzndSalePaymentToken();
+  const {
+    data: allowance,
+    isLoading,
+    error,
+  } = useReadErc20Allowance({
+    address: paymentToken,
+    args: [userAddress, saleAddress],
+    query: {
+      staleTime: 0,
+      refetchInterval: 5000,
+    },
+  });
+
+  return {
+    allowance,
+    isLoading,
+    error,
+  };
+};
+
+export const useContributeToCtznd = () => {
+  const [amount, setAmount] = useState(0);
+  const amountInWei = useMemo(() => parseEther(amount.toString()), [amount]);
+  const { formattedValue: maxAmount } = usePaymentTokenBalance();
+  const { data: tokensToBuyInWei, error: tokenError } =
+    useReadCtzndSalePaymentTokenToToken({
+      args: [amountInWei],
+    });
+
+  return {
+    amount,
+    setAmount,
+    amountInWei,
+    maxAmount: Number(maxAmount || 0),
+    tokensToBuyInWei: tokensToBuyInWei || 0n,
+    tokensToBuy: tokensToBuyInWei ? Number(formatEther(tokensToBuyInWei)) : 0,
+    error: tokenError,
+  };
 };

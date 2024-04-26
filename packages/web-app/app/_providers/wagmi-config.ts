@@ -18,5 +18,4 @@ export const wagmiConfig = getDefaultConfig({
       : []),
   ],
   ssr: true,
-  pollingInterval: 500,
 });

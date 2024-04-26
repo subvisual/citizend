@@ -18,6 +18,8 @@
 git clone git@github.com/subvisual/discoveryDAO
 cd discoveryDAO
 yarn install
+cd packages/contracts
+forge install
 ```
 
 ## Contracts

@@ -135,8 +135,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _minTarget,
         uint256 _maxTarget,
         uint256 _startRegistration,
-        uint256 _endRegistration,
-        bytes32 _merkleRoot
+        uint256 _endRegistration
     ) {
         require(_paymentToken != address(0), "can't be zero");
         require(_rate > 0, "can't be zero");
@@ -162,7 +161,6 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         maxTarget = _maxTarget;
         startRegistration = _startRegistration;
         endRegistration = _endRegistration;
-        merkleRoot = _merkleRoot;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -372,7 +370,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     function setMerkleRoot(
         bytes32 _merkleRoot
-    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
         merkleRoot = _merkleRoot;
     }
 

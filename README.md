@@ -28,6 +28,8 @@ Solidity smart contracts are found in `./packages/contracts`
 
 `yarn contracts:dev`, or `yarn dev` inside the `./packages/contracts` folder boots the local development chain
 
+`forge test` runs the tests
+
 ## Web
 
 NextJS web application that serves as the frontend is found in `./packages/web-app`

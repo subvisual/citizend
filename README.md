@@ -34,4 +34,4 @@ Solidity smart contracts are found in `./packages/contracts`
 
 NextJS web application that serves as the frontend is found in `./packages/web-app`
 
-`yarn web:dev, or `yarn dev` inside the `./packages/web-app` folder starts the project locally
+`yarn web:dev`, or `yarn dev` inside the `./packages/web-app` folder starts the project locally

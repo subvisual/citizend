@@ -15,8 +15,8 @@ const getNotVerifiedMessage = (status: idOSCredentialStatus | undefined) => {
 };
 
 const Status = () => {
-  const { getProviderUrl, address, hasProfile } = useIdOS();
-  const { status, error, isSuccess, isLoading } = useKyc();
+  const { getProviderUrl, address } = useIdOS();
+  const { status, error, isLoading } = useKyc();
   if (!address) return 'wallet not connected';
 
   const providerUrl = getProviderUrl(address);

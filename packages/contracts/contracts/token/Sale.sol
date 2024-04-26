@@ -13,8 +13,6 @@ import {ISale} from "./ISale.sol";
 import {RisingTide} from "../RisingTide/RisingTide.sol";
 import {Math} from "../libraries/Math.sol";
 
-/// Citizend token sale contract
-///
 /// Users interact with this contract to deposit $USDC in exchange for $CTND.
 /// The contract should hold all $CTND tokens meant to be distributed in the public sale
 contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
@@ -384,12 +382,16 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         _risingTide_setCap(_cap);
     }
 
+    /// Sets the minimum contribution
+    /// @param _minContribution new minimum contribution
     function setMinContribution(
         uint256 _minContribution
     ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
         minContribution = _minContribution;
     }
 
+    /// Sets the maximum contribution
+    /// @param _mmaxContribution new maximum contribution
     function setMaxContribution(
         uint256 _maxContribution
     ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {

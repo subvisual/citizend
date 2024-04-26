@@ -20,7 +20,7 @@ contract DeployScript is Script {
             5 ether,
             start,
             end,
-            1000,
+            1000000 ether,
             1000000 ether,
             2000000 ether,
             startRegistration,

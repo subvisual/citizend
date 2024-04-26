@@ -13,16 +13,15 @@ interface ISale {
         uint256 _paymentAmount
     ) external view returns (uint256);
 
-    /// How many $aUSD will be received for the given $CTND amount
+    /// How many $USDC will be received for the given $CTND amount
     function tokenToPaymentToken(
         uint256 _tokenAmount
     ) external view returns (uint256);
 
-    /// Commits an amount of $aUSD to buy $CTND
+    /// Commits an amount of $USDC to buy $CTND
     ///
-    /// @dev aUSD allowance must be previously set by spender
+    /// @dev USDC allowance must be previously set by spender
     /// @dev Actual $CTND allocation is only available once individual cap is set
-    /// @dev Needs to be approved by Fractal via the Registry
     ///
     /// @param _paymentAmount amount in payment token to commit
     function buy(

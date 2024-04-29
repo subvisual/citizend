@@ -6,6 +6,7 @@ import {
   sepolia,
 } from 'wagmi/chains';
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { http } from 'viem';
 
 export const wagmiConfig = getDefaultConfig({
   appName: 'Citizend',
@@ -17,5 +18,9 @@ export const wagmiConfig = getDefaultConfig({
       ? [foundry, sepolia, arbitrumSepolia]
       : []),
   ],
+  transports: {
+    [mainnet.id]: http(process.env.NEXT_PUBLIC_ALCHEMY_MAINNET),
+    [sepolia.id]: http(process.env.NEXT_PUBLIC_ALCHEMY_SEPOLIA),
+  },
   ssr: true,
 });

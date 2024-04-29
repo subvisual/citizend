@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   useFetchCredentials,
   useFetchProjectsSaleDetails,
@@ -229,4 +229,21 @@ export const useContributeToCtznd = () => {
     tokensToBuy: tokensToBuyInWei ? Number(formatEther(tokensToBuyInWei)) : 0,
     error: tokenError,
   };
+};
+
+/**
+ * Prevents double call issue in development
+ * @param {*} callback
+ * @param {*} deps
+ */
+export const useEffectSafe = (callback: () => void, deps: any[]) => {
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      callback();
+    }, 200);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 };

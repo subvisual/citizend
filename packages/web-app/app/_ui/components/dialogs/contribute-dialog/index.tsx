@@ -1,14 +1,12 @@
 'use client';
 
-import { useCtzndPaymentTokenAllowance } from '@/app/_lib/hooks';
+import { useCtzndPaymentTokenAllowance, useEffectSafe } from '@/app/_lib/hooks';
 import { Dialog } from '@headlessui/react';
 import { formatEther } from 'viem';
-import { Button } from '../../button';
 import {
   useBuyCtzndTokens,
   useSetPaymentTokenAllowance,
 } from '@/app/_lib/actions';
-import { useCallback, useEffect } from 'react';
 import { Spinner } from '../../svg/spinner';
 import { useTransaction } from 'wagmi';
 import { sepolia } from 'viem/chains';
@@ -63,30 +61,42 @@ const AllowFunds = ({ amountInWei, allowance }: TAllowFundsProps) => {
   const { error, setAllowance, isPending, allowanceTxHash } =
     useSetPaymentTokenAllowance();
 
-  const handleClick = useCallback(() => {
+  useEffectSafe(() => {
+    if (allowanceTxHash) return;
+
     setAllowance(amountInWei);
-  }, [setAllowance, amountInWei]);
+  }, []);
 
-  console.log(error);
-
-  return (
-    <div className="flex flex-col text-sm">
-      <div className="flex justify-between pb-6">
-        <div className="uppercase text-mono-800">Current allowed value:</div>
-        <div className="text-mono-950">
-          {allowance ? formatEther(allowance) : 0} USDC
-        </div>
-      </div>
-      {allowanceTxHash ? (
-        <div>
+  if (allowanceTxHash) {
+    return (
+      <>
+        <Check className="h-8 w-8 text-blue-500" />
+        Allowance submitted
+        <div className="text-sm">
           <Done hash={allowanceTxHash} />
         </div>
-      ) : (
-        <Button onClick={handleClick}>
-          {isPending ? <Spinner /> : 'Allow'}
-        </Button>
-      )}
-    </div>
+      </>
+    );
+  }
+
+  if (error) {
+    const errorMessage = error as unknown as any;
+    return (
+      <>
+        <Error className="h-8 w-8 text-red-700" />
+        <div>Failed</div>
+        <div className="flex text-sm">
+          {errorMessage?.shortMessage || "Couldn't submit allowance"}
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Spinner className="h-8 w-8 text-blue-500" />
+      Proceed in your wallet
+    </>
   );
 };
 
@@ -103,10 +113,11 @@ const Contribute = ({
   buyCtzndTokens,
   error,
 }: TContributeProps) => {
-  useEffect(() => {
+  useEffectSafe(() => {
     if (!tokensToBuyInWei || contributionTxHash) return;
+
     buyCtzndTokens(tokensToBuyInWei);
-  }, [tokensToBuyInWei, buyCtzndTokens, contributionTxHash]);
+  }, []);
 
   if (contributionTxHash) {
     return (
@@ -182,7 +193,7 @@ export function ContributeDialog({
     error: buyError,
   } = useBuyCtzndTokens();
 
-  if (isLoading)
+  if (isLoading && !allowance)
     return (
       <div>
         <Spinner />
@@ -219,9 +230,13 @@ export function ContributeDialog({
     <>
       <Dialog.Title
         as="h2"
-        className="relative flex w-full justify-center p-8 text-mono-950"
+        className="relative flex w-full flex-col items-center justify-center gap-4 p-8 text-mono-950"
       >
-        Allow USDC funds management
+        <AllowFunds
+          amount={amount}
+          allowance={allowance}
+          amountInWei={amountInWei}
+        />
       </Dialog.Title>
       <p>
         In order to contribute to this project, you need to allow the app to
@@ -234,11 +249,12 @@ export function ContributeDialog({
       </p>
       <div className="flex flex-col">
         <Description amount={amount} tokensToBuy={tokensToBuy} />
-        <AllowFunds
-          amount={amount}
-          allowance={allowance}
-          amountInWei={amountInWei}
-        />
+        <div className="flex justify-between pb-6 text-sm">
+          <div className="uppercase text-mono-800">Current allowed value:</div>
+          <div className="text-mono-950">
+            {allowance ? formatEther(allowance) : 0} USDC
+          </div>
+        </div>
       </div>
     </>
   );

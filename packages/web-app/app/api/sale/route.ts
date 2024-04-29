@@ -25,10 +25,10 @@ export async function GET(_request: Request) {
     return {
       ...project,
       status: 'Coming soon',
-      start: 1715947200,
-      end: 1716033600,
-      startRegistration: 1715342400,
-      endRegistration: 1715860800,
+      start: 1715947200 * 1000,
+      end: 1716033600 * 1000,
+      startRegistration: 1715342400 * 1000,
+      endRegistration: 1715860800 * 1000,
       minTarget: 500000,
       maxTarget: 1000000,
     };

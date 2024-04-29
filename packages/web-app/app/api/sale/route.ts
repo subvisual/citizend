@@ -25,12 +25,12 @@ export async function GET(_request: Request) {
     return {
       ...project,
       status: 'Coming soon',
-      start: 'TBD',
-      end: 'TBD',
-      startRegistration: 'TBD',
-      endRegistration: 'TBD',
-      minTarget: 'TBD',
-      maxTarget: 'TBD',
+      start: 1715947200,
+      end: 1716033600,
+      startRegistration: 1715342400,
+      endRegistration: 1715860800,
+      minTarget: 500000,
+      maxTarget: 1000000,
     };
   });
 

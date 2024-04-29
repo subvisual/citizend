@@ -9,9 +9,7 @@
     ],
     "nohoist": [
       "**/@openzeppelin/**",
-      "**/@nomiclabs/**",
       "**/@typechain/**",
-      "**/@polkadot/**",
       "**/typechain/**",
       "**/typescript/**",
       "**/ts-node/**",

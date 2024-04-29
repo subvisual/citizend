@@ -2,7 +2,7 @@
 import { createContext, useContext } from 'react';
 
 export type TProps = {
-  [key: string]: string;
+  [key: string]: string | number | bigint;
 };
 
 type TDialogContextValue = {

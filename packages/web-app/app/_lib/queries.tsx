@@ -13,7 +13,11 @@ import {
 } from '../_server/info';
 import { fetchAndGenerateProof } from '../_server/projects/generate-merkle-root';
 import { useAccount, useBalance } from 'wagmi';
-import { useReadCtzndSalePaymentToken } from '@/wagmi.generated';
+import {
+  useReadCtzndSalePaymentToken,
+  useReadCtzndSaleRate,
+  useReadCtzndSaleUncappedAllocation,
+} from '@/wagmi.generated';
 import { formatEther } from 'viem';
 
 export const usePublicInfo = () => {
@@ -250,4 +254,17 @@ export const usePaymentTokenBalance = () => {
     isLoading: isLoadingBalance || isLoadingToken,
     error: errorToken || errorBalance,
   };
+};
+
+export const useUserTotalInvestedUsdcCtznd = (address: `0x${string}`) => {
+  const { data: tokens } = useReadCtzndSaleUncappedAllocation({
+    args: [address],
+  });
+  const { data: rate } = useReadCtzndSaleRate();
+  const usdcValue =
+    tokens && rate
+      ? parseFloat(formatEther(tokens)) * parseFloat(formatEther(rate))
+      : 0;
+
+  return usdcValue;
 };

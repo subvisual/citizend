@@ -9,6 +9,8 @@ import { getRelativePath } from '../utils/getRelativePath';
 import { NoProjects } from './no-projects';
 import { MyProjectSkeleton } from './my-project';
 import { useReadCtzndSaleInvestorCount } from '@/wagmi.generated';
+import { useAccount } from 'wagmi';
+import { useUserTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
 
 const ProjectRow = ({
   logo,
@@ -16,8 +18,10 @@ const ProjectRow = ({
   minTarget,
   maxTarget,
 }: TProjectSaleDetails) => {
+  const { address } = useAccount();
   const { data: contributions } = useReadCtzndSaleInvestorCount();
   const totalContributions = contributions ? contributions.toString() : 0;
+  const totalUsdc = useUserTotalInvestedUsdcCtznd(address!);
 
   return (
     <Link
@@ -36,7 +40,7 @@ const ProjectRow = ({
         </div>
         <div className="hidden md:block">{totalContributions}</div>
         <div className="hidden md:block">{usdRange(minTarget, maxTarget)}</div>
-        <div>0 USDC</div>
+        <div>{totalUsdc} USDC</div>
       </div>
     </Link>
   );

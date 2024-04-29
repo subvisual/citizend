@@ -5,12 +5,18 @@ import { Button } from '../components';
 
 import { Spinner } from '../components/svg/spinner';
 import { DataFields } from './contribution/DataFields';
-import { useContributeToCtznd } from '@/app/_lib/actions';
 import { formatEther } from 'viem';
+import { useDialog } from '@/app/_providers/dialog/context';
+import { ContributeDialog } from '../components/dialogs/contribute-dialog';
+import { useContributeToCtznd } from '@/app/_lib/hooks';
 
-const getErrorMessage = (amount: number, error: any) => {
+const getErrorMessage = (amount: number, maxAmount: number, error: any) => {
   if (amount < 0) {
     return 'The amount must be greater than 0';
+  }
+
+  if (amount > maxAmount) {
+    return 'The amount exceeds the maximum balance';
   }
 
   if (error?.shortMessage) {
@@ -29,18 +35,16 @@ type TProjectContribution = {
 };
 
 export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
+  const { open } = useDialog();
   const {
-    diffToAllowance,
-    contributionTxHash,
+    maxAmount,
     amount,
+    amountInWei,
+    tokensToBuyInWei,
     tokensToBuy,
-    tokenError,
+    error,
     setAmount,
-    buyError,
-    allowanceError,
-    isPending,
-    submit: onSubmit,
-  } = useContributeToCtznd(userAddress);
+  } = useContributeToCtznd();
 
   const updateAmount = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +54,18 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
     [setAmount],
   );
 
-  const errorMessage = getErrorMessage(amount, buyError || allowanceError);
+  const onClick = useCallback(() => {
+    if (!amount || !tokensToBuy) return;
+    return open(ContributeDialog.displayName, {
+      userAddress,
+      amount,
+      amountInWei,
+      tokensToBuy,
+      tokensToBuyInWei,
+    });
+  }, [open, amount, tokensToBuy, amountInWei, tokensToBuyInWei, userAddress]);
+
+  const errorMessage = getErrorMessage(amount, maxAmount, error);
 
   return (
     <div className="flex w-full flex-col rounded-lg bg-mono-50 text-mono-950">
@@ -67,7 +82,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
           units="USDC"
           error={errorMessage}
           className="col-span-2 md:col-span-1"
-          onSubmit={onSubmit}
+          onSubmit={onClick}
           defaultValue={amount}
           min={0}
         />
@@ -77,8 +92,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
           id="ctnd-amount"
           units="CTND*"
           disabled
-          value={tokensToBuy ? formatEther(tokensToBuy).toString() : 0}
-          error={tokenError?.shortMessage || tokenError?.message}
+          value={tokensToBuy}
           className="col-span-2 md:col-span-1"
         />
         <DataFields />
@@ -87,27 +101,28 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
           the number of contributors and their desired contribution.
         </p>
       </div>
-      {contributionTxHash ? (
+      {/* {contributionTxHash ? (
         <div className="rounded-b-md bg-green-600 p-4 text-center text-mono-50">
           Contribution submitted
           <p className="break-words text-xs">{contributionTxHash}</p>
         </div>
-      ) : (
-        <Button
-          className="w-full rounded-none"
-          onClick={onSubmit}
-          disabled={amount <= 0}
-          variant={amount <= 0 ? 'primary-disabled' : 'primary'}
-        >
-          {isPending ? (
+      ) : ( */}
+      <Button
+        className="w-full rounded-none"
+        onClick={onClick}
+        disabled={amount <= 0 || !!errorMessage}
+        variant={amount <= 0 || !!errorMessage ? 'primary-disabled' : 'primary'}
+      >
+        Contribute
+        {/* {isPending ? (
             <Spinner />
           ) : diffToAllowance < 0 ? (
             'Allow contribution'
           ) : (
             'Contribute'
-          )}
-        </Button>
-      )}
+          )} */}
+      </Button>
+      {/* )} */}
     </div>
   );
 };

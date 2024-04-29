@@ -10,13 +10,10 @@ import { subscribeToNewsletter } from '../_server/active-campaign';
 import {
   ctzndSaleAddress,
   useReadCtzndSalePaymentToken,
-  useReadCtzndSalePaymentTokenToToken,
-  useReadErc20Allowance,
   useWriteCtzndSaleBuy,
   useWriteErc20Approve,
 } from '@/wagmi.generated';
 import { sepolia } from 'viem/chains';
-import { formatEther, parseEther } from 'viem';
 
 export const useAcquireAccessGrantMutation = () => {
   const { sdk } = useIdOS();
@@ -203,76 +200,66 @@ export const useSignDelegatedAccessGrant = (
   };
 };
 
-export const useContributeToCtznd = (address: `0x${string}`) => {
-  const [amount, setAmount] = useState(0);
-  const amountInWei = useMemo(() => parseEther(amount.toString()), [amount]);
+export const useBuyCtzndTokens = () => {
+  const {
+    writeContract,
+    data: contributionTxHash,
+    isPending,
+    error,
+  } = useWriteCtzndSaleBuy();
   const { data: merkleProof } = useFetchMerkleProof();
 
-  const {
-    writeContract: writeBuy,
-    data: contributionTxHash,
-    isPending: isWritePending,
-    error: buyError,
-  } = useWriteCtzndSaleBuy();
-  const {
-    writeContract: approveContract,
-    data: allowanceTxHash,
-    error: allowanceError,
-    isPending: isApprovePending,
-  } = useWriteErc20Approve();
-  const { data: paymentToken } = useReadCtzndSalePaymentToken();
-  const saleAddress = ctzndSaleAddress[sepolia.id];
-  const { data: allowance } = useReadErc20Allowance({
-    address: paymentToken,
-    args: [address, saleAddress],
-    query: {
-      refetchInterval: 1000,
+  const buyCtzndTokens = useCallback(
+    (tokensToBuyInWei: bigint) => {
+      if (tokensToBuyInWei === undefined || merkleProof === undefined) {
+        return;
+      }
+
+      writeContract({ args: [tokensToBuyInWei, merkleProof] });
     },
-  });
-  const { data: tokensToBuy, error: tokenError } =
-    useReadCtzndSalePaymentTokenToToken({
-      args: [amountInWei],
-    });
-
-  const diffToAllowance = useMemo(
-    () => (allowance || BigInt(0)) - amountInWei,
-    [allowance, amountInWei],
+    [merkleProof, writeContract],
   );
-
-  const submit = () => {
-    if (
-      amount <= 0 ||
-      allowance === undefined ||
-      paymentToken === undefined ||
-      tokensToBuy === undefined ||
-      merkleProof === undefined
-    ) {
-      return;
-    }
-
-    if (diffToAllowance < 0) {
-      return approveContract({
-        address: paymentToken,
-        args: [saleAddress, amountInWei],
-      });
-    }
-
-    writeBuy({ args: [tokensToBuy, merkleProof] });
-  };
 
   return {
     contributionTxHash,
+    buyCtzndTokens,
+    isPending,
+    error,
+  };
+};
+
+export const useSetPaymentTokenAllowance = () => {
+  const saleAddress = ctzndSaleAddress[sepolia.id];
+  const { data: paymentToken } = useReadCtzndSalePaymentToken();
+  const {
+    writeContract,
+    data: allowanceTxHash,
+    error,
+    isPending,
+  } = useWriteErc20Approve();
+
+  const setAllowance = useCallback(
+    (amountInWei: bigint) => {
+      if (
+        paymentToken === undefined ||
+        saleAddress === undefined ||
+        amountInWei <= 0
+      ) {
+        return;
+      }
+
+      writeContract({
+        address: paymentToken,
+        args: [saleAddress, amountInWei],
+      });
+    },
+    [paymentToken, saleAddress, writeContract],
+  );
+
+  return {
+    setAllowance,
     allowanceTxHash,
-    diffToAllowance,
-    amount,
-    amountInWei,
-    setAmount,
-    tokensToBuy,
-    isPending: isApprovePending || isWritePending,
-    error: buyError || allowanceError || tokenError,
-    buyError,
-    allowanceError,
-    tokenError,
-    submit,
+    isPending,
+    error,
   };
 };

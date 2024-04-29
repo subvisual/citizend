@@ -20,6 +20,10 @@ const Done = ({ hash }: { hash: `0x${string}` }) => {
     chainId: process.env.NEXT_PUBLIC_ENABLE_TESTNETS
       ? arbitrumSepolia.id
       : arbitrum.id,
+    query: {
+      staleTime: 0,
+      refetchIntervalInBackground: true,
+    },
   });
   const { refetchGrants, refetchKyc } = useKyc();
 
@@ -29,7 +33,7 @@ const Done = ({ hash }: { hash: `0x${string}` }) => {
       await refetchKyc();
 
       await refetch();
-    }, 10000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [refetchGrants, refetch, refetchKyc]);

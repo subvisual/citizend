@@ -28,7 +28,6 @@ contract DeployScript is Script {
         );
 
         sale.setMinContribution(200 ether);
-        sale.setMaxContribution(400 ether);
 
         vm.stopBroadcast();
     }

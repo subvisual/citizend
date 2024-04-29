@@ -5,24 +5,25 @@ import { useDialog } from '@/app/_providers/dialog/context';
 import { SettingsDialog } from './dialogs';
 import { EdgeBorderButton, EdgeButton } from './edge';
 import { Avatar } from './avatar';
-import { useAccount } from 'wagmi';
+import { useAccount, useBalance } from 'wagmi';
+import { formatEther } from 'viem';
+import { usePaymentTokenBalance } from '@/app/_lib/queries';
 
-type TConnectedButtonProps = {
-  displayBalance: string;
-};
-
-const ConnectedButton = ({ displayBalance }: TConnectedButtonProps) => {
+const ConnectedButton = () => {
+  const { data: balance, formattedValue } = usePaymentTokenBalance();
   const { open } = useDialog();
 
-  // should show USDC balance in future, which can be same hook that displays it
-  // inside the settings tab
+  if (!balance)
+    return (
+      <div className="h-14 w-44 animate-pulse rounded-md bg-gradient-to-br from-mono-800 to-mono-900" />
+    );
 
   return (
     <EdgeBorderButton
       avatar={<Avatar />}
       onClick={() => open(SettingsDialog.displayName)}
     >
-      {displayBalance}
+      {`${formattedValue} ${balance.symbol}`}
     </EdgeBorderButton>
   );
 };
@@ -61,9 +62,7 @@ export function WalletButton() {
             }
 
             if (account.displayBalance) {
-              return (
-                <ConnectedButton displayBalance={account.displayBalance} />
-              );
+              return <ConnectedButton />;
             }
 
             return (

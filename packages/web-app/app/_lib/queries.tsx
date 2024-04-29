@@ -12,6 +12,9 @@ import {
   getServerPublicInfo,
 } from '../_server/info';
 import { fetchAndGenerateProof } from '../_server/projects/generate-merkle-root';
+import { useAccount, useBalance } from 'wagmi';
+import { useReadCtzndSalePaymentToken } from '@/wagmi.generated';
+import { formatEther } from 'viem';
 
 export const usePublicInfo = () => {
   return useQuery({
@@ -210,4 +213,41 @@ export const useFetchMerkleProof = () => {
     },
     enabled: !!address,
   });
+};
+
+export const usePaymentTokenBalance = () => {
+  const { address } = useAccount();
+  const {
+    data: paymentToken,
+    isLoading: isLoadingToken,
+    error: errorToken,
+  } = useReadCtzndSalePaymentToken();
+
+  const {
+    data: balance,
+    isLoading: isLoadingBalance,
+    error: errorBalance,
+  } = useBalance({
+    token: paymentToken,
+    address,
+    query: {
+      enabled: !!paymentToken,
+    },
+  });
+
+  if (!paymentToken) {
+    return {
+      data: null,
+      formattedValue: null,
+      isLoading: isLoadingToken,
+      error: errorToken,
+    };
+  }
+
+  return {
+    data: balance,
+    formattedValue: balance ? formatEther(balance.value) : null,
+    isLoading: isLoadingBalance || isLoadingToken,
+    error: errorToken || errorBalance,
+  };
 };

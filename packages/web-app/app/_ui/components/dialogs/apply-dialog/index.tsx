@@ -3,7 +3,7 @@
 import { useProjectPublicInfo, usePublicInfo } from '@/app/_lib/queries';
 import { useIdOS } from '@/app/_providers/idos';
 import { Dialog } from '@headlessui/react';
-import { AcquireAccessGrantButton } from '../acquire-access-grant-button';
+import { AcquireAccessGrantButton } from './acquire-access-grant-button';
 import { Button } from '../..';
 import { TProps, useDialog } from '@/app/_providers/dialog/context';
 import { useMemo } from 'react';

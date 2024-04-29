@@ -10,13 +10,10 @@ import { subscribeToNewsletter } from '../_server/active-campaign';
 import {
   ctzndSaleAddress,
   useReadCtzndSalePaymentToken,
-  useReadCtzndSalePaymentTokenToToken,
-  useReadErc20Allowance,
   useWriteCtzndSaleBuy,
   useWriteErc20Approve,
 } from '@/wagmi.generated';
 import { sepolia } from 'viem/chains';
-import { formatEther, parseEther } from 'viem';
 
 export const useAcquireAccessGrantMutation = () => {
   const { sdk } = useIdOS();

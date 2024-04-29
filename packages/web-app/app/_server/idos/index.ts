@@ -40,13 +40,13 @@ const userFilter = async (grantee: idOSGrantee, userAddress: string) => {
     .parse(grantsResult)
     ?.filter((grant) => isValidGrant(grant.lockedUntil));
 
-  if (!grants.length) throw new Error('No valid grants found');
+  if (!grants.length) return null;
 
-  const country = await grantee.fetchUserCountryFromSharedCredential(
+  const country = await grantee.fetchUserCountryFromSharedPlusCredential(
     grants[0].dataId,
   );
 
-  if (!country) throw new Error('No country found');
+  if (!country) return null;
 
   const isBlockedCountry = blockedCountries.some(
     (blockedCountry) => blockedCountry === country,

@@ -19,7 +19,6 @@ import {
   useReadCtzndSaleUncappedAllocation,
 } from '@/wagmi.generated';
 import { formatEther } from 'viem';
-import { useProject } from '../_providers/project/context';
 
 export const usePublicInfo = () => {
   return useQuery({

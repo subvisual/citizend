@@ -157,12 +157,14 @@ export class idOSGrantee {
     );
   }
 
-  async fetchUserCountryFromSharedCredential(
+  async fetchUserCountryFromSharedPlusCredential(
     dataId: string,
   ): Promise<string | undefined> {
     const credentialString =
       await this.getSharedCredentialContentDecrypted(dataId);
     const credential = JSON.parse(credentialString);
+
+    if (credential?.level !== 'plus') return undefined;
 
     return credential?.credentialSubject?.residential_address_country;
   }

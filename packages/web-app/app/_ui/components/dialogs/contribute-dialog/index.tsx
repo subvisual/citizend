@@ -159,7 +159,7 @@ const Description = ({ amount, tokensToBuy }: TDescriptionProps) => (
   </div>
 );
 
-type TContributeDialogProps = {
+export type TContributeDialogProps = {
   userAddress: `0x${string}`;
   amount: number;
   tokensToBuy: number;
@@ -182,7 +182,12 @@ export function ContributeDialog({
     error: buyError,
   } = useBuyCtzndTokens();
 
-  if (isLoading) return null;
+  if (isLoading)
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
   if (error || allowance === undefined) return <div>{error?.message}</div>;
 
   const hasEnoughAllowance = allowance && allowance >= amountInWei;

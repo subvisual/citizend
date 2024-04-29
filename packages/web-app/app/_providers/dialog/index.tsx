@@ -6,7 +6,7 @@ import { ContributeDialog } from '@/app/_ui/components/dialogs/contribute-dialog
 
 type TDialogComponent = {
   displayName: string;
-  (props: TProps): JSX.Element;
+  (props: any): JSX.Element;
 };
 
 const dialogComponents: TDialogComponent[] = [

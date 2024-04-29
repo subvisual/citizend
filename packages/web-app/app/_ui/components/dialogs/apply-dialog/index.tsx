@@ -175,7 +175,8 @@ export const ApplyDialog = ({ projectId }: TProps) => {
   const { address, hasProfile } = useIdOS();
 
   // shouldn't be possible, just warding typescript
-  if (!projectId) return <p>No project selected</p>;
+  if (!projectId || typeof projectId !== 'string')
+    return <p>No project selected</p>;
 
   // shouldn't be possible, just warding typescript
   if (!address)
@@ -190,9 +191,7 @@ export const ApplyDialog = ({ projectId }: TProps) => {
     return <KycOnIdosRedirect />;
   }
 
-  if (typeof projectId === 'string') {
-    return <UnlockKycData projectId={projectId} />;
-  }
+  return <UnlockKycData projectId={projectId} />;
 };
 
 ApplyDialog.displayName = 'applyDialog';

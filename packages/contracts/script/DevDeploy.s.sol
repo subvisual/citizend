@@ -57,7 +57,6 @@ contract DevDeployScript is Script {
 
         sale.setMerkleRoot(merkleRoot);
         sale.setMinContribution(200 ether);
-        sale.setMaxContribution(400 ether);
         citizend.transfer(address(sale), 1000 ether);
 
         bool success = token.approve(address(sale), 1000 ether);

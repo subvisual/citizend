@@ -73,7 +73,6 @@ contract SaleTest is Test {
         sale.setMerkleRoot(merkleRoot);
         sale.setToken(address(token));
         sale.setMinContribution(0.2 ether);
-        sale.setMaxContribution(10 ether);
 
         token.transfer(address(sale), 1000000 ether);
 
@@ -164,17 +163,6 @@ contract SaleTest is Test {
         sale.buy(1 ether, aliceMerkleProof);
     }
 
-    function test_BuyRevertsWhenAboveMaximum() public {
-        vm.prank(owner);
-
-        sale.setMaxContribution(2 ether);
-
-        vm.startPrank(alice);
-
-        vm.expectRevert(bytes("can't be above maximum"));
-        sale.buy(11 ether, aliceMerkleProof);
-    }
-
     function test_BuyRevertsWhenInvalidMerkleProof() public {
         vm.prank(alice);
         vm.expectRevert(Sale.InvalidLeaf.selector);
@@ -182,9 +170,12 @@ contract SaleTest is Test {
     }
 
     function test_BuyRevertsAfterReachingMaxTarget() public {
+        vm.startPrank(owner);
+        sale.setMinContribution(1 ether);
+        sale.setMinTarget(1 ether);
+
         vm.startPrank(alice);
-        sale.buy(10 ether, aliceMerkleProof);
-        sale.buy(5 ether, aliceMerkleProof);
+        sale.buy(1 ether, aliceMerkleProof);
 
         vm.expectRevert(Sale.MaxTargetReached.selector);
         sale.buy(1 ether, aliceMerkleProof);
@@ -392,5 +383,21 @@ contract SaleTest is Test {
 
         vm.expectRevert(bytes("already refunded"));
         sale.refund(alice);
+    }
+
+    function test_AllocationIsZeroIfNotMinTargetReached() public {
+        vm.prank(owner);
+        sale.setMinTarget(5 ether);
+
+        vm.prank(alice);
+        sale.buy(2 ether, aliceMerkleProof);
+
+        vm.warp(sale.end() + 1000);
+
+        vm.prank(owner);
+        sale.setIndividualCap(2 ether);
+
+        require(sale.allocation(alice) == 0);
+        require(sale.refundAmount(alice) == sale.tokenToPaymentToken(2 ether));
     }
 }

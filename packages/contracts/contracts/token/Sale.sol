@@ -74,25 +74,25 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     uint256 public maxContribution;
 
     /// Timestamp at which sale starts
-    uint256 public immutable start;
+    uint256 public start;
 
     /// Timestamp at which sale ends
-    uint256 public immutable end;
+    uint256 public end;
 
     /// Timestamp at which registration period starts
-    uint256 public immutable startRegistration;
+    uint256 public startRegistration;
 
     /// Timestamp at which registration period ends
-    uint256 public immutable endRegistration;
+    uint256 public endRegistration;
 
     /// Total tokens available for sale
     uint256 public immutable totalTokensForSale;
 
     /// Minimum amount to be raised
-    uint256 public immutable minTarget;
+    uint256 public minTarget;
 
     /// Maximum amount to be raised
-    uint256 public immutable maxTarget;
+    uint256 public maxTarget;
 
     /// Token allocations committed by each buyer
     mapping(address => Account) accounts;
@@ -232,14 +232,14 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _amount,
         bytes32[] calldata _merkleProof
     ) external override(ISale) inSale nonReentrant {
-        if (totalUncappedAllocations >= maxTarget) revert MaxTargetReached();
+        if (_investorCount >= minTarget / minContribution)
+            revert MaxTargetReached();
 
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
         bool isValidLeaf = MerkleProof.verify(_merkleProof, merkleRoot, leaf);
         if (!isValidLeaf) revert InvalidLeaf();
 
         require(_amount >= minContribution, "can't be below minimum");
-        require(_amount <= maxContribution, "can't be above maximum");
 
         uint256 paymentAmount = tokenToPaymentToken(_amount);
         require(paymentAmount > 0, "can't be zero");
@@ -308,6 +308,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     function allocation(
         address _to
     ) public view override(ISale) returns (uint256) {
+        if (totalUncappedAllocations < minTarget) {
+            return 0;
+        }
+
         return _applyCap(uncappedAllocation(_to));
     }
 
@@ -372,6 +376,30 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         merkleRoot = _merkleRoot;
     }
 
+    function setStart(
+        uint256 _start
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
+        start = _start;
+    }
+
+    function setEnd(
+        uint256 _end
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
+        end = _end;
+    }
+
+    function setMinTarget(
+        uint256 _minTarget
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
+        minTarget = _minTarget;
+    }
+
+    function setMaxTarget(
+        uint256 _maxTarget
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
+        maxTarget = _maxTarget;
+    }
+
     /// Sets the individual cap
     /// @dev Can only be called once
     ///
@@ -388,14 +416,6 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _minContribution
     ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
         minContribution = _minContribution;
-    }
-
-    /// Sets the maximum contribution
-    /// @param _maxContribution new maximum contribution
-    function setMaxContribution(
-        uint256 _maxContribution
-    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
-        maxContribution = _maxContribution;
     }
 
     //

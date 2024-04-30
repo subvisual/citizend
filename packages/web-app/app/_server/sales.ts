@@ -11,7 +11,7 @@ import {
 import { mainnet, sepolia } from 'viem/chains';
 import { TProjectSaleDetails, TProjectStatus } from '../_types';
 import { TInternalError } from './types';
-import { projectsInfo } from './projects/project-info';
+import { evmGrantee, evmGranteePublicKey } from './wallet';
 
 const config = process.env.NEXT_PUBLIC_ENABLE_TESTNETS
   ? {
@@ -70,8 +70,8 @@ export const saleDetails = async (): Promise<
 
     return [
       {
-        address: projectsInfo.citizend.address,
-        publicKey: projectsInfo.citizend.publicKey,
+        address: evmGrantee.address,
+        publicKey: evmGranteePublicKey,
         project: 'citizend',
         status: contractResults[0],
         rate: contractResults[1],

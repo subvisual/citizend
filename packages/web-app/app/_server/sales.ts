@@ -15,11 +15,11 @@ import { TInternalError } from './types';
 const config = process.env.NEXT_PUBLIC_ENABLE_TESTNETS
   ? {
       chain: sepolia,
-      transport: http(process.env.NEXT_PUBLIC_ALCHEMY_SEPOLIA),
+      transport: http(),
     }
   : {
       chain: mainnet,
-      transport: http(process.env.NEXT_PUBLIC_ALCHEMY_MAINNET),
+      transport: http(),
     };
 
 const client = createWalletClient(config).extend(publicActions);

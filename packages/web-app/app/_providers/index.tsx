@@ -2,25 +2,55 @@
 
 import type { ReactNode } from 'react';
 import { IdOsProvider } from './idos';
-import { ReactQueryProviderWrapper } from './react-query-wrapper-provider';
-import { Web3Provider } from './web3-provider';
+import { wagmiConfig } from './wagmi-config';
+import { SsrWrapper } from './ssr-wrapper';
 import { DialogProvider } from './dialog';
+import { WagmiProvider } from 'wagmi';
+import { PersistQueryWrapper } from './persist-query-wrapper';
+import { nohemi } from '../_ui/fonts';
+import merge from 'lodash.merge';
+import {
+  RainbowKitProvider,
+  darkTheme,
+  type Theme,
+} from '@rainbow-me/rainbowkit';
 import { KycProvider } from './kyc';
 
 type TProvidersProps = {
   children: ReactNode;
 };
 
+const customTheme = merge(
+  darkTheme({
+    overlayBlur: 'small',
+    accentColor: '#3865FD',
+    accentColorForeground: '#FFF',
+  }),
+  {
+    fonts: {
+      body: nohemi.style.fontFamily,
+    },
+  },
+) as Theme;
+
 export function Providers({ children }: TProvidersProps) {
   return (
-    <ReactQueryProviderWrapper>
-      <Web3Provider>
-        <IdOsProvider>
-          <KycProvider>
-            <DialogProvider>{children}</DialogProvider>
-          </KycProvider>
-        </IdOsProvider>
-      </Web3Provider>
-    </ReactQueryProviderWrapper>
+    <WagmiProvider config={wagmiConfig}>
+      <SsrWrapper>
+        <PersistQueryWrapper>
+          <RainbowKitProvider
+            showRecentTransactions={true}
+            theme={customTheme}
+            modalSize="compact"
+          >
+            <IdOsProvider>
+              <KycProvider>
+                <DialogProvider>{children}</DialogProvider>
+              </KycProvider>
+            </IdOsProvider>
+          </RainbowKitProvider>
+        </PersistQueryWrapper>
+      </SsrWrapper>
+    </WagmiProvider>
   );
 }

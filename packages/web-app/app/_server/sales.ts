@@ -8,15 +8,22 @@ import {
   http,
   publicActions,
 } from 'viem';
-import { sepolia } from 'viem/chains';
+import { mainnet, sepolia } from 'viem/chains';
 import { TProjectSaleDetails, TProjectStatus } from '../_types';
 import { TInternalError } from './types';
 import { projectsInfo } from './projects/project-info';
 
-const client = createWalletClient({
-  chain: sepolia,
-  transport: http(),
-}).extend(publicActions);
+const config = process.env.NEXT_PUBLIC_ENABLE_TESTNETS
+  ? {
+      chain: sepolia,
+      transport: http(process.env.NEXT_PUBLIC_ALCHEMY_SEPOLIA),
+    }
+  : {
+      chain: mainnet,
+      transport: http(process.env.NEXT_PUBLIC_ALCHEMY_MAINNET),
+    };
+
+const client = createWalletClient(config).extend(publicActions);
 
 const contract = getContract({
   address: ctzndSaleAddress[sepolia.id],

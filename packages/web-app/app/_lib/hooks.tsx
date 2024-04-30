@@ -14,7 +14,6 @@ import {
   useReadCtzndSalePaymentToken,
   useReadCtzndSalePaymentTokenToToken,
   useReadErc20Allowance,
-  useWriteErc20Approve,
 } from '@/wagmi.generated';
 import { formatEther, parseEther } from 'viem';
 import { sepolia } from 'viem/chains';

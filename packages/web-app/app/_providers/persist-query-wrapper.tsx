@@ -6,19 +6,21 @@ import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persi
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { deserialize, serialize } from 'wagmi';
 
+const fiveMinutes = 1_000 * 60 * 5;
+const halfHour = 1_000 * 60 * 30;
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 0,
       refetchOnWindowFocus: false,
-      staleTime: 1_000 * 60 * 5,
-      gcTime: 1_000 * 60 * 60 * 0.5,
+      staleTime: fiveMinutes,
+      gcTime: halfHour,
     },
   },
 });
 
 export function PersistQueryWrapper({ children }: TChildren) {
-  // Set up the persister.
   const persister = createAsyncStoragePersister({
     serialize,
     storage: window?.sessionStorage,

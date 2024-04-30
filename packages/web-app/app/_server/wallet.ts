@@ -1,6 +1,7 @@
 import { hexToBytes } from 'viem';
 import nacl from 'tweetnacl';
 import { ethers } from 'ethers';
+import * as Base64Codec from '@stablelib/base64';
 
 const ENCRYPTION_SECRET_KEY = hexToBytes(
   process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY,
@@ -20,4 +21,6 @@ const evmGrantee = new ethers.Wallet(
   new ethers.JsonRpcProvider(EVM_NODE_URL),
 );
 
-export { evmGrantee, ENCRYPTION_KEY_PAIR };
+const evmGranteePublicKey = Base64Codec.encode(ENCRYPTION_KEY_PAIR.publicKey);
+
+export { evmGrantee, ENCRYPTION_KEY_PAIR, evmGranteePublicKey };

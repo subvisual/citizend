@@ -5,7 +5,11 @@ import { addressesListSchema, grantsSchema } from '../../_types/schemas';
 import { isValidGrant } from '@/app/_lib/utils';
 import { blockedCountries } from '../blocked-countries';
 import { idOSGrantee } from './idos-grantee';
-import { ENCRYPTION_KEY_PAIR, evmGrantee } from '../wallet';
+import {
+  ENCRYPTION_KEY_PAIR,
+  evmGrantee,
+  evmGranteePublicKey,
+} from '../wallet';
 
 export interface idOSGrant {
   content: string;
@@ -78,6 +82,6 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
 
 export const serverPublicInfo: ServerPublicInfo = {
   grantee: evmGrantee.address,
-  encryptionPublicKey: Base64Codec.encode(ENCRYPTION_KEY_PAIR.publicKey),
+  encryptionPublicKey: evmGranteePublicKey,
   lockTimeSpanSeconds: 3600 * 24 * 365, // one year?
 };

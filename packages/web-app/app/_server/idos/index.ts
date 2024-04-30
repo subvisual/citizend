@@ -1,4 +1,3 @@
-import * as Base64Codec from '@stablelib/base64';
 import { ServerPublicInfo } from '../types';
 import { getGrants, getProjectApplicants } from './grants';
 import { addressesListSchema, grantsSchema } from '../../_types/schemas';

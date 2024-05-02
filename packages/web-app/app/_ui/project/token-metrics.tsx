@@ -25,7 +25,7 @@ const ProgressBar = ({
   value: number;
 }) => {
   const valueInMillions = value / 1000_000;
-  const maxInMillions = max / 1000_000;
+  const maxInMillions = formatEther(max) / 1000_000_000;
   const halfInMillions = maxInMillions / 2;
   const currentRelativeValue = valueInMillions / maxInMillions;
   const percentage = currentRelativeValue * 100;
@@ -121,11 +121,11 @@ export const TokenMetrics = ({
   minContribution,
   maxContribution,
 }: TTokenMetricsProps) => {
-  const targetRaiseRange = usdRange(minTarget, maxTarget);
+  const targetRaiseRange = usdRange(BigInt(formatEther(minTarget)), BigInt(formatEther(maxTarget)));
   const maxPrice = usdValue(maxContribution);
   const minPrice = usdValue(minContribution);
   const totalTokens = new Intl.NumberFormat('default').format(
-    totalTokensForSale,
+    BigInt(formatEther(totalTokensForSale)),
   );
 
   return (

@@ -11,7 +11,7 @@ import {
   ctzndSaleAddress,
   useReadCtzndSalePaymentToken,
   useWriteCtzndSaleBuy,
-  useWriteErc20Approve,
+  useWriteCtzndErc20Approve,
 } from '@/wagmi.generated';
 import { sepolia } from 'viem/chains';
 
@@ -236,7 +236,7 @@ export const useSetPaymentTokenAllowance = () => {
     data: allowanceTxHash,
     error,
     isPending,
-  } = useWriteErc20Approve();
+  } = useWriteCtzndErc20Approve();
 
   const setAllowance = useCallback(
     (amountInWei: bigint) => {

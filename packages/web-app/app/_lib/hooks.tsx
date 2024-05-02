@@ -13,7 +13,7 @@ import {
   ctzndSaleAddress,
   useReadCtzndSalePaymentToken,
   useReadCtzndSalePaymentTokenToToken,
-  useReadErc20Allowance,
+  useReadCtzndErc20Allowance,
 } from '@/wagmi.generated';
 import { formatEther, parseEther } from 'viem';
 import { sepolia } from 'viem/chains';
@@ -194,7 +194,7 @@ export const useCtzndPaymentTokenAllowance = (userAddress: `0x${string}`) => {
     data: allowance,
     isLoading,
     error,
-  } = useReadErc20Allowance({
+  } = useReadCtzndErc20Allowance({
     address: paymentToken,
     args: [userAddress, saleAddress],
     query: {

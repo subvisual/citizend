@@ -3,7 +3,7 @@ import { useIdOS } from '../_providers/idos';
 import { insertGrantBySignature } from '../_server/idos/grants';
 import { useFetchGrantMessage } from './contract-queries';
 import { useSignMessage } from 'wagmi';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo  } from 'react';
 import { useFetchMerkleProof, useFetchNewDataId } from './queries';
 import { getServerPublicInfo } from '../_server/info';
 import { subscribeToNewsletter } from '../_server/active-campaign';
@@ -11,7 +11,7 @@ import {
   ctzndSaleAddress,
   useReadCtzndSalePaymentToken,
   useWriteCtzndSaleBuy,
-  useWriteErc20Approve,
+  useWriteCtzndErc20Approve,
 } from '@/wagmi.generated';
 import { sepolia } from 'viem/chains';
 
@@ -236,7 +236,7 @@ export const useSetPaymentTokenAllowance = () => {
     data: allowanceTxHash,
     error,
     isPending,
-  } = useWriteErc20Approve();
+  } = useWriteCtzndErc20Approve();
 
   const setAllowance = useCallback(
     (amountInWei: bigint) => {

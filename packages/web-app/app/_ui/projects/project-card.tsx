@@ -10,6 +10,7 @@ import { Status } from './status';
 import { usdValue } from '../utils/intl-formaters/usd-value';
 import { usdRange } from '../utils/intl-formaters/usd-range';
 import { shortDateRange } from '../utils/intl-formaters/date-range';
+import { formatEther, parseEther } from 'viem/utils';
 
 const Upcoming = ({
   minTarget,
@@ -52,11 +53,12 @@ const FullData = ({
   maxContribution,
   totalTokensForSale,
 }: TProjectSaleDetails) => {
-  const targetedRaise = usdRange(minTarget, maxTarget);
+  const targetedRaise = usdRange(BigInt(formatEther(minTarget)), BigInt(formatEther(maxTarget)));
   const maxPrice = usdValue(maxContribution);
   const minPrice = usdValue(minContribution);
+
   const totalTokens = new Intl.NumberFormat('default').format(
-    totalTokensForSale,
+    BigInt(formatEther(totalTokensForSale))
   );
 
   return (

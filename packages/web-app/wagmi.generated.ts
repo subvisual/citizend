@@ -6,10 +6,10 @@ import {
 } from 'wagmi/codegen'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// AccessControl
+// CtzndAccessControl
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const accessControlAbi = [
+export const ctzndAccessControlAbi = [
   {
     type: 'function',
     inputs: [],
@@ -143,10 +143,10 @@ export const accessControlAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Address
+// CtzndAddress
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const addressAbi = [
+export const ctzndAddressAbi = [
   {
     type: 'error',
     inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
@@ -161,10 +161,10 @@ export const addressAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Batch
+// CtzndBatch
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const batchAbi = [
+export const ctzndBatchAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -389,10 +389,10 @@ export const batchAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Citizend
+// CtzndCitizend
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const citizendAbi = [
+export const ctzndCitizendAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -780,10 +780,10 @@ export const citizendAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CitizendConstructorTest
+// CtzndCitizendConstructorTest
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const citizendConstructorTestAbi = [
+export const ctzndCitizendConstructorTestAbi = [
   {
     type: 'function',
     inputs: [],
@@ -1173,10 +1173,10 @@ export const citizendConstructorTestAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Controller
+// CtzndController
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const controllerAbi = [
+export const ctzndControllerAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -1509,596 +1509,10 @@ export const controllerAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CtzndSale
+// CtzndDSTest
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
- */
-export const ctzndSaleAbi = [
-  {
-    type: 'constructor',
-    inputs: [
-      { name: '_paymentToken', internalType: 'address', type: 'address' },
-      { name: '_rate', internalType: 'uint256', type: 'uint256' },
-      { name: '_start', internalType: 'uint256', type: 'uint256' },
-      { name: '_end', internalType: 'uint256', type: 'uint256' },
-      { name: '_totalTokensForSale', internalType: 'uint256', type: 'uint256' },
-      { name: '_minTarget', internalType: 'uint256', type: 'uint256' },
-      { name: '_maxTarget', internalType: 'uint256', type: 'uint256' },
-      { name: '_startRegistration', internalType: 'uint256', type: 'uint256' },
-      { name: '_endRegistration', internalType: 'uint256', type: 'uint256' },
-    ],
-    stateMutability: 'nonpayable',
-  },
-  { type: 'error', inputs: [], name: 'AccessControlBadConfirmation' },
-  {
-    type: 'error',
-    inputs: [
-      { name: 'account', internalType: 'address', type: 'address' },
-      { name: 'neededRole', internalType: 'bytes32', type: 'bytes32' },
-    ],
-    name: 'AccessControlUnauthorizedAccount',
-  },
-  {
-    type: 'error',
-    inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
-    name: 'AddressEmptyCode',
-  },
-  {
-    type: 'error',
-    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
-    name: 'AddressInsufficientBalance',
-  },
-  { type: 'error', inputs: [], name: 'FailedInnerCall' },
-  { type: 'error', inputs: [], name: 'InvalidLeaf' },
-  { type: 'error', inputs: [], name: 'MaxTargetReached' },
-  { type: 'error', inputs: [], name: 'ReentrancyGuardReentrantCall' },
-  {
-    type: 'error',
-    inputs: [{ name: 'token', internalType: 'address', type: 'address' }],
-    name: 'SafeERC20FailedOperation',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'tokenAmount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'Claim',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'from', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'paymentTokenAmount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-      {
-        name: 'tokenAmount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'Purchase',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'paymentTokenAmount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'Refund',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
-      {
-        name: 'previousAdminRole',
-        internalType: 'bytes32',
-        type: 'bytes32',
-        indexed: true,
-      },
-      {
-        name: 'newAdminRole',
-        internalType: 'bytes32',
-        type: 'bytes32',
-        indexed: true,
-      },
-    ],
-    name: 'RoleAdminChanged',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
-      {
-        name: 'account',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'sender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-    ],
-    name: 'RoleGranted',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
-      {
-        name: 'account',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-      {
-        name: 'sender',
-        internalType: 'address',
-        type: 'address',
-        indexed: true,
-      },
-    ],
-    name: 'RoleRevoked',
-  },
-  {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      { name: 'to', internalType: 'address', type: 'address', indexed: true },
-      {
-        name: 'paymentTokenAmount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'Withdraw',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'CAP_VALIDATION_GAS_LIMIT',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'CAP_VALIDATOR_ROLE',
-    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'DEFAULT_ADMIN_ROLE',
-    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'allocated',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_to', internalType: 'address', type: 'address' }],
-    name: 'allocation',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: '_amount', internalType: 'uint256', type: 'uint256' },
-      { name: '_merkleProof', internalType: 'bytes32[]', type: 'bytes32[]' },
-    ],
-    name: 'buy',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'end',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'endRegistration',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
-    name: 'getRoleAdmin',
-    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
-      { name: 'account', internalType: 'address', type: 'address' },
-    ],
-    name: 'grantRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
-      { name: 'account', internalType: 'address', type: 'address' },
-    ],
-    name: 'hasRole',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'individualCap',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'i', internalType: 'uint256', type: 'uint256' }],
-    name: 'investorAmountAt',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'investorCount',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'maxContribution',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'maxTarget',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'merkleRoot',
-    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'minContribution',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'minTarget',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'paymentToken',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: '_paymentAmount', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'paymentTokenToToken',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'rate',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'to', internalType: 'address', type: 'address' }],
-    name: 'refund',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'to', internalType: 'address', type: 'address' }],
-    name: 'refundAmount',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
-      { name: 'callerConfirmation', internalType: 'address', type: 'address' },
-    ],
-    name: 'renounceRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
-      { name: 'account', internalType: 'address', type: 'address' },
-    ],
-    name: 'revokeRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'risingTideCache',
-    outputs: [
-      { name: 'index', internalType: 'uint256', type: 'uint256' },
-      { name: 'sumForCap', internalType: 'uint256', type: 'uint256' },
-      { name: 'sumForNextCap', internalType: 'uint256', type: 'uint256' },
-      { name: 'largest', internalType: 'uint256', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'risingTideState',
-    outputs: [
-      {
-        name: '',
-        internalType: 'enum RisingTide.RisingTideState',
-        type: 'uint8',
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_amount', internalType: 'uint256', type: 'uint256' }],
-    name: 'risingTide_applyCap',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'risingTide_isValidCap',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'risingTide_totalAllocatedUncapped',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'risingTide_totalCap',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'risingTide_validate',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'risingTide_validating',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_end', internalType: 'uint256', type: 'uint256' }],
-    name: 'setEnd',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_cap', internalType: 'uint256', type: 'uint256' }],
-    name: 'setIndividualCap',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_maxTarget', internalType: 'uint256', type: 'uint256' }],
-    name: 'setMaxTarget',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_merkleRoot', internalType: 'bytes32', type: 'bytes32' }],
-    name: 'setMerkleRoot',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: '_minContribution', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'setMinContribution',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_minTarget', internalType: 'uint256', type: 'uint256' }],
-    name: 'setMinTarget',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_start', internalType: 'uint256', type: 'uint256' }],
-    name: 'setStart',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_token', internalType: 'address', type: 'address' }],
-    name: 'setToken',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'start',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'startRegistration',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'token',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: '_tokenAmount', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'tokenToPaymentToken',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'totalTokensForSale',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'totalUncappedAllocations',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '_to', internalType: 'address', type: 'address' }],
-    name: 'uncappedAllocation',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'withdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'withdrawn',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
-  },
-] as const
-
-/**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
- */
-export const ctzndSaleAddress = {
-  11155111: '0xF2EAcaa2b8374d648b2F1bab51C0e0aDD18Ec0D1',
-} as const
-
-/**
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
- */
-export const ctzndSaleConfig = {
-  address: ctzndSaleAddress,
-  abi: ctzndSaleAbi,
-} as const
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// DSTest
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const dsTestAbi = [
+export const ctzndDsTestAbi = [
   {
     type: 'function',
     inputs: [],
@@ -2264,10 +1678,10 @@ export const dsTestAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// DeployScript
+// CtzndDeployScript
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const deployScriptAbi = [
+export const ctzndDeployScriptAbi = [
   {
     type: 'function',
     inputs: [],
@@ -2285,10 +1699,10 @@ export const deployScriptAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// DevDeployScript
+// CtzndDevDeployScript
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const devDeployScriptAbi = [
+export const ctzndDevDeployScriptAbi = [
   {
     type: 'function',
     inputs: [],
@@ -2313,10 +1727,10 @@ export const devDeployScriptAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ERC165
+// CtzndERC165
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const erc165Abi = [
+export const ctzndErc165Abi = [
   {
     type: 'function',
     inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
@@ -2327,10 +1741,10 @@ export const erc165Abi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ERC20
+// CtzndERC20
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const erc20Abi = [
+export const ctzndErc20Abi = [
   {
     type: 'function',
     inputs: [
@@ -2488,10 +1902,10 @@ export const erc20Abi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ERC20Burnable
+// CtzndERC20Burnable
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const erc20BurnableAbi = [
+export const ctzndErc20BurnableAbi = [
   {
     type: 'function',
     inputs: [
@@ -2666,10 +2080,10 @@ export const erc20BurnableAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ERC20Pausable
+// CtzndERC20Pausable
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const erc20PausableAbi = [
+export const ctzndErc20PausableAbi = [
   {
     type: 'function',
     inputs: [
@@ -2862,10 +2276,10 @@ export const erc20PausableAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// FractalRegistry
+// CtzndFractalRegistry
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const fractalRegistryAbi = [
+export const ctzndFractalRegistryAbi = [
   {
     type: 'constructor',
     inputs: [{ name: '_root', internalType: 'address', type: 'address' }],
@@ -2949,10 +2363,10 @@ export const fractalRegistryAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IAccessControl
+// CtzndIAccessControl
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const iAccessControlAbi = [
+export const ctzndIAccessControlAbi = [
   {
     type: 'function',
     inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
@@ -3072,10 +2486,10 @@ export const iAccessControlAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IBatch
+// CtzndIBatch
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const iBatchAbi = [
+export const ctzndIBatchAbi = [
   {
     type: 'function',
     inputs: [
@@ -3089,10 +2503,10 @@ export const iBatchAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IController
+// CtzndIController
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const iControllerAbi = [
+export const ctzndIControllerAbi = [
   {
     type: 'function',
     inputs: [
@@ -3197,10 +2611,10 @@ export const iControllerAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC1155Errors
+// CtzndIERC1155Errors
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const ierc1155ErrorsAbi = [
+export const ctzndIerc1155ErrorsAbi = [
   {
     type: 'error',
     inputs: [
@@ -3250,10 +2664,10 @@ export const ierc1155ErrorsAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC165
+// CtzndIERC165
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const ierc165Abi = [
+export const ctzndIerc165Abi = [
   {
     type: 'function',
     inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
@@ -3264,10 +2678,10 @@ export const ierc165Abi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC20
+// CtzndIERC20
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const ierc20Abi = [
+export const ctzndIerc20Abi = [
   {
     type: 'function',
     inputs: [
@@ -3366,10 +2780,10 @@ export const ierc20Abi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC20Errors
+// CtzndIERC20Errors
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const ierc20ErrorsAbi = [
+export const ctzndIerc20ErrorsAbi = [
   {
     type: 'error',
     inputs: [
@@ -3411,10 +2825,10 @@ export const ierc20ErrorsAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC20Metadata
+// CtzndIERC20Metadata
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const ierc20MetadataAbi = [
+export const ctzndIerc20MetadataAbi = [
   {
     type: 'function',
     inputs: [
@@ -3534,10 +2948,10 @@ export const ierc20MetadataAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC20Permit
+// CtzndIERC20Permit
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const ierc20PermitAbi = [
+export const ctzndIerc20PermitAbi = [
   {
     type: 'function',
     inputs: [],
@@ -3570,10 +2984,10 @@ export const ierc20PermitAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC721Errors
+// CtzndIERC721Errors
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const ierc721ErrorsAbi = [
+export const ctzndIerc721ErrorsAbi = [
   {
     type: 'error',
     inputs: [
@@ -3624,10 +3038,10 @@ export const ierc721ErrorsAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IERC721TokenReceiver
+// CtzndIERC721TokenReceiver
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const ierc721TokenReceiverAbi = [
+export const ctzndIerc721TokenReceiverAbi = [
   {
     type: 'function',
     inputs: [
@@ -3643,10 +3057,10 @@ export const ierc721TokenReceiverAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IMulticall3
+// CtzndIMulticall3
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const iMulticall3Abi = [
+export const ctzndIMulticall3Abi = [
   {
     type: 'function',
     inputs: [
@@ -3886,10 +3300,10 @@ export const iMulticall3Abi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IPool
+// CtzndIPool
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const iPoolAbi = [
+export const ctzndIPoolAbi = [
   {
     type: 'function',
     inputs: [{ name: '_to', internalType: 'address', type: 'address' }],
@@ -3938,10 +3352,10 @@ export const iPoolAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IProject
+// CtzndIProject
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const iProjectAbi = [
+export const ctzndIProjectAbi = [
   {
     type: 'function',
     inputs: [],
@@ -4026,10 +3440,10 @@ export const iProjectAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ISale
+// CtzndISale
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const iSaleAbi = [
+export const ctzndISaleAbi = [
   {
     type: 'function',
     inputs: [{ name: '_who', internalType: 'address', type: 'address' }],
@@ -4117,10 +3531,10 @@ export const iSaleAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IStaking
+// CtzndIStaking
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const iStakingAbi = [
+export const ctzndIStakingAbi = [
   {
     type: 'function',
     inputs: [{ name: '_account', internalType: 'address', type: 'address' }],
@@ -4166,10 +3580,10 @@ export const iStakingAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IVesting
+// CtzndIVesting
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const iVestingAbi = [
+export const ctzndIVestingAbi = [
   {
     type: 'function',
     inputs: [{ name: 'to', internalType: 'address', type: 'address' }],
@@ -4256,18 +3670,18 @@ export const iVestingAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// MerkleProof
+// CtzndMerkleProof
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const merkleProofAbi = [
+export const ctzndMerkleProofAbi = [
   { type: 'error', inputs: [], name: 'MerkleProofInvalidMultiproof' },
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// MockERC721
+// CtzndMockERC721
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const mockErc721Abi = [
+export const ctzndMockErc721Abi = [
   {
     type: 'function',
     inputs: [
@@ -4444,10 +3858,10 @@ export const mockErc721Abi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// MockProject
+// CtzndMockProject
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const mockProjectAbi = [
+export const ctzndMockProjectAbi = [
   {
     type: 'function',
     inputs: [],
@@ -4560,10 +3974,10 @@ export const mockProjectAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// MockSale
+// CtzndMockSale
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const mockSaleAbi = [
+export const ctzndMockSaleAbi = [
   {
     type: 'function',
     inputs: [{ name: '', internalType: 'address', type: 'address' }],
@@ -4691,10 +4105,10 @@ export const mockSaleAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Pausable
+// CtzndPausable
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const pausableAbi = [
+export const ctzndPausableAbi = [
   {
     type: 'function',
     inputs: [],
@@ -4733,10 +4147,10 @@ export const pausableAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// PeoplesPool
+// CtzndPeoplesPool
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const peoplesPoolAbi = [
+export const ctzndPeoplesPoolAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -4946,10 +4360,10 @@ export const peoplesPoolAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Pool
+// CtzndPool
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const poolAbi = [
+export const ctzndPoolAbi = [
   {
     type: 'function',
     inputs: [],
@@ -5151,10 +4565,10 @@ export const poolAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Project
+// CtzndProject
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const projectAbi = [
+export const ctzndProjectAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -5308,10 +4722,10 @@ export const projectAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ProjectHelpers
+// CtzndProjectHelpers
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const projectHelpersAbi = [
+export const ctzndProjectHelpersAbi = [
   {
     type: 'function',
     inputs: [],
@@ -5322,10 +4736,10 @@ export const projectHelpersAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ProjectTest
+// CtzndProjectTest
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const projectTestAbi = [
+export const ctzndProjectTestAbi = [
   {
     type: 'function',
     inputs: [],
@@ -5732,10 +5146,10 @@ export const projectTestAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ProjectVoting
+// CtzndProjectVoting
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const projectVotingAbi = [
+export const ctzndProjectVotingAbi = [
   {
     type: 'function',
     inputs: [{ name: '', internalType: 'address', type: 'address' }],
@@ -5843,18 +5257,18 @@ export const projectVotingAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ReentrancyGuard
+// CtzndReentrancyGuard
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const reentrancyGuardAbi = [
+export const ctzndReentrancyGuardAbi = [
   { type: 'error', inputs: [], name: 'ReentrancyGuardReentrantCall' },
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// RisingTide
+// CtzndRisingTide
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const risingTideAbi = [
+export const ctzndRisingTideAbi = [
   {
     type: 'function',
     inputs: [],
@@ -5953,10 +5367,10 @@ export const risingTideAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// RisingTideTest
+// CtzndRisingTideTest
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const risingTideTestAbi = [
+export const ctzndRisingTideTestAbi = [
   {
     type: 'function',
     inputs: [],
@@ -6374,10 +5788,10 @@ export const risingTideTestAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// SafeERC20
+// CtzndSafeERC20
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const safeErc20Abi = [
+export const ctzndSafeErc20Abi = [
   {
     type: 'error',
     inputs: [
@@ -6395,13 +5809,14 @@ export const safeErc20Abi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Sale
+// CtzndSale
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
-export const saleAbi = [
+export const ctzndSaleAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -6966,22 +6381,28 @@ export const saleAbi = [
 ] as const
 
 /**
- *
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
-export const saleAddress = {
+export const ctzndSaleAddress = {
   31337: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+  11155111: '0xF2EAcaa2b8374d648b2F1bab51C0e0aDD18Ec0D1',
 } as const
 
 /**
- *
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
-export const saleConfig = { address: saleAddress, abi: saleAbi } as const
+export const ctzndSaleConfig = {
+  address: ctzndSaleAddress,
+  abi: ctzndSaleAbi,
+} as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// SaleTest
+// CtzndSaleTest
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const saleTestAbi = [
+export const ctzndSaleTestAbi = [
   {
     type: 'function',
     inputs: [],
@@ -7419,10 +6840,10 @@ export const saleTestAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Script
+// CtzndScript
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const scriptAbi = [
+export const ctzndScriptAbi = [
   {
     type: 'function',
     inputs: [],
@@ -7433,10 +6854,10 @@ export const scriptAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// StakersPool
+// CtzndStakersPool
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const stakersPoolAbi = [
+export const ctzndStakersPoolAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -7646,10 +7067,10 @@ export const stakersPoolAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Staking
+// CtzndStaking
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const stakingAbi = [
+export const ctzndStakingAbi = [
   {
     type: 'constructor',
     inputs: [{ name: '_token', internalType: 'address', type: 'address' }],
@@ -7826,10 +7247,10 @@ export const stakingAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// StdAssertions
+// CtzndStdAssertions
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const stdAssertionsAbi = [
+export const ctzndStdAssertionsAbi = [
   {
     type: 'function',
     inputs: [],
@@ -8076,10 +7497,10 @@ export const stdAssertionsAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// StdInvariant
+// CtzndStdInvariant
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const stdInvariantAbi = [
+export const ctzndStdInvariantAbi = [
   {
     type: 'function',
     inputs: [],
@@ -8212,10 +7633,10 @@ export const stdInvariantAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Test
+// CtzndTest
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const testAbi = [
+export const ctzndTestAbi = [
   {
     type: 'function',
     inputs: [],
@@ -8591,10 +8012,10 @@ export const testAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// TestPool
+// CtzndTestPool
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const testPoolAbi = [
+export const ctzndTestPoolAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -8804,10 +8225,10 @@ export const testPoolAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// TestProjectVoting
+// CtzndTestProjectVoting
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const testProjectVotingAbi = [
+export const ctzndTestProjectVotingAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -9006,10 +8427,10 @@ export const testProjectVotingAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// TestRisingTideWithCustomAmounts
+// CtzndTestRisingTideWithCustomAmounts
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const testRisingTideWithCustomAmountsAbi = [
+export const ctzndTestRisingTideWithCustomAmountsAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -9136,10 +8557,10 @@ export const testRisingTideWithCustomAmountsAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// TestRisingTideWithStaticAmounts
+// CtzndTestRisingTideWithStaticAmounts
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const testRisingTideWithStaticAmountsAbi = [
+export const ctzndTestRisingTideWithStaticAmountsAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -9254,10 +8675,10 @@ export const testRisingTideWithStaticAmountsAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Vesting
+// CtzndVesting
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const vestingAbi = [
+export const ctzndVestingAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -9605,10 +9026,10 @@ export const vestingAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Vm
+// CtzndVm
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const vmAbi = [
+export const ctzndVmAbi = [
   {
     type: 'function',
     inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
@@ -11902,10 +11323,10 @@ export const vmAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// VmSafe
+// CtzndVmSafe
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const vmSafeAbi = [
+export const ctzndVmSafeAbi = [
   {
     type: 'function',
     inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
@@ -13550,10 +12971,10 @@ export const vmSafeAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// stdError
+// CtzndstdError
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const stdErrorAbi = [
+export const ctzndstdErrorAbi = [
   {
     type: 'function',
     inputs: [],
@@ -13620,10 +13041,10 @@ export const stdErrorAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// stdStorageSafe
+// CtzndstdStorageSafe
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const stdStorageSafeAbi = [
+export const ctzndstdStorageSafeAbi = [
   {
     type: 'event',
     anonymous: false,
@@ -13666,1469 +13087,6421 @@ export const stdStorageSafeAbi = [
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link accessControlAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__
  */
-export const useReadAccessControl = /*#__PURE__*/ createUseReadContract({
-  abi: accessControlAbi,
+export const useReadCtzndAccessControl = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndAccessControlAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link accessControlAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
  */
-export const useReadAccessControlDefaultAdminRole =
+export const useReadCtzndAccessControlDefaultAdminRole =
   /*#__PURE__*/ createUseReadContract({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     functionName: 'DEFAULT_ADMIN_ROLE',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link accessControlAbi}__ and `functionName` set to `"getRoleAdmin"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `functionName` set to `"getRoleAdmin"`
  */
-export const useReadAccessControlGetRoleAdmin =
+export const useReadCtzndAccessControlGetRoleAdmin =
   /*#__PURE__*/ createUseReadContract({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     functionName: 'getRoleAdmin',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link accessControlAbi}__ and `functionName` set to `"hasRole"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `functionName` set to `"hasRole"`
  */
-export const useReadAccessControlHasRole = /*#__PURE__*/ createUseReadContract({
-  abi: accessControlAbi,
-  functionName: 'hasRole',
-})
+export const useReadCtzndAccessControlHasRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndAccessControlAbi,
+    functionName: 'hasRole',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link accessControlAbi}__ and `functionName` set to `"supportsInterface"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `functionName` set to `"supportsInterface"`
  */
-export const useReadAccessControlSupportsInterface =
+export const useReadCtzndAccessControlSupportsInterface =
   /*#__PURE__*/ createUseReadContract({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     functionName: 'supportsInterface',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link accessControlAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__
  */
-export const useWriteAccessControl = /*#__PURE__*/ createUseWriteContract({
-  abi: accessControlAbi,
+export const useWriteCtzndAccessControl = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndAccessControlAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link accessControlAbi}__ and `functionName` set to `"grantRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useWriteAccessControlGrantRole =
+export const useWriteCtzndAccessControlGrantRole =
   /*#__PURE__*/ createUseWriteContract({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     functionName: 'grantRole',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link accessControlAbi}__ and `functionName` set to `"renounceRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `functionName` set to `"renounceRole"`
  */
-export const useWriteAccessControlRenounceRole =
+export const useWriteCtzndAccessControlRenounceRole =
   /*#__PURE__*/ createUseWriteContract({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     functionName: 'renounceRole',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link accessControlAbi}__ and `functionName` set to `"revokeRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `functionName` set to `"revokeRole"`
  */
-export const useWriteAccessControlRevokeRole =
+export const useWriteCtzndAccessControlRevokeRole =
   /*#__PURE__*/ createUseWriteContract({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     functionName: 'revokeRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link accessControlAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__
  */
-export const useSimulateAccessControl = /*#__PURE__*/ createUseSimulateContract(
-  { abi: accessControlAbi },
-)
+export const useSimulateCtzndAccessControl =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndAccessControlAbi })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link accessControlAbi}__ and `functionName` set to `"grantRole"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useSimulateAccessControlGrantRole =
+export const useSimulateCtzndAccessControlGrantRole =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     functionName: 'grantRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link accessControlAbi}__ and `functionName` set to `"renounceRole"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `functionName` set to `"renounceRole"`
  */
-export const useSimulateAccessControlRenounceRole =
+export const useSimulateCtzndAccessControlRenounceRole =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     functionName: 'renounceRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link accessControlAbi}__ and `functionName` set to `"revokeRole"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `functionName` set to `"revokeRole"`
  */
-export const useSimulateAccessControlRevokeRole =
+export const useSimulateCtzndAccessControlRevokeRole =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     functionName: 'revokeRole',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link accessControlAbi}__
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndAccessControlAbi}__
  */
-export const useWatchAccessControlEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: accessControlAbi })
+export const useWatchCtzndAccessControlEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndAccessControlAbi })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link accessControlAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `eventName` set to `"RoleAdminChanged"`
  */
-export const useWatchAccessControlRoleAdminChangedEvent =
+export const useWatchCtzndAccessControlRoleAdminChangedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     eventName: 'RoleAdminChanged',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link accessControlAbi}__ and `eventName` set to `"RoleGranted"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `eventName` set to `"RoleGranted"`
  */
-export const useWatchAccessControlRoleGrantedEvent =
+export const useWatchCtzndAccessControlRoleGrantedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     eventName: 'RoleGranted',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link accessControlAbi}__ and `eventName` set to `"RoleRevoked"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndAccessControlAbi}__ and `eventName` set to `"RoleRevoked"`
  */
-export const useWatchAccessControlRoleRevokedEvent =
+export const useWatchCtzndAccessControlRoleRevokedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: accessControlAbi,
+    abi: ctzndAccessControlAbi,
     eventName: 'RoleRevoked',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__
  */
-export const useReadBatch = /*#__PURE__*/ createUseReadContract({
-  abi: batchAbi,
+export const useReadCtzndBatch = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndBatchAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"controller"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"controller"`
  */
-export const useReadBatchController = /*#__PURE__*/ createUseReadContract({
-  abi: batchAbi,
+export const useReadCtzndBatchController = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndBatchAbi,
   functionName: 'controller',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"getCurrentWinners"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"getCurrentWinners"`
  */
-export const useReadBatchGetCurrentWinners =
+export const useReadCtzndBatchGetCurrentWinners =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'getCurrentWinners',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"getProjectStatus"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"getProjectStatus"`
  */
-export const useReadBatchGetProjectStatus = /*#__PURE__*/ createUseReadContract(
-  { abi: batchAbi, functionName: 'getProjectStatus' },
-)
+export const useReadCtzndBatchGetProjectStatus =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndBatchAbi,
+    functionName: 'getProjectStatus',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"hasVotedForProject"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"hasVotedForProject"`
  */
-export const useReadBatchHasVotedForProject =
+export const useReadCtzndBatchHasVotedForProject =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'hasVotedForProject',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"inInvestmentPeriod"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"inInvestmentPeriod"`
  */
-export const useReadBatchInInvestmentPeriod =
+export const useReadCtzndBatchInInvestmentPeriod =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'inInvestmentPeriod',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"investmentEnd"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"investmentEnd"`
  */
-export const useReadBatchInvestmentEnd = /*#__PURE__*/ createUseReadContract({
-  abi: batchAbi,
-  functionName: 'investmentEnd',
-})
+export const useReadCtzndBatchInvestmentEnd =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndBatchAbi,
+    functionName: 'investmentEnd',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"projectToVotesIndex"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"projectToVotesIndex"`
  */
-export const useReadBatchProjectToVotesIndex =
+export const useReadCtzndBatchProjectToVotesIndex =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'projectToVotesIndex',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"projectVoteCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"projectVoteCount"`
  */
-export const useReadBatchProjectVoteCount = /*#__PURE__*/ createUseReadContract(
-  { abi: batchAbi, functionName: 'projectVoteCount' },
-)
+export const useReadCtzndBatchProjectVoteCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndBatchAbi,
+    functionName: 'projectVoteCount',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"projectVoting_finalBonus"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"projectVoting_finalBonus"`
  */
-export const useReadBatchProjectVotingFinalBonus =
+export const useReadCtzndBatchProjectVotingFinalBonus =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'projectVoting_finalBonus',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"projectVoting_initialBonus"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"projectVoting_initialBonus"`
  */
-export const useReadBatchProjectVotingInitialBonus =
+export const useReadCtzndBatchProjectVotingInitialBonus =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'projectVoting_initialBonus',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"projectVoting_projects"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"projectVoting_projects"`
  */
-export const useReadBatchProjectVotingProjects =
+export const useReadCtzndBatchProjectVotingProjects =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'projectVoting_projects',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"projectVoting_singleSlotDuration"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"projectVoting_singleSlotDuration"`
  */
-export const useReadBatchProjectVotingSingleSlotDuration =
+export const useReadCtzndBatchProjectVotingSingleSlotDuration =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'projectVoting_singleSlotDuration',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"projectVoting_voteLimitPerUser"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"projectVoting_voteLimitPerUser"`
  */
-export const useReadBatchProjectVotingVoteLimitPerUser =
+export const useReadCtzndBatchProjectVotingVoteLimitPerUser =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'projectVoting_voteLimitPerUser',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"projectVoting_votingPeriod"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"projectVoting_votingPeriod"`
  */
-export const useReadBatchProjectVotingVotingPeriod =
+export const useReadCtzndBatchProjectVotingVotingPeriod =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'projectVoting_votingPeriod',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"projects"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"projects"`
  */
-export const useReadBatchProjects = /*#__PURE__*/ createUseReadContract({
-  abi: batchAbi,
+export const useReadCtzndBatchProjects = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndBatchAbi,
   functionName: 'projects',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"singleSlotDuration"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"singleSlotDuration"`
  */
-export const useReadBatchSingleSlotDuration =
+export const useReadCtzndBatchSingleSlotDuration =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'singleSlotDuration',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"slotCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"slotCount"`
  */
-export const useReadBatchSlotCount = /*#__PURE__*/ createUseReadContract({
-  abi: batchAbi,
+export const useReadCtzndBatchSlotCount = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndBatchAbi,
   functionName: 'slotCount',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"userHasVotedForProject"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"userHasVotedForProject"`
  */
-export const useReadBatchUserHasVotedForProject =
+export const useReadCtzndBatchUserHasVotedForProject =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'userHasVotedForProject',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"userVoteCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"userVoteCount"`
  */
-export const useReadBatchUserVoteCount = /*#__PURE__*/ createUseReadContract({
-  abi: batchAbi,
-  functionName: 'userVoteCount',
-})
+export const useReadCtzndBatchUserVoteCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndBatchAbi,
+    functionName: 'userVoteCount',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"votes"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"votes"`
  */
-export const useReadBatchVotes = /*#__PURE__*/ createUseReadContract({
-  abi: batchAbi,
+export const useReadCtzndBatchVotes = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndBatchAbi,
   functionName: 'votes',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"votesIndexToProject"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"votesIndexToProject"`
  */
-export const useReadBatchVotesIndexToProject =
+export const useReadCtzndBatchVotesIndexToProject =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'votesIndexToProject',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"votingPeriod"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"votingPeriod"`
  */
-export const useReadBatchVotingPeriod = /*#__PURE__*/ createUseReadContract({
-  abi: batchAbi,
-  functionName: 'votingPeriod',
-})
+export const useReadCtzndBatchVotingPeriod =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndBatchAbi,
+    functionName: 'votingPeriod',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"weightedProjectVoteCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"weightedProjectVoteCount"`
  */
-export const useReadBatchWeightedProjectVoteCount =
+export const useReadCtzndBatchWeightedProjectVoteCount =
   /*#__PURE__*/ createUseReadContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'weightedProjectVoteCount',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link batchAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndBatchAbi}__
  */
-export const useWriteBatch = /*#__PURE__*/ createUseWriteContract({
-  abi: batchAbi,
+export const useWriteCtzndBatch = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndBatchAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"setVotingPeriod"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"setVotingPeriod"`
  */
-export const useWriteBatchSetVotingPeriod =
+export const useWriteCtzndBatchSetVotingPeriod =
   /*#__PURE__*/ createUseWriteContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'setVotingPeriod',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"vote"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"vote"`
  */
-export const useWriteBatchVote = /*#__PURE__*/ createUseWriteContract({
-  abi: batchAbi,
+export const useWriteCtzndBatchVote = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndBatchAbi,
   functionName: 'vote',
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link batchAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndBatchAbi}__
  */
-export const useSimulateBatch = /*#__PURE__*/ createUseSimulateContract({
-  abi: batchAbi,
+export const useSimulateCtzndBatch = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndBatchAbi,
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"setVotingPeriod"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"setVotingPeriod"`
  */
-export const useSimulateBatchSetVotingPeriod =
+export const useSimulateCtzndBatchSetVotingPeriod =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: batchAbi,
+    abi: ctzndBatchAbi,
     functionName: 'setVotingPeriod',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link batchAbi}__ and `functionName` set to `"vote"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndBatchAbi}__ and `functionName` set to `"vote"`
  */
-export const useSimulateBatchVote = /*#__PURE__*/ createUseSimulateContract({
-  abi: batchAbi,
-  functionName: 'vote',
+export const useSimulateCtzndBatchVote =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndBatchAbi,
+    functionName: 'vote',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__
+ */
+export const useReadCtzndCitizend = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndCitizendAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
  */
-export const useReadCitizend = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
- */
-export const useReadCitizendDefaultAdminRole =
+export const useReadCtzndCitizendDefaultAdminRole =
   /*#__PURE__*/ createUseReadContract({
-    abi: citizendAbi,
+    abi: ctzndCitizendAbi,
     functionName: 'DEFAULT_ADMIN_ROLE',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"PAUSER_ROLE"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"PAUSER_ROLE"`
  */
-export const useReadCitizendPauserRole = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'PAUSER_ROLE',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"allowance"`
- */
-export const useReadCitizendAllowance = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'allowance',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"balanceOf"`
- */
-export const useReadCitizendBalanceOf = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'balanceOf',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"decimals"`
- */
-export const useReadCitizendDecimals = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'decimals',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"getRoleAdmin"`
- */
-export const useReadCitizendGetRoleAdmin = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'getRoleAdmin',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"hasRole"`
- */
-export const useReadCitizendHasRole = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'hasRole',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"lockEnd"`
- */
-export const useReadCitizendLockEnd = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'lockEnd',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"name"`
- */
-export const useReadCitizendName = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'name',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"paused"`
- */
-export const useReadCitizendPaused = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'paused',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"supportsInterface"`
- */
-export const useReadCitizendSupportsInterface =
+export const useReadCtzndCitizendPauserRole =
   /*#__PURE__*/ createUseReadContract({
-    abi: citizendAbi,
-    functionName: 'supportsInterface',
+    abi: ctzndCitizendAbi,
+    functionName: 'PAUSER_ROLE',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"symbol"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"allowance"`
  */
-export const useReadCitizendSymbol = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'symbol',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"totalSupply"`
- */
-export const useReadCitizendTotalSupply = /*#__PURE__*/ createUseReadContract({
-  abi: citizendAbi,
-  functionName: 'totalSupply',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__
- */
-export const useWriteCitizend = /*#__PURE__*/ createUseWriteContract({
-  abi: citizendAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"approve"`
- */
-export const useWriteCitizendApprove = /*#__PURE__*/ createUseWriteContract({
-  abi: citizendAbi,
-  functionName: 'approve',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"burn"`
- */
-export const useWriteCitizendBurn = /*#__PURE__*/ createUseWriteContract({
-  abi: citizendAbi,
-  functionName: 'burn',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"burnFrom"`
- */
-export const useWriteCitizendBurnFrom = /*#__PURE__*/ createUseWriteContract({
-  abi: citizendAbi,
-  functionName: 'burnFrom',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"grantRole"`
- */
-export const useWriteCitizendGrantRole = /*#__PURE__*/ createUseWriteContract({
-  abi: citizendAbi,
-  functionName: 'grantRole',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"pause"`
- */
-export const useWriteCitizendPause = /*#__PURE__*/ createUseWriteContract({
-  abi: citizendAbi,
-  functionName: 'pause',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"renounceRole"`
- */
-export const useWriteCitizendRenounceRole =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: citizendAbi,
-    functionName: 'renounceRole',
+export const useReadCtzndCitizendAllowance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'allowance',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"revokeRole"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"balanceOf"`
  */
-export const useWriteCitizendRevokeRole = /*#__PURE__*/ createUseWriteContract({
-  abi: citizendAbi,
-  functionName: 'revokeRole',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"transfer"`
- */
-export const useWriteCitizendTransfer = /*#__PURE__*/ createUseWriteContract({
-  abi: citizendAbi,
-  functionName: 'transfer',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"transferFrom"`
- */
-export const useWriteCitizendTransferFrom =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: citizendAbi,
-    functionName: 'transferFrom',
+export const useReadCtzndCitizendBalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'balanceOf',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"unpause"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"decimals"`
  */
-export const useWriteCitizendUnpause = /*#__PURE__*/ createUseWriteContract({
-  abi: citizendAbi,
-  functionName: 'unpause',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"unpausePublic"`
- */
-export const useWriteCitizendUnpausePublic =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: citizendAbi,
-    functionName: 'unpausePublic',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__
- */
-export const useSimulateCitizend = /*#__PURE__*/ createUseSimulateContract({
-  abi: citizendAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"approve"`
- */
-export const useSimulateCitizendApprove =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendAbi,
-    functionName: 'approve',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"burn"`
- */
-export const useSimulateCitizendBurn = /*#__PURE__*/ createUseSimulateContract({
-  abi: citizendAbi,
-  functionName: 'burn',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"burnFrom"`
- */
-export const useSimulateCitizendBurnFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendAbi,
-    functionName: 'burnFrom',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"grantRole"`
- */
-export const useSimulateCitizendGrantRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendAbi,
-    functionName: 'grantRole',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"pause"`
- */
-export const useSimulateCitizendPause = /*#__PURE__*/ createUseSimulateContract(
-  { abi: citizendAbi, functionName: 'pause' },
+export const useReadCtzndCitizendDecimals = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndCitizendAbi, functionName: 'decimals' },
 )
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"renounceRole"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"getRoleAdmin"`
  */
-export const useSimulateCitizendRenounceRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendAbi,
-    functionName: 'renounceRole',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"revokeRole"`
- */
-export const useSimulateCitizendRevokeRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendAbi,
-    functionName: 'revokeRole',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"transfer"`
- */
-export const useSimulateCitizendTransfer =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendAbi,
-    functionName: 'transfer',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"transferFrom"`
- */
-export const useSimulateCitizendTransferFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendAbi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"unpause"`
- */
-export const useSimulateCitizendUnpause =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendAbi,
-    functionName: 'unpause',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendAbi}__ and `functionName` set to `"unpausePublic"`
- */
-export const useSimulateCitizendUnpausePublic =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendAbi,
-    functionName: 'unpausePublic',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendAbi}__
- */
-export const useWatchCitizendEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: citizendAbi,
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendAbi}__ and `eventName` set to `"Approval"`
- */
-export const useWatchCitizendApprovalEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendAbi,
-    eventName: 'Approval',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendAbi}__ and `eventName` set to `"Paused"`
- */
-export const useWatchCitizendPausedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendAbi,
-    eventName: 'Paused',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendAbi}__ and `eventName` set to `"RoleAdminChanged"`
- */
-export const useWatchCitizendRoleAdminChangedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendAbi,
-    eventName: 'RoleAdminChanged',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendAbi}__ and `eventName` set to `"RoleGranted"`
- */
-export const useWatchCitizendRoleGrantedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendAbi,
-    eventName: 'RoleGranted',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendAbi}__ and `eventName` set to `"RoleRevoked"`
- */
-export const useWatchCitizendRoleRevokedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendAbi,
-    eventName: 'RoleRevoked',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendAbi}__ and `eventName` set to `"Transfer"`
- */
-export const useWatchCitizendTransferEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendAbi,
-    eventName: 'Transfer',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendAbi}__ and `eventName` set to `"Unpaused"`
- */
-export const useWatchCitizendUnpausedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendAbi,
-    eventName: 'Unpaused',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__
- */
-export const useReadCitizendConstructorTest =
-  /*#__PURE__*/ createUseReadContract({ abi: citizendConstructorTestAbi })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"IS_TEST"`
- */
-export const useReadCitizendConstructorTestIsTest =
+export const useReadCtzndCitizendGetRoleAdmin =
   /*#__PURE__*/ createUseReadContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'IS_TEST',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"excludeArtifacts"`
- */
-export const useReadCitizendConstructorTestExcludeArtifacts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'excludeArtifacts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"excludeContracts"`
- */
-export const useReadCitizendConstructorTestExcludeContracts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'excludeContracts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"excludeSenders"`
- */
-export const useReadCitizendConstructorTestExcludeSenders =
-  /*#__PURE__*/ createUseReadContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'excludeSenders',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
- */
-export const useReadCitizendConstructorTestTargetArtifactSelectors =
-  /*#__PURE__*/ createUseReadContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'targetArtifactSelectors',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"targetArtifacts"`
- */
-export const useReadCitizendConstructorTestTargetArtifacts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'targetArtifacts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"targetContracts"`
- */
-export const useReadCitizendConstructorTestTargetContracts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'targetContracts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"targetInterfaces"`
- */
-export const useReadCitizendConstructorTestTargetInterfaces =
-  /*#__PURE__*/ createUseReadContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'targetInterfaces',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"targetSelectors"`
- */
-export const useReadCitizendConstructorTestTargetSelectors =
-  /*#__PURE__*/ createUseReadContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'targetSelectors',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"targetSenders"`
- */
-export const useReadCitizendConstructorTestTargetSenders =
-  /*#__PURE__*/ createUseReadContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'targetSenders',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__
- */
-export const useWriteCitizendConstructorTest =
-  /*#__PURE__*/ createUseWriteContract({ abi: citizendConstructorTestAbi })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"failed"`
- */
-export const useWriteCitizendConstructorTestFailed =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'failed',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"testInitialMint"`
- */
-export const useWriteCitizendConstructorTestTestInitialMint =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'testInitialMint',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"testSetsCorrectParameters"`
- */
-export const useWriteCitizendConstructorTestTestSetsCorrectParameters =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'testSetsCorrectParameters',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__
- */
-export const useSimulateCitizendConstructorTest =
-  /*#__PURE__*/ createUseSimulateContract({ abi: citizendConstructorTestAbi })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"failed"`
- */
-export const useSimulateCitizendConstructorTestFailed =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'failed',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"testInitialMint"`
- */
-export const useSimulateCitizendConstructorTestTestInitialMint =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'testInitialMint',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `functionName` set to `"testSetsCorrectParameters"`
- */
-export const useSimulateCitizendConstructorTestTestSetsCorrectParameters =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: citizendConstructorTestAbi,
-    functionName: 'testSetsCorrectParameters',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__
- */
-export const useWatchCitizendConstructorTestEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: citizendConstructorTestAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log"`
- */
-export const useWatchCitizendConstructorTestLogEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_address"`
- */
-export const useWatchCitizendConstructorTestLogAddressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_address',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_array"`
- */
-export const useWatchCitizendConstructorTestLogArrayEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_array',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_bytes"`
- */
-export const useWatchCitizendConstructorTestLogBytesEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_bytes',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_bytes32"`
- */
-export const useWatchCitizendConstructorTestLogBytes32Event =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_bytes32',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_int"`
- */
-export const useWatchCitizendConstructorTestLogIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_named_address"`
- */
-export const useWatchCitizendConstructorTestLogNamedAddressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_named_address',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_named_array"`
- */
-export const useWatchCitizendConstructorTestLogNamedArrayEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_named_array',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_named_bytes"`
- */
-export const useWatchCitizendConstructorTestLogNamedBytesEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_named_bytes',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_named_bytes32"`
- */
-export const useWatchCitizendConstructorTestLogNamedBytes32Event =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_named_bytes32',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
- */
-export const useWatchCitizendConstructorTestLogNamedDecimalIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_named_decimal_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
- */
-export const useWatchCitizendConstructorTestLogNamedDecimalUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_named_decimal_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_named_int"`
- */
-export const useWatchCitizendConstructorTestLogNamedIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_named_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_named_string"`
- */
-export const useWatchCitizendConstructorTestLogNamedStringEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_named_string',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_named_uint"`
- */
-export const useWatchCitizendConstructorTestLogNamedUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_named_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_string"`
- */
-export const useWatchCitizendConstructorTestLogStringEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_string',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"log_uint"`
- */
-export const useWatchCitizendConstructorTestLogUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'log_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link citizendConstructorTestAbi}__ and `eventName` set to `"logs"`
- */
-export const useWatchCitizendConstructorTestLogsEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: citizendConstructorTestAbi,
-    eventName: 'logs',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__
- */
-export const useReadController = /*#__PURE__*/ createUseReadContract({
-  abi: controllerAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"BATCH_MANAGER_ROLE"`
- */
-export const useReadControllerBatchManagerRole =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'BATCH_MANAGER_ROLE',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
- */
-export const useReadControllerDefaultAdminRole =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'DEFAULT_ADMIN_ROLE',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"LEGAL_MANAGER_ROLE"`
- */
-export const useReadControllerLegalManagerRole =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'LEGAL_MANAGER_ROLE',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"PROJECT_MANAGER_ROLE"`
- */
-export const useReadControllerProjectManagerRole =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'PROJECT_MANAGER_ROLE',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"canInvestInPeoplesPool"`
- */
-export const useReadControllerCanInvestInPeoplesPool =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'canInvestInPeoplesPool',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"canInvestInStakersPool"`
- */
-export const useReadControllerCanInvestInStakersPool =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'canInvestInStakersPool',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"canVote"`
- */
-export const useReadControllerCanVote = /*#__PURE__*/ createUseReadContract({
-  abi: controllerAbi,
-  functionName: 'canVote',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"getBatchForProject"`
- */
-export const useReadControllerGetBatchForProject =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'getBatchForProject',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"getRoleAdmin"`
- */
-export const useReadControllerGetRoleAdmin =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
+    abi: ctzndCitizendAbi,
     functionName: 'getRoleAdmin',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"hasBatchManagerRole"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"hasRole"`
  */
-export const useReadControllerHasBatchManagerRole =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'hasBatchManagerRole',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"hasLegalManagerRole"`
- */
-export const useReadControllerHasLegalManagerRole =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'hasLegalManagerRole',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"hasProjectManagerRole"`
- */
-export const useReadControllerHasProjectManagerRole =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'hasProjectManagerRole',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"hasRole"`
- */
-export const useReadControllerHasRole = /*#__PURE__*/ createUseReadContract({
-  abi: controllerAbi,
+export const useReadCtzndCitizendHasRole = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndCitizendAbi,
   functionName: 'hasRole',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"isProjectInBatch"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"lockEnd"`
  */
-export const useReadControllerIsProjectInBatch =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'isProjectInBatch',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"merkleRoot"`
- */
-export const useReadControllerMerkleRoot = /*#__PURE__*/ createUseReadContract({
-  abi: controllerAbi,
-  functionName: 'merkleRoot',
+export const useReadCtzndCitizendLockEnd = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndCitizendAbi,
+  functionName: 'lockEnd',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"projects"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"name"`
  */
-export const useReadControllerProjects = /*#__PURE__*/ createUseReadContract({
-  abi: controllerAbi,
-  functionName: 'projects',
+export const useReadCtzndCitizendName = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndCitizendAbi,
+  functionName: 'name',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"projectsToBatches"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"paused"`
  */
-export const useReadControllerProjectsToBatches =
-  /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
-    functionName: 'projectsToBatches',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"staking"`
- */
-export const useReadControllerStaking = /*#__PURE__*/ createUseReadContract({
-  abi: controllerAbi,
-  functionName: 'staking',
+export const useReadCtzndCitizendPaused = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndCitizendAbi,
+  functionName: 'paused',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"supportsInterface"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"supportsInterface"`
  */
-export const useReadControllerSupportsInterface =
+export const useReadCtzndCitizendSupportsInterface =
   /*#__PURE__*/ createUseReadContract({
-    abi: controllerAbi,
+    abi: ctzndCitizendAbi,
     functionName: 'supportsInterface',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"token"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"symbol"`
  */
-export const useReadControllerToken = /*#__PURE__*/ createUseReadContract({
-  abi: controllerAbi,
-  functionName: 'token',
+export const useReadCtzndCitizendSymbol = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndCitizendAbi,
+  functionName: 'symbol',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link controllerAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"totalSupply"`
  */
-export const useWriteController = /*#__PURE__*/ createUseWriteContract({
-  abi: controllerAbi,
+export const useReadCtzndCitizendTotalSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'totalSupply',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__
+ */
+export const useWriteCtzndCitizend = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndCitizendAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"createBatch"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"approve"`
  */
-export const useWriteControllerCreateBatch =
+export const useWriteCtzndCitizendApprove =
   /*#__PURE__*/ createUseWriteContract({
-    abi: controllerAbi,
-    functionName: 'createBatch',
+    abi: ctzndCitizendAbi,
+    functionName: 'approve',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"grantRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"burn"`
  */
-export const useWriteControllerGrantRole = /*#__PURE__*/ createUseWriteContract(
-  { abi: controllerAbi, functionName: 'grantRole' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"registerProject"`
- */
-export const useWriteControllerRegisterProject =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: controllerAbi,
-    functionName: 'registerProject',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"renounceRole"`
- */
-export const useWriteControllerRenounceRole =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: controllerAbi,
-    functionName: 'renounceRole',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"revokeRole"`
- */
-export const useWriteControllerRevokeRole =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: controllerAbi,
-    functionName: 'revokeRole',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"setBatchVotingPeriod"`
- */
-export const useWriteControllerSetBatchVotingPeriod =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: controllerAbi,
-    functionName: 'setBatchVotingPeriod',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link controllerAbi}__
- */
-export const useSimulateController = /*#__PURE__*/ createUseSimulateContract({
-  abi: controllerAbi,
+export const useWriteCtzndCitizendBurn = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndCitizendAbi,
+  functionName: 'burn',
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"createBatch"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"burnFrom"`
  */
-export const useSimulateControllerCreateBatch =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: controllerAbi,
-    functionName: 'createBatch',
+export const useWriteCtzndCitizendBurnFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'burnFrom',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"grantRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useSimulateControllerGrantRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: controllerAbi,
+export const useWriteCtzndCitizendGrantRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendAbi,
     functionName: 'grantRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"registerProject"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"pause"`
  */
-export const useSimulateControllerRegisterProject =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: controllerAbi,
-    functionName: 'registerProject',
-  })
+export const useWriteCtzndCitizendPause = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndCitizendAbi,
+  functionName: 'pause',
+})
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"renounceRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"renounceRole"`
  */
-export const useSimulateControllerRenounceRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: controllerAbi,
+export const useWriteCtzndCitizendRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendAbi,
     functionName: 'renounceRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"revokeRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"revokeRole"`
  */
-export const useSimulateControllerRevokeRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: controllerAbi,
+export const useWriteCtzndCitizendRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendAbi,
     functionName: 'revokeRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link controllerAbi}__ and `functionName` set to `"setBatchVotingPeriod"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"transfer"`
  */
-export const useSimulateControllerSetBatchVotingPeriod =
+export const useWriteCtzndCitizendTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteCtzndCitizendTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"unpause"`
+ */
+export const useWriteCtzndCitizendUnpause =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'unpause',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"unpausePublic"`
+ */
+export const useWriteCtzndCitizendUnpausePublic =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'unpausePublic',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__
+ */
+export const useSimulateCtzndCitizend = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndCitizendAbi },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateCtzndCitizendApprove =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: controllerAbi,
-    functionName: 'setBatchVotingPeriod',
+    abi: ctzndCitizendAbi,
+    functionName: 'approve',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link controllerAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"burn"`
  */
-export const useWatchControllerEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: controllerAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link controllerAbi}__ and `eventName` set to `"BatchCreated"`
- */
-export const useWatchControllerBatchCreatedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: controllerAbi,
-    eventName: 'BatchCreated',
+export const useSimulateCtzndCitizendBurn =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'burn',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link controllerAbi}__ and `eventName` set to `"ProjectRegistered"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"burnFrom"`
  */
-export const useWatchControllerProjectRegisteredEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: controllerAbi,
-    eventName: 'ProjectRegistered',
+export const useSimulateCtzndCitizendBurnFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'burnFrom',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link controllerAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useWatchControllerRoleAdminChangedEvent =
+export const useSimulateCtzndCitizendGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"pause"`
+ */
+export const useSimulateCtzndCitizendPause =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'pause',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useSimulateCtzndCitizendRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useSimulateCtzndCitizendRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateCtzndCitizendTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateCtzndCitizendTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"unpause"`
+ */
+export const useSimulateCtzndCitizendUnpause =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'unpause',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `functionName` set to `"unpausePublic"`
+ */
+export const useSimulateCtzndCitizendUnpausePublic =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendAbi,
+    functionName: 'unpausePublic',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendAbi}__
+ */
+export const useWatchCtzndCitizendEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndCitizendAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchCtzndCitizendApprovalEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: controllerAbi,
+    abi: ctzndCitizendAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `eventName` set to `"Paused"`
+ */
+export const useWatchCtzndCitizendPausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendAbi,
+    eventName: 'Paused',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ */
+export const useWatchCtzndCitizendRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendAbi,
     eventName: 'RoleAdminChanged',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link controllerAbi}__ and `eventName` set to `"RoleGranted"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `eventName` set to `"RoleGranted"`
  */
-export const useWatchControllerRoleGrantedEvent =
+export const useWatchCtzndCitizendRoleGrantedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: controllerAbi,
+    abi: ctzndCitizendAbi,
     eventName: 'RoleGranted',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link controllerAbi}__ and `eventName` set to `"RoleRevoked"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `eventName` set to `"RoleRevoked"`
  */
-export const useWatchControllerRoleRevokedEvent =
+export const useWatchCtzndCitizendRoleRevokedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: controllerAbi,
+    abi: ctzndCitizendAbi,
     eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchCtzndCitizendTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendAbi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendAbi}__ and `eventName` set to `"Unpaused"`
+ */
+export const useWatchCtzndCitizendUnpausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendAbi,
+    eventName: 'Unpaused',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__
+ */
+export const useReadCtzndCitizendConstructorTest =
+  /*#__PURE__*/ createUseReadContract({ abi: ctzndCitizendConstructorTestAbi })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"IS_TEST"`
+ */
+export const useReadCtzndCitizendConstructorTestIsTest =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'IS_TEST',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"excludeArtifacts"`
+ */
+export const useReadCtzndCitizendConstructorTestExcludeArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'excludeArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"excludeContracts"`
+ */
+export const useReadCtzndCitizendConstructorTestExcludeContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'excludeContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"excludeSenders"`
+ */
+export const useReadCtzndCitizendConstructorTestExcludeSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'excludeSenders',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
+ */
+export const useReadCtzndCitizendConstructorTestTargetArtifactSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'targetArtifactSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"targetArtifacts"`
+ */
+export const useReadCtzndCitizendConstructorTestTargetArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'targetArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"targetContracts"`
+ */
+export const useReadCtzndCitizendConstructorTestTargetContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'targetContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"targetInterfaces"`
+ */
+export const useReadCtzndCitizendConstructorTestTargetInterfaces =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'targetInterfaces',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"targetSelectors"`
+ */
+export const useReadCtzndCitizendConstructorTestTargetSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'targetSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"targetSenders"`
+ */
+export const useReadCtzndCitizendConstructorTestTargetSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'targetSenders',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__
+ */
+export const useWriteCtzndCitizendConstructorTest =
+  /*#__PURE__*/ createUseWriteContract({ abi: ctzndCitizendConstructorTestAbi })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useWriteCtzndCitizendConstructorTestFailed =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"testInitialMint"`
+ */
+export const useWriteCtzndCitizendConstructorTestTestInitialMint =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'testInitialMint',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"testSetsCorrectParameters"`
+ */
+export const useWriteCtzndCitizendConstructorTestTestSetsCorrectParameters =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'testSetsCorrectParameters',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__
+ */
+export const useSimulateCtzndCitizendConstructorTest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendConstructorTestAbi,
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useSimulateCtzndCitizendConstructorTestFailed =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"testInitialMint"`
+ */
+export const useSimulateCtzndCitizendConstructorTestTestInitialMint =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'testInitialMint',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `functionName` set to `"testSetsCorrectParameters"`
+ */
+export const useSimulateCtzndCitizendConstructorTestTestSetsCorrectParameters =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndCitizendConstructorTestAbi,
+    functionName: 'testSetsCorrectParameters',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__
+ */
+export const useWatchCtzndCitizendConstructorTestEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_address"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_array"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_bytes"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_bytes32"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_int"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_named_address"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogNamedAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_named_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_named_array"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogNamedArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_named_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_named_bytes"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogNamedBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_named_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_named_bytes32"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogNamedBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_named_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogNamedDecimalIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_named_decimal_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogNamedDecimalUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_named_decimal_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_named_int"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogNamedIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_named_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_named_string"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogNamedStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_named_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_named_uint"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogNamedUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_named_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_string"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"log_uint"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'log_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndCitizendConstructorTestAbi}__ and `eventName` set to `"logs"`
+ */
+export const useWatchCtzndCitizendConstructorTestLogsEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndCitizendConstructorTestAbi,
+    eventName: 'logs',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__
+ */
+export const useReadCtzndController = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndControllerAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"BATCH_MANAGER_ROLE"`
+ */
+export const useReadCtzndControllerBatchManagerRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'BATCH_MANAGER_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ */
+export const useReadCtzndControllerDefaultAdminRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"LEGAL_MANAGER_ROLE"`
+ */
+export const useReadCtzndControllerLegalManagerRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'LEGAL_MANAGER_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"PROJECT_MANAGER_ROLE"`
+ */
+export const useReadCtzndControllerProjectManagerRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'PROJECT_MANAGER_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"canInvestInPeoplesPool"`
+ */
+export const useReadCtzndControllerCanInvestInPeoplesPool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'canInvestInPeoplesPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"canInvestInStakersPool"`
+ */
+export const useReadCtzndControllerCanInvestInStakersPool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'canInvestInStakersPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"canVote"`
+ */
+export const useReadCtzndControllerCanVote =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'canVote',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"getBatchForProject"`
+ */
+export const useReadCtzndControllerGetBatchForProject =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'getBatchForProject',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"getRoleAdmin"`
+ */
+export const useReadCtzndControllerGetRoleAdmin =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'getRoleAdmin',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"hasBatchManagerRole"`
+ */
+export const useReadCtzndControllerHasBatchManagerRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'hasBatchManagerRole',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"hasLegalManagerRole"`
+ */
+export const useReadCtzndControllerHasLegalManagerRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'hasLegalManagerRole',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"hasProjectManagerRole"`
+ */
+export const useReadCtzndControllerHasProjectManagerRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'hasProjectManagerRole',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"hasRole"`
+ */
+export const useReadCtzndControllerHasRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'hasRole',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"isProjectInBatch"`
+ */
+export const useReadCtzndControllerIsProjectInBatch =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'isProjectInBatch',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"merkleRoot"`
+ */
+export const useReadCtzndControllerMerkleRoot =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'merkleRoot',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"projects"`
+ */
+export const useReadCtzndControllerProjects =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'projects',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"projectsToBatches"`
+ */
+export const useReadCtzndControllerProjectsToBatches =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'projectsToBatches',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"staking"`
+ */
+export const useReadCtzndControllerStaking =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'staking',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadCtzndControllerSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndControllerAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"token"`
+ */
+export const useReadCtzndControllerToken = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndControllerAbi,
+  functionName: 'token',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndControllerAbi}__
+ */
+export const useWriteCtzndController = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndControllerAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"createBatch"`
+ */
+export const useWriteCtzndControllerCreateBatch =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndControllerAbi,
+    functionName: 'createBatch',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useWriteCtzndControllerGrantRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndControllerAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"registerProject"`
+ */
+export const useWriteCtzndControllerRegisterProject =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndControllerAbi,
+    functionName: 'registerProject',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useWriteCtzndControllerRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndControllerAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useWriteCtzndControllerRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndControllerAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"setBatchVotingPeriod"`
+ */
+export const useWriteCtzndControllerSetBatchVotingPeriod =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndControllerAbi,
+    functionName: 'setBatchVotingPeriod',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndControllerAbi}__
+ */
+export const useSimulateCtzndController =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndControllerAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"createBatch"`
+ */
+export const useSimulateCtzndControllerCreateBatch =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndControllerAbi,
+    functionName: 'createBatch',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useSimulateCtzndControllerGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndControllerAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"registerProject"`
+ */
+export const useSimulateCtzndControllerRegisterProject =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndControllerAbi,
+    functionName: 'registerProject',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useSimulateCtzndControllerRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndControllerAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useSimulateCtzndControllerRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndControllerAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndControllerAbi}__ and `functionName` set to `"setBatchVotingPeriod"`
+ */
+export const useSimulateCtzndControllerSetBatchVotingPeriod =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndControllerAbi,
+    functionName: 'setBatchVotingPeriod',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndControllerAbi}__
+ */
+export const useWatchCtzndControllerEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndControllerAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndControllerAbi}__ and `eventName` set to `"BatchCreated"`
+ */
+export const useWatchCtzndControllerBatchCreatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndControllerAbi,
+    eventName: 'BatchCreated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndControllerAbi}__ and `eventName` set to `"ProjectRegistered"`
+ */
+export const useWatchCtzndControllerProjectRegisteredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndControllerAbi,
+    eventName: 'ProjectRegistered',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndControllerAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ */
+export const useWatchCtzndControllerRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndControllerAbi,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndControllerAbi}__ and `eventName` set to `"RoleGranted"`
+ */
+export const useWatchCtzndControllerRoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndControllerAbi,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndControllerAbi}__ and `eventName` set to `"RoleRevoked"`
+ */
+export const useWatchCtzndControllerRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndControllerAbi,
+    eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndDsTestAbi}__
+ */
+export const useReadCtzndDsTest = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndDsTestAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `functionName` set to `"IS_TEST"`
+ */
+export const useReadCtzndDsTestIsTest = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndDsTestAbi,
+  functionName: 'IS_TEST',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndDsTestAbi}__
+ */
+export const useWriteCtzndDsTest = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndDsTestAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useWriteCtzndDsTestFailed = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndDsTestAbi,
+  functionName: 'failed',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndDsTestAbi}__
+ */
+export const useSimulateCtzndDsTest = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndDsTestAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useSimulateCtzndDsTestFailed =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndDsTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__
+ */
+export const useWatchCtzndDsTestEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndDsTestAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log"`
+ */
+export const useWatchCtzndDsTestLogEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_address"`
+ */
+export const useWatchCtzndDsTestLogAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_bytes"`
+ */
+export const useWatchCtzndDsTestLogBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_bytes32"`
+ */
+export const useWatchCtzndDsTestLogBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_int"`
+ */
+export const useWatchCtzndDsTestLogIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_named_address"`
+ */
+export const useWatchCtzndDsTestLogNamedAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_named_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_named_bytes"`
+ */
+export const useWatchCtzndDsTestLogNamedBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_named_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_named_bytes32"`
+ */
+export const useWatchCtzndDsTestLogNamedBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_named_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
+ */
+export const useWatchCtzndDsTestLogNamedDecimalIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_named_decimal_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
+ */
+export const useWatchCtzndDsTestLogNamedDecimalUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_named_decimal_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_named_int"`
+ */
+export const useWatchCtzndDsTestLogNamedIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_named_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_named_string"`
+ */
+export const useWatchCtzndDsTestLogNamedStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_named_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_named_uint"`
+ */
+export const useWatchCtzndDsTestLogNamedUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_named_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_string"`
+ */
+export const useWatchCtzndDsTestLogStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"log_uint"`
+ */
+export const useWatchCtzndDsTestLogUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'log_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndDsTestAbi}__ and `eventName` set to `"logs"`
+ */
+export const useWatchCtzndDsTestLogsEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndDsTestAbi,
+    eventName: 'logs',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndDeployScriptAbi}__
+ */
+export const useReadCtzndDeployScript = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndDeployScriptAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndDeployScriptAbi}__ and `functionName` set to `"IS_SCRIPT"`
+ */
+export const useReadCtzndDeployScriptIsScript =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndDeployScriptAbi,
+    functionName: 'IS_SCRIPT',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndDeployScriptAbi}__
+ */
+export const useWriteCtzndDeployScript = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndDeployScriptAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndDeployScriptAbi}__ and `functionName` set to `"run"`
+ */
+export const useWriteCtzndDeployScriptRun =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndDeployScriptAbi,
+    functionName: 'run',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndDeployScriptAbi}__
+ */
+export const useSimulateCtzndDeployScript =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndDeployScriptAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndDeployScriptAbi}__ and `functionName` set to `"run"`
+ */
+export const useSimulateCtzndDeployScriptRun =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndDeployScriptAbi,
+    functionName: 'run',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndDevDeployScriptAbi}__
+ */
+export const useReadCtzndDevDeployScript = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndDevDeployScriptAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndDevDeployScriptAbi}__ and `functionName` set to `"IS_SCRIPT"`
+ */
+export const useReadCtzndDevDeployScriptIsScript =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndDevDeployScriptAbi,
+    functionName: 'IS_SCRIPT',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndDevDeployScriptAbi}__
+ */
+export const useWriteCtzndDevDeployScript =
+  /*#__PURE__*/ createUseWriteContract({ abi: ctzndDevDeployScriptAbi })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndDevDeployScriptAbi}__ and `functionName` set to `"run"`
+ */
+export const useWriteCtzndDevDeployScriptRun =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndDevDeployScriptAbi,
+    functionName: 'run',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndDevDeployScriptAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useWriteCtzndDevDeployScriptSetUp =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndDevDeployScriptAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndDevDeployScriptAbi}__
+ */
+export const useSimulateCtzndDevDeployScript =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndDevDeployScriptAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndDevDeployScriptAbi}__ and `functionName` set to `"run"`
+ */
+export const useSimulateCtzndDevDeployScriptRun =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndDevDeployScriptAbi,
+    functionName: 'run',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndDevDeployScriptAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useSimulateCtzndDevDeployScriptSetUp =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndDevDeployScriptAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc165Abi}__
+ */
+export const useReadCtzndErc165 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndErc165Abi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc165Abi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadCtzndErc165SupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc165Abi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20Abi}__
+ */
+export const useReadCtzndErc20 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndErc20Abi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadCtzndErc20Allowance = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndErc20Abi,
+  functionName: 'allowance',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadCtzndErc20BalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndErc20Abi,
+  functionName: 'balanceOf',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"decimals"`
+ */
+export const useReadCtzndErc20Decimals = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndErc20Abi,
+  functionName: 'decimals',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"name"`
+ */
+export const useReadCtzndErc20Name = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndErc20Abi,
+  functionName: 'name',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadCtzndErc20Symbol = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndErc20Abi,
+  functionName: 'symbol',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"totalSupply"`
+ */
+export const useReadCtzndErc20TotalSupply = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndErc20Abi, functionName: 'totalSupply' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20Abi}__
+ */
+export const useWriteCtzndErc20 = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndErc20Abi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteCtzndErc20Approve = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndErc20Abi,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteCtzndErc20Transfer = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndErc20Abi,
+  functionName: 'transfer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteCtzndErc20TransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndErc20Abi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20Abi}__
+ */
+export const useSimulateCtzndErc20 = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndErc20Abi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateCtzndErc20Approve =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20Abi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateCtzndErc20Transfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20Abi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateCtzndErc20TransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20Abi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20Abi}__
+ */
+export const useWatchCtzndErc20Event =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndErc20Abi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20Abi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchCtzndErc20ApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndErc20Abi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20Abi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchCtzndErc20TransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndErc20Abi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__
+ */
+export const useReadCtzndErc20Burnable = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndErc20BurnableAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadCtzndErc20BurnableAllowance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'allowance',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadCtzndErc20BurnableBalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'balanceOf',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"decimals"`
+ */
+export const useReadCtzndErc20BurnableDecimals =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'decimals',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"name"`
+ */
+export const useReadCtzndErc20BurnableName =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'name',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadCtzndErc20BurnableSymbol =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'symbol',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"totalSupply"`
+ */
+export const useReadCtzndErc20BurnableTotalSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'totalSupply',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__
+ */
+export const useWriteCtzndErc20Burnable = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndErc20BurnableAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteCtzndErc20BurnableApprove =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"burn"`
+ */
+export const useWriteCtzndErc20BurnableBurn =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'burn',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"burnFrom"`
+ */
+export const useWriteCtzndErc20BurnableBurnFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'burnFrom',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteCtzndErc20BurnableTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteCtzndErc20BurnableTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__
+ */
+export const useSimulateCtzndErc20Burnable =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndErc20BurnableAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateCtzndErc20BurnableApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"burn"`
+ */
+export const useSimulateCtzndErc20BurnableBurn =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'burn',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"burnFrom"`
+ */
+export const useSimulateCtzndErc20BurnableBurnFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'burnFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateCtzndErc20BurnableTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateCtzndErc20BurnableTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20BurnableAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__
+ */
+export const useWatchCtzndErc20BurnableEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndErc20BurnableAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchCtzndErc20BurnableApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndErc20BurnableAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20BurnableAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchCtzndErc20BurnableTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndErc20BurnableAbi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__
+ */
+export const useReadCtzndErc20Pausable = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndErc20PausableAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadCtzndErc20PausableAllowance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'allowance',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadCtzndErc20PausableBalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'balanceOf',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"decimals"`
+ */
+export const useReadCtzndErc20PausableDecimals =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'decimals',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"name"`
+ */
+export const useReadCtzndErc20PausableName =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'name',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"paused"`
+ */
+export const useReadCtzndErc20PausablePaused =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'paused',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadCtzndErc20PausableSymbol =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'symbol',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"totalSupply"`
+ */
+export const useReadCtzndErc20PausableTotalSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'totalSupply',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__
+ */
+export const useWriteCtzndErc20Pausable = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndErc20PausableAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteCtzndErc20PausableApprove =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteCtzndErc20PausableTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteCtzndErc20PausableTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__
+ */
+export const useSimulateCtzndErc20Pausable =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndErc20PausableAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateCtzndErc20PausableApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateCtzndErc20PausableTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateCtzndErc20PausableTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndErc20PausableAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20PausableAbi}__
+ */
+export const useWatchCtzndErc20PausableEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndErc20PausableAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchCtzndErc20PausableApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndErc20PausableAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `eventName` set to `"Paused"`
+ */
+export const useWatchCtzndErc20PausablePausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndErc20PausableAbi,
+    eventName: 'Paused',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchCtzndErc20PausableTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndErc20PausableAbi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndErc20PausableAbi}__ and `eventName` set to `"Unpaused"`
+ */
+export const useWatchCtzndErc20PausableUnpausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndErc20PausableAbi,
+    eventName: 'Unpaused',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__
+ */
+export const useReadCtzndFractalRegistry = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndFractalRegistryAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"delegates"`
+ */
+export const useReadCtzndFractalRegistryDelegates =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'delegates',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"getFractalId"`
+ */
+export const useReadCtzndFractalRegistryGetFractalId =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'getFractalId',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"isUserInList"`
+ */
+export const useReadCtzndFractalRegistryIsUserInList =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'isUserInList',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__
+ */
+export const useWriteCtzndFractalRegistry =
+  /*#__PURE__*/ createUseWriteContract({ abi: ctzndFractalRegistryAbi })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"addDelegate"`
+ */
+export const useWriteCtzndFractalRegistryAddDelegate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'addDelegate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"addUserAddress"`
+ */
+export const useWriteCtzndFractalRegistryAddUserAddress =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'addUserAddress',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"addUserToList"`
+ */
+export const useWriteCtzndFractalRegistryAddUserToList =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'addUserToList',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"removeDelegate"`
+ */
+export const useWriteCtzndFractalRegistryRemoveDelegate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'removeDelegate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"removeUserAddress"`
+ */
+export const useWriteCtzndFractalRegistryRemoveUserAddress =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'removeUserAddress',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"removeUserFromList"`
+ */
+export const useWriteCtzndFractalRegistryRemoveUserFromList =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'removeUserFromList',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__
+ */
+export const useSimulateCtzndFractalRegistry =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndFractalRegistryAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"addDelegate"`
+ */
+export const useSimulateCtzndFractalRegistryAddDelegate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'addDelegate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"addUserAddress"`
+ */
+export const useSimulateCtzndFractalRegistryAddUserAddress =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'addUserAddress',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"addUserToList"`
+ */
+export const useSimulateCtzndFractalRegistryAddUserToList =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'addUserToList',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"removeDelegate"`
+ */
+export const useSimulateCtzndFractalRegistryRemoveDelegate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'removeDelegate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"removeUserAddress"`
+ */
+export const useSimulateCtzndFractalRegistryRemoveUserAddress =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'removeUserAddress',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndFractalRegistryAbi}__ and `functionName` set to `"removeUserFromList"`
+ */
+export const useSimulateCtzndFractalRegistryRemoveUserFromList =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndFractalRegistryAbi,
+    functionName: 'removeUserFromList',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__
+ */
+export const useReadCtzndIAccessControl = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIAccessControlAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `functionName` set to `"getRoleAdmin"`
+ */
+export const useReadCtzndIAccessControlGetRoleAdmin =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIAccessControlAbi,
+    functionName: 'getRoleAdmin',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `functionName` set to `"hasRole"`
+ */
+export const useReadCtzndIAccessControlHasRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIAccessControlAbi,
+    functionName: 'hasRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__
+ */
+export const useWriteCtzndIAccessControl = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndIAccessControlAbi },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useWriteCtzndIAccessControlGrantRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIAccessControlAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useWriteCtzndIAccessControlRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIAccessControlAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useWriteCtzndIAccessControlRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIAccessControlAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__
+ */
+export const useSimulateCtzndIAccessControl =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndIAccessControlAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useSimulateCtzndIAccessControlGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIAccessControlAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useSimulateCtzndIAccessControlRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIAccessControlAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useSimulateCtzndIAccessControlRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIAccessControlAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndIAccessControlAbi}__
+ */
+export const useWatchCtzndIAccessControlEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndIAccessControlAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ */
+export const useWatchCtzndIAccessControlRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndIAccessControlAbi,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `eventName` set to `"RoleGranted"`
+ */
+export const useWatchCtzndIAccessControlRoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndIAccessControlAbi,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndIAccessControlAbi}__ and `eventName` set to `"RoleRevoked"`
+ */
+export const useWatchCtzndIAccessControlRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndIAccessControlAbi,
+    eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIBatchAbi}__
+ */
+export const useWriteCtzndIBatch = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIBatchAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIBatchAbi}__ and `functionName` set to `"vote"`
+ */
+export const useWriteCtzndIBatchVote = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIBatchAbi,
+  functionName: 'vote',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIBatchAbi}__
+ */
+export const useSimulateCtzndIBatch = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndIBatchAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIBatchAbi}__ and `functionName` set to `"vote"`
+ */
+export const useSimulateCtzndIBatchVote =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIBatchAbi,
+    functionName: 'vote',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIControllerAbi}__
+ */
+export const useReadCtzndIController = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIControllerAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"canInvestInPeoplesPool"`
+ */
+export const useReadCtzndIControllerCanInvestInPeoplesPool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'canInvestInPeoplesPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"canInvestInStakersPool"`
+ */
+export const useReadCtzndIControllerCanInvestInStakersPool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'canInvestInStakersPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"canVote"`
+ */
+export const useReadCtzndIControllerCanVote =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'canVote',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"getBatchForProject"`
+ */
+export const useReadCtzndIControllerGetBatchForProject =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'getBatchForProject',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"hasLegalManagerRole"`
+ */
+export const useReadCtzndIControllerHasLegalManagerRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'hasLegalManagerRole',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"hasProjectManagerRole"`
+ */
+export const useReadCtzndIControllerHasProjectManagerRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'hasProjectManagerRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIControllerAbi}__
+ */
+export const useWriteCtzndIController = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIControllerAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"createBatch"`
+ */
+export const useWriteCtzndIControllerCreateBatch =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'createBatch',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"isProjectInBatch"`
+ */
+export const useWriteCtzndIControllerIsProjectInBatch =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'isProjectInBatch',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"registerProject"`
+ */
+export const useWriteCtzndIControllerRegisterProject =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'registerProject',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"setBatchVotingPeriod"`
+ */
+export const useWriteCtzndIControllerSetBatchVotingPeriod =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'setBatchVotingPeriod',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIControllerAbi}__
+ */
+export const useSimulateCtzndIController =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndIControllerAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"createBatch"`
+ */
+export const useSimulateCtzndIControllerCreateBatch =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'createBatch',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"isProjectInBatch"`
+ */
+export const useSimulateCtzndIControllerIsProjectInBatch =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'isProjectInBatch',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"registerProject"`
+ */
+export const useSimulateCtzndIControllerRegisterProject =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'registerProject',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIControllerAbi}__ and `functionName` set to `"setBatchVotingPeriod"`
+ */
+export const useSimulateCtzndIControllerSetBatchVotingPeriod =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIControllerAbi,
+    functionName: 'setBatchVotingPeriod',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc165Abi}__
+ */
+export const useReadCtzndIerc165 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIerc165Abi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc165Abi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadCtzndIerc165SupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIerc165Abi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20Abi}__
+ */
+export const useReadCtzndIerc20 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIerc20Abi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadCtzndIerc20Allowance = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIerc20Abi,
+  functionName: 'allowance',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadCtzndIerc20BalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIerc20Abi,
+  functionName: 'balanceOf',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `functionName` set to `"totalSupply"`
+ */
+export const useReadCtzndIerc20TotalSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIerc20Abi,
+    functionName: 'totalSupply',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc20Abi}__
+ */
+export const useWriteCtzndIerc20 = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIerc20Abi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteCtzndIerc20Approve = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIerc20Abi,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteCtzndIerc20Transfer = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndIerc20Abi, functionName: 'transfer' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteCtzndIerc20TransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIerc20Abi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc20Abi}__
+ */
+export const useSimulateCtzndIerc20 = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndIerc20Abi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateCtzndIerc20Approve =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIerc20Abi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateCtzndIerc20Transfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIerc20Abi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateCtzndIerc20TransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIerc20Abi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndIerc20Abi}__
+ */
+export const useWatchCtzndIerc20Event =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndIerc20Abi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchCtzndIerc20ApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndIerc20Abi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndIerc20Abi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchCtzndIerc20TransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndIerc20Abi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__
+ */
+export const useReadCtzndIerc20Metadata = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIerc20MetadataAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadCtzndIerc20MetadataAllowance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'allowance',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadCtzndIerc20MetadataBalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'balanceOf',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"decimals"`
+ */
+export const useReadCtzndIerc20MetadataDecimals =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'decimals',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"name"`
+ */
+export const useReadCtzndIerc20MetadataName =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'name',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadCtzndIerc20MetadataSymbol =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'symbol',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"totalSupply"`
+ */
+export const useReadCtzndIerc20MetadataTotalSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'totalSupply',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__
+ */
+export const useWriteCtzndIerc20Metadata = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndIerc20MetadataAbi },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteCtzndIerc20MetadataApprove =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteCtzndIerc20MetadataTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteCtzndIerc20MetadataTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__
+ */
+export const useSimulateCtzndIerc20Metadata =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndIerc20MetadataAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateCtzndIerc20MetadataApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateCtzndIerc20MetadataTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateCtzndIerc20MetadataTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIerc20MetadataAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__
+ */
+export const useWatchCtzndIerc20MetadataEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndIerc20MetadataAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchCtzndIerc20MetadataApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndIerc20MetadataAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndIerc20MetadataAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchCtzndIerc20MetadataTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndIerc20MetadataAbi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20PermitAbi}__
+ */
+export const useReadCtzndIerc20Permit = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIerc20PermitAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20PermitAbi}__ and `functionName` set to `"DOMAIN_SEPARATOR"`
+ */
+export const useReadCtzndIerc20PermitDomainSeparator =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIerc20PermitAbi,
+    functionName: 'DOMAIN_SEPARATOR',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIerc20PermitAbi}__ and `functionName` set to `"nonces"`
+ */
+export const useReadCtzndIerc20PermitNonces =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIerc20PermitAbi,
+    functionName: 'nonces',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc20PermitAbi}__
+ */
+export const useWriteCtzndIerc20Permit = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIerc20PermitAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc20PermitAbi}__ and `functionName` set to `"permit"`
+ */
+export const useWriteCtzndIerc20PermitPermit =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIerc20PermitAbi,
+    functionName: 'permit',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc20PermitAbi}__
+ */
+export const useSimulateCtzndIerc20Permit =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndIerc20PermitAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc20PermitAbi}__ and `functionName` set to `"permit"`
+ */
+export const useSimulateCtzndIerc20PermitPermit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIerc20PermitAbi,
+    functionName: 'permit',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc721TokenReceiverAbi}__
+ */
+export const useWriteCtzndIerc721TokenReceiver =
+  /*#__PURE__*/ createUseWriteContract({ abi: ctzndIerc721TokenReceiverAbi })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIerc721TokenReceiverAbi}__ and `functionName` set to `"onERC721Received"`
+ */
+export const useWriteCtzndIerc721TokenReceiverOnErc721Received =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIerc721TokenReceiverAbi,
+    functionName: 'onERC721Received',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc721TokenReceiverAbi}__
+ */
+export const useSimulateCtzndIerc721TokenReceiver =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndIerc721TokenReceiverAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIerc721TokenReceiverAbi}__ and `functionName` set to `"onERC721Received"`
+ */
+export const useSimulateCtzndIerc721TokenReceiverOnErc721Received =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIerc721TokenReceiverAbi,
+    functionName: 'onERC721Received',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__
+ */
+export const useReadCtzndIMulticall3 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIMulticall3Abi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"getBasefee"`
+ */
+export const useReadCtzndIMulticall3GetBasefee =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'getBasefee',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"getBlockHash"`
+ */
+export const useReadCtzndIMulticall3GetBlockHash =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'getBlockHash',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"getBlockNumber"`
+ */
+export const useReadCtzndIMulticall3GetBlockNumber =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'getBlockNumber',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"getChainId"`
+ */
+export const useReadCtzndIMulticall3GetChainId =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'getChainId',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"getCurrentBlockCoinbase"`
+ */
+export const useReadCtzndIMulticall3GetCurrentBlockCoinbase =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'getCurrentBlockCoinbase',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"getCurrentBlockDifficulty"`
+ */
+export const useReadCtzndIMulticall3GetCurrentBlockDifficulty =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'getCurrentBlockDifficulty',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"getCurrentBlockGasLimit"`
+ */
+export const useReadCtzndIMulticall3GetCurrentBlockGasLimit =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'getCurrentBlockGasLimit',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"getCurrentBlockTimestamp"`
+ */
+export const useReadCtzndIMulticall3GetCurrentBlockTimestamp =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'getCurrentBlockTimestamp',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"getEthBalance"`
+ */
+export const useReadCtzndIMulticall3GetEthBalance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'getEthBalance',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"getLastBlockHash"`
+ */
+export const useReadCtzndIMulticall3GetLastBlockHash =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'getLastBlockHash',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__
+ */
+export const useWriteCtzndIMulticall3 = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIMulticall3Abi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"aggregate"`
+ */
+export const useWriteCtzndIMulticall3Aggregate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'aggregate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"aggregate3"`
+ */
+export const useWriteCtzndIMulticall3Aggregate3 =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'aggregate3',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"aggregate3Value"`
+ */
+export const useWriteCtzndIMulticall3Aggregate3Value =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'aggregate3Value',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"blockAndAggregate"`
+ */
+export const useWriteCtzndIMulticall3BlockAndAggregate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'blockAndAggregate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"tryAggregate"`
+ */
+export const useWriteCtzndIMulticall3TryAggregate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'tryAggregate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"tryBlockAndAggregate"`
+ */
+export const useWriteCtzndIMulticall3TryBlockAndAggregate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'tryBlockAndAggregate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__
+ */
+export const useSimulateCtzndIMulticall3 =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndIMulticall3Abi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"aggregate"`
+ */
+export const useSimulateCtzndIMulticall3Aggregate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'aggregate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"aggregate3"`
+ */
+export const useSimulateCtzndIMulticall3Aggregate3 =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'aggregate3',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"aggregate3Value"`
+ */
+export const useSimulateCtzndIMulticall3Aggregate3Value =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'aggregate3Value',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"blockAndAggregate"`
+ */
+export const useSimulateCtzndIMulticall3BlockAndAggregate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'blockAndAggregate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"tryAggregate"`
+ */
+export const useSimulateCtzndIMulticall3TryAggregate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'tryAggregate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIMulticall3Abi}__ and `functionName` set to `"tryBlockAndAggregate"`
+ */
+export const useSimulateCtzndIMulticall3TryBlockAndAggregate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIMulticall3Abi,
+    functionName: 'tryBlockAndAggregate',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIPoolAbi}__
+ */
+export const useReadCtzndIPool = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIPoolAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIPoolAbi}__ and `functionName` set to `"allocation"`
+ */
+export const useReadCtzndIPoolAllocation = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIPoolAbi,
+  functionName: 'allocation',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIPoolAbi}__ and `functionName` set to `"refundableAmount"`
+ */
+export const useReadCtzndIPoolRefundableAmount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIPoolAbi,
+    functionName: 'refundableAmount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIPoolAbi}__ and `functionName` set to `"uncappedAllocation"`
+ */
+export const useReadCtzndIPoolUncappedAllocation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIPoolAbi,
+    functionName: 'uncappedAllocation',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIPoolAbi}__
+ */
+export const useWriteCtzndIPool = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIPoolAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIPoolAbi}__ and `functionName` set to `"invest"`
+ */
+export const useWriteCtzndIPoolInvest = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIPoolAbi,
+  functionName: 'invest',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIPoolAbi}__ and `functionName` set to `"refund"`
+ */
+export const useWriteCtzndIPoolRefund = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIPoolAbi,
+  functionName: 'refund',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIPoolAbi}__ and `functionName` set to `"setIndividualCap"`
+ */
+export const useWriteCtzndIPoolSetIndividualCap =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIPoolAbi,
+    functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIPoolAbi}__
+ */
+export const useSimulateCtzndIPool = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndIPoolAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIPoolAbi}__ and `functionName` set to `"invest"`
+ */
+export const useSimulateCtzndIPoolInvest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIPoolAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIPoolAbi}__ and `functionName` set to `"refund"`
+ */
+export const useSimulateCtzndIPoolRefund =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIPoolAbi,
+    functionName: 'refund',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIPoolAbi}__ and `functionName` set to `"setIndividualCap"`
+ */
+export const useSimulateCtzndIPoolSetIndividualCap =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIPoolAbi,
+    functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIProjectAbi}__
+ */
+export const useReadCtzndIProject = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIProjectAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"approvedByLegal"`
+ */
+export const useReadCtzndIProjectApprovedByLegal =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'approvedByLegal',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"approvedByManager"`
+ */
+export const useReadCtzndIProjectApprovedByManager =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'approvedByManager',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"hasTokens"`
+ */
+export const useReadCtzndIProjectHasTokens =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'hasTokens',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"investmentTokenToToken"`
+ */
+export const useReadCtzndIProjectInvestmentTokenToToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'investmentTokenToToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"isReadyForListing"`
+ */
+export const useReadCtzndIProjectIsReadyForListing =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'isReadyForListing',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"peoplesPool"`
+ */
+export const useReadCtzndIProjectPeoplesPool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'peoplesPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"stakersPool"`
+ */
+export const useReadCtzndIProjectStakersPool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'stakersPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"tokenToInvestmentToken"`
+ */
+export const useReadCtzndIProjectTokenToInvestmentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'tokenToInvestmentToken',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIProjectAbi}__
+ */
+export const useWriteCtzndIProject = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIProjectAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"approveByLegal"`
+ */
+export const useWriteCtzndIProjectApproveByLegal =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'approveByLegal',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"approveByManager"`
+ */
+export const useWriteCtzndIProjectApproveByManager =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'approveByManager',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"invest"`
+ */
+export const useWriteCtzndIProjectInvest = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndIProjectAbi, functionName: 'invest' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIProjectAbi}__
+ */
+export const useSimulateCtzndIProject = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndIProjectAbi },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"approveByLegal"`
+ */
+export const useSimulateCtzndIProjectApproveByLegal =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'approveByLegal',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"approveByManager"`
+ */
+export const useSimulateCtzndIProjectApproveByManager =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'approveByManager',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIProjectAbi}__ and `functionName` set to `"invest"`
+ */
+export const useSimulateCtzndIProjectInvest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIProjectAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndISaleAbi}__
+ */
+export const useReadCtzndISale = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndISaleAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"allocation"`
+ */
+export const useReadCtzndISaleAllocation = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndISaleAbi,
+  functionName: 'allocation',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"paymentToken"`
+ */
+export const useReadCtzndISalePaymentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndISaleAbi,
+    functionName: 'paymentToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"paymentTokenToToken"`
+ */
+export const useReadCtzndISalePaymentTokenToToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndISaleAbi,
+    functionName: 'paymentTokenToToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"refundAmount"`
+ */
+export const useReadCtzndISaleRefundAmount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndISaleAbi,
+    functionName: 'refundAmount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"token"`
+ */
+export const useReadCtzndISaleToken = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndISaleAbi,
+  functionName: 'token',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"tokenToPaymentToken"`
+ */
+export const useReadCtzndISaleTokenToPaymentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndISaleAbi,
+    functionName: 'tokenToPaymentToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"uncappedAllocation"`
+ */
+export const useReadCtzndISaleUncappedAllocation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndISaleAbi,
+    functionName: 'uncappedAllocation',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndISaleAbi}__
+ */
+export const useWriteCtzndISale = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndISaleAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"buy"`
+ */
+export const useWriteCtzndISaleBuy = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndISaleAbi,
+  functionName: 'buy',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"refund"`
+ */
+export const useWriteCtzndISaleRefund = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndISaleAbi,
+  functionName: 'refund',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"setIndividualCap"`
+ */
+export const useWriteCtzndISaleSetIndividualCap =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndISaleAbi,
+    functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"withdraw"`
+ */
+export const useWriteCtzndISaleWithdraw = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndISaleAbi,
+  functionName: 'withdraw',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndISaleAbi}__
+ */
+export const useSimulateCtzndISale = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndISaleAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"buy"`
+ */
+export const useSimulateCtzndISaleBuy = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndISaleAbi, functionName: 'buy' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"refund"`
+ */
+export const useSimulateCtzndISaleRefund =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndISaleAbi,
+    functionName: 'refund',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"setIndividualCap"`
+ */
+export const useSimulateCtzndISaleSetIndividualCap =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndISaleAbi,
+    functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndISaleAbi}__ and `functionName` set to `"withdraw"`
+ */
+export const useSimulateCtzndISaleWithdraw =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndISaleAbi,
+    functionName: 'withdraw',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIStakingAbi}__
+ */
+export const useReadCtzndIStaking = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIStakingAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIStakingAbi}__ and `functionName` set to `"hasStaked"`
+ */
+export const useReadCtzndIStakingHasStaked =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIStakingAbi,
+    functionName: 'hasStaked',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIStakingAbi}__ and `functionName` set to `"withdrawable"`
+ */
+export const useReadCtzndIStakingWithdrawable =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIStakingAbi,
+    functionName: 'withdrawable',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIStakingAbi}__
+ */
+export const useWriteCtzndIStaking = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIStakingAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIStakingAbi}__ and `functionName` set to `"rebond"`
+ */
+export const useWriteCtzndIStakingRebond = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndIStakingAbi, functionName: 'rebond' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIStakingAbi}__ and `functionName` set to `"stake"`
+ */
+export const useWriteCtzndIStakingStake = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIStakingAbi,
+  functionName: 'stake',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIStakingAbi}__ and `functionName` set to `"unbond"`
+ */
+export const useWriteCtzndIStakingUnbond = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndIStakingAbi, functionName: 'unbond' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIStakingAbi}__ and `functionName` set to `"withdraw"`
+ */
+export const useWriteCtzndIStakingWithdraw =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIStakingAbi,
+    functionName: 'withdraw',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIStakingAbi}__
+ */
+export const useSimulateCtzndIStaking = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndIStakingAbi },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIStakingAbi}__ and `functionName` set to `"rebond"`
+ */
+export const useSimulateCtzndIStakingRebond =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIStakingAbi,
+    functionName: 'rebond',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIStakingAbi}__ and `functionName` set to `"stake"`
+ */
+export const useSimulateCtzndIStakingStake =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIStakingAbi,
+    functionName: 'stake',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIStakingAbi}__ and `functionName` set to `"unbond"`
+ */
+export const useSimulateCtzndIStakingUnbond =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIStakingAbi,
+    functionName: 'unbond',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIStakingAbi}__ and `functionName` set to `"withdraw"`
+ */
+export const useSimulateCtzndIStakingWithdraw =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIStakingAbi,
+    functionName: 'withdraw',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIVestingAbi}__
+ */
+export const useReadCtzndIVesting = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIVestingAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"claimable"`
+ */
+export const useReadCtzndIVestingClaimable =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIVestingAbi,
+    functionName: 'claimable',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"claimed"`
+ */
+export const useReadCtzndIVestingClaimed = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIVestingAbi,
+  functionName: 'claimed',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"privateSaleCap"`
+ */
+export const useReadCtzndIVestingPrivateSaleCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIVestingAbi,
+    functionName: 'privateSaleCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"publicSaleCliffMonths"`
+ */
+export const useReadCtzndIVestingPublicSaleCliffMonths =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIVestingAbi,
+    functionName: 'publicSaleCliffMonths',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"publicSaleVestingMonths"`
+ */
+export const useReadCtzndIVestingPublicSaleVestingMonths =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIVestingAbi,
+    functionName: 'publicSaleVestingMonths',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"startTime"`
+ */
+export const useReadCtzndIVestingStartTime =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIVestingAbi,
+    functionName: 'startTime',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"token"`
+ */
+export const useReadCtzndIVestingToken = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndIVestingAbi,
+  functionName: 'token',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"totalAllocated"`
+ */
+export const useReadCtzndIVestingTotalAllocated =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndIVestingAbi,
+    functionName: 'totalAllocated',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIVestingAbi}__
+ */
+export const useWriteCtzndIVesting = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIVestingAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"claim"`
+ */
+export const useWriteCtzndIVestingClaim = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndIVestingAbi,
+  functionName: 'claim',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"createPrivateSaleVest"`
+ */
+export const useWriteCtzndIVestingCreatePrivateSaleVest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndIVestingAbi,
+    functionName: 'createPrivateSaleVest',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"refund"`
+ */
+export const useWriteCtzndIVestingRefund = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndIVestingAbi, functionName: 'refund' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIVestingAbi}__
+ */
+export const useSimulateCtzndIVesting = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndIVestingAbi },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"claim"`
+ */
+export const useSimulateCtzndIVestingClaim =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIVestingAbi,
+    functionName: 'claim',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"createPrivateSaleVest"`
+ */
+export const useSimulateCtzndIVestingCreatePrivateSaleVest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIVestingAbi,
+    functionName: 'createPrivateSaleVest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndIVestingAbi}__ and `functionName` set to `"refund"`
+ */
+export const useSimulateCtzndIVestingRefund =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndIVestingAbi,
+    functionName: 'refund',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__
+ */
+export const useReadCtzndMockErc721 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndMockErc721Abi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadCtzndMockErc721BalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'balanceOf',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"getApproved"`
+ */
+export const useReadCtzndMockErc721GetApproved =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'getApproved',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"isApprovedForAll"`
+ */
+export const useReadCtzndMockErc721IsApprovedForAll =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'isApprovedForAll',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"name"`
+ */
+export const useReadCtzndMockErc721Name = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndMockErc721Abi,
+  functionName: 'name',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"ownerOf"`
+ */
+export const useReadCtzndMockErc721OwnerOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'ownerOf',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadCtzndMockErc721SupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadCtzndMockErc721Symbol = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndMockErc721Abi, functionName: 'symbol' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"tokenURI"`
+ */
+export const useReadCtzndMockErc721TokenUri =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'tokenURI',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__
+ */
+export const useWriteCtzndMockErc721 = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndMockErc721Abi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteCtzndMockErc721Approve =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteCtzndMockErc721Initialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"safeTransferFrom"`
+ */
+export const useWriteCtzndMockErc721SafeTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'safeTransferFrom',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"setApprovalForAll"`
+ */
+export const useWriteCtzndMockErc721SetApprovalForAll =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'setApprovalForAll',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteCtzndMockErc721TransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__
+ */
+export const useSimulateCtzndMockErc721 =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndMockErc721Abi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateCtzndMockErc721Approve =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateCtzndMockErc721Initialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"safeTransferFrom"`
+ */
+export const useSimulateCtzndMockErc721SafeTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'safeTransferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"setApprovalForAll"`
+ */
+export const useSimulateCtzndMockErc721SetApprovalForAll =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'setApprovalForAll',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateCtzndMockErc721TransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockErc721Abi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndMockErc721Abi}__
+ */
+export const useWatchCtzndMockErc721Event =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndMockErc721Abi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchCtzndMockErc721ApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndMockErc721Abi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `eventName` set to `"ApprovalForAll"`
+ */
+export const useWatchCtzndMockErc721ApprovalForAllEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndMockErc721Abi,
+    eventName: 'ApprovalForAll',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndMockErc721Abi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchCtzndMockErc721TransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndMockErc721Abi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__
+ */
+export const useReadCtzndMockProject = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndMockProjectAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"approveByLegal"`
+ */
+export const useReadCtzndMockProjectApproveByLegal =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'approveByLegal',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"approveByManager"`
+ */
+export const useReadCtzndMockProjectApproveByManager =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'approveByManager',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"approvedByLegal"`
+ */
+export const useReadCtzndMockProjectApprovedByLegal =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'approvedByLegal',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"approvedByManager"`
+ */
+export const useReadCtzndMockProjectApprovedByManager =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'approvedByManager',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"hasTokens"`
+ */
+export const useReadCtzndMockProjectHasTokens =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'hasTokens',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"investmentTokenToToken"`
+ */
+export const useReadCtzndMockProjectInvestmentTokenToToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'investmentTokenToToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"isReadyForListing"`
+ */
+export const useReadCtzndMockProjectIsReadyForListing =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'isReadyForListing',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"merkleRoot"`
+ */
+export const useReadCtzndMockProjectMerkleRoot =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'merkleRoot',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"peoplesPool"`
+ */
+export const useReadCtzndMockProjectPeoplesPool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'peoplesPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"stakersPool"`
+ */
+export const useReadCtzndMockProjectStakersPool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'stakersPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"tokenToInvestmentToken"`
+ */
+export const useReadCtzndMockProjectTokenToInvestmentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'tokenToInvestmentToken',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__
+ */
+export const useWriteCtzndMockProject = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndMockProjectAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"invest"`
+ */
+export const useWriteCtzndMockProjectInvest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"test_createPeoplesPool"`
+ */
+export const useWriteCtzndMockProjectTestCreatePeoplesPool =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'test_createPeoplesPool',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"test_createStakersPool"`
+ */
+export const useWriteCtzndMockProjectTestCreateStakersPool =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'test_createStakersPool',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__
+ */
+export const useSimulateCtzndMockProject =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndMockProjectAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"invest"`
+ */
+export const useSimulateCtzndMockProjectInvest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"test_createPeoplesPool"`
+ */
+export const useSimulateCtzndMockProjectTestCreatePeoplesPool =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'test_createPeoplesPool',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockProjectAbi}__ and `functionName` set to `"test_createStakersPool"`
+ */
+export const useSimulateCtzndMockProjectTestCreateStakersPool =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockProjectAbi,
+    functionName: 'test_createStakersPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__
+ */
+export const useReadCtzndMockSale = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndMockSaleAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"allocation"`
+ */
+export const useReadCtzndMockSaleAllocation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'allocation',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"buy"`
+ */
+export const useReadCtzndMockSaleBuy = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndMockSaleAbi,
+  functionName: 'buy',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"calls"`
+ */
+export const useReadCtzndMockSaleCalls = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndMockSaleAbi,
+  functionName: 'calls',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"paymentToken"`
+ */
+export const useReadCtzndMockSalePaymentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'paymentToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"paymentTokenToToken"`
+ */
+export const useReadCtzndMockSalePaymentTokenToToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'paymentTokenToToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"refundAmount"`
+ */
+export const useReadCtzndMockSaleRefundAmount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'refundAmount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"setIndividualCap"`
+ */
+export const useReadCtzndMockSaleSetIndividualCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadCtzndMockSaleSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"test_Called"`
+ */
+export const useReadCtzndMockSaleTestCalled =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'test_Called',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"token"`
+ */
+export const useReadCtzndMockSaleToken = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndMockSaleAbi,
+  functionName: 'token',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"tokenToPaymentToken"`
+ */
+export const useReadCtzndMockSaleTokenToPaymentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'tokenToPaymentToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"uncappedAllocation"`
+ */
+export const useReadCtzndMockSaleUncappedAllocation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'uncappedAllocation',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"withdraw"`
+ */
+export const useReadCtzndMockSaleWithdraw = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndMockSaleAbi, functionName: 'withdraw' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__
+ */
+export const useWriteCtzndMockSale = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndMockSaleAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"refund"`
+ */
+export const useWriteCtzndMockSaleRefund = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndMockSaleAbi, functionName: 'refund' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"test_addAllocation"`
+ */
+export const useWriteCtzndMockSaleTestAddAllocation =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'test_addAllocation',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"test_addRefund"`
+ */
+export const useWriteCtzndMockSaleTestAddRefund =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'test_addRefund',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__
+ */
+export const useSimulateCtzndMockSale = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndMockSaleAbi },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"refund"`
+ */
+export const useSimulateCtzndMockSaleRefund =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'refund',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"test_addAllocation"`
+ */
+export const useSimulateCtzndMockSaleTestAddAllocation =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'test_addAllocation',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndMockSaleAbi}__ and `functionName` set to `"test_addRefund"`
+ */
+export const useSimulateCtzndMockSaleTestAddRefund =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndMockSaleAbi,
+    functionName: 'test_addRefund',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPausableAbi}__
+ */
+export const useReadCtzndPausable = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndPausableAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPausableAbi}__ and `functionName` set to `"paused"`
+ */
+export const useReadCtzndPausablePaused = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndPausableAbi,
+  functionName: 'paused',
+})
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndPausableAbi}__
+ */
+export const useWatchCtzndPausableEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndPausableAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndPausableAbi}__ and `eventName` set to `"Paused"`
+ */
+export const useWatchCtzndPausablePausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndPausableAbi,
+    eventName: 'Paused',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndPausableAbi}__ and `eventName` set to `"Unpaused"`
+ */
+export const useWatchCtzndPausableUnpausedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndPausableAbi,
+    eventName: 'Unpaused',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__
+ */
+export const useReadCtzndPeoplesPool = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndPeoplesPoolAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
+ */
+export const useReadCtzndPeoplesPoolCapValidationGasLimit =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'CAP_VALIDATION_GAS_LIMIT',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"allocation"`
+ */
+export const useReadCtzndPeoplesPoolAllocation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'allocation',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"individualCap"`
+ */
+export const useReadCtzndPeoplesPoolIndividualCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'individualCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"investmentToken"`
+ */
+export const useReadCtzndPeoplesPoolInvestmentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'investmentToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"investorAmountAt"`
+ */
+export const useReadCtzndPeoplesPoolInvestorAmountAt =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'investorAmountAt',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"investorCount"`
+ */
+export const useReadCtzndPeoplesPoolInvestorCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'investorCount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"project"`
+ */
+export const useReadCtzndPeoplesPoolProject =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'project',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"refundableAmount"`
+ */
+export const useReadCtzndPeoplesPoolRefundableAmount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'refundableAmount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"risingTideCache"`
+ */
+export const useReadCtzndPeoplesPoolRisingTideCache =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'risingTideCache',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"risingTideState"`
+ */
+export const useReadCtzndPeoplesPoolRisingTideState =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'risingTideState',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"risingTide_applyCap"`
+ */
+export const useReadCtzndPeoplesPoolRisingTideApplyCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'risingTide_applyCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"risingTide_isValidCap"`
+ */
+export const useReadCtzndPeoplesPoolRisingTideIsValidCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'risingTide_isValidCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
+ */
+export const useReadCtzndPeoplesPoolRisingTideTotalAllocatedUncapped =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'risingTide_totalAllocatedUncapped',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"risingTide_totalCap"`
+ */
+export const useReadCtzndPeoplesPoolRisingTideTotalCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'risingTide_totalCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"risingTide_validating"`
+ */
+export const useReadCtzndPeoplesPoolRisingTideValidating =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'risingTide_validating',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"saleSupply"`
+ */
+export const useReadCtzndPeoplesPoolSaleSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'saleSupply',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"totalUncappedAllocations"`
+ */
+export const useReadCtzndPeoplesPoolTotalUncappedAllocations =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'totalUncappedAllocations',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"uncappedAllocation"`
+ */
+export const useReadCtzndPeoplesPoolUncappedAllocation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'uncappedAllocation',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__
+ */
+export const useWriteCtzndPeoplesPool = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndPeoplesPoolAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"invest"`
+ */
+export const useWriteCtzndPeoplesPoolInvest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"refund"`
+ */
+export const useWriteCtzndPeoplesPoolRefund =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'refund',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"risingTide_validate"`
+ */
+export const useWriteCtzndPeoplesPoolRisingTideValidate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'risingTide_validate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"setIndividualCap"`
+ */
+export const useWriteCtzndPeoplesPoolSetIndividualCap =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__
+ */
+export const useSimulateCtzndPeoplesPool =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndPeoplesPoolAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"invest"`
+ */
+export const useSimulateCtzndPeoplesPoolInvest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"refund"`
+ */
+export const useSimulateCtzndPeoplesPoolRefund =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'refund',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"risingTide_validate"`
+ */
+export const useSimulateCtzndPeoplesPoolRisingTideValidate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'risingTide_validate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `functionName` set to `"setIndividualCap"`
+ */
+export const useSimulateCtzndPeoplesPoolSetIndividualCap =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndPeoplesPoolAbi,
+    functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__
+ */
+export const useWatchCtzndPeoplesPoolEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndPeoplesPoolAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndPeoplesPoolAbi}__ and `eventName` set to `"Refund"`
+ */
+export const useWatchCtzndPeoplesPoolRefundEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndPeoplesPoolAbi,
+    eventName: 'Refund',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__
+ */
+export const useReadCtzndPool = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndPoolAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
+ */
+export const useReadCtzndPoolCapValidationGasLimit =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'CAP_VALIDATION_GAS_LIMIT',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"allocation"`
+ */
+export const useReadCtzndPoolAllocation = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndPoolAbi,
+  functionName: 'allocation',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"individualCap"`
+ */
+export const useReadCtzndPoolIndividualCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'individualCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"investmentToken"`
+ */
+export const useReadCtzndPoolInvestmentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'investmentToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"investorAmountAt"`
+ */
+export const useReadCtzndPoolInvestorAmountAt =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'investorAmountAt',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"investorCount"`
+ */
+export const useReadCtzndPoolInvestorCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'investorCount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"project"`
+ */
+export const useReadCtzndPoolProject = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndPoolAbi,
+  functionName: 'project',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"refundableAmount"`
+ */
+export const useReadCtzndPoolRefundableAmount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'refundableAmount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"risingTideCache"`
+ */
+export const useReadCtzndPoolRisingTideCache =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'risingTideCache',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"risingTideState"`
+ */
+export const useReadCtzndPoolRisingTideState =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'risingTideState',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"risingTide_applyCap"`
+ */
+export const useReadCtzndPoolRisingTideApplyCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'risingTide_applyCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"risingTide_isValidCap"`
+ */
+export const useReadCtzndPoolRisingTideIsValidCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'risingTide_isValidCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
+ */
+export const useReadCtzndPoolRisingTideTotalAllocatedUncapped =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'risingTide_totalAllocatedUncapped',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"risingTide_totalCap"`
+ */
+export const useReadCtzndPoolRisingTideTotalCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'risingTide_totalCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"risingTide_validating"`
+ */
+export const useReadCtzndPoolRisingTideValidating =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'risingTide_validating',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"saleSupply"`
+ */
+export const useReadCtzndPoolSaleSupply = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndPoolAbi,
+  functionName: 'saleSupply',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"totalUncappedAllocations"`
+ */
+export const useReadCtzndPoolTotalUncappedAllocations =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'totalUncappedAllocations',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"uncappedAllocation"`
+ */
+export const useReadCtzndPoolUncappedAllocation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndPoolAbi,
+    functionName: 'uncappedAllocation',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndPoolAbi}__
+ */
+export const useWriteCtzndPool = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndPoolAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"invest"`
+ */
+export const useWriteCtzndPoolInvest = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndPoolAbi,
+  functionName: 'invest',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"refund"`
+ */
+export const useWriteCtzndPoolRefund = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndPoolAbi,
+  functionName: 'refund',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"risingTide_validate"`
+ */
+export const useWriteCtzndPoolRisingTideValidate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndPoolAbi,
+    functionName: 'risingTide_validate',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"setIndividualCap"`
+ */
+export const useWriteCtzndPoolSetIndividualCap =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndPoolAbi,
+    functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndPoolAbi}__
+ */
+export const useSimulateCtzndPool = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndPoolAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"invest"`
+ */
+export const useSimulateCtzndPoolInvest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndPoolAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"refund"`
+ */
+export const useSimulateCtzndPoolRefund =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndPoolAbi,
+    functionName: 'refund',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"risingTide_validate"`
+ */
+export const useSimulateCtzndPoolRisingTideValidate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndPoolAbi,
+    functionName: 'risingTide_validate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndPoolAbi}__ and `functionName` set to `"setIndividualCap"`
+ */
+export const useSimulateCtzndPoolSetIndividualCap =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndPoolAbi,
+    functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndPoolAbi}__
+ */
+export const useWatchCtzndPoolEvent = /*#__PURE__*/ createUseWatchContractEvent(
+  { abi: ctzndPoolAbi },
+)
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndPoolAbi}__ and `eventName` set to `"Refund"`
+ */
+export const useWatchCtzndPoolRefundEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndPoolAbi,
+    eventName: 'Refund',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__
+ */
+export const useReadCtzndProject = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndProjectAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"MUL"`
+ */
+export const useReadCtzndProjectMul = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndProjectAbi,
+  functionName: 'MUL',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"approvedByLegal"`
+ */
+export const useReadCtzndProjectApprovedByLegal =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'approvedByLegal',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"approvedByManager"`
+ */
+export const useReadCtzndProjectApprovedByManager =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'approvedByManager',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"controller"`
+ */
+export const useReadCtzndProjectController =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'controller',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"description"`
+ */
+export const useReadCtzndProjectDescription =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'description',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"hasTokens"`
+ */
+export const useReadCtzndProjectHasTokens = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndProjectAbi, functionName: 'hasTokens' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"investmentTokenToToken"`
+ */
+export const useReadCtzndProjectInvestmentTokenToToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'investmentTokenToToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"isReadyForListing"`
+ */
+export const useReadCtzndProjectIsReadyForListing =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'isReadyForListing',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"merkleRoot"`
+ */
+export const useReadCtzndProjectMerkleRoot =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'merkleRoot',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"peoplesPool"`
+ */
+export const useReadCtzndProjectPeoplesPool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'peoplesPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"rate"`
+ */
+export const useReadCtzndProjectRate = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndProjectAbi,
+  functionName: 'rate',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"saleSupply"`
+ */
+export const useReadCtzndProjectSaleSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'saleSupply',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"stakersPool"`
+ */
+export const useReadCtzndProjectStakersPool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'stakersPool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadCtzndProjectSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"token"`
+ */
+export const useReadCtzndProjectToken = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndProjectAbi,
+  functionName: 'token',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"tokenToInvestmentToken"`
+ */
+export const useReadCtzndProjectTokenToInvestmentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectAbi,
+    functionName: 'tokenToInvestmentToken',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndProjectAbi}__
+ */
+export const useWriteCtzndProject = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndProjectAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"approveByLegal"`
+ */
+export const useWriteCtzndProjectApproveByLegal =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndProjectAbi,
+    functionName: 'approveByLegal',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"approveByManager"`
+ */
+export const useWriteCtzndProjectApproveByManager =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndProjectAbi,
+    functionName: 'approveByManager',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"invest"`
+ */
+export const useWriteCtzndProjectInvest = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndProjectAbi,
+  functionName: 'invest',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndProjectAbi}__
+ */
+export const useSimulateCtzndProject = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndProjectAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"approveByLegal"`
+ */
+export const useSimulateCtzndProjectApproveByLegal =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndProjectAbi,
+    functionName: 'approveByLegal',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"approveByManager"`
+ */
+export const useSimulateCtzndProjectApproveByManager =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndProjectAbi,
+    functionName: 'approveByManager',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndProjectAbi}__ and `functionName` set to `"invest"`
+ */
+export const useSimulateCtzndProjectInvest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndProjectAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectHelpersAbi}__
+ */
+export const useReadCtzndProjectHelpers = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndProjectHelpersAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectHelpersAbi}__ and `functionName` set to `"MUL"`
+ */
+export const useReadCtzndProjectHelpersMul =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectHelpersAbi,
+    functionName: 'MUL',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__
+ */
+export const useReadCtzndProjectTest = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndProjectTestAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"IS_TEST"`
+ */
+export const useReadCtzndProjectTestIsTest =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'IS_TEST',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"excludeArtifacts"`
+ */
+export const useReadCtzndProjectTestExcludeArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'excludeArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"excludeContracts"`
+ */
+export const useReadCtzndProjectTestExcludeContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'excludeContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"excludeSenders"`
+ */
+export const useReadCtzndProjectTestExcludeSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'excludeSenders',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"proofs"`
+ */
+export const useReadCtzndProjectTestProofs =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'proofs',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
+ */
+export const useReadCtzndProjectTestTargetArtifactSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'targetArtifactSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"targetArtifacts"`
+ */
+export const useReadCtzndProjectTestTargetArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'targetArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"targetContracts"`
+ */
+export const useReadCtzndProjectTestTargetContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'targetContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"targetInterfaces"`
+ */
+export const useReadCtzndProjectTestTargetInterfaces =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'targetInterfaces',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"targetSelectors"`
+ */
+export const useReadCtzndProjectTestTargetSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'targetSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"targetSenders"`
+ */
+export const useReadCtzndProjectTestTargetSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'targetSenders',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__
+ */
+export const useWriteCtzndProjectTest = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndProjectTestAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useWriteCtzndProjectTestFailed =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useWriteCtzndProjectTestSetUp =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"testInvest"`
+ */
+export const useWriteCtzndProjectTestTestInvest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'testInvest',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"testInvestShouldRevertWithInvalidProof"`
+ */
+export const useWriteCtzndProjectTestTestInvestShouldRevertWithInvalidProof =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'testInvestShouldRevertWithInvalidProof',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__
+ */
+export const useSimulateCtzndProjectTest =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndProjectTestAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useSimulateCtzndProjectTestFailed =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useSimulateCtzndProjectTestSetUp =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"testInvest"`
+ */
+export const useSimulateCtzndProjectTestTestInvest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'testInvest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `functionName` set to `"testInvestShouldRevertWithInvalidProof"`
+ */
+export const useSimulateCtzndProjectTestTestInvestShouldRevertWithInvalidProof =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndProjectTestAbi,
+    functionName: 'testInvestShouldRevertWithInvalidProof',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__
+ */
+export const useWatchCtzndProjectTestEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndProjectTestAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log"`
+ */
+export const useWatchCtzndProjectTestLogEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_address"`
+ */
+export const useWatchCtzndProjectTestLogAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_array"`
+ */
+export const useWatchCtzndProjectTestLogArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_bytes"`
+ */
+export const useWatchCtzndProjectTestLogBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_bytes32"`
+ */
+export const useWatchCtzndProjectTestLogBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_int"`
+ */
+export const useWatchCtzndProjectTestLogIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_named_address"`
+ */
+export const useWatchCtzndProjectTestLogNamedAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_named_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_named_array"`
+ */
+export const useWatchCtzndProjectTestLogNamedArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_named_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_named_bytes"`
+ */
+export const useWatchCtzndProjectTestLogNamedBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_named_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_named_bytes32"`
+ */
+export const useWatchCtzndProjectTestLogNamedBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_named_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
+ */
+export const useWatchCtzndProjectTestLogNamedDecimalIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_named_decimal_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
+ */
+export const useWatchCtzndProjectTestLogNamedDecimalUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_named_decimal_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_named_int"`
+ */
+export const useWatchCtzndProjectTestLogNamedIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_named_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_named_string"`
+ */
+export const useWatchCtzndProjectTestLogNamedStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_named_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_named_uint"`
+ */
+export const useWatchCtzndProjectTestLogNamedUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_named_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_string"`
+ */
+export const useWatchCtzndProjectTestLogStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"log_uint"`
+ */
+export const useWatchCtzndProjectTestLogUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'log_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndProjectTestAbi}__ and `eventName` set to `"logs"`
+ */
+export const useWatchCtzndProjectTestLogsEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndProjectTestAbi,
+    eventName: 'logs',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__
+ */
+export const useReadCtzndProjectVoting = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndProjectVotingAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"projectToVotesIndex"`
+ */
+export const useReadCtzndProjectVotingProjectToVotesIndex =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'projectToVotesIndex',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"projectVoteCount"`
+ */
+export const useReadCtzndProjectVotingProjectVoteCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'projectVoteCount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"projectVoting_finalBonus"`
+ */
+export const useReadCtzndProjectVotingProjectVotingFinalBonus =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'projectVoting_finalBonus',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"projectVoting_initialBonus"`
+ */
+export const useReadCtzndProjectVotingProjectVotingInitialBonus =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'projectVoting_initialBonus',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"projectVoting_projects"`
+ */
+export const useReadCtzndProjectVotingProjectVotingProjects =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'projectVoting_projects',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"projectVoting_singleSlotDuration"`
+ */
+export const useReadCtzndProjectVotingProjectVotingSingleSlotDuration =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'projectVoting_singleSlotDuration',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"projectVoting_voteLimitPerUser"`
+ */
+export const useReadCtzndProjectVotingProjectVotingVoteLimitPerUser =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'projectVoting_voteLimitPerUser',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"projectVoting_votingPeriod"`
+ */
+export const useReadCtzndProjectVotingProjectVotingVotingPeriod =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'projectVoting_votingPeriod',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"userHasVotedForProject"`
+ */
+export const useReadCtzndProjectVotingUserHasVotedForProject =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'userHasVotedForProject',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"userVoteCount"`
+ */
+export const useReadCtzndProjectVotingUserVoteCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'userVoteCount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"votes"`
+ */
+export const useReadCtzndProjectVotingVotes =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'votes',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"votesIndexToProject"`
+ */
+export const useReadCtzndProjectVotingVotesIndexToProject =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'votesIndexToProject',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndProjectVotingAbi}__ and `functionName` set to `"weightedProjectVoteCount"`
+ */
+export const useReadCtzndProjectVotingWeightedProjectVoteCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndProjectVotingAbi,
+    functionName: 'weightedProjectVoteCount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__
+ */
+export const useReadCtzndRisingTide = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndRisingTideAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
+ */
+export const useReadCtzndRisingTideCapValidationGasLimit =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'CAP_VALIDATION_GAS_LIMIT',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"individualCap"`
+ */
+export const useReadCtzndRisingTideIndividualCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'individualCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"investorAmountAt"`
+ */
+export const useReadCtzndRisingTideInvestorAmountAt =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'investorAmountAt',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"investorCount"`
+ */
+export const useReadCtzndRisingTideInvestorCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'investorCount',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"risingTideCache"`
+ */
+export const useReadCtzndRisingTideRisingTideCache =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'risingTideCache',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"risingTideState"`
+ */
+export const useReadCtzndRisingTideRisingTideState =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'risingTideState',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"risingTide_applyCap"`
+ */
+export const useReadCtzndRisingTideRisingTideApplyCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'risingTide_applyCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"risingTide_isValidCap"`
+ */
+export const useReadCtzndRisingTideRisingTideIsValidCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'risingTide_isValidCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
+ */
+export const useReadCtzndRisingTideRisingTideTotalAllocatedUncapped =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'risingTide_totalAllocatedUncapped',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"risingTide_totalCap"`
+ */
+export const useReadCtzndRisingTideRisingTideTotalCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'risingTide_totalCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"risingTide_validating"`
+ */
+export const useReadCtzndRisingTideRisingTideValidating =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'risingTide_validating',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__
+ */
+export const useWriteCtzndRisingTide = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndRisingTideAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"risingTide_validate"`
+ */
+export const useWriteCtzndRisingTideRisingTideValidate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'risingTide_validate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__
+ */
+export const useSimulateCtzndRisingTide =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndRisingTideAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndRisingTideAbi}__ and `functionName` set to `"risingTide_validate"`
+ */
+export const useSimulateCtzndRisingTideRisingTideValidate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndRisingTideAbi,
+    functionName: 'risingTide_validate',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__
+ */
+export const useReadCtzndRisingTideTest = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndRisingTideTestAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"IS_TEST"`
+ */
+export const useReadCtzndRisingTideTestIsTest =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'IS_TEST',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"excludeArtifacts"`
+ */
+export const useReadCtzndRisingTideTestExcludeArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'excludeArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"excludeContracts"`
+ */
+export const useReadCtzndRisingTideTestExcludeContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'excludeContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"excludeSenders"`
+ */
+export const useReadCtzndRisingTideTestExcludeSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'excludeSenders',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
+ */
+export const useReadCtzndRisingTideTestTargetArtifactSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'targetArtifactSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"targetArtifacts"`
+ */
+export const useReadCtzndRisingTideTestTargetArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'targetArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"targetContracts"`
+ */
+export const useReadCtzndRisingTideTestTargetContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'targetContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"targetInterfaces"`
+ */
+export const useReadCtzndRisingTideTestTargetInterfaces =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'targetInterfaces',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"targetSelectors"`
+ */
+export const useReadCtzndRisingTideTestTargetSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'targetSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"targetSenders"`
+ */
+export const useReadCtzndRisingTideTestTargetSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'targetSenders',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__
+ */
+export const useWriteCtzndRisingTideTest = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndRisingTideTestAbi },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useWriteCtzndRisingTideTestFailed =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useWriteCtzndRisingTideTestSetUp =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"testGitbookExampleCorrectly"`
+ */
+export const useWriteCtzndRisingTideTestTestGitbookExampleCorrectly =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'testGitbookExampleCorrectly',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"testGitbookExampleFailsWithLargerCap"`
+ */
+export const useWriteCtzndRisingTideTestTestGitbookExampleFailsWithLargerCap =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'testGitbookExampleFailsWithLargerCap',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"testGitbookExampleFailsWithSmallerCap"`
+ */
+export const useWriteCtzndRisingTideTestTestGitbookExampleFailsWithSmallerCap =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'testGitbookExampleFailsWithSmallerCap',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"testSmallExampleCorrectly"`
+ */
+export const useWriteCtzndRisingTideTestTestSmallExampleCorrectly =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'testSmallExampleCorrectly',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"testSmallExampleFails"`
+ */
+export const useWriteCtzndRisingTideTestTestSmallExampleFails =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'testSmallExampleFails',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__
+ */
+export const useSimulateCtzndRisingTideTest =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndRisingTideTestAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useSimulateCtzndRisingTideTestFailed =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useSimulateCtzndRisingTideTestSetUp =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"testGitbookExampleCorrectly"`
+ */
+export const useSimulateCtzndRisingTideTestTestGitbookExampleCorrectly =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'testGitbookExampleCorrectly',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"testGitbookExampleFailsWithLargerCap"`
+ */
+export const useSimulateCtzndRisingTideTestTestGitbookExampleFailsWithLargerCap =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'testGitbookExampleFailsWithLargerCap',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"testGitbookExampleFailsWithSmallerCap"`
+ */
+export const useSimulateCtzndRisingTideTestTestGitbookExampleFailsWithSmallerCap =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'testGitbookExampleFailsWithSmallerCap',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"testSmallExampleCorrectly"`
+ */
+export const useSimulateCtzndRisingTideTestTestSmallExampleCorrectly =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'testSmallExampleCorrectly',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `functionName` set to `"testSmallExampleFails"`
+ */
+export const useSimulateCtzndRisingTideTestTestSmallExampleFails =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndRisingTideTestAbi,
+    functionName: 'testSmallExampleFails',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__
+ */
+export const useWatchCtzndRisingTideTestEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndRisingTideTestAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log"`
+ */
+export const useWatchCtzndRisingTideTestLogEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_address"`
+ */
+export const useWatchCtzndRisingTideTestLogAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_array"`
+ */
+export const useWatchCtzndRisingTideTestLogArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_bytes"`
+ */
+export const useWatchCtzndRisingTideTestLogBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_bytes32"`
+ */
+export const useWatchCtzndRisingTideTestLogBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_int"`
+ */
+export const useWatchCtzndRisingTideTestLogIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_named_address"`
+ */
+export const useWatchCtzndRisingTideTestLogNamedAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_named_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_named_array"`
+ */
+export const useWatchCtzndRisingTideTestLogNamedArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_named_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_named_bytes"`
+ */
+export const useWatchCtzndRisingTideTestLogNamedBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_named_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_named_bytes32"`
+ */
+export const useWatchCtzndRisingTideTestLogNamedBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_named_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
+ */
+export const useWatchCtzndRisingTideTestLogNamedDecimalIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_named_decimal_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
+ */
+export const useWatchCtzndRisingTideTestLogNamedDecimalUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_named_decimal_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_named_int"`
+ */
+export const useWatchCtzndRisingTideTestLogNamedIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_named_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_named_string"`
+ */
+export const useWatchCtzndRisingTideTestLogNamedStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_named_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_named_uint"`
+ */
+export const useWatchCtzndRisingTideTestLogNamedUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_named_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_string"`
+ */
+export const useWatchCtzndRisingTideTestLogStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"log_uint"`
+ */
+export const useWatchCtzndRisingTideTestLogUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'log_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndRisingTideTestAbi}__ and `eventName` set to `"logs"`
+ */
+export const useWatchCtzndRisingTideTestLogsEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndRisingTideTestAbi,
+    eventName: 'logs',
   })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSale = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15138,7 +19511,8 @@ export const useReadCtzndSale = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleCapValidationGasLimit =
   /*#__PURE__*/ createUseReadContract({
@@ -15150,7 +19524,8 @@ export const useReadCtzndSaleCapValidationGasLimit =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"CAP_VALIDATOR_ROLE"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleCapValidatorRole =
   /*#__PURE__*/ createUseReadContract({
@@ -15162,7 +19537,8 @@ export const useReadCtzndSaleCapValidatorRole =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleDefaultAdminRole =
   /*#__PURE__*/ createUseReadContract({
@@ -15174,7 +19550,8 @@ export const useReadCtzndSaleDefaultAdminRole =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"allocated"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleAllocated = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15185,7 +19562,8 @@ export const useReadCtzndSaleAllocated = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"allocation"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleAllocation = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15196,7 +19574,8 @@ export const useReadCtzndSaleAllocation = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"end"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleEnd = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15207,7 +19586,8 @@ export const useReadCtzndSaleEnd = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"endRegistration"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleEndRegistration =
   /*#__PURE__*/ createUseReadContract({
@@ -15219,7 +19599,8 @@ export const useReadCtzndSaleEndRegistration =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"getRoleAdmin"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleGetRoleAdmin = /*#__PURE__*/ createUseReadContract(
   {
@@ -15232,7 +19613,8 @@ export const useReadCtzndSaleGetRoleAdmin = /*#__PURE__*/ createUseReadContract(
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"hasRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleHasRole = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15243,7 +19625,8 @@ export const useReadCtzndSaleHasRole = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"individualCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleIndividualCap =
   /*#__PURE__*/ createUseReadContract({
@@ -15255,7 +19638,8 @@ export const useReadCtzndSaleIndividualCap =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"investorAmountAt"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleInvestorAmountAt =
   /*#__PURE__*/ createUseReadContract({
@@ -15267,7 +19651,8 @@ export const useReadCtzndSaleInvestorAmountAt =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"investorCount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleInvestorCount =
   /*#__PURE__*/ createUseReadContract({
@@ -15279,7 +19664,8 @@ export const useReadCtzndSaleInvestorCount =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"maxContribution"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleMaxContribution =
   /*#__PURE__*/ createUseReadContract({
@@ -15291,7 +19677,8 @@ export const useReadCtzndSaleMaxContribution =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"maxTarget"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleMaxTarget = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15302,7 +19689,8 @@ export const useReadCtzndSaleMaxTarget = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"merkleRoot"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleMerkleRoot = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15313,7 +19701,8 @@ export const useReadCtzndSaleMerkleRoot = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"minContribution"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleMinContribution =
   /*#__PURE__*/ createUseReadContract({
@@ -15325,7 +19714,8 @@ export const useReadCtzndSaleMinContribution =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"minTarget"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleMinTarget = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15336,7 +19726,8 @@ export const useReadCtzndSaleMinTarget = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"paymentToken"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSalePaymentToken = /*#__PURE__*/ createUseReadContract(
   {
@@ -15349,7 +19740,8 @@ export const useReadCtzndSalePaymentToken = /*#__PURE__*/ createUseReadContract(
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"paymentTokenToToken"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSalePaymentTokenToToken =
   /*#__PURE__*/ createUseReadContract({
@@ -15361,7 +19753,8 @@ export const useReadCtzndSalePaymentTokenToToken =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"rate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleRate = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15372,7 +19765,8 @@ export const useReadCtzndSaleRate = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"refundAmount"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleRefundAmount = /*#__PURE__*/ createUseReadContract(
   {
@@ -15385,7 +19779,8 @@ export const useReadCtzndSaleRefundAmount = /*#__PURE__*/ createUseReadContract(
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTideCache"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleRisingTideCache =
   /*#__PURE__*/ createUseReadContract({
@@ -15397,7 +19792,8 @@ export const useReadCtzndSaleRisingTideCache =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTideState"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleRisingTideState =
   /*#__PURE__*/ createUseReadContract({
@@ -15409,7 +19805,8 @@ export const useReadCtzndSaleRisingTideState =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_applyCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleRisingTideApplyCap =
   /*#__PURE__*/ createUseReadContract({
@@ -15421,7 +19818,8 @@ export const useReadCtzndSaleRisingTideApplyCap =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_isValidCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleRisingTideIsValidCap =
   /*#__PURE__*/ createUseReadContract({
@@ -15433,7 +19831,8 @@ export const useReadCtzndSaleRisingTideIsValidCap =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleRisingTideTotalAllocatedUncapped =
   /*#__PURE__*/ createUseReadContract({
@@ -15445,7 +19844,8 @@ export const useReadCtzndSaleRisingTideTotalAllocatedUncapped =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_totalCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleRisingTideTotalCap =
   /*#__PURE__*/ createUseReadContract({
@@ -15457,7 +19857,8 @@ export const useReadCtzndSaleRisingTideTotalCap =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_validating"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleRisingTideValidating =
   /*#__PURE__*/ createUseReadContract({
@@ -15469,7 +19870,8 @@ export const useReadCtzndSaleRisingTideValidating =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"start"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleStart = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15480,7 +19882,8 @@ export const useReadCtzndSaleStart = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"startRegistration"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleStartRegistration =
   /*#__PURE__*/ createUseReadContract({
@@ -15492,7 +19895,8 @@ export const useReadCtzndSaleStartRegistration =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"supportsInterface"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleSupportsInterface =
   /*#__PURE__*/ createUseReadContract({
@@ -15504,7 +19908,8 @@ export const useReadCtzndSaleSupportsInterface =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"token"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleToken = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15515,7 +19920,8 @@ export const useReadCtzndSaleToken = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"tokenToPaymentToken"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleTokenToPaymentToken =
   /*#__PURE__*/ createUseReadContract({
@@ -15527,7 +19933,8 @@ export const useReadCtzndSaleTokenToPaymentToken =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"totalTokensForSale"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleTotalTokensForSale =
   /*#__PURE__*/ createUseReadContract({
@@ -15539,7 +19946,8 @@ export const useReadCtzndSaleTotalTokensForSale =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"totalUncappedAllocations"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleTotalUncappedAllocations =
   /*#__PURE__*/ createUseReadContract({
@@ -15551,7 +19959,8 @@ export const useReadCtzndSaleTotalUncappedAllocations =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"uncappedAllocation"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleUncappedAllocation =
   /*#__PURE__*/ createUseReadContract({
@@ -15563,7 +19972,8 @@ export const useReadCtzndSaleUncappedAllocation =
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"withdrawn"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useReadCtzndSaleWithdrawn = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -15574,7 +19984,8 @@ export const useReadCtzndSaleWithdrawn = /*#__PURE__*/ createUseReadContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSale = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -15584,7 +19995,8 @@ export const useWriteCtzndSale = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"buy"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleBuy = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -15595,7 +20007,8 @@ export const useWriteCtzndSaleBuy = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"grantRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleGrantRole = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -15606,7 +20019,8 @@ export const useWriteCtzndSaleGrantRole = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"refund"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleRefund = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -15617,7 +20031,8 @@ export const useWriteCtzndSaleRefund = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"renounceRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleRenounceRole =
   /*#__PURE__*/ createUseWriteContract({
@@ -15629,7 +20044,8 @@ export const useWriteCtzndSaleRenounceRole =
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"revokeRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleRevokeRole = /*#__PURE__*/ createUseWriteContract(
   { abi: ctzndSaleAbi, address: ctzndSaleAddress, functionName: 'revokeRole' },
@@ -15638,7 +20054,8 @@ export const useWriteCtzndSaleRevokeRole = /*#__PURE__*/ createUseWriteContract(
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_validate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleRisingTideValidate =
   /*#__PURE__*/ createUseWriteContract({
@@ -15650,7 +20067,8 @@ export const useWriteCtzndSaleRisingTideValidate =
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setEnd"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleSetEnd = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -15661,7 +20079,8 @@ export const useWriteCtzndSaleSetEnd = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setIndividualCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleSetIndividualCap =
   /*#__PURE__*/ createUseWriteContract({
@@ -15673,7 +20092,8 @@ export const useWriteCtzndSaleSetIndividualCap =
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMaxTarget"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleSetMaxTarget =
   /*#__PURE__*/ createUseWriteContract({
@@ -15685,7 +20105,8 @@ export const useWriteCtzndSaleSetMaxTarget =
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMerkleRoot"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleSetMerkleRoot =
   /*#__PURE__*/ createUseWriteContract({
@@ -15697,7 +20118,8 @@ export const useWriteCtzndSaleSetMerkleRoot =
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMinContribution"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleSetMinContribution =
   /*#__PURE__*/ createUseWriteContract({
@@ -15709,7 +20131,8 @@ export const useWriteCtzndSaleSetMinContribution =
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMinTarget"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleSetMinTarget =
   /*#__PURE__*/ createUseWriteContract({
@@ -15721,7 +20144,8 @@ export const useWriteCtzndSaleSetMinTarget =
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setStart"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleSetStart = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -15732,7 +20156,8 @@ export const useWriteCtzndSaleSetStart = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setToken"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleSetToken = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -15743,7 +20168,8 @@ export const useWriteCtzndSaleSetToken = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"withdraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWriteCtzndSaleWithdraw = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -15754,7 +20180,8 @@ export const useWriteCtzndSaleWithdraw = /*#__PURE__*/ createUseWriteContract({
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSale = /*#__PURE__*/ createUseSimulateContract({
   abi: ctzndSaleAbi,
@@ -15764,7 +20191,8 @@ export const useSimulateCtzndSale = /*#__PURE__*/ createUseSimulateContract({
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"buy"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleBuy = /*#__PURE__*/ createUseSimulateContract({
   abi: ctzndSaleAbi,
@@ -15775,7 +20203,8 @@ export const useSimulateCtzndSaleBuy = /*#__PURE__*/ createUseSimulateContract({
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"grantRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleGrantRole =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15787,7 +20216,8 @@ export const useSimulateCtzndSaleGrantRole =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"refund"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleRefund =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15799,7 +20229,8 @@ export const useSimulateCtzndSaleRefund =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"renounceRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleRenounceRole =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15811,7 +20242,8 @@ export const useSimulateCtzndSaleRenounceRole =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"revokeRole"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleRevokeRole =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15823,7 +20255,8 @@ export const useSimulateCtzndSaleRevokeRole =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"risingTide_validate"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleRisingTideValidate =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15835,7 +20268,8 @@ export const useSimulateCtzndSaleRisingTideValidate =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setEnd"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleSetEnd =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15847,7 +20281,8 @@ export const useSimulateCtzndSaleSetEnd =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setIndividualCap"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleSetIndividualCap =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15859,7 +20294,8 @@ export const useSimulateCtzndSaleSetIndividualCap =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMaxTarget"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleSetMaxTarget =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15871,7 +20307,8 @@ export const useSimulateCtzndSaleSetMaxTarget =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMerkleRoot"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleSetMerkleRoot =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15883,7 +20320,8 @@ export const useSimulateCtzndSaleSetMerkleRoot =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMinContribution"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleSetMinContribution =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15895,7 +20333,8 @@ export const useSimulateCtzndSaleSetMinContribution =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setMinTarget"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleSetMinTarget =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15907,7 +20346,8 @@ export const useSimulateCtzndSaleSetMinTarget =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setStart"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleSetStart =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15919,7 +20359,8 @@ export const useSimulateCtzndSaleSetStart =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"setToken"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleSetToken =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15931,7 +20372,8 @@ export const useSimulateCtzndSaleSetToken =
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"withdraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useSimulateCtzndSaleWithdraw =
   /*#__PURE__*/ createUseSimulateContract({
@@ -15943,7 +20385,8 @@ export const useSimulateCtzndSaleWithdraw =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWatchCtzndSaleEvent = /*#__PURE__*/ createUseWatchContractEvent(
   { abi: ctzndSaleAbi, address: ctzndSaleAddress },
@@ -15952,7 +20395,8 @@ export const useWatchCtzndSaleEvent = /*#__PURE__*/ createUseWatchContractEvent(
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"Claim"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWatchCtzndSaleClaimEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -15964,7 +20408,8 @@ export const useWatchCtzndSaleClaimEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"Purchase"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWatchCtzndSalePurchaseEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -15976,7 +20421,8 @@ export const useWatchCtzndSalePurchaseEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"Refund"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWatchCtzndSaleRefundEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -15988,7 +20434,8 @@ export const useWatchCtzndSaleRefundEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"RoleAdminChanged"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWatchCtzndSaleRoleAdminChangedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -16000,7 +20447,8 @@ export const useWatchCtzndSaleRoleAdminChangedEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"RoleGranted"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWatchCtzndSaleRoleGrantedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -16012,7 +20460,8 @@ export const useWatchCtzndSaleRoleGrantedEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"RoleRevoked"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWatchCtzndSaleRoleRevokedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -16024,7 +20473,8 @@ export const useWatchCtzndSaleRoleRevokedEvent =
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleAbi}__ and `eventName` set to `"Withdraw"`
  *
- * [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1)
  */
 export const useWatchCtzndSaleWithdrawEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -16034,11754 +20484,6194 @@ export const useWatchCtzndSaleWithdrawEvent =
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dsTestAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__
  */
-export const useReadDsTest = /*#__PURE__*/ createUseReadContract({
-  abi: dsTestAbi,
+export const useReadCtzndSaleTest = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndSaleTestAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dsTestAbi}__ and `functionName` set to `"IS_TEST"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"IS_TEST"`
  */
-export const useReadDsTestIsTest = /*#__PURE__*/ createUseReadContract({
-  abi: dsTestAbi,
+export const useReadCtzndSaleTestIsTest = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndSaleTestAbi,
   functionName: 'IS_TEST',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dsTestAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"excludeArtifacts"`
  */
-export const useWriteDsTest = /*#__PURE__*/ createUseWriteContract({
-  abi: dsTestAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dsTestAbi}__ and `functionName` set to `"failed"`
- */
-export const useWriteDsTestFailed = /*#__PURE__*/ createUseWriteContract({
-  abi: dsTestAbi,
-  functionName: 'failed',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dsTestAbi}__
- */
-export const useSimulateDsTest = /*#__PURE__*/ createUseSimulateContract({
-  abi: dsTestAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dsTestAbi}__ and `functionName` set to `"failed"`
- */
-export const useSimulateDsTestFailed = /*#__PURE__*/ createUseSimulateContract({
-  abi: dsTestAbi,
-  functionName: 'failed',
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__
- */
-export const useWatchDsTestEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: dsTestAbi,
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log"`
- */
-export const useWatchDsTestLogEvent = /*#__PURE__*/ createUseWatchContractEvent(
-  { abi: dsTestAbi, eventName: 'log' },
-)
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_address"`
- */
-export const useWatchDsTestLogAddressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_address',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_bytes"`
- */
-export const useWatchDsTestLogBytesEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_bytes',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_bytes32"`
- */
-export const useWatchDsTestLogBytes32Event =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_bytes32',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_int"`
- */
-export const useWatchDsTestLogIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_named_address"`
- */
-export const useWatchDsTestLogNamedAddressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_named_address',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_named_bytes"`
- */
-export const useWatchDsTestLogNamedBytesEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_named_bytes',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_named_bytes32"`
- */
-export const useWatchDsTestLogNamedBytes32Event =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_named_bytes32',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
- */
-export const useWatchDsTestLogNamedDecimalIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_named_decimal_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
- */
-export const useWatchDsTestLogNamedDecimalUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_named_decimal_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_named_int"`
- */
-export const useWatchDsTestLogNamedIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_named_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_named_string"`
- */
-export const useWatchDsTestLogNamedStringEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_named_string',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_named_uint"`
- */
-export const useWatchDsTestLogNamedUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_named_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_string"`
- */
-export const useWatchDsTestLogStringEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_string',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"log_uint"`
- */
-export const useWatchDsTestLogUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'log_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dsTestAbi}__ and `eventName` set to `"logs"`
- */
-export const useWatchDsTestLogsEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: dsTestAbi,
-    eventName: 'logs',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link deployScriptAbi}__
- */
-export const useReadDeployScript = /*#__PURE__*/ createUseReadContract({
-  abi: deployScriptAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link deployScriptAbi}__ and `functionName` set to `"IS_SCRIPT"`
- */
-export const useReadDeployScriptIsScript = /*#__PURE__*/ createUseReadContract({
-  abi: deployScriptAbi,
-  functionName: 'IS_SCRIPT',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link deployScriptAbi}__
- */
-export const useWriteDeployScript = /*#__PURE__*/ createUseWriteContract({
-  abi: deployScriptAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link deployScriptAbi}__ and `functionName` set to `"run"`
- */
-export const useWriteDeployScriptRun = /*#__PURE__*/ createUseWriteContract({
-  abi: deployScriptAbi,
-  functionName: 'run',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link deployScriptAbi}__
- */
-export const useSimulateDeployScript = /*#__PURE__*/ createUseSimulateContract({
-  abi: deployScriptAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link deployScriptAbi}__ and `functionName` set to `"run"`
- */
-export const useSimulateDeployScriptRun =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: deployScriptAbi,
-    functionName: 'run',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link devDeployScriptAbi}__
- */
-export const useReadDevDeployScript = /*#__PURE__*/ createUseReadContract({
-  abi: devDeployScriptAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link devDeployScriptAbi}__ and `functionName` set to `"IS_SCRIPT"`
- */
-export const useReadDevDeployScriptIsScript =
-  /*#__PURE__*/ createUseReadContract({
-    abi: devDeployScriptAbi,
-    functionName: 'IS_SCRIPT',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link devDeployScriptAbi}__
- */
-export const useWriteDevDeployScript = /*#__PURE__*/ createUseWriteContract({
-  abi: devDeployScriptAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link devDeployScriptAbi}__ and `functionName` set to `"run"`
- */
-export const useWriteDevDeployScriptRun = /*#__PURE__*/ createUseWriteContract({
-  abi: devDeployScriptAbi,
-  functionName: 'run',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link devDeployScriptAbi}__ and `functionName` set to `"setUp"`
- */
-export const useWriteDevDeployScriptSetUp =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: devDeployScriptAbi,
-    functionName: 'setUp',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link devDeployScriptAbi}__
- */
-export const useSimulateDevDeployScript =
-  /*#__PURE__*/ createUseSimulateContract({ abi: devDeployScriptAbi })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link devDeployScriptAbi}__ and `functionName` set to `"run"`
- */
-export const useSimulateDevDeployScriptRun =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: devDeployScriptAbi,
-    functionName: 'run',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link devDeployScriptAbi}__ and `functionName` set to `"setUp"`
- */
-export const useSimulateDevDeployScriptSetUp =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: devDeployScriptAbi,
-    functionName: 'setUp',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc165Abi}__
- */
-export const useReadErc165 = /*#__PURE__*/ createUseReadContract({
-  abi: erc165Abi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc165Abi}__ and `functionName` set to `"supportsInterface"`
- */
-export const useReadErc165SupportsInterface =
-  /*#__PURE__*/ createUseReadContract({
-    abi: erc165Abi,
-    functionName: 'supportsInterface',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20Abi}__
- */
-export const useReadErc20 = /*#__PURE__*/ createUseReadContract({
-  abi: erc20Abi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"allowance"`
- */
-export const useReadErc20Allowance = /*#__PURE__*/ createUseReadContract({
-  abi: erc20Abi,
-  functionName: 'allowance',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"balanceOf"`
- */
-export const useReadErc20BalanceOf = /*#__PURE__*/ createUseReadContract({
-  abi: erc20Abi,
-  functionName: 'balanceOf',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"decimals"`
- */
-export const useReadErc20Decimals = /*#__PURE__*/ createUseReadContract({
-  abi: erc20Abi,
-  functionName: 'decimals',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"name"`
- */
-export const useReadErc20Name = /*#__PURE__*/ createUseReadContract({
-  abi: erc20Abi,
-  functionName: 'name',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"symbol"`
- */
-export const useReadErc20Symbol = /*#__PURE__*/ createUseReadContract({
-  abi: erc20Abi,
-  functionName: 'symbol',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"totalSupply"`
- */
-export const useReadErc20TotalSupply = /*#__PURE__*/ createUseReadContract({
-  abi: erc20Abi,
-  functionName: 'totalSupply',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20Abi}__
- */
-export const useWriteErc20 = /*#__PURE__*/ createUseWriteContract({
-  abi: erc20Abi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"approve"`
- */
-export const useWriteErc20Approve = /*#__PURE__*/ createUseWriteContract({
-  abi: erc20Abi,
-  functionName: 'approve',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"transfer"`
- */
-export const useWriteErc20Transfer = /*#__PURE__*/ createUseWriteContract({
-  abi: erc20Abi,
-  functionName: 'transfer',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"transferFrom"`
- */
-export const useWriteErc20TransferFrom = /*#__PURE__*/ createUseWriteContract({
-  abi: erc20Abi,
-  functionName: 'transferFrom',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20Abi}__
- */
-export const useSimulateErc20 = /*#__PURE__*/ createUseSimulateContract({
-  abi: erc20Abi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"approve"`
- */
-export const useSimulateErc20Approve = /*#__PURE__*/ createUseSimulateContract({
-  abi: erc20Abi,
-  functionName: 'approve',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"transfer"`
- */
-export const useSimulateErc20Transfer = /*#__PURE__*/ createUseSimulateContract(
-  { abi: erc20Abi, functionName: 'transfer' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20Abi}__ and `functionName` set to `"transferFrom"`
- */
-export const useSimulateErc20TransferFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: erc20Abi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20Abi}__
- */
-export const useWatchErc20Event = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: erc20Abi,
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20Abi}__ and `eventName` set to `"Approval"`
- */
-export const useWatchErc20ApprovalEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: erc20Abi,
-    eventName: 'Approval',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20Abi}__ and `eventName` set to `"Transfer"`
- */
-export const useWatchErc20TransferEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: erc20Abi,
-    eventName: 'Transfer',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20BurnableAbi}__
- */
-export const useReadErc20Burnable = /*#__PURE__*/ createUseReadContract({
-  abi: erc20BurnableAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"allowance"`
- */
-export const useReadErc20BurnableAllowance =
-  /*#__PURE__*/ createUseReadContract({
-    abi: erc20BurnableAbi,
-    functionName: 'allowance',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"balanceOf"`
- */
-export const useReadErc20BurnableBalanceOf =
-  /*#__PURE__*/ createUseReadContract({
-    abi: erc20BurnableAbi,
-    functionName: 'balanceOf',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"decimals"`
- */
-export const useReadErc20BurnableDecimals = /*#__PURE__*/ createUseReadContract(
-  { abi: erc20BurnableAbi, functionName: 'decimals' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"name"`
- */
-export const useReadErc20BurnableName = /*#__PURE__*/ createUseReadContract({
-  abi: erc20BurnableAbi,
-  functionName: 'name',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"symbol"`
- */
-export const useReadErc20BurnableSymbol = /*#__PURE__*/ createUseReadContract({
-  abi: erc20BurnableAbi,
-  functionName: 'symbol',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"totalSupply"`
- */
-export const useReadErc20BurnableTotalSupply =
-  /*#__PURE__*/ createUseReadContract({
-    abi: erc20BurnableAbi,
-    functionName: 'totalSupply',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20BurnableAbi}__
- */
-export const useWriteErc20Burnable = /*#__PURE__*/ createUseWriteContract({
-  abi: erc20BurnableAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"approve"`
- */
-export const useWriteErc20BurnableApprove =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: erc20BurnableAbi,
-    functionName: 'approve',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"burn"`
- */
-export const useWriteErc20BurnableBurn = /*#__PURE__*/ createUseWriteContract({
-  abi: erc20BurnableAbi,
-  functionName: 'burn',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"burnFrom"`
- */
-export const useWriteErc20BurnableBurnFrom =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: erc20BurnableAbi,
-    functionName: 'burnFrom',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"transfer"`
- */
-export const useWriteErc20BurnableTransfer =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: erc20BurnableAbi,
-    functionName: 'transfer',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"transferFrom"`
- */
-export const useWriteErc20BurnableTransferFrom =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: erc20BurnableAbi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20BurnableAbi}__
- */
-export const useSimulateErc20Burnable = /*#__PURE__*/ createUseSimulateContract(
-  { abi: erc20BurnableAbi },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"approve"`
- */
-export const useSimulateErc20BurnableApprove =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: erc20BurnableAbi,
-    functionName: 'approve',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"burn"`
- */
-export const useSimulateErc20BurnableBurn =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: erc20BurnableAbi,
-    functionName: 'burn',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"burnFrom"`
- */
-export const useSimulateErc20BurnableBurnFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: erc20BurnableAbi,
-    functionName: 'burnFrom',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"transfer"`
- */
-export const useSimulateErc20BurnableTransfer =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: erc20BurnableAbi,
-    functionName: 'transfer',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20BurnableAbi}__ and `functionName` set to `"transferFrom"`
- */
-export const useSimulateErc20BurnableTransferFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: erc20BurnableAbi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20BurnableAbi}__
- */
-export const useWatchErc20BurnableEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: erc20BurnableAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20BurnableAbi}__ and `eventName` set to `"Approval"`
- */
-export const useWatchErc20BurnableApprovalEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: erc20BurnableAbi,
-    eventName: 'Approval',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20BurnableAbi}__ and `eventName` set to `"Transfer"`
- */
-export const useWatchErc20BurnableTransferEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: erc20BurnableAbi,
-    eventName: 'Transfer',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20PausableAbi}__
- */
-export const useReadErc20Pausable = /*#__PURE__*/ createUseReadContract({
-  abi: erc20PausableAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"allowance"`
- */
-export const useReadErc20PausableAllowance =
-  /*#__PURE__*/ createUseReadContract({
-    abi: erc20PausableAbi,
-    functionName: 'allowance',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"balanceOf"`
- */
-export const useReadErc20PausableBalanceOf =
-  /*#__PURE__*/ createUseReadContract({
-    abi: erc20PausableAbi,
-    functionName: 'balanceOf',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"decimals"`
- */
-export const useReadErc20PausableDecimals = /*#__PURE__*/ createUseReadContract(
-  { abi: erc20PausableAbi, functionName: 'decimals' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"name"`
- */
-export const useReadErc20PausableName = /*#__PURE__*/ createUseReadContract({
-  abi: erc20PausableAbi,
-  functionName: 'name',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"paused"`
- */
-export const useReadErc20PausablePaused = /*#__PURE__*/ createUseReadContract({
-  abi: erc20PausableAbi,
-  functionName: 'paused',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"symbol"`
- */
-export const useReadErc20PausableSymbol = /*#__PURE__*/ createUseReadContract({
-  abi: erc20PausableAbi,
-  functionName: 'symbol',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"totalSupply"`
- */
-export const useReadErc20PausableTotalSupply =
-  /*#__PURE__*/ createUseReadContract({
-    abi: erc20PausableAbi,
-    functionName: 'totalSupply',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20PausableAbi}__
- */
-export const useWriteErc20Pausable = /*#__PURE__*/ createUseWriteContract({
-  abi: erc20PausableAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"approve"`
- */
-export const useWriteErc20PausableApprove =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: erc20PausableAbi,
-    functionName: 'approve',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"transfer"`
- */
-export const useWriteErc20PausableTransfer =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: erc20PausableAbi,
-    functionName: 'transfer',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"transferFrom"`
- */
-export const useWriteErc20PausableTransferFrom =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: erc20PausableAbi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20PausableAbi}__
- */
-export const useSimulateErc20Pausable = /*#__PURE__*/ createUseSimulateContract(
-  { abi: erc20PausableAbi },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"approve"`
- */
-export const useSimulateErc20PausableApprove =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: erc20PausableAbi,
-    functionName: 'approve',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"transfer"`
- */
-export const useSimulateErc20PausableTransfer =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: erc20PausableAbi,
-    functionName: 'transfer',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc20PausableAbi}__ and `functionName` set to `"transferFrom"`
- */
-export const useSimulateErc20PausableTransferFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: erc20PausableAbi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20PausableAbi}__
- */
-export const useWatchErc20PausableEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: erc20PausableAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20PausableAbi}__ and `eventName` set to `"Approval"`
- */
-export const useWatchErc20PausableApprovalEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: erc20PausableAbi,
-    eventName: 'Approval',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20PausableAbi}__ and `eventName` set to `"Paused"`
- */
-export const useWatchErc20PausablePausedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: erc20PausableAbi,
-    eventName: 'Paused',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20PausableAbi}__ and `eventName` set to `"Transfer"`
- */
-export const useWatchErc20PausableTransferEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: erc20PausableAbi,
-    eventName: 'Transfer',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc20PausableAbi}__ and `eventName` set to `"Unpaused"`
- */
-export const useWatchErc20PausableUnpausedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: erc20PausableAbi,
-    eventName: 'Unpaused',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link fractalRegistryAbi}__
- */
-export const useReadFractalRegistry = /*#__PURE__*/ createUseReadContract({
-  abi: fractalRegistryAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"delegates"`
- */
-export const useReadFractalRegistryDelegates =
-  /*#__PURE__*/ createUseReadContract({
-    abi: fractalRegistryAbi,
-    functionName: 'delegates',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"getFractalId"`
- */
-export const useReadFractalRegistryGetFractalId =
-  /*#__PURE__*/ createUseReadContract({
-    abi: fractalRegistryAbi,
-    functionName: 'getFractalId',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"isUserInList"`
- */
-export const useReadFractalRegistryIsUserInList =
-  /*#__PURE__*/ createUseReadContract({
-    abi: fractalRegistryAbi,
-    functionName: 'isUserInList',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link fractalRegistryAbi}__
- */
-export const useWriteFractalRegistry = /*#__PURE__*/ createUseWriteContract({
-  abi: fractalRegistryAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"addDelegate"`
- */
-export const useWriteFractalRegistryAddDelegate =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: fractalRegistryAbi,
-    functionName: 'addDelegate',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"addUserAddress"`
- */
-export const useWriteFractalRegistryAddUserAddress =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: fractalRegistryAbi,
-    functionName: 'addUserAddress',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"addUserToList"`
- */
-export const useWriteFractalRegistryAddUserToList =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: fractalRegistryAbi,
-    functionName: 'addUserToList',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"removeDelegate"`
- */
-export const useWriteFractalRegistryRemoveDelegate =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: fractalRegistryAbi,
-    functionName: 'removeDelegate',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"removeUserAddress"`
- */
-export const useWriteFractalRegistryRemoveUserAddress =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: fractalRegistryAbi,
-    functionName: 'removeUserAddress',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"removeUserFromList"`
- */
-export const useWriteFractalRegistryRemoveUserFromList =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: fractalRegistryAbi,
-    functionName: 'removeUserFromList',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link fractalRegistryAbi}__
- */
-export const useSimulateFractalRegistry =
-  /*#__PURE__*/ createUseSimulateContract({ abi: fractalRegistryAbi })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"addDelegate"`
- */
-export const useSimulateFractalRegistryAddDelegate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: fractalRegistryAbi,
-    functionName: 'addDelegate',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"addUserAddress"`
- */
-export const useSimulateFractalRegistryAddUserAddress =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: fractalRegistryAbi,
-    functionName: 'addUserAddress',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"addUserToList"`
- */
-export const useSimulateFractalRegistryAddUserToList =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: fractalRegistryAbi,
-    functionName: 'addUserToList',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"removeDelegate"`
- */
-export const useSimulateFractalRegistryRemoveDelegate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: fractalRegistryAbi,
-    functionName: 'removeDelegate',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"removeUserAddress"`
- */
-export const useSimulateFractalRegistryRemoveUserAddress =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: fractalRegistryAbi,
-    functionName: 'removeUserAddress',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link fractalRegistryAbi}__ and `functionName` set to `"removeUserFromList"`
- */
-export const useSimulateFractalRegistryRemoveUserFromList =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: fractalRegistryAbi,
-    functionName: 'removeUserFromList',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iAccessControlAbi}__
- */
-export const useReadIAccessControl = /*#__PURE__*/ createUseReadContract({
-  abi: iAccessControlAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iAccessControlAbi}__ and `functionName` set to `"getRoleAdmin"`
- */
-export const useReadIAccessControlGetRoleAdmin =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iAccessControlAbi,
-    functionName: 'getRoleAdmin',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iAccessControlAbi}__ and `functionName` set to `"hasRole"`
- */
-export const useReadIAccessControlHasRole = /*#__PURE__*/ createUseReadContract(
-  { abi: iAccessControlAbi, functionName: 'hasRole' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iAccessControlAbi}__
- */
-export const useWriteIAccessControl = /*#__PURE__*/ createUseWriteContract({
-  abi: iAccessControlAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iAccessControlAbi}__ and `functionName` set to `"grantRole"`
- */
-export const useWriteIAccessControlGrantRole =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iAccessControlAbi,
-    functionName: 'grantRole',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iAccessControlAbi}__ and `functionName` set to `"renounceRole"`
- */
-export const useWriteIAccessControlRenounceRole =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iAccessControlAbi,
-    functionName: 'renounceRole',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iAccessControlAbi}__ and `functionName` set to `"revokeRole"`
- */
-export const useWriteIAccessControlRevokeRole =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iAccessControlAbi,
-    functionName: 'revokeRole',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iAccessControlAbi}__
- */
-export const useSimulateIAccessControl =
-  /*#__PURE__*/ createUseSimulateContract({ abi: iAccessControlAbi })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iAccessControlAbi}__ and `functionName` set to `"grantRole"`
- */
-export const useSimulateIAccessControlGrantRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iAccessControlAbi,
-    functionName: 'grantRole',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iAccessControlAbi}__ and `functionName` set to `"renounceRole"`
- */
-export const useSimulateIAccessControlRenounceRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iAccessControlAbi,
-    functionName: 'renounceRole',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iAccessControlAbi}__ and `functionName` set to `"revokeRole"`
- */
-export const useSimulateIAccessControlRevokeRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iAccessControlAbi,
-    functionName: 'revokeRole',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iAccessControlAbi}__
- */
-export const useWatchIAccessControlEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: iAccessControlAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iAccessControlAbi}__ and `eventName` set to `"RoleAdminChanged"`
- */
-export const useWatchIAccessControlRoleAdminChangedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: iAccessControlAbi,
-    eventName: 'RoleAdminChanged',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iAccessControlAbi}__ and `eventName` set to `"RoleGranted"`
- */
-export const useWatchIAccessControlRoleGrantedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: iAccessControlAbi,
-    eventName: 'RoleGranted',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link iAccessControlAbi}__ and `eventName` set to `"RoleRevoked"`
- */
-export const useWatchIAccessControlRoleRevokedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: iAccessControlAbi,
-    eventName: 'RoleRevoked',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iBatchAbi}__
- */
-export const useWriteIBatch = /*#__PURE__*/ createUseWriteContract({
-  abi: iBatchAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iBatchAbi}__ and `functionName` set to `"vote"`
- */
-export const useWriteIBatchVote = /*#__PURE__*/ createUseWriteContract({
-  abi: iBatchAbi,
-  functionName: 'vote',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iBatchAbi}__
- */
-export const useSimulateIBatch = /*#__PURE__*/ createUseSimulateContract({
-  abi: iBatchAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iBatchAbi}__ and `functionName` set to `"vote"`
- */
-export const useSimulateIBatchVote = /*#__PURE__*/ createUseSimulateContract({
-  abi: iBatchAbi,
-  functionName: 'vote',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iControllerAbi}__
- */
-export const useReadIController = /*#__PURE__*/ createUseReadContract({
-  abi: iControllerAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"canInvestInPeoplesPool"`
- */
-export const useReadIControllerCanInvestInPeoplesPool =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iControllerAbi,
-    functionName: 'canInvestInPeoplesPool',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"canInvestInStakersPool"`
- */
-export const useReadIControllerCanInvestInStakersPool =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iControllerAbi,
-    functionName: 'canInvestInStakersPool',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"canVote"`
- */
-export const useReadIControllerCanVote = /*#__PURE__*/ createUseReadContract({
-  abi: iControllerAbi,
-  functionName: 'canVote',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"getBatchForProject"`
- */
-export const useReadIControllerGetBatchForProject =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iControllerAbi,
-    functionName: 'getBatchForProject',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"hasLegalManagerRole"`
- */
-export const useReadIControllerHasLegalManagerRole =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iControllerAbi,
-    functionName: 'hasLegalManagerRole',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"hasProjectManagerRole"`
- */
-export const useReadIControllerHasProjectManagerRole =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iControllerAbi,
-    functionName: 'hasProjectManagerRole',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iControllerAbi}__
- */
-export const useWriteIController = /*#__PURE__*/ createUseWriteContract({
-  abi: iControllerAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"createBatch"`
- */
-export const useWriteIControllerCreateBatch =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iControllerAbi,
-    functionName: 'createBatch',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"isProjectInBatch"`
- */
-export const useWriteIControllerIsProjectInBatch =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iControllerAbi,
-    functionName: 'isProjectInBatch',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"registerProject"`
- */
-export const useWriteIControllerRegisterProject =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iControllerAbi,
-    functionName: 'registerProject',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"setBatchVotingPeriod"`
- */
-export const useWriteIControllerSetBatchVotingPeriod =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iControllerAbi,
-    functionName: 'setBatchVotingPeriod',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iControllerAbi}__
- */
-export const useSimulateIController = /*#__PURE__*/ createUseSimulateContract({
-  abi: iControllerAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"createBatch"`
- */
-export const useSimulateIControllerCreateBatch =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iControllerAbi,
-    functionName: 'createBatch',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"isProjectInBatch"`
- */
-export const useSimulateIControllerIsProjectInBatch =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iControllerAbi,
-    functionName: 'isProjectInBatch',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"registerProject"`
- */
-export const useSimulateIControllerRegisterProject =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iControllerAbi,
-    functionName: 'registerProject',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iControllerAbi}__ and `functionName` set to `"setBatchVotingPeriod"`
- */
-export const useSimulateIControllerSetBatchVotingPeriod =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iControllerAbi,
-    functionName: 'setBatchVotingPeriod',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc165Abi}__
- */
-export const useReadIerc165 = /*#__PURE__*/ createUseReadContract({
-  abi: ierc165Abi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc165Abi}__ and `functionName` set to `"supportsInterface"`
- */
-export const useReadIerc165SupportsInterface =
-  /*#__PURE__*/ createUseReadContract({
-    abi: ierc165Abi,
-    functionName: 'supportsInterface',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20Abi}__
- */
-export const useReadIerc20 = /*#__PURE__*/ createUseReadContract({
-  abi: ierc20Abi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"allowance"`
- */
-export const useReadIerc20Allowance = /*#__PURE__*/ createUseReadContract({
-  abi: ierc20Abi,
-  functionName: 'allowance',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"balanceOf"`
- */
-export const useReadIerc20BalanceOf = /*#__PURE__*/ createUseReadContract({
-  abi: ierc20Abi,
-  functionName: 'balanceOf',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"totalSupply"`
- */
-export const useReadIerc20TotalSupply = /*#__PURE__*/ createUseReadContract({
-  abi: ierc20Abi,
-  functionName: 'totalSupply',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20Abi}__
- */
-export const useWriteIerc20 = /*#__PURE__*/ createUseWriteContract({
-  abi: ierc20Abi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"approve"`
- */
-export const useWriteIerc20Approve = /*#__PURE__*/ createUseWriteContract({
-  abi: ierc20Abi,
-  functionName: 'approve',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"transfer"`
- */
-export const useWriteIerc20Transfer = /*#__PURE__*/ createUseWriteContract({
-  abi: ierc20Abi,
-  functionName: 'transfer',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"transferFrom"`
- */
-export const useWriteIerc20TransferFrom = /*#__PURE__*/ createUseWriteContract({
-  abi: ierc20Abi,
-  functionName: 'transferFrom',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20Abi}__
- */
-export const useSimulateIerc20 = /*#__PURE__*/ createUseSimulateContract({
-  abi: ierc20Abi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"approve"`
- */
-export const useSimulateIerc20Approve = /*#__PURE__*/ createUseSimulateContract(
-  { abi: ierc20Abi, functionName: 'approve' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"transfer"`
- */
-export const useSimulateIerc20Transfer =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: ierc20Abi,
-    functionName: 'transfer',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20Abi}__ and `functionName` set to `"transferFrom"`
- */
-export const useSimulateIerc20TransferFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: ierc20Abi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc20Abi}__
- */
-export const useWatchIerc20Event = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: ierc20Abi,
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc20Abi}__ and `eventName` set to `"Approval"`
- */
-export const useWatchIerc20ApprovalEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: ierc20Abi,
-    eventName: 'Approval',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc20Abi}__ and `eventName` set to `"Transfer"`
- */
-export const useWatchIerc20TransferEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: ierc20Abi,
-    eventName: 'Transfer',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20MetadataAbi}__
- */
-export const useReadIerc20Metadata = /*#__PURE__*/ createUseReadContract({
-  abi: ierc20MetadataAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"allowance"`
- */
-export const useReadIerc20MetadataAllowance =
-  /*#__PURE__*/ createUseReadContract({
-    abi: ierc20MetadataAbi,
-    functionName: 'allowance',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"balanceOf"`
- */
-export const useReadIerc20MetadataBalanceOf =
-  /*#__PURE__*/ createUseReadContract({
-    abi: ierc20MetadataAbi,
-    functionName: 'balanceOf',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"decimals"`
- */
-export const useReadIerc20MetadataDecimals =
-  /*#__PURE__*/ createUseReadContract({
-    abi: ierc20MetadataAbi,
-    functionName: 'decimals',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"name"`
- */
-export const useReadIerc20MetadataName = /*#__PURE__*/ createUseReadContract({
-  abi: ierc20MetadataAbi,
-  functionName: 'name',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"symbol"`
- */
-export const useReadIerc20MetadataSymbol = /*#__PURE__*/ createUseReadContract({
-  abi: ierc20MetadataAbi,
-  functionName: 'symbol',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"totalSupply"`
- */
-export const useReadIerc20MetadataTotalSupply =
-  /*#__PURE__*/ createUseReadContract({
-    abi: ierc20MetadataAbi,
-    functionName: 'totalSupply',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20MetadataAbi}__
- */
-export const useWriteIerc20Metadata = /*#__PURE__*/ createUseWriteContract({
-  abi: ierc20MetadataAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"approve"`
- */
-export const useWriteIerc20MetadataApprove =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: ierc20MetadataAbi,
-    functionName: 'approve',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"transfer"`
- */
-export const useWriteIerc20MetadataTransfer =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: ierc20MetadataAbi,
-    functionName: 'transfer',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"transferFrom"`
- */
-export const useWriteIerc20MetadataTransferFrom =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: ierc20MetadataAbi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20MetadataAbi}__
- */
-export const useSimulateIerc20Metadata =
-  /*#__PURE__*/ createUseSimulateContract({ abi: ierc20MetadataAbi })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"approve"`
- */
-export const useSimulateIerc20MetadataApprove =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: ierc20MetadataAbi,
-    functionName: 'approve',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"transfer"`
- */
-export const useSimulateIerc20MetadataTransfer =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: ierc20MetadataAbi,
-    functionName: 'transfer',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `functionName` set to `"transferFrom"`
- */
-export const useSimulateIerc20MetadataTransferFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: ierc20MetadataAbi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc20MetadataAbi}__
- */
-export const useWatchIerc20MetadataEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: ierc20MetadataAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `eventName` set to `"Approval"`
- */
-export const useWatchIerc20MetadataApprovalEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: ierc20MetadataAbi,
-    eventName: 'Approval',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc20MetadataAbi}__ and `eventName` set to `"Transfer"`
- */
-export const useWatchIerc20MetadataTransferEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: ierc20MetadataAbi,
-    eventName: 'Transfer',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20PermitAbi}__
- */
-export const useReadIerc20Permit = /*#__PURE__*/ createUseReadContract({
-  abi: ierc20PermitAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20PermitAbi}__ and `functionName` set to `"DOMAIN_SEPARATOR"`
- */
-export const useReadIerc20PermitDomainSeparator =
-  /*#__PURE__*/ createUseReadContract({
-    abi: ierc20PermitAbi,
-    functionName: 'DOMAIN_SEPARATOR',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20PermitAbi}__ and `functionName` set to `"nonces"`
- */
-export const useReadIerc20PermitNonces = /*#__PURE__*/ createUseReadContract({
-  abi: ierc20PermitAbi,
-  functionName: 'nonces',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20PermitAbi}__
- */
-export const useWriteIerc20Permit = /*#__PURE__*/ createUseWriteContract({
-  abi: ierc20PermitAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc20PermitAbi}__ and `functionName` set to `"permit"`
- */
-export const useWriteIerc20PermitPermit = /*#__PURE__*/ createUseWriteContract({
-  abi: ierc20PermitAbi,
-  functionName: 'permit',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20PermitAbi}__
- */
-export const useSimulateIerc20Permit = /*#__PURE__*/ createUseSimulateContract({
-  abi: ierc20PermitAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc20PermitAbi}__ and `functionName` set to `"permit"`
- */
-export const useSimulateIerc20PermitPermit =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: ierc20PermitAbi,
-    functionName: 'permit',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc721TokenReceiverAbi}__
- */
-export const useWriteIerc721TokenReceiver =
-  /*#__PURE__*/ createUseWriteContract({ abi: ierc721TokenReceiverAbi })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc721TokenReceiverAbi}__ and `functionName` set to `"onERC721Received"`
- */
-export const useWriteIerc721TokenReceiverOnErc721Received =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: ierc721TokenReceiverAbi,
-    functionName: 'onERC721Received',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc721TokenReceiverAbi}__
- */
-export const useSimulateIerc721TokenReceiver =
-  /*#__PURE__*/ createUseSimulateContract({ abi: ierc721TokenReceiverAbi })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc721TokenReceiverAbi}__ and `functionName` set to `"onERC721Received"`
- */
-export const useSimulateIerc721TokenReceiverOnErc721Received =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: ierc721TokenReceiverAbi,
-    functionName: 'onERC721Received',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__
- */
-export const useReadIMulticall3 = /*#__PURE__*/ createUseReadContract({
-  abi: iMulticall3Abi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"getBasefee"`
- */
-export const useReadIMulticall3GetBasefee = /*#__PURE__*/ createUseReadContract(
-  { abi: iMulticall3Abi, functionName: 'getBasefee' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"getBlockHash"`
- */
-export const useReadIMulticall3GetBlockHash =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iMulticall3Abi,
-    functionName: 'getBlockHash',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"getBlockNumber"`
- */
-export const useReadIMulticall3GetBlockNumber =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iMulticall3Abi,
-    functionName: 'getBlockNumber',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"getChainId"`
- */
-export const useReadIMulticall3GetChainId = /*#__PURE__*/ createUseReadContract(
-  { abi: iMulticall3Abi, functionName: 'getChainId' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"getCurrentBlockCoinbase"`
- */
-export const useReadIMulticall3GetCurrentBlockCoinbase =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iMulticall3Abi,
-    functionName: 'getCurrentBlockCoinbase',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"getCurrentBlockDifficulty"`
- */
-export const useReadIMulticall3GetCurrentBlockDifficulty =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iMulticall3Abi,
-    functionName: 'getCurrentBlockDifficulty',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"getCurrentBlockGasLimit"`
- */
-export const useReadIMulticall3GetCurrentBlockGasLimit =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iMulticall3Abi,
-    functionName: 'getCurrentBlockGasLimit',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"getCurrentBlockTimestamp"`
- */
-export const useReadIMulticall3GetCurrentBlockTimestamp =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iMulticall3Abi,
-    functionName: 'getCurrentBlockTimestamp',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"getEthBalance"`
- */
-export const useReadIMulticall3GetEthBalance =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iMulticall3Abi,
-    functionName: 'getEthBalance',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"getLastBlockHash"`
- */
-export const useReadIMulticall3GetLastBlockHash =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iMulticall3Abi,
-    functionName: 'getLastBlockHash',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iMulticall3Abi}__
- */
-export const useWriteIMulticall3 = /*#__PURE__*/ createUseWriteContract({
-  abi: iMulticall3Abi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"aggregate"`
- */
-export const useWriteIMulticall3Aggregate =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iMulticall3Abi,
-    functionName: 'aggregate',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"aggregate3"`
- */
-export const useWriteIMulticall3Aggregate3 =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iMulticall3Abi,
-    functionName: 'aggregate3',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"aggregate3Value"`
- */
-export const useWriteIMulticall3Aggregate3Value =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iMulticall3Abi,
-    functionName: 'aggregate3Value',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"blockAndAggregate"`
- */
-export const useWriteIMulticall3BlockAndAggregate =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iMulticall3Abi,
-    functionName: 'blockAndAggregate',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"tryAggregate"`
- */
-export const useWriteIMulticall3TryAggregate =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iMulticall3Abi,
-    functionName: 'tryAggregate',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"tryBlockAndAggregate"`
- */
-export const useWriteIMulticall3TryBlockAndAggregate =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iMulticall3Abi,
-    functionName: 'tryBlockAndAggregate',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iMulticall3Abi}__
- */
-export const useSimulateIMulticall3 = /*#__PURE__*/ createUseSimulateContract({
-  abi: iMulticall3Abi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"aggregate"`
- */
-export const useSimulateIMulticall3Aggregate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iMulticall3Abi,
-    functionName: 'aggregate',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"aggregate3"`
- */
-export const useSimulateIMulticall3Aggregate3 =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iMulticall3Abi,
-    functionName: 'aggregate3',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"aggregate3Value"`
- */
-export const useSimulateIMulticall3Aggregate3Value =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iMulticall3Abi,
-    functionName: 'aggregate3Value',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"blockAndAggregate"`
- */
-export const useSimulateIMulticall3BlockAndAggregate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iMulticall3Abi,
-    functionName: 'blockAndAggregate',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"tryAggregate"`
- */
-export const useSimulateIMulticall3TryAggregate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iMulticall3Abi,
-    functionName: 'tryAggregate',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iMulticall3Abi}__ and `functionName` set to `"tryBlockAndAggregate"`
- */
-export const useSimulateIMulticall3TryBlockAndAggregate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iMulticall3Abi,
-    functionName: 'tryBlockAndAggregate',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iPoolAbi}__
- */
-export const useReadIPool = /*#__PURE__*/ createUseReadContract({
-  abi: iPoolAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iPoolAbi}__ and `functionName` set to `"allocation"`
- */
-export const useReadIPoolAllocation = /*#__PURE__*/ createUseReadContract({
-  abi: iPoolAbi,
-  functionName: 'allocation',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iPoolAbi}__ and `functionName` set to `"refundableAmount"`
- */
-export const useReadIPoolRefundableAmount = /*#__PURE__*/ createUseReadContract(
-  { abi: iPoolAbi, functionName: 'refundableAmount' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iPoolAbi}__ and `functionName` set to `"uncappedAllocation"`
- */
-export const useReadIPoolUncappedAllocation =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iPoolAbi,
-    functionName: 'uncappedAllocation',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iPoolAbi}__
- */
-export const useWriteIPool = /*#__PURE__*/ createUseWriteContract({
-  abi: iPoolAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iPoolAbi}__ and `functionName` set to `"invest"`
- */
-export const useWriteIPoolInvest = /*#__PURE__*/ createUseWriteContract({
-  abi: iPoolAbi,
-  functionName: 'invest',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iPoolAbi}__ and `functionName` set to `"refund"`
- */
-export const useWriteIPoolRefund = /*#__PURE__*/ createUseWriteContract({
-  abi: iPoolAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iPoolAbi}__ and `functionName` set to `"setIndividualCap"`
- */
-export const useWriteIPoolSetIndividualCap =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iPoolAbi,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iPoolAbi}__
- */
-export const useSimulateIPool = /*#__PURE__*/ createUseSimulateContract({
-  abi: iPoolAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iPoolAbi}__ and `functionName` set to `"invest"`
- */
-export const useSimulateIPoolInvest = /*#__PURE__*/ createUseSimulateContract({
-  abi: iPoolAbi,
-  functionName: 'invest',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iPoolAbi}__ and `functionName` set to `"refund"`
- */
-export const useSimulateIPoolRefund = /*#__PURE__*/ createUseSimulateContract({
-  abi: iPoolAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iPoolAbi}__ and `functionName` set to `"setIndividualCap"`
- */
-export const useSimulateIPoolSetIndividualCap =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iPoolAbi,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iProjectAbi}__
- */
-export const useReadIProject = /*#__PURE__*/ createUseReadContract({
-  abi: iProjectAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"approvedByLegal"`
- */
-export const useReadIProjectApprovedByLegal =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iProjectAbi,
-    functionName: 'approvedByLegal',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"approvedByManager"`
- */
-export const useReadIProjectApprovedByManager =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iProjectAbi,
-    functionName: 'approvedByManager',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"hasTokens"`
- */
-export const useReadIProjectHasTokens = /*#__PURE__*/ createUseReadContract({
-  abi: iProjectAbi,
-  functionName: 'hasTokens',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"investmentTokenToToken"`
- */
-export const useReadIProjectInvestmentTokenToToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iProjectAbi,
-    functionName: 'investmentTokenToToken',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"isReadyForListing"`
- */
-export const useReadIProjectIsReadyForListing =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iProjectAbi,
-    functionName: 'isReadyForListing',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"peoplesPool"`
- */
-export const useReadIProjectPeoplesPool = /*#__PURE__*/ createUseReadContract({
-  abi: iProjectAbi,
-  functionName: 'peoplesPool',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"stakersPool"`
- */
-export const useReadIProjectStakersPool = /*#__PURE__*/ createUseReadContract({
-  abi: iProjectAbi,
-  functionName: 'stakersPool',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"tokenToInvestmentToken"`
- */
-export const useReadIProjectTokenToInvestmentToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iProjectAbi,
-    functionName: 'tokenToInvestmentToken',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iProjectAbi}__
- */
-export const useWriteIProject = /*#__PURE__*/ createUseWriteContract({
-  abi: iProjectAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"approveByLegal"`
- */
-export const useWriteIProjectApproveByLegal =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iProjectAbi,
-    functionName: 'approveByLegal',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"approveByManager"`
- */
-export const useWriteIProjectApproveByManager =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iProjectAbi,
-    functionName: 'approveByManager',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"invest"`
- */
-export const useWriteIProjectInvest = /*#__PURE__*/ createUseWriteContract({
-  abi: iProjectAbi,
-  functionName: 'invest',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iProjectAbi}__
- */
-export const useSimulateIProject = /*#__PURE__*/ createUseSimulateContract({
-  abi: iProjectAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"approveByLegal"`
- */
-export const useSimulateIProjectApproveByLegal =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iProjectAbi,
-    functionName: 'approveByLegal',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"approveByManager"`
- */
-export const useSimulateIProjectApproveByManager =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iProjectAbi,
-    functionName: 'approveByManager',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iProjectAbi}__ and `functionName` set to `"invest"`
- */
-export const useSimulateIProjectInvest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iProjectAbi,
-    functionName: 'invest',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iSaleAbi}__
- */
-export const useReadISale = /*#__PURE__*/ createUseReadContract({
-  abi: iSaleAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"allocation"`
- */
-export const useReadISaleAllocation = /*#__PURE__*/ createUseReadContract({
-  abi: iSaleAbi,
-  functionName: 'allocation',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"paymentToken"`
- */
-export const useReadISalePaymentToken = /*#__PURE__*/ createUseReadContract({
-  abi: iSaleAbi,
-  functionName: 'paymentToken',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"paymentTokenToToken"`
- */
-export const useReadISalePaymentTokenToToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iSaleAbi,
-    functionName: 'paymentTokenToToken',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"refundAmount"`
- */
-export const useReadISaleRefundAmount = /*#__PURE__*/ createUseReadContract({
-  abi: iSaleAbi,
-  functionName: 'refundAmount',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"token"`
- */
-export const useReadISaleToken = /*#__PURE__*/ createUseReadContract({
-  abi: iSaleAbi,
-  functionName: 'token',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"tokenToPaymentToken"`
- */
-export const useReadISaleTokenToPaymentToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iSaleAbi,
-    functionName: 'tokenToPaymentToken',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"uncappedAllocation"`
- */
-export const useReadISaleUncappedAllocation =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iSaleAbi,
-    functionName: 'uncappedAllocation',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iSaleAbi}__
- */
-export const useWriteISale = /*#__PURE__*/ createUseWriteContract({
-  abi: iSaleAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"buy"`
- */
-export const useWriteISaleBuy = /*#__PURE__*/ createUseWriteContract({
-  abi: iSaleAbi,
-  functionName: 'buy',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"refund"`
- */
-export const useWriteISaleRefund = /*#__PURE__*/ createUseWriteContract({
-  abi: iSaleAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"setIndividualCap"`
- */
-export const useWriteISaleSetIndividualCap =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iSaleAbi,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"withdraw"`
- */
-export const useWriteISaleWithdraw = /*#__PURE__*/ createUseWriteContract({
-  abi: iSaleAbi,
-  functionName: 'withdraw',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iSaleAbi}__
- */
-export const useSimulateISale = /*#__PURE__*/ createUseSimulateContract({
-  abi: iSaleAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"buy"`
- */
-export const useSimulateISaleBuy = /*#__PURE__*/ createUseSimulateContract({
-  abi: iSaleAbi,
-  functionName: 'buy',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"refund"`
- */
-export const useSimulateISaleRefund = /*#__PURE__*/ createUseSimulateContract({
-  abi: iSaleAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"setIndividualCap"`
- */
-export const useSimulateISaleSetIndividualCap =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iSaleAbi,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iSaleAbi}__ and `functionName` set to `"withdraw"`
- */
-export const useSimulateISaleWithdraw = /*#__PURE__*/ createUseSimulateContract(
-  { abi: iSaleAbi, functionName: 'withdraw' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iStakingAbi}__
- */
-export const useReadIStaking = /*#__PURE__*/ createUseReadContract({
-  abi: iStakingAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iStakingAbi}__ and `functionName` set to `"hasStaked"`
- */
-export const useReadIStakingHasStaked = /*#__PURE__*/ createUseReadContract({
-  abi: iStakingAbi,
-  functionName: 'hasStaked',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iStakingAbi}__ and `functionName` set to `"withdrawable"`
- */
-export const useReadIStakingWithdrawable = /*#__PURE__*/ createUseReadContract({
-  abi: iStakingAbi,
-  functionName: 'withdrawable',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iStakingAbi}__
- */
-export const useWriteIStaking = /*#__PURE__*/ createUseWriteContract({
-  abi: iStakingAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iStakingAbi}__ and `functionName` set to `"rebond"`
- */
-export const useWriteIStakingRebond = /*#__PURE__*/ createUseWriteContract({
-  abi: iStakingAbi,
-  functionName: 'rebond',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iStakingAbi}__ and `functionName` set to `"stake"`
- */
-export const useWriteIStakingStake = /*#__PURE__*/ createUseWriteContract({
-  abi: iStakingAbi,
-  functionName: 'stake',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iStakingAbi}__ and `functionName` set to `"unbond"`
- */
-export const useWriteIStakingUnbond = /*#__PURE__*/ createUseWriteContract({
-  abi: iStakingAbi,
-  functionName: 'unbond',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iStakingAbi}__ and `functionName` set to `"withdraw"`
- */
-export const useWriteIStakingWithdraw = /*#__PURE__*/ createUseWriteContract({
-  abi: iStakingAbi,
-  functionName: 'withdraw',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iStakingAbi}__
- */
-export const useSimulateIStaking = /*#__PURE__*/ createUseSimulateContract({
-  abi: iStakingAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iStakingAbi}__ and `functionName` set to `"rebond"`
- */
-export const useSimulateIStakingRebond =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iStakingAbi,
-    functionName: 'rebond',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iStakingAbi}__ and `functionName` set to `"stake"`
- */
-export const useSimulateIStakingStake = /*#__PURE__*/ createUseSimulateContract(
-  { abi: iStakingAbi, functionName: 'stake' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iStakingAbi}__ and `functionName` set to `"unbond"`
- */
-export const useSimulateIStakingUnbond =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iStakingAbi,
-    functionName: 'unbond',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iStakingAbi}__ and `functionName` set to `"withdraw"`
- */
-export const useSimulateIStakingWithdraw =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iStakingAbi,
-    functionName: 'withdraw',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iVestingAbi}__
- */
-export const useReadIVesting = /*#__PURE__*/ createUseReadContract({
-  abi: iVestingAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"claimable"`
- */
-export const useReadIVestingClaimable = /*#__PURE__*/ createUseReadContract({
-  abi: iVestingAbi,
-  functionName: 'claimable',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"claimed"`
- */
-export const useReadIVestingClaimed = /*#__PURE__*/ createUseReadContract({
-  abi: iVestingAbi,
-  functionName: 'claimed',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"privateSaleCap"`
- */
-export const useReadIVestingPrivateSaleCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iVestingAbi,
-    functionName: 'privateSaleCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"publicSaleCliffMonths"`
- */
-export const useReadIVestingPublicSaleCliffMonths =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iVestingAbi,
-    functionName: 'publicSaleCliffMonths',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"publicSaleVestingMonths"`
- */
-export const useReadIVestingPublicSaleVestingMonths =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iVestingAbi,
-    functionName: 'publicSaleVestingMonths',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"startTime"`
- */
-export const useReadIVestingStartTime = /*#__PURE__*/ createUseReadContract({
-  abi: iVestingAbi,
-  functionName: 'startTime',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"token"`
- */
-export const useReadIVestingToken = /*#__PURE__*/ createUseReadContract({
-  abi: iVestingAbi,
-  functionName: 'token',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"totalAllocated"`
- */
-export const useReadIVestingTotalAllocated =
-  /*#__PURE__*/ createUseReadContract({
-    abi: iVestingAbi,
-    functionName: 'totalAllocated',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iVestingAbi}__
- */
-export const useWriteIVesting = /*#__PURE__*/ createUseWriteContract({
-  abi: iVestingAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"claim"`
- */
-export const useWriteIVestingClaim = /*#__PURE__*/ createUseWriteContract({
-  abi: iVestingAbi,
-  functionName: 'claim',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"createPrivateSaleVest"`
- */
-export const useWriteIVestingCreatePrivateSaleVest =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: iVestingAbi,
-    functionName: 'createPrivateSaleVest',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"refund"`
- */
-export const useWriteIVestingRefund = /*#__PURE__*/ createUseWriteContract({
-  abi: iVestingAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iVestingAbi}__
- */
-export const useSimulateIVesting = /*#__PURE__*/ createUseSimulateContract({
-  abi: iVestingAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"claim"`
- */
-export const useSimulateIVestingClaim = /*#__PURE__*/ createUseSimulateContract(
-  { abi: iVestingAbi, functionName: 'claim' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"createPrivateSaleVest"`
- */
-export const useSimulateIVestingCreatePrivateSaleVest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iVestingAbi,
-    functionName: 'createPrivateSaleVest',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iVestingAbi}__ and `functionName` set to `"refund"`
- */
-export const useSimulateIVestingRefund =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: iVestingAbi,
-    functionName: 'refund',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockErc721Abi}__
- */
-export const useReadMockErc721 = /*#__PURE__*/ createUseReadContract({
-  abi: mockErc721Abi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"balanceOf"`
- */
-export const useReadMockErc721BalanceOf = /*#__PURE__*/ createUseReadContract({
-  abi: mockErc721Abi,
-  functionName: 'balanceOf',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"getApproved"`
- */
-export const useReadMockErc721GetApproved = /*#__PURE__*/ createUseReadContract(
-  { abi: mockErc721Abi, functionName: 'getApproved' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"isApprovedForAll"`
- */
-export const useReadMockErc721IsApprovedForAll =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockErc721Abi,
-    functionName: 'isApprovedForAll',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"name"`
- */
-export const useReadMockErc721Name = /*#__PURE__*/ createUseReadContract({
-  abi: mockErc721Abi,
-  functionName: 'name',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"ownerOf"`
- */
-export const useReadMockErc721OwnerOf = /*#__PURE__*/ createUseReadContract({
-  abi: mockErc721Abi,
-  functionName: 'ownerOf',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"supportsInterface"`
- */
-export const useReadMockErc721SupportsInterface =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockErc721Abi,
-    functionName: 'supportsInterface',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"symbol"`
- */
-export const useReadMockErc721Symbol = /*#__PURE__*/ createUseReadContract({
-  abi: mockErc721Abi,
-  functionName: 'symbol',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"tokenURI"`
- */
-export const useReadMockErc721TokenUri = /*#__PURE__*/ createUseReadContract({
-  abi: mockErc721Abi,
-  functionName: 'tokenURI',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockErc721Abi}__
- */
-export const useWriteMockErc721 = /*#__PURE__*/ createUseWriteContract({
-  abi: mockErc721Abi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"approve"`
- */
-export const useWriteMockErc721Approve = /*#__PURE__*/ createUseWriteContract({
-  abi: mockErc721Abi,
-  functionName: 'approve',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"initialize"`
- */
-export const useWriteMockErc721Initialize =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: mockErc721Abi,
-    functionName: 'initialize',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"safeTransferFrom"`
- */
-export const useWriteMockErc721SafeTransferFrom =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: mockErc721Abi,
-    functionName: 'safeTransferFrom',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"setApprovalForAll"`
- */
-export const useWriteMockErc721SetApprovalForAll =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: mockErc721Abi,
-    functionName: 'setApprovalForAll',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"transferFrom"`
- */
-export const useWriteMockErc721TransferFrom =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: mockErc721Abi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockErc721Abi}__
- */
-export const useSimulateMockErc721 = /*#__PURE__*/ createUseSimulateContract({
-  abi: mockErc721Abi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"approve"`
- */
-export const useSimulateMockErc721Approve =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockErc721Abi,
-    functionName: 'approve',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"initialize"`
- */
-export const useSimulateMockErc721Initialize =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockErc721Abi,
-    functionName: 'initialize',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"safeTransferFrom"`
- */
-export const useSimulateMockErc721SafeTransferFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockErc721Abi,
-    functionName: 'safeTransferFrom',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"setApprovalForAll"`
- */
-export const useSimulateMockErc721SetApprovalForAll =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockErc721Abi,
-    functionName: 'setApprovalForAll',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockErc721Abi}__ and `functionName` set to `"transferFrom"`
- */
-export const useSimulateMockErc721TransferFrom =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockErc721Abi,
-    functionName: 'transferFrom',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link mockErc721Abi}__
- */
-export const useWatchMockErc721Event =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: mockErc721Abi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link mockErc721Abi}__ and `eventName` set to `"Approval"`
- */
-export const useWatchMockErc721ApprovalEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: mockErc721Abi,
-    eventName: 'Approval',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link mockErc721Abi}__ and `eventName` set to `"ApprovalForAll"`
- */
-export const useWatchMockErc721ApprovalForAllEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: mockErc721Abi,
-    eventName: 'ApprovalForAll',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link mockErc721Abi}__ and `eventName` set to `"Transfer"`
- */
-export const useWatchMockErc721TransferEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: mockErc721Abi,
-    eventName: 'Transfer',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__
- */
-export const useReadMockProject = /*#__PURE__*/ createUseReadContract({
-  abi: mockProjectAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approveByLegal"`
- */
-export const useReadMockProjectApproveByLegal =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockProjectAbi,
-    functionName: 'approveByLegal',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approveByManager"`
- */
-export const useReadMockProjectApproveByManager =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockProjectAbi,
-    functionName: 'approveByManager',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approvedByLegal"`
- */
-export const useReadMockProjectApprovedByLegal =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockProjectAbi,
-    functionName: 'approvedByLegal',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"approvedByManager"`
- */
-export const useReadMockProjectApprovedByManager =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockProjectAbi,
-    functionName: 'approvedByManager',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"hasTokens"`
- */
-export const useReadMockProjectHasTokens = /*#__PURE__*/ createUseReadContract({
-  abi: mockProjectAbi,
-  functionName: 'hasTokens',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"investmentTokenToToken"`
- */
-export const useReadMockProjectInvestmentTokenToToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockProjectAbi,
-    functionName: 'investmentTokenToToken',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"isReadyForListing"`
- */
-export const useReadMockProjectIsReadyForListing =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockProjectAbi,
-    functionName: 'isReadyForListing',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"merkleRoot"`
- */
-export const useReadMockProjectMerkleRoot = /*#__PURE__*/ createUseReadContract(
-  { abi: mockProjectAbi, functionName: 'merkleRoot' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"peoplesPool"`
- */
-export const useReadMockProjectPeoplesPool =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockProjectAbi,
-    functionName: 'peoplesPool',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"stakersPool"`
- */
-export const useReadMockProjectStakersPool =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockProjectAbi,
-    functionName: 'stakersPool',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"tokenToInvestmentToken"`
- */
-export const useReadMockProjectTokenToInvestmentToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockProjectAbi,
-    functionName: 'tokenToInvestmentToken',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockProjectAbi}__
- */
-export const useWriteMockProject = /*#__PURE__*/ createUseWriteContract({
-  abi: mockProjectAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"invest"`
- */
-export const useWriteMockProjectInvest = /*#__PURE__*/ createUseWriteContract({
-  abi: mockProjectAbi,
-  functionName: 'invest',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"test_createPeoplesPool"`
- */
-export const useWriteMockProjectTestCreatePeoplesPool =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: mockProjectAbi,
-    functionName: 'test_createPeoplesPool',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"test_createStakersPool"`
- */
-export const useWriteMockProjectTestCreateStakersPool =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: mockProjectAbi,
-    functionName: 'test_createStakersPool',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockProjectAbi}__
- */
-export const useSimulateMockProject = /*#__PURE__*/ createUseSimulateContract({
-  abi: mockProjectAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"invest"`
- */
-export const useSimulateMockProjectInvest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockProjectAbi,
-    functionName: 'invest',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"test_createPeoplesPool"`
- */
-export const useSimulateMockProjectTestCreatePeoplesPool =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockProjectAbi,
-    functionName: 'test_createPeoplesPool',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockProjectAbi}__ and `functionName` set to `"test_createStakersPool"`
- */
-export const useSimulateMockProjectTestCreateStakersPool =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockProjectAbi,
-    functionName: 'test_createStakersPool',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__
- */
-export const useReadMockSale = /*#__PURE__*/ createUseReadContract({
-  abi: mockSaleAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"allocation"`
- */
-export const useReadMockSaleAllocation = /*#__PURE__*/ createUseReadContract({
-  abi: mockSaleAbi,
-  functionName: 'allocation',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"buy"`
- */
-export const useReadMockSaleBuy = /*#__PURE__*/ createUseReadContract({
-  abi: mockSaleAbi,
-  functionName: 'buy',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"calls"`
- */
-export const useReadMockSaleCalls = /*#__PURE__*/ createUseReadContract({
-  abi: mockSaleAbi,
-  functionName: 'calls',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"paymentToken"`
- */
-export const useReadMockSalePaymentToken = /*#__PURE__*/ createUseReadContract({
-  abi: mockSaleAbi,
-  functionName: 'paymentToken',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"paymentTokenToToken"`
- */
-export const useReadMockSalePaymentTokenToToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockSaleAbi,
-    functionName: 'paymentTokenToToken',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"refundAmount"`
- */
-export const useReadMockSaleRefundAmount = /*#__PURE__*/ createUseReadContract({
-  abi: mockSaleAbi,
-  functionName: 'refundAmount',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"setIndividualCap"`
- */
-export const useReadMockSaleSetIndividualCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockSaleAbi,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"supportsInterface"`
- */
-export const useReadMockSaleSupportsInterface =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockSaleAbi,
-    functionName: 'supportsInterface',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"test_Called"`
- */
-export const useReadMockSaleTestCalled = /*#__PURE__*/ createUseReadContract({
-  abi: mockSaleAbi,
-  functionName: 'test_Called',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"token"`
- */
-export const useReadMockSaleToken = /*#__PURE__*/ createUseReadContract({
-  abi: mockSaleAbi,
-  functionName: 'token',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"tokenToPaymentToken"`
- */
-export const useReadMockSaleTokenToPaymentToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockSaleAbi,
-    functionName: 'tokenToPaymentToken',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"uncappedAllocation"`
- */
-export const useReadMockSaleUncappedAllocation =
-  /*#__PURE__*/ createUseReadContract({
-    abi: mockSaleAbi,
-    functionName: 'uncappedAllocation',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"withdraw"`
- */
-export const useReadMockSaleWithdraw = /*#__PURE__*/ createUseReadContract({
-  abi: mockSaleAbi,
-  functionName: 'withdraw',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockSaleAbi}__
- */
-export const useWriteMockSale = /*#__PURE__*/ createUseWriteContract({
-  abi: mockSaleAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"refund"`
- */
-export const useWriteMockSaleRefund = /*#__PURE__*/ createUseWriteContract({
-  abi: mockSaleAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"test_addAllocation"`
- */
-export const useWriteMockSaleTestAddAllocation =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: mockSaleAbi,
-    functionName: 'test_addAllocation',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"test_addRefund"`
- */
-export const useWriteMockSaleTestAddRefund =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: mockSaleAbi,
-    functionName: 'test_addRefund',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockSaleAbi}__
- */
-export const useSimulateMockSale = /*#__PURE__*/ createUseSimulateContract({
-  abi: mockSaleAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"refund"`
- */
-export const useSimulateMockSaleRefund =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockSaleAbi,
-    functionName: 'refund',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"test_addAllocation"`
- */
-export const useSimulateMockSaleTestAddAllocation =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockSaleAbi,
-    functionName: 'test_addAllocation',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockSaleAbi}__ and `functionName` set to `"test_addRefund"`
- */
-export const useSimulateMockSaleTestAddRefund =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: mockSaleAbi,
-    functionName: 'test_addRefund',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pausableAbi}__
- */
-export const useReadPausable = /*#__PURE__*/ createUseReadContract({
-  abi: pausableAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link pausableAbi}__ and `functionName` set to `"paused"`
- */
-export const useReadPausablePaused = /*#__PURE__*/ createUseReadContract({
-  abi: pausableAbi,
-  functionName: 'paused',
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link pausableAbi}__
- */
-export const useWatchPausableEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: pausableAbi,
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link pausableAbi}__ and `eventName` set to `"Paused"`
- */
-export const useWatchPausablePausedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: pausableAbi,
-    eventName: 'Paused',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link pausableAbi}__ and `eventName` set to `"Unpaused"`
- */
-export const useWatchPausableUnpausedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: pausableAbi,
-    eventName: 'Unpaused',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__
- */
-export const useReadPeoplesPool = /*#__PURE__*/ createUseReadContract({
-  abi: peoplesPoolAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
- */
-export const useReadPeoplesPoolCapValidationGasLimit =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'CAP_VALIDATION_GAS_LIMIT',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"allocation"`
- */
-export const useReadPeoplesPoolAllocation = /*#__PURE__*/ createUseReadContract(
-  { abi: peoplesPoolAbi, functionName: 'allocation' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"individualCap"`
- */
-export const useReadPeoplesPoolIndividualCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'individualCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"investmentToken"`
- */
-export const useReadPeoplesPoolInvestmentToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'investmentToken',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"investorAmountAt"`
- */
-export const useReadPeoplesPoolInvestorAmountAt =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'investorAmountAt',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"investorCount"`
- */
-export const useReadPeoplesPoolInvestorCount =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'investorCount',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"project"`
- */
-export const useReadPeoplesPoolProject = /*#__PURE__*/ createUseReadContract({
-  abi: peoplesPoolAbi,
-  functionName: 'project',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"refundableAmount"`
- */
-export const useReadPeoplesPoolRefundableAmount =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'refundableAmount',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"risingTideCache"`
- */
-export const useReadPeoplesPoolRisingTideCache =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'risingTideCache',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"risingTideState"`
- */
-export const useReadPeoplesPoolRisingTideState =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'risingTideState',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"risingTide_applyCap"`
- */
-export const useReadPeoplesPoolRisingTideApplyCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'risingTide_applyCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"risingTide_isValidCap"`
- */
-export const useReadPeoplesPoolRisingTideIsValidCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'risingTide_isValidCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
- */
-export const useReadPeoplesPoolRisingTideTotalAllocatedUncapped =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'risingTide_totalAllocatedUncapped',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"risingTide_totalCap"`
- */
-export const useReadPeoplesPoolRisingTideTotalCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'risingTide_totalCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"risingTide_validating"`
- */
-export const useReadPeoplesPoolRisingTideValidating =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'risingTide_validating',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"saleSupply"`
- */
-export const useReadPeoplesPoolSaleSupply = /*#__PURE__*/ createUseReadContract(
-  { abi: peoplesPoolAbi, functionName: 'saleSupply' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"totalUncappedAllocations"`
- */
-export const useReadPeoplesPoolTotalUncappedAllocations =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'totalUncappedAllocations',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"uncappedAllocation"`
- */
-export const useReadPeoplesPoolUncappedAllocation =
-  /*#__PURE__*/ createUseReadContract({
-    abi: peoplesPoolAbi,
-    functionName: 'uncappedAllocation',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link peoplesPoolAbi}__
- */
-export const useWritePeoplesPool = /*#__PURE__*/ createUseWriteContract({
-  abi: peoplesPoolAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"invest"`
- */
-export const useWritePeoplesPoolInvest = /*#__PURE__*/ createUseWriteContract({
-  abi: peoplesPoolAbi,
-  functionName: 'invest',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"refund"`
- */
-export const useWritePeoplesPoolRefund = /*#__PURE__*/ createUseWriteContract({
-  abi: peoplesPoolAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"risingTide_validate"`
- */
-export const useWritePeoplesPoolRisingTideValidate =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: peoplesPoolAbi,
-    functionName: 'risingTide_validate',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"setIndividualCap"`
- */
-export const useWritePeoplesPoolSetIndividualCap =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: peoplesPoolAbi,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link peoplesPoolAbi}__
- */
-export const useSimulatePeoplesPool = /*#__PURE__*/ createUseSimulateContract({
-  abi: peoplesPoolAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"invest"`
- */
-export const useSimulatePeoplesPoolInvest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: peoplesPoolAbi,
-    functionName: 'invest',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"refund"`
- */
-export const useSimulatePeoplesPoolRefund =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: peoplesPoolAbi,
-    functionName: 'refund',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"risingTide_validate"`
- */
-export const useSimulatePeoplesPoolRisingTideValidate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: peoplesPoolAbi,
-    functionName: 'risingTide_validate',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link peoplesPoolAbi}__ and `functionName` set to `"setIndividualCap"`
- */
-export const useSimulatePeoplesPoolSetIndividualCap =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: peoplesPoolAbi,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link peoplesPoolAbi}__
- */
-export const useWatchPeoplesPoolEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: peoplesPoolAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link peoplesPoolAbi}__ and `eventName` set to `"Refund"`
- */
-export const useWatchPeoplesPoolRefundEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: peoplesPoolAbi,
-    eventName: 'Refund',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__
- */
-export const useReadPool = /*#__PURE__*/ createUseReadContract({ abi: poolAbi })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
- */
-export const useReadPoolCapValidationGasLimit =
-  /*#__PURE__*/ createUseReadContract({
-    abi: poolAbi,
-    functionName: 'CAP_VALIDATION_GAS_LIMIT',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"allocation"`
- */
-export const useReadPoolAllocation = /*#__PURE__*/ createUseReadContract({
-  abi: poolAbi,
-  functionName: 'allocation',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"individualCap"`
- */
-export const useReadPoolIndividualCap = /*#__PURE__*/ createUseReadContract({
-  abi: poolAbi,
-  functionName: 'individualCap',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"investmentToken"`
- */
-export const useReadPoolInvestmentToken = /*#__PURE__*/ createUseReadContract({
-  abi: poolAbi,
-  functionName: 'investmentToken',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"investorAmountAt"`
- */
-export const useReadPoolInvestorAmountAt = /*#__PURE__*/ createUseReadContract({
-  abi: poolAbi,
-  functionName: 'investorAmountAt',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"investorCount"`
- */
-export const useReadPoolInvestorCount = /*#__PURE__*/ createUseReadContract({
-  abi: poolAbi,
-  functionName: 'investorCount',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"project"`
- */
-export const useReadPoolProject = /*#__PURE__*/ createUseReadContract({
-  abi: poolAbi,
-  functionName: 'project',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"refundableAmount"`
- */
-export const useReadPoolRefundableAmount = /*#__PURE__*/ createUseReadContract({
-  abi: poolAbi,
-  functionName: 'refundableAmount',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"risingTideCache"`
- */
-export const useReadPoolRisingTideCache = /*#__PURE__*/ createUseReadContract({
-  abi: poolAbi,
-  functionName: 'risingTideCache',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"risingTideState"`
- */
-export const useReadPoolRisingTideState = /*#__PURE__*/ createUseReadContract({
-  abi: poolAbi,
-  functionName: 'risingTideState',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"risingTide_applyCap"`
- */
-export const useReadPoolRisingTideApplyCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: poolAbi,
-    functionName: 'risingTide_applyCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"risingTide_isValidCap"`
- */
-export const useReadPoolRisingTideIsValidCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: poolAbi,
-    functionName: 'risingTide_isValidCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
- */
-export const useReadPoolRisingTideTotalAllocatedUncapped =
-  /*#__PURE__*/ createUseReadContract({
-    abi: poolAbi,
-    functionName: 'risingTide_totalAllocatedUncapped',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"risingTide_totalCap"`
- */
-export const useReadPoolRisingTideTotalCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: poolAbi,
-    functionName: 'risingTide_totalCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"risingTide_validating"`
- */
-export const useReadPoolRisingTideValidating =
-  /*#__PURE__*/ createUseReadContract({
-    abi: poolAbi,
-    functionName: 'risingTide_validating',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"saleSupply"`
- */
-export const useReadPoolSaleSupply = /*#__PURE__*/ createUseReadContract({
-  abi: poolAbi,
-  functionName: 'saleSupply',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"totalUncappedAllocations"`
- */
-export const useReadPoolTotalUncappedAllocations =
-  /*#__PURE__*/ createUseReadContract({
-    abi: poolAbi,
-    functionName: 'totalUncappedAllocations',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"uncappedAllocation"`
- */
-export const useReadPoolUncappedAllocation =
-  /*#__PURE__*/ createUseReadContract({
-    abi: poolAbi,
-    functionName: 'uncappedAllocation',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link poolAbi}__
- */
-export const useWritePool = /*#__PURE__*/ createUseWriteContract({
-  abi: poolAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"invest"`
- */
-export const useWritePoolInvest = /*#__PURE__*/ createUseWriteContract({
-  abi: poolAbi,
-  functionName: 'invest',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"refund"`
- */
-export const useWritePoolRefund = /*#__PURE__*/ createUseWriteContract({
-  abi: poolAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"risingTide_validate"`
- */
-export const useWritePoolRisingTideValidate =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: poolAbi,
-    functionName: 'risingTide_validate',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"setIndividualCap"`
- */
-export const useWritePoolSetIndividualCap =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: poolAbi,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link poolAbi}__
- */
-export const useSimulatePool = /*#__PURE__*/ createUseSimulateContract({
-  abi: poolAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"invest"`
- */
-export const useSimulatePoolInvest = /*#__PURE__*/ createUseSimulateContract({
-  abi: poolAbi,
-  functionName: 'invest',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"refund"`
- */
-export const useSimulatePoolRefund = /*#__PURE__*/ createUseSimulateContract({
-  abi: poolAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"risingTide_validate"`
- */
-export const useSimulatePoolRisingTideValidate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: poolAbi,
-    functionName: 'risingTide_validate',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link poolAbi}__ and `functionName` set to `"setIndividualCap"`
- */
-export const useSimulatePoolSetIndividualCap =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: poolAbi,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link poolAbi}__
- */
-export const useWatchPoolEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: poolAbi,
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link poolAbi}__ and `eventName` set to `"Refund"`
- */
-export const useWatchPoolRefundEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: poolAbi,
-    eventName: 'Refund',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__
- */
-export const useReadProject = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"MUL"`
- */
-export const useReadProjectMul = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-  functionName: 'MUL',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"approvedByLegal"`
- */
-export const useReadProjectApprovedByLegal =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectAbi,
-    functionName: 'approvedByLegal',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"approvedByManager"`
- */
-export const useReadProjectApprovedByManager =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectAbi,
-    functionName: 'approvedByManager',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"controller"`
- */
-export const useReadProjectController = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-  functionName: 'controller',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"description"`
- */
-export const useReadProjectDescription = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-  functionName: 'description',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"hasTokens"`
- */
-export const useReadProjectHasTokens = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-  functionName: 'hasTokens',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"investmentTokenToToken"`
- */
-export const useReadProjectInvestmentTokenToToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectAbi,
-    functionName: 'investmentTokenToToken',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"isReadyForListing"`
- */
-export const useReadProjectIsReadyForListing =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectAbi,
-    functionName: 'isReadyForListing',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"merkleRoot"`
- */
-export const useReadProjectMerkleRoot = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-  functionName: 'merkleRoot',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"peoplesPool"`
- */
-export const useReadProjectPeoplesPool = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-  functionName: 'peoplesPool',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"rate"`
- */
-export const useReadProjectRate = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-  functionName: 'rate',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"saleSupply"`
- */
-export const useReadProjectSaleSupply = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-  functionName: 'saleSupply',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"stakersPool"`
- */
-export const useReadProjectStakersPool = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-  functionName: 'stakersPool',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"supportsInterface"`
- */
-export const useReadProjectSupportsInterface =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectAbi,
-    functionName: 'supportsInterface',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"token"`
- */
-export const useReadProjectToken = /*#__PURE__*/ createUseReadContract({
-  abi: projectAbi,
-  functionName: 'token',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"tokenToInvestmentToken"`
- */
-export const useReadProjectTokenToInvestmentToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectAbi,
-    functionName: 'tokenToInvestmentToken',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectAbi}__
- */
-export const useWriteProject = /*#__PURE__*/ createUseWriteContract({
-  abi: projectAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"approveByLegal"`
- */
-export const useWriteProjectApproveByLegal =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: projectAbi,
-    functionName: 'approveByLegal',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"approveByManager"`
- */
-export const useWriteProjectApproveByManager =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: projectAbi,
-    functionName: 'approveByManager',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"invest"`
- */
-export const useWriteProjectInvest = /*#__PURE__*/ createUseWriteContract({
-  abi: projectAbi,
-  functionName: 'invest',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectAbi}__
- */
-export const useSimulateProject = /*#__PURE__*/ createUseSimulateContract({
-  abi: projectAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"approveByLegal"`
- */
-export const useSimulateProjectApproveByLegal =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: projectAbi,
-    functionName: 'approveByLegal',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"approveByManager"`
- */
-export const useSimulateProjectApproveByManager =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: projectAbi,
-    functionName: 'approveByManager',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectAbi}__ and `functionName` set to `"invest"`
- */
-export const useSimulateProjectInvest = /*#__PURE__*/ createUseSimulateContract(
-  { abi: projectAbi, functionName: 'invest' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectHelpersAbi}__
- */
-export const useReadProjectHelpers = /*#__PURE__*/ createUseReadContract({
-  abi: projectHelpersAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectHelpersAbi}__ and `functionName` set to `"MUL"`
- */
-export const useReadProjectHelpersMul = /*#__PURE__*/ createUseReadContract({
-  abi: projectHelpersAbi,
-  functionName: 'MUL',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__
- */
-export const useReadProjectTest = /*#__PURE__*/ createUseReadContract({
-  abi: projectTestAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"IS_TEST"`
- */
-export const useReadProjectTestIsTest = /*#__PURE__*/ createUseReadContract({
-  abi: projectTestAbi,
-  functionName: 'IS_TEST',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"excludeArtifacts"`
- */
-export const useReadProjectTestExcludeArtifacts =
+export const useReadCtzndSaleTestExcludeArtifacts =
   /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'excludeArtifacts',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"excludeContracts"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"excludeContracts"`
  */
-export const useReadProjectTestExcludeContracts =
+export const useReadCtzndSaleTestExcludeContracts =
   /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'excludeContracts',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"excludeSenders"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"excludeSenders"`
  */
-export const useReadProjectTestExcludeSenders =
+export const useReadCtzndSaleTestExcludeSenders =
   /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'excludeSenders',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"proofs"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
  */
-export const useReadProjectTestProofs = /*#__PURE__*/ createUseReadContract({
-  abi: projectTestAbi,
-  functionName: 'proofs',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
- */
-export const useReadProjectTestTargetArtifactSelectors =
+export const useReadCtzndSaleTestTargetArtifactSelectors =
   /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'targetArtifactSelectors',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetArtifacts"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"targetArtifacts"`
  */
-export const useReadProjectTestTargetArtifacts =
+export const useReadCtzndSaleTestTargetArtifacts =
   /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'targetArtifacts',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetContracts"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"targetContracts"`
  */
-export const useReadProjectTestTargetContracts =
+export const useReadCtzndSaleTestTargetContracts =
   /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'targetContracts',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetInterfaces"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"targetInterfaces"`
  */
-export const useReadProjectTestTargetInterfaces =
+export const useReadCtzndSaleTestTargetInterfaces =
   /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'targetInterfaces',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetSelectors"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"targetSelectors"`
  */
-export const useReadProjectTestTargetSelectors =
+export const useReadCtzndSaleTestTargetSelectors =
   /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'targetSelectors',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"targetSenders"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"targetSenders"`
  */
-export const useReadProjectTestTargetSenders =
+export const useReadCtzndSaleTestTargetSenders =
   /*#__PURE__*/ createUseReadContract({
-    abi: projectTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'targetSenders',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectTestAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__
  */
-export const useWriteProjectTest = /*#__PURE__*/ createUseWriteContract({
-  abi: projectTestAbi,
+export const useWriteCtzndSaleTest = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndSaleTestAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"failed"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"failed"`
  */
-export const useWriteProjectTestFailed = /*#__PURE__*/ createUseWriteContract({
-  abi: projectTestAbi,
-  functionName: 'failed',
-})
+export const useWriteCtzndSaleTestFailed = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndSaleTestAbi, functionName: 'failed' },
+)
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"setUp"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"setUp"`
  */
-export const useWriteProjectTestSetUp = /*#__PURE__*/ createUseWriteContract({
-  abi: projectTestAbi,
+export const useWriteCtzndSaleTestSetUp = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndSaleTestAbi,
   functionName: 'setUp',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"testInvest"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"test_InitialContribution"`
  */
-export const useWriteProjectTestTestInvest =
+export const useWriteCtzndSaleTestTestInitialContribution =
   /*#__PURE__*/ createUseWriteContract({
-    abi: projectTestAbi,
-    functionName: 'testInvest',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"testInvestShouldRevertWithInvalidProof"`
- */
-export const useWriteProjectTestTestInvestShouldRevertWithInvalidProof =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: projectTestAbi,
-    functionName: 'testInvestShouldRevertWithInvalidProof',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectTestAbi}__
- */
-export const useSimulateProjectTest = /*#__PURE__*/ createUseSimulateContract({
-  abi: projectTestAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"failed"`
- */
-export const useSimulateProjectTestFailed =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: projectTestAbi,
-    functionName: 'failed',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"setUp"`
- */
-export const useSimulateProjectTestSetUp =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: projectTestAbi,
-    functionName: 'setUp',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"testInvest"`
- */
-export const useSimulateProjectTestTestInvest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: projectTestAbi,
-    functionName: 'testInvest',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link projectTestAbi}__ and `functionName` set to `"testInvestShouldRevertWithInvalidProof"`
- */
-export const useSimulateProjectTestTestInvestShouldRevertWithInvalidProof =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: projectTestAbi,
-    functionName: 'testInvestShouldRevertWithInvalidProof',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__
- */
-export const useWatchProjectTestEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: projectTestAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log"`
- */
-export const useWatchProjectTestLogEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_address"`
- */
-export const useWatchProjectTestLogAddressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_address',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_array"`
- */
-export const useWatchProjectTestLogArrayEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_array',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_bytes"`
- */
-export const useWatchProjectTestLogBytesEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_bytes',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_bytes32"`
- */
-export const useWatchProjectTestLogBytes32Event =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_bytes32',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_int"`
- */
-export const useWatchProjectTestLogIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_address"`
- */
-export const useWatchProjectTestLogNamedAddressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_address',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_array"`
- */
-export const useWatchProjectTestLogNamedArrayEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_array',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_bytes"`
- */
-export const useWatchProjectTestLogNamedBytesEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_bytes',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_bytes32"`
- */
-export const useWatchProjectTestLogNamedBytes32Event =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_bytes32',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
- */
-export const useWatchProjectTestLogNamedDecimalIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_decimal_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
- */
-export const useWatchProjectTestLogNamedDecimalUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_decimal_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_int"`
- */
-export const useWatchProjectTestLogNamedIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_string"`
- */
-export const useWatchProjectTestLogNamedStringEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_string',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_named_uint"`
- */
-export const useWatchProjectTestLogNamedUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_named_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_string"`
- */
-export const useWatchProjectTestLogStringEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_string',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"log_uint"`
- */
-export const useWatchProjectTestLogUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'log_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link projectTestAbi}__ and `eventName` set to `"logs"`
- */
-export const useWatchProjectTestLogsEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: projectTestAbi,
-    eventName: 'logs',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__
- */
-export const useReadProjectVoting = /*#__PURE__*/ createUseReadContract({
-  abi: projectVotingAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"projectToVotesIndex"`
- */
-export const useReadProjectVotingProjectToVotesIndex =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'projectToVotesIndex',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"projectVoteCount"`
- */
-export const useReadProjectVotingProjectVoteCount =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'projectVoteCount',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"projectVoting_finalBonus"`
- */
-export const useReadProjectVotingProjectVotingFinalBonus =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'projectVoting_finalBonus',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"projectVoting_initialBonus"`
- */
-export const useReadProjectVotingProjectVotingInitialBonus =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'projectVoting_initialBonus',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"projectVoting_projects"`
- */
-export const useReadProjectVotingProjectVotingProjects =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'projectVoting_projects',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"projectVoting_singleSlotDuration"`
- */
-export const useReadProjectVotingProjectVotingSingleSlotDuration =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'projectVoting_singleSlotDuration',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"projectVoting_voteLimitPerUser"`
- */
-export const useReadProjectVotingProjectVotingVoteLimitPerUser =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'projectVoting_voteLimitPerUser',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"projectVoting_votingPeriod"`
- */
-export const useReadProjectVotingProjectVotingVotingPeriod =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'projectVoting_votingPeriod',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"userHasVotedForProject"`
- */
-export const useReadProjectVotingUserHasVotedForProject =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'userHasVotedForProject',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"userVoteCount"`
- */
-export const useReadProjectVotingUserVoteCount =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'userVoteCount',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"votes"`
- */
-export const useReadProjectVotingVotes = /*#__PURE__*/ createUseReadContract({
-  abi: projectVotingAbi,
-  functionName: 'votes',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"votesIndexToProject"`
- */
-export const useReadProjectVotingVotesIndexToProject =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'votesIndexToProject',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link projectVotingAbi}__ and `functionName` set to `"weightedProjectVoteCount"`
- */
-export const useReadProjectVotingWeightedProjectVoteCount =
-  /*#__PURE__*/ createUseReadContract({
-    abi: projectVotingAbi,
-    functionName: 'weightedProjectVoteCount',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__
- */
-export const useReadRisingTide = /*#__PURE__*/ createUseReadContract({
-  abi: risingTideAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
- */
-export const useReadRisingTideCapValidationGasLimit =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'CAP_VALIDATION_GAS_LIMIT',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"individualCap"`
- */
-export const useReadRisingTideIndividualCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'individualCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"investorAmountAt"`
- */
-export const useReadRisingTideInvestorAmountAt =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'investorAmountAt',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"investorCount"`
- */
-export const useReadRisingTideInvestorCount =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'investorCount',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"risingTideCache"`
- */
-export const useReadRisingTideRisingTideCache =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'risingTideCache',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"risingTideState"`
- */
-export const useReadRisingTideRisingTideState =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'risingTideState',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"risingTide_applyCap"`
- */
-export const useReadRisingTideRisingTideApplyCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'risingTide_applyCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"risingTide_isValidCap"`
- */
-export const useReadRisingTideRisingTideIsValidCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'risingTide_isValidCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
- */
-export const useReadRisingTideRisingTideTotalAllocatedUncapped =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'risingTide_totalAllocatedUncapped',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"risingTide_totalCap"`
- */
-export const useReadRisingTideRisingTideTotalCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'risingTide_totalCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"risingTide_validating"`
- */
-export const useReadRisingTideRisingTideValidating =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideAbi,
-    functionName: 'risingTide_validating',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link risingTideAbi}__
- */
-export const useWriteRisingTide = /*#__PURE__*/ createUseWriteContract({
-  abi: risingTideAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"risingTide_validate"`
- */
-export const useWriteRisingTideRisingTideValidate =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: risingTideAbi,
-    functionName: 'risingTide_validate',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link risingTideAbi}__
- */
-export const useSimulateRisingTide = /*#__PURE__*/ createUseSimulateContract({
-  abi: risingTideAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link risingTideAbi}__ and `functionName` set to `"risingTide_validate"`
- */
-export const useSimulateRisingTideRisingTideValidate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: risingTideAbi,
-    functionName: 'risingTide_validate',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__
- */
-export const useReadRisingTideTest = /*#__PURE__*/ createUseReadContract({
-  abi: risingTideTestAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"IS_TEST"`
- */
-export const useReadRisingTideTestIsTest = /*#__PURE__*/ createUseReadContract({
-  abi: risingTideTestAbi,
-  functionName: 'IS_TEST',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"excludeArtifacts"`
- */
-export const useReadRisingTideTestExcludeArtifacts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideTestAbi,
-    functionName: 'excludeArtifacts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"excludeContracts"`
- */
-export const useReadRisingTideTestExcludeContracts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideTestAbi,
-    functionName: 'excludeContracts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"excludeSenders"`
- */
-export const useReadRisingTideTestExcludeSenders =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideTestAbi,
-    functionName: 'excludeSenders',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
- */
-export const useReadRisingTideTestTargetArtifactSelectors =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideTestAbi,
-    functionName: 'targetArtifactSelectors',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"targetArtifacts"`
- */
-export const useReadRisingTideTestTargetArtifacts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideTestAbi,
-    functionName: 'targetArtifacts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"targetContracts"`
- */
-export const useReadRisingTideTestTargetContracts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideTestAbi,
-    functionName: 'targetContracts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"targetInterfaces"`
- */
-export const useReadRisingTideTestTargetInterfaces =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideTestAbi,
-    functionName: 'targetInterfaces',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"targetSelectors"`
- */
-export const useReadRisingTideTestTargetSelectors =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideTestAbi,
-    functionName: 'targetSelectors',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"targetSenders"`
- */
-export const useReadRisingTideTestTargetSenders =
-  /*#__PURE__*/ createUseReadContract({
-    abi: risingTideTestAbi,
-    functionName: 'targetSenders',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link risingTideTestAbi}__
- */
-export const useWriteRisingTideTest = /*#__PURE__*/ createUseWriteContract({
-  abi: risingTideTestAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"failed"`
- */
-export const useWriteRisingTideTestFailed =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: risingTideTestAbi,
-    functionName: 'failed',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"setUp"`
- */
-export const useWriteRisingTideTestSetUp = /*#__PURE__*/ createUseWriteContract(
-  { abi: risingTideTestAbi, functionName: 'setUp' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"testGitbookExampleCorrectly"`
- */
-export const useWriteRisingTideTestTestGitbookExampleCorrectly =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: risingTideTestAbi,
-    functionName: 'testGitbookExampleCorrectly',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"testGitbookExampleFailsWithLargerCap"`
- */
-export const useWriteRisingTideTestTestGitbookExampleFailsWithLargerCap =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: risingTideTestAbi,
-    functionName: 'testGitbookExampleFailsWithLargerCap',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"testGitbookExampleFailsWithSmallerCap"`
- */
-export const useWriteRisingTideTestTestGitbookExampleFailsWithSmallerCap =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: risingTideTestAbi,
-    functionName: 'testGitbookExampleFailsWithSmallerCap',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"testSmallExampleCorrectly"`
- */
-export const useWriteRisingTideTestTestSmallExampleCorrectly =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: risingTideTestAbi,
-    functionName: 'testSmallExampleCorrectly',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"testSmallExampleFails"`
- */
-export const useWriteRisingTideTestTestSmallExampleFails =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: risingTideTestAbi,
-    functionName: 'testSmallExampleFails',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link risingTideTestAbi}__
- */
-export const useSimulateRisingTideTest =
-  /*#__PURE__*/ createUseSimulateContract({ abi: risingTideTestAbi })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"failed"`
- */
-export const useSimulateRisingTideTestFailed =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: risingTideTestAbi,
-    functionName: 'failed',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"setUp"`
- */
-export const useSimulateRisingTideTestSetUp =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: risingTideTestAbi,
-    functionName: 'setUp',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"testGitbookExampleCorrectly"`
- */
-export const useSimulateRisingTideTestTestGitbookExampleCorrectly =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: risingTideTestAbi,
-    functionName: 'testGitbookExampleCorrectly',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"testGitbookExampleFailsWithLargerCap"`
- */
-export const useSimulateRisingTideTestTestGitbookExampleFailsWithLargerCap =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: risingTideTestAbi,
-    functionName: 'testGitbookExampleFailsWithLargerCap',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"testGitbookExampleFailsWithSmallerCap"`
- */
-export const useSimulateRisingTideTestTestGitbookExampleFailsWithSmallerCap =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: risingTideTestAbi,
-    functionName: 'testGitbookExampleFailsWithSmallerCap',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"testSmallExampleCorrectly"`
- */
-export const useSimulateRisingTideTestTestSmallExampleCorrectly =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: risingTideTestAbi,
-    functionName: 'testSmallExampleCorrectly',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link risingTideTestAbi}__ and `functionName` set to `"testSmallExampleFails"`
- */
-export const useSimulateRisingTideTestTestSmallExampleFails =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: risingTideTestAbi,
-    functionName: 'testSmallExampleFails',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__
- */
-export const useWatchRisingTideTestEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: risingTideTestAbi })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log"`
- */
-export const useWatchRisingTideTestLogEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_address"`
- */
-export const useWatchRisingTideTestLogAddressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_address',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_array"`
- */
-export const useWatchRisingTideTestLogArrayEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_array',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_bytes"`
- */
-export const useWatchRisingTideTestLogBytesEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_bytes',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_bytes32"`
- */
-export const useWatchRisingTideTestLogBytes32Event =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_bytes32',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_int"`
- */
-export const useWatchRisingTideTestLogIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_named_address"`
- */
-export const useWatchRisingTideTestLogNamedAddressEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_named_address',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_named_array"`
- */
-export const useWatchRisingTideTestLogNamedArrayEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_named_array',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_named_bytes"`
- */
-export const useWatchRisingTideTestLogNamedBytesEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_named_bytes',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_named_bytes32"`
- */
-export const useWatchRisingTideTestLogNamedBytes32Event =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_named_bytes32',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
- */
-export const useWatchRisingTideTestLogNamedDecimalIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_named_decimal_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
- */
-export const useWatchRisingTideTestLogNamedDecimalUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_named_decimal_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_named_int"`
- */
-export const useWatchRisingTideTestLogNamedIntEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_named_int',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_named_string"`
- */
-export const useWatchRisingTideTestLogNamedStringEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_named_string',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_named_uint"`
- */
-export const useWatchRisingTideTestLogNamedUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_named_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_string"`
- */
-export const useWatchRisingTideTestLogStringEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_string',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"log_uint"`
- */
-export const useWatchRisingTideTestLogUintEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'log_uint',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link risingTideTestAbi}__ and `eventName` set to `"logs"`
- */
-export const useWatchRisingTideTestLogsEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: risingTideTestAbi,
-    eventName: 'logs',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__
- *
- *
- */
-export const useReadSale = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
- *
- *
- */
-export const useReadSaleCapValidationGasLimit =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'CAP_VALIDATION_GAS_LIMIT',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"CAP_VALIDATOR_ROLE"`
- *
- *
- */
-export const useReadSaleCapValidatorRole = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'CAP_VALIDATOR_ROLE',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
- *
- *
- */
-export const useReadSaleDefaultAdminRole = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'DEFAULT_ADMIN_ROLE',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"allocated"`
- *
- *
- */
-export const useReadSaleAllocated = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'allocated',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"allocation"`
- *
- *
- */
-export const useReadSaleAllocation = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'allocation',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"end"`
- *
- *
- */
-export const useReadSaleEnd = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'end',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"endRegistration"`
- *
- *
- */
-export const useReadSaleEndRegistration = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'endRegistration',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"getRoleAdmin"`
- *
- *
- */
-export const useReadSaleGetRoleAdmin = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'getRoleAdmin',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"hasRole"`
- *
- *
- */
-export const useReadSaleHasRole = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'hasRole',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"individualCap"`
- *
- *
- */
-export const useReadSaleIndividualCap = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'individualCap',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"investorAmountAt"`
- *
- *
- */
-export const useReadSaleInvestorAmountAt = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'investorAmountAt',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"investorCount"`
- *
- *
- */
-export const useReadSaleInvestorCount = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'investorCount',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"maxContribution"`
- *
- *
- */
-export const useReadSaleMaxContribution = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'maxContribution',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"maxTarget"`
- *
- *
- */
-export const useReadSaleMaxTarget = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'maxTarget',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"merkleRoot"`
- *
- *
- */
-export const useReadSaleMerkleRoot = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'merkleRoot',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"minContribution"`
- *
- *
- */
-export const useReadSaleMinContribution = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'minContribution',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"minTarget"`
- *
- *
- */
-export const useReadSaleMinTarget = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'minTarget',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"paymentToken"`
- *
- *
- */
-export const useReadSalePaymentToken = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'paymentToken',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"paymentTokenToToken"`
- *
- *
- */
-export const useReadSalePaymentTokenToToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'paymentTokenToToken',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"rate"`
- *
- *
- */
-export const useReadSaleRate = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'rate',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"refundAmount"`
- *
- *
- */
-export const useReadSaleRefundAmount = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'refundAmount',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"risingTideCache"`
- *
- *
- */
-export const useReadSaleRisingTideCache = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'risingTideCache',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"risingTideState"`
- *
- *
- */
-export const useReadSaleRisingTideState = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'risingTideState',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"risingTide_applyCap"`
- *
- *
- */
-export const useReadSaleRisingTideApplyCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'risingTide_applyCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"risingTide_isValidCap"`
- *
- *
- */
-export const useReadSaleRisingTideIsValidCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'risingTide_isValidCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
- *
- *
- */
-export const useReadSaleRisingTideTotalAllocatedUncapped =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'risingTide_totalAllocatedUncapped',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"risingTide_totalCap"`
- *
- *
- */
-export const useReadSaleRisingTideTotalCap =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'risingTide_totalCap',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"risingTide_validating"`
- *
- *
- */
-export const useReadSaleRisingTideValidating =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'risingTide_validating',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"start"`
- *
- *
- */
-export const useReadSaleStart = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'start',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"startRegistration"`
- *
- *
- */
-export const useReadSaleStartRegistration = /*#__PURE__*/ createUseReadContract(
-  { abi: saleAbi, address: saleAddress, functionName: 'startRegistration' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"supportsInterface"`
- *
- *
- */
-export const useReadSaleSupportsInterface = /*#__PURE__*/ createUseReadContract(
-  { abi: saleAbi, address: saleAddress, functionName: 'supportsInterface' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"token"`
- *
- *
- */
-export const useReadSaleToken = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'token',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"tokenToPaymentToken"`
- *
- *
- */
-export const useReadSaleTokenToPaymentToken =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'tokenToPaymentToken',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"totalTokensForSale"`
- *
- *
- */
-export const useReadSaleTotalTokensForSale =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'totalTokensForSale',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"totalUncappedAllocations"`
- *
- *
- */
-export const useReadSaleTotalUncappedAllocations =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'totalUncappedAllocations',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"uncappedAllocation"`
- *
- *
- */
-export const useReadSaleUncappedAllocation =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'uncappedAllocation',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"withdrawn"`
- *
- *
- */
-export const useReadSaleWithdrawn = /*#__PURE__*/ createUseReadContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'withdrawn',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__
- *
- *
- */
-export const useWriteSale = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"buy"`
- *
- *
- */
-export const useWriteSaleBuy = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'buy',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"grantRole"`
- *
- *
- */
-export const useWriteSaleGrantRole = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'grantRole',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"refund"`
- *
- *
- */
-export const useWriteSaleRefund = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"renounceRole"`
- *
- *
- */
-export const useWriteSaleRenounceRole = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'renounceRole',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"revokeRole"`
- *
- *
- */
-export const useWriteSaleRevokeRole = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'revokeRole',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"risingTide_validate"`
- *
- *
- */
-export const useWriteSaleRisingTideValidate =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'risingTide_validate',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setEnd"`
- *
- *
- */
-export const useWriteSaleSetEnd = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'setEnd',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setIndividualCap"`
- *
- *
- */
-export const useWriteSaleSetIndividualCap =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMaxTarget"`
- *
- *
- */
-export const useWriteSaleSetMaxTarget = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'setMaxTarget',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMerkleRoot"`
- *
- *
- */
-export const useWriteSaleSetMerkleRoot = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'setMerkleRoot',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMinContribution"`
- *
- *
- */
-export const useWriteSaleSetMinContribution =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'setMinContribution',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMinTarget"`
- *
- *
- */
-export const useWriteSaleSetMinTarget = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'setMinTarget',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setStart"`
- *
- *
- */
-export const useWriteSaleSetStart = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'setStart',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setToken"`
- *
- *
- */
-export const useWriteSaleSetToken = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'setToken',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"withdraw"`
- *
- *
- */
-export const useWriteSaleWithdraw = /*#__PURE__*/ createUseWriteContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'withdraw',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__
- *
- *
- */
-export const useSimulateSale = /*#__PURE__*/ createUseSimulateContract({
-  abi: saleAbi,
-  address: saleAddress,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"buy"`
- *
- *
- */
-export const useSimulateSaleBuy = /*#__PURE__*/ createUseSimulateContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'buy',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"grantRole"`
- *
- *
- */
-export const useSimulateSaleGrantRole = /*#__PURE__*/ createUseSimulateContract(
-  { abi: saleAbi, address: saleAddress, functionName: 'grantRole' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"refund"`
- *
- *
- */
-export const useSimulateSaleRefund = /*#__PURE__*/ createUseSimulateContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"renounceRole"`
- *
- *
- */
-export const useSimulateSaleRenounceRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'renounceRole',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"revokeRole"`
- *
- *
- */
-export const useSimulateSaleRevokeRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'revokeRole',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"risingTide_validate"`
- *
- *
- */
-export const useSimulateSaleRisingTideValidate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'risingTide_validate',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setEnd"`
- *
- *
- */
-export const useSimulateSaleSetEnd = /*#__PURE__*/ createUseSimulateContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'setEnd',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setIndividualCap"`
- *
- *
- */
-export const useSimulateSaleSetIndividualCap =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMaxTarget"`
- *
- *
- */
-export const useSimulateSaleSetMaxTarget =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'setMaxTarget',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMerkleRoot"`
- *
- *
- */
-export const useSimulateSaleSetMerkleRoot =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'setMerkleRoot',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMinContribution"`
- *
- *
- */
-export const useSimulateSaleSetMinContribution =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'setMinContribution',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setMinTarget"`
- *
- *
- */
-export const useSimulateSaleSetMinTarget =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: saleAbi,
-    address: saleAddress,
-    functionName: 'setMinTarget',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setStart"`
- *
- *
- */
-export const useSimulateSaleSetStart = /*#__PURE__*/ createUseSimulateContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'setStart',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"setToken"`
- *
- *
- */
-export const useSimulateSaleSetToken = /*#__PURE__*/ createUseSimulateContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'setToken',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleAbi}__ and `functionName` set to `"withdraw"`
- *
- *
- */
-export const useSimulateSaleWithdraw = /*#__PURE__*/ createUseSimulateContract({
-  abi: saleAbi,
-  address: saleAddress,
-  functionName: 'withdraw',
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleAbi}__
- *
- *
- */
-export const useWatchSaleEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: saleAbi,
-  address: saleAddress,
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleAbi}__ and `eventName` set to `"Claim"`
- *
- *
- */
-export const useWatchSaleClaimEvent = /*#__PURE__*/ createUseWatchContractEvent(
-  { abi: saleAbi, address: saleAddress, eventName: 'Claim' },
-)
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleAbi}__ and `eventName` set to `"Purchase"`
- *
- *
- */
-export const useWatchSalePurchaseEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleAbi,
-    address: saleAddress,
-    eventName: 'Purchase',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleAbi}__ and `eventName` set to `"Refund"`
- *
- *
- */
-export const useWatchSaleRefundEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleAbi,
-    address: saleAddress,
-    eventName: 'Refund',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleAbi}__ and `eventName` set to `"RoleAdminChanged"`
- *
- *
- */
-export const useWatchSaleRoleAdminChangedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleAbi,
-    address: saleAddress,
-    eventName: 'RoleAdminChanged',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleAbi}__ and `eventName` set to `"RoleGranted"`
- *
- *
- */
-export const useWatchSaleRoleGrantedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleAbi,
-    address: saleAddress,
-    eventName: 'RoleGranted',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleAbi}__ and `eventName` set to `"RoleRevoked"`
- *
- *
- */
-export const useWatchSaleRoleRevokedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleAbi,
-    address: saleAddress,
-    eventName: 'RoleRevoked',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleAbi}__ and `eventName` set to `"Withdraw"`
- *
- *
- */
-export const useWatchSaleWithdrawEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleAbi,
-    address: saleAddress,
-    eventName: 'Withdraw',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__
- */
-export const useReadSaleTest = /*#__PURE__*/ createUseReadContract({
-  abi: saleTestAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"IS_TEST"`
- */
-export const useReadSaleTestIsTest = /*#__PURE__*/ createUseReadContract({
-  abi: saleTestAbi,
-  functionName: 'IS_TEST',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"excludeArtifacts"`
- */
-export const useReadSaleTestExcludeArtifacts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleTestAbi,
-    functionName: 'excludeArtifacts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"excludeContracts"`
- */
-export const useReadSaleTestExcludeContracts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleTestAbi,
-    functionName: 'excludeContracts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"excludeSenders"`
- */
-export const useReadSaleTestExcludeSenders =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleTestAbi,
-    functionName: 'excludeSenders',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
- */
-export const useReadSaleTestTargetArtifactSelectors =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleTestAbi,
-    functionName: 'targetArtifactSelectors',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"targetArtifacts"`
- */
-export const useReadSaleTestTargetArtifacts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleTestAbi,
-    functionName: 'targetArtifacts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"targetContracts"`
- */
-export const useReadSaleTestTargetContracts =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleTestAbi,
-    functionName: 'targetContracts',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"targetInterfaces"`
- */
-export const useReadSaleTestTargetInterfaces =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleTestAbi,
-    functionName: 'targetInterfaces',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"targetSelectors"`
- */
-export const useReadSaleTestTargetSelectors =
-  /*#__PURE__*/ createUseReadContract({
-    abi: saleTestAbi,
-    functionName: 'targetSelectors',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"targetSenders"`
- */
-export const useReadSaleTestTargetSenders = /*#__PURE__*/ createUseReadContract(
-  { abi: saleTestAbi, functionName: 'targetSenders' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__
- */
-export const useWriteSaleTest = /*#__PURE__*/ createUseWriteContract({
-  abi: saleTestAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"failed"`
- */
-export const useWriteSaleTestFailed = /*#__PURE__*/ createUseWriteContract({
-  abi: saleTestAbi,
-  functionName: 'failed',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"setUp"`
- */
-export const useWriteSaleTestSetUp = /*#__PURE__*/ createUseWriteContract({
-  abi: saleTestAbi,
-  functionName: 'setUp',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_InitialContribution"`
- */
-export const useWriteSaleTestTestInitialContribution =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'test_InitialContribution',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__
  */
-export const useSimulateSaleTest = /*#__PURE__*/ createUseSimulateContract({
-  abi: saleTestAbi,
-})
+export const useSimulateCtzndSaleTest = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndSaleTestAbi },
+)
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"failed"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"failed"`
  */
-export const useSimulateSaleTestFailed =
+export const useSimulateCtzndSaleTestFailed =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'failed',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"setUp"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"setUp"`
  */
-export const useSimulateSaleTestSetUp = /*#__PURE__*/ createUseSimulateContract(
-  { abi: saleTestAbi, functionName: 'setUp' },
-)
+export const useSimulateCtzndSaleTestSetUp =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleTestAbi,
+    functionName: 'setUp',
+  })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link saleTestAbi}__ and `functionName` set to `"test_InitialContribution"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `functionName` set to `"test_InitialContribution"`
  */
-export const useSimulateSaleTestTestInitialContribution =
+export const useSimulateCtzndSaleTestTestInitialContribution =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     functionName: 'test_InitialContribution',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__
  */
-export const useWatchSaleTestEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: saleTestAbi,
-})
+export const useWatchCtzndSaleTestEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndSaleTestAbi })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"Claim"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"Claim"`
  */
-export const useWatchSaleTestClaimEvent =
+export const useWatchCtzndSaleTestClaimEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'Claim',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"Purchase"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"Purchase"`
  */
-export const useWatchSaleTestPurchaseEvent =
+export const useWatchCtzndSaleTestPurchaseEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'Purchase',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"Refund"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"Refund"`
  */
-export const useWatchSaleTestRefundEvent =
+export const useWatchCtzndSaleTestRefundEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'Refund',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log"`
  */
-export const useWatchSaleTestLogEvent =
+export const useWatchCtzndSaleTestLogEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_address"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_address"`
  */
-export const useWatchSaleTestLogAddressEvent =
+export const useWatchCtzndSaleTestLogAddressEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_address',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_array"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_array"`
  */
-export const useWatchSaleTestLogArrayEvent =
+export const useWatchCtzndSaleTestLogArrayEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_array',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_bytes"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_bytes"`
  */
-export const useWatchSaleTestLogBytesEvent =
+export const useWatchCtzndSaleTestLogBytesEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_bytes',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_bytes32"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_bytes32"`
  */
-export const useWatchSaleTestLogBytes32Event =
+export const useWatchCtzndSaleTestLogBytes32Event =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_bytes32',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_int"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_int"`
  */
-export const useWatchSaleTestLogIntEvent =
+export const useWatchCtzndSaleTestLogIntEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_int',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_named_address"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_named_address"`
  */
-export const useWatchSaleTestLogNamedAddressEvent =
+export const useWatchCtzndSaleTestLogNamedAddressEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_named_address',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_named_array"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_named_array"`
  */
-export const useWatchSaleTestLogNamedArrayEvent =
+export const useWatchCtzndSaleTestLogNamedArrayEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_named_array',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_named_bytes"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_named_bytes"`
  */
-export const useWatchSaleTestLogNamedBytesEvent =
+export const useWatchCtzndSaleTestLogNamedBytesEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_named_bytes',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_named_bytes32"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_named_bytes32"`
  */
-export const useWatchSaleTestLogNamedBytes32Event =
+export const useWatchCtzndSaleTestLogNamedBytes32Event =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_named_bytes32',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
  */
-export const useWatchSaleTestLogNamedDecimalIntEvent =
+export const useWatchCtzndSaleTestLogNamedDecimalIntEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_named_decimal_int',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
  */
-export const useWatchSaleTestLogNamedDecimalUintEvent =
+export const useWatchCtzndSaleTestLogNamedDecimalUintEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_named_decimal_uint',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_named_int"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_named_int"`
  */
-export const useWatchSaleTestLogNamedIntEvent =
+export const useWatchCtzndSaleTestLogNamedIntEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_named_int',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_named_string"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_named_string"`
  */
-export const useWatchSaleTestLogNamedStringEvent =
+export const useWatchCtzndSaleTestLogNamedStringEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_named_string',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_named_uint"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_named_uint"`
  */
-export const useWatchSaleTestLogNamedUintEvent =
+export const useWatchCtzndSaleTestLogNamedUintEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_named_uint',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_string"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_string"`
  */
-export const useWatchSaleTestLogStringEvent =
+export const useWatchCtzndSaleTestLogStringEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_string',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"log_uint"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"log_uint"`
  */
-export const useWatchSaleTestLogUintEvent =
+export const useWatchCtzndSaleTestLogUintEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'log_uint',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link saleTestAbi}__ and `eventName` set to `"logs"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleTestAbi}__ and `eventName` set to `"logs"`
  */
-export const useWatchSaleTestLogsEvent =
+export const useWatchCtzndSaleTestLogsEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: saleTestAbi,
+    abi: ctzndSaleTestAbi,
     eventName: 'logs',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link scriptAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndScriptAbi}__
  */
-export const useReadScript = /*#__PURE__*/ createUseReadContract({
-  abi: scriptAbi,
+export const useReadCtzndScript = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndScriptAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link scriptAbi}__ and `functionName` set to `"IS_SCRIPT"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndScriptAbi}__ and `functionName` set to `"IS_SCRIPT"`
  */
-export const useReadScriptIsScript = /*#__PURE__*/ createUseReadContract({
-  abi: scriptAbi,
+export const useReadCtzndScriptIsScript = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndScriptAbi,
   functionName: 'IS_SCRIPT',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__
  */
-export const useReadStakersPool = /*#__PURE__*/ createUseReadContract({
-  abi: stakersPoolAbi,
+export const useReadCtzndStakersPool = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndStakersPoolAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
  */
-export const useReadStakersPoolCapValidationGasLimit =
+export const useReadCtzndStakersPoolCapValidationGasLimit =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'CAP_VALIDATION_GAS_LIMIT',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"allocation"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"allocation"`
  */
-export const useReadStakersPoolAllocation = /*#__PURE__*/ createUseReadContract(
-  { abi: stakersPoolAbi, functionName: 'allocation' },
-)
+export const useReadCtzndStakersPoolAllocation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndStakersPoolAbi,
+    functionName: 'allocation',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"individualCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"individualCap"`
  */
-export const useReadStakersPoolIndividualCap =
+export const useReadCtzndStakersPoolIndividualCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'individualCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"investmentToken"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"investmentToken"`
  */
-export const useReadStakersPoolInvestmentToken =
+export const useReadCtzndStakersPoolInvestmentToken =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'investmentToken',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"investorAmountAt"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"investorAmountAt"`
  */
-export const useReadStakersPoolInvestorAmountAt =
+export const useReadCtzndStakersPoolInvestorAmountAt =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'investorAmountAt',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"investorCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"investorCount"`
  */
-export const useReadStakersPoolInvestorCount =
+export const useReadCtzndStakersPoolInvestorCount =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'investorCount',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"project"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"project"`
  */
-export const useReadStakersPoolProject = /*#__PURE__*/ createUseReadContract({
-  abi: stakersPoolAbi,
-  functionName: 'project',
-})
+export const useReadCtzndStakersPoolProject =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndStakersPoolAbi,
+    functionName: 'project',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"refundableAmount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"refundableAmount"`
  */
-export const useReadStakersPoolRefundableAmount =
+export const useReadCtzndStakersPoolRefundableAmount =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'refundableAmount',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"risingTideCache"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"risingTideCache"`
  */
-export const useReadStakersPoolRisingTideCache =
+export const useReadCtzndStakersPoolRisingTideCache =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'risingTideCache',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"risingTideState"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"risingTideState"`
  */
-export const useReadStakersPoolRisingTideState =
+export const useReadCtzndStakersPoolRisingTideState =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'risingTideState',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"risingTide_applyCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"risingTide_applyCap"`
  */
-export const useReadStakersPoolRisingTideApplyCap =
+export const useReadCtzndStakersPoolRisingTideApplyCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'risingTide_applyCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"risingTide_isValidCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"risingTide_isValidCap"`
  */
-export const useReadStakersPoolRisingTideIsValidCap =
+export const useReadCtzndStakersPoolRisingTideIsValidCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'risingTide_isValidCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
  */
-export const useReadStakersPoolRisingTideTotalAllocatedUncapped =
+export const useReadCtzndStakersPoolRisingTideTotalAllocatedUncapped =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'risingTide_totalAllocatedUncapped',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"risingTide_totalCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"risingTide_totalCap"`
  */
-export const useReadStakersPoolRisingTideTotalCap =
+export const useReadCtzndStakersPoolRisingTideTotalCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'risingTide_totalCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"risingTide_validating"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"risingTide_validating"`
  */
-export const useReadStakersPoolRisingTideValidating =
+export const useReadCtzndStakersPoolRisingTideValidating =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'risingTide_validating',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"saleSupply"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"saleSupply"`
  */
-export const useReadStakersPoolSaleSupply = /*#__PURE__*/ createUseReadContract(
-  { abi: stakersPoolAbi, functionName: 'saleSupply' },
-)
+export const useReadCtzndStakersPoolSaleSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndStakersPoolAbi,
+    functionName: 'saleSupply',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"totalUncappedAllocations"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"totalUncappedAllocations"`
  */
-export const useReadStakersPoolTotalUncappedAllocations =
+export const useReadCtzndStakersPoolTotalUncappedAllocations =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'totalUncappedAllocations',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"uncappedAllocation"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"uncappedAllocation"`
  */
-export const useReadStakersPoolUncappedAllocation =
+export const useReadCtzndStakersPoolUncappedAllocation =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'uncappedAllocation',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakersPoolAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__
  */
-export const useWriteStakersPool = /*#__PURE__*/ createUseWriteContract({
-  abi: stakersPoolAbi,
+export const useWriteCtzndStakersPool = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndStakersPoolAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"invest"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"invest"`
  */
-export const useWriteStakersPoolInvest = /*#__PURE__*/ createUseWriteContract({
-  abi: stakersPoolAbi,
-  functionName: 'invest',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"refund"`
- */
-export const useWriteStakersPoolRefund = /*#__PURE__*/ createUseWriteContract({
-  abi: stakersPoolAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"risingTide_validate"`
- */
-export const useWriteStakersPoolRisingTideValidate =
+export const useWriteCtzndStakersPoolInvest =
   /*#__PURE__*/ createUseWriteContract({
-    abi: stakersPoolAbi,
-    functionName: 'risingTide_validate',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"setIndividualCap"`
- */
-export const useWriteStakersPoolSetIndividualCap =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: stakersPoolAbi,
-    functionName: 'setIndividualCap',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakersPoolAbi}__
- */
-export const useSimulateStakersPool = /*#__PURE__*/ createUseSimulateContract({
-  abi: stakersPoolAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"invest"`
- */
-export const useSimulateStakersPoolInvest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     functionName: 'invest',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"refund"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"refund"`
  */
-export const useSimulateStakersPoolRefund =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: stakersPoolAbi,
+export const useWriteCtzndStakersPoolRefund =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndStakersPoolAbi,
     functionName: 'refund',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"risingTide_validate"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"risingTide_validate"`
  */
-export const useSimulateStakersPoolRisingTideValidate =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: stakersPoolAbi,
+export const useWriteCtzndStakersPoolRisingTideValidate =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndStakersPoolAbi,
     functionName: 'risingTide_validate',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakersPoolAbi}__ and `functionName` set to `"setIndividualCap"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"setIndividualCap"`
  */
-export const useSimulateStakersPoolSetIndividualCap =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: stakersPoolAbi,
+export const useWriteCtzndStakersPoolSetIndividualCap =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndStakersPoolAbi,
     functionName: 'setIndividualCap',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakersPoolAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__
  */
-export const useWatchStakersPoolEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: stakersPoolAbi })
+export const useSimulateCtzndStakersPool =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndStakersPoolAbi })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakersPoolAbi}__ and `eventName` set to `"Refund"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"invest"`
  */
-export const useWatchStakersPoolRefundEvent =
+export const useSimulateCtzndStakersPoolInvest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndStakersPoolAbi,
+    functionName: 'invest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"refund"`
+ */
+export const useSimulateCtzndStakersPoolRefund =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndStakersPoolAbi,
+    functionName: 'refund',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"risingTide_validate"`
+ */
+export const useSimulateCtzndStakersPoolRisingTideValidate =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndStakersPoolAbi,
+    functionName: 'risingTide_validate',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `functionName` set to `"setIndividualCap"`
+ */
+export const useSimulateCtzndStakersPoolSetIndividualCap =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndStakersPoolAbi,
+    functionName: 'setIndividualCap',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStakersPoolAbi}__
+ */
+export const useWatchCtzndStakersPoolEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndStakersPoolAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStakersPoolAbi}__ and `eventName` set to `"Refund"`
+ */
+export const useWatchCtzndStakersPoolRefundEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stakersPoolAbi,
+    abi: ctzndStakersPoolAbi,
     eventName: 'Refund',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakingAbi}__
  */
-export const useReadStaking = /*#__PURE__*/ createUseReadContract({
-  abi: stakingAbi,
+export const useReadCtzndStaking = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndStakingAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"UNBONDING_PERIOD"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"UNBONDING_PERIOD"`
  */
-export const useReadStakingUnbondingPeriod =
+export const useReadCtzndStakingUnbondingPeriod =
   /*#__PURE__*/ createUseReadContract({
-    abi: stakingAbi,
+    abi: ctzndStakingAbi,
     functionName: 'UNBONDING_PERIOD',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"hasStaked"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"hasStaked"`
  */
-export const useReadStakingHasStaked = /*#__PURE__*/ createUseReadContract({
-  abi: stakingAbi,
-  functionName: 'hasStaked',
-})
+export const useReadCtzndStakingHasStaked = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndStakingAbi, functionName: 'hasStaked' },
+)
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"stakes"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"stakes"`
  */
-export const useReadStakingStakes = /*#__PURE__*/ createUseReadContract({
-  abi: stakingAbi,
+export const useReadCtzndStakingStakes = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndStakingAbi,
   functionName: 'stakes',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"token"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"token"`
  */
-export const useReadStakingToken = /*#__PURE__*/ createUseReadContract({
-  abi: stakingAbi,
+export const useReadCtzndStakingToken = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndStakingAbi,
   functionName: 'token',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"unbondings"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"unbondings"`
  */
-export const useReadStakingUnbondings = /*#__PURE__*/ createUseReadContract({
-  abi: stakingAbi,
-  functionName: 'unbondings',
+export const useReadCtzndStakingUnbondings =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndStakingAbi,
+    functionName: 'unbondings',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"withdrawable"`
+ */
+export const useReadCtzndStakingWithdrawable =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndStakingAbi,
+    functionName: 'withdrawable',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStakingAbi}__
+ */
+export const useWriteCtzndStaking = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndStakingAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"withdrawable"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"rebond"`
  */
-export const useReadStakingWithdrawable = /*#__PURE__*/ createUseReadContract({
-  abi: stakingAbi,
-  functionName: 'withdrawable',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingAbi}__
- */
-export const useWriteStaking = /*#__PURE__*/ createUseWriteContract({
-  abi: stakingAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"rebond"`
- */
-export const useWriteStakingRebond = /*#__PURE__*/ createUseWriteContract({
-  abi: stakingAbi,
+export const useWriteCtzndStakingRebond = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndStakingAbi,
   functionName: 'rebond',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"stake"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"stake"`
  */
-export const useWriteStakingStake = /*#__PURE__*/ createUseWriteContract({
-  abi: stakingAbi,
+export const useWriteCtzndStakingStake = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndStakingAbi,
   functionName: 'stake',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"unbond"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"unbond"`
  */
-export const useWriteStakingUnbond = /*#__PURE__*/ createUseWriteContract({
-  abi: stakingAbi,
+export const useWriteCtzndStakingUnbond = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndStakingAbi,
   functionName: 'unbond',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"withdraw"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"withdraw"`
  */
-export const useWriteStakingWithdraw = /*#__PURE__*/ createUseWriteContract({
-  abi: stakingAbi,
-  functionName: 'withdraw',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingAbi}__
- */
-export const useSimulateStaking = /*#__PURE__*/ createUseSimulateContract({
-  abi: stakingAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"rebond"`
- */
-export const useSimulateStakingRebond = /*#__PURE__*/ createUseSimulateContract(
-  { abi: stakingAbi, functionName: 'rebond' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"stake"`
- */
-export const useSimulateStakingStake = /*#__PURE__*/ createUseSimulateContract({
-  abi: stakingAbi,
-  functionName: 'stake',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"unbond"`
- */
-export const useSimulateStakingUnbond = /*#__PURE__*/ createUseSimulateContract(
-  { abi: stakingAbi, functionName: 'unbond' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingAbi}__ and `functionName` set to `"withdraw"`
- */
-export const useSimulateStakingWithdraw =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: stakingAbi,
+export const useWriteCtzndStakingWithdraw =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndStakingAbi,
     functionName: 'withdraw',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStakingAbi}__
  */
-export const useWatchStakingEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: stakingAbi,
+export const useSimulateCtzndStaking = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndStakingAbi,
 })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingAbi}__ and `eventName` set to `"Rebond"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"rebond"`
  */
-export const useWatchStakingRebondEvent =
+export const useSimulateCtzndStakingRebond =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndStakingAbi,
+    functionName: 'rebond',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"stake"`
+ */
+export const useSimulateCtzndStakingStake =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndStakingAbi,
+    functionName: 'stake',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"unbond"`
+ */
+export const useSimulateCtzndStakingUnbond =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndStakingAbi,
+    functionName: 'unbond',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStakingAbi}__ and `functionName` set to `"withdraw"`
+ */
+export const useSimulateCtzndStakingWithdraw =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndStakingAbi,
+    functionName: 'withdraw',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStakingAbi}__
+ */
+export const useWatchCtzndStakingEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndStakingAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStakingAbi}__ and `eventName` set to `"Rebond"`
+ */
+export const useWatchCtzndStakingRebondEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stakingAbi,
+    abi: ctzndStakingAbi,
     eventName: 'Rebond',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingAbi}__ and `eventName` set to `"StakeFunds"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStakingAbi}__ and `eventName` set to `"StakeFunds"`
  */
-export const useWatchStakingStakeFundsEvent =
+export const useWatchCtzndStakingStakeFundsEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stakingAbi,
+    abi: ctzndStakingAbi,
     eventName: 'StakeFunds',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingAbi}__ and `eventName` set to `"Unbond"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStakingAbi}__ and `eventName` set to `"Unbond"`
  */
-export const useWatchStakingUnbondEvent =
+export const useWatchCtzndStakingUnbondEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stakingAbi,
+    abi: ctzndStakingAbi,
     eventName: 'Unbond',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingAbi}__ and `eventName` set to `"Withdrawal"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStakingAbi}__ and `eventName` set to `"Withdrawal"`
  */
-export const useWatchStakingWithdrawalEvent =
+export const useWatchCtzndStakingWithdrawalEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stakingAbi,
+    abi: ctzndStakingAbi,
     eventName: 'Withdrawal',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdAssertionsAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__
  */
-export const useReadStdAssertions = /*#__PURE__*/ createUseReadContract({
-  abi: stdAssertionsAbi,
+export const useReadCtzndStdAssertions = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndStdAssertionsAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdAssertionsAbi}__ and `functionName` set to `"IS_TEST"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `functionName` set to `"IS_TEST"`
  */
-export const useReadStdAssertionsIsTest = /*#__PURE__*/ createUseReadContract({
-  abi: stdAssertionsAbi,
-  functionName: 'IS_TEST',
+export const useReadCtzndStdAssertionsIsTest =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndStdAssertionsAbi,
+    functionName: 'IS_TEST',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__
+ */
+export const useWriteCtzndStdAssertions = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndStdAssertionsAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stdAssertionsAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `functionName` set to `"failed"`
  */
-export const useWriteStdAssertions = /*#__PURE__*/ createUseWriteContract({
-  abi: stdAssertionsAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stdAssertionsAbi}__ and `functionName` set to `"failed"`
- */
-export const useWriteStdAssertionsFailed = /*#__PURE__*/ createUseWriteContract(
-  { abi: stdAssertionsAbi, functionName: 'failed' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stdAssertionsAbi}__
- */
-export const useSimulateStdAssertions = /*#__PURE__*/ createUseSimulateContract(
-  { abi: stdAssertionsAbi },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stdAssertionsAbi}__ and `functionName` set to `"failed"`
- */
-export const useSimulateStdAssertionsFailed =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: stdAssertionsAbi,
+export const useWriteCtzndStdAssertionsFailed =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndStdAssertionsAbi,
     functionName: 'failed',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__
  */
-export const useWatchStdAssertionsEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: stdAssertionsAbi })
+export const useSimulateCtzndStdAssertions =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndStdAssertionsAbi })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `functionName` set to `"failed"`
  */
-export const useWatchStdAssertionsLogEvent =
+export const useSimulateCtzndStdAssertionsFailed =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndStdAssertionsAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__
+ */
+export const useWatchCtzndStdAssertionsEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndStdAssertionsAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log"`
+ */
+export const useWatchCtzndStdAssertionsLogEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_address"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_address"`
  */
-export const useWatchStdAssertionsLogAddressEvent =
+export const useWatchCtzndStdAssertionsLogAddressEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_address',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_array"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_array"`
  */
-export const useWatchStdAssertionsLogArrayEvent =
+export const useWatchCtzndStdAssertionsLogArrayEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_array',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_bytes"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_bytes"`
  */
-export const useWatchStdAssertionsLogBytesEvent =
+export const useWatchCtzndStdAssertionsLogBytesEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_bytes',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_bytes32"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_bytes32"`
  */
-export const useWatchStdAssertionsLogBytes32Event =
+export const useWatchCtzndStdAssertionsLogBytes32Event =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_bytes32',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_int"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_int"`
  */
-export const useWatchStdAssertionsLogIntEvent =
+export const useWatchCtzndStdAssertionsLogIntEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_int',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_named_address"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_named_address"`
  */
-export const useWatchStdAssertionsLogNamedAddressEvent =
+export const useWatchCtzndStdAssertionsLogNamedAddressEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_named_address',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_named_array"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_named_array"`
  */
-export const useWatchStdAssertionsLogNamedArrayEvent =
+export const useWatchCtzndStdAssertionsLogNamedArrayEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_named_array',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_named_bytes"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_named_bytes"`
  */
-export const useWatchStdAssertionsLogNamedBytesEvent =
+export const useWatchCtzndStdAssertionsLogNamedBytesEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_named_bytes',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_named_bytes32"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_named_bytes32"`
  */
-export const useWatchStdAssertionsLogNamedBytes32Event =
+export const useWatchCtzndStdAssertionsLogNamedBytes32Event =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_named_bytes32',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_named_decimal_int"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_named_decimal_int"`
  */
-export const useWatchStdAssertionsLogNamedDecimalIntEvent =
+export const useWatchCtzndStdAssertionsLogNamedDecimalIntEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_named_decimal_int',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_named_decimal_uint"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_named_decimal_uint"`
  */
-export const useWatchStdAssertionsLogNamedDecimalUintEvent =
+export const useWatchCtzndStdAssertionsLogNamedDecimalUintEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_named_decimal_uint',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_named_int"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_named_int"`
  */
-export const useWatchStdAssertionsLogNamedIntEvent =
+export const useWatchCtzndStdAssertionsLogNamedIntEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_named_int',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_named_string"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_named_string"`
  */
-export const useWatchStdAssertionsLogNamedStringEvent =
+export const useWatchCtzndStdAssertionsLogNamedStringEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_named_string',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_named_uint"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_named_uint"`
  */
-export const useWatchStdAssertionsLogNamedUintEvent =
+export const useWatchCtzndStdAssertionsLogNamedUintEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_named_uint',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_string"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_string"`
  */
-export const useWatchStdAssertionsLogStringEvent =
+export const useWatchCtzndStdAssertionsLogStringEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_string',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"log_uint"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"log_uint"`
  */
-export const useWatchStdAssertionsLogUintEvent =
+export const useWatchCtzndStdAssertionsLogUintEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'log_uint',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdAssertionsAbi}__ and `eventName` set to `"logs"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndStdAssertionsAbi}__ and `eventName` set to `"logs"`
  */
-export const useWatchStdAssertionsLogsEvent =
+export const useWatchCtzndStdAssertionsLogsEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdAssertionsAbi,
+    abi: ctzndStdAssertionsAbi,
     eventName: 'logs',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdInvariantAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdInvariantAbi}__
  */
-export const useReadStdInvariant = /*#__PURE__*/ createUseReadContract({
-  abi: stdInvariantAbi,
+export const useReadCtzndStdInvariant = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndStdInvariantAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdInvariantAbi}__ and `functionName` set to `"excludeArtifacts"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdInvariantAbi}__ and `functionName` set to `"excludeArtifacts"`
  */
-export const useReadStdInvariantExcludeArtifacts =
+export const useReadCtzndStdInvariantExcludeArtifacts =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdInvariantAbi,
+    abi: ctzndStdInvariantAbi,
     functionName: 'excludeArtifacts',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdInvariantAbi}__ and `functionName` set to `"excludeContracts"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdInvariantAbi}__ and `functionName` set to `"excludeContracts"`
  */
-export const useReadStdInvariantExcludeContracts =
+export const useReadCtzndStdInvariantExcludeContracts =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdInvariantAbi,
+    abi: ctzndStdInvariantAbi,
     functionName: 'excludeContracts',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdInvariantAbi}__ and `functionName` set to `"excludeSenders"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdInvariantAbi}__ and `functionName` set to `"excludeSenders"`
  */
-export const useReadStdInvariantExcludeSenders =
+export const useReadCtzndStdInvariantExcludeSenders =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdInvariantAbi,
+    abi: ctzndStdInvariantAbi,
     functionName: 'excludeSenders',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdInvariantAbi}__ and `functionName` set to `"targetArtifactSelectors"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdInvariantAbi}__ and `functionName` set to `"targetArtifactSelectors"`
  */
-export const useReadStdInvariantTargetArtifactSelectors =
+export const useReadCtzndStdInvariantTargetArtifactSelectors =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdInvariantAbi,
+    abi: ctzndStdInvariantAbi,
     functionName: 'targetArtifactSelectors',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdInvariantAbi}__ and `functionName` set to `"targetArtifacts"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdInvariantAbi}__ and `functionName` set to `"targetArtifacts"`
  */
-export const useReadStdInvariantTargetArtifacts =
+export const useReadCtzndStdInvariantTargetArtifacts =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdInvariantAbi,
+    abi: ctzndStdInvariantAbi,
     functionName: 'targetArtifacts',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdInvariantAbi}__ and `functionName` set to `"targetContracts"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdInvariantAbi}__ and `functionName` set to `"targetContracts"`
  */
-export const useReadStdInvariantTargetContracts =
+export const useReadCtzndStdInvariantTargetContracts =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdInvariantAbi,
+    abi: ctzndStdInvariantAbi,
     functionName: 'targetContracts',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdInvariantAbi}__ and `functionName` set to `"targetInterfaces"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdInvariantAbi}__ and `functionName` set to `"targetInterfaces"`
  */
-export const useReadStdInvariantTargetInterfaces =
+export const useReadCtzndStdInvariantTargetInterfaces =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdInvariantAbi,
+    abi: ctzndStdInvariantAbi,
     functionName: 'targetInterfaces',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdInvariantAbi}__ and `functionName` set to `"targetSelectors"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdInvariantAbi}__ and `functionName` set to `"targetSelectors"`
  */
-export const useReadStdInvariantTargetSelectors =
+export const useReadCtzndStdInvariantTargetSelectors =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdInvariantAbi,
+    abi: ctzndStdInvariantAbi,
     functionName: 'targetSelectors',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdInvariantAbi}__ and `functionName` set to `"targetSenders"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndStdInvariantAbi}__ and `functionName` set to `"targetSenders"`
  */
-export const useReadStdInvariantTargetSenders =
+export const useReadCtzndStdInvariantTargetSenders =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdInvariantAbi,
+    abi: ctzndStdInvariantAbi,
     functionName: 'targetSenders',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__
  */
-export const useReadTest = /*#__PURE__*/ createUseReadContract({ abi: testAbi })
+export const useReadCtzndTest = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndTestAbi,
+})
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"IS_TEST"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"IS_TEST"`
  */
-export const useReadTestIsTest = /*#__PURE__*/ createUseReadContract({
-  abi: testAbi,
+export const useReadCtzndTestIsTest = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndTestAbi,
   functionName: 'IS_TEST',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"excludeArtifacts"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"excludeArtifacts"`
  */
-export const useReadTestExcludeArtifacts = /*#__PURE__*/ createUseReadContract({
-  abi: testAbi,
-  functionName: 'excludeArtifacts',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"excludeContracts"`
- */
-export const useReadTestExcludeContracts = /*#__PURE__*/ createUseReadContract({
-  abi: testAbi,
-  functionName: 'excludeContracts',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"excludeSenders"`
- */
-export const useReadTestExcludeSenders = /*#__PURE__*/ createUseReadContract({
-  abi: testAbi,
-  functionName: 'excludeSenders',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"targetArtifactSelectors"`
- */
-export const useReadTestTargetArtifactSelectors =
+export const useReadCtzndTestExcludeArtifacts =
   /*#__PURE__*/ createUseReadContract({
-    abi: testAbi,
+    abi: ctzndTestAbi,
+    functionName: 'excludeArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"excludeContracts"`
+ */
+export const useReadCtzndTestExcludeContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestAbi,
+    functionName: 'excludeContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"excludeSenders"`
+ */
+export const useReadCtzndTestExcludeSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestAbi,
+    functionName: 'excludeSenders',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
+ */
+export const useReadCtzndTestTargetArtifactSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestAbi,
     functionName: 'targetArtifactSelectors',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"targetArtifacts"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"targetArtifacts"`
  */
-export const useReadTestTargetArtifacts = /*#__PURE__*/ createUseReadContract({
-  abi: testAbi,
-  functionName: 'targetArtifacts',
+export const useReadCtzndTestTargetArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestAbi,
+    functionName: 'targetArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"targetContracts"`
+ */
+export const useReadCtzndTestTargetContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestAbi,
+    functionName: 'targetContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"targetInterfaces"`
+ */
+export const useReadCtzndTestTargetInterfaces =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestAbi,
+    functionName: 'targetInterfaces',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"targetSelectors"`
+ */
+export const useReadCtzndTestTargetSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestAbi,
+    functionName: 'targetSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"targetSenders"`
+ */
+export const useReadCtzndTestTargetSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestAbi,
+    functionName: 'targetSenders',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestAbi}__
+ */
+export const useWriteCtzndTest = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndTestAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"targetContracts"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"failed"`
  */
-export const useReadTestTargetContracts = /*#__PURE__*/ createUseReadContract({
-  abi: testAbi,
-  functionName: 'targetContracts',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"targetInterfaces"`
- */
-export const useReadTestTargetInterfaces = /*#__PURE__*/ createUseReadContract({
-  abi: testAbi,
-  functionName: 'targetInterfaces',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"targetSelectors"`
- */
-export const useReadTestTargetSelectors = /*#__PURE__*/ createUseReadContract({
-  abi: testAbi,
-  functionName: 'targetSelectors',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"targetSenders"`
- */
-export const useReadTestTargetSenders = /*#__PURE__*/ createUseReadContract({
-  abi: testAbi,
-  functionName: 'targetSenders',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testAbi}__
- */
-export const useWriteTest = /*#__PURE__*/ createUseWriteContract({
-  abi: testAbi,
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"failed"`
- */
-export const useWriteTestFailed = /*#__PURE__*/ createUseWriteContract({
-  abi: testAbi,
+export const useWriteCtzndTestFailed = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndTestAbi,
   functionName: 'failed',
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestAbi}__
  */
-export const useSimulateTest = /*#__PURE__*/ createUseSimulateContract({
-  abi: testAbi,
+export const useSimulateCtzndTest = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndTestAbi,
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testAbi}__ and `functionName` set to `"failed"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestAbi}__ and `functionName` set to `"failed"`
  */
-export const useSimulateTestFailed = /*#__PURE__*/ createUseSimulateContract({
-  abi: testAbi,
-  functionName: 'failed',
-})
+export const useSimulateCtzndTestFailed =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndTestAbi,
+    functionName: 'failed',
+  })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__
  */
-export const useWatchTestEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: testAbi,
-})
+export const useWatchCtzndTestEvent = /*#__PURE__*/ createUseWatchContractEvent(
+  { abi: ctzndTestAbi },
+)
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log"`
  */
-export const useWatchTestLogEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: testAbi,
-  eventName: 'log',
-})
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_address"`
- */
-export const useWatchTestLogAddressEvent =
+export const useWatchCtzndTestLogEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
+    eventName: 'log',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_address"`
+ */
+export const useWatchCtzndTestLogAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndTestAbi,
     eventName: 'log_address',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_array"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_array"`
  */
-export const useWatchTestLogArrayEvent =
+export const useWatchCtzndTestLogArrayEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_array',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_bytes"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_bytes"`
  */
-export const useWatchTestLogBytesEvent =
+export const useWatchCtzndTestLogBytesEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_bytes',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_bytes32"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_bytes32"`
  */
-export const useWatchTestLogBytes32Event =
+export const useWatchCtzndTestLogBytes32Event =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_bytes32',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_int"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_int"`
  */
-export const useWatchTestLogIntEvent =
+export const useWatchCtzndTestLogIntEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_int',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_named_address"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_named_address"`
  */
-export const useWatchTestLogNamedAddressEvent =
+export const useWatchCtzndTestLogNamedAddressEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_named_address',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_named_array"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_named_array"`
  */
-export const useWatchTestLogNamedArrayEvent =
+export const useWatchCtzndTestLogNamedArrayEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_named_array',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_named_bytes"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_named_bytes"`
  */
-export const useWatchTestLogNamedBytesEvent =
+export const useWatchCtzndTestLogNamedBytesEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_named_bytes',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_named_bytes32"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_named_bytes32"`
  */
-export const useWatchTestLogNamedBytes32Event =
+export const useWatchCtzndTestLogNamedBytes32Event =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_named_bytes32',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_named_decimal_int"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
  */
-export const useWatchTestLogNamedDecimalIntEvent =
+export const useWatchCtzndTestLogNamedDecimalIntEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_named_decimal_int',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_named_decimal_uint"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
  */
-export const useWatchTestLogNamedDecimalUintEvent =
+export const useWatchCtzndTestLogNamedDecimalUintEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_named_decimal_uint',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_named_int"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_named_int"`
  */
-export const useWatchTestLogNamedIntEvent =
+export const useWatchCtzndTestLogNamedIntEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_named_int',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_named_string"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_named_string"`
  */
-export const useWatchTestLogNamedStringEvent =
+export const useWatchCtzndTestLogNamedStringEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_named_string',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_named_uint"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_named_uint"`
  */
-export const useWatchTestLogNamedUintEvent =
+export const useWatchCtzndTestLogNamedUintEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_named_uint',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_string"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_string"`
  */
-export const useWatchTestLogStringEvent =
+export const useWatchCtzndTestLogStringEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_string',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"log_uint"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"log_uint"`
  */
-export const useWatchTestLogUintEvent =
+export const useWatchCtzndTestLogUintEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testAbi,
+    abi: ctzndTestAbi,
     eventName: 'log_uint',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testAbi}__ and `eventName` set to `"logs"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestAbi}__ and `eventName` set to `"logs"`
  */
-export const useWatchTestLogsEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: testAbi,
-  eventName: 'logs',
+export const useWatchCtzndTestLogsEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndTestAbi,
+    eventName: 'logs',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__
+ */
+export const useReadCtzndTestPool = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndTestPoolAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
  */
-export const useReadTestPool = /*#__PURE__*/ createUseReadContract({
-  abi: testPoolAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
- */
-export const useReadTestPoolCapValidationGasLimit =
+export const useReadCtzndTestPoolCapValidationGasLimit =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'CAP_VALIDATION_GAS_LIMIT',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"allocation"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"allocation"`
  */
-export const useReadTestPoolAllocation = /*#__PURE__*/ createUseReadContract({
-  abi: testPoolAbi,
-  functionName: 'allocation',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"individualCap"`
- */
-export const useReadTestPoolIndividualCap = /*#__PURE__*/ createUseReadContract(
-  { abi: testPoolAbi, functionName: 'individualCap' },
-)
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"investmentToken"`
- */
-export const useReadTestPoolInvestmentToken =
+export const useReadCtzndTestPoolAllocation =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
+    functionName: 'allocation',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"individualCap"`
+ */
+export const useReadCtzndTestPoolIndividualCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestPoolAbi,
+    functionName: 'individualCap',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"investmentToken"`
+ */
+export const useReadCtzndTestPoolInvestmentToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestPoolAbi,
     functionName: 'investmentToken',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"investorAmountAt"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"investorAmountAt"`
  */
-export const useReadTestPoolInvestorAmountAt =
+export const useReadCtzndTestPoolInvestorAmountAt =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'investorAmountAt',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"investorCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"investorCount"`
  */
-export const useReadTestPoolInvestorCount = /*#__PURE__*/ createUseReadContract(
-  { abi: testPoolAbi, functionName: 'investorCount' },
-)
+export const useReadCtzndTestPoolInvestorCount =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestPoolAbi,
+    functionName: 'investorCount',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"project"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"project"`
  */
-export const useReadTestPoolProject = /*#__PURE__*/ createUseReadContract({
-  abi: testPoolAbi,
+export const useReadCtzndTestPoolProject = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndTestPoolAbi,
   functionName: 'project',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"refundableAmount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"refundableAmount"`
  */
-export const useReadTestPoolRefundableAmount =
+export const useReadCtzndTestPoolRefundableAmount =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'refundableAmount',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"risingTideCache"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"risingTideCache"`
  */
-export const useReadTestPoolRisingTideCache =
+export const useReadCtzndTestPoolRisingTideCache =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'risingTideCache',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"risingTideState"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"risingTideState"`
  */
-export const useReadTestPoolRisingTideState =
+export const useReadCtzndTestPoolRisingTideState =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'risingTideState',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"risingTide_applyCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"risingTide_applyCap"`
  */
-export const useReadTestPoolRisingTideApplyCap =
+export const useReadCtzndTestPoolRisingTideApplyCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'risingTide_applyCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"risingTide_isValidCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"risingTide_isValidCap"`
  */
-export const useReadTestPoolRisingTideIsValidCap =
+export const useReadCtzndTestPoolRisingTideIsValidCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'risingTide_isValidCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
  */
-export const useReadTestPoolRisingTideTotalAllocatedUncapped =
+export const useReadCtzndTestPoolRisingTideTotalAllocatedUncapped =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'risingTide_totalAllocatedUncapped',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"risingTide_totalCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"risingTide_totalCap"`
  */
-export const useReadTestPoolRisingTideTotalCap =
+export const useReadCtzndTestPoolRisingTideTotalCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'risingTide_totalCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"risingTide_validating"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"risingTide_validating"`
  */
-export const useReadTestPoolRisingTideValidating =
+export const useReadCtzndTestPoolRisingTideValidating =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'risingTide_validating',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"saleSupply"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"saleSupply"`
  */
-export const useReadTestPoolSaleSupply = /*#__PURE__*/ createUseReadContract({
-  abi: testPoolAbi,
-  functionName: 'saleSupply',
-})
+export const useReadCtzndTestPoolSaleSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndTestPoolAbi,
+    functionName: 'saleSupply',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"totalUncappedAllocations"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"totalUncappedAllocations"`
  */
-export const useReadTestPoolTotalUncappedAllocations =
+export const useReadCtzndTestPoolTotalUncappedAllocations =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'totalUncappedAllocations',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"uncappedAllocation"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"uncappedAllocation"`
  */
-export const useReadTestPoolUncappedAllocation =
+export const useReadCtzndTestPoolUncappedAllocation =
   /*#__PURE__*/ createUseReadContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'uncappedAllocation',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testPoolAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__
  */
-export const useWriteTestPool = /*#__PURE__*/ createUseWriteContract({
-  abi: testPoolAbi,
+export const useWriteCtzndTestPool = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndTestPoolAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"invest"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"invest"`
  */
-export const useWriteTestPoolInvest = /*#__PURE__*/ createUseWriteContract({
-  abi: testPoolAbi,
-  functionName: 'invest',
-})
+export const useWriteCtzndTestPoolInvest = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndTestPoolAbi, functionName: 'invest' },
+)
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"refund"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"refund"`
  */
-export const useWriteTestPoolRefund = /*#__PURE__*/ createUseWriteContract({
-  abi: testPoolAbi,
-  functionName: 'refund',
-})
+export const useWriteCtzndTestPoolRefund = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndTestPoolAbi, functionName: 'refund' },
+)
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"risingTide_validate"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"risingTide_validate"`
  */
-export const useWriteTestPoolRisingTideValidate =
+export const useWriteCtzndTestPoolRisingTideValidate =
   /*#__PURE__*/ createUseWriteContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'risingTide_validate',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"setIndividualCap"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"setIndividualCap"`
  */
-export const useWriteTestPoolSetIndividualCap =
+export const useWriteCtzndTestPoolSetIndividualCap =
   /*#__PURE__*/ createUseWriteContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'setIndividualCap',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testPoolAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__
  */
-export const useSimulateTestPool = /*#__PURE__*/ createUseSimulateContract({
-  abi: testPoolAbi,
-})
+export const useSimulateCtzndTestPool = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndTestPoolAbi },
+)
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"invest"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"invest"`
  */
-export const useSimulateTestPoolInvest =
+export const useSimulateCtzndTestPoolInvest =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'invest',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"refund"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"refund"`
  */
-export const useSimulateTestPoolRefund =
+export const useSimulateCtzndTestPoolRefund =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'refund',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"risingTide_validate"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"risingTide_validate"`
  */
-export const useSimulateTestPoolRisingTideValidate =
+export const useSimulateCtzndTestPoolRisingTideValidate =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'risingTide_validate',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testPoolAbi}__ and `functionName` set to `"setIndividualCap"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `functionName` set to `"setIndividualCap"`
  */
-export const useSimulateTestPoolSetIndividualCap =
+export const useSimulateCtzndTestPoolSetIndividualCap =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     functionName: 'setIndividualCap',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testPoolAbi}__
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestPoolAbi}__
  */
-export const useWatchTestPoolEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: testPoolAbi,
-})
+export const useWatchCtzndTestPoolEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndTestPoolAbi })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link testPoolAbi}__ and `eventName` set to `"Refund"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndTestPoolAbi}__ and `eventName` set to `"Refund"`
  */
-export const useWatchTestPoolRefundEvent =
+export const useWatchCtzndTestPoolRefundEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: testPoolAbi,
+    abi: ctzndTestPoolAbi,
     eventName: 'Refund',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__
  */
-export const useReadTestProjectVoting = /*#__PURE__*/ createUseReadContract({
-  abi: testProjectVotingAbi,
-})
+export const useReadCtzndTestProjectVoting =
+  /*#__PURE__*/ createUseReadContract({ abi: ctzndTestProjectVotingAbi })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"numSlots"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"numSlots"`
  */
-export const useReadTestProjectVotingNumSlots =
+export const useReadCtzndTestProjectVotingNumSlots =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'numSlots',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"projectToVotesIndex"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"projectToVotesIndex"`
  */
-export const useReadTestProjectVotingProjectToVotesIndex =
+export const useReadCtzndTestProjectVotingProjectToVotesIndex =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'projectToVotesIndex',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"projectVoteCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"projectVoteCount"`
  */
-export const useReadTestProjectVotingProjectVoteCount =
+export const useReadCtzndTestProjectVotingProjectVoteCount =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'projectVoteCount',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"projectVoting_finalBonus"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"projectVoting_finalBonus"`
  */
-export const useReadTestProjectVotingProjectVotingFinalBonus =
+export const useReadCtzndTestProjectVotingProjectVotingFinalBonus =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'projectVoting_finalBonus',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"projectVoting_initialBonus"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"projectVoting_initialBonus"`
  */
-export const useReadTestProjectVotingProjectVotingInitialBonus =
+export const useReadCtzndTestProjectVotingProjectVotingInitialBonus =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'projectVoting_initialBonus',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"projectVoting_projects"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"projectVoting_projects"`
  */
-export const useReadTestProjectVotingProjectVotingProjects =
+export const useReadCtzndTestProjectVotingProjectVotingProjects =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'projectVoting_projects',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"projectVoting_singleSlotDuration"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"projectVoting_singleSlotDuration"`
  */
-export const useReadTestProjectVotingProjectVotingSingleSlotDuration =
+export const useReadCtzndTestProjectVotingProjectVotingSingleSlotDuration =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'projectVoting_singleSlotDuration',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"projectVoting_voteLimitPerUser"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"projectVoting_voteLimitPerUser"`
  */
-export const useReadTestProjectVotingProjectVotingVoteLimitPerUser =
+export const useReadCtzndTestProjectVotingProjectVotingVoteLimitPerUser =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'projectVoting_voteLimitPerUser',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"projectVoting_votingPeriod"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"projectVoting_votingPeriod"`
  */
-export const useReadTestProjectVotingProjectVotingVotingPeriod =
+export const useReadCtzndTestProjectVotingProjectVotingVotingPeriod =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'projectVoting_votingPeriod',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"projects"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"projects"`
  */
-export const useReadTestProjectVotingProjects =
+export const useReadCtzndTestProjectVotingProjects =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'projects',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"test_calculateWeightedVote"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"test_calculateWeightedVote"`
  */
-export const useReadTestProjectVotingTestCalculateWeightedVote =
+export const useReadCtzndTestProjectVotingTestCalculateWeightedVote =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'test_calculateWeightedVote',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"test_getWinners"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"test_getWinners"`
  */
-export const useReadTestProjectVotingTestGetWinners =
+export const useReadCtzndTestProjectVotingTestGetWinners =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'test_getWinners',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"test_sortVotes"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"test_sortVotes"`
  */
-export const useReadTestProjectVotingTestSortVotes =
+export const useReadCtzndTestProjectVotingTestSortVotes =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'test_sortVotes',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"userHasVotedForProject"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"userHasVotedForProject"`
  */
-export const useReadTestProjectVotingUserHasVotedForProject =
+export const useReadCtzndTestProjectVotingUserHasVotedForProject =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'userHasVotedForProject',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"userVoteCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"userVoteCount"`
  */
-export const useReadTestProjectVotingUserVoteCount =
+export const useReadCtzndTestProjectVotingUserVoteCount =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'userVoteCount',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"votes"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"votes"`
  */
-export const useReadTestProjectVotingVotes =
+export const useReadCtzndTestProjectVotingVotes =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'votes',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"votesIndexToProject"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"votesIndexToProject"`
  */
-export const useReadTestProjectVotingVotesIndexToProject =
+export const useReadCtzndTestProjectVotingVotesIndexToProject =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'votesIndexToProject',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"votingPeriod"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"votingPeriod"`
  */
-export const useReadTestProjectVotingVotingPeriod =
+export const useReadCtzndTestProjectVotingVotingPeriod =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'votingPeriod',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"weightedProjectVoteCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"weightedProjectVoteCount"`
  */
-export const useReadTestProjectVotingWeightedProjectVoteCount =
+export const useReadCtzndTestProjectVotingWeightedProjectVoteCount =
   /*#__PURE__*/ createUseReadContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'weightedProjectVoteCount',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testProjectVotingAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__
  */
-export const useWriteTestProjectVoting = /*#__PURE__*/ createUseWriteContract({
-  abi: testProjectVotingAbi,
-})
+export const useWriteCtzndTestProjectVoting =
+  /*#__PURE__*/ createUseWriteContract({ abi: ctzndTestProjectVotingAbi })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"test_vote"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"test_vote"`
  */
-export const useWriteTestProjectVotingTestVote =
+export const useWriteCtzndTestProjectVotingTestVote =
   /*#__PURE__*/ createUseWriteContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'test_vote',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testProjectVotingAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__
  */
-export const useSimulateTestProjectVoting =
-  /*#__PURE__*/ createUseSimulateContract({ abi: testProjectVotingAbi })
+export const useSimulateCtzndTestProjectVoting =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ctzndTestProjectVotingAbi })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testProjectVotingAbi}__ and `functionName` set to `"test_vote"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestProjectVotingAbi}__ and `functionName` set to `"test_vote"`
  */
-export const useSimulateTestProjectVotingTestVote =
+export const useSimulateCtzndTestProjectVotingTestVote =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testProjectVotingAbi,
+    abi: ctzndTestProjectVotingAbi,
     functionName: 'test_vote',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__
  */
-export const useReadTestRisingTideWithCustomAmounts =
+export const useReadCtzndTestRisingTideWithCustomAmounts =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
  */
-export const useReadTestRisingTideWithCustomAmountsCapValidationGasLimit =
+export const useReadCtzndTestRisingTideWithCustomAmountsCapValidationGasLimit =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'CAP_VALIDATION_GAS_LIMIT',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"individualCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"individualCap"`
  */
-export const useReadTestRisingTideWithCustomAmountsIndividualCap =
+export const useReadCtzndTestRisingTideWithCustomAmountsIndividualCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'individualCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"investorAmountAt"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"investorAmountAt"`
  */
-export const useReadTestRisingTideWithCustomAmountsInvestorAmountAt =
+export const useReadCtzndTestRisingTideWithCustomAmountsInvestorAmountAt =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'investorAmountAt',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"investorCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"investorCount"`
  */
-export const useReadTestRisingTideWithCustomAmountsInvestorCount =
+export const useReadCtzndTestRisingTideWithCustomAmountsInvestorCount =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'investorCount',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTideCache"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTideCache"`
  */
-export const useReadTestRisingTideWithCustomAmountsRisingTideCache =
+export const useReadCtzndTestRisingTideWithCustomAmountsRisingTideCache =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'risingTideCache',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTideState"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTideState"`
  */
-export const useReadTestRisingTideWithCustomAmountsRisingTideState =
+export const useReadCtzndTestRisingTideWithCustomAmountsRisingTideState =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'risingTideState',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_applyCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_applyCap"`
  */
-export const useReadTestRisingTideWithCustomAmountsRisingTideApplyCap =
+export const useReadCtzndTestRisingTideWithCustomAmountsRisingTideApplyCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'risingTide_applyCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_isValidCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_isValidCap"`
  */
-export const useReadTestRisingTideWithCustomAmountsRisingTideIsValidCap =
+export const useReadCtzndTestRisingTideWithCustomAmountsRisingTideIsValidCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'risingTide_isValidCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
  */
-export const useReadTestRisingTideWithCustomAmountsRisingTideTotalAllocatedUncapped =
+export const useReadCtzndTestRisingTideWithCustomAmountsRisingTideTotalAllocatedUncapped =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'risingTide_totalAllocatedUncapped',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_totalCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_totalCap"`
  */
-export const useReadTestRisingTideWithCustomAmountsRisingTideTotalCap =
+export const useReadCtzndTestRisingTideWithCustomAmountsRisingTideTotalCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'risingTide_totalCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_validating"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_validating"`
  */
-export const useReadTestRisingTideWithCustomAmountsRisingTideValidating =
+export const useReadCtzndTestRisingTideWithCustomAmountsRisingTideValidating =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'risingTide_validating',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__
  */
-export const useWriteTestRisingTideWithCustomAmounts =
+export const useWriteCtzndTestRisingTideWithCustomAmounts =
   /*#__PURE__*/ createUseWriteContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_validate"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_validate"`
  */
-export const useWriteTestRisingTideWithCustomAmountsRisingTideValidate =
+export const useWriteCtzndTestRisingTideWithCustomAmountsRisingTideValidate =
   /*#__PURE__*/ createUseWriteContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'risingTide_validate',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"setCap"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"setCap"`
  */
-export const useWriteTestRisingTideWithCustomAmountsSetCap =
+export const useWriteCtzndTestRisingTideWithCustomAmountsSetCap =
   /*#__PURE__*/ createUseWriteContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'setCap',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"test_invest"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"test_invest"`
  */
-export const useWriteTestRisingTideWithCustomAmountsTestInvest =
+export const useWriteCtzndTestRisingTideWithCustomAmountsTestInvest =
   /*#__PURE__*/ createUseWriteContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'test_invest',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__
  */
-export const useSimulateTestRisingTideWithCustomAmounts =
+export const useSimulateCtzndTestRisingTideWithCustomAmounts =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_validate"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"risingTide_validate"`
  */
-export const useSimulateTestRisingTideWithCustomAmountsRisingTideValidate =
+export const useSimulateCtzndTestRisingTideWithCustomAmountsRisingTideValidate =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'risingTide_validate',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"setCap"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"setCap"`
  */
-export const useSimulateTestRisingTideWithCustomAmountsSetCap =
+export const useSimulateCtzndTestRisingTideWithCustomAmountsSetCap =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'setCap',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"test_invest"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestRisingTideWithCustomAmountsAbi}__ and `functionName` set to `"test_invest"`
  */
-export const useSimulateTestRisingTideWithCustomAmountsTestInvest =
+export const useSimulateCtzndTestRisingTideWithCustomAmountsTestInvest =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testRisingTideWithCustomAmountsAbi,
+    abi: ctzndTestRisingTideWithCustomAmountsAbi,
     functionName: 'test_invest',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__
  */
-export const useReadTestRisingTideWithStaticAmounts =
+export const useReadCtzndTestRisingTideWithStaticAmounts =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"CAP_VALIDATION_GAS_LIMIT"`
  */
-export const useReadTestRisingTideWithStaticAmountsCapValidationGasLimit =
+export const useReadCtzndTestRisingTideWithStaticAmountsCapValidationGasLimit =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'CAP_VALIDATION_GAS_LIMIT',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"individualCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"individualCap"`
  */
-export const useReadTestRisingTideWithStaticAmountsIndividualCap =
+export const useReadCtzndTestRisingTideWithStaticAmountsIndividualCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'individualCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"investorAmountAt"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"investorAmountAt"`
  */
-export const useReadTestRisingTideWithStaticAmountsInvestorAmountAt =
+export const useReadCtzndTestRisingTideWithStaticAmountsInvestorAmountAt =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'investorAmountAt',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"investorCount"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"investorCount"`
  */
-export const useReadTestRisingTideWithStaticAmountsInvestorCount =
+export const useReadCtzndTestRisingTideWithStaticAmountsInvestorCount =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'investorCount',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTideCache"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTideCache"`
  */
-export const useReadTestRisingTideWithStaticAmountsRisingTideCache =
+export const useReadCtzndTestRisingTideWithStaticAmountsRisingTideCache =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'risingTideCache',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTideState"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTideState"`
  */
-export const useReadTestRisingTideWithStaticAmountsRisingTideState =
+export const useReadCtzndTestRisingTideWithStaticAmountsRisingTideState =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'risingTideState',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_applyCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_applyCap"`
  */
-export const useReadTestRisingTideWithStaticAmountsRisingTideApplyCap =
+export const useReadCtzndTestRisingTideWithStaticAmountsRisingTideApplyCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'risingTide_applyCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_isValidCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_isValidCap"`
  */
-export const useReadTestRisingTideWithStaticAmountsRisingTideIsValidCap =
+export const useReadCtzndTestRisingTideWithStaticAmountsRisingTideIsValidCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'risingTide_isValidCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_totalAllocatedUncapped"`
  */
-export const useReadTestRisingTideWithStaticAmountsRisingTideTotalAllocatedUncapped =
+export const useReadCtzndTestRisingTideWithStaticAmountsRisingTideTotalAllocatedUncapped =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'risingTide_totalAllocatedUncapped',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_totalCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_totalCap"`
  */
-export const useReadTestRisingTideWithStaticAmountsRisingTideTotalCap =
+export const useReadCtzndTestRisingTideWithStaticAmountsRisingTideTotalCap =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'risingTide_totalCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_validating"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_validating"`
  */
-export const useReadTestRisingTideWithStaticAmountsRisingTideValidating =
+export const useReadCtzndTestRisingTideWithStaticAmountsRisingTideValidating =
   /*#__PURE__*/ createUseReadContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'risingTide_validating',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__
  */
-export const useWriteTestRisingTideWithStaticAmounts =
+export const useWriteCtzndTestRisingTideWithStaticAmounts =
   /*#__PURE__*/ createUseWriteContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_validate"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_validate"`
  */
-export const useWriteTestRisingTideWithStaticAmountsRisingTideValidate =
+export const useWriteCtzndTestRisingTideWithStaticAmountsRisingTideValidate =
   /*#__PURE__*/ createUseWriteContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'risingTide_validate',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"setCap"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"setCap"`
  */
-export const useWriteTestRisingTideWithStaticAmountsSetCap =
+export const useWriteCtzndTestRisingTideWithStaticAmountsSetCap =
   /*#__PURE__*/ createUseWriteContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'setCap',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__
  */
-export const useSimulateTestRisingTideWithStaticAmounts =
+export const useSimulateCtzndTestRisingTideWithStaticAmounts =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_validate"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"risingTide_validate"`
  */
-export const useSimulateTestRisingTideWithStaticAmountsRisingTideValidate =
+export const useSimulateCtzndTestRisingTideWithStaticAmountsRisingTideValidate =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'risingTide_validate',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link testRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"setCap"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndTestRisingTideWithStaticAmountsAbi}__ and `functionName` set to `"setCap"`
  */
-export const useSimulateTestRisingTideWithStaticAmountsSetCap =
+export const useSimulateCtzndTestRisingTideWithStaticAmountsSetCap =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: testRisingTideWithStaticAmountsAbi,
+    abi: ctzndTestRisingTideWithStaticAmountsAbi,
     functionName: 'setCap',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__
  */
-export const useReadVesting = /*#__PURE__*/ createUseReadContract({
-  abi: vestingAbi,
+export const useReadCtzndVesting = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVestingAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
  */
-export const useReadVestingDefaultAdminRole =
+export const useReadCtzndVestingDefaultAdminRole =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'DEFAULT_ADMIN_ROLE',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"PRIVATE_SALE_MAX_CLIFF_MONTHS"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"PRIVATE_SALE_MAX_CLIFF_MONTHS"`
  */
-export const useReadVestingPrivateSaleMaxCliffMonths =
+export const useReadCtzndVestingPrivateSaleMaxCliffMonths =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'PRIVATE_SALE_MAX_CLIFF_MONTHS',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"SALE_MANAGER_ROLE"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"SALE_MANAGER_ROLE"`
  */
-export const useReadVestingSaleManagerRole =
+export const useReadCtzndVestingSaleManagerRole =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'SALE_MANAGER_ROLE',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"claimable"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"claimable"`
  */
-export const useReadVestingClaimable = /*#__PURE__*/ createUseReadContract({
-  abi: vestingAbi,
-  functionName: 'claimable',
-})
+export const useReadCtzndVestingClaimable = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndVestingAbi, functionName: 'claimable' },
+)
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"claimablePrivate"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"claimablePrivate"`
  */
-export const useReadVestingClaimablePrivate =
+export const useReadCtzndVestingClaimablePrivate =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'claimablePrivate',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"claimablePublic"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"claimablePublic"`
  */
-export const useReadVestingClaimablePublic =
+export const useReadCtzndVestingClaimablePublic =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'claimablePublic',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"claimed"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"claimed"`
  */
-export const useReadVestingClaimed = /*#__PURE__*/ createUseReadContract({
-  abi: vestingAbi,
+export const useReadCtzndVestingClaimed = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVestingAbi,
   functionName: 'claimed',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"getRoleAdmin"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"getRoleAdmin"`
  */
-export const useReadVestingGetRoleAdmin = /*#__PURE__*/ createUseReadContract({
-  abi: vestingAbi,
-  functionName: 'getRoleAdmin',
-})
+export const useReadCtzndVestingGetRoleAdmin =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVestingAbi,
+    functionName: 'getRoleAdmin',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"hasRole"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"hasRole"`
  */
-export const useReadVestingHasRole = /*#__PURE__*/ createUseReadContract({
-  abi: vestingAbi,
+export const useReadCtzndVestingHasRole = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVestingAbi,
   functionName: 'hasRole',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"privateAllocations"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"privateAllocations"`
  */
-export const useReadVestingPrivateAllocations =
+export const useReadCtzndVestingPrivateAllocations =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'privateAllocations',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"privateSaleCap"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"privateSaleCap"`
  */
-export const useReadVestingPrivateSaleCap = /*#__PURE__*/ createUseReadContract(
-  { abi: vestingAbi, functionName: 'privateSaleCap' },
-)
+export const useReadCtzndVestingPrivateSaleCap =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVestingAbi,
+    functionName: 'privateSaleCap',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"publicSaleCliffMonths"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"publicSaleCliffMonths"`
  */
-export const useReadVestingPublicSaleCliffMonths =
+export const useReadCtzndVestingPublicSaleCliffMonths =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'publicSaleCliffMonths',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"publicSaleVestingMonths"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"publicSaleVestingMonths"`
  */
-export const useReadVestingPublicSaleVestingMonths =
+export const useReadCtzndVestingPublicSaleVestingMonths =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'publicSaleVestingMonths',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"sales"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"sales"`
  */
-export const useReadVestingSales = /*#__PURE__*/ createUseReadContract({
-  abi: vestingAbi,
+export const useReadCtzndVestingSales = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVestingAbi,
   functionName: 'sales',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"startTime"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"startTime"`
  */
-export const useReadVestingStartTime = /*#__PURE__*/ createUseReadContract({
-  abi: vestingAbi,
-  functionName: 'startTime',
-})
+export const useReadCtzndVestingStartTime = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndVestingAbi, functionName: 'startTime' },
+)
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"supportsInterface"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"supportsInterface"`
  */
-export const useReadVestingSupportsInterface =
+export const useReadCtzndVestingSupportsInterface =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'supportsInterface',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"token"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"token"`
  */
-export const useReadVestingToken = /*#__PURE__*/ createUseReadContract({
-  abi: vestingAbi,
+export const useReadCtzndVestingToken = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVestingAbi,
   functionName: 'token',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"totalAllocated"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"totalAllocated"`
  */
-export const useReadVestingTotalAllocated = /*#__PURE__*/ createUseReadContract(
-  { abi: vestingAbi, functionName: 'totalAllocated' },
-)
+export const useReadCtzndVestingTotalAllocated =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVestingAbi,
+    functionName: 'totalAllocated',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"totalAllocatedPrivate"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"totalAllocatedPrivate"`
  */
-export const useReadVestingTotalAllocatedPrivate =
+export const useReadCtzndVestingTotalAllocatedPrivate =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'totalAllocatedPrivate',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"totalAllocatedPublic"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"totalAllocatedPublic"`
  */
-export const useReadVestingTotalAllocatedPublic =
+export const useReadCtzndVestingTotalAllocatedPublic =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'totalAllocatedPublic',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"totalPrivateSales"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"totalPrivateSales"`
  */
-export const useReadVestingTotalPrivateSales =
+export const useReadCtzndVestingTotalPrivateSales =
   /*#__PURE__*/ createUseReadContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'totalPrivateSales',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"usedNonces"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"usedNonces"`
  */
-export const useReadVestingUsedNonces = /*#__PURE__*/ createUseReadContract({
-  abi: vestingAbi,
-  functionName: 'usedNonces',
+export const useReadCtzndVestingUsedNonces =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVestingAbi,
+    functionName: 'usedNonces',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVestingAbi}__
+ */
+export const useWriteCtzndVesting = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVestingAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vestingAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"addSale"`
  */
-export const useWriteVesting = /*#__PURE__*/ createUseWriteContract({
-  abi: vestingAbi,
-})
+export const useWriteCtzndVestingAddSale = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndVestingAbi, functionName: 'addSale' },
+)
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"addSale"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"claim"`
  */
-export const useWriteVestingAddSale = /*#__PURE__*/ createUseWriteContract({
-  abi: vestingAbi,
-  functionName: 'addSale',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"claim"`
- */
-export const useWriteVestingClaim = /*#__PURE__*/ createUseWriteContract({
-  abi: vestingAbi,
+export const useWriteCtzndVestingClaim = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVestingAbi,
   functionName: 'claim',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"createPrivateSaleVest"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"createPrivateSaleVest"`
  */
-export const useWriteVestingCreatePrivateSaleVest =
+export const useWriteCtzndVestingCreatePrivateSaleVest =
   /*#__PURE__*/ createUseWriteContract({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     functionName: 'createPrivateSaleVest',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"grantRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useWriteVestingGrantRole = /*#__PURE__*/ createUseWriteContract({
-  abi: vestingAbi,
-  functionName: 'grantRole',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"refund"`
- */
-export const useWriteVestingRefund = /*#__PURE__*/ createUseWriteContract({
-  abi: vestingAbi,
-  functionName: 'refund',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"renounceRole"`
- */
-export const useWriteVestingRenounceRole = /*#__PURE__*/ createUseWriteContract(
-  { abi: vestingAbi, functionName: 'renounceRole' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"revokeRole"`
- */
-export const useWriteVestingRevokeRole = /*#__PURE__*/ createUseWriteContract({
-  abi: vestingAbi,
-  functionName: 'revokeRole',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"setStartTime"`
- */
-export const useWriteVestingSetStartTime = /*#__PURE__*/ createUseWriteContract(
-  { abi: vestingAbi, functionName: 'setStartTime' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vestingAbi}__
- */
-export const useSimulateVesting = /*#__PURE__*/ createUseSimulateContract({
-  abi: vestingAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"addSale"`
- */
-export const useSimulateVestingAddSale =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vestingAbi,
-    functionName: 'addSale',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"claim"`
- */
-export const useSimulateVestingClaim = /*#__PURE__*/ createUseSimulateContract({
-  abi: vestingAbi,
-  functionName: 'claim',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"createPrivateSaleVest"`
- */
-export const useSimulateVestingCreatePrivateSaleVest =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vestingAbi,
-    functionName: 'createPrivateSaleVest',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"grantRole"`
- */
-export const useSimulateVestingGrantRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vestingAbi,
+export const useWriteCtzndVestingGrantRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVestingAbi,
     functionName: 'grantRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"refund"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"refund"`
  */
-export const useSimulateVestingRefund = /*#__PURE__*/ createUseSimulateContract(
-  { abi: vestingAbi, functionName: 'refund' },
-)
+export const useWriteCtzndVestingRefund = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVestingAbi,
+  functionName: 'refund',
+})
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"renounceRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"renounceRole"`
  */
-export const useSimulateVestingRenounceRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vestingAbi,
+export const useWriteCtzndVestingRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVestingAbi,
     functionName: 'renounceRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"revokeRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"revokeRole"`
  */
-export const useSimulateVestingRevokeRole =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vestingAbi,
+export const useWriteCtzndVestingRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVestingAbi,
     functionName: 'revokeRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vestingAbi}__ and `functionName` set to `"setStartTime"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"setStartTime"`
  */
-export const useSimulateVestingSetStartTime =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vestingAbi,
+export const useWriteCtzndVestingSetStartTime =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVestingAbi,
     functionName: 'setStartTime',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link vestingAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVestingAbi}__
  */
-export const useWatchVestingEvent = /*#__PURE__*/ createUseWatchContractEvent({
-  abi: vestingAbi,
+export const useSimulateCtzndVesting = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVestingAbi,
 })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link vestingAbi}__ and `eventName` set to `"AddSale"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"addSale"`
  */
-export const useWatchVestingAddSaleEvent =
+export const useSimulateCtzndVestingAddSale =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVestingAbi,
+    functionName: 'addSale',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"claim"`
+ */
+export const useSimulateCtzndVestingClaim =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVestingAbi,
+    functionName: 'claim',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"createPrivateSaleVest"`
+ */
+export const useSimulateCtzndVestingCreatePrivateSaleVest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVestingAbi,
+    functionName: 'createPrivateSaleVest',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useSimulateCtzndVestingGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVestingAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"refund"`
+ */
+export const useSimulateCtzndVestingRefund =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVestingAbi,
+    functionName: 'refund',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useSimulateCtzndVestingRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVestingAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useSimulateCtzndVestingRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVestingAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVestingAbi}__ and `functionName` set to `"setStartTime"`
+ */
+export const useSimulateCtzndVestingSetStartTime =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVestingAbi,
+    functionName: 'setStartTime',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndVestingAbi}__
+ */
+export const useWatchCtzndVestingEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndVestingAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndVestingAbi}__ and `eventName` set to `"AddSale"`
+ */
+export const useWatchCtzndVestingAddSaleEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     eventName: 'AddSale',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link vestingAbi}__ and `eventName` set to `"ClaimVesting"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndVestingAbi}__ and `eventName` set to `"ClaimVesting"`
  */
-export const useWatchVestingClaimVestingEvent =
+export const useWatchCtzndVestingClaimVestingEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     eventName: 'ClaimVesting',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link vestingAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndVestingAbi}__ and `eventName` set to `"RoleAdminChanged"`
  */
-export const useWatchVestingRoleAdminChangedEvent =
+export const useWatchCtzndVestingRoleAdminChangedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     eventName: 'RoleAdminChanged',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link vestingAbi}__ and `eventName` set to `"RoleGranted"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndVestingAbi}__ and `eventName` set to `"RoleGranted"`
  */
-export const useWatchVestingRoleGrantedEvent =
+export const useWatchCtzndVestingRoleGrantedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     eventName: 'RoleGranted',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link vestingAbi}__ and `eventName` set to `"RoleRevoked"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndVestingAbi}__ and `eventName` set to `"RoleRevoked"`
  */
-export const useWatchVestingRoleRevokedEvent =
+export const useWatchCtzndVestingRoleRevokedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: vestingAbi,
+    abi: ctzndVestingAbi,
     eventName: 'RoleRevoked',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__
  */
-export const useReadVm = /*#__PURE__*/ createUseReadContract({ abi: vmAbi })
+export const useReadCtzndVm = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
+})
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"activeFork"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"activeFork"`
  */
-export const useReadVmActiveFork = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmActiveFork = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'activeFork',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"addr"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"addr"`
  */
-export const useReadVmAddr = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmAddr = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'addr',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"assume"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"assume"`
  */
-export const useReadVmAssume = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmAssume = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'assume',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"computeCreate2Address"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"computeCreate2Address"`
  */
-export const useReadVmComputeCreate2Address =
+export const useReadCtzndVmComputeCreate2Address =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmAbi,
+    abi: ctzndVmAbi,
     functionName: 'computeCreate2Address',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"computeCreateAddress"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"computeCreateAddress"`
  */
-export const useReadVmComputeCreateAddress =
+export const useReadCtzndVmComputeCreateAddress =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmAbi,
+    abi: ctzndVmAbi,
     functionName: 'computeCreateAddress',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"deriveKey"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"deriveKey"`
  */
-export const useReadVmDeriveKey = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmDeriveKey = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'deriveKey',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"envAddress"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"envAddress"`
  */
-export const useReadVmEnvAddress = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmEnvAddress = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'envAddress',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"envBool"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"envBool"`
  */
-export const useReadVmEnvBool = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmEnvBool = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'envBool',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"envBytes"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"envBytes"`
  */
-export const useReadVmEnvBytes = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmEnvBytes = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'envBytes',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"envBytes32"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"envBytes32"`
  */
-export const useReadVmEnvBytes32 = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmEnvBytes32 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'envBytes32',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"envInt"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"envInt"`
  */
-export const useReadVmEnvInt = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmEnvInt = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'envInt',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"envOr"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"envOr"`
  */
-export const useReadVmEnvOr = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmEnvOr = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'envOr',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"envString"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"envString"`
  */
-export const useReadVmEnvString = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmEnvString = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'envString',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"envUint"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"envUint"`
  */
-export const useReadVmEnvUint = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmEnvUint = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'envUint',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"fsMetadata"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"fsMetadata"`
  */
-export const useReadVmFsMetadata = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
+export const useReadCtzndVmFsMetadata = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'fsMetadata',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getBlockNumber"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getBlockNumber"`
  */
-export const useReadVmGetBlockNumber = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'getBlockNumber',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getBlockTimestamp"`
- */
-export const useReadVmGetBlockTimestamp = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'getBlockTimestamp',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getCode"`
- */
-export const useReadVmGetCode = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'getCode',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getDeployedCode"`
- */
-export const useReadVmGetDeployedCode = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'getDeployedCode',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getLabel"`
- */
-export const useReadVmGetLabel = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'getLabel',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getNonce"`
- */
-export const useReadVmGetNonce = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'getNonce',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"isPersistent"`
- */
-export const useReadVmIsPersistent = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'isPersistent',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"keyExists"`
- */
-export const useReadVmKeyExists = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'keyExists',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"load"`
- */
-export const useReadVmLoad = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'load',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseAddress"`
- */
-export const useReadVmParseAddress = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseAddress',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseBool"`
- */
-export const useReadVmParseBool = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseBool',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseBytes"`
- */
-export const useReadVmParseBytes = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseBytes',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseBytes32"`
- */
-export const useReadVmParseBytes32 = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseBytes32',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseInt"`
- */
-export const useReadVmParseInt = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseInt',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJson"`
- */
-export const useReadVmParseJson = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJson',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonAddress"`
- */
-export const useReadVmParseJsonAddress = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonAddress',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonAddressArray"`
- */
-export const useReadVmParseJsonAddressArray =
-  /*#__PURE__*/ createUseReadContract({
-    abi: vmAbi,
-    functionName: 'parseJsonAddressArray',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonBool"`
- */
-export const useReadVmParseJsonBool = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonBool',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonBoolArray"`
- */
-export const useReadVmParseJsonBoolArray = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonBoolArray',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonBytes"`
- */
-export const useReadVmParseJsonBytes = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonBytes',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonBytes32"`
- */
-export const useReadVmParseJsonBytes32 = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonBytes32',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonBytes32Array"`
- */
-export const useReadVmParseJsonBytes32Array =
-  /*#__PURE__*/ createUseReadContract({
-    abi: vmAbi,
-    functionName: 'parseJsonBytes32Array',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonBytesArray"`
- */
-export const useReadVmParseJsonBytesArray = /*#__PURE__*/ createUseReadContract(
-  { abi: vmAbi, functionName: 'parseJsonBytesArray' },
+export const useReadCtzndVmGetBlockNumber = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndVmAbi, functionName: 'getBlockNumber' },
 )
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonInt"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getBlockTimestamp"`
  */
-export const useReadVmParseJsonInt = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonInt',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonIntArray"`
- */
-export const useReadVmParseJsonIntArray = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonIntArray',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonKeys"`
- */
-export const useReadVmParseJsonKeys = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonKeys',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonString"`
- */
-export const useReadVmParseJsonString = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonString',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonStringArray"`
- */
-export const useReadVmParseJsonStringArray =
+export const useReadCtzndVmGetBlockTimestamp =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmAbi,
-    functionName: 'parseJsonStringArray',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonUint"`
- */
-export const useReadVmParseJsonUint = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonUint',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseJsonUintArray"`
- */
-export const useReadVmParseJsonUintArray = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseJsonUintArray',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"parseUint"`
- */
-export const useReadVmParseUint = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'parseUint',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"projectRoot"`
- */
-export const useReadVmProjectRoot = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'projectRoot',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"readDir"`
- */
-export const useReadVmReadDir = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'readDir',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"readFile"`
- */
-export const useReadVmReadFile = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'readFile',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"readFileBinary"`
- */
-export const useReadVmReadFileBinary = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'readFileBinary',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"readLine"`
- */
-export const useReadVmReadLine = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'readLine',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"readLink"`
- */
-export const useReadVmReadLink = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'readLink',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"rpcUrl"`
- */
-export const useReadVmRpcUrl = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'rpcUrl',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"rpcUrlStructs"`
- */
-export const useReadVmRpcUrlStructs = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'rpcUrlStructs',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"rpcUrls"`
- */
-export const useReadVmRpcUrls = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'rpcUrls',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"sign"`
- */
-export const useReadVmSign = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'sign',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"signP256"`
- */
-export const useReadVmSignP256 = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'signP256',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"toBase64"`
- */
-export const useReadVmToBase64 = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'toBase64',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"toBase64URL"`
- */
-export const useReadVmToBase64Url = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'toBase64URL',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"toString"`
- */
-export const useReadVmToString = /*#__PURE__*/ createUseReadContract({
-  abi: vmAbi,
-  functionName: 'toString',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__
- */
-export const useWriteVm = /*#__PURE__*/ createUseWriteContract({ abi: vmAbi })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"accesses"`
- */
-export const useWriteVmAccesses = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'accesses',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"allowCheatcodes"`
- */
-export const useWriteVmAllowCheatcodes = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'allowCheatcodes',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"breakpoint"`
- */
-export const useWriteVmBreakpoint = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'breakpoint',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"broadcast"`
- */
-export const useWriteVmBroadcast = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'broadcast',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"chainId"`
- */
-export const useWriteVmChainId = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'chainId',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"clearMockedCalls"`
- */
-export const useWriteVmClearMockedCalls = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'clearMockedCalls',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"closeFile"`
- */
-export const useWriteVmCloseFile = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'closeFile',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"coinbase"`
- */
-export const useWriteVmCoinbase = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'coinbase',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"copyFile"`
- */
-export const useWriteVmCopyFile = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'copyFile',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"createDir"`
- */
-export const useWriteVmCreateDir = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'createDir',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"createFork"`
- */
-export const useWriteVmCreateFork = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'createFork',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"createSelectFork"`
- */
-export const useWriteVmCreateSelectFork = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'createSelectFork',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"createWallet"`
- */
-export const useWriteVmCreateWallet = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'createWallet',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"deal"`
- */
-export const useWriteVmDeal = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'deal',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"deleteSnapshot"`
- */
-export const useWriteVmDeleteSnapshot = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'deleteSnapshot',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"deleteSnapshots"`
- */
-export const useWriteVmDeleteSnapshots = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'deleteSnapshots',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"difficulty"`
- */
-export const useWriteVmDifficulty = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'difficulty',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"dumpState"`
- */
-export const useWriteVmDumpState = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'dumpState',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"etch"`
- */
-export const useWriteVmEtch = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'etch',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"eth_getLogs"`
- */
-export const useWriteVmEthGetLogs = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'eth_getLogs',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"exists"`
- */
-export const useWriteVmExists = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'exists',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectCall"`
- */
-export const useWriteVmExpectCall = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'expectCall',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectCallMinGas"`
- */
-export const useWriteVmExpectCallMinGas = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'expectCallMinGas',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectEmit"`
- */
-export const useWriteVmExpectEmit = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'expectEmit',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectRevert"`
- */
-export const useWriteVmExpectRevert = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'expectRevert',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectSafeMemory"`
- */
-export const useWriteVmExpectSafeMemory = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'expectSafeMemory',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectSafeMemoryCall"`
- */
-export const useWriteVmExpectSafeMemoryCall =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmAbi,
-    functionName: 'expectSafeMemoryCall',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"fee"`
- */
-export const useWriteVmFee = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'fee',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"ffi"`
- */
-export const useWriteVmFfi = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'ffi',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getMappingKeyAndParentOf"`
- */
-export const useWriteVmGetMappingKeyAndParentOf =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmAbi,
-    functionName: 'getMappingKeyAndParentOf',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getMappingLength"`
- */
-export const useWriteVmGetMappingLength = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'getMappingLength',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getMappingSlotAt"`
- */
-export const useWriteVmGetMappingSlotAt = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'getMappingSlotAt',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getNonce"`
- */
-export const useWriteVmGetNonce = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'getNonce',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getRecordedLogs"`
- */
-export const useWriteVmGetRecordedLogs = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'getRecordedLogs',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"isDir"`
- */
-export const useWriteVmIsDir = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'isDir',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"isFile"`
- */
-export const useWriteVmIsFile = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'isFile',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"label"`
- */
-export const useWriteVmLabel = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'label',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"loadAllocs"`
- */
-export const useWriteVmLoadAllocs = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'loadAllocs',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"makePersistent"`
- */
-export const useWriteVmMakePersistent = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'makePersistent',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"mockCall"`
- */
-export const useWriteVmMockCall = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'mockCall',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"mockCallRevert"`
- */
-export const useWriteVmMockCallRevert = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'mockCallRevert',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"pauseGasMetering"`
- */
-export const useWriteVmPauseGasMetering = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'pauseGasMetering',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"prank"`
- */
-export const useWriteVmPrank = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'prank',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"prevrandao"`
- */
-export const useWriteVmPrevrandao = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'prevrandao',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"readCallers"`
- */
-export const useWriteVmReadCallers = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'readCallers',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"record"`
- */
-export const useWriteVmRecord = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'record',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"recordLogs"`
- */
-export const useWriteVmRecordLogs = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'recordLogs',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"rememberKey"`
- */
-export const useWriteVmRememberKey = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'rememberKey',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"removeDir"`
- */
-export const useWriteVmRemoveDir = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'removeDir',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"removeFile"`
- */
-export const useWriteVmRemoveFile = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'removeFile',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"resetNonce"`
- */
-export const useWriteVmResetNonce = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'resetNonce',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"resumeGasMetering"`
- */
-export const useWriteVmResumeGasMetering = /*#__PURE__*/ createUseWriteContract(
-  { abi: vmAbi, functionName: 'resumeGasMetering' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"revertTo"`
- */
-export const useWriteVmRevertTo = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'revertTo',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"revertToAndDelete"`
- */
-export const useWriteVmRevertToAndDelete = /*#__PURE__*/ createUseWriteContract(
-  { abi: vmAbi, functionName: 'revertToAndDelete' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"revokePersistent"`
- */
-export const useWriteVmRevokePersistent = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'revokePersistent',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"roll"`
- */
-export const useWriteVmRoll = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'roll',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"rollFork"`
- */
-export const useWriteVmRollFork = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'rollFork',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"rpc"`
- */
-export const useWriteVmRpc = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'rpc',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"selectFork"`
- */
-export const useWriteVmSelectFork = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'selectFork',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeAddress"`
- */
-export const useWriteVmSerializeAddress = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'serializeAddress',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeBool"`
- */
-export const useWriteVmSerializeBool = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'serializeBool',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeBytes"`
- */
-export const useWriteVmSerializeBytes = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'serializeBytes',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeBytes32"`
- */
-export const useWriteVmSerializeBytes32 = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'serializeBytes32',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeInt"`
- */
-export const useWriteVmSerializeInt = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'serializeInt',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeJson"`
- */
-export const useWriteVmSerializeJson = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'serializeJson',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeString"`
- */
-export const useWriteVmSerializeString = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'serializeString',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeUint"`
- */
-export const useWriteVmSerializeUint = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'serializeUint',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"setEnv"`
- */
-export const useWriteVmSetEnv = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'setEnv',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"setNonce"`
- */
-export const useWriteVmSetNonce = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'setNonce',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"setNonceUnsafe"`
- */
-export const useWriteVmSetNonceUnsafe = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'setNonceUnsafe',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"sign"`
- */
-export const useWriteVmSign = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'sign',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"skip"`
- */
-export const useWriteVmSkip = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'skip',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"sleep"`
- */
-export const useWriteVmSleep = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'sleep',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"snapshot"`
- */
-export const useWriteVmSnapshot = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'snapshot',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"startBroadcast"`
- */
-export const useWriteVmStartBroadcast = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'startBroadcast',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"startMappingRecording"`
- */
-export const useWriteVmStartMappingRecording =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmAbi,
-    functionName: 'startMappingRecording',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"startPrank"`
- */
-export const useWriteVmStartPrank = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'startPrank',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"startStateDiffRecording"`
- */
-export const useWriteVmStartStateDiffRecording =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmAbi,
-    functionName: 'startStateDiffRecording',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"stopAndReturnStateDiff"`
- */
-export const useWriteVmStopAndReturnStateDiff =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmAbi,
-    functionName: 'stopAndReturnStateDiff',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"stopBroadcast"`
- */
-export const useWriteVmStopBroadcast = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'stopBroadcast',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"stopMappingRecording"`
- */
-export const useWriteVmStopMappingRecording =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmAbi,
-    functionName: 'stopMappingRecording',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"stopPrank"`
- */
-export const useWriteVmStopPrank = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'stopPrank',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"store"`
- */
-export const useWriteVmStore = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'store',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"transact"`
- */
-export const useWriteVmTransact = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'transact',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"tryFfi"`
- */
-export const useWriteVmTryFfi = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'tryFfi',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"txGasPrice"`
- */
-export const useWriteVmTxGasPrice = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'txGasPrice',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"unixTime"`
- */
-export const useWriteVmUnixTime = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'unixTime',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"warp"`
- */
-export const useWriteVmWarp = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'warp',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"writeFile"`
- */
-export const useWriteVmWriteFile = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'writeFile',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"writeFileBinary"`
- */
-export const useWriteVmWriteFileBinary = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'writeFileBinary',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"writeJson"`
- */
-export const useWriteVmWriteJson = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'writeJson',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"writeLine"`
- */
-export const useWriteVmWriteLine = /*#__PURE__*/ createUseWriteContract({
-  abi: vmAbi,
-  functionName: 'writeLine',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__
- */
-export const useSimulateVm = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"accesses"`
- */
-export const useSimulateVmAccesses = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'accesses',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"allowCheatcodes"`
- */
-export const useSimulateVmAllowCheatcodes =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'allowCheatcodes',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"breakpoint"`
- */
-export const useSimulateVmBreakpoint = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'breakpoint',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"broadcast"`
- */
-export const useSimulateVmBroadcast = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'broadcast',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"chainId"`
- */
-export const useSimulateVmChainId = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'chainId',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"clearMockedCalls"`
- */
-export const useSimulateVmClearMockedCalls =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'clearMockedCalls',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"closeFile"`
- */
-export const useSimulateVmCloseFile = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'closeFile',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"coinbase"`
- */
-export const useSimulateVmCoinbase = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'coinbase',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"copyFile"`
- */
-export const useSimulateVmCopyFile = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'copyFile',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"createDir"`
- */
-export const useSimulateVmCreateDir = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'createDir',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"createFork"`
- */
-export const useSimulateVmCreateFork = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'createFork',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"createSelectFork"`
- */
-export const useSimulateVmCreateSelectFork =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'createSelectFork',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"createWallet"`
- */
-export const useSimulateVmCreateWallet =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'createWallet',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"deal"`
- */
-export const useSimulateVmDeal = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'deal',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"deleteSnapshot"`
- */
-export const useSimulateVmDeleteSnapshot =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'deleteSnapshot',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"deleteSnapshots"`
- */
-export const useSimulateVmDeleteSnapshots =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'deleteSnapshots',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"difficulty"`
- */
-export const useSimulateVmDifficulty = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'difficulty',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"dumpState"`
- */
-export const useSimulateVmDumpState = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'dumpState',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"etch"`
- */
-export const useSimulateVmEtch = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'etch',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"eth_getLogs"`
- */
-export const useSimulateVmEthGetLogs = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'eth_getLogs',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"exists"`
- */
-export const useSimulateVmExists = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'exists',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectCall"`
- */
-export const useSimulateVmExpectCall = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'expectCall',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectCallMinGas"`
- */
-export const useSimulateVmExpectCallMinGas =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'expectCallMinGas',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectEmit"`
- */
-export const useSimulateVmExpectEmit = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'expectEmit',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectRevert"`
- */
-export const useSimulateVmExpectRevert =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'expectRevert',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectSafeMemory"`
- */
-export const useSimulateVmExpectSafeMemory =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'expectSafeMemory',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"expectSafeMemoryCall"`
- */
-export const useSimulateVmExpectSafeMemoryCall =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'expectSafeMemoryCall',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"fee"`
- */
-export const useSimulateVmFee = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'fee',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"ffi"`
- */
-export const useSimulateVmFfi = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'ffi',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getMappingKeyAndParentOf"`
- */
-export const useSimulateVmGetMappingKeyAndParentOf =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'getMappingKeyAndParentOf',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getMappingLength"`
- */
-export const useSimulateVmGetMappingLength =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'getMappingLength',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getMappingSlotAt"`
- */
-export const useSimulateVmGetMappingSlotAt =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'getMappingSlotAt',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getNonce"`
- */
-export const useSimulateVmGetNonce = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'getNonce',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"getRecordedLogs"`
- */
-export const useSimulateVmGetRecordedLogs =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'getRecordedLogs',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"isDir"`
- */
-export const useSimulateVmIsDir = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'isDir',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"isFile"`
- */
-export const useSimulateVmIsFile = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'isFile',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"label"`
- */
-export const useSimulateVmLabel = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'label',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"loadAllocs"`
- */
-export const useSimulateVmLoadAllocs = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'loadAllocs',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"makePersistent"`
- */
-export const useSimulateVmMakePersistent =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'makePersistent',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"mockCall"`
- */
-export const useSimulateVmMockCall = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'mockCall',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"mockCallRevert"`
- */
-export const useSimulateVmMockCallRevert =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'mockCallRevert',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"pauseGasMetering"`
- */
-export const useSimulateVmPauseGasMetering =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'pauseGasMetering',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"prank"`
- */
-export const useSimulateVmPrank = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'prank',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"prevrandao"`
- */
-export const useSimulateVmPrevrandao = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'prevrandao',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"readCallers"`
- */
-export const useSimulateVmReadCallers = /*#__PURE__*/ createUseSimulateContract(
-  { abi: vmAbi, functionName: 'readCallers' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"record"`
- */
-export const useSimulateVmRecord = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'record',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"recordLogs"`
- */
-export const useSimulateVmRecordLogs = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'recordLogs',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"rememberKey"`
- */
-export const useSimulateVmRememberKey = /*#__PURE__*/ createUseSimulateContract(
-  { abi: vmAbi, functionName: 'rememberKey' },
-)
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"removeDir"`
- */
-export const useSimulateVmRemoveDir = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'removeDir',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"removeFile"`
- */
-export const useSimulateVmRemoveFile = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'removeFile',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"resetNonce"`
- */
-export const useSimulateVmResetNonce = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'resetNonce',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"resumeGasMetering"`
- */
-export const useSimulateVmResumeGasMetering =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'resumeGasMetering',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"revertTo"`
- */
-export const useSimulateVmRevertTo = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'revertTo',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"revertToAndDelete"`
- */
-export const useSimulateVmRevertToAndDelete =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'revertToAndDelete',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"revokePersistent"`
- */
-export const useSimulateVmRevokePersistent =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'revokePersistent',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"roll"`
- */
-export const useSimulateVmRoll = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'roll',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"rollFork"`
- */
-export const useSimulateVmRollFork = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'rollFork',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"rpc"`
- */
-export const useSimulateVmRpc = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'rpc',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"selectFork"`
- */
-export const useSimulateVmSelectFork = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'selectFork',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeAddress"`
- */
-export const useSimulateVmSerializeAddress =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'serializeAddress',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeBool"`
- */
-export const useSimulateVmSerializeBool =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'serializeBool',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeBytes"`
- */
-export const useSimulateVmSerializeBytes =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'serializeBytes',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeBytes32"`
- */
-export const useSimulateVmSerializeBytes32 =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'serializeBytes32',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeInt"`
- */
-export const useSimulateVmSerializeInt =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'serializeInt',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeJson"`
- */
-export const useSimulateVmSerializeJson =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'serializeJson',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeString"`
- */
-export const useSimulateVmSerializeString =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'serializeString',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"serializeUint"`
- */
-export const useSimulateVmSerializeUint =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'serializeUint',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"setEnv"`
- */
-export const useSimulateVmSetEnv = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'setEnv',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"setNonce"`
- */
-export const useSimulateVmSetNonce = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'setNonce',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"setNonceUnsafe"`
- */
-export const useSimulateVmSetNonceUnsafe =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'setNonceUnsafe',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"sign"`
- */
-export const useSimulateVmSign = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'sign',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"skip"`
- */
-export const useSimulateVmSkip = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'skip',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"sleep"`
- */
-export const useSimulateVmSleep = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'sleep',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"snapshot"`
- */
-export const useSimulateVmSnapshot = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'snapshot',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"startBroadcast"`
- */
-export const useSimulateVmStartBroadcast =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'startBroadcast',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"startMappingRecording"`
- */
-export const useSimulateVmStartMappingRecording =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'startMappingRecording',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"startPrank"`
- */
-export const useSimulateVmStartPrank = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'startPrank',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"startStateDiffRecording"`
- */
-export const useSimulateVmStartStateDiffRecording =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'startStateDiffRecording',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"stopAndReturnStateDiff"`
- */
-export const useSimulateVmStopAndReturnStateDiff =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'stopAndReturnStateDiff',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"stopBroadcast"`
- */
-export const useSimulateVmStopBroadcast =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'stopBroadcast',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"stopMappingRecording"`
- */
-export const useSimulateVmStopMappingRecording =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'stopMappingRecording',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"stopPrank"`
- */
-export const useSimulateVmStopPrank = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'stopPrank',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"store"`
- */
-export const useSimulateVmStore = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'store',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"transact"`
- */
-export const useSimulateVmTransact = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'transact',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"tryFfi"`
- */
-export const useSimulateVmTryFfi = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'tryFfi',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"txGasPrice"`
- */
-export const useSimulateVmTxGasPrice = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'txGasPrice',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"unixTime"`
- */
-export const useSimulateVmUnixTime = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'unixTime',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"warp"`
- */
-export const useSimulateVmWarp = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'warp',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"writeFile"`
- */
-export const useSimulateVmWriteFile = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'writeFile',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"writeFileBinary"`
- */
-export const useSimulateVmWriteFileBinary =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmAbi,
-    functionName: 'writeFileBinary',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"writeJson"`
- */
-export const useSimulateVmWriteJson = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'writeJson',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmAbi}__ and `functionName` set to `"writeLine"`
- */
-export const useSimulateVmWriteLine = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmAbi,
-  functionName: 'writeLine',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__
- */
-export const useReadVmSafe = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"addr"`
- */
-export const useReadVmSafeAddr = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'addr',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"assume"`
- */
-export const useReadVmSafeAssume = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'assume',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"computeCreate2Address"`
- */
-export const useReadVmSafeComputeCreate2Address =
-  /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
-    functionName: 'computeCreate2Address',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"computeCreateAddress"`
- */
-export const useReadVmSafeComputeCreateAddress =
-  /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
-    functionName: 'computeCreateAddress',
-  })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"deriveKey"`
- */
-export const useReadVmSafeDeriveKey = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'deriveKey',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"envAddress"`
- */
-export const useReadVmSafeEnvAddress = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'envAddress',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"envBool"`
- */
-export const useReadVmSafeEnvBool = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'envBool',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"envBytes"`
- */
-export const useReadVmSafeEnvBytes = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'envBytes',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"envBytes32"`
- */
-export const useReadVmSafeEnvBytes32 = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'envBytes32',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"envInt"`
- */
-export const useReadVmSafeEnvInt = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'envInt',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"envOr"`
- */
-export const useReadVmSafeEnvOr = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'envOr',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"envString"`
- */
-export const useReadVmSafeEnvString = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'envString',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"envUint"`
- */
-export const useReadVmSafeEnvUint = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'envUint',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"fsMetadata"`
- */
-export const useReadVmSafeFsMetadata = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'fsMetadata',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getBlockNumber"`
- */
-export const useReadVmSafeGetBlockNumber = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'getBlockNumber',
-})
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getBlockTimestamp"`
- */
-export const useReadVmSafeGetBlockTimestamp =
-  /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'getBlockTimestamp',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getCode"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getCode"`
  */
-export const useReadVmSafeGetCode = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmGetCode = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'getCode',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getDeployedCode"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getDeployedCode"`
  */
-export const useReadVmSafeGetDeployedCode = /*#__PURE__*/ createUseReadContract(
-  { abi: vmSafeAbi, functionName: 'getDeployedCode' },
-)
+export const useReadCtzndVmGetDeployedCode =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmAbi,
+    functionName: 'getDeployedCode',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getLabel"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getLabel"`
  */
-export const useReadVmSafeGetLabel = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmGetLabel = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'getLabel',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getNonce"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getNonce"`
  */
-export const useReadVmSafeGetNonce = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmGetNonce = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'getNonce',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"keyExists"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"isPersistent"`
  */
-export const useReadVmSafeKeyExists = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmIsPersistent = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
+  functionName: 'isPersistent',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"keyExists"`
+ */
+export const useReadCtzndVmKeyExists = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'keyExists',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"load"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"load"`
  */
-export const useReadVmSafeLoad = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmLoad = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'load',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseAddress"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseAddress"`
  */
-export const useReadVmSafeParseAddress = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseAddress = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseAddress',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseBool"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseBool"`
  */
-export const useReadVmSafeParseBool = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseBool = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseBool',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseBytes"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseBytes"`
  */
-export const useReadVmSafeParseBytes = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseBytes = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseBytes',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseBytes32"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseBytes32"`
  */
-export const useReadVmSafeParseBytes32 = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseBytes32 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseBytes32',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseInt"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseInt"`
  */
-export const useReadVmSafeParseInt = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseInt = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseInt',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJson"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJson"`
  */
-export const useReadVmSafeParseJson = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseJson = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseJson',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonAddress"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonAddress"`
  */
-export const useReadVmSafeParseJsonAddress =
+export const useReadCtzndVmParseJsonAddress =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'parseJsonAddress',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonAddressArray"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonAddressArray"`
  */
-export const useReadVmSafeParseJsonAddressArray =
+export const useReadCtzndVmParseJsonAddressArray =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'parseJsonAddressArray',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonBool"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonBool"`
  */
-export const useReadVmSafeParseJsonBool = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseJsonBool = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseJsonBool',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonBoolArray"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonBoolArray"`
  */
-export const useReadVmSafeParseJsonBoolArray =
+export const useReadCtzndVmParseJsonBoolArray =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'parseJsonBoolArray',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonBytes"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonBytes"`
  */
-export const useReadVmSafeParseJsonBytes = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'parseJsonBytes',
-})
+export const useReadCtzndVmParseJsonBytes = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndVmAbi, functionName: 'parseJsonBytes' },
+)
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonBytes32"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonBytes32"`
  */
-export const useReadVmSafeParseJsonBytes32 =
+export const useReadCtzndVmParseJsonBytes32 =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'parseJsonBytes32',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonBytes32Array"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonBytes32Array"`
  */
-export const useReadVmSafeParseJsonBytes32Array =
+export const useReadCtzndVmParseJsonBytes32Array =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'parseJsonBytes32Array',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonBytesArray"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonBytesArray"`
  */
-export const useReadVmSafeParseJsonBytesArray =
+export const useReadCtzndVmParseJsonBytesArray =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'parseJsonBytesArray',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonInt"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonInt"`
  */
-export const useReadVmSafeParseJsonInt = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseJsonInt = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseJsonInt',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonIntArray"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonIntArray"`
  */
-export const useReadVmSafeParseJsonIntArray =
+export const useReadCtzndVmParseJsonIntArray =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'parseJsonIntArray',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonKeys"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonKeys"`
  */
-export const useReadVmSafeParseJsonKeys = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseJsonKeys = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseJsonKeys',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonString"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonString"`
  */
-export const useReadVmSafeParseJsonString = /*#__PURE__*/ createUseReadContract(
-  { abi: vmSafeAbi, functionName: 'parseJsonString' },
-)
+export const useReadCtzndVmParseJsonString =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmAbi,
+    functionName: 'parseJsonString',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonStringArray"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonStringArray"`
  */
-export const useReadVmSafeParseJsonStringArray =
+export const useReadCtzndVmParseJsonStringArray =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'parseJsonStringArray',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonUint"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonUint"`
  */
-export const useReadVmSafeParseJsonUint = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseJsonUint = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseJsonUint',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseJsonUintArray"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseJsonUintArray"`
  */
-export const useReadVmSafeParseJsonUintArray =
+export const useReadCtzndVmParseJsonUintArray =
   /*#__PURE__*/ createUseReadContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'parseJsonUintArray',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"parseUint"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"parseUint"`
  */
-export const useReadVmSafeParseUint = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmParseUint = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'parseUint',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"projectRoot"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"projectRoot"`
  */
-export const useReadVmSafeProjectRoot = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmProjectRoot = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'projectRoot',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"readDir"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"readDir"`
  */
-export const useReadVmSafeReadDir = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmReadDir = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'readDir',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"readFile"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"readFile"`
  */
-export const useReadVmSafeReadFile = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmReadFile = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'readFile',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"readFileBinary"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"readFileBinary"`
  */
-export const useReadVmSafeReadFileBinary = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
-  functionName: 'readFileBinary',
-})
+export const useReadCtzndVmReadFileBinary = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndVmAbi, functionName: 'readFileBinary' },
+)
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"readLine"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"readLine"`
  */
-export const useReadVmSafeReadLine = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmReadLine = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'readLine',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"readLink"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"readLink"`
  */
-export const useReadVmSafeReadLink = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmReadLink = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'readLink',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"rpcUrl"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"rpcUrl"`
  */
-export const useReadVmSafeRpcUrl = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmRpcUrl = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'rpcUrl',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"rpcUrlStructs"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"rpcUrlStructs"`
  */
-export const useReadVmSafeRpcUrlStructs = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmRpcUrlStructs = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'rpcUrlStructs',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"rpcUrls"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"rpcUrls"`
  */
-export const useReadVmSafeRpcUrls = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmRpcUrls = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'rpcUrls',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"sign"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"sign"`
  */
-export const useReadVmSafeSign = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmSign = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'sign',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"signP256"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"signP256"`
  */
-export const useReadVmSafeSignP256 = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmSignP256 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'signP256',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"toBase64"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"toBase64"`
  */
-export const useReadVmSafeToBase64 = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmToBase64 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'toBase64',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"toBase64URL"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"toBase64URL"`
  */
-export const useReadVmSafeToBase64Url = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmToBase64Url = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'toBase64URL',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"toString"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"toString"`
  */
-export const useReadVmSafeToString = /*#__PURE__*/ createUseReadContract({
-  abi: vmSafeAbi,
+export const useReadCtzndVmToString = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmAbi,
   functionName: 'toString',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__
  */
-export const useWriteVmSafe = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVm = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"accesses"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"accesses"`
  */
-export const useWriteVmSafeAccesses = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmAccesses = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'accesses',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"breakpoint"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"allowCheatcodes"`
  */
-export const useWriteVmSafeBreakpoint = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmAllowCheatcodes =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'allowCheatcodes',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"breakpoint"`
+ */
+export const useWriteCtzndVmBreakpoint = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'breakpoint',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"broadcast"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"broadcast"`
  */
-export const useWriteVmSafeBroadcast = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmBroadcast = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'broadcast',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"closeFile"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"chainId"`
  */
-export const useWriteVmSafeCloseFile = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmChainId = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'chainId',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"clearMockedCalls"`
+ */
+export const useWriteCtzndVmClearMockedCalls =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'clearMockedCalls',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"closeFile"`
+ */
+export const useWriteCtzndVmCloseFile = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'closeFile',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"copyFile"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"coinbase"`
  */
-export const useWriteVmSafeCopyFile = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmCoinbase = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'coinbase',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"copyFile"`
+ */
+export const useWriteCtzndVmCopyFile = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'copyFile',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"createDir"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"createDir"`
  */
-export const useWriteVmSafeCreateDir = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmCreateDir = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'createDir',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"createWallet"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"createFork"`
  */
-export const useWriteVmSafeCreateWallet = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
-  functionName: 'createWallet',
+export const useWriteCtzndVmCreateFork = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'createFork',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"eth_getLogs"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"createSelectFork"`
  */
-export const useWriteVmSafeEthGetLogs = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmCreateSelectFork =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'createSelectFork',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"createWallet"`
+ */
+export const useWriteCtzndVmCreateWallet = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndVmAbi, functionName: 'createWallet' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"deal"`
+ */
+export const useWriteCtzndVmDeal = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'deal',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"deleteSnapshot"`
+ */
+export const useWriteCtzndVmDeleteSnapshot =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'deleteSnapshot',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"deleteSnapshots"`
+ */
+export const useWriteCtzndVmDeleteSnapshots =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'deleteSnapshots',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"difficulty"`
+ */
+export const useWriteCtzndVmDifficulty = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'difficulty',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"dumpState"`
+ */
+export const useWriteCtzndVmDumpState = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'dumpState',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"etch"`
+ */
+export const useWriteCtzndVmEtch = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'etch',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"eth_getLogs"`
+ */
+export const useWriteCtzndVmEthGetLogs = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'eth_getLogs',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"exists"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"exists"`
  */
-export const useWriteVmSafeExists = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmExists = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'exists',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"ffi"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectCall"`
  */
-export const useWriteVmSafeFfi = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmExpectCall = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'expectCall',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectCallMinGas"`
+ */
+export const useWriteCtzndVmExpectCallMinGas =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'expectCallMinGas',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectEmit"`
+ */
+export const useWriteCtzndVmExpectEmit = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'expectEmit',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectRevert"`
+ */
+export const useWriteCtzndVmExpectRevert = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndVmAbi, functionName: 'expectRevert' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectSafeMemory"`
+ */
+export const useWriteCtzndVmExpectSafeMemory =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'expectSafeMemory',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectSafeMemoryCall"`
+ */
+export const useWriteCtzndVmExpectSafeMemoryCall =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'expectSafeMemoryCall',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"fee"`
+ */
+export const useWriteCtzndVmFee = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'fee',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"ffi"`
+ */
+export const useWriteCtzndVmFfi = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'ffi',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getMappingKeyAndParentOf"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getMappingKeyAndParentOf"`
  */
-export const useWriteVmSafeGetMappingKeyAndParentOf =
+export const useWriteCtzndVmGetMappingKeyAndParentOf =
   /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'getMappingKeyAndParentOf',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getMappingLength"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getMappingLength"`
  */
-export const useWriteVmSafeGetMappingLength =
+export const useWriteCtzndVmGetMappingLength =
   /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'getMappingLength',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getMappingSlotAt"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getMappingSlotAt"`
  */
-export const useWriteVmSafeGetMappingSlotAt =
+export const useWriteCtzndVmGetMappingSlotAt =
   /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'getMappingSlotAt',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getNonce"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getNonce"`
  */
-export const useWriteVmSafeGetNonce = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmGetNonce = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'getNonce',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getRecordedLogs"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getRecordedLogs"`
  */
-export const useWriteVmSafeGetRecordedLogs =
+export const useWriteCtzndVmGetRecordedLogs =
   /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'getRecordedLogs',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"isDir"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"isDir"`
  */
-export const useWriteVmSafeIsDir = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmIsDir = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'isDir',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"isFile"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"isFile"`
  */
-export const useWriteVmSafeIsFile = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmIsFile = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'isFile',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"label"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"label"`
  */
-export const useWriteVmSafeLabel = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmLabel = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'label',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"pauseGasMetering"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"loadAllocs"`
  */
-export const useWriteVmSafePauseGasMetering =
+export const useWriteCtzndVmLoadAllocs = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'loadAllocs',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"makePersistent"`
+ */
+export const useWriteCtzndVmMakePersistent =
   /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
+    functionName: 'makePersistent',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"mockCall"`
+ */
+export const useWriteCtzndVmMockCall = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'mockCall',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"mockCallRevert"`
+ */
+export const useWriteCtzndVmMockCallRevert =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'mockCallRevert',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"pauseGasMetering"`
+ */
+export const useWriteCtzndVmPauseGasMetering =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'pauseGasMetering',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"record"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"prank"`
  */
-export const useWriteVmSafeRecord = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmPrank = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'prank',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"prevrandao"`
+ */
+export const useWriteCtzndVmPrevrandao = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'prevrandao',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"readCallers"`
+ */
+export const useWriteCtzndVmReadCallers = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'readCallers',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"record"`
+ */
+export const useWriteCtzndVmRecord = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'record',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"recordLogs"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"recordLogs"`
  */
-export const useWriteVmSafeRecordLogs = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmRecordLogs = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'recordLogs',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"rememberKey"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"rememberKey"`
  */
-export const useWriteVmSafeRememberKey = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmRememberKey = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'rememberKey',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"removeDir"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"removeDir"`
  */
-export const useWriteVmSafeRemoveDir = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmRemoveDir = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'removeDir',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"removeFile"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"removeFile"`
  */
-export const useWriteVmSafeRemoveFile = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmRemoveFile = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'removeFile',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"resumeGasMetering"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"resetNonce"`
  */
-export const useWriteVmSafeResumeGasMetering =
+export const useWriteCtzndVmResetNonce = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'resetNonce',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"resumeGasMetering"`
+ */
+export const useWriteCtzndVmResumeGasMetering =
   /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'resumeGasMetering',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"rpc"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"revertTo"`
  */
-export const useWriteVmSafeRpc = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmRevertTo = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'revertTo',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"revertToAndDelete"`
+ */
+export const useWriteCtzndVmRevertToAndDelete =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'revertToAndDelete',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"revokePersistent"`
+ */
+export const useWriteCtzndVmRevokePersistent =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'revokePersistent',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"roll"`
+ */
+export const useWriteCtzndVmRoll = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'roll',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"rollFork"`
+ */
+export const useWriteCtzndVmRollFork = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'rollFork',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"rpc"`
+ */
+export const useWriteCtzndVmRpc = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'rpc',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeAddress"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"selectFork"`
  */
-export const useWriteVmSafeSerializeAddress =
+export const useWriteCtzndVmSelectFork = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'selectFork',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeAddress"`
+ */
+export const useWriteCtzndVmSerializeAddress =
   /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'serializeAddress',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeBool"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeBool"`
  */
-export const useWriteVmSafeSerializeBool = /*#__PURE__*/ createUseWriteContract(
-  { abi: vmSafeAbi, functionName: 'serializeBool' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeBytes"`
- */
-export const useWriteVmSafeSerializeBytes =
+export const useWriteCtzndVmSerializeBool =
   /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
-    functionName: 'serializeBytes',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeBytes32"`
- */
-export const useWriteVmSafeSerializeBytes32 =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
-    functionName: 'serializeBytes32',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeInt"`
- */
-export const useWriteVmSafeSerializeInt = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
-  functionName: 'serializeInt',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeJson"`
- */
-export const useWriteVmSafeSerializeJson = /*#__PURE__*/ createUseWriteContract(
-  { abi: vmSafeAbi, functionName: 'serializeJson' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeString"`
- */
-export const useWriteVmSafeSerializeString =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
-    functionName: 'serializeString',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeUint"`
- */
-export const useWriteVmSafeSerializeUint = /*#__PURE__*/ createUseWriteContract(
-  { abi: vmSafeAbi, functionName: 'serializeUint' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"setEnv"`
- */
-export const useWriteVmSafeSetEnv = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
-  functionName: 'setEnv',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"sign"`
- */
-export const useWriteVmSafeSign = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
-  functionName: 'sign',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"sleep"`
- */
-export const useWriteVmSafeSleep = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
-  functionName: 'sleep',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"startBroadcast"`
- */
-export const useWriteVmSafeStartBroadcast =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
-    functionName: 'startBroadcast',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"startMappingRecording"`
- */
-export const useWriteVmSafeStartMappingRecording =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
-    functionName: 'startMappingRecording',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"startStateDiffRecording"`
- */
-export const useWriteVmSafeStartStateDiffRecording =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
-    functionName: 'startStateDiffRecording',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"stopAndReturnStateDiff"`
- */
-export const useWriteVmSafeStopAndReturnStateDiff =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
-    functionName: 'stopAndReturnStateDiff',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"stopBroadcast"`
- */
-export const useWriteVmSafeStopBroadcast = /*#__PURE__*/ createUseWriteContract(
-  { abi: vmSafeAbi, functionName: 'stopBroadcast' },
-)
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"stopMappingRecording"`
- */
-export const useWriteVmSafeStopMappingRecording =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
-    functionName: 'stopMappingRecording',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"tryFfi"`
- */
-export const useWriteVmSafeTryFfi = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
-  functionName: 'tryFfi',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"unixTime"`
- */
-export const useWriteVmSafeUnixTime = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
-  functionName: 'unixTime',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"writeFile"`
- */
-export const useWriteVmSafeWriteFile = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
-  functionName: 'writeFile',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"writeFileBinary"`
- */
-export const useWriteVmSafeWriteFileBinary =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: vmSafeAbi,
-    functionName: 'writeFileBinary',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"writeJson"`
- */
-export const useWriteVmSafeWriteJson = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
-  functionName: 'writeJson',
-})
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"writeLine"`
- */
-export const useWriteVmSafeWriteLine = /*#__PURE__*/ createUseWriteContract({
-  abi: vmSafeAbi,
-  functionName: 'writeLine',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__
- */
-export const useSimulateVmSafe = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"accesses"`
- */
-export const useSimulateVmSafeAccesses =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'accesses',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"breakpoint"`
- */
-export const useSimulateVmSafeBreakpoint =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'breakpoint',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"broadcast"`
- */
-export const useSimulateVmSafeBroadcast =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'broadcast',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"closeFile"`
- */
-export const useSimulateVmSafeCloseFile =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'closeFile',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"copyFile"`
- */
-export const useSimulateVmSafeCopyFile =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'copyFile',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"createDir"`
- */
-export const useSimulateVmSafeCreateDir =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'createDir',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"createWallet"`
- */
-export const useSimulateVmSafeCreateWallet =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'createWallet',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"eth_getLogs"`
- */
-export const useSimulateVmSafeEthGetLogs =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'eth_getLogs',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"exists"`
- */
-export const useSimulateVmSafeExists = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
-  functionName: 'exists',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"ffi"`
- */
-export const useSimulateVmSafeFfi = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
-  functionName: 'ffi',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getMappingKeyAndParentOf"`
- */
-export const useSimulateVmSafeGetMappingKeyAndParentOf =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'getMappingKeyAndParentOf',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getMappingLength"`
- */
-export const useSimulateVmSafeGetMappingLength =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'getMappingLength',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getMappingSlotAt"`
- */
-export const useSimulateVmSafeGetMappingSlotAt =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'getMappingSlotAt',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getNonce"`
- */
-export const useSimulateVmSafeGetNonce =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'getNonce',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"getRecordedLogs"`
- */
-export const useSimulateVmSafeGetRecordedLogs =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'getRecordedLogs',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"isDir"`
- */
-export const useSimulateVmSafeIsDir = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
-  functionName: 'isDir',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"isFile"`
- */
-export const useSimulateVmSafeIsFile = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
-  functionName: 'isFile',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"label"`
- */
-export const useSimulateVmSafeLabel = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
-  functionName: 'label',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"pauseGasMetering"`
- */
-export const useSimulateVmSafePauseGasMetering =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'pauseGasMetering',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"record"`
- */
-export const useSimulateVmSafeRecord = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
-  functionName: 'record',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"recordLogs"`
- */
-export const useSimulateVmSafeRecordLogs =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'recordLogs',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"rememberKey"`
- */
-export const useSimulateVmSafeRememberKey =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'rememberKey',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"removeDir"`
- */
-export const useSimulateVmSafeRemoveDir =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'removeDir',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"removeFile"`
- */
-export const useSimulateVmSafeRemoveFile =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'removeFile',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"resumeGasMetering"`
- */
-export const useSimulateVmSafeResumeGasMetering =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'resumeGasMetering',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"rpc"`
- */
-export const useSimulateVmSafeRpc = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
-  functionName: 'rpc',
-})
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeAddress"`
- */
-export const useSimulateVmSafeSerializeAddress =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'serializeAddress',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeBool"`
- */
-export const useSimulateVmSafeSerializeBool =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'serializeBool',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeBytes"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeBytes"`
  */
-export const useSimulateVmSafeSerializeBytes =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmSerializeBytes =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'serializeBytes',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeBytes32"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeBytes32"`
  */
-export const useSimulateVmSafeSerializeBytes32 =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmSerializeBytes32 =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'serializeBytes32',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeInt"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeInt"`
  */
-export const useSimulateVmSafeSerializeInt =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'serializeInt',
-  })
+export const useWriteCtzndVmSerializeInt = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndVmAbi, functionName: 'serializeInt' },
+)
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeJson"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeJson"`
  */
-export const useSimulateVmSafeSerializeJson =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmSerializeJson =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'serializeJson',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeString"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeString"`
  */
-export const useSimulateVmSafeSerializeString =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmSerializeString =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'serializeString',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"serializeUint"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeUint"`
  */
-export const useSimulateVmSafeSerializeUint =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmSerializeUint =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'serializeUint',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"setEnv"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"setEnv"`
  */
-export const useSimulateVmSafeSetEnv = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmSetEnv = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'setEnv',
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"sign"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"setNonce"`
  */
-export const useSimulateVmSafeSign = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmSetNonce = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'setNonce',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"setNonceUnsafe"`
+ */
+export const useWriteCtzndVmSetNonceUnsafe =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
+    functionName: 'setNonceUnsafe',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"sign"`
+ */
+export const useWriteCtzndVmSign = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'sign',
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"sleep"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"skip"`
  */
-export const useSimulateVmSafeSleep = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmSkip = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'skip',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"sleep"`
+ */
+export const useWriteCtzndVmSleep = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'sleep',
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"startBroadcast"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"snapshot"`
  */
-export const useSimulateVmSafeStartBroadcast =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmSnapshot = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'snapshot',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"startBroadcast"`
+ */
+export const useWriteCtzndVmStartBroadcast =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'startBroadcast',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"startMappingRecording"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"startMappingRecording"`
  */
-export const useSimulateVmSafeStartMappingRecording =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmStartMappingRecording =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'startMappingRecording',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"startStateDiffRecording"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"startPrank"`
  */
-export const useSimulateVmSafeStartStateDiffRecording =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmStartPrank = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'startPrank',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"startStateDiffRecording"`
+ */
+export const useWriteCtzndVmStartStateDiffRecording =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'startStateDiffRecording',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"stopAndReturnStateDiff"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"stopAndReturnStateDiff"`
  */
-export const useSimulateVmSafeStopAndReturnStateDiff =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmStopAndReturnStateDiff =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'stopAndReturnStateDiff',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"stopBroadcast"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"stopBroadcast"`
  */
-export const useSimulateVmSafeStopBroadcast =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmStopBroadcast =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'stopBroadcast',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"stopMappingRecording"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"stopMappingRecording"`
  */
-export const useSimulateVmSafeStopMappingRecording =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmStopMappingRecording =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'stopMappingRecording',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"tryFfi"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"stopPrank"`
  */
-export const useSimulateVmSafeTryFfi = /*#__PURE__*/ createUseSimulateContract({
-  abi: vmSafeAbi,
+export const useWriteCtzndVmStopPrank = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'stopPrank',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"store"`
+ */
+export const useWriteCtzndVmStore = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'store',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"transact"`
+ */
+export const useWriteCtzndVmTransact = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'transact',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"tryFfi"`
+ */
+export const useWriteCtzndVmTryFfi = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
   functionName: 'tryFfi',
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"unixTime"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"txGasPrice"`
  */
-export const useSimulateVmSafeUnixTime =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'unixTime',
-  })
+export const useWriteCtzndVmTxGasPrice = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'txGasPrice',
+})
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"writeFile"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"unixTime"`
  */
-export const useSimulateVmSafeWriteFile =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
-    functionName: 'writeFile',
-  })
+export const useWriteCtzndVmUnixTime = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'unixTime',
+})
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"writeFileBinary"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"warp"`
  */
-export const useSimulateVmSafeWriteFileBinary =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+export const useWriteCtzndVmWarp = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'warp',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"writeFile"`
+ */
+export const useWriteCtzndVmWriteFile = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'writeFile',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"writeFileBinary"`
+ */
+export const useWriteCtzndVmWriteFileBinary =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmAbi,
     functionName: 'writeFileBinary',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"writeJson"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"writeJson"`
  */
-export const useSimulateVmSafeWriteJson =
+export const useWriteCtzndVmWriteJson = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'writeJson',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"writeLine"`
+ */
+export const useWriteCtzndVmWriteLine = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmAbi,
+  functionName: 'writeLine',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__
+ */
+export const useSimulateCtzndVm = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"accesses"`
+ */
+export const useSimulateCtzndVmAccesses =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
+    functionName: 'accesses',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"allowCheatcodes"`
+ */
+export const useSimulateCtzndVmAllowCheatcodes =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'allowCheatcodes',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"breakpoint"`
+ */
+export const useSimulateCtzndVmBreakpoint =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'breakpoint',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"broadcast"`
+ */
+export const useSimulateCtzndVmBroadcast =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'broadcast',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"chainId"`
+ */
+export const useSimulateCtzndVmChainId =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'chainId',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"clearMockedCalls"`
+ */
+export const useSimulateCtzndVmClearMockedCalls =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'clearMockedCalls',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"closeFile"`
+ */
+export const useSimulateCtzndVmCloseFile =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'closeFile',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"coinbase"`
+ */
+export const useSimulateCtzndVmCoinbase =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'coinbase',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"copyFile"`
+ */
+export const useSimulateCtzndVmCopyFile =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'copyFile',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"createDir"`
+ */
+export const useSimulateCtzndVmCreateDir =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'createDir',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"createFork"`
+ */
+export const useSimulateCtzndVmCreateFork =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'createFork',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"createSelectFork"`
+ */
+export const useSimulateCtzndVmCreateSelectFork =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'createSelectFork',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"createWallet"`
+ */
+export const useSimulateCtzndVmCreateWallet =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'createWallet',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"deal"`
+ */
+export const useSimulateCtzndVmDeal = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'deal',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"deleteSnapshot"`
+ */
+export const useSimulateCtzndVmDeleteSnapshot =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'deleteSnapshot',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"deleteSnapshots"`
+ */
+export const useSimulateCtzndVmDeleteSnapshots =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'deleteSnapshots',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"difficulty"`
+ */
+export const useSimulateCtzndVmDifficulty =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'difficulty',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"dumpState"`
+ */
+export const useSimulateCtzndVmDumpState =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'dumpState',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"etch"`
+ */
+export const useSimulateCtzndVmEtch = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'etch',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"eth_getLogs"`
+ */
+export const useSimulateCtzndVmEthGetLogs =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'eth_getLogs',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"exists"`
+ */
+export const useSimulateCtzndVmExists = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndVmAbi, functionName: 'exists' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectCall"`
+ */
+export const useSimulateCtzndVmExpectCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'expectCall',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectCallMinGas"`
+ */
+export const useSimulateCtzndVmExpectCallMinGas =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'expectCallMinGas',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectEmit"`
+ */
+export const useSimulateCtzndVmExpectEmit =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'expectEmit',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectRevert"`
+ */
+export const useSimulateCtzndVmExpectRevert =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'expectRevert',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectSafeMemory"`
+ */
+export const useSimulateCtzndVmExpectSafeMemory =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'expectSafeMemory',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"expectSafeMemoryCall"`
+ */
+export const useSimulateCtzndVmExpectSafeMemoryCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'expectSafeMemoryCall',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"fee"`
+ */
+export const useSimulateCtzndVmFee = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'fee',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"ffi"`
+ */
+export const useSimulateCtzndVmFfi = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'ffi',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getMappingKeyAndParentOf"`
+ */
+export const useSimulateCtzndVmGetMappingKeyAndParentOf =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'getMappingKeyAndParentOf',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getMappingLength"`
+ */
+export const useSimulateCtzndVmGetMappingLength =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'getMappingLength',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getMappingSlotAt"`
+ */
+export const useSimulateCtzndVmGetMappingSlotAt =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'getMappingSlotAt',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getNonce"`
+ */
+export const useSimulateCtzndVmGetNonce =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'getNonce',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"getRecordedLogs"`
+ */
+export const useSimulateCtzndVmGetRecordedLogs =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'getRecordedLogs',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"isDir"`
+ */
+export const useSimulateCtzndVmIsDir = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'isDir',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"isFile"`
+ */
+export const useSimulateCtzndVmIsFile = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndVmAbi, functionName: 'isFile' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"label"`
+ */
+export const useSimulateCtzndVmLabel = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'label',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"loadAllocs"`
+ */
+export const useSimulateCtzndVmLoadAllocs =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'loadAllocs',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"makePersistent"`
+ */
+export const useSimulateCtzndVmMakePersistent =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'makePersistent',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"mockCall"`
+ */
+export const useSimulateCtzndVmMockCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'mockCall',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"mockCallRevert"`
+ */
+export const useSimulateCtzndVmMockCallRevert =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'mockCallRevert',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"pauseGasMetering"`
+ */
+export const useSimulateCtzndVmPauseGasMetering =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'pauseGasMetering',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"prank"`
+ */
+export const useSimulateCtzndVmPrank = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'prank',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"prevrandao"`
+ */
+export const useSimulateCtzndVmPrevrandao =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'prevrandao',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"readCallers"`
+ */
+export const useSimulateCtzndVmReadCallers =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'readCallers',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"record"`
+ */
+export const useSimulateCtzndVmRecord = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndVmAbi, functionName: 'record' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"recordLogs"`
+ */
+export const useSimulateCtzndVmRecordLogs =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'recordLogs',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"rememberKey"`
+ */
+export const useSimulateCtzndVmRememberKey =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'rememberKey',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"removeDir"`
+ */
+export const useSimulateCtzndVmRemoveDir =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'removeDir',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"removeFile"`
+ */
+export const useSimulateCtzndVmRemoveFile =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'removeFile',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"resetNonce"`
+ */
+export const useSimulateCtzndVmResetNonce =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'resetNonce',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"resumeGasMetering"`
+ */
+export const useSimulateCtzndVmResumeGasMetering =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'resumeGasMetering',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"revertTo"`
+ */
+export const useSimulateCtzndVmRevertTo =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'revertTo',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"revertToAndDelete"`
+ */
+export const useSimulateCtzndVmRevertToAndDelete =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'revertToAndDelete',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"revokePersistent"`
+ */
+export const useSimulateCtzndVmRevokePersistent =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'revokePersistent',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"roll"`
+ */
+export const useSimulateCtzndVmRoll = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'roll',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"rollFork"`
+ */
+export const useSimulateCtzndVmRollFork =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'rollFork',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"rpc"`
+ */
+export const useSimulateCtzndVmRpc = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'rpc',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"selectFork"`
+ */
+export const useSimulateCtzndVmSelectFork =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'selectFork',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeAddress"`
+ */
+export const useSimulateCtzndVmSerializeAddress =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'serializeAddress',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeBool"`
+ */
+export const useSimulateCtzndVmSerializeBool =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'serializeBool',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeBytes"`
+ */
+export const useSimulateCtzndVmSerializeBytes =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'serializeBytes',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeBytes32"`
+ */
+export const useSimulateCtzndVmSerializeBytes32 =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'serializeBytes32',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeInt"`
+ */
+export const useSimulateCtzndVmSerializeInt =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'serializeInt',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeJson"`
+ */
+export const useSimulateCtzndVmSerializeJson =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'serializeJson',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeString"`
+ */
+export const useSimulateCtzndVmSerializeString =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'serializeString',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"serializeUint"`
+ */
+export const useSimulateCtzndVmSerializeUint =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'serializeUint',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"setEnv"`
+ */
+export const useSimulateCtzndVmSetEnv = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndVmAbi, functionName: 'setEnv' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"setNonce"`
+ */
+export const useSimulateCtzndVmSetNonce =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'setNonce',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"setNonceUnsafe"`
+ */
+export const useSimulateCtzndVmSetNonceUnsafe =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'setNonceUnsafe',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"sign"`
+ */
+export const useSimulateCtzndVmSign = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'sign',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"skip"`
+ */
+export const useSimulateCtzndVmSkip = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'skip',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"sleep"`
+ */
+export const useSimulateCtzndVmSleep = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'sleep',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"snapshot"`
+ */
+export const useSimulateCtzndVmSnapshot =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'snapshot',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"startBroadcast"`
+ */
+export const useSimulateCtzndVmStartBroadcast =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'startBroadcast',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"startMappingRecording"`
+ */
+export const useSimulateCtzndVmStartMappingRecording =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'startMappingRecording',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"startPrank"`
+ */
+export const useSimulateCtzndVmStartPrank =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'startPrank',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"startStateDiffRecording"`
+ */
+export const useSimulateCtzndVmStartStateDiffRecording =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'startStateDiffRecording',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"stopAndReturnStateDiff"`
+ */
+export const useSimulateCtzndVmStopAndReturnStateDiff =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'stopAndReturnStateDiff',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"stopBroadcast"`
+ */
+export const useSimulateCtzndVmStopBroadcast =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'stopBroadcast',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"stopMappingRecording"`
+ */
+export const useSimulateCtzndVmStopMappingRecording =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'stopMappingRecording',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"stopPrank"`
+ */
+export const useSimulateCtzndVmStopPrank =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'stopPrank',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"store"`
+ */
+export const useSimulateCtzndVmStore = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'store',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"transact"`
+ */
+export const useSimulateCtzndVmTransact =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'transact',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"tryFfi"`
+ */
+export const useSimulateCtzndVmTryFfi = /*#__PURE__*/ createUseSimulateContract(
+  { abi: ctzndVmAbi, functionName: 'tryFfi' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"txGasPrice"`
+ */
+export const useSimulateCtzndVmTxGasPrice =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'txGasPrice',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"unixTime"`
+ */
+export const useSimulateCtzndVmUnixTime =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'unixTime',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"warp"`
+ */
+export const useSimulateCtzndVmWarp = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmAbi,
+  functionName: 'warp',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"writeFile"`
+ */
+export const useSimulateCtzndVmWriteFile =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'writeFile',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"writeFileBinary"`
+ */
+export const useSimulateCtzndVmWriteFileBinary =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
+    functionName: 'writeFileBinary',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"writeJson"`
+ */
+export const useSimulateCtzndVmWriteJson =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmAbi,
     functionName: 'writeJson',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link vmSafeAbi}__ and `functionName` set to `"writeLine"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmAbi}__ and `functionName` set to `"writeLine"`
  */
-export const useSimulateVmSafeWriteLine =
+export const useSimulateCtzndVmWriteLine =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: vmSafeAbi,
+    abi: ctzndVmAbi,
     functionName: 'writeLine',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdErrorAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__
  */
-export const useReadStdError = /*#__PURE__*/ createUseReadContract({
-  abi: stdErrorAbi,
+export const useReadCtzndVmSafe = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdErrorAbi}__ and `functionName` set to `"arithmeticError"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"addr"`
  */
-export const useReadStdErrorArithmeticError =
+export const useReadCtzndVmSafeAddr = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'addr',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"assume"`
+ */
+export const useReadCtzndVmSafeAssume = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'assume',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"computeCreate2Address"`
+ */
+export const useReadCtzndVmSafeComputeCreate2Address =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdErrorAbi,
+    abi: ctzndVmSafeAbi,
+    functionName: 'computeCreate2Address',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"computeCreateAddress"`
+ */
+export const useReadCtzndVmSafeComputeCreateAddress =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'computeCreateAddress',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"deriveKey"`
+ */
+export const useReadCtzndVmSafeDeriveKey = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'deriveKey',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"envAddress"`
+ */
+export const useReadCtzndVmSafeEnvAddress = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndVmSafeAbi, functionName: 'envAddress' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"envBool"`
+ */
+export const useReadCtzndVmSafeEnvBool = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'envBool',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"envBytes"`
+ */
+export const useReadCtzndVmSafeEnvBytes = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'envBytes',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"envBytes32"`
+ */
+export const useReadCtzndVmSafeEnvBytes32 = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndVmSafeAbi, functionName: 'envBytes32' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"envInt"`
+ */
+export const useReadCtzndVmSafeEnvInt = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'envInt',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"envOr"`
+ */
+export const useReadCtzndVmSafeEnvOr = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'envOr',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"envString"`
+ */
+export const useReadCtzndVmSafeEnvString = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'envString',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"envUint"`
+ */
+export const useReadCtzndVmSafeEnvUint = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'envUint',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"fsMetadata"`
+ */
+export const useReadCtzndVmSafeFsMetadata = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndVmSafeAbi, functionName: 'fsMetadata' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getBlockNumber"`
+ */
+export const useReadCtzndVmSafeGetBlockNumber =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getBlockNumber',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getBlockTimestamp"`
+ */
+export const useReadCtzndVmSafeGetBlockTimestamp =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getBlockTimestamp',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getCode"`
+ */
+export const useReadCtzndVmSafeGetCode = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'getCode',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getDeployedCode"`
+ */
+export const useReadCtzndVmSafeGetDeployedCode =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getDeployedCode',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getLabel"`
+ */
+export const useReadCtzndVmSafeGetLabel = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'getLabel',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getNonce"`
+ */
+export const useReadCtzndVmSafeGetNonce = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'getNonce',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"keyExists"`
+ */
+export const useReadCtzndVmSafeKeyExists = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'keyExists',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"load"`
+ */
+export const useReadCtzndVmSafeLoad = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'load',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseAddress"`
+ */
+export const useReadCtzndVmSafeParseAddress =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseAddress',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseBool"`
+ */
+export const useReadCtzndVmSafeParseBool = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'parseBool',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseBytes"`
+ */
+export const useReadCtzndVmSafeParseBytes = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndVmSafeAbi, functionName: 'parseBytes' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseBytes32"`
+ */
+export const useReadCtzndVmSafeParseBytes32 =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseBytes32',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseInt"`
+ */
+export const useReadCtzndVmSafeParseInt = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'parseInt',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJson"`
+ */
+export const useReadCtzndVmSafeParseJson = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'parseJson',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonAddress"`
+ */
+export const useReadCtzndVmSafeParseJsonAddress =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonAddress',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonAddressArray"`
+ */
+export const useReadCtzndVmSafeParseJsonAddressArray =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonAddressArray',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonBool"`
+ */
+export const useReadCtzndVmSafeParseJsonBool =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonBool',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonBoolArray"`
+ */
+export const useReadCtzndVmSafeParseJsonBoolArray =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonBoolArray',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonBytes"`
+ */
+export const useReadCtzndVmSafeParseJsonBytes =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonBytes',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonBytes32"`
+ */
+export const useReadCtzndVmSafeParseJsonBytes32 =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonBytes32',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonBytes32Array"`
+ */
+export const useReadCtzndVmSafeParseJsonBytes32Array =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonBytes32Array',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonBytesArray"`
+ */
+export const useReadCtzndVmSafeParseJsonBytesArray =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonBytesArray',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonInt"`
+ */
+export const useReadCtzndVmSafeParseJsonInt =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonInt',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonIntArray"`
+ */
+export const useReadCtzndVmSafeParseJsonIntArray =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonIntArray',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonKeys"`
+ */
+export const useReadCtzndVmSafeParseJsonKeys =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonKeys',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonString"`
+ */
+export const useReadCtzndVmSafeParseJsonString =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonString',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonStringArray"`
+ */
+export const useReadCtzndVmSafeParseJsonStringArray =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonStringArray',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonUint"`
+ */
+export const useReadCtzndVmSafeParseJsonUint =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonUint',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseJsonUintArray"`
+ */
+export const useReadCtzndVmSafeParseJsonUintArray =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'parseJsonUintArray',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"parseUint"`
+ */
+export const useReadCtzndVmSafeParseUint = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'parseUint',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"projectRoot"`
+ */
+export const useReadCtzndVmSafeProjectRoot =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'projectRoot',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"readDir"`
+ */
+export const useReadCtzndVmSafeReadDir = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'readDir',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"readFile"`
+ */
+export const useReadCtzndVmSafeReadFile = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'readFile',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"readFileBinary"`
+ */
+export const useReadCtzndVmSafeReadFileBinary =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'readFileBinary',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"readLine"`
+ */
+export const useReadCtzndVmSafeReadLine = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'readLine',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"readLink"`
+ */
+export const useReadCtzndVmSafeReadLink = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'readLink',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"rpcUrl"`
+ */
+export const useReadCtzndVmSafeRpcUrl = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'rpcUrl',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"rpcUrlStructs"`
+ */
+export const useReadCtzndVmSafeRpcUrlStructs =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'rpcUrlStructs',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"rpcUrls"`
+ */
+export const useReadCtzndVmSafeRpcUrls = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'rpcUrls',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"sign"`
+ */
+export const useReadCtzndVmSafeSign = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'sign',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"signP256"`
+ */
+export const useReadCtzndVmSafeSignP256 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'signP256',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"toBase64"`
+ */
+export const useReadCtzndVmSafeToBase64 = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'toBase64',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"toBase64URL"`
+ */
+export const useReadCtzndVmSafeToBase64Url =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'toBase64URL',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"toString"`
+ */
+export const useReadCtzndVmSafeToString = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'toString',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__
+ */
+export const useWriteCtzndVmSafe = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"accesses"`
+ */
+export const useWriteCtzndVmSafeAccesses = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndVmSafeAbi, functionName: 'accesses' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"breakpoint"`
+ */
+export const useWriteCtzndVmSafeBreakpoint =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'breakpoint',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"broadcast"`
+ */
+export const useWriteCtzndVmSafeBroadcast =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'broadcast',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"closeFile"`
+ */
+export const useWriteCtzndVmSafeCloseFile =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'closeFile',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"copyFile"`
+ */
+export const useWriteCtzndVmSafeCopyFile = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndVmSafeAbi, functionName: 'copyFile' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"createDir"`
+ */
+export const useWriteCtzndVmSafeCreateDir =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'createDir',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"createWallet"`
+ */
+export const useWriteCtzndVmSafeCreateWallet =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'createWallet',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"eth_getLogs"`
+ */
+export const useWriteCtzndVmSafeEthGetLogs =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'eth_getLogs',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"exists"`
+ */
+export const useWriteCtzndVmSafeExists = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'exists',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"ffi"`
+ */
+export const useWriteCtzndVmSafeFfi = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'ffi',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getMappingKeyAndParentOf"`
+ */
+export const useWriteCtzndVmSafeGetMappingKeyAndParentOf =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getMappingKeyAndParentOf',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getMappingLength"`
+ */
+export const useWriteCtzndVmSafeGetMappingLength =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getMappingLength',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getMappingSlotAt"`
+ */
+export const useWriteCtzndVmSafeGetMappingSlotAt =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getMappingSlotAt',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getNonce"`
+ */
+export const useWriteCtzndVmSafeGetNonce = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndVmSafeAbi, functionName: 'getNonce' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getRecordedLogs"`
+ */
+export const useWriteCtzndVmSafeGetRecordedLogs =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getRecordedLogs',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"isDir"`
+ */
+export const useWriteCtzndVmSafeIsDir = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'isDir',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"isFile"`
+ */
+export const useWriteCtzndVmSafeIsFile = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'isFile',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"label"`
+ */
+export const useWriteCtzndVmSafeLabel = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'label',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"pauseGasMetering"`
+ */
+export const useWriteCtzndVmSafePauseGasMetering =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'pauseGasMetering',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"record"`
+ */
+export const useWriteCtzndVmSafeRecord = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'record',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"recordLogs"`
+ */
+export const useWriteCtzndVmSafeRecordLogs =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'recordLogs',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"rememberKey"`
+ */
+export const useWriteCtzndVmSafeRememberKey =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'rememberKey',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"removeDir"`
+ */
+export const useWriteCtzndVmSafeRemoveDir =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'removeDir',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"removeFile"`
+ */
+export const useWriteCtzndVmSafeRemoveFile =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'removeFile',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"resumeGasMetering"`
+ */
+export const useWriteCtzndVmSafeResumeGasMetering =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'resumeGasMetering',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"rpc"`
+ */
+export const useWriteCtzndVmSafeRpc = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'rpc',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeAddress"`
+ */
+export const useWriteCtzndVmSafeSerializeAddress =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeAddress',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeBool"`
+ */
+export const useWriteCtzndVmSafeSerializeBool =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeBool',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeBytes"`
+ */
+export const useWriteCtzndVmSafeSerializeBytes =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeBytes',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeBytes32"`
+ */
+export const useWriteCtzndVmSafeSerializeBytes32 =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeBytes32',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeInt"`
+ */
+export const useWriteCtzndVmSafeSerializeInt =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeInt',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeJson"`
+ */
+export const useWriteCtzndVmSafeSerializeJson =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeJson',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeString"`
+ */
+export const useWriteCtzndVmSafeSerializeString =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeString',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeUint"`
+ */
+export const useWriteCtzndVmSafeSerializeUint =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeUint',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"setEnv"`
+ */
+export const useWriteCtzndVmSafeSetEnv = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'setEnv',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"sign"`
+ */
+export const useWriteCtzndVmSafeSign = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'sign',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"sleep"`
+ */
+export const useWriteCtzndVmSafeSleep = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'sleep',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"startBroadcast"`
+ */
+export const useWriteCtzndVmSafeStartBroadcast =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'startBroadcast',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"startMappingRecording"`
+ */
+export const useWriteCtzndVmSafeStartMappingRecording =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'startMappingRecording',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"startStateDiffRecording"`
+ */
+export const useWriteCtzndVmSafeStartStateDiffRecording =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'startStateDiffRecording',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"stopAndReturnStateDiff"`
+ */
+export const useWriteCtzndVmSafeStopAndReturnStateDiff =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'stopAndReturnStateDiff',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"stopBroadcast"`
+ */
+export const useWriteCtzndVmSafeStopBroadcast =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'stopBroadcast',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"stopMappingRecording"`
+ */
+export const useWriteCtzndVmSafeStopMappingRecording =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'stopMappingRecording',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"tryFfi"`
+ */
+export const useWriteCtzndVmSafeTryFfi = /*#__PURE__*/ createUseWriteContract({
+  abi: ctzndVmSafeAbi,
+  functionName: 'tryFfi',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"unixTime"`
+ */
+export const useWriteCtzndVmSafeUnixTime = /*#__PURE__*/ createUseWriteContract(
+  { abi: ctzndVmSafeAbi, functionName: 'unixTime' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"writeFile"`
+ */
+export const useWriteCtzndVmSafeWriteFile =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'writeFile',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"writeFileBinary"`
+ */
+export const useWriteCtzndVmSafeWriteFileBinary =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'writeFileBinary',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"writeJson"`
+ */
+export const useWriteCtzndVmSafeWriteJson =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'writeJson',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"writeLine"`
+ */
+export const useWriteCtzndVmSafeWriteLine =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'writeLine',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__
+ */
+export const useSimulateCtzndVmSafe = /*#__PURE__*/ createUseSimulateContract({
+  abi: ctzndVmSafeAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"accesses"`
+ */
+export const useSimulateCtzndVmSafeAccesses =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'accesses',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"breakpoint"`
+ */
+export const useSimulateCtzndVmSafeBreakpoint =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'breakpoint',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"broadcast"`
+ */
+export const useSimulateCtzndVmSafeBroadcast =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'broadcast',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"closeFile"`
+ */
+export const useSimulateCtzndVmSafeCloseFile =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'closeFile',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"copyFile"`
+ */
+export const useSimulateCtzndVmSafeCopyFile =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'copyFile',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"createDir"`
+ */
+export const useSimulateCtzndVmSafeCreateDir =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'createDir',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"createWallet"`
+ */
+export const useSimulateCtzndVmSafeCreateWallet =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'createWallet',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"eth_getLogs"`
+ */
+export const useSimulateCtzndVmSafeEthGetLogs =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'eth_getLogs',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"exists"`
+ */
+export const useSimulateCtzndVmSafeExists =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'exists',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"ffi"`
+ */
+export const useSimulateCtzndVmSafeFfi =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'ffi',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getMappingKeyAndParentOf"`
+ */
+export const useSimulateCtzndVmSafeGetMappingKeyAndParentOf =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getMappingKeyAndParentOf',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getMappingLength"`
+ */
+export const useSimulateCtzndVmSafeGetMappingLength =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getMappingLength',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getMappingSlotAt"`
+ */
+export const useSimulateCtzndVmSafeGetMappingSlotAt =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getMappingSlotAt',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getNonce"`
+ */
+export const useSimulateCtzndVmSafeGetNonce =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getNonce',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"getRecordedLogs"`
+ */
+export const useSimulateCtzndVmSafeGetRecordedLogs =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'getRecordedLogs',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"isDir"`
+ */
+export const useSimulateCtzndVmSafeIsDir =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'isDir',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"isFile"`
+ */
+export const useSimulateCtzndVmSafeIsFile =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'isFile',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"label"`
+ */
+export const useSimulateCtzndVmSafeLabel =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'label',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"pauseGasMetering"`
+ */
+export const useSimulateCtzndVmSafePauseGasMetering =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'pauseGasMetering',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"record"`
+ */
+export const useSimulateCtzndVmSafeRecord =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'record',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"recordLogs"`
+ */
+export const useSimulateCtzndVmSafeRecordLogs =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'recordLogs',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"rememberKey"`
+ */
+export const useSimulateCtzndVmSafeRememberKey =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'rememberKey',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"removeDir"`
+ */
+export const useSimulateCtzndVmSafeRemoveDir =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'removeDir',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"removeFile"`
+ */
+export const useSimulateCtzndVmSafeRemoveFile =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'removeFile',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"resumeGasMetering"`
+ */
+export const useSimulateCtzndVmSafeResumeGasMetering =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'resumeGasMetering',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"rpc"`
+ */
+export const useSimulateCtzndVmSafeRpc =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'rpc',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeAddress"`
+ */
+export const useSimulateCtzndVmSafeSerializeAddress =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeAddress',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeBool"`
+ */
+export const useSimulateCtzndVmSafeSerializeBool =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeBool',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeBytes"`
+ */
+export const useSimulateCtzndVmSafeSerializeBytes =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeBytes',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeBytes32"`
+ */
+export const useSimulateCtzndVmSafeSerializeBytes32 =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeBytes32',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeInt"`
+ */
+export const useSimulateCtzndVmSafeSerializeInt =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeInt',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeJson"`
+ */
+export const useSimulateCtzndVmSafeSerializeJson =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeJson',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeString"`
+ */
+export const useSimulateCtzndVmSafeSerializeString =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeString',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"serializeUint"`
+ */
+export const useSimulateCtzndVmSafeSerializeUint =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'serializeUint',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"setEnv"`
+ */
+export const useSimulateCtzndVmSafeSetEnv =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'setEnv',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"sign"`
+ */
+export const useSimulateCtzndVmSafeSign =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'sign',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"sleep"`
+ */
+export const useSimulateCtzndVmSafeSleep =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'sleep',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"startBroadcast"`
+ */
+export const useSimulateCtzndVmSafeStartBroadcast =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'startBroadcast',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"startMappingRecording"`
+ */
+export const useSimulateCtzndVmSafeStartMappingRecording =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'startMappingRecording',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"startStateDiffRecording"`
+ */
+export const useSimulateCtzndVmSafeStartStateDiffRecording =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'startStateDiffRecording',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"stopAndReturnStateDiff"`
+ */
+export const useSimulateCtzndVmSafeStopAndReturnStateDiff =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'stopAndReturnStateDiff',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"stopBroadcast"`
+ */
+export const useSimulateCtzndVmSafeStopBroadcast =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'stopBroadcast',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"stopMappingRecording"`
+ */
+export const useSimulateCtzndVmSafeStopMappingRecording =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'stopMappingRecording',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"tryFfi"`
+ */
+export const useSimulateCtzndVmSafeTryFfi =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'tryFfi',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"unixTime"`
+ */
+export const useSimulateCtzndVmSafeUnixTime =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'unixTime',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"writeFile"`
+ */
+export const useSimulateCtzndVmSafeWriteFile =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'writeFile',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"writeFileBinary"`
+ */
+export const useSimulateCtzndVmSafeWriteFileBinary =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'writeFileBinary',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"writeJson"`
+ */
+export const useSimulateCtzndVmSafeWriteJson =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'writeJson',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndVmSafeAbi}__ and `functionName` set to `"writeLine"`
+ */
+export const useSimulateCtzndVmSafeWriteLine =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndVmSafeAbi,
+    functionName: 'writeLine',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndstdErrorAbi}__
+ */
+export const useReadCtzndstdError = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndstdErrorAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndstdErrorAbi}__ and `functionName` set to `"arithmeticError"`
+ */
+export const useReadCtzndstdErrorArithmeticError =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndstdErrorAbi,
     functionName: 'arithmeticError',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdErrorAbi}__ and `functionName` set to `"assertionError"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndstdErrorAbi}__ and `functionName` set to `"assertionError"`
  */
-export const useReadStdErrorAssertionError =
+export const useReadCtzndstdErrorAssertionError =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdErrorAbi,
+    abi: ctzndstdErrorAbi,
     functionName: 'assertionError',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdErrorAbi}__ and `functionName` set to `"divisionError"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndstdErrorAbi}__ and `functionName` set to `"divisionError"`
  */
-export const useReadStdErrorDivisionError = /*#__PURE__*/ createUseReadContract(
-  { abi: stdErrorAbi, functionName: 'divisionError' },
-)
+export const useReadCtzndstdErrorDivisionError =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndstdErrorAbi,
+    functionName: 'divisionError',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdErrorAbi}__ and `functionName` set to `"encodeStorageError"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndstdErrorAbi}__ and `functionName` set to `"encodeStorageError"`
  */
-export const useReadStdErrorEncodeStorageError =
+export const useReadCtzndstdErrorEncodeStorageError =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdErrorAbi,
+    abi: ctzndstdErrorAbi,
     functionName: 'encodeStorageError',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdErrorAbi}__ and `functionName` set to `"enumConversionError"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndstdErrorAbi}__ and `functionName` set to `"enumConversionError"`
  */
-export const useReadStdErrorEnumConversionError =
+export const useReadCtzndstdErrorEnumConversionError =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdErrorAbi,
+    abi: ctzndstdErrorAbi,
     functionName: 'enumConversionError',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdErrorAbi}__ and `functionName` set to `"indexOOBError"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndstdErrorAbi}__ and `functionName` set to `"indexOOBError"`
  */
-export const useReadStdErrorIndexOobError = /*#__PURE__*/ createUseReadContract(
-  { abi: stdErrorAbi, functionName: 'indexOOBError' },
-)
+export const useReadCtzndstdErrorIndexOobError =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndstdErrorAbi,
+    functionName: 'indexOOBError',
+  })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdErrorAbi}__ and `functionName` set to `"memOverflowError"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndstdErrorAbi}__ and `functionName` set to `"memOverflowError"`
  */
-export const useReadStdErrorMemOverflowError =
+export const useReadCtzndstdErrorMemOverflowError =
   /*#__PURE__*/ createUseReadContract({
-    abi: stdErrorAbi,
+    abi: ctzndstdErrorAbi,
     functionName: 'memOverflowError',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdErrorAbi}__ and `functionName` set to `"popError"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndstdErrorAbi}__ and `functionName` set to `"popError"`
  */
-export const useReadStdErrorPopError = /*#__PURE__*/ createUseReadContract({
-  abi: stdErrorAbi,
-  functionName: 'popError',
-})
+export const useReadCtzndstdErrorPopError = /*#__PURE__*/ createUseReadContract(
+  { abi: ctzndstdErrorAbi, functionName: 'popError' },
+)
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link stdErrorAbi}__ and `functionName` set to `"zeroVarError"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndstdErrorAbi}__ and `functionName` set to `"zeroVarError"`
  */
-export const useReadStdErrorZeroVarError = /*#__PURE__*/ createUseReadContract({
-  abi: stdErrorAbi,
-  functionName: 'zeroVarError',
-})
+export const useReadCtzndstdErrorZeroVarError =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndstdErrorAbi,
+    functionName: 'zeroVarError',
+  })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdStorageSafeAbi}__
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndstdStorageSafeAbi}__
  */
-export const useWatchStdStorageSafeEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: stdStorageSafeAbi })
+export const useWatchCtzndstdStorageSafeEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ctzndstdStorageSafeAbi })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdStorageSafeAbi}__ and `eventName` set to `"SlotFound"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndstdStorageSafeAbi}__ and `eventName` set to `"SlotFound"`
  */
-export const useWatchStdStorageSafeSlotFoundEvent =
+export const useWatchCtzndstdStorageSafeSlotFoundEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdStorageSafeAbi,
+    abi: ctzndstdStorageSafeAbi,
     eventName: 'SlotFound',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stdStorageSafeAbi}__ and `eventName` set to `"WARNING_UninitedSlot"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndstdStorageSafeAbi}__ and `eventName` set to `"WARNING_UninitedSlot"`
  */
-export const useWatchStdStorageSafeWarningUninitedSlotEvent =
+export const useWatchCtzndstdStorageSafeWarningUninitedSlotEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: stdStorageSafeAbi,
+    abi: ctzndstdStorageSafeAbi,
     eventName: 'WARNING_UninitedSlot',
   })

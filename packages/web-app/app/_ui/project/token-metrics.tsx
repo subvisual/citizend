@@ -121,11 +121,11 @@ export const TokenMetrics = ({
   minContribution,
   maxContribution,
 }: TTokenMetricsProps) => {
-  const targetRaiseRange = usdRange(minTarget, maxTarget);
+  const targetRaiseRange = usdRange(BigInt(formatEther(minTarget)), BigInt(formatEther(maxTarget)));
   const maxPrice = usdValue(maxContribution);
   const minPrice = usdValue(minContribution);
   const totalTokens = new Intl.NumberFormat('default').format(
-    totalTokensForSale,
+    BigInt(formatEther(totalTokensForSale)),
   );
 
   return (

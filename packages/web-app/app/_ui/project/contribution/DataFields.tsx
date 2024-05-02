@@ -85,7 +85,7 @@ export const DataFields = () => {
         <div className="text-mono-800">Max. participants</div>
         <div>
           {maxParticipants !== undefined ? (
-            number(maxParticipants)
+            number(BigInt(formatEther(maxParticipants)))
           ) : (
             <LoadingField />
           )}

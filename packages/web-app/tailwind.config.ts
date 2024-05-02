@@ -51,6 +51,7 @@ const config: Config = {
       },
       boxShadow: {
         'projects-table': '0px 4px 16px 0px #DADFED',
+        banner: '0px 10px 30px 0px #0B1018',
       },
       borderRadius: {
         '2.5xl': '1.125rem',

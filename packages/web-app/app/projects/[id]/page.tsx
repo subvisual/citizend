@@ -1,6 +1,7 @@
 'use client';
 
 import { ProjectProvider } from '@/app/_providers/project';
+import { SaleBanner } from '@/app/_ui/project/contribution/SaleBanner';
 import { ProjectContent } from '@/app/_ui/project/project-content';
 import { ProjectHeader } from '@/app/_ui/project/project-header';
 import { useMemo } from 'react';
@@ -24,6 +25,7 @@ export default function Project({ params }: TProjectProps) {
 
   return (
     <main className="mb-56">
+      {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN ? <SaleBanner /> : null}
       <ProjectProvider value={project}>
         <ProjectHeader />
         <ProjectContent />

@@ -16,6 +16,7 @@ import { useAccount, useBalance } from 'wagmi';
 import {
   useReadCtzndSalePaymentToken,
   useReadCtzndSaleRate,
+  useReadCtzndSaleTotalUncappedAllocations,
   useReadCtzndSaleUncappedAllocation,
 } from '@/wagmi.generated';
 import { formatEther } from 'viem';
@@ -254,6 +255,22 @@ export const usePaymentTokenBalance = () => {
     isLoading: isLoadingBalance || isLoadingToken,
     error: errorToken || errorBalance,
   };
+};
+
+export const useTotalInvestedUsdcCtznd = () => {
+  const { data: tokens } = useReadCtzndSaleTotalUncappedAllocations({
+    query: {
+      staleTime: 0,
+      refetchInterval: 1000 * 10, // 10 seconds
+    },
+  });
+  const { data: rate } = useReadCtzndSaleRate();
+  const usdcValue =
+    tokens && rate
+      ? parseFloat(formatEther(tokens)) * parseFloat(formatEther(rate))
+      : 0;
+
+  return usdcValue;
 };
 
 export const useUserTotalInvestedUsdcCtznd = (address: `0x${string}`) => {

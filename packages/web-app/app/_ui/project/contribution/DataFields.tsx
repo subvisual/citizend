@@ -1,33 +1,22 @@
 import {
-  useReadCtzndSaleMaxContribution,
   useReadCtzndSaleMinContribution,
-  useReadCtzndSaleInvestorCount,
   useReadCtzndSaleMaxTarget,
-  useReadCtzndSaleMinTarget,
+  useReadCtzndSaleTotalTokensForSale,
 } from '@/wagmi.generated';
 import { formatEther } from 'viem';
-import { usdValue } from '../../utils/intl-formaters/usd-value';
 import { number } from '../../utils/intl-formaters/number';
 
 const useMaxParticipants = () => {
-  const {
-    data: maxTarget,
-    isLoading: maxLoading,
-    error: maxError,
-  } = useReadCtzndSaleMaxTarget();
-  const {
-    data: minTarget,
-    isLoading: minLoading,
-    error: minError,
-  } = useReadCtzndSaleMinTarget();
+  const { data: maxTarget, isLoading: targetLoading } =
+    useReadCtzndSaleMaxTarget();
+  const { data: min, isLoading: minLoading } =
+    useReadCtzndSaleMinContribution();
+  const targetValue = maxTarget ? Number(formatEther(maxTarget)) : undefined;
+  const minValue = min ? Number(formatEther(min)) : undefined;
 
   return {
-    data:
-      maxTarget === undefined || minTarget === undefined
-        ? undefined
-        : BigInt(maxTarget) - BigInt(minTarget),
-    isLoading: maxLoading || minLoading,
-    error: maxError || minError,
+    data: !targetValue || !minValue ? undefined : targetValue / minValue,
+    isLoading: targetLoading || minLoading,
   };
 };
 
@@ -36,61 +25,49 @@ const LoadingField = () => (
 );
 
 export const DataFields = () => {
-  const { data: maxContribution } = useReadCtzndSaleMaxContribution();
+  const { data: totalTokensForSale } = useReadCtzndSaleTotalTokensForSale();
   const { data: minContribution } = useReadCtzndSaleMinContribution();
-  const { data: investorCount } = useReadCtzndSaleInvestorCount({
-    query: {
-      refetchInterval: 1000 * 60, // every minute
-    },
-  });
   const { data: maxParticipants } = useMaxParticipants();
 
   return (
-    <>
-      <div className="md:col-span-2">
-        <div className="text-mono-800">Current price</div>
-        <div>0.1 USDC*</div>
+    <div className="flex flex-col gap-6 border-t border-mono-200 p-4 md:p-6">
+      <div className="flex flex-col gap-2 md:flex-row md:justify-between">
+        <span className="text-mono-800">Current price/Token (FDV):</span>
+        <div className="md:text-end">
+          <span>$0.20</span>
+          <span className="text-mono-800">($20m)</span>
+        </div>
       </div>
-      <div>
-        <div className="text-mono-800">Min. contribution</div>
-        <div>
+      <div className="flex flex-col gap-2 md:flex-row md:justify-between">
+        <span className="text-mono-800">Tokens distributed:</span>
+        <span className="md:text-end">
+          {totalTokensForSale !== undefined ? (
+            <>{number(Number(formatEther(totalTokensForSale)))} CTND</>
+          ) : (
+            <LoadingField />
+          )}
+        </span>
+      </div>
+      <div className="flex flex-col gap-2 md:flex-row md:justify-between">
+        <span className="text-mono-800">Min. contribution amount:</span>
+        <span className="md:text-end">
           {minContribution !== undefined ? (
-            usdValue(formatEther(minContribution))
+            <>{formatEther(minContribution)} USDC</>
           ) : (
             <LoadingField />
           )}
-        </div>
+        </span>
       </div>
-      <div>
-        <div className="text-mono-800">Max. contribution</div>
-        <div>
-          {maxContribution !== undefined ? (
-            usdValue(formatEther(maxContribution))
-          ) : (
-            <LoadingField />
-          )}
-        </div>
-      </div>
-      <div>
-        <div className="text-mono-800">Current contributors</div>
-        <div>
-          {investorCount !== undefined ? (
-            number(investorCount)
-          ) : (
-            <LoadingField />
-          )}
-        </div>
-      </div>
-      <div>
-        <div className="text-mono-800">Max. participants</div>
-        <div>
+      <div className="flex flex-col gap-2 md:flex-row md:justify-between">
+        <span className="text-mono-800">Max. number of participants:</span>
+        <span className="md:text-end">
           {maxParticipants !== undefined ? (
-            number(BigInt(formatEther(maxParticipants)))
+            number(maxParticipants)
           ) : (
             <LoadingField />
           )}
-        </div>
+        </span>
       </div>
-    </>
+    </div>
   );
 };

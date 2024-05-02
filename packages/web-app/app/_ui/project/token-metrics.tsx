@@ -1,19 +1,12 @@
 import {
-  useReadCtzndSaleTokenToPaymentToken,
-  useReadCtzndSaleTotalUncappedAllocations,
+  useReadCtzndSaleInvestorCount,
+  useReadCtzndSaleMaxTarget,
 } from '@/wagmi.generated';
-import { usdRange } from '../utils/intl-formaters/usd-range';
 import { usdValue } from '../utils/intl-formaters/usd-value';
-import { formatEther, parseEther } from 'viem';
+import { formatEther } from 'viem';
 import clsx from 'clsx';
-
-type TTokenMetricsProps = {
-  minTarget: bigint;
-  maxTarget: bigint;
-  totalTokensForSale: bigint;
-  minContribution: string;
-  maxContribution: string;
-};
+import { number } from '../utils/intl-formaters/number';
+import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
 
 const ProgressBar = ({
   title,
@@ -88,72 +81,67 @@ const ProgressBar = ({
   );
 };
 
-const ProgressBarWrapper = ({ maxTarget }: { maxTarget: bigint }) => {
-  const { data: ctzndTokensSold, isLoading: isLoadingSaleTokens } =
-    useReadCtzndSaleTotalUncappedAllocations();
-  const { data: tokensInvested, isLoading: isLoadingPaymentTokens } =
-    useReadCtzndSaleTokenToPaymentToken({
-      args: [ctzndTokensSold || 0n],
-    });
-  const value = tokensInvested ? formatEther(tokensInvested) : '0';
+const LoadingField = () => (
+  <div className="h-5 w-full animate-pulse rounded-md bg-gradient-to-br from-mono-50 to-mono-200" />
+);
 
-  if (isLoadingSaleTokens || isLoadingPaymentTokens)
-    return (
-      <>
-        <div className="mx-auto mb-4 h-6 w-44 animate-pulse rounded-md bg-gradient-to-br from-mono-50 to-mono-200" />
-        <div className="h-6 w-full animate-pulse rounded-md bg-gradient-to-br from-mono-50 to-mono-200" />
-      </>
-    );
-
-  return (
-    <ProgressBar
-      title="Raise status"
-      max={Number(maxTarget)}
-      value={Number(value)}
-    />
-  );
-};
-
-export const TokenMetrics = ({
-  minTarget,
-  maxTarget,
-  totalTokensForSale,
-  minContribution,
-  maxContribution,
-}: TTokenMetricsProps) => {
-  const targetRaiseRange = usdRange(BigInt(formatEther(minTarget)), BigInt(formatEther(maxTarget)));
-  const maxPrice = usdValue(maxContribution);
-  const minPrice = usdValue(minContribution);
-  const totalTokens = new Intl.NumberFormat('default').format(
-    BigInt(formatEther(totalTokensForSale)),
-  );
+export const TokenMetrics = () => {
+  const { data: maxTarget } = useReadCtzndSaleMaxTarget();
+  const totalCommitted = useTotalInvestedUsdcCtznd();
+  const maxValue = maxTarget ? Number(formatEther(maxTarget)) : 0;
+  const { data: investorCount } = useReadCtzndSaleInvestorCount({
+    query: {
+      refetchInterval: 1000 * 10, // 10 seconds
+    },
+  });
 
   return (
     <div className="flex w-full flex-col rounded-lg bg-mono-50 text-mono-950">
       <h4 className="border-b border-mono-200 px-8 py-6 font-medium uppercase">
-        Token Metrics
+        Community Sale Status
       </h4>
       {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
         <div className="m-8">
-          <ProgressBarWrapper maxTarget={maxTarget} />
+          <ProgressBar
+            title="Raise status"
+            max={maxValue}
+            value={totalCommitted}
+          />
         </div>
       ) : null}
       <div className="flex flex-col gap-4 p-8">
         <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-          <span className="text-mono-800">Target Raise:</span>
-          <span className="md:text-end">{targetRaiseRange}</span>
+          <span className="text-mono-800">Total amount commited:</span>
+          <span className="md:text-end">
+            {totalCommitted !== undefined ? (
+              usdValue(totalCommitted)
+            ) : (
+              <LoadingField />
+            )}
+          </span>
         </div>
         <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-          <span className="text-mono-800">Min. price per token:</span>
-          <span className="md:text-end">{minPrice}</span>
+          <span className="text-mono-800">Current number of participants:</span>
+          <span className="md:text-end">
+            {investorCount !== undefined ? (
+              number(investorCount)
+            ) : (
+              <LoadingField />
+            )}
+          </span>
         </div>
         <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-          <span className="text-mono-800">Max price per token:</span>
-          <span className="md:text-end">{maxPrice}</span>
+          <span className="text-mono-800">Current price (FDV):</span>
+          <div className="md:text-end">
+            {usdValue(0.4)}
+            <span className="text-mono-800"> ($40m)</span>
+          </div>
         </div>
         <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-          <span className="text-mono-800">Total supply:</span>
-          <span className="md:text-end">{totalTokens}</span>
+          <span className="text-mono-800">
+            Current max. allocation/participant:
+          </span>
+          <span className="md:text-end">{'N/A'}</span>
         </div>
       </div>
     </div>

@@ -10,8 +10,8 @@ contract DeployScript is Script {
 
         uint256 startRegistration = 1714953600;
         uint256 endRegistration = 1715212800;
-        uint256 start = 1715299200;
-        uint256 end = 1715385599;
+        uint256 start = 1714660299;
+        uint256 end = 1715342400;
 
         address USDC = 0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238;
 
@@ -20,14 +20,14 @@ contract DeployScript is Script {
             5 ether,
             start,
             end,
+            2500000 ether,
+            500000 ether,
             1000000 ether,
-            1000000 ether,
-            2000000 ether,
             startRegistration,
             endRegistration
         );
 
-        sale.setMinContribution(200 ether);
+        sale.setMinContribution(1 ether);
 
         vm.stopBroadcast();
     }

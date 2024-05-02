@@ -10,15 +10,15 @@ export default defineConfig({
       contracts: [
         {
           name: "CtzndSale",
-          address: "0xBe9fF1A0BdF6979534784F1B80fE0e60803f334C",
+          address: "0xf2eacaa2b8374d648b2f1bab51c0e0add18ec0d1",
         },
       ],
     }),
     foundry({
       project: "./",
-      exclude: ["MockERC20.sol"],
+      exclude: ["MockERC20.sol", "Sale.d.sol"],
       deployments: {
-        Project: {
+        Sale: {
           31337: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
         },
       },

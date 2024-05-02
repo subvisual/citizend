@@ -25,7 +25,7 @@ const ProgressBar = ({
   value: number;
 }) => {
   const valueInMillions = value / 1000_000;
-  const maxInMillions = formatEther(max) / 1000_000_000;
+  const maxInMillions = max / 1000_000;
   const halfInMillions = maxInMillions / 2;
   const currentRelativeValue = valueInMillions / maxInMillions;
   const percentage = currentRelativeValue * 100;

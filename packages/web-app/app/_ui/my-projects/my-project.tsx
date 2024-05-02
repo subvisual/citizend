@@ -15,7 +15,6 @@ import { CardSkeleton } from '../components/skeletons/card-skeleton';
 import {
   useReadCtzndSaleInvestorCount,
   useReadCtzndSaleUncappedAllocation,
-  useReadCtzndSaleRate,
 } from '@/wagmi.generated';
 import { useAccount } from 'wagmi';
 import { formatEther, parseEther } from 'viem';
@@ -26,7 +25,11 @@ const Header = ({
   minTarget,
   maxTarget,
 }: TProjectSaleDetails) => {
-  const { data: contributions } = useReadCtzndSaleInvestorCount();
+  const { data: contributions } = useReadCtzndSaleInvestorCount({
+    query: {
+      staleTime: 0,
+    },
+  });
   const totalContributions = contributions ? contributions.toString() : 0;
 
   return (

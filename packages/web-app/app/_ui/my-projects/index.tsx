@@ -19,7 +19,9 @@ const ProjectRow = ({
   maxTarget,
 }: TProjectSaleDetails) => {
   const { address } = useAccount();
-  const { data: contributions } = useReadCtzndSaleInvestorCount();
+  const { data: contributions } = useReadCtzndSaleInvestorCount({
+    query: { staleTime: 0 },
+  });
   const totalContributions = contributions ? contributions.toString() : 0;
   const totalUsdc = useUserTotalInvestedUsdcCtznd(address!);
 

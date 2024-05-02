@@ -6,15 +6,14 @@ import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persi
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { deserialize, serialize } from 'wagmi';
 
-const fiveMinutes = 1_000 * 60 * 5;
-const halfHour = 1_000 * 60 * 30;
+const oneHour = 1_000 * 60;
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 0,
-      staleTime: fiveMinutes,
-      gcTime: halfHour,
+      staleTime: oneHour,
+      gcTime: oneHour,
     },
   },
 });

@@ -259,6 +259,9 @@ export const usePaymentTokenBalance = () => {
 export const useUserTotalInvestedUsdcCtznd = (address: `0x${string}`) => {
   const { data: tokens } = useReadCtzndSaleUncappedAllocation({
     args: [address],
+    query: {
+      staleTime: 0,
+    },
   });
   const { data: rate } = useReadCtzndSaleRate();
   const usdcValue =

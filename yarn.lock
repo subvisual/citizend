@@ -1047,10 +1047,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-2.0.2.tgz#d9fae00a2d5cb40f92cfe64b47ad749fbc38f917"
   integrity sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==
 
-"@idos-network/idos-sdk@0.2.10":
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/@idos-network/idos-sdk/-/idos-sdk-0.2.10.tgz#85e83c71c024db41718f56e226694f2b60f91b2b"
-  integrity sha512-2nAcwBQ8j4pMRCa3NJ1pwkLxAdygBwNkbfF56xpNtv5iabqw9ujHnBZ+xRGOkrskVXLtf/yH1ptkWsOCUZH4cQ==
+"@idos-network/idos-sdk@0.2.14":
+  version "0.2.14"
+  resolved "https://registry.yarnpkg.com/@idos-network/idos-sdk/-/idos-sdk-0.2.14.tgz#2ea3bce4cc56cc24ccb9c09b27d1d58e63fa2901"
+  integrity sha512-wuPFg3eXEIVjMN/XQQYGf3nGx7yBaP6EJ5YiBH4ovTpxRdstSaASxncuxibNyPyam+cukCAYX5Ar8MW205RC5g==
   dependencies:
     "@digitalbazaar/ed25519-signature-2020" "^5.2.0"
     "@digitalbazaar/ed25519-verification-key-2020" "^4.1.0"

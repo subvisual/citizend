@@ -94,7 +94,7 @@ const Complete = () => (
       </Dialog.Title>
       <p>
         You’re eligible to participate in the community sale that will take
-        place on the 5th of May.
+        place on the 17th of May.
       </p>
       <p>
         We will send a reminder to everyone who is eligible 24h before the sale.

@@ -1,28 +1,28 @@
 'use server';
 
 import { Address, createPublicClient, http, publicActions } from 'viem';
-import { anvil } from 'viem/chains';
+import { sepolia } from 'viem/chains';
 
-import { saleAbi } from './abi';
+import { ctzndSaleAbi, ctzndSaleAddress } from '@/wagmi.generated';
 
-const saleContractAddress = '0x5613c3007f77a5095702f887b7e863cc5b5192a6';
+const saleContractAddress = ctzndSaleAddress[sepolia.id];
 
 const client = createPublicClient({
-  chain: anvil,
+  chain: sepolia,
   transport: http(),
 }).extend(publicActions);
 
 export const computeRisingTideCap = async () => {
   const purchases = await client.getContractEvents({
     address: saleContractAddress,
-    abi: saleAbi,
+    abi: ctzndSaleAbi,
     eventName: 'Purchase',
-    fromBlock: 0n,
+    fromBlock: 5822779n,
   });
 
   const available = await client.readContract({
     address: saleContractAddress,
-    abi: saleAbi,
+    abi: ctzndSaleAbi,
     functionName: 'totalTokensForSale',
   });
 
@@ -55,8 +55,6 @@ export const computeRisingTideCap = async () => {
     capNextIdx++;
     investorsLeft--;
   }
-
-  console.log(available - accum / investorsLeft);
 
   // at this point, the cap is just whatever amount is not yet allocated (i.e.:
   // without the small investors) divided equally by everyone else

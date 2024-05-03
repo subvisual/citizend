@@ -11,6 +11,7 @@ import { MyProjectSkeleton } from './my-project';
 import { useReadCtzndSaleInvestorCount } from '@/wagmi.generated';
 import { useAccount } from 'wagmi';
 import { useUserTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
+import { formatEther } from 'viem';
 
 const ProjectRow = ({
   logo,
@@ -24,7 +25,10 @@ const ProjectRow = ({
   });
   const totalContributions = contributions ? contributions.toString() : 0;
   const totalUsdc = useUserTotalInvestedUsdcCtznd(address!);
-
+  const targetedRaise = usdRange(
+    BigInt(formatEther(minTarget)),
+    BigInt(formatEther(maxTarget)),
+  );
   return (
     <Link
       href={`/my-projects/${project}`}
@@ -41,7 +45,7 @@ const ProjectRow = ({
           {project}
         </div>
         <div className="hidden md:block">{totalContributions}</div>
-        <div className="hidden md:block">{usdRange(minTarget, maxTarget)}</div>
+        <div className="hidden md:block">{targetedRaise}</div>
         <div>{totalUsdc} USDC</div>
       </div>
     </Link>

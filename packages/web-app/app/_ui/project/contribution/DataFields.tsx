@@ -39,7 +39,7 @@ export const DataFields = () => {
         <span className="text-mono-800">Current price/Token (FDV):</span>
         <div className="md:text-end">
           <span>{`${usdValue(currentTokenPrice)}`} </span>
-          <span className="text-mono-800">{(`$${currentTokenPrice * 100}m`)}</span>
+          <span className="text-mono-800">{`$${currentTokenPrice * 100}m`}</span>
         </div>
         <span className="text-sm text-mono-800">Price range (FDV range):</span>
         <div className="text-sm md:text-end">

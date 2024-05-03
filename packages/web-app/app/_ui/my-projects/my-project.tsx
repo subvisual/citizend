@@ -18,6 +18,7 @@ import {
 } from '@/wagmi.generated';
 import { useAccount } from 'wagmi';
 import { formatEther, parseEther } from 'viem';
+import { useCtzndSaleStatus } from '@/app/_lib/hooks';
 
 const Header = ({
   project,
@@ -31,6 +32,10 @@ const Header = ({
     },
   });
   const totalContributions = contributions ? contributions.toString() : 0;
+  const targetedRaise = usdRange(
+    BigInt(formatEther(minTarget)),
+    BigInt(formatEther(maxTarget)),
+  );
 
   return (
     <div className="flex flex-col rounded-md bg-mono-50 px-6 py-8 text-mono-950">
@@ -50,7 +55,7 @@ const Header = ({
         </div>
         <div className="flex flex-col gap-2 md:border-r md:border-mono-200">
           <h3 className="text-sm text-mono-800">Target Raise</h3>
-          <div>{usdRange(minTarget, maxTarget)}</div>
+          <div>{targetedRaise}</div>
         </div>
         <div className="flex flex-col gap-2">
           <h3 className="text-sm text-mono-800">Vesting period ends in:</h3>
@@ -65,14 +70,17 @@ const MyContribution = () => {
   const { address } = useAccount();
   const { projectId } = useProject();
   const usdcValue = useUserTotalInvestedUsdcCtznd(address!);
+  const status = useCtzndSaleStatus();
 
   return (
     <div className="flex flex-col gap-2 rounded-md bg-mono-50 px-6 py-8 text-mono-950">
       <h3 className="text-sm text-mono-800">Contributions</h3>
       <div className="text-3.5xl">{`${usdcValue} USDC`}</div>
-      <div className="self-center pt-6">
-        <EdgeLink href={`/projects/${projectId}`}>New Contribution</EdgeLink>
-      </div>
+      {status === 'live' ? (
+        <div className="self-center pt-6">
+          <EdgeLink href={`/projects/${projectId}`}>New Contribution</EdgeLink>
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -83,10 +91,20 @@ const MyTokens = () => {
     args: [address!],
   });
   const myTokens = tokens ? formatEther(tokens!) : 0;
+  const status = useCtzndSaleStatus();
 
   return (
     <div className="flex flex-col gap-2 rounded-md bg-mono-50 px-6 py-8 text-mono-950">
-      <h3 className="text-sm text-mono-800">My tokens</h3>
+      <h3 className="flex text-sm text-mono-800">
+        <div className="relative">
+          My tokens
+          {status === 'completed' ? (
+            <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-full rounded-full bg-blue-500 px-2 py-1 text-xs leading-3 text-mono-50">
+              Closed
+            </div>
+          ) : null}
+        </div>
+      </h3>
       <div className="text-3.5xl">{myTokens} CTND</div>
       <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-3">
         <div className="flex flex-col gap-2">

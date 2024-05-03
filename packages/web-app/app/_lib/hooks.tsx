@@ -18,6 +18,8 @@ import {
   useReadCtzndErc20Allowance,
   useReadCtzndSaleMaxTarget,
   useReadCtzndSaleMinTarget,
+  useReadCtzndSaleStart,
+  useReadCtzndSaleEnd,
 } from '@/wagmi.generated';
 import { formatEther, parseEther } from 'viem';
 import { sepolia } from 'viem/chains';
@@ -249,6 +251,28 @@ export const useEffectSafe = (callback: () => void, deps: any[]) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
+};
+
+export const useCtzndSaleStatus = () => {
+  const { data: start } = useReadCtzndSaleStart();
+  const { data: end } = useReadCtzndSaleEnd();
+  const startDate = start ? start * 1000n : undefined;
+  const endDate = end ? end * 1000n : undefined;
+  const now = Date.now();
+
+  if (!startDate || !endDate) {
+    return 'loading';
+  }
+
+  if (now > endDate) {
+    return 'completed';
+  }
+
+  if (now < startDate) {
+    return 'upcoming';
+  }
+
+  return 'live';
 };
 
 export const useCtzndSaleCapStatus = () => {

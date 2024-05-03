@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export const SaleBanner = () => {
   return (
-    <div className="left-0 -mt-20 mb-20 flex flex-col items-center bg-mono-900 py-6 shadow-banner shadow-mono-950">
+    <div className="left-0 -mt-20 mb-20 flex flex-col items-center bg-mono-900 px-4 py-6 text-center shadow-banner shadow-mono-950">
       <p>
         Citizend optimizes for community distribution while enabling price
         discovery.

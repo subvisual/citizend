@@ -115,7 +115,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
       <div className="px-6 pt-5 text-mono-400">
         By clicking &quot;Contribute&quot; you agree to the platform{' '}
         <Link href={''} className="text-mono-50">
-          Terms and Conditions
+          Terms and Conditions{' '}
         </Link>
         and confirm you read the{' '}
         <Link href={''} className="text-mono-50">

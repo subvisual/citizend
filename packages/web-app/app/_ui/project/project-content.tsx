@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Tab } from '@headlessui/react';
 import clsx from 'clsx';
 import { CitizendProjectDescription } from './citizend-project-description';
-import { ProjectInformation } from './project-information';
-import { TokenMetrics } from './token-metrics';
+import { HowToParticipate } from './how-to-participate';
+import { SaleStatus } from './sale-status';
 import { ApplyButton } from './apply-button';
 import { useFetchProjectsSaleDetails } from '@/app/_lib/queries';
 import { useProject } from '@/app/_providers/project/context';
@@ -13,6 +13,8 @@ import { useHasCitizendGrant, useHasProjectGrant } from '@/app/_lib/hooks';
 import { AppliedSuccess } from './applied-success';
 import { CardSkeleton } from '../components/skeletons/card-skeleton';
 import { useAccount } from 'wagmi';
+import { ProjectInformation } from './project-information';
+import { TokenMetrics } from './token-metrics';
 
 const generateTabClassName = ({ selected }: { selected: boolean }) =>
   clsx(
@@ -66,38 +68,41 @@ export const ProjectContent = () => {
         <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
           <Tab.List className="my-4 grid grid-cols-2 gap-6">
             <Tab className={generateTabClassName}>Description</Tab>
-            <Tab className={generateTabClassName}>Token Metrics</Tab>
+            {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+              <Tab className={generateTabClassName}>Register</Tab>
+            ) : null}
+            {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
+              <Tab className={generateTabClassName}>Token metrics</Tab>
+            ) : null}
           </Tab.List>
           <Tab.Panels className="pb-64">
             <Tab.Panel className="focus:outline-none">
               <CitizendProjectDescription />
             </Tab.Panel>
-            <Tab.Panel className="flex flex-col gap-8 focus:outline-none">
-              {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' &&
-              hasGrant &&
-              address ? (
-                <ProjectContribution userAddress={address} />
-              ) : null}
-              {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
-                <ProjectInformation
-                  saleDate={start}
-                  startRegistration={startRegistration}
-                  endRegistration={endRegistration}
-                  applied={!!hasGrant}
-                />
-              ) : null}
-              <TokenMetrics hasGrant={hasGrant} />
-              {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
-                hasGrant ? (
-                  <AppliedSuccess />
+            {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+              <Tab.Panel className="flex flex-col gap-8 focus:outline-none">
+                {hasGrant ? (
+                  <ProjectInformation saleDate={start} />
                 ) : (
-                  <ApplyButton
-                    isLoading={isLoadingGrant}
+                  <HowToParticipate
+                    saleDate={start}
+                    startRegistration={startRegistration}
+                    endRegistration={endRegistration}
                     error={errorLoadingGrant}
                   />
-                )
-              ) : null}
-            </Tab.Panel>
+                )}
+                <TokenMetrics />
+                {hasGrant ? <AppliedSuccess /> : null}
+              </Tab.Panel>
+            ) : null}
+            {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
+              <Tab.Panel className="flex flex-col gap-8 focus:outline-none">
+                {hasGrant && address ? (
+                  <ProjectContribution userAddress={address} />
+                ) : null}
+                <SaleStatus hasGrant={hasGrant} />
+              </Tab.Panel>
+            ) : null}
           </Tab.Panels>
         </Tab.Group>
       </div>
@@ -112,30 +117,23 @@ export const ProjectContent = () => {
         </div>
         <div className="display flex flex-col gap-8">
           {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
-            <ProjectInformation
-              saleDate={start}
-              startRegistration={startRegistration}
-              endRegistration={endRegistration}
-              applied={!!hasGrant}
-            />
+            <>
+              {hasGrant ? (
+                <ProjectInformation saleDate={start} />
+              ) : (
+                <HowToParticipate
+                  saleDate={start}
+                  startRegistration={startRegistration}
+                  endRegistration={endRegistration}
+                  error={errorLoadingGrant}
+                />
+              )}
+              <TokenMetrics />
+              {hasGrant ? <AppliedSuccess /> : null}
+            </>
           ) : null}
-          <TokenMetrics hasGrant={hasGrant} />
-          {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
-            hasGrant ? (
-              <AppliedSuccess />
-            ) : (
-              <ApplyButton
-                isLoading={isLoadingGrant}
-                error={errorLoadingGrant}
-              />
-            )
-          ) : null}
-          {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' && !hasGrant ? (
-            <div>
-              This token sale is exclusively open to individuals who have
-              previously applied for participation. Stay tuned for future
-              opportunities.
-            </div>
+          {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
+            <SaleStatus hasGrant={hasGrant} />
           ) : null}
         </div>
       </div>

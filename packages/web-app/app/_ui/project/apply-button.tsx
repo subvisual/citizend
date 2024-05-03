@@ -20,7 +20,7 @@ export const ApplyButton = ({ isLoading, error }: TApplyButtonProps) => {
 
   if (isLoading || (error && error !== ERRORS.MISSING_FRACTAL_AG)) {
     return (
-      <Button disabled variant="primary-disabled">
+      <Button disabled variant="primary-disabled" className="rounded-t-none">
         {isLoading ? (
           <Spinner className="animate-spin" />
         ) : (
@@ -32,13 +32,16 @@ export const ApplyButton = ({ isLoading, error }: TApplyButtonProps) => {
 
   if (!address)
     return (
-      <Button disabled variant="primary-disabled">
+      <Button disabled variant="primary-disabled" className="rounded-t-none">
         Connect wallet first
       </Button>
     );
 
   return (
-    <Button onClick={() => open(ApplyDialog.displayName, { projectId })}>
+    <Button
+      onClick={() => open(ApplyDialog.displayName, { projectId })}
+      className="rounded-t-none"
+    >
       Register to participate
     </Button>
   );

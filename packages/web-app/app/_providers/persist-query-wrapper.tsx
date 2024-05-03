@@ -5,12 +5,15 @@ import { TChildren } from '@/app/_types';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { deserialize, serialize } from 'wagmi';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { hashFn } from 'wagmi/query';
 
 const oneHour = 1_000 * 60;
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      queryKeyHashFn: hashFn,
       retry: 0,
       staleTime: oneHour,
       gcTime: oneHour,
@@ -30,6 +33,7 @@ export function PersistQueryWrapper({ children }: TChildren) {
       client={queryClient}
       persistOptions={{ persister }}
     >
+      <ReactQueryDevtools initialIsOpen={false} />
       {children}
     </PersistQueryClientProvider>
   );

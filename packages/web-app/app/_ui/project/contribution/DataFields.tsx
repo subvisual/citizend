@@ -7,6 +7,7 @@ import { number } from '../../utils/intl-formaters/number';
 import { useCtzndMinContributionUsdc } from '@/app/_lib/queries';
 import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
 import { calculateTokenPrice } from '../../utils/calculateTokenPrice';
+import { usdValue } from '../../utils/intl-formaters/usd-value';
 
 const useMaxParticipants = () => {
   const { data: maxTarget, isLoading: targetLoading } =
@@ -37,7 +38,7 @@ export const DataFields = () => {
       <div className="grid grid-cols-1 gap-x-2 gap-y-1 md:grid-cols-2">
         <span className="text-mono-800">Current price/Token (FDV):</span>
         <div className="md:text-end">
-          <span>{`$${currentTokenPrice}`} </span>
+          <span>{`${usdValue(currentTokenPrice)}`} </span>
           <span className="text-mono-800">{(`$${currentTokenPrice * 100}m`)}</span>
         </div>
         <span className="text-sm text-mono-800">Price range (FDV range):</span>

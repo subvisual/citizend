@@ -105,7 +105,7 @@ export const TokenMetrics = () => {
           <ProgressBar
             title="Raise status"
             max={maxValue}
-            value={totalCommitted}
+            value={Number(totalCommitted)}
           />
         </div>
       ) : null}

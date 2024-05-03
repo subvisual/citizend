@@ -295,12 +295,6 @@ export const useUserTotalInvestedUsdcCtznd = (address: `0x${string}`) => {
 export const useCtzndMinContributionUsdc = () => {
   const { data: min } = useReadCtzndSaleMinContribution();
 
-  console.log(
-    '%c==>',
-    'color: green; background: yellow; font-size: 20px',
-    min,
-  );
-
   const { data: minUsdc } = useReadCtzndSaleTokenToPaymentToken({
     args: [min || 0n],
   });

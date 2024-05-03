@@ -15,7 +15,7 @@ import { fetchAndGenerateProof } from '../_server/projects/generate-merkle-root'
 import { useAccount, useBalance } from 'wagmi';
 import {
   useReadCtzndSalePaymentToken,
-  useReadCtzndSaleRate,
+  useReadCtzndSaleTokenToPaymentToken,
   useReadCtzndSaleTotalUncappedAllocations,
   useReadCtzndSaleUncappedAllocation,
 } from '@/wagmi.generated';
@@ -258,33 +258,35 @@ export const usePaymentTokenBalance = () => {
 };
 
 export const useTotalInvestedUsdcCtznd = () => {
-  const { data: tokens } = useReadCtzndSaleTotalUncappedAllocations({
+  const { data: ctzndTokensSold } = useReadCtzndSaleTotalUncappedAllocations({
     query: {
       staleTime: 0,
       refetchInterval: 1000 * 10, // 10 seconds
     },
   });
-  const { data: rate } = useReadCtzndSaleRate();
+  const { data: tokensInvested } = useReadCtzndSaleTokenToPaymentToken({
+    args: [ctzndTokensSold || 0n],
+  });
+
   const usdcValue =
-    tokens && rate
-      ? parseFloat(formatEther(tokens)) * parseFloat(formatEther(rate))
-      : 0;
+    ctzndTokensSold && tokensInvested ? formatEther(tokensInvested) : '0';
 
   return usdcValue;
 };
 
 export const useUserTotalInvestedUsdcCtznd = (address: `0x${string}`) => {
-  const { data: tokens } = useReadCtzndSaleUncappedAllocation({
+  const { data: ctzndTokensSold } = useReadCtzndSaleUncappedAllocation({
     args: [address],
     query: {
       staleTime: 0,
     },
   });
-  const { data: rate } = useReadCtzndSaleRate();
+  const { data: tokensInvested } = useReadCtzndSaleTokenToPaymentToken({
+    args: [ctzndTokensSold || 0n],
+  });
+
   const usdcValue =
-    tokens && rate
-      ? parseFloat(formatEther(tokens)) * parseFloat(formatEther(rate))
-      : 0;
+    ctzndTokensSold && tokensInvested ? formatEther(tokensInvested) : '0';
 
   return usdcValue;
 };

@@ -52,3 +52,5 @@ jobs:
         run: yarn workspace @discovery-dao/web-app build
         env:
           NEXT_PUBLIC_WC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_WC_PROJECT_ID }}
+          NEXT_CITIZEND_WALLET_PRIVATE_KEY: ${{ secrets.NEXT_CITIZEND_WALLET_PRIVATE_KEY }}
+          NEXT_PUBLIC_IDOS_NODE_URL: ${{ secrets.NEXT_PUBLIC_IDOS_NODE_URL }}

@@ -1,3 +1,7 @@
+import Image from 'next/image';
+import fractal from '../../../public/fractal.png';
+import outlier from '../../../public/outlier.png';
+
 const StepOne = () => (
   <svg
     width="79"
@@ -253,6 +257,52 @@ const StepThree = () => (
   </svg>
 );
 
+export const Arbitrum = () => (
+  <svg
+    width="56"
+    height="56"
+    viewBox="0 0 56 56"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clip-path="url(#clip0_5335_33274)">
+      <path
+        d="M5.24414 17.0227V38.9769C5.24414 40.3786 5.99369 41.6746 7.20769 42.3732L26.2316 53.3526C27.4456 54.0512 28.9401 54.0512 30.1541 53.3526L49.178 42.3732C50.392 41.6746 51.1416 40.3786 51.1416 38.9769V17.0227C51.1416 15.621 50.392 14.3249 49.178 13.6264L30.1541 2.64697C28.9401 1.94841 27.4456 1.94841 26.2316 2.64697L7.20309 13.6264C5.98909 14.3249 5.24414 15.621 5.24414 17.0227Z"
+        fill="#213147"
+      />
+      <path
+        d="M32.3445 32.2579L29.6314 39.694C29.5578 39.9008 29.5578 40.126 29.6314 40.3328L34.2988 53.1275L39.6974 50.0116L33.2182 32.2579C33.071 31.8489 32.4916 31.8489 32.3445 32.2579Z"
+        fill="#12AAFF"
+      />
+      <path
+        d="M37.7846 19.7526C37.6374 19.3435 37.058 19.3435 36.9109 19.7526L34.1978 27.1886C34.1242 27.3954 34.1242 27.6206 34.1978 27.8274L41.845 48.7751L47.2437 45.6592L37.7846 19.7526Z"
+        fill="#12AAFF"
+      />
+      <path
+        d="M28.1912 3.46984C28.3245 3.46984 28.4579 3.50661 28.5775 3.57095L49.1649 15.4511C49.404 15.589 49.5511 15.8464 49.5511 16.1175V39.8733C49.5511 40.149 49.404 40.4018 49.1649 40.5397L28.5775 52.4199C28.4625 52.4888 28.3245 52.521 28.1912 52.521C28.0578 52.521 27.9245 52.4842 27.8049 52.4199L7.2175 40.5489C6.97838 40.411 6.83123 40.1536 6.83123 39.8825V16.1221C6.83123 15.8464 6.97838 15.5936 7.2175 15.4557L27.8049 3.57554C27.9245 3.50661 28.0578 3.46984 28.1912 3.46984ZM28.1912 0C27.46 0 26.7243 0.188428 26.0667 0.569881L5.48387 12.4455C4.16871 13.2038 3.35938 14.6055 3.35938 16.1221V39.8779C3.35938 41.3945 4.16871 42.7962 5.48387 43.5545L26.0713 55.4347C26.7289 55.8116 27.46 56.0046 28.1958 56.0046C28.9269 56.0046 29.6627 55.8162 30.3203 55.4347L50.9077 43.5545C52.2228 42.7962 53.0322 41.3945 53.0322 39.8779V16.1221C53.0322 14.6055 52.2228 13.2038 50.9077 12.4455L30.3157 0.569881C29.6581 0.188428 28.9223 0 28.1912 0Z"
+        fill="#9DCCED"
+      />
+      <path
+        d="M14.5742 48.8027L16.4688 43.6187L20.2809 46.7852L16.7171 50.039L14.5742 48.8027Z"
+        fill="#213147"
+      />
+      <path
+        d="M26.4569 14.4219H21.2376C20.8467 14.4219 20.4972 14.6655 20.3639 15.0331L9.17578 45.6872L14.5744 48.8032L26.8937 15.0469C27.0087 14.7436 26.7834 14.4219 26.4569 14.4219Z"
+        fill="white"
+      />
+      <path
+        d="M35.5902 14.4219H30.371C29.9801 14.4219 29.6306 14.6655 29.4972 15.0331L16.7227 50.0348L22.1213 53.1508L36.0271 15.0469C36.1374 14.7436 35.9121 14.4219 35.5902 14.4219Z"
+        fill="white"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_5335_33274">
+        <rect width="56" height="56" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
 export const CitizendProjectDescription = () => {
   return (
     <div className="max-w-2xl text-mono-50">
@@ -272,7 +322,7 @@ export const CitizendProjectDescription = () => {
         thrives on the merits of consensus and shared values. Created by the
         community, for the community.highest potential.
       </p>
-      <h3 className="mt-8">How does it work</h3>
+      <h3 className="mt-16">How does it work</h3>
       <p className="text-mono-400">
         Projects hoping to secure community contributions or distribute tokens
         on citizend must garner the greatest number of votes from the community
@@ -285,10 +335,10 @@ export const CitizendProjectDescription = () => {
       </p>
       <div className="mt-6 flex flex-col gap-6 py-8">
         <div className="flex items-center">
-          <div className="flex-grow">
+          <div className="-ml-4 flex-grow">
             <StepOne />
           </div>
-          <div className="pl-4">
+          <div className="flex flex-col gap-3 pl-4">
             <h4 className="text-xl text-mono-50">Explore</h4>
             <p className="text-sm text-mono-400">
               Explore projects, sign up, and start your KYC process to prepare
@@ -297,10 +347,10 @@ export const CitizendProjectDescription = () => {
           </div>
         </div>
         <div className="flex items-center">
-          <div className="flex-grow">
+          <div className="-ml-4 flex-grow">
             <StepTwo />
           </div>
-          <div className="pl-4">
+          <div className="flex flex-col gap-3 pl-4">
             <h4 className="text-xl text-mono-50">Vote</h4>
             <p className="text-sm text-mono-400">
               Cast your single vote for your favorite project to help determine
@@ -309,10 +359,10 @@ export const CitizendProjectDescription = () => {
           </div>
         </div>
         <div className="flex items-center">
-          <div className="flex-grow">
+          <div className="-ml-4 flex-grow">
             <StepThree />
           </div>
-          <div className="pl-4">
+          <div className="flex flex-col gap-3 pl-4">
             <h4 className="text-xl text-mono-50">Contribute</h4>
             <p className="text-sm text-mono-400">
               Contribute to the winning project using the Two-pool contribution
@@ -327,7 +377,58 @@ export const CitizendProjectDescription = () => {
         users. List of our partners and backers include Fractal ID, Outlier
         Ventures, Arbitrum and more.
       </p>
-      <h3 className="mt-8">The rising tide mechanism</h3>
+      <div className="mt-6 flex flex-col gap-6">
+        <div className="flex">
+          <div className="min-w-14">
+            <Image alt="fractal logo" src={fractal} placeholder="blur" />
+          </div>
+          <div className="flex flex-col gap-3 pl-6">
+            <h4 className="text-xl text-mono-50">Fractal ID</h4>
+            <p className="text-sm text-mono-400">
+              Fractal ID is one of the leading KYC and compliance providers for
+              web3 with more than 1.1m users verified and 250 projects supported
+              since 2017. Fractal ID develops decentralized identity solutions
+              for dApps and ecosystems to ensure a safer, privacy-preserving
+              web3.
+            </p>
+            <p className="text-xl text-blue-500">+1.1m users verified</p>
+          </div>
+        </div>
+        <div className="flex">
+          <div className="min-w-14">
+            <Image
+              alt="fractal logo"
+              src={outlier}
+              placeholder="blur"
+              className="h-14 w-14"
+            />
+          </div>
+          <div className="flex flex-col gap-3 pl-6">
+            <h4 className="text-xl text-mono-50">Outlier Ventures</h4>
+            <p className="text-sm text-mono-400">
+              Outlier Ventures, founded in 2014, is the largest web3-focused
+              accelerator, with more than 270 projects accelerated and a network
+              of 500+ investors and top VCs.{' '}
+            </p>
+            <p className="text-xl text-blue-500">+140 projects every year</p>
+          </div>
+        </div>
+        <div className="flex">
+          <div className="min-w-14 flex-grow">
+            <Arbitrum />
+          </div>
+          <div className="flex flex-col gap-3 pl-6">
+            <h4 className="text-xl text-mono-50">Arbitrum</h4>
+            <p className="text-sm text-mono-400">
+              Arbitrum is the leading Layer 2 ecosystem for scaling and
+              empowering Ethereum with more than +600k weekly active addresses
+              and +800 projects deployed and a strong focus on DeFi.
+            </p>
+            <p className="text-xl text-blue-500">+15bn Total Value Locked</p>
+          </div>
+        </div>
+      </div>
+      <h3 className="mt-16">The rising tide mechanism</h3>
       <p className="text-mono-400">
         A standout feature of citizend’s approach is the Rising Tide Mechanism,
         a cleverly designed system that optimizes for community distribution,
@@ -344,7 +445,7 @@ export const CitizendProjectDescription = () => {
         platform that values community engagement and contribution equally,
         paving the way for a more inclusive and balanced web3 funding ecosystem.
       </p>
-      <h3 className="mt-8">Privacy and Compliance with idOS</h3>
+      <h3 className="mt-16">Privacy and Compliance with idOS</h3>
       <p className="text-mono-400">
         Citizend places a strong emphasis on ensuring the confidentiality and
         security of its users’ information. Leveraging idOS, a state-of-the-art

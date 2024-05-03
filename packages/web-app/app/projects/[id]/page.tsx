@@ -25,7 +25,9 @@ export default function Project({ params }: TProjectProps) {
 
   return (
     <main className="mb-56">
-      {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN ? <SaleBanner /> : null}
+      {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
+        <SaleBanner />
+      ) : null}
       <ProjectProvider value={project}>
         <ProjectHeader />
         <ProjectContent />

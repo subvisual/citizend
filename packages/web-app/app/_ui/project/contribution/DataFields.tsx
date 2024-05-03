@@ -1,22 +1,21 @@
 import {
-  useReadCtzndSaleMinContribution,
   useReadCtzndSaleMaxTarget,
   useReadCtzndSaleTotalTokensForSale,
 } from '@/wagmi.generated';
 import { formatEther } from 'viem';
 import { number } from '../../utils/intl-formaters/number';
+import { useCtzndMinContributionUsdc } from '@/app/_lib/queries';
 
 const useMaxParticipants = () => {
   const { data: maxTarget, isLoading: targetLoading } =
     useReadCtzndSaleMaxTarget();
-  const { data: min, isLoading: minLoading } =
-    useReadCtzndSaleMinContribution();
+  const min = useReadCtzndSaleTotalTokensForSale();
   const targetValue = maxTarget ? Number(formatEther(maxTarget)) : undefined;
-  const minValue = min ? Number(formatEther(min)) : undefined;
+  const minValue = min ? Number(min) : undefined;
 
   return {
     data: !targetValue || !minValue ? undefined : targetValue / minValue,
-    isLoading: targetLoading || minLoading,
+    isLoading: targetLoading,
   };
 };
 
@@ -26,7 +25,7 @@ const LoadingField = () => (
 
 export const DataFields = () => {
   const { data: totalTokensForSale } = useReadCtzndSaleTotalTokensForSale();
-  const { data: minContribution } = useReadCtzndSaleMinContribution();
+  const minContribution = useCtzndMinContributionUsdc();
   const { data: maxParticipants } = useMaxParticipants();
 
   return (
@@ -50,13 +49,7 @@ export const DataFields = () => {
       </div>
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
         <span className="text-mono-800">Min. contribution amount:</span>
-        <span className="md:text-end">
-          {minContribution !== undefined ? (
-            <>{formatEther(minContribution)} USDC</>
-          ) : (
-            <LoadingField />
-          )}
-        </span>
+        <span className="md:text-end">{minContribution} USDC</span>
       </div>
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
         <span className="text-mono-800">Max. number of participants:</span>

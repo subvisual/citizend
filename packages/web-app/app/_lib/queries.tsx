@@ -14,6 +14,7 @@ import {
 import { fetchAndGenerateProof } from '../_server/projects/generate-merkle-root';
 import { useAccount, useBalance } from 'wagmi';
 import {
+  useReadCtzndSaleMinContribution,
   useReadCtzndSalePaymentToken,
   useReadCtzndSaleTokenToPaymentToken,
   useReadCtzndSaleTotalUncappedAllocations,
@@ -287,6 +288,24 @@ export const useUserTotalInvestedUsdcCtznd = (address: `0x${string}`) => {
 
   const usdcValue =
     ctzndTokensSold && tokensInvested ? formatEther(tokensInvested) : '0';
+
+  return usdcValue;
+};
+
+export const useCtzndMinContributionUsdc = () => {
+  const { data: min } = useReadCtzndSaleMinContribution();
+
+  console.log(
+    '%c==>',
+    'color: green; background: yellow; font-size: 20px',
+    min,
+  );
+
+  const { data: minUsdc } = useReadCtzndSaleTokenToPaymentToken({
+    args: [min || 0n],
+  });
+
+  const usdcValue = min && minUsdc ? formatEther(minUsdc) : '0';
 
   return usdcValue;
 };

@@ -5,5 +5,5 @@ const rangeFormatter = new Intl.NumberFormat('default', {
   maximumSignificantDigits: 1,
 });
 
-export const usdRange = (min: bigint, max: bigint) =>
+export const usdRange = (min: bigint | number, max: bigint | number) =>
   rangeFormatter.formatRange(min, max);

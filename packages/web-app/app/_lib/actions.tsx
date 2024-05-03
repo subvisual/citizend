@@ -3,7 +3,7 @@ import { useIdOS } from '../_providers/idos';
 import { insertGrantBySignature } from '../_server/idos/grants';
 import { useFetchGrantMessage } from './contract-queries';
 import { useSignMessage } from 'wagmi';
-import { useCallback, useEffect, useMemo  } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useFetchMerkleProof, useFetchNewDataId } from './queries';
 import { getServerPublicInfo } from '../_server/info';
 import { subscribeToNewsletter } from '../_server/active-campaign';

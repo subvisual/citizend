@@ -58,16 +58,7 @@ export const ProjectContent = () => {
     );
   if (!project) return <div>Project not found</div>;
 
-  const {
-    start,
-    startRegistration,
-    endRegistration,
-    minTarget,
-    maxTarget,
-    minContribution,
-    maxContribution,
-    totalTokensForSale,
-  } = project;
+  const { start, startRegistration, endRegistration } = project;
 
   return (
     <>
@@ -95,13 +86,7 @@ export const ProjectContent = () => {
                   applied={!!hasGrant}
                 />
               ) : null}
-              <TokenMetrics
-                minTarget={minTarget}
-                maxTarget={maxTarget}
-                minContribution={minContribution}
-                maxContribution={maxContribution}
-                totalTokensForSale={totalTokensForSale}
-              />
+              <TokenMetrics />
               {hasGrant && process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
                 <AppliedSuccess />
               ) : null}
@@ -133,13 +118,7 @@ export const ProjectContent = () => {
               applied={!!hasGrant}
             />
           ) : null}
-          <TokenMetrics
-            minTarget={minTarget}
-            maxTarget={maxTarget}
-            minContribution={minContribution}
-            maxContribution={maxContribution}
-            totalTokensForSale={totalTokensForSale}
-          />
+          <TokenMetrics />
           {hasGrant && process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
             <AppliedSuccess />
           ) : null}

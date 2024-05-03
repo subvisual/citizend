@@ -11,6 +11,7 @@ import { usdValue } from '../utils/intl-formaters/usd-value';
 import { usdRange } from '../utils/intl-formaters/usd-range';
 import { shortDateRange } from '../utils/intl-formaters/date-range';
 import { formatEther, parseEther } from 'viem/utils';
+import { useCtzndMinContributionUsdc } from '@/app/_lib/queries';
 
 const Upcoming = ({
   minTarget,
@@ -49,17 +50,13 @@ const Upcoming = ({
 const FullData = ({
   minTarget,
   maxTarget,
-  minContribution,
-  maxContribution,
   totalTokensForSale,
 }: TProjectSaleDetails) => {
   const targetedRaise = usdRange(
     BigInt(formatEther(minTarget)),
     BigInt(formatEther(maxTarget)),
   );
-  const maxPrice = usdValue(maxContribution);
-  const minPrice = usdValue(minContribution);
-
+  const minPrice = useCtzndMinContributionUsdc();
   const totalTokens = new Intl.NumberFormat('default').format(
     BigInt(formatEther(totalTokensForSale)),
   );
@@ -71,12 +68,8 @@ const FullData = ({
         <span>{targetedRaise}</span>
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
-        <span className="text-mono-400">Max. price per token</span>
-        <span>{maxPrice}</span>
-      </li>
-      <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400">Min. price per token</span>
-        <span>{minPrice}</span>
+        <span>{usdValue(minPrice)}</span>
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400"># of tokens distributed</span>

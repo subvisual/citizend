@@ -39,7 +39,7 @@ export const ApplyButton = ({ isLoading, error }: TApplyButtonProps) => {
 
   return (
     <Button onClick={() => open(ApplyDialog.displayName, { projectId })}>
-      Apply to participate
+      Register to participate
     </Button>
   );
 };

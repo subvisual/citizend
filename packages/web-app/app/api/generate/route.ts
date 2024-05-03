@@ -1,4 +1,4 @@
-import { generateMerkleRoot } from "@/app/_server/projects/generate-merkle-root";
+import { generateMerkleRoot } from '@/app/_server/projects/generate-merkle-root';
 
 export const revalidate = 0;
 

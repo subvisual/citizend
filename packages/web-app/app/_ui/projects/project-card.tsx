@@ -53,12 +53,15 @@ const FullData = ({
   maxContribution,
   totalTokensForSale,
 }: TProjectSaleDetails) => {
-  const targetedRaise = usdRange(BigInt(formatEther(minTarget)), BigInt(formatEther(maxTarget)));
+  const targetedRaise = usdRange(
+    BigInt(formatEther(minTarget)),
+    BigInt(formatEther(maxTarget)),
+  );
   const maxPrice = usdValue(maxContribution);
   const minPrice = usdValue(minContribution);
 
   const totalTokens = new Intl.NumberFormat('default').format(
-    BigInt(formatEther(totalTokensForSale))
+    BigInt(formatEther(totalTokensForSale)),
   );
 
   return (

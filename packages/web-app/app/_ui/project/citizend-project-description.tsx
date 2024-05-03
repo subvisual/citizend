@@ -324,14 +324,13 @@ export const CitizendProjectDescription = () => {
       </p>
       <h3 className="mt-16">How does it work</h3>
       <p className="text-mono-400">
-        Projects hoping to secure community contributions or distribute tokens
-        on citizend must garner the greatest number of votes from the community
-        to win a slot, with each member of the community being able to cast only
-        one vote, among multiple competing projects in each batch. To do so,
-        projects must convince the community of their worth, as community
-        members only receive allocations if their chosen project is elected,
-        they are incentivized to research and select the projects with the
-        highest potential.
+        Projects hoping to secure community contributions must garner the
+        greatest number of votes from the community to win a slot, with each
+        member of the community being able to cast only one vote, among multiple
+        competing projects in each batch. To do so, projects must convince the
+        community of their worth, as community members only receive allocations
+        if their chosen project is elected, they are incentivized to research
+        and select the projects with the highest potential.
       </p>
       <div className="mt-6 flex flex-col gap-6 py-8">
         <div className="flex items-center">
@@ -443,7 +442,7 @@ export const CitizendProjectDescription = () => {
       <p className="text-mono-400">
         The Rising Tide Mechanism embodies citizend’s vision of a token launch
         platform that values community engagement and contribution equally,
-        paving the way for a more inclusive and balanced web3 funding ecosystem.
+        paving the way for a more inclusive and balanced web3 ecosystem.
       </p>
       <h3 className="mt-16">Privacy and Compliance with idOS</h3>
       <p className="text-mono-400">

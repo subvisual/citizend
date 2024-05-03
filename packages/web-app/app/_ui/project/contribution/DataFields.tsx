@@ -5,6 +5,8 @@ import {
 import { formatEther } from 'viem';
 import { number } from '../../utils/intl-formaters/number';
 import { useCtzndMinContributionUsdc } from '@/app/_lib/queries';
+import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
+import { calculateTokenPrice } from '../../utils/calculateTokenPrice';
 import { usdValue } from '../../utils/intl-formaters/usd-value';
 
 const useMaxParticipants = () => {
@@ -28,14 +30,16 @@ export const DataFields = () => {
   const { data: totalTokensForSale } = useReadCtzndSaleTotalTokensForSale();
   const minContribution = useCtzndMinContributionUsdc();
   const { data: maxParticipants } = useMaxParticipants();
+  const totalContributions = useTotalInvestedUsdcCtznd();
+  const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
 
   return (
     <div className="flex flex-col gap-6 border-t border-mono-200 p-4 md:p-6">
       <div className="grid grid-cols-1 gap-x-2 gap-y-1 md:grid-cols-2">
         <span className="text-mono-800">Current price/Token (FDV):</span>
         <div className="md:text-end">
-          <span>$0.20</span>
-          <span className="text-mono-800">($20m)</span>
+          <span>{`${usdValue(currentTokenPrice)}`} </span>
+          <span className="text-mono-800">{(`$${currentTokenPrice * 100}m`)}</span>
         </div>
         <span className="text-sm text-mono-800">Price range (FDV range):</span>
         <div className="text-sm md:text-end">

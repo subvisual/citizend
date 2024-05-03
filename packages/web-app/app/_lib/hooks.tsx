@@ -16,6 +16,8 @@ import {
   useReadCtzndSalePaymentToken,
   useReadCtzndSalePaymentTokenToToken,
   useReadCtzndErc20Allowance,
+  useReadCtzndSaleMaxTarget,
+  useReadCtzndSaleMinTarget,
 } from '@/wagmi.generated';
 import { formatEther, parseEther } from 'viem';
 import { sepolia } from 'viem/chains';
@@ -249,9 +251,33 @@ export const useEffectSafe = (callback: () => void, deps: any[]) => {
   }, deps);
 };
 
-export const useCtzndRisingTideCap = () => {
+export const useCtzndSaleCapStatus = () => {
   const totalInvested = useTotalInvestedUsdcCtznd();
-  const aboveCap = Number(totalInvested) > 1_000_000;
+  const { data: maxTarget } = useReadCtzndSaleMaxTarget();
+  const { data: minTarget } = useReadCtzndSaleMinTarget();
+
+  const investedValue = Number(totalInvested);
+  const maxValue = maxTarget ? Number(formatEther(maxTarget)) : undefined;
+  const minValue = minTarget ? Number(formatEther(minTarget)) : undefined;
+
+  if (maxValue === undefined || minValue === undefined) {
+    return 'loading';
+  }
+
+  if (investedValue > maxValue) {
+    return 'above';
+  }
+
+  if (investedValue < minValue) {
+    return 'below';
+  }
+
+  return 'within';
+};
+
+export const useCtzndRisingTideCap = () => {
+  const status = useCtzndSaleCapStatus();
+  const aboveCap = status === 'above';
   const { data, isLoading, error } = useFetchRisingTideCap(aboveCap);
   const cap = aboveCap && data ? formatEther(data) : 'N/A';
 

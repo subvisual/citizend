@@ -86,15 +86,16 @@ export const ProjectContent = () => {
                   applied={!!hasGrant}
                 />
               ) : null}
-              <TokenMetrics />
-              {hasGrant && process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
-                <AppliedSuccess />
-              ) : null}
-              {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !hasGrant ? (
-                <ApplyButton
-                  isLoading={isLoadingGrant}
-                  error={errorLoadingGrant}
-                />
+              <TokenMetrics hasGrant={hasGrant} />
+              {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+                hasGrant ? (
+                  <AppliedSuccess />
+                ) : (
+                  <ApplyButton
+                    isLoading={isLoadingGrant}
+                    error={errorLoadingGrant}
+                  />
+                )
               ) : null}
             </Tab.Panel>
           </Tab.Panels>
@@ -118,12 +119,23 @@ export const ProjectContent = () => {
               applied={!!hasGrant}
             />
           ) : null}
-          <TokenMetrics />
-          {hasGrant && process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
-            <AppliedSuccess />
+          <TokenMetrics hasGrant={hasGrant} />
+          {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+            hasGrant ? (
+              <AppliedSuccess />
+            ) : (
+              <ApplyButton
+                isLoading={isLoadingGrant}
+                error={errorLoadingGrant}
+              />
+            )
           ) : null}
-          {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !hasGrant ? (
-            <ApplyButton isLoading={isLoading} error={errorLoadingGrant} />
+          {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' && !hasGrant ? (
+            <div>
+              This token sale is exclusively open to individuals who have
+              previously applied for participation. Stay tuned for future
+              opportunities.
+            </div>
           ) : null}
         </div>
       </div>

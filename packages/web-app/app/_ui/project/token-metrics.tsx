@@ -7,7 +7,8 @@ import { formatEther } from 'viem';
 import clsx from 'clsx';
 import { number } from '../utils/intl-formaters/number';
 import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
-import { useCtzndRisingTideCap } from '@/app/_lib/hooks';
+import { useCtzndRisingTideCap, useCtzndSaleCapStatus } from '@/app/_lib/hooks';
+import Link from 'next/link';
 
 const ProgressBar = ({
   title,
@@ -86,7 +87,47 @@ const LoadingField = () => (
   <div className="h-5 w-full animate-pulse rounded-md bg-gradient-to-br from-mono-50 to-mono-200" />
 );
 
-export const TokenMetrics = () => {
+const Info = () => {
+  const status = useCtzndSaleCapStatus();
+
+  if (status === 'below') {
+    return (
+      <div className="flex items-center border-t border-mono-200 p-8 text-mono-800">
+        *If the total contributions fall below $500K, the token will not be
+        launched, and refunds will be issued.
+      </div>
+    );
+  }
+
+  if (status === 'within') {
+    return (
+      <div className="flex items-center border-t border-mono-200 p-8 text-mono-800">
+        *At this contribution level you will receive your full desired
+        contribution.
+      </div>
+    );
+  }
+
+  if (status === 'above') {
+    return (
+      <div className="flex flex-col border-t border-mono-200 p-8 text-mono-800">
+        *The contributions exceed $1M, activating our Rising Tide Mechanism.
+        Your final token allocation will be determined by the number of
+        participants and their total contribution amount.
+        <Link
+          className="text-blue-500"
+          href={
+            'https://docs.citizend.xyz/citizend/how-citizend-works/discovery-batches-and-securing-a-contribution-slot/rising-tide-mechanism'
+          }
+        >
+          Learn more about the Rising Tide Mechanism.
+        </Link>
+      </div>
+    );
+  }
+};
+
+export const TokenMetrics = ({ hasGrant }: { hasGrant: boolean }) => {
   const { data: maxTarget } = useReadCtzndSaleMaxTarget();
   const totalCommitted = useTotalInvestedUsdcCtznd();
   const maxValue = maxTarget ? Number(formatEther(maxTarget)) : 0;
@@ -157,6 +198,7 @@ export const TokenMetrics = () => {
           </span>
         </div>
       </div>
+      {hasGrant ? <Info /> : null}
     </div>
   );
 };

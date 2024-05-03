@@ -45,7 +45,7 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
 
       // Authenticate by signing a message
       if (profile) {
-        // @ts-expect-error
+        // @ts-ignore
         await sdk.setSigner('EVM', ethSigner);
         setHasSigner(true);
         return;

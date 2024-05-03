@@ -2,9 +2,11 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   useFetchCredentials,
   useFetchProjectsSaleDetails,
+  useFetchRisingTideCap,
   usePaymentTokenBalance,
   useProjectPublicInfo,
   usePublicInfo,
+  useTotalInvestedUsdcCtznd,
 } from './queries';
 import { useKyc } from '../_providers/kyc/context';
 import { compareAddresses, isValidGrant } from './utils';
@@ -245,4 +247,21 @@ export const useEffectSafe = (callback: () => void, deps: any[]) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
+};
+
+export const useCtzndRisingTideCap = () => {
+  const totalInvested = useTotalInvestedUsdcCtznd();
+  const aboveCap = Number(totalInvested) > 1_000_000;
+  const { data, isLoading, error } = useFetchRisingTideCap(aboveCap);
+  const cap = aboveCap && data ? formatEther(data) : 'N/A';
+
+  const result = useMemo(() => {
+    return {
+      data: cap,
+      isLoading,
+      error,
+    };
+  }, [cap, isLoading, error]);
+
+  return result;
 };

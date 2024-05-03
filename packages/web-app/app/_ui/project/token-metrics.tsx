@@ -7,6 +7,7 @@ import { formatEther } from 'viem';
 import clsx from 'clsx';
 import { number } from '../utils/intl-formaters/number';
 import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
+import { useCtzndRisingTideCap } from '@/app/_lib/hooks';
 
 const ProgressBar = ({
   title,
@@ -17,8 +18,8 @@ const ProgressBar = ({
   max: number;
   value: number;
 }) => {
-  const valueInMillions = value / 1000_000;
-  const maxInMillions = max / 1000_000;
+  const valueInMillions = value / 1_000_000;
+  const maxInMillions = max / 1_000_000;
   const halfInMillions = maxInMillions / 2;
   const currentRelativeValue = valueInMillions / maxInMillions;
   const percentage = currentRelativeValue * 100;
@@ -94,11 +95,21 @@ export const TokenMetrics = () => {
       refetchInterval: 1000 * 10, // 10 seconds
     },
   });
+  const { data: cap, isLoading: isLoadingCap } = useCtzndRisingTideCap();
 
   return (
     <div className="flex w-full flex-col rounded-lg bg-mono-50 text-mono-950">
-      <h4 className="border-b border-mono-200 px-8 py-6 font-medium uppercase">
+      <h4 className="flex justify-between border-b border-mono-200 px-8 py-6 font-medium uppercase">
         Community Sale Status
+        {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
+          <div className="flex items-center gap-3 text-mono-800">
+            Live
+            <span className="relative flex h-4 w-4">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75"></span>
+              <span className="relative inline-flex h-4 w-4 rounded-full bg-green-500"></span>
+            </span>
+          </div>
+        ) : null}
       </h4>
       {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
         <div className="m-8">
@@ -141,7 +152,9 @@ export const TokenMetrics = () => {
           <span className="text-mono-800">
             Current max. allocation/participant:
           </span>
-          <span className="md:text-end">{'N/A'}</span>
+          <span className="md:text-end">
+            {isLoadingCap ? <LoadingField /> : cap}
+          </span>
         </div>
       </div>
     </div>

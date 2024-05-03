@@ -21,6 +21,7 @@ import {
   useReadCtzndSaleUncappedAllocation,
 } from '@/wagmi.generated';
 import { formatEther } from 'viem';
+import { computeRisingTideCap } from '../_server/risingTide/risingtide';
 
 export const usePublicInfo = () => {
   return useQuery({
@@ -302,4 +303,17 @@ export const useCtzndMinContributionUsdc = () => {
   const usdcValue = min && minUsdc ? formatEther(minUsdc) : '0';
 
   return usdcValue;
+};
+
+export const useFetchRisingTideCap = (enabled?: boolean) => {
+  return useQuery({
+    queryKey: ['rising-tide-cap'],
+    queryFn: async () => {
+      const cap = await computeRisingTideCap();
+
+      return cap;
+    },
+    refetchInterval: 1000 * 1, // 1 minute
+    enabled,
+  });
 };

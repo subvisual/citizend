@@ -12,7 +12,7 @@ const client = createPublicClient({
   transport: http(),
 }).extend(publicActions);
 
-export const computeRisingTideCap = async () => {
+export const computeRisingTideCap = async (): Promise<bigint> => {
   const purchases = await client.getContractEvents({
     address: saleContractAddress,
     abi: ctzndSaleAbi,

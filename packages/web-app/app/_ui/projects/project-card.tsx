@@ -20,7 +20,10 @@ const Upcoming = ({
   endRegistration,
   start,
 }: TProjectSaleDetails) => {
-  const targetedRaise = usdRange(minTarget, maxTarget);
+  const targetedRaise = usdRange(
+    BigInt(formatEther(minTarget)),
+    BigInt(formatEther(maxTarget)),
+  );
   const registerPeriod = shortDateRange(startRegistration, endRegistration);
   const { days, hours, minutes, seconds } = useCountdown(start);
 

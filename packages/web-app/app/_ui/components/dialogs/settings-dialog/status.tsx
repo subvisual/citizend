@@ -47,7 +47,7 @@ const Status = () => {
           <Check />
         </div>
         <Link
-          href={providerUrl}
+          href={'https://dashboard.idos.network/'}
           className="select-none rounded-md text-xs text-blue-500 hover:text-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mono-400"
         >
           Manage my ID

@@ -140,13 +140,22 @@ const ContributionAllowed = ({ projectId }: TProjectIdProps) => {
 
 // 2 step -> User has verified their ID externally and now has to unlock IdOs and enclave
 const UnlockKycData = ({ projectId }: TProjectIdProps) => {
-  const { country, id, status, isLoading: isLoadingKyc, error } = useKyc();
+  const {
+    residentialCountry,
+    idDocumentCountry,
+    id,
+    status,
+    isLoading: isLoadingKyc,
+    error,
+  } = useKyc();
   const isBlockedCountry = useMemo(() => {
-    if (!country) return false;
+    if (!residentialCountry || !idDocumentCountry) return false;
     return blockedCountries.some(
-      (blockedCountry) => blockedCountry === country,
+      (blockedCountry) =>
+        blockedCountry === residentialCountry ||
+        blockedCountry === idDocumentCountry,
     );
-  }, [country]);
+  }, [residentialCountry, idDocumentCountry]);
 
   //**KYC flows */
   if (isLoadingKyc) return <UnlockIdosExternal />;
@@ -163,7 +172,7 @@ const UnlockKycData = ({ projectId }: TProjectIdProps) => {
   //**KYC flows */
 
   // KYC complete & country allowed, move to next step AG generation
-  if (status === 'approved' && country) {
+  if (status === 'approved' && residentialCountry && idDocumentCountry) {
     return <ContributionAllowed projectId={projectId} />;
   }
 

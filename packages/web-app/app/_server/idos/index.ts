@@ -27,14 +27,17 @@ const userFilter = async (grantee: idOSGrantee, userAddress: string) => {
 
     if (!grants.length) return null;
 
-    const country = await grantee.fetchUserCountryFromSharedPlusCredential(
-      grants[0].dataId,
-    );
+    const { residentialCountry, idDocumentCountry } =
+      await grantee.fetchUserCountriesFromSharedPlusCredential(
+        grants[0].dataId,
+      );
 
-    if (!country) return null;
+    if (!residentialCountry || !idDocumentCountry) return null;
 
     const isBlockedCountry = blockedCountries.some(
-      (blockedCountry) => blockedCountry === country,
+      (blockedCountry) =>
+        blockedCountry === residentialCountry ||
+        blockedCountry === idDocumentCountry,
     );
 
     if (isBlockedCountry) return null;

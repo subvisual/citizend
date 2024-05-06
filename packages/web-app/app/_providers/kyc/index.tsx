@@ -56,8 +56,10 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
       },
     );
   }, [credentialContent, address]);
-  const country =
+  const residentialCountry =
     credentialContent?.credentialSubject?.residential_address_country;
+  const idDocumentCountry =
+    credentialContent?.credentialSubject?.identification_document_country;
   const isLoading = kycLoading || contentLoading || grantsLoading;
   const error = processError(kycError || contentError || grantsError);
   const isSuccess = kycSuccess && contentSuccess && grantsSuccess;
@@ -67,7 +69,8 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
     return {
       id,
       status: credentialContent?.status,
-      country,
+      residentialCountry,
+      idDocumentCountry,
       wallet,
       isLoading,
       error,
@@ -80,7 +83,8 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
   }, [
     id,
     credentialContent,
-    country,
+    residentialCountry,
+    idDocumentCountry,
     wallet,
     isLoading,
     error,

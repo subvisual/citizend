@@ -8,7 +8,7 @@ import {
   publicActions,
   zeroAddress,
 } from 'viem';
-import { arbitrumSepolia } from 'viem/chains';
+import { arbitrumSepolia, arbitrum } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import { grantsAbi } from './abi';
 import { TInternalError } from '../../types';
@@ -19,9 +19,14 @@ const account = privateKeyToAccount(
   process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY,
 );
 
+const chain =
+  process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+    ? arbitrumSepolia
+    : arbitrum;
+
 const client = createWalletClient({
   account,
-  chain: arbitrumSepolia,
+  chain: chain,
   transport: http(),
 }).extend(publicActions);
 

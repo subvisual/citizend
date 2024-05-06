@@ -12,7 +12,7 @@ export default defineConfig({
         Sale: {
           1: "0x85b34Aa54fdf8242e4656eA50b711F45340925bC",
           31337: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-          11155111: "0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD",
+          11155111: "0x23abe818f04f810151a12b65893248bcf623b967",
         },
       },
     }),

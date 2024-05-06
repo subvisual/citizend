@@ -10,6 +10,28 @@ import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
 import { useCtzndRisingTideCap, useCtzndSaleCapStatus } from '@/app/_lib/hooks';
 import Link from 'next/link';
 
+const ProgressBarInfo = () => {
+  const status = useCtzndSaleCapStatus();
+
+  if (status === 'below') {
+    return (
+      <div className="pt-10 text-blue-500">Approaching Minimum Goal...*</div>
+    );
+  }
+
+  if (status === 'within') {
+    return (
+      <div className="pt-10 text-blue-500">Minimum Goal Accomplished*</div>
+    );
+  }
+
+  if (status === 'above') {
+    return <div className="pt-10 text-blue-500">Target Goal Exceeded*</div>;
+  }
+
+  return null;
+};
+
 const ProgressBar = ({
   title,
   max,
@@ -25,7 +47,7 @@ const ProgressBar = ({
   const currentRelativeValue = valueInMillions / maxInMillions;
   const percentage = currentRelativeValue * 100;
   const displayPercentage = percentage > 0 && percentage < 1 ? 1 : percentage;
-  const percentageRounded = Math.round(displayPercentage) + '%';
+  const percentageRounded = `${Math.round(displayPercentage)}%`;
   const displayValue =
     valueInMillions > 0 && valueInMillions < 0.1
       ? '<0.1'
@@ -36,7 +58,7 @@ const ProgressBar = ({
       <div className="flex flex-col px-6">
         <label
           htmlFor="progress-bar"
-          className="self-center text-base font-normal normal-case text-mono-800"
+          className="self-center pb-7 text-base font-normal normal-case text-mono-800"
         >
           {title}
         </label>
@@ -58,12 +80,15 @@ const ProgressBar = ({
         </div>
         <div className="relative z-0 flex">
           <div
-            className={`absolute left-[${percentageRounded}] top-0 flex flex-col  items-start`}
+            className={clsx(
+              'absolute top-0 flex flex-col items-start',
+              `left-[${percentageRounded}]`,
+            )}
           >
             {percentageRounded === '100%' ? null : (
               <>
-                <div className="absolute -left-1 -top-8 h-2 w-2 rotate-45 transform bg-blue-500" />
-                <div className="-translate-x-1/2 text-blue-500">
+                <div className="absolute -left-1 -top-9 h-2 w-2 rotate-45 transform bg-blue-500" />
+                <div className="absolute -top-14 -translate-x-1/2 -translate-y-1 text-blue-500">
                   {displayValue}M
                 </div>
               </>
@@ -77,6 +102,7 @@ const ProgressBar = ({
             <div className="border-[1px h-2 w-0.5" />
             {maxInMillions + 'M'}
           </div>
+          <ProgressBarInfo />
         </div>
       </div>
     </div>
@@ -153,9 +179,9 @@ export const SaleStatus = ({ hasGrant }: { hasGrant: boolean }) => {
             </div>
           ) : null}
         </h4>
-        <div className="mb-16 p-8">
+        <div className="p-8">
           <ProgressBar
-            title="Raise status"
+            title="Current raise status"
             max={maxValue}
             value={Number(totalCommitted)}
           />

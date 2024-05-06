@@ -5,8 +5,7 @@ import { useDialog } from '@/app/_providers/dialog/context';
 import { SettingsDialog } from './dialogs';
 import { EdgeBorderButton, EdgeButton } from './edge';
 import { Avatar } from './avatar';
-import { useAccount, useBalance } from 'wagmi';
-import { formatEther } from 'viem';
+import { useAccount } from 'wagmi';
 import { usePaymentTokenBalance } from '@/app/_lib/queries';
 
 const ConnectedButton = () => {

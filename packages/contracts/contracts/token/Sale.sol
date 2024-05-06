@@ -372,7 +372,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     function setMerkleRoot(
         bytes32 _merkleRoot
-    ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
         merkleRoot = _merkleRoot;
     }
 

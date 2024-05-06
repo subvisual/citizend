@@ -15,6 +15,8 @@ import {
   type Theme,
 } from '@rainbow-me/rainbowkit';
 import { KycProvider } from './kyc';
+import { sepolia } from 'wagmi/chains';
+import { switchChain } from '@wagmi/core';
 
 type TProvidersProps = {
   children: ReactNode;
@@ -34,6 +36,8 @@ const customTheme = merge(
 ) as Theme;
 
 export function Providers({ children }: TProvidersProps) {
+  switchChain(wagmiConfig, { chainId: sepolia.id })
+
   return (
     <WagmiProvider config={wagmiConfig}>
       <SsrWrapper>

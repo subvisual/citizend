@@ -12,7 +12,6 @@ export const wagmiConfig = getDefaultConfig({
   appName: 'Citizend',
   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
   chains: [
-    sepolia,
     mainnet,
     arbitrum,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'

@@ -7,7 +7,7 @@ import { Discord } from './svg/Discord';
 const resources = [
   {
     name: 'Website',
-    href: 'https://citizend.xyz/',
+    href: 'https://citizend.xyz',
     icon: () => (
       <svg
         width="52"
@@ -54,7 +54,7 @@ const resources = [
   },
   {
     name: 'Discord',
-    href: 'https://discord.gg/sXDnhmQM',
+    href: 'https://discord.gg/citizend',
     icon: Discord,
   },
   {

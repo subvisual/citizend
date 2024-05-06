@@ -80,10 +80,10 @@ const ProgressBar = ({
         </div>
         <div className="relative z-0 flex">
           <div
-            className={clsx(
-              'absolute top-0 flex flex-col items-start',
-              `left-[${percentageRounded}]`,
-            )}
+            className="absolute top-0 flex flex-col items-start"
+            style={{
+              left: percentageRounded,
+            }}
           >
             {percentageRounded === '100%' ? null : (
               <>

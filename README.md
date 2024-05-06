@@ -1,4 +1,4 @@
-# DiscoveryDAO monorepo
+# citizend monorepo
 
 ## Audit reports
 

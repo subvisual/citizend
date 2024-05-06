@@ -21,7 +21,7 @@ export const HowToParticipate = ({
   return (
     <div className="flex w-full flex-col rounded-lg bg-mono-50 text-mono-950">
       <h4 className="border-b border-mono-200 px-8 py-6 font-medium uppercase">
-        Project Information
+        How to participate
       </h4>
       <div className="flex flex-col gap-4 px-8 py-8">
         <div className="flex flex-col gap-2 md:flex-row md:justify-between">
@@ -50,7 +50,7 @@ export const HowToParticipate = ({
             id="kyc-check"
             name="kyc-check"
             type="checkbox"
-            className="h-5 w-5 rounded border-mono-800 bg-transparent text-blue-500 focus:ring-mono-800"
+            className="ml-auto h-5 w-5 rounded border-mono-800 bg-transparent text-blue-500 focus:ring-mono-800"
           />
         </div>
         <div className="flex items-center gap-3">

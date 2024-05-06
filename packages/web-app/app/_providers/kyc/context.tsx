@@ -10,7 +10,8 @@ export type TWallet = {
 };
 
 export type TKycContextValue = {
-  country: string | undefined;
+  residentialCountry: string | undefined;
+  idDocumentCountry: string | undefined;
   wallet: TWallet | undefined;
   id: string | undefined;
   status: idOSCredentialStatus | undefined;

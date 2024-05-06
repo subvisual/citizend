@@ -68,6 +68,11 @@ interface idOSGranteeInitParams {
   granteeSigner: ethers.Wallet;
 }
 
+type TUserCountry = {
+  residentialCountry: string | undefined;
+  idDocumentCountry: string | undefined;
+};
+
 const throwError = (message: string): never => {
   throw new Error(message);
 };
@@ -157,16 +162,25 @@ export class idOSGrantee {
     );
   }
 
-  async fetchUserCountryFromSharedPlusCredential(
+  async fetchUserCountriesFromSharedPlusCredential(
     dataId: string,
-  ): Promise<string | undefined> {
+  ): Promise<TUserCountry> {
     const credentialString =
       await this.getSharedCredentialContentDecrypted(dataId);
     const credential = JSON.parse(credentialString);
 
-    if (credential?.level !== 'plus') return undefined;
+    if (credential?.level !== 'plus')
+      return {
+        residentialCountry: undefined,
+        idDocumentCountry: undefined,
+      };
 
-    return credential?.credentialSubject?.residential_address_country;
+    return {
+      residentialCountry:
+        credential?.credentialSubject?.residential_address_country,
+      idDocumentCountry:
+        credential?.credentialSubject?.identification_document_country,
+    };
   }
 
   get grantee() {

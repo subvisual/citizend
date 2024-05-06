@@ -12,10 +12,13 @@ export const useFetchGrantMessage = (
 ) => {
   const { address: owner } = useIdOS();
 
-  return useReadContract({
-    chainId: process.env.NEXT_PUBLIC_ENABLE_TESTNETS
+  const chainId =
+    process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
       ? arbitrumSepolia.id
-      : arbitrum.id,
+      : arbitrum.id;
+
+  return useReadContract({
+    chainId: chainId,
     abi: grantsAbi,
     address: process.env.NEXT_PUBLIC_IDOS_CONTRACT_ADDRESS_ARBITRUM,
     functionName: 'insertGrantBySignatureMessage',

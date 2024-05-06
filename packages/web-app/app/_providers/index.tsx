@@ -1,11 +1,11 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { IdOsProvider } from './idos';
 import { wagmiConfig } from './wagmi-config';
 import { SsrWrapper } from './ssr-wrapper';
 import { DialogProvider } from './dialog';
-import { WagmiProvider } from 'wagmi';
+import { WagmiProvider, useSwitchChain } from 'wagmi';
 import { PersistQueryWrapper } from './persist-query-wrapper';
 import { nohemi } from '../_ui/fonts';
 import merge from 'lodash.merge';
@@ -16,8 +16,6 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { KycProvider } from './kyc';
 import { sepolia } from 'wagmi/chains';
-import { switchChain } from '@wagmi/core';
-
 type TProvidersProps = {
   children: ReactNode;
 };
@@ -35,24 +33,36 @@ const customTheme = merge(
   },
 ) as Theme;
 
-export function Providers({ children }: TProvidersProps) {
-  switchChain(wagmiConfig, { chainId: sepolia.id })
+const ChainWrapper = ({ children }: TProvidersProps) => {
+  const { switchChain } = useSwitchChain();
 
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
+      switchChain({ chainId: sepolia.id });
+    }
+  }, []);
+
+  return children;
+};
+
+export function Providers({ children }: TProvidersProps) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <SsrWrapper>
         <PersistQueryWrapper>
-          <RainbowKitProvider
-            showRecentTransactions={true}
-            theme={customTheme}
-            modalSize="compact"
-          >
-            <IdOsProvider>
-              <KycProvider>
-                <DialogProvider>{children}</DialogProvider>
-              </KycProvider>
-            </IdOsProvider>
-          </RainbowKitProvider>
+          <ChainWrapper>
+            <RainbowKitProvider
+              showRecentTransactions={true}
+              theme={customTheme}
+              modalSize="compact"
+            >
+              <IdOsProvider>
+                <KycProvider>
+                  <DialogProvider>{children}</DialogProvider>
+                </KycProvider>
+              </IdOsProvider>
+            </RainbowKitProvider>
+          </ChainWrapper>
         </PersistQueryWrapper>
       </SsrWrapper>
     </WagmiProvider>

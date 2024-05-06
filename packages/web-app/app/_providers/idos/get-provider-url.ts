@@ -1,4 +1,7 @@
 const providerBaseUrl = process.env.NEXT_PUBLIC_PROFILE_PROVIDER_BASE;
+const responseType = '&response_type=code';
+const scope =
+  '&scope=contact%3Aread%20verification.plus%3Aread%20verification.plus.details%3Aread';
 const providerIdosCheck =
   '%20verification.idos%3Aread%20verification.idos.details%3Aread';
 const providerLivenessCheck =
@@ -6,14 +9,18 @@ const providerLivenessCheck =
 const providerEthWalletCheck =
   '%20verification.wallet-eth%3Aread%20verification.wallet-eth.details%3Aread';
 const providerEnsureWalletCheck = '&ensure_wallet=';
+const userRole = '&user_role=person';
 
 export const getProviderUrl = (address: string) => {
   return (
     providerBaseUrl +
+    responseType +
+    scope +
     providerIdosCheck +
     providerLivenessCheck +
     providerEthWalletCheck +
     providerEnsureWalletCheck +
-    address
+    address +
+    userRole
   );
 };

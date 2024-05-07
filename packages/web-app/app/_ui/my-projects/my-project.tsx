@@ -34,11 +34,14 @@ const Header = ({
       staleTime: 0,
     },
   });
+  const status = useCtzndSaleStatus();
   const totalContributions = contributions ? contributions.toString() : 0;
   const targetedRaise = usdRange(
     BigInt(formatEther(minTarget)),
     BigInt(formatEther(maxTarget)),
   );
+  const projectTitle =
+    project === 'citizend' ? 'Citizend Community Sale' : project;
 
   return (
     <div className="flex flex-col rounded-md bg-mono-50 px-6 py-8 text-mono-950">
@@ -49,7 +52,14 @@ const Header = ({
           width={40}
           height={40}
         />
-        {project}
+        <div className="relative">
+          {projectTitle}
+          {status === 'completed' ? (
+            <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-full rounded-full bg-blue-500 px-2 pb-0.5 pt-1 text-xs uppercase leading-3 text-mono-50">
+              Closed
+            </div>
+          ) : null}
+        </div>
       </h2>
       <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-3 md:px-14 md:pt-8">
         <div className="flex flex-col gap-2 md:border-r md:border-mono-200">
@@ -152,9 +162,9 @@ const MyTokens = () => {
       <h3 className="flex text-sm text-mono-800">
         <div className="relative">
           My tokens
-          {status === 'completed' ? (
-            <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-full rounded-full bg-blue-500 px-2 py-1 text-xs leading-3 text-mono-50">
-              Closed
+          {status === 'live' ? (
+            <div className="absolute right-0 top-0 w-48 -translate-y-1/2 translate-x-full rounded-full bg-mono-900 px-2 pb-0.5 pt-1 text-xs uppercase leading-3 text-mono-50">
+              Ongoing cap calculations
             </div>
           ) : null}
         </div>

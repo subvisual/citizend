@@ -136,17 +136,17 @@ contract SaleTest is Test {
     }
 
     function test_Buy1000() public {
-      vm.startPrank(alice);
-      paymentToken.mint(alice, 900 ether);
-      paymentToken.approve(address(sale), 5000 ether);
+        vm.startPrank(alice);
+        paymentToken.mint(alice, 900 ether);
+        paymentToken.approve(address(sale), 5000 ether);
 
-      uint256 beforeBalance = paymentToken.balanceOf(alice);
-      require(beforeBalance == 1000 ether);
+        uint256 beforeBalance = paymentToken.balanceOf(alice);
+        require(beforeBalance == 1000 ether);
 
-      emit Purchase(address(alice), 1000 ether, 5000 ether);
-      sale.buy(5000 ether, aliceMerkleProof);
+        emit Purchase(address(alice), 1000 ether, 5000 ether);
+        sale.buy(5000 ether, aliceMerkleProof);
 
-      vm.stopPrank();
+        vm.stopPrank();
     }
 
     function test_BuyMultiplePurchasesSameAccount() public {

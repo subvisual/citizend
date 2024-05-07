@@ -55,8 +55,15 @@ const ProgressBar = ({
   value: number;
 }) => {
   const valueInMillions = value / 1_000_000;
-  const maxInMillions = max / 1_000_000;
-  const halfInMillions = maxInMillions / 2;
+  const maxTargetInMillion = max / 1_000_000;
+  const maxInMillions = valueInMillions > 1.4 ? valueInMillions : 1.4;
+  const maxTargetPosition = Math.round(
+    (maxTargetInMillion / maxInMillions) * 100,
+  );
+  const halfTargetInMillion = maxTargetInMillion / 2;
+  const halfTargetPosition = Math.round(
+    (halfTargetInMillion / maxInMillions) * 100,
+  );
   const currentRelativeValue = valueInMillions / maxInMillions;
   const percentage = currentRelativeValue * 100;
   const displayPercentage = getDisplayPercentage(percentage);
@@ -107,13 +114,23 @@ const ProgressBar = ({
               </>
             )}
           </div>
-          <div className="absolute left-1/2 top-0 flex flex-col  items-start">
+          <div
+            className="absolute top-0 flex flex-col  items-start"
+            style={{
+              left: `${halfTargetPosition}%`,
+            }}
+          >
             <div className="h-2 w-0.5 border-[1px] border-blue-500" />
-            <div className="-translate-x-1/2">{halfInMillions}M</div>
+            <div className="-translate-x-1/2">{halfTargetInMillion}M</div>
           </div>
-          <div className="absolute right-0 top-0 flex flex-col  items-end ">
-            <div className="border-[1px h-2 w-0.5" />
-            {maxInMillions + 'M'}
+          <div
+            className="absolute top-0 flex flex-col  items-start"
+            style={{
+              left: `${maxTargetPosition}%`,
+            }}
+          >
+            <div className="h-2 w-0.5 border-[1px] border-blue-500" />
+            <div className="-translate-x-1/2">{maxTargetInMillion}M</div>
           </div>
           <ProgressBarInfo />
         </div>

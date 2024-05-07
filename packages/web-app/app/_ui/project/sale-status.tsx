@@ -33,6 +33,18 @@ const ProgressBarInfo = () => {
   return null;
 };
 
+const getDisplayPercentage = (percentage: number) => {
+  if (percentage > 0 && percentage < 1) {
+    return 1;
+  }
+
+  if (percentage > 100) {
+    return 100;
+  }
+
+  return percentage;
+};
+
 const ProgressBar = ({
   title,
   max,
@@ -47,7 +59,7 @@ const ProgressBar = ({
   const halfInMillions = maxInMillions / 2;
   const currentRelativeValue = valueInMillions / maxInMillions;
   const percentage = currentRelativeValue * 100;
-  const displayPercentage = percentage > 0 && percentage < 1 ? 1 : percentage;
+  const displayPercentage = getDisplayPercentage(percentage);
   const percentageRounded = `${Math.round(displayPercentage)}%`;
   const displayValue =
     valueInMillions > 0 && valueInMillions < 0.1

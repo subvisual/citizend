@@ -167,12 +167,12 @@ export class idOSGrantee {
 
   async verifyCredential(credential: any) {
     if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
-      return await idOS.verifiableCredentials.verify(credential, {
+      return idOS.verifiableCredentials.verify(credential, {
         allowedIssuers: [PLAYGROUND_FRACTAL_ISSUER],
       });
     }
 
-    return await idOS.verifiableCredentials.verify(credential);
+    return idOS.verifiableCredentials.verify(credential);
   }
 
   async fetchUserCountriesFromSharedPlusCredential(
@@ -182,18 +182,24 @@ export class idOSGrantee {
       await this.getSharedCredentialContentDecrypted(dataId);
     const credential = JSON.parse(credentialString);
 
+    let isValid;
     try {
-      const isValid = await this.verifyCredential(credential);
-      console.log('%c==>VALID:', isValid);
+      isValid = await this.verifyCredential(credential);
     } catch (error) {
+      console.log('Error verifying credential');
       console.log(error);
     }
 
-    if (credential?.level !== 'plus')
+    if (
+      credential?.level !== 'plus' ||
+      typeof isValid !== 'boolean' ||
+      isValid !== true
+    ) {
       return {
         residentialCountry: undefined,
         idDocumentCountry: undefined,
       };
+    }
 
     return {
       residentialCountry:

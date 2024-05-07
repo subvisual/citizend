@@ -45,7 +45,7 @@ contract DevDeployScript is Script {
         Citizend citizend = new Citizend(owner, end);
         Sale sale = new Sale(
             address(token),
-            5 ether,
+            0.2 ether,
             start,
             end,
             100000000000000000000,

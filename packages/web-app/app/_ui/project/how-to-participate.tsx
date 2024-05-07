@@ -4,6 +4,7 @@ import { Fractal } from '../components/svg/Fractal';
 import { formatDate } from '../utils/intl-formaters/date';
 import { Discord } from '../components/svg/Discord';
 import { ApplyButton } from './apply-button';
+import { getProviderUrl } from '@/app/_providers/idos/get-provider-url';
 
 type THowToParticipateProps = {
   saleDate: bigint;
@@ -38,9 +39,9 @@ export const HowToParticipate = ({
         </div>
       </div>
       <div className="flex flex-col gap-4 px-8 pb-8">
-        <div className="text-mono-800">Condition to participate:</div>
+        <div className="text-mono-800">Conditions to participate:</div>
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-blue-500">
+          <Link href={getProviderUrl()} className="text-blue-500">
             <Fractal />
           </Link>
           <label htmlFor="kyc-check" className="capitalize text-blue-500">
@@ -54,7 +55,10 @@ export const HowToParticipate = ({
           />
         </div>
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-blue-500">
+          <Link
+            href="https://twitter.com/citizendxyz"
+            className="text-blue-500"
+          >
             <Twitter />
           </Link>
           <label htmlFor="twitter-check" className="capitalize text-blue-500">
@@ -68,7 +72,10 @@ export const HowToParticipate = ({
           />
         </div>
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-blue-500">
+          <Link
+            href="https://discord.com/invite/citizend"
+            className="text-blue-500"
+          >
             <Discord />
           </Link>
           <label htmlFor="discord-check" className="capitalize text-blue-500">

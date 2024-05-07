@@ -11,7 +11,19 @@ const providerEthWalletCheck =
 const providerEnsureWalletCheck = '&ensure_wallet=';
 const userRole = '&user_role=person';
 
-export const getProviderUrl = (address: string) => {
+export const getProviderUrl = (address?: string) => {
+  if (!address) {
+    return (
+      providerBaseUrl +
+      responseType +
+      scope +
+      providerIdosCheck +
+      providerLivenessCheck +
+      providerEthWalletCheck +
+      userRole
+    );
+  }
+
   return (
     providerBaseUrl +
     responseType +

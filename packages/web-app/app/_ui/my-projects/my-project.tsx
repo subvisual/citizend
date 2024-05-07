@@ -85,6 +85,9 @@ const Refund = ({ address }: { address: `0x${string}` }) => {
   const { open } = useDialog();
   const formattedValue =
     refundValue !== undefined ? formatEther(refundValue) : '0';
+  if (error) {
+    console.log(error);
+  }
 
   return (
     <div>

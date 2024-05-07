@@ -51,8 +51,6 @@ export const RefundDialog = ({
   txHash,
   error,
 }: TRefundDialogProps) => {
-  console.log('%c==>', 'color: green; background: red; font-size: 20px', error);
-
   return (
     <>
       <Dialog.Title

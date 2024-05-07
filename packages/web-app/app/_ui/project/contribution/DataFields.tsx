@@ -66,7 +66,7 @@ export const DataFields = () => {
         <span className="md:text-end">{minContribution} USDC</span>
       </div>
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-        <span className="text-mono-800">Max. number of participas:</span>
+        <span className="text-mono-800">Max. number of participants:</span>
         <span className="md:text-end">
           {maxParticipants !== undefined ? (
             number(maxParticipants)

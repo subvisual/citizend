@@ -16,7 +16,7 @@ const getNotVerifiedMessage = (status: idOSCredentialStatus | undefined) => {
 
 const Status = () => {
   const { getProviderUrl, address } = useIdOS();
-  const { status, error, isLoading } = useKyc();
+  const { status, error, isLoading, isBlockedCountry } = useKyc();
   if (!address) return 'wallet not connected';
 
   const providerUrl = getProviderUrl(address);
@@ -39,6 +39,18 @@ const Status = () => {
         >
           Manage my ID
         </Link>
+      </>
+    );
+  }
+
+  if (isBlockedCountry) {
+    return (
+      <>
+        <div className="absolute right-0 top-7 h-3 w-3 rounded-full bg-red-700"></div>
+        <h4>Not available in your country</h4>
+        <p className="text-start">
+          Unfortunately, we are not available in your country at the moment.
+        </p>
       </>
     );
   }

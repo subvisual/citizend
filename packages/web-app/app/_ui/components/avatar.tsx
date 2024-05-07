@@ -10,13 +10,16 @@ const avatarMap = {
   expired: LockedAvatar,
 };
 
-const getAvatar = (status: idOSCredentialStatus | undefined) => {
+const getAvatarFromStatus = (status: idOSCredentialStatus | undefined) => {
   return (status && avatarMap[status]) || LockedAvatar;
 };
 
 export const Avatar = () => {
-  const { status } = useKyc();
-  const Avatar = getAvatar(status);
+  const { status, isBlockedCountry } = useKyc();
+
+  if (isBlockedCountry) return <LockedAvatar />;
+
+  const Avatar = getAvatarFromStatus(status);
 
   return <Avatar />;
 };

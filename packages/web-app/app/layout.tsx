@@ -9,10 +9,11 @@ import backgroundDesktop from '../public/background-desktop.png';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Citizend',
-    default: 'Citizend',
+    template: '%s | citizend: Token Launch Platform',
+    default: 'citizend: Token Launch Platform',
   },
-  description: 'The community-curated token launch platform of web3',
+  description:
+    'Citizend is the community-curated token launch platform of web3 enabling both community contributions and token launches in a secure, transparent and compliant way. Find the next early gem here.',
   keywords: [
     'Launchpad',
     'Web3',
@@ -27,7 +28,9 @@ export const metadata: Metadata = {
     'Citizend Token Sale',
     'Citizend Token Launch',
   ],
-  // metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
+  icons: {
+    icon: '/favicon.png',
+  },
 };
 
 export default function RootLayout({

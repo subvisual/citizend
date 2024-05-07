@@ -9,6 +9,7 @@ import { number } from '../utils/intl-formaters/number';
 import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
 import { useCtzndRisingTideCap, useCtzndSaleCapStatus } from '@/app/_lib/hooks';
 import Link from 'next/link';
+import { calculateTokenPrice } from '../utils/calculateTokenPrice';
 
 const ProgressBarInfo = () => {
   const status = useCtzndSaleCapStatus();
@@ -163,6 +164,8 @@ export const SaleStatus = ({ hasGrant }: { hasGrant: boolean }) => {
     },
   });
   const { data: cap, isLoading: isLoadingCap } = useCtzndRisingTideCap();
+  const totalContributions = useTotalInvestedUsdcCtznd();
+  const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
 
   return (
     <>
@@ -212,8 +215,8 @@ export const SaleStatus = ({ hasGrant }: { hasGrant: boolean }) => {
           <div className="flex flex-col gap-2 md:flex-row md:justify-between">
             <span className="text-mono-800">Current price (FDV):</span>
             <div className="md:text-end">
-              {usdValue(0.4)}
-              <span className="text-mono-800"> ($40m)</span>
+              <span>{`${usdValue(currentTokenPrice)}`} </span>
+              <span className="text-mono-800">{`($${currentTokenPrice * 100}m)`}</span>
             </div>
           </div>
           <div className="flex flex-col gap-2 md:flex-row md:justify-between">

@@ -5,6 +5,9 @@ import { ethers } from 'ethers';
 import nacl from 'tweetnacl';
 import { decodeBase58, toBeHex } from 'ethers';
 import { EthSigner } from '@kwilteam/kwil-js/dist/core/builders';
+import { idOS } from '@idos-network/idos-sdk';
+
+const PLAYGROUND_FRACTAL_ISSUER = 'https://vc-issuers.next.fractal.id/idos';
 
 export function implicitAddressFromPublicKey(publicKey: string) {
   const key_without_prefix = publicKey.replace(/^ed25519:/, '');
@@ -162,12 +165,29 @@ export class idOSGrantee {
     );
   }
 
+  async verifyCredential(credential: any) {
+    if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
+      return await idOS.verifiableCredentials.verify(credential, {
+        allowedIssuers: [PLAYGROUND_FRACTAL_ISSUER],
+      });
+    }
+
+    return await idOS.verifiableCredentials.verify(credential);
+  }
+
   async fetchUserCountriesFromSharedPlusCredential(
     dataId: string,
   ): Promise<TUserCountry> {
     const credentialString =
       await this.getSharedCredentialContentDecrypted(dataId);
     const credential = JSON.parse(credentialString);
+
+    try {
+      const isValid = await this.verifyCredential(credential);
+      console.log('%c==>VALID:', isValid);
+    } catch (error) {
+      console.log(error);
+    }
 
     if (credential?.level !== 'plus')
       return {

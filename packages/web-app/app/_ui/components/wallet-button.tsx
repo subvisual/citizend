@@ -20,8 +20,8 @@ const statusDotMap = {
 
 type TStatus = Exclude<idOSCredentialStatus, 'approved'>;
 
-const StatusDot = ({ status }: { status: TStatus }) => {
-  const color = statusDotMap[status];
+const StatusDot = ({ status }: { status: TStatus | undefined }) => {
+  const color = (status && statusDotMap[status]) || 'red-700';
 
   return (
     <div
@@ -46,7 +46,7 @@ const ConnectedButton = () => {
       onClick={() => open(SettingsDialog.displayName)}
     >
       {`${formattedValue} ${balance.symbol}`}
-      {status && status !== 'approved' ? <StatusDot status={status} /> : null}
+      {status !== 'approved' ? <StatusDot status={status} /> : null}
     </EdgeBorderButton>
   );
 };

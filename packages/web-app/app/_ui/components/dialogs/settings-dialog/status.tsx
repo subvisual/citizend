@@ -30,7 +30,11 @@ const Status = () => {
           Your information is currently being verified.
         </p>
         <Link
-          href={providerUrl}
+          href={
+            process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+              ? 'https://app.next.fractal.id/'
+              : 'https://app.fractal.id/'
+          }
           className="select-none rounded-md text-xs text-blue-500 hover:text-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mono-400"
         >
           Manage my ID

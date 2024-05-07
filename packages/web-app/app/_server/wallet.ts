@@ -12,9 +12,10 @@ const ENCRYPTION_KEY_PAIR = nacl.box.keyPair.fromSecretKey(
   ENCRYPTION_SECRET_KEY,
 );
 
-const EVM_NODE_URL = process.env.NEXT_PUBLIC_ENABLE_TESTNETS
-  ? process.env.NEXT_PUBLIC_ALCHEMY_SEPOLIA
-  : process.env.NEXT_PUBLIC_ALCHEMY_MAINNET;
+const EVM_NODE_URL =
+  process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+    ? process.env.NEXT_PUBLIC_ALCHEMY_SEPOLIA
+    : process.env.NEXT_PUBLIC_ALCHEMY_MAINNET;
 
 const evmGrantee = new ethers.Wallet(
   EVM_GRANTEE_PRIVATE_KEY,

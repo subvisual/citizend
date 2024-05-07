@@ -17,9 +17,10 @@ type AcquireAccessGrantButton = {
 const Done = ({ hash }: { hash: `0x${string}` }) => {
   const { refetch, data } = useTransaction({
     hash,
-    chainId: process.env.NEXT_PUBLIC_ENABLE_TESTNETS
-      ? arbitrumSepolia.id
-      : arbitrum.id,
+    chainId:
+      process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+        ? arbitrumSepolia.id
+        : arbitrum.id,
     query: {
       staleTime: 0,
       refetchIntervalInBackground: true,

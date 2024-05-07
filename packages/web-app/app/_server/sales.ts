@@ -13,15 +13,16 @@ import { TProjectSaleDetails, TProjectStatus } from '../_types';
 import { TInternalError } from './types';
 import { evmGrantee, evmGranteePublicKey } from './wallet';
 
-const config = process.env.NEXT_PUBLIC_ENABLE_TESTNETS
-  ? {
-      chain: sepolia,
-      transport: http(),
-    }
-  : {
-      chain: mainnet,
-      transport: http(),
-    };
+const config =
+  process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+    ? {
+        chain: sepolia,
+        transport: http(),
+      }
+    : {
+        chain: mainnet,
+        transport: http(),
+      };
 
 const client = createWalletClient(config).extend(publicActions);
 

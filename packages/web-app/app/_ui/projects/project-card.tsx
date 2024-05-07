@@ -11,7 +11,11 @@ import { usdValue } from '../utils/intl-formaters/usd-value';
 import { usdRange } from '../utils/intl-formaters/usd-range';
 import { shortDateRange } from '../utils/intl-formaters/date-range';
 import { formatEther, parseEther } from 'viem/utils';
-import { useCtzndMinContributionUsdc } from '@/app/_lib/queries';
+import {
+  useCtzndMinContributionUsdc,
+  useTotalInvestedUsdcCtznd,
+} from '@/app/_lib/queries';
+import { calculateTokenPrice } from '../utils/calculateTokenPrice';
 
 const Upcoming = ({
   minTarget,
@@ -63,6 +67,8 @@ const FullData = ({
   const totalTokens = new Intl.NumberFormat('default').format(
     BigInt(formatEther(totalTokensForSale)),
   );
+  const totalContributions = useTotalInvestedUsdcCtznd();
+  const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
 
   return (
     <ul className="mt-8 flex flex-col gap-4">
@@ -71,8 +77,16 @@ const FullData = ({
         <span>{targetedRaise}</span>
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
-        <span className="text-mono-400">Min. price per token</span>
+        <span className="text-mono-400">Current price/Token (FDV):</span>
+        <span>{usdValue(currentTokenPrice)}</span>
+      </li>
+      <li className="flex flex-col justify-between gap-3 md:flex-row">
+        <span className="text-mono-400">Min. contribution</span>
         <span>{usdValue(minPrice)}</span>
+      </li>
+      <li className="flex flex-col justify-between gap-3 md:flex-row">
+        <span className="text-mono-400">% of total supply distributed</span>
+        <span>25%</span>
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400"># of tokens distributed</span>

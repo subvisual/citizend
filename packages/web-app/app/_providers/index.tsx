@@ -40,7 +40,7 @@ const ChainWrapper = ({ children }: TProvidersProps) => {
     if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
       switchChain({ chainId: sepolia.id });
     }
-  }, []);
+  }, [switchChain]);
 
   return children;
 };

@@ -38,7 +38,7 @@ export const DataFields = () => {
       <div className="grid grid-cols-1 gap-x-2 gap-y-1 md:grid-cols-2">
         <span className="text-mono-800">Current price/Token (FDV):</span>
         <div className="md:text-end">
-          <span>{`${usdValue(currentTokenPrice)}`} </span>
+          <span>{usdValue(currentTokenPrice)} </span>
           <span className="text-mono-800">{`($${currentTokenPrice * 100}m)`}</span>
         </div>
         <span className="text-sm text-mono-800">Price range (FDV range):</span>
@@ -66,7 +66,7 @@ export const DataFields = () => {
         <span className="md:text-end">{minContribution} USDC</span>
       </div>
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-        <span className="text-mono-800">Max. number of participants:</span>
+        <span className="text-mono-800">Max. number of participas:</span>
         <span className="md:text-end">
           {maxParticipants !== undefined ? (
             number(maxParticipants)

@@ -52,38 +52,43 @@ export const EdgeBorderButton = ({
   return (
     <button
       onClick={onClick}
-      className="md:focus-visible:outlin-2 group relative flex rounded-lg text-mono-900 hover:text-mono-800 focus:outline-none md:focus:outline md:focus-visible:outline-mono-50"
+      className="group relative flex rounded-lg text-mono-900 hover:text-mono-800 focus:outline-none md:focus:outline md:focus-visible:outline-2 md:focus-visible:outline-mono-50"
     >
       <svg
-        width="16"
-        height="56"
-        viewBox="0 0 16 56"
+        width="17"
+        height="58"
+        viewBox="0 0 17 58"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="hidden md:block"
       >
         <path
-          d="M12.6833 2.01625L2.33594 11.2549C1.48597 12.0138 1 13.0992 1 14.2387V51C1 53.2091 2.79086 55 5 55H15V1.0151C14.1431 1.08977 13.3295 1.43925 12.6833 2.01625Z"
+          d="M7.85455 7.85455L15.5 1H17V57H5C2.79086 57 1 55.2091 1 53V14L7.85455 7.85455Z"
           fill="currentColor"
+        />
+        <path
+          d="M17 57H6C3.23858 57 1 54.7614 1 52V15.2387C1 13.8144 1.60746 12.4576 2.66992 11.509L13.0173 2.27031C13.9336 1.45219 15.1189 1 16.3473 1H17"
           stroke="#3865FD"
           strokeWidth="2"
         />
       </svg>
-      <div className="z-10 flex h-14 items-center justify-center py-2 font-medium text-mono-50 group-hover:bg-mono-800 md:-mx-0.5 md:border-b-2 md:border-t-2 md:border-blue-500 md:bg-mono-900 md:px-6">
+      <div className="z-10 flex h-[58px] items-center justify-center py-2 font-medium text-mono-50 group-hover:bg-mono-800 md:-mx-0.5 md:border-b-2 md:border-t-2 md:border-blue-500 md:bg-mono-900 md:px-6">
         <span className="mr-3 hidden md:block">{children}</span>
         {avatar}
       </div>
       <svg
-        width="16"
-        height="56"
-        viewBox="0 0 16 56"
+        width="17"
+        height="58"
+        viewBox="0 0 17 58"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="hidden md:block"
       >
         <path
-          d="M3.31673 53.9838L13.6641 44.7451C14.514 43.9862 15 42.9008 15 41.7613V5C15 2.79086 13.2091 1 11 1H1V54.9849C1.85693 54.9102 2.67049 54.5608 3.31673 53.9838Z"
+          d="M9.14545 50.1455L1.5 57H0V1H12C14.2091 1 16 2.79086 16 5V44L9.14545 50.1455Z"
           fill="currentColor"
+        />
+        <path
+          d="M0 1H11C13.7614 1 16 3.23858 16 6V42.7613C16 44.1856 15.3925 45.5424 14.3301 46.491L3.98275 55.7297C3.06645 56.5478 1.88105 57 0.652668 57H0"
           stroke="#3865FD"
           strokeWidth="2"
         />

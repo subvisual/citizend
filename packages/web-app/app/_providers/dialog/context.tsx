@@ -1,8 +1,9 @@
 //create a dialog manager context
 import { createContext, useContext } from 'react';
+import { WriteContractErrorType } from 'viem';
 
 export type TProps = {
-  [key: string]: string | number | bigint;
+  [key: string]: string | number | bigint | `0x${string}` | undefined | null;
 };
 
 type TDialogContextValue = {

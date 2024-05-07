@@ -3,6 +3,7 @@ import { DialogContext, TProps } from './context';
 import { DialogWrapper } from '@/app/_ui/components/dialogs/dialog-wrapper';
 import { ApplyDialog, SettingsDialog } from '@/app/_ui/components/dialogs';
 import { ContributeDialog } from '@/app/_ui/components/dialogs/contribute-dialog';
+import { RefundDialog } from '@/app/_ui/components/dialogs/refund-dialog';
 
 type TDialogComponent = {
   displayName: string;
@@ -13,6 +14,7 @@ const dialogComponents: TDialogComponent[] = [
   SettingsDialog,
   ApplyDialog,
   ContributeDialog,
+  RefundDialog,
 ];
 
 const emptyProps = {};

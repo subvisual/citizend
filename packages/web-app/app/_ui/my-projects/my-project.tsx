@@ -10,15 +10,18 @@ import { TProjectSaleDetails } from '@/app/_types';
 import { getRelativePath } from '../utils/getRelativePath';
 import { usdRange } from '../utils/intl-formaters/usd-range';
 import { formatDate } from '../utils/intl-formaters/date';
-import { EdgeLink } from '../components/edge';
+import { EdgeButton, EdgeLink } from '../components/edge';
 import { CardSkeleton } from '../components/skeletons/card-skeleton';
 import {
   useReadCtzndSaleInvestorCount,
+  useReadCtzndSaleRefundAmount,
   useReadCtzndSaleUncappedAllocation,
+  useWriteCtzndSaleRefund,
 } from '@/wagmi.generated';
 import { useAccount } from 'wagmi';
-import { formatEther, parseEther } from 'viem';
+import { formatEther } from 'viem';
 import { useCtzndSaleStatus } from '@/app/_lib/hooks';
+import { useDialog } from '@/app/_providers/dialog/context';
 
 const Header = ({
   project,
@@ -66,6 +69,56 @@ const Header = ({
   );
 };
 
+const LoadingField = () => (
+  <div className="h-5 w-full animate-pulse rounded-md bg-gradient-to-br from-mono-50 to-mono-200" />
+);
+
+const Refund = ({ address }: { address: `0x${string}` }) => {
+  const { data: refundValue } = useReadCtzndSaleRefundAmount({
+    args: [address],
+  });
+  const {
+    writeContract,
+    data: refundTxHash,
+    error,
+  } = useWriteCtzndSaleRefund();
+  const { open } = useDialog();
+  const formattedValue =
+    refundValue !== undefined ? formatEther(refundValue) : '0';
+  if (error) {
+    console.log(error);
+  }
+
+  return (
+    <div>
+      <h3 className="text-sm text-mono-800">Refund After Cap Calculations</h3>
+      <div className="flex flex-col gap-2">
+        {refundValue !== undefined ? (
+          <>{formattedValue} USDC</>
+        ) : (
+          <LoadingField />
+        )}
+        {refundValue && refundValue > 0n ? (
+          <div className="self-center pt-6">
+            <EdgeButton
+              onClick={() => {
+                writeContract({ args: [address] });
+                open('refundDialog', {
+                  refundValue: formattedValue,
+                  txHash: refundTxHash,
+                  error: (error as unknown as any)?.shortMessage || null,
+                });
+              }}
+            >
+              Claim
+            </EdgeButton>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+};
+
 const MyContribution = () => {
   const { address } = useAccount();
   const { projectId } = useProject();
@@ -81,6 +134,7 @@ const MyContribution = () => {
           <EdgeLink href={`/projects/${projectId}`}>New Contribution</EdgeLink>
         </div>
       ) : null}
+      {status === 'completed' && address ? <Refund address={address} /> : null}
     </div>
   );
 };

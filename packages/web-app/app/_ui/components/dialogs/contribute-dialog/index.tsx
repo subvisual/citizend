@@ -8,57 +8,17 @@ import {
   useSetPaymentTokenAllowance,
 } from '@/app/_lib/actions';
 import { Spinner } from '../../svg/spinner';
-import { useTransaction } from 'wagmi';
-import { sepolia } from 'viem/chains';
 import { Check } from '../../svg/check';
-import Link from 'next/link';
 import { Error } from '../../svg/error';
-
-const Done = ({ hash }: { hash: `0x${string}` }) => {
-  const { data } = useTransaction({
-    hash,
-    chainId: sepolia.id,
-    query: {
-      staleTime: 0,
-      refetchInterval: 1000,
-      refetchIntervalInBackground: true,
-    },
-  });
-
-  if (data?.blockHash) {
-    return (
-      <Link
-        href={`https://sepolia.etherscan.io/tx/${hash}`}
-        target="_blank"
-        className="text-blue-500"
-      >
-        View on etherscan
-      </Link>
-    );
-  }
-
-  return (
-    <div className="flex content-center items-center justify-center gap-1">
-      <Spinner className="h-5 w-5 text-blue-500" />
-      <Link
-        href={`https://sepolia.etherscan.io/tx/${hash}`}
-        target="_blank"
-        className="text-blue-500"
-      >
-        Validating Transaction
-      </Link>
-    </div>
-  );
-};
+import { Done } from '../done';
 
 type TAllowFundsProps = {
   amount: number;
   amountInWei: bigint;
-  allowance: bigint;
 };
 
-const AllowFunds = ({ amountInWei, allowance }: TAllowFundsProps) => {
-  const { error, setAllowance, isPending, allowanceTxHash } =
+const AllowFunds = ({ amountInWei }: TAllowFundsProps) => {
+  const { error, setAllowance, allowanceTxHash } =
     useSetPaymentTokenAllowance();
 
   useEffectSafe(() => {
@@ -232,11 +192,7 @@ export function ContributeDialog({
         as="h2"
         className="relative flex w-full flex-col items-center justify-center gap-4 p-8 text-mono-950"
       >
-        <AllowFunds
-          amount={amount}
-          allowance={allowance}
-          amountInWei={amountInWei}
-        />
+        <AllowFunds amount={amount} amountInWei={amountInWei} />
       </Dialog.Title>
       <p>
         In order to contribute to this project, you need to allow the app to

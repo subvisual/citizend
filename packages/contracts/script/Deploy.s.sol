@@ -17,7 +17,7 @@ contract DeployScript is Script {
 
         Sale sale = new Sale(
             USDC,
-            5 ether,
+            0.2 ether,
             start,
             end,
             2500000 ether,

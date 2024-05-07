@@ -60,7 +60,7 @@ contract SaleTest is Test {
         token = new Citizend(owner, end);
         sale = new Sale(
             address(paymentToken),
-            5 ether,
+            0.2 ether,
             start,
             end,
             10 ether,
@@ -95,7 +95,7 @@ contract SaleTest is Test {
 
     function testConstructor() public view {
         require(sale.paymentToken() == address(paymentToken));
-        require(sale.rate() == 5 ether);
+        require(sale.rate() == 0.2 ether);
         require(sale.start() == start);
         require(sale.end() == end);
         require(sale.hasRole(sale.DEFAULT_ADMIN_ROLE(), owner));
@@ -105,14 +105,14 @@ contract SaleTest is Test {
 
     function test_PaymentTokenToToken() public view {
         require(sale.paymentTokenToToken(0 ether) == 0);
-        require(sale.paymentTokenToToken(1 ether) == 0.2 ether);
-        require(sale.paymentTokenToToken(5 ether) == 1 ether);
+        require(sale.paymentTokenToToken(0.2 ether) == 1 ether);
+        require(sale.paymentTokenToToken(1 ether) == 5 ether);
     }
 
     function test_TokenToPaymentToken() public view {
         require(sale.tokenToPaymentToken(0 ether) == 0);
-        require(sale.tokenToPaymentToken(0.2 ether) == 1 ether);
-        require(sale.tokenToPaymentToken(1 ether) == 5 ether);
+        require(sale.tokenToPaymentToken(1 ether) == 0.2 ether);
+        require(sale.tokenToPaymentToken(5 ether) == 1 ether);
     }
 
     function test_Buy() public {
@@ -123,14 +123,28 @@ contract SaleTest is Test {
 
         vm.expectEmit();
 
-        emit Purchase(address(alice), 5 ether, 1 ether);
+        emit Purchase(address(alice), 1 ether, 5 ether);
 
-        sale.buy(1 ether, aliceMerkleProof);
+        sale.buy(5 ether, aliceMerkleProof);
 
         uint256 afterBalance = paymentToken.balanceOf(alice);
-        require(afterBalance == 95 ether);
+        require(afterBalance == 99 ether);
 
-        require(sale.risingTide_totalAllocatedUncapped() == 1 ether);
+        require(sale.risingTide_totalAllocatedUncapped() == 5 ether);
+
+        vm.stopPrank();
+    }
+
+    function test_Buy1000() public {
+        vm.startPrank(alice);
+        paymentToken.mint(alice, 900 ether);
+        paymentToken.approve(address(sale), 5000 ether);
+
+        uint256 beforeBalance = paymentToken.balanceOf(alice);
+        require(beforeBalance == 1000 ether);
+
+        emit Purchase(address(alice), 1000 ether, 5000 ether);
+        sale.buy(5000 ether, aliceMerkleProof);
 
         vm.stopPrank();
     }
@@ -139,16 +153,16 @@ contract SaleTest is Test {
         vm.startPrank(alice);
 
         vm.expectEmit();
-        emit Purchase(address(alice), 5 ether, 1 ether);
+        emit Purchase(address(alice), 1 ether, 5 ether);
 
-        sale.buy(1 ether, aliceMerkleProof);
+        sale.buy(5 ether, aliceMerkleProof);
 
         vm.expectEmit();
-        emit Purchase(address(alice), 5 ether, 1 ether);
+        emit Purchase(address(alice), 1 ether, 5 ether);
 
-        sale.buy(1 ether, aliceMerkleProof);
+        sale.buy(5 ether, aliceMerkleProof);
 
-        require(sale.uncappedAllocation(alice) == 2 ether);
+        require(sale.uncappedAllocation(alice) == 10 ether);
 
         vm.stopPrank();
     }
@@ -244,19 +258,19 @@ contract SaleTest is Test {
         uint256 aliceAllocation = sale.allocation(alice);
         uint256 aliceRefund = sale.refundAmount(alice);
         require(aliceAllocation == 5 ether);
-        require(aliceRefund == 25 ether);
+        require(aliceRefund == 1 ether);
 
         uint256 bobAllocation = sale.allocation(bob);
         uint256 bobRefund = sale.refundAmount(bob);
         require(bobAllocation == 5 ether);
-        require(bobRefund == 25 ether);
+        require(bobRefund == 1 ether);
 
         sale.withdraw();
 
         vm.stopPrank();
 
         uint256 ownerBalance = paymentToken.balanceOf(owner);
-        require(ownerBalance == 50 ether);
+        require(ownerBalance == 2 ether);
     }
 
     function test_SetIndividualCap() public {
@@ -299,7 +313,7 @@ contract SaleTest is Test {
         vm.prank(owner);
         sale.setIndividualCap(5 ether);
 
-        require(sale.refundAmount(alice) == 25 ether);
+        require(sale.refundAmount(alice) == 1 ether);
 
         vm.prank(alice);
         sale.refund(alice);

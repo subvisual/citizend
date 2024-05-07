@@ -78,7 +78,8 @@ const FullData = ({
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400">Current price/Token (FDV):</span>
-        <span>{usdValue(currentTokenPrice)}</span>
+        <span className="ml-auto">{usdValue(currentTokenPrice)}</span>
+        <span className="text-mono-800">{`($${currentTokenPrice * 100}m)`}</span>
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400">Min. contribution</span>

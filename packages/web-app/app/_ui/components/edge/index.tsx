@@ -72,7 +72,7 @@ export const EdgeBorderButton = ({
           strokeWidth="2"
         />
       </svg>
-      <div className="z-10 flex h-[58px] items-center justify-center py-2 font-medium text-mono-50 group-hover:bg-mono-800 md:-mx-0.5 md:border-b-2 md:border-t-2 md:border-blue-500 md:bg-mono-900 md:px-6">
+      <div className="z-10 flex h-[58px] items-center justify-center py-2 font-medium text-mono-50 md:-mx-0.5 md:border-b-2 md:border-t-2 md:border-blue-500 md:bg-mono-900 md:px-6 md:group-hover:bg-mono-800">
         <span className="mr-3 hidden md:block">{children}</span>
         {avatar}
       </div>
@@ -82,6 +82,7 @@ export const EdgeBorderButton = ({
         viewBox="0 0 17 58"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="hidden md:block"
       >
         <path
           d="M9.14545 50.1455L1.5 57H0V1H12C14.2091 1 16 2.79086 16 5V44L9.14545 50.1455Z"

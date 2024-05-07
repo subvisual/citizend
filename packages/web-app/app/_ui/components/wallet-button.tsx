@@ -8,8 +8,30 @@ import { Avatar } from './avatar';
 import { useAccount } from 'wagmi';
 import { usePaymentTokenBalance } from '@/app/_lib/queries';
 import { mainnet, sepolia } from 'viem/chains';
+import { useKyc } from '@/app/_providers/kyc/context';
+import { idOSCredentialStatus } from '@/app/_types/idos';
+
+const statusDotMap = {
+  pending: 'yellow-500',
+  contacted: 'yellow-500',
+  rejected: 'red-700',
+  expired: 'yellow-500',
+};
+
+type TStatus = Exclude<idOSCredentialStatus, 'approved'>;
+
+const StatusDot = ({ status }: { status: TStatus }) => {
+  const color = statusDotMap[status];
+
+  return (
+    <div
+      className={`h-4 w-4 rounded-full bg-${color} absolute -right-1.5 -top-1.5 ml-1 animate-pulse`}
+    ></div>
+  );
+};
 
 const ConnectedButton = () => {
+  const { status } = useKyc();
   const { data: balance, formattedValue } = usePaymentTokenBalance();
   const { open } = useDialog();
 
@@ -24,6 +46,7 @@ const ConnectedButton = () => {
       onClick={() => open(SettingsDialog.displayName)}
     >
       {`${formattedValue} ${balance.symbol}`}
+      {status && status !== 'approved' ? <StatusDot status={status} /> : null}
     </EdgeBorderButton>
   );
 };

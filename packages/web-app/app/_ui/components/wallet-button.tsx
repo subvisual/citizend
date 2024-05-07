@@ -7,6 +7,7 @@ import { EdgeBorderButton, EdgeButton } from './edge';
 import { Avatar } from './avatar';
 import { useAccount } from 'wagmi';
 import { usePaymentTokenBalance } from '@/app/_lib/queries';
+import { mainnet, sepolia } from 'viem/chains';
 
 const ConnectedButton = () => {
   const { data: balance, formattedValue } = usePaymentTokenBalance();
@@ -54,7 +55,12 @@ export function WalletButton() {
                 </EdgeButton>
               );
             }
-            if (chain.unsupported) {
+
+            if (
+              (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' &&
+                chain?.id !== sepolia.id) ||
+              chain?.id === mainnet.id
+            ) {
               return (
                 <EdgeButton onClick={openChainModal}>Wrong network</EdgeButton>
               );

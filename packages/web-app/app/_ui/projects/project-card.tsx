@@ -139,6 +139,9 @@ export const ProjectCard = (props: TProjectSaleDetails) => {
         logo={logo}
       />
       <div className="lead mt-11 self-center text-xl">{project}</div>
+      <p className="text-center text-mono-400">
+        The community-curated token launch platform of web3.
+      </p>
       <Content {...props} />
     </Link>
   );

@@ -376,15 +376,27 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         merkleRoot = _merkleRoot;
     }
 
+    function setStartRegistration(
+        uint256 _startRegistration
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
+        startRegistration = _startRegistration;
+    }
+
+    function setEndRegistration(
+        uint256 _endRegistration
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
+        endRegistration = _endRegistration;
+    }
+
     function setStart(
         uint256 _start
-    ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
         start = _start;
     }
 
     function setEnd(
         uint256 _end
-    ) external onlyRole(DEFAULT_ADMIN_ROLE) beforeSale nonReentrant {
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
         end = _end;
     }
 

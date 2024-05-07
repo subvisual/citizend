@@ -99,10 +99,10 @@ export const HowToParticipate = ({
           />
         </div>
         <p className="pt-10 text-mono-800">
-          Citizens, residents (tax holders or otherwise) of Green Card holders
-          of the United States of America, and residents of BVI, Cayman Islands,
-          North Korea, Iran, Russia, Venezuela, and Canada are not eligible to
-          participate in Citizend’s Community Sale.
+          Citizens, residents (tax holders or otherwise) or Green Card holders
+          of the United States of America, and citizens or residents of BVI,
+          Cayman Islands, North Korea, Iran, Russia, Venezuela, and Canada are
+          not eligible to participate in citizend’s Community Sale.
         </p>
       </div>
       <ApplyButton error={error} isLoading={false} />

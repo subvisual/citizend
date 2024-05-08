@@ -9,6 +9,8 @@ const CountDown = () => {
     (saleEnd || 0n) * 1000n,
   );
 
+  if (!saleEnd) return null;
+
   return (
     <div className="flex h-[88px]">
       <svg

@@ -6,6 +6,25 @@ import { Footer, Topbar } from '@/app/_ui/components';
 import { Providers } from './_providers';
 import Image from 'next/image';
 import backgroundDesktop from '../public/background-desktop.png';
+import Head from 'next/head';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  image:
+    'https://uploads-ssl.webflow.com/6613ccb2950e14dbbe77a183/661fab3674735b20d0c82435_citizend-share-image.jpg',
+  url: 'https://app.citizend.xyz',
+  sameAs: [
+    'https://twitter.com/citizendxyz',
+    'https://discord.com/invite/citizendxyz',
+    'https://t.me/+QcSyoxz9bpYyZDhk',
+    'https://medium.com/@citizendxyz',
+  ],
+  logo: 'https://uploads-ssl.webflow.com/6613ccb2950e14dbbe77a183/66214110832182d072dc54f2_citizend-logo.png',
+  name: 'citizend: Token Launch Platform',
+  description:
+    'Citizend is the community-curated token launch platform of web3 enabling both community contributions and token launches in a secure, transparent and compliant way. Find the next early gem here.',
+};
 
 export const metadata: Metadata = {
   title: {
@@ -40,6 +59,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${nohemi.variable} font-nohemi`}>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </Head>
       <body className={`relative overflow-hidden bg-mono-900`}>
         <Image
           alt="background"

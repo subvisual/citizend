@@ -27,6 +27,7 @@ const jsonLd = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_DAPP_HOST),
   title: {
     template: '%s | citizend: Token Launch Platform',
     default: 'citizend: Token Launch Platform',

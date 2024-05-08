@@ -15,6 +15,7 @@ declare global {
       NEXT_ACTIVE_CAMPAIGN_ACCOUNT_NAME: string;
       NEXT_PUBLIC_ALCHEMY_MAINNET: string;
       NEXT_PUBLIC_ALCHEMY_SEPOLIA: string;
+      NEXT_PUBLIC_DAPP_HOST: string;
     }
   }
 }

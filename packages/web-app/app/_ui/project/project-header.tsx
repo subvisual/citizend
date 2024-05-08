@@ -5,7 +5,9 @@ import { useCountdown } from '../hooks/useCountdown';
 const CountDown = () => {
   const { data: saleEnd } = useReadCtzndSaleEnd();
 
-  const { hours, minutes, seconds } = useCountdown((saleEnd || 0n) * 1000n);
+  const { days, hours, minutes, seconds } = useCountdown(
+    (saleEnd || 0n) * 1000n,
+  );
 
   return (
     <div className="flex h-[88px]">
@@ -26,6 +28,14 @@ const CountDown = () => {
           <div className="-mb-6 flex w-full justify-center self-center md:mb-0 md:w-auto">
             ENDS IN
           </div>
+          {days ? (
+            <div className="flex items-baseline">
+              <div className="text-3.5xl leading-10">{hours}</div>
+              <span className="pl-1">DAYS</span>
+            </div>
+          ) : (
+            0
+          )}
           <div className="flex items-baseline">
             <div className="text-3.5xl leading-10">{hours}</div>
             <span className="pl-1">H</span>

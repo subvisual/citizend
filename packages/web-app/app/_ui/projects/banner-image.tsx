@@ -15,7 +15,7 @@ export const BannerImage = ({
   const logoHref = getRelativePath(logo);
 
   return (
-    <div className="relative">
+    <div className="relative flex justify-center">
       <Image
         src={backgroundHref}
         alt="Project banner"

@@ -54,7 +54,7 @@ export default function RootLayout({
             backgroundAttachment: 'fixed',
             backgroundRepeat: 'no-repeat',
           }}
-          className="fixed left-0 top-0 -z-10 h-screen w-screen antialiased"
+          className="fixed left-0 top-0 -z-10 h-screen w-screen"
         />
         <Providers>
           <div

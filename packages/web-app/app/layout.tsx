@@ -39,10 +39,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`relative ${nohemi.className} overflow-hidden bg-mono-900`}
-      >
+    <html lang="en" className={`${nohemi.variable} font-nohemi`}>
+      <body className={`relative overflow-hidden bg-mono-900`}>
         <Image
           alt="background"
           src={backgroundDesktop}
@@ -56,7 +54,7 @@ export default function RootLayout({
             backgroundAttachment: 'fixed',
             backgroundRepeat: 'no-repeat',
           }}
-          className="fixed left-0 top-0 -z-10 h-screen w-screen antialiased"
+          className="fixed left-0 top-0 -z-10 h-screen w-screen"
         />
         <Providers>
           <div

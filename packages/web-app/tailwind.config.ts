@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        nohemi: ['var(--font-nohemi)'],
+      },
       gridTemplateColumns: {
         footer: 'repeat(2, minmax(0, 31rem))',
       },

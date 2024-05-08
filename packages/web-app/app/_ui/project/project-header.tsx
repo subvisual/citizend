@@ -9,6 +9,8 @@ const CountDown = () => {
     (saleEnd || 0n) * 1000n,
   );
 
+  if (!saleEnd) return null;
+
   return (
     <div className="flex h-[88px]">
       <svg
@@ -33,9 +35,7 @@ const CountDown = () => {
               <div className="text-3.5xl leading-10">{hours}</div>
               <span className="pl-1">DAYS</span>
             </div>
-          ) : (
-            0
-          )}
+          ) : null}
           <div className="flex items-baseline">
             <div className="text-3.5xl leading-10">{hours}</div>
             <span className="pl-1">H</span>

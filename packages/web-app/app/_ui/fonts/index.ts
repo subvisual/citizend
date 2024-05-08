@@ -13,4 +13,5 @@ export const nohemi = localFont({
       style: 'normal',
     },
   ],
+  variable: '--font-nohemi',
 });

@@ -39,10 +39,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`relative ${nohemi.className} overflow-hidden bg-mono-900`}
-      >
+    <html lang="en" className={`${nohemi.variable}`}>
+      <body className={`relative overflow-hidden bg-mono-900`}>
         <Image
           alt="background"
           src={backgroundDesktop}

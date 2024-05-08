@@ -96,6 +96,8 @@ contract SaleTest is Test {
     function testConstructor() public view {
         require(sale.paymentToken() == address(paymentToken));
         require(sale.rate() == 0.2 ether);
+        require(sale.minPrice() == 0.2 ether);
+        require(sale.maxPrice() == 0.4 ether);
         require(sale.start() == start);
         require(sale.end() == end);
         require(sale.hasRole(sale.DEFAULT_ADMIN_ROLE(), owner));
@@ -332,9 +334,6 @@ contract SaleTest is Test {
 
         vm.warp(sale.end() + 1000);
 
-        vm.prank(owner);
-        sale.setIndividualCap(9 ether);
-
         require(sale.refundAmount(alice) == 0);
     }
 
@@ -413,5 +412,40 @@ contract SaleTest is Test {
 
         require(sale.allocation(alice) == 0);
         require(sale.refundAmount(alice) == sale.tokenToPaymentToken(2 ether));
+    }
+
+    function test_AllocationWhenMaxTargetNotReached() public {
+        vm.startPrank(owner);
+        sale.setMinTarget(5 ether);
+        sale.setMaxTarget(10 ether);
+        vm.stopPrank();
+
+        vm.prank(alice);
+        sale.buy(6 ether, aliceMerkleProof);
+
+        vm.warp(sale.end() + 1000);
+
+        console.log(sale.allocation(alice));
+
+        require(sale.currentTokenPrice() == 0.24 ether);
+        require(sale.allocation(alice) == 5 ether);
+        require(
+            sale.allocation(alice) ==
+                (sale.tokenToPaymentToken(6 ether) / sale.currentTokenPrice()) * 1 ether
+        );
+    }
+
+    function test_CurrentPrice() public {
+        require(sale.currentTokenPrice() == 0.2 ether);
+
+        vm.startPrank(owner);
+        sale.setMinTarget(5 ether);
+        sale.setMaxTarget(10 ether);
+        vm.stopPrank();
+
+        vm.prank(alice);
+        sale.buy(7.5 ether, aliceMerkleProof);
+
+        require(sale.currentTokenPrice() == 0.3 ether);
     }
 }

@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /my-projects/
+
+Sitemap: https://app.citizend.xyz

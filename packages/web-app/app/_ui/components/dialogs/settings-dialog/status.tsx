@@ -9,8 +9,8 @@ import { idOSCredentialStatus } from '@/app/_types/idos';
 import { ERRORS } from '@/app/_providers/kyc';
 
 const getNotVerifiedMessage = (status: idOSCredentialStatus | undefined) => {
-  if (status === 'expired') return 'KYC expired';
-  if (status === 'rejected') return 'KYC rejected';
+  if (status === 'expired') return 'ID verification expired';
+  if (status === 'rejected') return 'ID verification rejected';
   return 'Not verified';
 };
 
@@ -20,6 +20,18 @@ const Status = () => {
   if (!address) return 'wallet not connected';
 
   const providerUrl = getProviderUrl(address);
+
+  if (isBlockedCountry) {
+    return (
+      <>
+        <div className="absolute right-0 top-7 h-3 w-3 rounded-full bg-red-700"></div>
+        <h4>Not available in your country</h4>
+        <p className="text-start">
+          Unfortunately, we are not available in your country at the moment.
+        </p>
+      </>
+    );
+  }
 
   if (status === 'pending' || status === 'contacted') {
     return (
@@ -39,18 +51,6 @@ const Status = () => {
         >
           Manage my ID
         </Link>
-      </>
-    );
-  }
-
-  if (isBlockedCountry) {
-    return (
-      <>
-        <div className="absolute right-0 top-7 h-3 w-3 rounded-full bg-red-700"></div>
-        <h4>Not available in your country</h4>
-        <p className="text-start">
-          Unfortunately, we are not available in your country at the moment.
-        </p>
       </>
     );
   }

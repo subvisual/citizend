@@ -196,7 +196,7 @@ export function ContributeDialog({
       </Dialog.Title>
       <p>
         In order to contribute to this project, you need to allow the app to
-        withdraw you USDC funds.
+        withdraw your USDC funds.
       </p>
       <br />
       <p>

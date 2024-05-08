@@ -6,6 +6,7 @@ import { useKycCredential } from '@/app/_lib/hooks';
 import { useFetchCredentialContent, useFetchGrants } from '@/app/_lib/queries';
 import { useIdOS } from '../idos';
 import { compareAddresses } from '@/app/_lib/utils';
+import { blockedCountries } from '@/app/_server/blocked-countries';
 
 export const ERRORS = {
   MISSING_FRACTAL_AG: "Couldn't decrypt",
@@ -19,6 +20,19 @@ const processError = (error: Error | null): string | null => {
   }
 
   return error.message;
+};
+
+const checkIsBlockedCountry = (
+  residentialCountry: string | undefined,
+  idDocumentCountry: string | undefined,
+): null | boolean => {
+  if (!residentialCountry || !idDocumentCountry) return null;
+
+  return blockedCountries.some(
+    (blockedCountry) =>
+      blockedCountry === residentialCountry ||
+      blockedCountry === idDocumentCountry,
+  );
 };
 
 export const KycProvider = ({ children }: PropsWithChildren) => {
@@ -64,6 +78,10 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
   const error = processError(kycError || contentError || grantsError);
   const isSuccess = kycSuccess && contentSuccess && grantsSuccess;
   const shares = originalCredential?.shares;
+  const isBlockedCountry = useMemo(
+    () => checkIsBlockedCountry(residentialCountry, idDocumentCountry),
+    [residentialCountry, idDocumentCountry],
+  );
 
   const state: TKycContextValue = useMemo(() => {
     return {
@@ -71,6 +89,7 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
       status: credentialContent?.status,
       residentialCountry,
       idDocumentCountry,
+      isBlockedCountry,
       wallet,
       isLoading,
       error,
@@ -85,6 +104,7 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
     credentialContent,
     residentialCountry,
     idDocumentCountry,
+    isBlockedCountry,
     wallet,
     isLoading,
     error,

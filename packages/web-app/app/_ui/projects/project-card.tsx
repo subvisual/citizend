@@ -10,7 +10,7 @@ import { Status } from './status';
 import { usdValue } from '../utils/intl-formaters/usd-value';
 import { usdRange } from '../utils/intl-formaters/usd-range';
 import { shortDateRange } from '../utils/intl-formaters/date-range';
-import { formatEther, parseEther } from 'viem/utils';
+import { formatEther } from 'viem/utils';
 import {
   useCtzndMinContributionUsdc,
   useTotalInvestedUsdcCtznd,

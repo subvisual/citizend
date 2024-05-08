@@ -12,6 +12,7 @@ export type TWallet = {
 export type TKycContextValue = {
   residentialCountry: string | undefined;
   idDocumentCountry: string | undefined;
+  isBlockedCountry: null | boolean;
   wallet: TWallet | undefined;
   id: string | undefined;
   status: idOSCredentialStatus | undefined;

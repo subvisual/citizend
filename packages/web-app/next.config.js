@@ -2,8 +2,8 @@
 const nextConfig = {
   experimental: {
     instrumentationHook: true,
-    serverComponentsExternalPackages: ["@appsignal/nodejs"],
-  }
+    serverComponentsExternalPackages: ['@appsignal/nodejs'],
+  },
 };
 
 module.exports = nextConfig;

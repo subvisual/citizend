@@ -25,10 +25,17 @@ const Status = () => {
     return (
       <>
         <div className="absolute right-0 top-7 h-3 w-3 rounded-full bg-red-700"></div>
-        <h4>Not available in your country</h4>
+        <h4>Id verification rejected</h4>
         <p className="text-start">
-          Unfortunately, we are not available in your country at the moment.
+          To be able to contribute to this project, you must have an approved ID
+          Plus verification by Fractal ID.
         </p>
+        <Link
+          href={providerUrl}
+          className="select-none rounded-md text-xs text-blue-500 hover:text-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mono-400"
+        >
+          Click here to check your verification status
+        </Link>
       </>
     );
   }

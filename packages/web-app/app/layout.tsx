@@ -6,6 +6,7 @@ import { Footer, Topbar } from '@/app/_ui/components';
 import { Providers } from './_providers';
 import Image from 'next/image';
 import backgroundDesktop from '../public/background-desktop.png';
+import Head from 'next/head';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -58,10 +59,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${nohemi.variable} font-nohemi`}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </Head>
       <body className={`relative overflow-hidden bg-mono-900`}>
         <Image
           alt="background"

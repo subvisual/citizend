@@ -51,6 +51,28 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.png',
   },
+  openGraph: {
+    title: 'citizend: Token Launch Platform',
+    description:
+      'Citizend is the community-curated token launch platform of web3 enabling both community contributions and token launches in a secure, transparent and compliant way. Find the next early gem here.',
+    url: 'https://app.citizend.xyz',
+    siteName: 'Citizend app',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 800,
+        height: 600,
+      },
+      {
+        url: 'https://assets-global.website-files.com/6613ccb2950e14dbbe77a183/661fab3674735b20d0c82435_citizend-share-image.jpg', // Must be an absolute URL
+        width: 1800,
+        height: 1600,
+        alt: 'Citizend alt',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({

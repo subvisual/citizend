@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 body {
-  @apply font-nohemi;
   @apply text-mono-50;
   @apply text-base;
   @apply font-normal;

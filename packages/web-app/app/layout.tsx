@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${nohemi.variable}`}>
+    <html lang="en" className={`${nohemi.variable} font-nohemi`}>
       <body className={`relative overflow-hidden bg-mono-900`}>
         <Image
           alt="background"

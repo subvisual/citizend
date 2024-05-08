@@ -431,7 +431,8 @@ contract SaleTest is Test {
         require(sale.allocation(alice) == 5 ether);
         require(
             sale.allocation(alice) ==
-                (sale.tokenToPaymentToken(6 ether) / sale.currentTokenPrice()) * 1 ether
+                (sale.tokenToPaymentToken(6 ether) / sale.currentTokenPrice()) *
+                    1 ether
         );
     }
 

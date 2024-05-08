@@ -18,6 +18,7 @@ type TCloseProps = {
 const Close = ({ setOpen }: TCloseProps) => {
   return (
     <button
+      aria-label="Close panel"
       type="button"
       onClick={() => setOpen(false)}
       className="text-mono-50 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-mono-50"

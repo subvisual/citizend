@@ -56,6 +56,7 @@ export const SubscribeNewsletter = () => {
         type="email"
         units={
           <Button
+            aria-label="submit"
             variant="secondary"
             className="absolute right-4 top-[20%] pb-0 pl-0 pr-0 pt-0"
             onClick={handleSubmit}

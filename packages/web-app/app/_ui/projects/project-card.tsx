@@ -79,7 +79,7 @@ const FullData = ({
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400">Current price/Token (FDV):</span>
         <span className="ml-auto">{usdValue(currentTokenPrice)}</span>
-        <span className="text-mono-800">{`($${currentTokenPrice * 100}m)`}</span>
+        <span>{`($${currentTokenPrice * 100}m)`}</span>
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400">Min. contribution</span>
@@ -104,7 +104,7 @@ const Live = (props: TProjectSaleDetails) => {
   return (
     <>
       <FullData {...props} />
-      <li className="-mx-6 -mb-8 flex flex-row items-center gap-3 rounded-b-2.5xl bg-blue-500 px-4 py-3 md:-mx-8">
+      <div className="-mx-6 -mb-8 flex flex-row items-center gap-3 rounded-b-2.5xl bg-blue-500 px-4 py-3 md:-mx-8">
         <div className="flex flex-col gap-3 md:flex-row">
           <span>Sale ends in:</span>
           <span>
@@ -112,7 +112,7 @@ const Live = (props: TProjectSaleDetails) => {
           </span>
         </div>
         <ArrowRight className="ml-auto items-center text-transparent" />
-      </li>
+      </div>
     </>
   );
 };

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { getRelativePath } from '../utils/getRelativePath';
+import citizendCardDesktop from '../../../public/citizend-card-desktop.png';
 
 export const BannerImage = ({
   background,
@@ -10,29 +11,17 @@ export const BannerImage = ({
   backgroundMobile: string;
   logo: string;
 }) => {
-  const backgroundHref = getRelativePath(background);
-  const backgroundMobileHref = getRelativePath(backgroundMobile);
   const logoHref = getRelativePath(logo);
 
   return (
     <div className="relative flex justify-center">
       <Image
-        src={backgroundHref}
+        src={citizendCardDesktop}
         alt="Project banner"
-        width={363}
-        height={210}
-        sizes="33vw"
+        placeholder="blur"
+        sizes="(min-width: 768px) 33vw, 100vw"
         priority
-        className="hidden rounded-xl md:block"
-      />
-      <Image
-        src={backgroundMobileHref}
-        alt="Project banner"
-        sizes="90vw"
-        priority
-        width={278}
-        height={161}
-        className="rounded-xl md:hidden"
+        className="h-[161px] w-[278px] rounded-xl md:h-[210px] md:w-[363px]"
       />
       <div className="absolute -bottom-11 left-1/2 -translate-x-1/2">
         <Image src={logoHref} alt="Project Logo" width={92} height={92} />

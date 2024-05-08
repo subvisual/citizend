@@ -78,8 +78,9 @@ const FullData = ({
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400">Current price/Token (FDV):</span>
-        <span className="ml-auto">{usdValue(currentTokenPrice)}</span>
-        <span>{`($${currentTokenPrice * 100}m)`}</span>
+        <span>
+          {usdValue(currentTokenPrice)} {`($${currentTokenPrice * 100}m)`}
+        </span>
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400">Min. contribution</span>
@@ -140,7 +141,7 @@ export const ProjectCard = (props: TProjectSaleDetails) => {
         logo={logo}
       />
       <div className="lead mt-11 self-center text-xl">{project}</div>
-      <p className="max-w-[363px] break-words text-center text-mono-400">
+      <p className="max-w-[278px] break-words text-center text-mono-400 md:max-w-[363px]">
         The community-curated token launch platform of web3.
       </p>
       <Content {...props} />

@@ -425,8 +425,6 @@ contract SaleTest is Test {
 
         vm.warp(sale.end() + 1000);
 
-        console.log(sale.allocation(alice));
-
         require(sale.currentTokenPrice() == 0.24 ether);
         require(sale.allocation(alice) == 5 ether);
         require(

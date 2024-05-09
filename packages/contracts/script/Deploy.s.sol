@@ -8,12 +8,12 @@ contract DeployScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        uint256 startRegistration = 1714953600;
-        uint256 endRegistration = 1715212800;
-        uint256 start = 1714660299;
-        uint256 end = 1715342400;
+        uint256 startRegistration = 1715342400;
+        uint256 endRegistration = 1715860800;
+        uint256 start = 1715947200;
+        uint256 end = 1716033600;
 
-        address USDC = 0x1fD476786D370219F94fF2421cD7f5D7C8CA86c0;
+        address USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
 
         Sale sale = new Sale(
             USDC,

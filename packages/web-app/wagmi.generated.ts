@@ -5834,6 +5834,13 @@ export const ctzndSaleAbi = [
   {
     type: 'function',
     inputs: [],
+    name: 'currentTokenPrice',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
     name: 'end',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
@@ -5903,6 +5910,13 @@ export const ctzndSaleAbi = [
   {
     type: 'function',
     inputs: [],
+    name: 'maxPrice',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
     name: 'maxTarget',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
@@ -5918,6 +5932,13 @@ export const ctzndSaleAbi = [
     type: 'function',
     inputs: [],
     name: 'minContribution',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'minPrice',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
   },
@@ -19555,6 +19576,19 @@ export const useReadCtzndSaleAllocation = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"currentTokenPrice"`
+ *
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd03A5c8C2cA3dB59D9076a13Fc5379a7E326c82E)
+ */
+export const useReadCtzndSaleCurrentTokenPrice =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleAbi,
+    address: ctzndSaleAddress,
+    functionName: 'currentTokenPrice',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"end"`
  *
  * -
@@ -19658,6 +19692,18 @@ export const useReadCtzndSaleMaxContribution =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"maxPrice"`
+ *
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd03A5c8C2cA3dB59D9076a13Fc5379a7E326c82E)
+ */
+export const useReadCtzndSaleMaxPrice = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndSaleAbi,
+  address: ctzndSaleAddress,
+  functionName: 'maxPrice',
+})
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"maxTarget"`
  *
  * -
@@ -19693,6 +19739,18 @@ export const useReadCtzndSaleMinContribution =
     address: ctzndSaleAddress,
     functionName: 'minContribution',
   })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"minPrice"`
+ *
+ * -
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0xd03A5c8C2cA3dB59D9076a13Fc5379a7E326c82E)
+ */
+export const useReadCtzndSaleMinPrice = /*#__PURE__*/ createUseReadContract({
+  abi: ctzndSaleAbi,
+  address: ctzndSaleAddress,
+  functionName: 'minPrice',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleAbi}__ and `functionName` set to `"minTarget"`

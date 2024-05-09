@@ -36,34 +36,32 @@ contract DevDeployScript is Script {
 
         bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
 
-        startRegistration = 1714953600;
-        endRegistration = 1715212800;
-        start = 1715299200;
-        end = 1715385599;
+        startRegistration = 1715342400;
+        endRegistration = 1715860800;
+        start = 1715947200;
+        end = 1716033600;
 
-        MockERC20 token = new MockERC20("USDC", "USDC", 18);
-        Citizend citizend = new Citizend(owner, end);
+        MockERC20 paymentToken = new MockERC20("USDC", "USDC", 18);
         Sale sale = new Sale(
-            address(token),
+            address(paymentToken),
             0.2 ether,
             start,
             end,
-            100000000000000000000,
-            1000000,
-            2000000,
+            2500000 ether,
+            500000 ether,
+            1000000 ether,
             startRegistration,
             endRegistration
         );
 
         sale.setMerkleRoot(merkleRoot);
         sale.setMinContribution(200 ether);
-        citizend.transfer(address(sale), 1000 ether);
 
-        bool success = token.approve(address(sale), 1000 ether);
+        bool success = paymentToken.approve(address(sale), 1000 ether);
         require(success, "approve failed");
 
         for (uint256 i; i < testAccounts.length; i++) {
-            token.mint(testAccounts[i], 1000 ether);
+            paymentToken.mint(testAccounts[i], 1000 ether);
         }
         vm.stopBroadcast();
     }

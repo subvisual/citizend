@@ -39,4 +39,6 @@ export type TProjectSaleDetails = {
   totalTokensForSale: bigint;
   startRegistration: bigint;
   endRegistration: bigint;
+  supplyPercentage: string;
+  currentPrice: number;
 };

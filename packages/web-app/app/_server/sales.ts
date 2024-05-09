@@ -12,22 +12,23 @@ import { mainnet, sepolia } from 'viem/chains';
 import { TProjectSaleDetails, TProjectStatus } from '../_types';
 import { TInternalError } from './types';
 import { evmGrantee, evmGranteePublicKey } from './wallet';
+import { calculateTokenPrice } from '../_ui/utils/calculateTokenPrice';
 
 const config =
   process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
     ? {
-        chain: sepolia,
-        transport: http(),
-      }
+      chain: sepolia,
+      transport: http(),
+    }
     : {
-        chain: mainnet,
-        transport: http(),
-      };
+      chain: mainnet,
+      transport: http(),
+    };
 
 const client = createWalletClient(config).extend(publicActions);
 
 const contract = getContract({
-  address: ctzndSaleAddress[sepolia.id],
+  address: ctzndSaleAddress[config.chain.id],
   abi: ctzndSaleAbi,
   client,
 });
@@ -67,6 +68,7 @@ export const saleDetails = async (): Promise<
       contract.read.totalTokensForSale(),
       contract.read.startRegistration(),
       contract.read.endRegistration(),
+      contract.read.totalUncappedAllocations(),
     ]);
 
     return [
@@ -89,6 +91,8 @@ export const saleDetails = async (): Promise<
         logo: `${host}/project-citizend-logo.svg`,
         background: `${host}/citizend-card-desktop.png`,
         backgroundMobile: `${host}/citizend-card-mobile.png`,
+        supplyPercentage: '2.5%',
+        currentPrice: calculateTokenPrice(Number(formatEther(contractResults[11]))),
       },
     ];
   } catch (error) {

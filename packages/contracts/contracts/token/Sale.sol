@@ -67,7 +67,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// Fixed price of token, expressed in paymentToken amount
     uint256 public immutable rate;
 
+    /// Fixed minimum price of token, expressed in paymentToken amount
     uint256 public immutable minPrice;
+
+    /// Fixed maximum price of token, expressed in paymentToken amount
     uint256 public immutable maxPrice;
 
     /// Minimum amount per contribution, expressed in paymentToken amount

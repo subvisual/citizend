@@ -15,7 +15,7 @@ import {
   type Theme,
 } from '@rainbow-me/rainbowkit';
 import { KycProvider } from './kyc';
-import { sepolia } from 'wagmi/chains';
+import { mainnet, sepolia } from 'wagmi/chains';
 type TProvidersProps = {
   children: ReactNode;
 };
@@ -39,8 +39,11 @@ const ChainWrapper = ({ children }: TProvidersProps) => {
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
       switchChain({ chainId: sepolia.id });
+    } else {
+      switchChain({ chainId: mainnet.id });
     }
   }, [switchChain]);
+
 
   return children;
 };

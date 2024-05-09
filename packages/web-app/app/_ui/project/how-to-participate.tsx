@@ -89,7 +89,7 @@ export const HowToParticipate = ({
           />
         </div>
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-blue-500">
+          <Link href="https://twitter.com/citizendxyz/status/1788492675030585402" className="text-blue-500">
             <Twitter />
           </Link>
           <label

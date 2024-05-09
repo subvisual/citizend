@@ -44,7 +44,6 @@ const ChainWrapper = ({ children }: TProvidersProps) => {
     }
   }, [switchChain]);
 
-
   return children;
 };
 

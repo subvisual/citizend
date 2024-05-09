@@ -79,7 +79,7 @@ export const HowToParticipate = ({
             <Discord />
           </Link>
           <label htmlFor="discord-check" className="capitalize text-blue-500">
-            Follow Citizend on Discord
+            Join Citizend on Discord
           </label>
           <input
             id="discord-check"

@@ -1,6 +1,7 @@
 import { useProject } from '@/app/_providers/project/context';
 import {
   useFetchProjectsSaleDetails,
+  useTotalInvestedUsdcCtznd,
   useUserTotalInvestedUsdcCtznd,
 } from '@/app/_lib/queries';
 import { NavLink } from '../components/nav-link';
@@ -8,40 +9,36 @@ import { Right } from '../components/svg/right';
 import Image from 'next/image';
 import { TProjectSaleDetails } from '@/app/_types';
 import { getRelativePath } from '../utils/getRelativePath';
-import { usdRange } from '../utils/intl-formaters/usd-range';
-import { formatDate } from '../utils/intl-formaters/date';
 import { EdgeButton, EdgeLink } from '../components/edge';
 import { CardSkeleton } from '../components/skeletons/card-skeleton';
 import {
+  useReadCtzndSaleAllocation,
   useReadCtzndSaleInvestorCount,
   useReadCtzndSaleRefundAmount,
-  useReadCtzndSaleUncappedAllocation,
   useWriteCtzndSaleRefund,
 } from '@/wagmi.generated';
 import { useAccount } from 'wagmi';
 import { formatEther } from 'viem';
-import { useCtzndSaleStatus } from '@/app/_lib/hooks';
+import { useCtzndSaleCapStatus, useCtzndSaleStatus } from '@/app/_lib/hooks';
 import { useDialog } from '@/app/_providers/dialog/context';
+import { number } from '../utils/intl-formaters/number';
+import { usdValue } from '../utils/intl-formaters/usd-value';
+import { useCountdown } from '../hooks/useCountdown';
+import { calculateTokenPrice } from '../utils/calculateTokenPrice';
 
-const Header = ({
-  project,
-  logo,
-  minTarget,
-  maxTarget,
-}: TProjectSaleDetails) => {
-  const { data: contributions } = useReadCtzndSaleInvestorCount({
+const Header = ({ project, logo, end }: TProjectSaleDetails) => {
+  const { data: numberOfParticipants } = useReadCtzndSaleInvestorCount({
     query: {
       staleTime: 0,
     },
   });
+  const totalCommittedUsdc = useTotalInvestedUsdcCtznd();
   const status = useCtzndSaleStatus();
-  const totalContributions = contributions ? contributions.toString() : 0;
-  const targetedRaise = usdRange(
-    BigInt(formatEther(minTarget)),
-    BigInt(formatEther(maxTarget)),
-  );
+  const formattedNumberOfParticipants = number(numberOfParticipants || 0);
+  const saleCapStatus = useCtzndSaleCapStatus();
   const projectTitle =
     project === 'citizend' ? 'Citizend Community Sale' : project;
+  const { days, hours, minutes, seconds } = useCountdown(end);
 
   return (
     <div className="flex flex-col rounded-md bg-mono-50 px-6 py-8 text-mono-950">
@@ -52,27 +49,44 @@ const Header = ({
           width={40}
           height={40}
         />
-        <div className="relative">
+        <div className="relative flex w-full flex-col md:flex-row md:items-center">
           {projectTitle}
           {status === 'completed' ? (
             <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-full rounded-full bg-blue-500 px-2 pb-0.5 pt-1 text-xs uppercase leading-3 text-mono-50">
               Closed
             </div>
           ) : null}
+          {status === 'live' ? (
+            <>
+              <div className="flex">
+                <div className="pr-4 text-base uppercase text-mono-800 md:pl-6">
+                  Live
+                </div>
+                <div className="ml-1 h-4 w-4 animate-pulse rounded-full bg-green-500" />
+              </div>
+              <div className="ml-auto w-56 text-base font-normal">
+                Sale ends in {days}d {hours}h {minutes}m {seconds}s
+              </div>
+            </>
+          ) : null}
         </div>
       </h2>
       <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-3 md:px-14 md:pt-8">
         <div className="flex flex-col gap-2 md:border-r md:border-mono-200">
-          <h3 className="text-sm text-mono-800">Contributions</h3>
-          <div>{totalContributions}</div>
+          <h3 className="text-sm text-mono-800">Number of participants</h3>
+          <div>{formattedNumberOfParticipants}</div>
         </div>
         <div className="flex flex-col gap-2 md:border-r md:border-mono-200">
-          <h3 className="text-sm text-mono-800">Target Raise</h3>
-          <div>{targetedRaise}</div>
+          <h3 className="text-sm text-mono-800">Total amount committed</h3>
+          <div>{usdValue(totalCommittedUsdc)}</div>
         </div>
         <div className="flex flex-col gap-2">
-          <h3 className="text-sm text-mono-800">Vesting period ends in:</h3>
-          <div>{formatDate(BigInt(new Date('05/05/2024').getTime()))}</div>
+          <h3 className="text-sm text-mono-800">Rising Tide Mechanism</h3>
+          <div>
+            {saleCapStatus === 'above'
+              ? 'ON (max. target reached'
+              : 'OFF (total contributed below max.)'}
+          </div>
         </div>
       </div>
     </div>
@@ -137,7 +151,7 @@ const MyContribution = () => {
 
   return (
     <div className="flex flex-col gap-2 rounded-md bg-mono-50 px-6 py-8 text-mono-950">
-      <h3 className="text-sm text-mono-800">Contributions</h3>
+      <h3 className="text-sm text-mono-800">My Contribution</h3>
       <div className="text-3.5xl">{`${usdcValue} USDC`}</div>
       {status === 'live' ? (
         <div className="self-center pt-6">
@@ -151,17 +165,32 @@ const MyContribution = () => {
 
 const MyTokens = () => {
   const { address } = useAccount();
-  const { data: tokens } = useReadCtzndSaleUncappedAllocation({
+  const investedUsdc = useUserTotalInvestedUsdcCtznd(address!);
+  const { data: refund } = useReadCtzndSaleRefundAmount({
     args: [address!],
+    query: {
+      enabled: !!address,
+      staleTime: 0,
+    },
   });
-  const myTokens = tokens ? formatEther(tokens!) : 0;
+  const refundValue = refund ? formatEther(refund!) : 0;
+  const confirmedAllocation = Number(investedUsdc) - Number(refundValue);
   const status = useCtzndSaleStatus();
+  const totalContributions = useTotalInvestedUsdcCtznd();
+  const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
+  const { data: availableToClaim } = useReadCtzndSaleAllocation({
+    args: [address!],
+    query: {
+      enabled: !!address,
+      staleTime: 0,
+    },
+  });
 
   return (
     <div className="flex flex-col gap-2 rounded-md bg-mono-50 px-6 py-8 text-mono-950">
       <h3 className="flex text-sm text-mono-800">
         <div className="relative">
-          My tokens
+          Confirmed Allocation
           {status === 'live' ? (
             <div className="absolute right-0 top-0 w-48 -translate-y-1/2 translate-x-full rounded-full bg-mono-900 px-2 pb-0.5 pt-1 text-xs uppercase leading-3 text-mono-50">
               Ongoing cap calculations
@@ -169,19 +198,21 @@ const MyTokens = () => {
           ) : null}
         </div>
       </h3>
-      <div className="text-3.5xl">{myTokens} CTND</div>
+      <div className="text-3.5xl">{confirmedAllocation} USDC</div>
       <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-3">
         <div className="flex flex-col gap-2">
-          <h3 className="text-sm text-mono-800">Total Claimed</h3>
-          <div>-</div>
+          <h3 className="text-sm text-mono-800">Current CTND PRICE (FDV)</h3>
+          <div>
+            {usdValue(currentTokenPrice)} {`($${currentTokenPrice * 100}m)`}
+          </div>
         </div>
         <div className="flex flex-col gap-2">
-          <h3 className="text-sm text-mono-800">Next Release</h3>
-          <div>-</div>
+          <h3 className="text-sm text-mono-800">CTND Available to Claim</h3>
+          <div>{availableToClaim ? formatEther(availableToClaim) : 0} CTND</div>
         </div>
         <div className="flex flex-col gap-2">
-          <h3 className="text-sm text-mono-800">Available to claim</h3>
-          <div>-</div>
+          <h3 className="text-sm text-mono-800">Available for refund</h3>
+          <div>{refundValue} USDC</div>
         </div>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import { ServerPublicInfo } from '../types';
 import { getGrants, getProjectApplicants } from './grants';
 import { addressesListSchema, grantsSchema } from '../../_types/schemas';
-import { isValidGrant } from '@/app/_lib/utils';
 import { blockedCountries } from '../blocked-countries';
 import { idOSGrantee } from './idos-grantee';
 import {
@@ -21,9 +20,7 @@ const userFilter = async (grantee: idOSGrantee, userAddress: string) => {
       owner: userAddress,
       grantee: evmGrantee.address,
     });
-    const grants = grantsSchema
-      .parse(grantsResult)
-      ?.filter((grant) => isValidGrant(grant.lockedUntil));
+    const grants = grantsSchema.parse(grantsResult);
 
     if (!grants.length) return null;
 

@@ -9,7 +9,7 @@ import {
   useTotalInvestedUsdcCtznd,
 } from './queries';
 import { useKyc } from '../_providers/kyc/context';
-import { compareAddresses, isValidGrant } from './utils';
+import { compareAddresses } from './utils';
 import { TProjectInfoArgs } from '../_server/info';
 import {
   ctzndSaleAddress,
@@ -91,10 +91,7 @@ export const useHasCitizendGrant = () => {
   const hasGrant = useMemo(() => {
     if (!citizendGrants?.length || !shares) return false;
 
-    return citizendGrants.some(
-      (grant) =>
-        shares.includes(grant.dataId) && isValidGrant(grant.lockedUntil),
-    );
+    return citizendGrants.some((grant) => shares.includes(grant.dataId));
   }, [citizendGrants, shares]);
 
   return useMemo(() => {
@@ -132,10 +129,7 @@ export const useMyProjects = () => {
       );
       if (!projectGrants?.length) return false;
 
-      return projectGrants.some(
-        (grant) =>
-          shares.includes(grant.dataId) && isValidGrant(grant.lockedUntil),
-      );
+      return projectGrants.some((grant) => shares.includes(grant.dataId));
     });
   }, [saleDetails, shares, grants]);
 
@@ -177,10 +171,7 @@ export const useHasProjectGrant = (projectId: string) => {
   const hasGrant = useMemo(() => {
     if (!projectGrants?.length || !shares) return false;
 
-    return projectGrants.some(
-      (grant) =>
-        shares.includes(grant.dataId) && isValidGrant(grant.lockedUntil),
-    );
+    return projectGrants.some((grant) => shares.includes(grant.dataId));
   }, [projectGrants, shares]);
 
   return useMemo(() => {

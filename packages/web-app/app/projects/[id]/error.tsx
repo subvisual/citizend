@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/app/_ui/components';
+import { appSignal } from '@/app/app-signal';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -11,7 +12,11 @@ export default function Error({
 }) {
   const router = useRouter();
   useEffect(() => {
+    const report = async () => {
+      await appSignal.sendError(error);
+    };
     // Optionally log the error to an error reporting service
+    report();
     console.error(error);
   }, [error]);
 

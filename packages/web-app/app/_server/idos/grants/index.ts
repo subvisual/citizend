@@ -23,11 +23,11 @@ const config =
   process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
     ? {
         chain: arbitrumSepolia,
-        transport: http(process.env.NEXT_PUBLIC_AlCHEMY_ARBITRUM),
+        transport: http(process.env.NEXT_PUBLIC_ALCHEMY_ARBITRUM_SEPOLIA),
       }
     : {
         chain: arbitrum,
-        transport: http(process.env.NEXT_PUBLIC_ALCHEMY_ARBITRUM_SEPOLIA),
+        transport: http(process.env.NEXT_PUBLIC_AlCHEMY_ARBITRUM),
       };
 
 const client = createWalletClient({

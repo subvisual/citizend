@@ -27,7 +27,7 @@ const config =
       }
     : {
         chain: arbitrum,
-        transport: http(process.env.NEXT_PUBLIC_AlCHEMY_ARBITRUM),
+        transport: http(process.env.NEXT_PUBLIC_ALCHEMY_ARBITRUM),
       };
 
 const client = createWalletClient({

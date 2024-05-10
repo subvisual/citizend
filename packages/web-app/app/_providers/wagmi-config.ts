@@ -21,10 +21,7 @@ export const wagmiConfig = getDefaultConfig({
   transports: {
     [mainnet.id]: http(process.env.NEXT_PUBLIC_ALCHEMY_MAINNET),
     [sepolia.id]: http(process.env.NEXT_PUBLIC_ALCHEMY_SEPOLIA),
-    [arbitrumSepolia.id]: http(
-      process.env.NEXT_PUBLIC_ALCHEMY_ARBITRUM_SEPOLIA,
-    ),
-    [arbitrum.id]: http(process.env.NEXT_PUBLIC_AlCHEMY_ARBITRUM),
+    [arbitrum.id]: http(process.env.NEXT_PUBLIC_ALCHEMY_ARBITRUM),
   },
   ssr: true,
 });

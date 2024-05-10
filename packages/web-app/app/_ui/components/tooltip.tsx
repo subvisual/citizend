@@ -32,7 +32,7 @@ export const Tooltip = ({
         id="tooltip-animation"
         role="tooltip"
         className={clsx(
-          'tooltip invisible absolute z-10 inline-block min-w-72 rounded-lg bg-mono-950 px-3 py-2 text-sm font-medium normal-case text-white opacity-0 shadow-sm transition-opacity duration-300 group-hover:visible group-hover:opacity-100',
+          'tooltip invisible absolute -top-1 z-10 inline-block min-w-72 rounded-lg bg-mono-950 px-3 py-2 text-sm font-medium normal-case text-white opacity-0 shadow-sm transition-opacity duration-300 group-hover:visible group-hover:opacity-100',
           className,
         )}
       >

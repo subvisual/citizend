@@ -16,6 +16,7 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { KycProvider } from './kyc';
 import { mainnet, sepolia } from 'wagmi/chains';
+import { AppSignalWrapper } from './app-signal-wrapper';
 type TProvidersProps = {
   children: ReactNode;
 };
@@ -49,24 +50,26 @@ const ChainWrapper = ({ children }: TProvidersProps) => {
 
 export function Providers({ children }: TProvidersProps) {
   return (
-    <WagmiProvider config={wagmiConfig}>
-      <SsrWrapper>
-        <PersistQueryWrapper>
-          <ChainWrapper>
-            <RainbowKitProvider
-              showRecentTransactions={true}
-              theme={customTheme}
-              modalSize="compact"
-            >
-              <IdOsProvider>
-                <KycProvider>
-                  <DialogProvider>{children}</DialogProvider>
-                </KycProvider>
-              </IdOsProvider>
-            </RainbowKitProvider>
-          </ChainWrapper>
-        </PersistQueryWrapper>
-      </SsrWrapper>
-    </WagmiProvider>
+    <AppSignalWrapper>
+      <WagmiProvider config={wagmiConfig}>
+        <SsrWrapper>
+          <PersistQueryWrapper>
+            <ChainWrapper>
+              <RainbowKitProvider
+                showRecentTransactions={true}
+                theme={customTheme}
+                modalSize="compact"
+              >
+                <IdOsProvider>
+                  <KycProvider>
+                    <DialogProvider>{children}</DialogProvider>
+                  </KycProvider>
+                </IdOsProvider>
+              </RainbowKitProvider>
+            </ChainWrapper>
+          </PersistQueryWrapper>
+        </SsrWrapper>
+      </WagmiProvider>
+    </AppSignalWrapper>
   );
 }

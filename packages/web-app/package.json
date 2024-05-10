@@ -30,7 +30,9 @@
     ]
   },
   "dependencies": {
+    "@appsignal/javascript": "^1.3.30",
     "@appsignal/nodejs": "^3.4.2",
+    "@appsignal/react": "^1.0.25",
     "@headlessui/react": "^1.7.19",
     "@idos-network/idos-sdk": "0.2.14",
     "@kwilteam/kwil-js": "0.5.8",

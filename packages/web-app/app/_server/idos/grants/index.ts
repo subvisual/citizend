@@ -24,10 +24,20 @@ const chain =
     ? arbitrumSepolia
     : arbitrum;
 
+const config =
+  process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+    ? {
+        chain: arbitrumSepolia,
+        transport: http(process.env.NEXT_PUBLIC_AlCHEMY_ARBITRUM),
+      }
+    : {
+        chain: arbitrum,
+        transport: http(process.env.NEXT_PUBLIC_ALCHEMY_ARBITRUM_SEPOLIA),
+      };
+
 const client = createWalletClient({
   account,
-  chain: chain,
-  transport: http(),
+  ...config,
 }).extend(publicActions);
 
 const contract = getContract({

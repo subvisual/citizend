@@ -15,7 +15,6 @@ export default function Error({
     const report = async () => {
       await appSignal.sendError(error);
     };
-    // Optionally log the error to an error reporting service
     report();
     console.error(error);
   }, [error]);

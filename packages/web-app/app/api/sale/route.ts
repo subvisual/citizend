@@ -25,6 +25,7 @@ export async function GET(_request: Request) {
   const tempDetails = details.map((project) => {
     return {
       ...project,
+      status: "Apply Now",
       minTarget: formatEther(project.minTarget),
       maxTarget: formatEther(project.maxTarget),
     };

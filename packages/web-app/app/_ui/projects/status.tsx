@@ -12,7 +12,7 @@ export const Status = ({ status }: { status: TProjectStatus }) => {
   return (
     <div className="absolute -top-7 left-1/2 flex -translate-x-1/2 content-center items-center justify-center">
       <div className={clsx('rounded-lg px-9 py-3 capitalize', ...colors)}>
-        {status}
+        {status !== 'upcoming' ? status : 'Apply now' }
       </div>
     </div>
   );

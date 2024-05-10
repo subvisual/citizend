@@ -67,15 +67,17 @@ export const DataFields = () => {
         <span className="md:text-end">{minContribution} USDC</span>
       </div>
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-        <span className="relative text-mono-800">
-          Max. number of participants:
-          <div className="absolute -right-4 -top-2">
-            <Tooltip
-              text="Sale will close automatically after reaching this amount"
-              className="-translate-x-3/4 -translate-y-full"
-            />
-          </div>
-        </span>
+        <div className="flex text-mono-800">
+          <span className="relative flex">
+            Max. number of participants:{' '}
+            <div className="absolute -right-4 -top-2">
+              <Tooltip
+                text="Sale will close automatically after reaching this amount"
+                className="-translate-x-3/4 -translate-y-full"
+              />
+            </div>
+          </span>
+        </div>
         <span className="md:text-end">
           {maxParticipants !== undefined ? (
             number(maxParticipants)

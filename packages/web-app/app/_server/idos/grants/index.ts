@@ -19,11 +19,6 @@ const account = privateKeyToAccount(
   process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY,
 );
 
-const chain =
-  process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-    ? arbitrumSepolia
-    : arbitrum;
-
 const config =
   process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
     ? {

@@ -82,7 +82,8 @@ export function WalletButton() {
             if (
               (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' &&
                 chain?.id !== sepolia.id) ||
-              chain?.id !== mainnet.id
+              (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'false' &&
+                chain?.id !== mainnet.id)
             ) {
               return (
                 <EdgeButton onClick={openChainModal}>Wrong network</EdgeButton>

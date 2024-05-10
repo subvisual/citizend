@@ -5,6 +5,7 @@ import { formatDate } from '../utils/intl-formaters/date';
 import { Discord } from '../components/svg/Discord';
 import { ApplyButton } from './apply-button';
 import { getProviderUrl } from '@/app/_providers/idos/get-provider-url';
+import { Tooltip } from '../components/tooltip';
 
 type THowToParticipateProps = {
   saleDate: bigint;
@@ -44,8 +45,17 @@ export const HowToParticipate = ({
           <Link href={getProviderUrl()} className="text-blue-500">
             <Fractal />
           </Link>
-          <label htmlFor="kyc-check" className="capitalize text-blue-500">
+          <label
+            htmlFor="kyc-check"
+            className="relative flex capitalize text-blue-500"
+          >
             Get your Citizend Passport (KYC verified)
+            <div className="absolute -right-4 -top-2">
+              <Tooltip
+                text="Please complete this step as soon as possible. KYC verification may take up to 48h to be processed as is required to participate"
+                className="-translate-x-3/4 -translate-y-full"
+              />
+            </div>
           </label>
           <input
             id="kyc-check"

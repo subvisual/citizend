@@ -19,15 +19,20 @@ const account = privateKeyToAccount(
   process.env.NEXT_CITIZEND_WALLET_PRIVATE_KEY,
 );
 
-const chain =
+const config =
   process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-    ? arbitrumSepolia
-    : arbitrum;
+    ? {
+        chain: arbitrumSepolia,
+        transport: http(process.env.NEXT_PUBLIC_ALCHEMY_ARBITRUM_SEPOLIA),
+      }
+    : {
+        chain: arbitrum,
+        transport: http(process.env.NEXT_PUBLIC_AlCHEMY_ARBITRUM),
+      };
 
 const client = createWalletClient({
   account,
-  chain: chain,
-  transport: http(),
+  ...config,
 }).extend(publicActions);
 
 const contract = getContract({

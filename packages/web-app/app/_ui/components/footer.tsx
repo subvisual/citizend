@@ -55,12 +55,6 @@ export function Footer() {
             >
               Terms of Service
             </Link>
-            <Link href="/" role="listitem">
-              AML Policy
-            </Link>
-            <Link href="/" role="listitem">
-              Refund Policy
-            </Link>
           </div>
         </div>
       </div>

@@ -59,6 +59,10 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
     const grantee = await idOSGrantee.init({
       granteeSigner: evmGrantee,
       encryptionSecret: ENCRYPTION_KEY_PAIR.secretKey,
+      dbId:
+        process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+          ? undefined
+          : 'x44250024a9bf9599ad7c3fcdb220d2100357dbf263014485174a1ae3',
     });
     const allowed = [];
 

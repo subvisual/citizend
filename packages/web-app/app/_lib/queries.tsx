@@ -20,7 +20,7 @@ import {
   useReadCtzndSaleTotalUncappedAllocations,
   useReadCtzndSaleUncappedAllocation,
 } from '@/wagmi.generated';
-import { formatEther } from 'viem';
+import { formatEther, formatUnits } from 'viem';
 import { computeRisingTideCap } from '../_server/risingTide/risingtide';
 
 export const usePublicInfo = () => {
@@ -253,7 +253,7 @@ export const usePaymentTokenBalance = () => {
 
   return {
     data: balance,
-    formattedValue: balance ? formatEther(balance.value) : null,
+    formattedValue: balance ? formatUnits(balance.value, 6) : null,
     isLoading: isLoadingBalance || isLoadingToken,
     error: errorToken || errorBalance,
   };

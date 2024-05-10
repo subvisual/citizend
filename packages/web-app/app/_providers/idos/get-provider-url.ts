@@ -9,6 +9,8 @@ const providerLivenessCheck =
 const providerEthWalletCheck =
   '%20verification.wallet-eth%3Aread%20verification.wallet-eth.details%3Aread';
 const providerEnsureWalletCheck = '&ensure_wallet=';
+const providerUniqueCheck =
+  '%20verification.uniq%3Aread%20verification.uniq.details%3Aread';
 const userRole = '&user_role=person';
 
 export const getProviderUrl = (address?: string) => {
@@ -19,6 +21,7 @@ export const getProviderUrl = (address?: string) => {
       scope +
       providerIdosCheck +
       providerLivenessCheck +
+      providerUniqueCheck +
       providerEthWalletCheck +
       userRole
     );
@@ -30,6 +33,7 @@ export const getProviderUrl = (address?: string) => {
     scope +
     providerIdosCheck +
     providerLivenessCheck +
+    providerUniqueCheck +
     providerEthWalletCheck +
     providerEnsureWalletCheck +
     address +

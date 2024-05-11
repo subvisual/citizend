@@ -103,6 +103,14 @@ export default function RootLayout({
             <Footer />
           </div>
         </Providers>
+        <div id="idos-root" className="justify-end md:justify-center">
+          <div className="flex min-w-full flex-col items-center gap-5 rounded-md bg-mono-50 p-6 pb-16 md:min-w-96 md:pb-10">
+            <h3 className="text-center text-mono-950">Access your idOS data</h3>
+            <div className="flex flex-col">
+              <div id="idos" className="flex flex-col rounded-sm *:h-10"></div>
+            </div>
+          </div>
+        </div>
       </body>
     </html>
   );

@@ -14,6 +14,7 @@ import { IdOSContext } from './context';
 import { idOsConfig } from './config';
 import { getProviderUrl } from './get-provider-url';
 import { useQueryClient } from '@tanstack/react-query';
+import { appSignal } from '@/app/app-signal';
 
 export const IdOsProvider = ({ children }: PropsWithChildren) => {
   const queryClient = useQueryClient();
@@ -45,10 +46,25 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
 
       // Authenticate by signing a message
       if (profile) {
-        // @ts-ignore
-        await sdk.setSigner('EVM', ethSigner);
-        setHasSigner(true);
-        return;
+        let count = 0;
+        while (count < 2) {
+          try {
+            const signer = await sdk.setSigner('EVM', ethSigner);
+            if (!signer?.address) throw new Error('Signer not set');
+            setHasSigner(true);
+            break;
+          } catch (error: any) {
+            count++;
+            if (count === 2) {
+              await sdk.reset({ enclave: true });
+              await appSignal.sendError(
+                new Error(
+                  `Exceeded maximum retries for trying to set signer: ${error?.message}`,
+                ),
+              );
+            }
+          }
+        }
       }
     };
 

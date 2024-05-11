@@ -66,7 +66,7 @@ const Status = () => {
     return (
       <>
         <div className="flex items-center gap-2">
-          <h4>Verified</h4>
+          <h4>Verified citizend Passport</h4>
           <Check />
         </div>
         <Link
@@ -88,8 +88,8 @@ const Status = () => {
       <div className="absolute right-0 top-7 h-3 w-3 rounded-full bg-red-700"></div>
       <h4>{getNotVerifiedMessage(status)}</h4>
       <p className="text-start">
-        To be able to contribute to this project, you must have an approved ID
-        Plus verification by Fractal ID.
+        To be able to contribute to this project, you must have an approved
+        citizend Passport (ID Plus verification by Fractal ID).
       </p>
       <Link
         href={providerUrl}

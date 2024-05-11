@@ -47,7 +47,6 @@ export function Topbar() {
           <MyProjectsLink topbar />
         </nav>
         <div className="ml-auto flex flex-row gap-6">
-          {/* <div id="idos" className="mr-3 h-12 md:self-center" /> */}
           <WalletButton />
           <NavigationMobile className="md:hidden" />
         </div>

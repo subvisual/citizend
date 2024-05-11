@@ -99,6 +99,8 @@ export const useFetchCredentials = () => {
     },
     select: filterCredentials,
     enabled: !!(sdk && hasSigner && address),
+    refetchOnWindowFocus: true,
+    staleTime: 0,
   });
 };
 
@@ -128,6 +130,8 @@ export const useFetchCredentialContent = (credentialId: string | undefined) => {
       return JSON.parse(credential?.content);
     },
     enabled: !!(sdk && credentialId && hasSigner),
+    refetchOnWindowFocus: true,
+    staleTime: 0,
   });
 };
 
@@ -141,8 +145,6 @@ export const useFetchWallets = () => {
   });
 };
 
-// Not used at the moment
-// maybe usefull to get grants through our server and avoid a modal
 export const useFetchGrants = () => {
   const { sdk, address, hasSigner } = useIdOS();
 
@@ -160,6 +162,7 @@ export const useFetchGrants = () => {
       return result;
     },
     enabled: !!(sdk && hasSigner && address),
+    staleTime: 0,
   });
 };
 

@@ -1,13 +1,14 @@
 import { BrowserProvider, JsonRpcSigner } from 'ethers';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { WalletClient } from 'viem';
 import { useWalletClient } from 'wagmi';
 
 function walletClientToSigner(walletClient: WalletClient) {
   const { account, chain, transport } = walletClient;
   if (!account || !chain || !transport) {
-    console.log('Missing account, chain or transport, on walletClientToSigner');
-    return undefined;
+    throw new Error(
+      'Missing account, chain or transport, on walletClientToSigner',
+    );
   }
 
   const network = {
@@ -20,24 +21,10 @@ function walletClientToSigner(walletClient: WalletClient) {
   return signer;
 }
 
-// /** Hook to convert a viem Wallet Client to an ethers.js Signer. */
 export function useEthersSigner({ chainId }: { chainId?: number } = {}) {
   const { data: walletClient } = useWalletClient({ chainId });
-  const [signer, setSigner] = useState<JsonRpcSigner | undefined>();
-
-  useEffect(() => {
-    const loadClient = async () => {
-      if (walletClient) {
-        const signerResult = await walletClientToSigner(walletClient);
-        setSigner(signerResult);
-      }
-    };
-    loadClient();
-
-    return () => {
-      setSigner(undefined);
-    };
-  }, [walletClient]);
-
-  return signer;
+  return useMemo(
+    () => (walletClient ? walletClientToSigner(walletClient) : undefined),
+    [walletClient],
+  );
 }

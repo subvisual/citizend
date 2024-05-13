@@ -10,6 +10,7 @@ import { usePaymentTokenBalance } from '@/app/_lib/queries';
 import { mainnet, sepolia } from 'viem/chains';
 import { useKyc } from '@/app/_providers/kyc/context';
 import { idOSCredentialStatus } from '@/app/_types/idos';
+import { useIdOS } from '@/app/_providers/idos';
 
 const statusDotMap = {
   pending: 'yellow-500',
@@ -38,27 +39,38 @@ const StatusDot = ({
   );
 };
 
-const ConnectedButton = () => {
+const SignedButton = () => {
   const { status, isLoading } = useKyc();
   const { data: balance, formattedValue } = usePaymentTokenBalance();
   const { open } = useDialog();
-
-  if (!balance)
-    return (
-      <div className="h-14 w-44 animate-pulse rounded-md bg-gradient-to-br from-mono-800 to-mono-900" />
-    );
 
   return (
     <EdgeBorderButton
       avatar={<Avatar />}
       onClick={() => open(SettingsDialog.displayName)}
     >
-      {`${formattedValue} ${balance.symbol}`}
+      {`${formattedValue} ${balance?.symbol}`}
       {status !== 'approved' ? (
         <StatusDot status={status} isLoading={isLoading} />
       ) : null}
     </EdgeBorderButton>
   );
+};
+
+const ConnectedButton = () => {
+  const { hasSigner, setSigner } = useIdOS();
+  const { data: balance } = usePaymentTokenBalance();
+
+  if (!balance)
+    return (
+      <div className="h-14 w-44 animate-pulse rounded-md bg-gradient-to-br from-mono-800 to-mono-900" />
+    );
+
+  if (!hasSigner) {
+    return <EdgeButton onClick={setSigner}>Verify identity</EdgeButton>;
+  }
+
+  return <SignedButton />;
 };
 
 export function WalletButton() {

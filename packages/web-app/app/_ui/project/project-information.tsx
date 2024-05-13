@@ -7,7 +7,7 @@ export const ProjectInformation = ({ saleDate }: { saleDate: bigint }) => (
     </h4>
     <div className="flex flex-col gap-4 px-8 py-8">
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-        <span className="text-mono-800">Contribution opens (24h)</span>
+        <span className="text-mono-800">Contribution opens (72h)</span>
         <span>{formatDate(saleDate)}</span>
       </div>
     </div>

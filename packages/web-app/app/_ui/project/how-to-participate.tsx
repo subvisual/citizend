@@ -35,7 +35,7 @@ export const HowToParticipate = ({
           <span>{formatDate(endRegistration)}</span>
         </div>
         <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-          <span className="text-mono-800">Contribution opens (24h)</span>
+          <span className="text-mono-800">Contribution opens (72h)</span>
           <span>{formatDate(saleDate)}</span>
         </div>
       </div>

@@ -8,14 +8,15 @@ import { deserialize, serialize } from 'wagmi';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { hashFn } from 'wagmi/query';
 
-const oneHour = 1_000 * 60;
+const oneMinute = 1_000 * 60;
+const oneHour = oneMinute * 60;
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       queryKeyHashFn: hashFn,
       retry: 0,
-      staleTime: oneHour,
+      staleTime: oneMinute,
       gcTime: oneHour,
     },
   },

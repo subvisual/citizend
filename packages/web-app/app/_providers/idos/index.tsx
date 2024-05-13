@@ -15,6 +15,7 @@ import { idOsConfig } from './config';
 import { getProviderUrl } from './get-provider-url';
 import { useQueryClient } from '@tanstack/react-query';
 import { appSignal } from '@/app/app-signal';
+import { useEffectSafe } from '@/app/_lib/hooks';
 
 export const IdOsProvider = ({ children }: PropsWithChildren) => {
   const queryClient = useQueryClient();
@@ -31,12 +32,13 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
   }, [isConnected, ethSigner]);
 
   // Load SDK once wallet is connected
-  useEffect(() => {
+  useEffectSafe(() => {
     const loadSdk = async () => {
       const ref = await idOS.init(idOsConfig);
 
       setSdk(ref);
     };
+
     if (isConnected && !sdk) {
       loadSdk();
     }

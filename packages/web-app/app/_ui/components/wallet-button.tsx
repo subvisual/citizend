@@ -20,8 +20,16 @@ const statusDotMap = {
 
 type TStatus = Exclude<idOSCredentialStatus, 'approved'>;
 
-const StatusDot = ({ status }: { status: TStatus | undefined }) => {
-  const color = (status && statusDotMap[status]) || 'red-700';
+const StatusDot = ({
+  status,
+  isLoading,
+}: {
+  status: TStatus | undefined;
+  isLoading: boolean;
+}) => {
+  const color = isLoading
+    ? 'yellow-500'
+    : (status && statusDotMap[status]) || 'red-700';
 
   return (
     <div
@@ -31,7 +39,7 @@ const StatusDot = ({ status }: { status: TStatus | undefined }) => {
 };
 
 const ConnectedButton = () => {
-  const { status } = useKyc();
+  const { status, isLoading } = useKyc();
   const { data: balance, formattedValue } = usePaymentTokenBalance();
   const { open } = useDialog();
 
@@ -46,7 +54,9 @@ const ConnectedButton = () => {
       onClick={() => open(SettingsDialog.displayName)}
     >
       {`${formattedValue} ${balance.symbol}`}
-      {status !== 'approved' ? <StatusDot status={status} /> : null}
+      {status !== 'approved' ? (
+        <StatusDot status={status} isLoading={isLoading} />
+      ) : null}
     </EdgeBorderButton>
   );
 };

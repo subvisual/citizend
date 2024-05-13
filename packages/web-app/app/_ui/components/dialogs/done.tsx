@@ -3,6 +3,13 @@ import { Spinner } from '../svg/spinner';
 import { useTransaction } from 'wagmi';
 import { sepolia, mainnet } from 'viem/chains';
 
+const getTxLink = (hash: string) => {
+  if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
+    return `https://sepolia.etherscan.io/tx/${hash}`;
+  }
+  return `https://etherscan.io/tx/${hash}`;
+};
+
 export const Done = ({ hash }: { hash: `0x${string}` }) => {
   const { data } = useTransaction({
     hash,
@@ -19,11 +26,7 @@ export const Done = ({ hash }: { hash: `0x${string}` }) => {
 
   if (data?.blockHash) {
     return (
-      <Link
-        href={`https://sepolia.etherscan.io/tx/${hash}`}
-        target="_blank"
-        className="text-blue-500"
-      >
+      <Link href={getTxLink(hash)} target="_blank" className="text-blue-500">
         View on etherscan
       </Link>
     );
@@ -32,11 +35,7 @@ export const Done = ({ hash }: { hash: `0x${string}` }) => {
   return (
     <div className="flex content-center items-center justify-center gap-1">
       <Spinner className="h-5 w-5 text-blue-500" />
-      <Link
-        href={`https://sepolia.etherscan.io/tx/${hash}`}
-        target="_blank"
-        className="text-blue-500"
-      >
+      <Link href={getTxLink(hash)} target="_blank" className="text-blue-500">
         Validating Transaction
       </Link>
     </div>

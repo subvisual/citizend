@@ -47,7 +47,7 @@ const IssueCitizendGrant = () => {
 
   if (hasCitizendGrant) return <Check />;
 
-  return <AcquireAccessGrantButton {...data} />;
+  return <AcquireAccessGrantButton {...data} hasGrant={hasCitizendGrant} />;
 };
 
 const IssueProjectGrant = ({ projectId }: TProjectIdProps) => {
@@ -78,6 +78,7 @@ const IssueProjectGrant = ({ projectId }: TProjectIdProps) => {
       grantee={data.address}
       encryptionPublicKey={data.publicKey}
       lockTimeSpanSeconds={citizendData.lockTimeSpanSeconds}
+      hasGrant={hasProjectGrant}
     />
   );
 };
@@ -103,7 +104,7 @@ const Complete = () => (
   </div>
 );
 
-const ContributionAllowed = ({ projectId }: TProjectIdProps) => {
+const ApplicationAllowed = ({ projectId }: TProjectIdProps) => {
   const { hasGrant: hasProjectGrant } = useHasProjectGrant(projectId);
   const { hasGrant: hasCitizendGrant } = useHasCitizendGrant();
 
@@ -124,14 +125,17 @@ const ContributionAllowed = ({ projectId }: TProjectIdProps) => {
             To be able to contribute to projects you must issue an access grant
             to Citizend and to the project.
           </p>
-          <p className="flex items-center gap-5">
+          <div className="flex items-center gap-5">
             <IssueCitizendGrant />
             <span>Citizend Access Grant</span>
-          </p>
-          <p className="flex items-center gap-5">
-            <IssueProjectGrant projectId={projectId} />{' '}
-            <span>Project Access Grant</span>
-          </p>
+          </div>
+
+          {projectId !== 'citizend' ? (
+            <div className="flex items-center gap-5">
+              <IssueProjectGrant projectId={projectId} />{' '}
+              <span>Project Access Grant</span>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
@@ -173,7 +177,7 @@ const UnlockKycData = ({ projectId }: TProjectIdProps) => {
 
   // KYC complete & country allowed, move to next step AG generation
   if (status === 'approved' && residentialCountry && idDocumentCountry) {
-    return <ContributionAllowed projectId={projectId} />;
+    return <ApplicationAllowed projectId={projectId} />;
   }
 
   return <MissingIdosData />;

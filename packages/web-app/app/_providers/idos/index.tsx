@@ -120,12 +120,7 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
     };
   }, [sdk, hasProfile, userAddress, hasSigner, handleDisconnect, setSigner]);
 
-  return (
-    <IdOSContext.Provider value={state}>
-      {JSON.stringify(ethSigner)}
-      {children}
-    </IdOSContext.Provider>
-  );
+  return <IdOSContext.Provider value={state}>{children}</IdOSContext.Provider>;
 };
 
 export { useIdOS } from './context';

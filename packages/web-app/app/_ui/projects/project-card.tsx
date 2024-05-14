@@ -65,7 +65,7 @@ const FullData = ({
   );
   const minPrice = useCtzndMinContributionUsdc();
   const totalTokens = new Intl.NumberFormat('default').format(
-    BigInt(formatEther(totalTokensForSale)),
+    Number(totalTokensForSale),
   );
   const totalContributions = useTotalInvestedUsdcCtznd();
   const currentTokenPrice = calculateTokenPrice(Number(totalContributions));

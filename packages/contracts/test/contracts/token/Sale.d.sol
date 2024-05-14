@@ -320,7 +320,6 @@ contract SaleTest is Test {
         vm.prank(owner);
         sale.setIndividualCap(5 ether);
 
-        console.log(sale.refundAmount(alice));
         require(sale.refundAmount(alice) == 2 ether);
 
         vm.prank(alice);

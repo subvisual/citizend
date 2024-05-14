@@ -14,6 +14,7 @@ import {
   useWriteCtzndErc20Approve,
 } from '@/wagmi.generated';
 import { sepolia } from 'viem/chains';
+import { appSignal } from '../app-signal';
 
 export const useAcquireAccessGrantMutation = () => {
   const { sdk } = useIdOS();
@@ -40,6 +41,9 @@ export const useAcquireAccessGrantMutation = () => {
       queryClient.invalidateQueries({ queryKey: ['credential-content'] });
       queryClient.invalidateQueries({ queryKey: ['grants'] });
     },
+    onError: (error) => {
+      appSignal.sendError(error);
+    },
   });
 };
 
@@ -53,6 +57,9 @@ export const useSubscribeNewsletterMutation = () => {
       }
 
       return result;
+    },
+    onError: (error) => {
+      appSignal.sendError(error);
     },
   });
 };
@@ -98,6 +105,9 @@ export const useInsertGrantBySignatureMutation = () => {
         queryClient.invalidateQueries({ queryKey: ['grants', owner] });
       }, 10000);
     },
+    onError: (error) => {
+      appSignal.sendError(error);
+    },
   });
 };
 
@@ -128,6 +138,13 @@ export const useSignDelegatedAccessGrant = (
     signMessage,
     isPending: isSignPending,
   } = useSignMessage();
+
+  useEffect(() => {
+    const reportError = insertError || messageError;
+    if (reportError) {
+      appSignal.sendError(reportError);
+    }
+  }, [insertError, messageError]);
 
   useEffect(() => {
     if (

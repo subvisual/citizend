@@ -37,6 +37,7 @@ export const ProjectContent = () => {
     (project) => project.project.toLowerCase() === projectId,
   );
   const hasGrant = hasProjectGrant && hasCitizendGrant;
+  const saleCompleted = project?.status === 'completed';
 
   if (isLoading || isLoadingGrant || (!data && !isError)) {
     return (
@@ -68,10 +69,11 @@ export const ProjectContent = () => {
         <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
           <Tab.List className="my-4 grid grid-cols-2 gap-6">
             <Tab className={generateTabClassName}>Description</Tab>
-            {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' ? (
+            {process.env.NEXT_PUBLIC_APPLY_OPEN === 'true' && !saleCompleted ? (
               <Tab className={generateTabClassName}>Register</Tab>
             ) : null}
-            {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
+            {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ||
+            saleCompleted ? (
               <Tab className={generateTabClassName}>Token metrics</Tab>
             ) : null}
           </Tab.List>
@@ -97,7 +99,7 @@ export const ProjectContent = () => {
             ) : null}
             {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
               <Tab.Panel className="flex flex-col gap-8 focus:outline-none">
-                {hasGrant && address ? (
+                {hasGrant && address && !saleCompleted ? (
                   <ProjectContribution userAddress={address} />
                 ) : null}
                 <SaleStatus hasGrant={hasGrant} />
@@ -110,7 +112,8 @@ export const ProjectContent = () => {
         <div className="flex flex-col gap-16">
           {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' &&
           hasGrant &&
-          address ? (
+          address &&
+          !saleCompleted ? (
             <ProjectContribution userAddress={address} />
           ) : null}
           <CitizendProjectDescription />

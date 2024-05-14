@@ -84,7 +84,7 @@ export const saleDetails = async (): Promise<
         end: contractResults[5] * 1000n,
         minContribution: formatEther(contractResults[6]),
         maxContribution: formatEther(contractResults[7]),
-        totalTokensForSale: contractResults[8],
+        totalTokensForSale: formatEther(contractResults[8]),
         startRegistration: contractResults[9] * 1000n,
         endRegistration: contractResults[10] * 1000n,
         url: `${host}/projects/citizend`,

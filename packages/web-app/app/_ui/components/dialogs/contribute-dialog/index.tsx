@@ -11,6 +11,8 @@ import { Spinner } from '../../svg/spinner';
 import { Check } from '../../svg/check';
 import { Error } from '../../svg/error';
 import { Done } from '../done';
+import { use } from 'react';
+import { appSignal } from '@/app/app-signal';
 
 type TAllowFundsProps = {
   amount: number;
@@ -152,6 +154,14 @@ export function ContributeDialog({
     buyCtzndTokens,
     error: buyError,
   } = useBuyCtzndTokens();
+
+  useEffectSafe(() => {
+    const reportError = error || buyError;
+
+    if (!reportError) return;
+
+    appSignal.sendError(reportError);
+  }, [error, buyError]);
 
   if (isLoading && !allowance)
     return (

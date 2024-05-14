@@ -22,6 +22,8 @@ import {
 } from '@/wagmi.generated';
 import { formatEther, formatUnits } from 'viem';
 import { computeRisingTideCap } from '../_server/risingTide/risingtide';
+import { appSignal } from '../app-signal';
+import { useEffect } from 'react';
 
 export const usePublicInfo = () => {
   return useQuery({
@@ -41,6 +43,7 @@ export const useProjectPublicInfo = (projectId?: TProjectInfoArgs) => {
       const result = await getProjectPublicInfo(projectId);
 
       if (typeof result === 'object' && 'error' in result) {
+        appSignal.sendError(new Error(result.error));
         throw new Error(PROJECT_NOT_FOUND);
       }
 
@@ -60,6 +63,7 @@ export const useFetchProjectsSaleDetails = () => {
         typeof projectSaleDetails === 'object' &&
         'error' in projectSaleDetails
       ) {
+        appSignal.sendError(new Error(projectSaleDetails.error));
         throw new Error(projectSaleDetails.error);
       }
 
@@ -109,25 +113,24 @@ export const useFetchCredentialContent = (credentialId: string | undefined) => {
 
   return useQuery({
     queryKey: ['credential-content', credentialId],
-    queryFn: async ({ queryKey: [, credentialId] }) => {
+    queryFn: async () => {
       if (!sdk || !credentialId || !hasSigner) return '';
 
-      const credential = await sdk.data.get<
-        idOSCredential & { content: string }
-      >('credentials', credentialId);
+      try {
+        const credential = await sdk.data.get<
+          idOSCredential & { content: string }
+        >('credentials', credentialId);
 
-      if (!credential) return '';
+        if (!credential) {
+          appSignal.sendError(new Error('Credential content not found'));
+          return '';
+        }
 
-      // check if this step is really needed
-      // const verified = await idOS.verifiableCredentials.verify(credential?.content);
-
-      // console.log(
-      //   '%c==>Verify Credential:',
-      //   'color: green; background: yellow; font-size: 20px',
-      //   verified,
-      // );
-
-      return JSON.parse(credential?.content);
+        return JSON.parse(credential?.content);
+      } catch (error) {
+        appSignal.sendError(error as Error);
+        throw error;
+      }
     },
     enabled: !!(sdk && credentialId && hasSigner),
     refetchOnWindowFocus: true,
@@ -156,6 +159,7 @@ export const useFetchGrants = () => {
       const result = await getGrants({ owner: address });
 
       if (typeof result === 'object' && 'error' in result) {
+        appSignal.sendError(new Error(result.error));
         throw new Error(result.error);
       }
 
@@ -198,6 +202,7 @@ export const useFetchNewDataId = (
 
         return dataId;
       } catch (error) {
+        appSignal.sendError(error as Error);
         return null;
       }
     },
@@ -216,6 +221,7 @@ export const useFetchMerkleProof = () => {
       const result = await fetchAndGenerateProof(address);
 
       if (typeof result === 'object' && 'error' in result) {
+        appSignal.sendError(new Error(result.error));
         throw new Error(result.error);
       }
 
@@ -244,6 +250,14 @@ export const usePaymentTokenBalance = () => {
       enabled: !!paymentToken,
     },
   });
+
+  useEffect(() => {
+    const errorToReport = errorToken || errorBalance;
+
+    if (errorToReport) {
+      appSignal.sendError(errorToReport);
+    }
+  }, [errorToken, errorBalance]);
 
   if (!paymentToken) {
     return {

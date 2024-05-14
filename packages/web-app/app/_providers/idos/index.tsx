@@ -58,11 +58,19 @@ export const IdOsProvider = ({ children }: PropsWithChildren) => {
         let count = 0;
         while (count < 2) {
           try {
-            const signer = await sdk.setSigner('EVM', evmSigner);
+            if (sdk?.auth?.user && sdk.auth.user?.address !== userAddress) {
+              sdk.auth.user = undefined;
+              await sdk.reset({ enclave: true });
+            }
 
-            if (!signer?.address) throw new Error('Signer not set');
+            if (!sdk?.auth?.user) {
+              const signer = await sdk.setSigner('EVM', evmSigner);
+
+              if (!signer?.address) throw new Error('Signer not set');
+            }
 
             setHasSigner(true);
+            count = 0;
             break;
           } catch (error: any) {
             count++;

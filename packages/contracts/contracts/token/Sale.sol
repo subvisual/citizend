@@ -118,7 +118,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     // Merkle root for contributions validation
     bytes32 public merkleRoot;
 
-    error MaxTargetReached();
+    error MaxContributorsReached();
     error InvalidLeaf();
 
     /// @param _paymentToken Token accepted as payment
@@ -240,8 +240,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _amount,
         bytes32[] calldata _merkleProof
     ) external override(ISale) inSale nonReentrant {
-        if (_investorCount >= minTarget / minContribution)
-            revert MaxTargetReached();
+        if (_investorCount >= maxTarget / minContribution)
+            revert MaxContributorsReached();
 
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
         bool isValidLeaf = MerkleProof.verify(_merkleProof, merkleRoot, leaf);
@@ -316,11 +316,11 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     function allocation(
         address _to
     ) public view override(ISale) returns (uint256) {
-        if (totalUncappedAllocations < minTarget) {
+        if (tokenToPaymentToken(totalUncappedAllocations) < minTarget) {
             return 0;
         }
 
-        if (totalUncappedAllocations > maxTarget) {
+        if (tokenToPaymentToken(totalUncappedAllocations) > maxTarget) {
             return _applyCap(uncappedAllocation(_to));
         }
 
@@ -330,17 +330,18 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     }
 
     function currentTokenPrice() public view returns (uint256) {
-        if (totalUncappedAllocations < minTarget) {
+        if (tokenToPaymentToken(totalUncappedAllocations) < minTarget) {
             return minPrice;
         }
 
-        if (totalUncappedAllocations > maxTarget) {
+        if (tokenToPaymentToken(totalUncappedAllocations) > maxTarget) {
             return maxPrice;
         }
 
         return
             minPrice +
-            ((maxPrice - minPrice) * (totalUncappedAllocations - minTarget)) /
+            ((maxPrice - minPrice) *
+                (tokenToPaymentToken(totalUncappedAllocations) - minTarget)) /
             (maxTarget - minTarget);
     }
 

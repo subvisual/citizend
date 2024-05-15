@@ -11,8 +11,8 @@ export default defineConfig({
       deployments: {
         Sale: {
           1: "0x85b34Aa54fdf8242e4656eA50b711F45340925bC",
-          31337: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-          11155111: "0x23abe818f04f810151a12b65893248bcf623b967",
+          31337: "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+          11155111: "0xb8C0cD4370c8279f642BFB6433b7D35027DE3b60",
         },
       },
     }),

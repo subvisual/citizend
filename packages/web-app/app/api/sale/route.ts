@@ -31,5 +31,35 @@ export async function GET(_request: Request) {
     };
   });
 
-  return Response.json(tempDetails);
+  const host = process.env.NEXT_PUBLIC_DAPP_HOST;
+
+  const extendedWithTBA = [
+    ...tempDetails,
+    {
+      address: 'TBA',
+      publicKey: 'TBA',
+      project: 'the posemesh (AUKI)',
+      description:
+        'The DePIN for AI Perception. The posemesh is a decentralized machine perception network for the next 100 billion people, devices and AI.',
+      status: 'upcoming',
+      rate: 'TBA',
+      minTarget: 'TBA',
+      maxTarget: 'TBA',
+      start: 'TBA',
+      end: 'TBA',
+      minContribution: 'TBA',
+      maxContribution: 'TBA',
+      totalTokensForSale: 'TBA',
+      startRegistration: 'TBA',
+      endRegistration: 'TBA',
+      url: 'TBA',
+      logo: `${host}/auki-logo.jpg`,
+      background: `${host}/auki-card-background.jpg`,
+      backgroundMobile: `${host}/auki-card-background.jpg`,
+      supplyPercentage: 'TBA',
+      currentPrice: 'TBA',
+    },
+  ];
+
+  return Response.json(extendedWithTBA);
 }

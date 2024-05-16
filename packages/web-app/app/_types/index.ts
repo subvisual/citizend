@@ -24,6 +24,7 @@ export type TProjectSaleDetails = {
   address: string;
   publicKey: string;
   project: string;
+  description: string;
   status: TProjectStatus;
   url: string;
   logo: string;

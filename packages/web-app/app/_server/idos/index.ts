@@ -47,10 +47,14 @@ const userFilter = async (grantee: idOSGrantee, userAddress: string) => {
     );
 
     //expected scenario
-    if (isBlockedCountry) return null;
+    if (isBlockedCountry) {
+      console.log('Blocked country found for user', userAddress);
+      return null;
+    }
 
     return userAddress;
   } catch (error) {
+    console.log(error);
     if (error instanceof Error) {
       console.error(error.message);
     }
@@ -64,7 +68,7 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
     const applicantsResult = await getProjectApplicants(projectAddress);
     const addressesFull = addressesListSchema.parse(applicantsResult);
     //first 20 addresses
-    const addresses = ['0xFbc53B2C5516e8d0765C9BC9711DbD27aab38F40'];
+    const addresses = addressesFull;
     console.log(
       '%c==>',
       'color: green; background: yellow; font-size: 20px',
@@ -81,35 +85,29 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
     });
 
     // const number of batches with 10 addresses
-    const batches = Math.ceil(addresses.length / 10);
-    let currentBatch: string[] = [];
     const allowed: string[] = [];
     let notAllowed: string[] = [];
-    for (let i = 0; i < batches; i++) {
-      console.log(
-        '%c==>BATCH',
-        'color: green; background: yellow; font-size: 20px',
-        i,
-      );
-
-      currentBatch = addresses.slice(i * 10, i * 10 + 10);
-
-      for (const address of currentBatch) {
-        const result = await userFilter(grantee, address);
-        if (result !== null) {
-          allowed.push(result);
-        } else {
-          console.log(
-            '%c==>Failed',
-            'color: green; background: yellow; font-size: 20px',
-            address,
-          );
-          notAllowed.push(address);
-        }
+    let i = 0;
+    for (const address of addresses) {
+      const result = await userFilter(grantee, address);
+      if (result !== null) {
+        allowed.push(result);
+        console.log(
+          '%c==>',
+          'color: green; background: yellow; font-size: 20px',
+          i++,
+        );
+      } else {
+        console.log(
+          '%c==>Failed',
+          'color: green; background: yellow; font-size: 20px',
+          address,
+        );
+        notAllowed.push(address);
       }
-      // sleep for 200ms
-      // await new Promise((resolve) => setTimeout(resolve, 200));
     }
+    // sleep for 200ms
+    // await new Promise((resolve) => setTimeout(resolve, 200));
 
     // retry not allowed addresses for 5 times
     // remove addresses from notAllowed array if they are allowed

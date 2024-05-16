@@ -165,14 +165,30 @@ export class idOSGrantee {
     );
   }
 
-  async verifyCredential(credential: any) {
-    if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
-      return idOS.verifiableCredentials.verify(credential, {
-        allowedIssuers: [PLAYGROUND_FRACTAL_ISSUER],
+  async isValidCredential(credential: any): Promise<boolean> {
+    try {
+      let result: any;
+
+      if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
+        result = await idOS.verifiableCredentials.verify(credential, {
+          allowedIssuers: [PLAYGROUND_FRACTAL_ISSUER],
+        });
+      } else {
+        result = await idOS.verifiableCredentials.verify(credential);
+      }
+
+      if (result !== true) {
+        throw new Error('Invalid credential', result);
+      }
+
+      return true;
+    } catch (error) {
+      console.log('Error verifying credential');
+      console.log(error);
+      return new Promise((resolve, _reject) => {
+        resolve(false);
       });
     }
-
-    return idOS.verifiableCredentials.verify(credential);
   }
 
   async fetchUserCountriesFromSharedPlusCredential(
@@ -182,30 +198,24 @@ export class idOSGrantee {
       await this.getSharedCredentialContentDecrypted(dataId);
     const credential = JSON.parse(credentialString);
 
-    let isValid;
-    try {
-      isValid = await this.verifyCredential(credential);
-    } catch (error) {
-      console.log('Error verifying credential');
-      console.log(error);
+    const isValid = await this.isValidCredential(credential);
+
+    if (credential?.level && credential.level !== 'plus') {
+      console.log('Credential is not plus level, for dataId:', dataId);
     }
 
-    if (
-      credential?.level !== 'plus' ||
-      typeof isValid !== 'boolean' ||
-      isValid !== true
-    ) {
+    if (credential?.level === 'plus' && isValid) {
       return {
-        residentialCountry: undefined,
-        idDocumentCountry: undefined,
+        residentialCountry:
+          credential?.credentialSubject?.residential_address_country,
+        idDocumentCountry:
+          credential?.credentialSubject?.identification_document_country,
       };
     }
 
     return {
-      residentialCountry:
-        credential?.credentialSubject?.residential_address_country,
-      idDocumentCountry:
-        credential?.credentialSubject?.identification_document_country,
+      residentialCountry: undefined,
+      idDocumentCountry: undefined,
     };
   }
 

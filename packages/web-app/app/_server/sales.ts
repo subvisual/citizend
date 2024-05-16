@@ -76,6 +76,7 @@ export const saleDetails = async (): Promise<
         address: evmGrantee.address,
         publicKey: evmGranteePublicKey,
         project: 'citizend',
+        description: 'The community-curated token launch platform of web3.',
         status: contractResults[0],
         rate: contractResults[1],
         minTarget: contractResults[2],

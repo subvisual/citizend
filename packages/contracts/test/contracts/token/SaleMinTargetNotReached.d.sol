@@ -75,10 +75,46 @@ contract SaleMinTargetNotReachedTest is Test {
         sale.setMerkleRoot(merkleRoot);
         sale.setMinContribution(sale.paymentTokenToToken(100 ether));
 
-        paymentToken.mint(alice, 1000 ether);
-        paymentToken.mint(bob, 1000 ether);
+        paymentToken.mint(alice, 300000 ether);
+        paymentToken.mint(bob, 300000 ether);
 
         vm.stopPrank();
+    }
+
+    function test_AllocationWhenMinTargetReached() public {
+        vm.warp(sale.start());
+
+        vm.startPrank(alice);
+        paymentToken.approve(address(sale), 300000 ether);
+        sale.buy(sale.paymentTokenToToken(300000 ether), merkleProofs[alice]);
+        vm.stopPrank();
+
+        vm.startPrank(bob);
+        paymentToken.approve(address(sale), 200000 ether);
+        sale.buy(sale.paymentTokenToToken(200000 ether), merkleProofs[bob]);
+        vm.stopPrank();
+
+        require(paymentToken.balanceOf(address(sale)) == 500000 ether);
+
+        vm.startPrank(bob);
+        paymentToken.approve(address(sale), 100000 ether);
+        sale.buy(sale.paymentTokenToToken(100000 ether), merkleProofs[bob]);
+        vm.stopPrank();
+
+        vm.warp(sale.end() + 1000);
+
+        require(
+            sale.totalUncappedAllocations() ==
+                sale.paymentTokenToToken(600000 ether)
+        );
+        require(
+            sale.allocation(address(alice)) ==
+                ((300000 ether / sale.currentTokenPrice()) * 1 ether)
+        );
+        require(
+            sale.allocation(address(bob)) ==
+                ((300000 ether / sale.currentTokenPrice()) * 1 ether)
+        );
     }
 
     function test_RefundsWhenMinTargetNotReached() public {

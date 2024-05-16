@@ -199,12 +199,17 @@ export class idOSGrantee {
     const credential = JSON.parse(credentialString);
 
     const isValid = await this.isValidCredential(credential);
+    const isApproved = credential?.status === 'approved';
 
     if (credential?.level && credential.level !== 'plus') {
       console.log('Credential is not plus level, for dataId:', dataId);
     }
 
-    if (credential?.level === 'plus' && isValid) {
+    if (!isApproved) {
+      console.log('Credential is not approved, for dataId:', dataId);
+    }
+
+    if (credential?.level === 'plus' && isValid && isApproved) {
       return {
         residentialCountry:
           credential?.credentialSubject?.residential_address_country,

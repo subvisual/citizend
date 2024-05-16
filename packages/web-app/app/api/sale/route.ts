@@ -40,7 +40,7 @@ export async function GET(_request: Request) {
       publicKey: 'TBA',
       project: 'the posemesh (AUKI)',
       description:
-        'The DePin for AI Perception. The posemesh is a decentralized machine perception network for the next 100 billion people, devices and AI',
+        'The DePIN for AI Perception. The posemesh is a decentralized machine perception network for the next 100 billion people, devices and AI.',
       status: 'upcoming',
       rate: 'TBA',
       minTarget: 'TBA',

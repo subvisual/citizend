@@ -53,7 +53,7 @@ export async function GET(_request: Request) {
       startRegistration: 'TBA',
       endRegistration: 'TBA',
       url: 'TBA',
-      logo: `${host}/auki-logo.jpg`,
+      logo: `${host}/auki-logo.png`,
       background: `${host}/auki-card-background.jpg`,
       backgroundMobile: `${host}/auki-card-background.jpg`,
       supplyPercentage: 'TBA',

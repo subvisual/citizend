@@ -38,7 +38,7 @@ export async function GET(_request: Request) {
     {
       address: 'TBA',
       publicKey: 'TBA',
-      project: 'the posemesh (AUKI)',
+      project: 'The Posemesh (AUKI)',
       description:
         'The DePIN for AI Perception. The posemesh is a decentralized machine perception network for the next 100 billion people, devices and AI.',
       status: 'upcoming',

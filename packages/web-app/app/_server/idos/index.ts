@@ -64,8 +64,8 @@ const userFilter = async (grantee: idOSGrantee, userAddress: string) => {
 };
 
 const filterApplicants = async (addresses: string[], grantee: idOSGrantee) => {
-  const allowed: string[] = [];
-  const notAllowed: string[] = [];
+  const allowed = new Set<string>();
+  const notAllowed = new Set<string>();
   const batches = Math.ceil(addresses.length / 10);
 
   // run in batches of 10
@@ -82,9 +82,9 @@ const filterApplicants = async (addresses: string[], grantee: idOSGrantee) => {
 
     results.forEach((result, index) => {
       if (result !== null) {
-        allowed.push(result);
+        allowed.add(result);
       } else {
-        notAllowed.push(batch[index]);
+        notAllowed.add(batch[index]);
       }
     });
   }
@@ -93,18 +93,17 @@ const filterApplicants = async (addresses: string[], grantee: idOSGrantee) => {
 };
 
 const retryFailed = async (
-  allowed: string[],
-  notAllowed: string[],
+  allowed: Set<string>,
+  notAllowed: Set<string>,
   grantee: idOSGrantee,
 ) => {
   for (const address of notAllowed) {
     const result = await userFilter(grantee, address);
     if (result !== null) {
-      allowed.push(result);
+      allowed.add(result);
+      notAllowed.delete(address);
     }
   }
-
-  notAllowed = notAllowed.filter((address) => !allowed.includes(address));
 };
 
 export const getAllowedProjectApplicants = async (projectAddress: string) => {
@@ -125,7 +124,7 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
     let { allowed, notAllowed } = await filterApplicants(addresses, grantee);
     // retry 2 times failed addresses
     let retry = 2;
-    while (retry > 0 && notAllowed.length > 0) {
+    while (retry > 0 && notAllowed.size > 0) {
       retryFailed(allowed, notAllowed, grantee);
       retry--;
     }
@@ -133,7 +132,7 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
     console.log('==>', 'NOT ALLOWED:');
     console.log(notAllowed);
 
-    return allowed as string[];
+    return Array.from(allowed);
   } catch (error) {
     console.error(error);
 

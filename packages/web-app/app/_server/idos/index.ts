@@ -63,59 +63,48 @@ const userFilter = async (grantee: idOSGrantee, userAddress: string) => {
   return null;
 };
 
-const populateLists = async (addresses: string[], grantee: idOSGrantee) => {
+const filterApplicants = async (addresses: string[], grantee: idOSGrantee) => {
   const allowed: string[] = [];
   const notAllowed: string[] = [];
-  const batches = Math.ceil(addresses.length / 2);
+  const batches = Math.ceil(addresses.length / 10);
 
+  // run in batches of 10
   for (let i = 0; i < batches; i++) {
-    console.log(
-      '%c==>BATCH',
-      'color: green; background: yellow; font-size: 20px',
-      i,
+    console.log('==>BATCH', i);
+
+    let batch = addresses.slice(i * 10, (i + 1) * 10);
+    let promises = batch.map(
+      async (address): Promise<string | null> =>
+        new Promise((resolve) => resolve(userFilter(grantee, address))),
     );
 
-    const batch = addresses.slice(i * 2, (i + 1) * 2);
-    console.log(
-      '%c==>',
-      'color: green; background: yellow; font-size: 20px',
-      'MANDOU',
-    );
-
-    const promises = batch.map(async (address): Promise<string | null> => {
-      return new Promise(() => userFilter(grantee, address));
-    });
-
-    const results = await Promise.all(promises);
-
-    console.log(
-      '%c==>',
-      'color: green; background: yellow; font-size: 20px',
-      'CHEGOU',
-    );
+    let results = await Promise.all(promises);
 
     results.forEach((result, index) => {
-      console.log(
-        '%c==>RESULT',
-        'color: green; background: yellow; font-size: 20px',
-        result,
-      );
-
       if (result !== null) {
         allowed.push(result);
       } else {
-        console.log(
-          '%c==>FAILED',
-          'color: green; background: yellow; font-size: 20px',
-          result,
-        );
-
         notAllowed.push(batch[index]);
       }
     });
   }
 
   return { allowed, notAllowed };
+};
+
+const retryFailed = async (
+  allowed: string[],
+  notAllowed: string[],
+  grantee: idOSGrantee,
+) => {
+  for (const address of notAllowed) {
+    const result = await userFilter(grantee, address);
+    if (result !== null) {
+      allowed.push(result);
+    }
+  }
+
+  notAllowed = notAllowed.filter((address) => !allowed.includes(address));
 };
 
 export const getAllowedProjectApplicants = async (projectAddress: string) => {
@@ -131,42 +120,18 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
           ? undefined
           : 'x44250024a9bf9599ad7c3fcdb220d2100357dbf263014485174a1ae3',
     });
-    // number of batches of 5 addresses
-    let { allowed, notAllowed } = await populateLists(addresses, grantee);
 
-    console.log(
-      '%c==>',
-      'color: green; background: yellow; font-size: 20px',
-      'DEU MERDA',
-    );
-
-    // for (const address of addresses) {
-    //   const result = await userFilter(grantee, address);
-    //   if (result !== null) {
-    //     allowed.push(result);
-    //   } else {
-    //     notAllowed.push(address);
-    //   }
-    // }
-
-    let retry = 5;
+    // first run to populate the lists
+    let { allowed, notAllowed } = await filterApplicants(addresses, grantee);
+    // retry 2 times failed addresses
+    let retry = 2;
     while (retry > 0 && notAllowed.length > 0) {
-      for (const address of notAllowed) {
-        const result = await userFilter(grantee, address);
-        if (result !== null) {
-          allowed.push(result);
-        } else {
-          console.log(
-            '%c==>Failed Retry',
-            'color: green; background: yellow; font-size: 20px',
-            address,
-          );
-        }
-      }
-
-      notAllowed = notAllowed.filter((address) => !allowed.includes(address));
+      retryFailed(allowed, notAllowed, grantee);
       retry--;
     }
+
+    console.log('==>', 'NOT ALLOWED:');
+    console.log(notAllowed);
 
     return allowed as string[];
   } catch (error) {

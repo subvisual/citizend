@@ -154,15 +154,23 @@ export class idOSGrantee {
   }
 
   async getSharedCredentialContentDecrypted(dataId: string): Promise<string> {
-    const credentialCopy = await this.fetchSharedCredentialFromIdos<{
-      content: string;
-      encryption_public_key: string;
-    }>(dataId);
+    try {
+      const credentialCopy = await this.fetchSharedCredentialFromIdos<{
+        content: string;
+        encryption_public_key: string;
+      }>(dataId);
 
-    return await this.noncedBox.decrypt(
-      credentialCopy.content,
-      credentialCopy.encryption_public_key,
-    );
+      return await this.noncedBox.decrypt(
+        credentialCopy.content,
+        credentialCopy.encryption_public_key,
+      );
+    } catch (error) {
+      console.log(
+        'Error fetching or decrypting shared credential from idos for dataId:',
+        dataId,
+      );
+      throw error;
+    }
   }
 
   async isValidCredential(credential: any): Promise<boolean> {

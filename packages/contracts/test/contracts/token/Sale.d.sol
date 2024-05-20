@@ -56,7 +56,7 @@ contract SaleTest is Test {
             0x070e8db97b197cc0e4a1790c5e6c3667bab32d733db7f815fbe84f5824c7168d
         );
 
-        paymentToken = new MockERC20("USDC", "USDC", 18);
+        paymentToken = new MockERC20("USDC", "USDC", 6);
         token = new Citizend(owner, end);
         sale = new Sale(
             address(paymentToken),

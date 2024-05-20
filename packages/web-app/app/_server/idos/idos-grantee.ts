@@ -5,6 +5,9 @@ import { ethers } from 'ethers';
 import nacl from 'tweetnacl';
 import { decodeBase58, toBeHex } from 'ethers';
 import { EthSigner } from '@kwilteam/kwil-js/dist/core/builders';
+import { idOS } from '@idos-network/idos-sdk';
+
+const PLAYGROUND_FRACTAL_ISSUER = 'https://vc-issuers.next.fractal.id/idos';
 
 export function implicitAddressFromPublicKey(publicKey: string) {
   const key_without_prefix = publicKey.replace(/^ed25519:/, '');
@@ -151,15 +154,50 @@ export class idOSGrantee {
   }
 
   async getSharedCredentialContentDecrypted(dataId: string): Promise<string> {
-    const credentialCopy = await this.fetchSharedCredentialFromIdos<{
-      content: string;
-      encryption_public_key: string;
-    }>(dataId);
+    try {
+      const credentialCopy = await this.fetchSharedCredentialFromIdos<{
+        content: string;
+        encryption_public_key: string;
+      }>(dataId);
 
-    return await this.noncedBox.decrypt(
-      credentialCopy.content,
-      credentialCopy.encryption_public_key,
-    );
+      return await this.noncedBox.decrypt(
+        credentialCopy.content,
+        credentialCopy.encryption_public_key,
+      );
+    } catch (error) {
+      console.log(
+        'Error fetching or decrypting shared credential from idos for dataId:',
+        dataId,
+      );
+      throw error;
+    }
+  }
+
+  async isValidCredential(credential: any): Promise<boolean> {
+    try {
+      // Ignore for now due to minification issues from idOS SDK side
+      // let result: any;
+
+      // if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
+      //   result = await idOS.verifiableCredentials.verify(credential, {
+      //     allowedIssuers: [PLAYGROUND_FRACTAL_ISSUER],
+      //   });
+      // } else {
+      //   result = await idOS.verifiableCredentials.verify(credential);
+      // }
+
+      // if (result !== true) {
+      //   throw new Error('Invalid credential', result);
+      // }
+
+      return true;
+    } catch (error) {
+      console.log('Error verifying credential');
+      console.log(error);
+      return new Promise((resolve, _reject) => {
+        resolve(false);
+      });
+    }
   }
 
   async fetchUserCountriesFromSharedPlusCredential(
@@ -169,17 +207,29 @@ export class idOSGrantee {
       await this.getSharedCredentialContentDecrypted(dataId);
     const credential = JSON.parse(credentialString);
 
-    if (credential?.level !== 'plus')
+    const isValid = await this.isValidCredential(credential);
+    const isApproved = credential?.status === 'approved';
+
+    if (credential?.level && credential.level !== 'plus') {
+      console.log('Credential is not plus level, for dataId:', dataId);
+    }
+
+    if (!isApproved) {
+      console.log('Credential is not approved, for dataId:', dataId);
+    }
+
+    if (credential?.level === 'plus' && isValid && isApproved) {
       return {
-        residentialCountry: undefined,
-        idDocumentCountry: undefined,
+        residentialCountry:
+          credential?.credentialSubject?.residential_address_country,
+        idDocumentCountry:
+          credential?.credentialSubject?.identification_document_country,
       };
+    }
 
     return {
-      residentialCountry:
-        credential?.credentialSubject?.residential_address_country,
-      idDocumentCountry:
-        credential?.credentialSubject?.identification_document_country,
+      residentialCountry: undefined,
+      idDocumentCountry: undefined,
     };
   }
 

@@ -5769,7 +5769,7 @@ export const ctzndSafeErc20Abi = [
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const ctzndSaleAbi = [
   {
@@ -6365,7 +6365,7 @@ export const ctzndSaleAbi = [
   },
   { type: 'error', inputs: [], name: 'FailedInnerCall' },
   { type: 'error', inputs: [], name: 'InvalidLeaf' },
-  { type: 'error', inputs: [], name: 'MaxTargetReached' },
+  { type: 'error', inputs: [], name: 'MaxContributorsReached' },
   { type: 'error', inputs: [], name: 'ReentrancyGuardReentrantCall' },
   {
     type: 'error',
@@ -6377,23 +6377,1244 @@ export const ctzndSaleAbi = [
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const ctzndSaleAddress = {
   1: '0x85b34Aa54fdf8242e4656eA50b711F45340925bC',
   31337: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
-  11155111: '0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD',
+  11155111: '0x7409Dfa77Bf9974a3e205eAcB2B35Bb2CFf39154',
 } as const
 
 /**
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const ctzndSaleConfig = {
   address: ctzndSaleAddress,
   abi: ctzndSaleAbi,
 } as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CtzndSaleMaxTargetNotReachedTest
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const ctzndSaleMaxTargetNotReachedTestAbi = [
+  {
+    type: 'function',
+    inputs: [],
+    name: 'IS_TEST',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'excludeArtifacts',
+    outputs: [
+      {
+        name: 'excludedArtifacts_',
+        internalType: 'string[]',
+        type: 'string[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'excludeContracts',
+    outputs: [
+      {
+        name: 'excludedContracts_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'excludeSenders',
+    outputs: [
+      {
+        name: 'excludedSenders_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'failed',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'setUp',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetArtifactSelectors',
+    outputs: [
+      {
+        name: 'targetedArtifactSelectors_',
+        internalType: 'struct StdInvariant.FuzzSelector[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'addr', internalType: 'address', type: 'address' },
+          { name: 'selectors', internalType: 'bytes4[]', type: 'bytes4[]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetArtifacts',
+    outputs: [
+      {
+        name: 'targetedArtifacts_',
+        internalType: 'string[]',
+        type: 'string[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetContracts',
+    outputs: [
+      {
+        name: 'targetedContracts_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetInterfaces',
+    outputs: [
+      {
+        name: 'targetedInterfaces_',
+        internalType: 'struct StdInvariant.FuzzInterface[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'addr', internalType: 'address', type: 'address' },
+          { name: 'artifacts', internalType: 'string[]', type: 'string[]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetSelectors',
+    outputs: [
+      {
+        name: 'targetedSelectors_',
+        internalType: 'struct StdInvariant.FuzzSelector[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'addr', internalType: 'address', type: 'address' },
+          { name: 'selectors', internalType: 'bytes4[]', type: 'bytes4[]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetSenders',
+    outputs: [
+      {
+        name: 'targetedSenders_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_AllocationAfterMaxTargetReached',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_BuyRevertsWhenMaxTargetReached',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'val',
+        internalType: 'uint256[]',
+        type: 'uint256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'val',
+        internalType: 'int256[]',
+        type: 'int256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'val',
+        internalType: 'address[]',
+        type: 'address[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_named_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'val',
+        internalType: 'uint256[]',
+        type: 'uint256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'val',
+        internalType: 'int256[]',
+        type: 'int256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'val',
+        internalType: 'address[]',
+        type: 'address[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_named_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_named_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+      {
+        name: 'decimals',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_decimal_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+      {
+        name: 'decimals',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_decimal_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_named_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_named_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'logs',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CtzndSaleMaxTargetReachedTest
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const ctzndSaleMaxTargetReachedTestAbi = [
+  {
+    type: 'function',
+    inputs: [],
+    name: 'IS_TEST',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'excludeArtifacts',
+    outputs: [
+      {
+        name: 'excludedArtifacts_',
+        internalType: 'string[]',
+        type: 'string[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'excludeContracts',
+    outputs: [
+      {
+        name: 'excludedContracts_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'excludeSenders',
+    outputs: [
+      {
+        name: 'excludedSenders_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'failed',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'setUp',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetArtifactSelectors',
+    outputs: [
+      {
+        name: 'targetedArtifactSelectors_',
+        internalType: 'struct StdInvariant.FuzzSelector[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'addr', internalType: 'address', type: 'address' },
+          { name: 'selectors', internalType: 'bytes4[]', type: 'bytes4[]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetArtifacts',
+    outputs: [
+      {
+        name: 'targetedArtifacts_',
+        internalType: 'string[]',
+        type: 'string[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetContracts',
+    outputs: [
+      {
+        name: 'targetedContracts_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetInterfaces',
+    outputs: [
+      {
+        name: 'targetedInterfaces_',
+        internalType: 'struct StdInvariant.FuzzInterface[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'addr', internalType: 'address', type: 'address' },
+          { name: 'artifacts', internalType: 'string[]', type: 'string[]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetSelectors',
+    outputs: [
+      {
+        name: 'targetedSelectors_',
+        internalType: 'struct StdInvariant.FuzzSelector[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'addr', internalType: 'address', type: 'address' },
+          { name: 'selectors', internalType: 'bytes4[]', type: 'bytes4[]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetSenders',
+    outputs: [
+      {
+        name: 'targetedSenders_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_AllocationAfterMaxTargetReached',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_BuyRevertsWhenMaxTargetReached',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'val',
+        internalType: 'uint256[]',
+        type: 'uint256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'val',
+        internalType: 'int256[]',
+        type: 'int256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'val',
+        internalType: 'address[]',
+        type: 'address[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_named_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'val',
+        internalType: 'uint256[]',
+        type: 'uint256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'val',
+        internalType: 'int256[]',
+        type: 'int256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'val',
+        internalType: 'address[]',
+        type: 'address[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_named_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_named_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+      {
+        name: 'decimals',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_decimal_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+      {
+        name: 'decimals',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_decimal_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_named_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_named_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'logs',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CtzndSaleMinTargetNotReachedDevDeployScript
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const ctzndSaleMinTargetNotReachedDevDeployScriptAbi = [
+  {
+    type: 'function',
+    inputs: [],
+    name: 'IS_SCRIPT',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'run',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CtzndSaleMinTargetNotReachedTest
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const ctzndSaleMinTargetNotReachedTestAbi = [
+  {
+    type: 'function',
+    inputs: [],
+    name: 'IS_TEST',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'excludeArtifacts',
+    outputs: [
+      {
+        name: 'excludedArtifacts_',
+        internalType: 'string[]',
+        type: 'string[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'excludeContracts',
+    outputs: [
+      {
+        name: 'excludedContracts_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'excludeSenders',
+    outputs: [
+      {
+        name: 'excludedSenders_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'failed',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'setUp',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetArtifactSelectors',
+    outputs: [
+      {
+        name: 'targetedArtifactSelectors_',
+        internalType: 'struct StdInvariant.FuzzSelector[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'addr', internalType: 'address', type: 'address' },
+          { name: 'selectors', internalType: 'bytes4[]', type: 'bytes4[]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetArtifacts',
+    outputs: [
+      {
+        name: 'targetedArtifacts_',
+        internalType: 'string[]',
+        type: 'string[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetContracts',
+    outputs: [
+      {
+        name: 'targetedContracts_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetInterfaces',
+    outputs: [
+      {
+        name: 'targetedInterfaces_',
+        internalType: 'struct StdInvariant.FuzzInterface[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'addr', internalType: 'address', type: 'address' },
+          { name: 'artifacts', internalType: 'string[]', type: 'string[]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetSelectors',
+    outputs: [
+      {
+        name: 'targetedSelectors_',
+        internalType: 'struct StdInvariant.FuzzSelector[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'addr', internalType: 'address', type: 'address' },
+          { name: 'selectors', internalType: 'bytes4[]', type: 'bytes4[]' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'targetSenders',
+    outputs: [
+      {
+        name: 'targetedSenders_',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_AllocationWhenMinTargetReached',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'test_RefundsWhenMinTargetNotReached',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'val',
+        internalType: 'uint256[]',
+        type: 'uint256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'val',
+        internalType: 'int256[]',
+        type: 'int256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'val',
+        internalType: 'address[]',
+        type: 'address[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'address', type: 'address', indexed: false },
+    ],
+    name: 'log_named_address',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'val',
+        internalType: 'uint256[]',
+        type: 'uint256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'val',
+        internalType: 'int256[]',
+        type: 'int256[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'val',
+        internalType: 'address[]',
+        type: 'address[]',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_array',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'log_named_bytes',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'bytes32', type: 'bytes32', indexed: false },
+    ],
+    name: 'log_named_bytes32',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+      {
+        name: 'decimals',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_decimal_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+      {
+        name: 'decimals',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'log_named_decimal_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'int256', type: 'int256', indexed: false },
+    ],
+    name: 'log_named_int',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_named_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'key', internalType: 'string', type: 'string', indexed: false },
+      { name: 'val', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_named_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'string', type: 'string', indexed: false },
+    ],
+    name: 'log_string',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'uint256', type: 'uint256', indexed: false },
+    ],
+    name: 'log_uint',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: '', internalType: 'bytes', type: 'bytes', indexed: false },
+    ],
+    name: 'logs',
+  },
+] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CtzndSaleTest
@@ -19510,7 +20731,7 @@ export const useWatchCtzndRisingTideTestLogsEvent =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSale = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19522,7 +20743,7 @@ export const useReadCtzndSale = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleCapValidationGasLimit =
   /*#__PURE__*/ createUseReadContract({
@@ -19536,7 +20757,7 @@ export const useReadCtzndSaleCapValidationGasLimit =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleCapValidatorRole =
   /*#__PURE__*/ createUseReadContract({
@@ -19550,7 +20771,7 @@ export const useReadCtzndSaleCapValidatorRole =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleDefaultAdminRole =
   /*#__PURE__*/ createUseReadContract({
@@ -19564,7 +20785,7 @@ export const useReadCtzndSaleDefaultAdminRole =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleAllocated = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19577,7 +20798,7 @@ export const useReadCtzndSaleAllocated = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleAllocation = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19590,7 +20811,7 @@ export const useReadCtzndSaleAllocation = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleCurrentTokenPrice =
   /*#__PURE__*/ createUseReadContract({
@@ -19604,7 +20825,7 @@ export const useReadCtzndSaleCurrentTokenPrice =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleEnd = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19617,7 +20838,7 @@ export const useReadCtzndSaleEnd = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleEndRegistration =
   /*#__PURE__*/ createUseReadContract({
@@ -19631,7 +20852,7 @@ export const useReadCtzndSaleEndRegistration =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleGetRoleAdmin = /*#__PURE__*/ createUseReadContract(
   {
@@ -19646,7 +20867,7 @@ export const useReadCtzndSaleGetRoleAdmin = /*#__PURE__*/ createUseReadContract(
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleHasRole = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19659,7 +20880,7 @@ export const useReadCtzndSaleHasRole = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleIndividualCap =
   /*#__PURE__*/ createUseReadContract({
@@ -19673,7 +20894,7 @@ export const useReadCtzndSaleIndividualCap =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleInvestorAmountAt =
   /*#__PURE__*/ createUseReadContract({
@@ -19687,7 +20908,7 @@ export const useReadCtzndSaleInvestorAmountAt =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleInvestorCount =
   /*#__PURE__*/ createUseReadContract({
@@ -19701,7 +20922,7 @@ export const useReadCtzndSaleInvestorCount =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleMaxContribution =
   /*#__PURE__*/ createUseReadContract({
@@ -19715,7 +20936,7 @@ export const useReadCtzndSaleMaxContribution =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleMaxPrice = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19728,7 +20949,7 @@ export const useReadCtzndSaleMaxPrice = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleMaxTarget = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19741,7 +20962,7 @@ export const useReadCtzndSaleMaxTarget = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleMerkleRoot = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19754,7 +20975,7 @@ export const useReadCtzndSaleMerkleRoot = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleMinContribution =
   /*#__PURE__*/ createUseReadContract({
@@ -19768,7 +20989,7 @@ export const useReadCtzndSaleMinContribution =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleMinPrice = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19781,7 +21002,7 @@ export const useReadCtzndSaleMinPrice = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleMinTarget = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19794,7 +21015,7 @@ export const useReadCtzndSaleMinTarget = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSalePaymentToken = /*#__PURE__*/ createUseReadContract(
   {
@@ -19809,7 +21030,7 @@ export const useReadCtzndSalePaymentToken = /*#__PURE__*/ createUseReadContract(
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSalePaymentTokenToToken =
   /*#__PURE__*/ createUseReadContract({
@@ -19823,7 +21044,7 @@ export const useReadCtzndSalePaymentTokenToToken =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleRate = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19836,7 +21057,7 @@ export const useReadCtzndSaleRate = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleRefundAmount = /*#__PURE__*/ createUseReadContract(
   {
@@ -19851,7 +21072,7 @@ export const useReadCtzndSaleRefundAmount = /*#__PURE__*/ createUseReadContract(
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleRisingTideCache =
   /*#__PURE__*/ createUseReadContract({
@@ -19865,7 +21086,7 @@ export const useReadCtzndSaleRisingTideCache =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleRisingTideState =
   /*#__PURE__*/ createUseReadContract({
@@ -19879,7 +21100,7 @@ export const useReadCtzndSaleRisingTideState =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleRisingTideApplyCap =
   /*#__PURE__*/ createUseReadContract({
@@ -19893,7 +21114,7 @@ export const useReadCtzndSaleRisingTideApplyCap =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleRisingTideIsValidCap =
   /*#__PURE__*/ createUseReadContract({
@@ -19907,7 +21128,7 @@ export const useReadCtzndSaleRisingTideIsValidCap =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleRisingTideTotalAllocatedUncapped =
   /*#__PURE__*/ createUseReadContract({
@@ -19921,7 +21142,7 @@ export const useReadCtzndSaleRisingTideTotalAllocatedUncapped =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleRisingTideTotalCap =
   /*#__PURE__*/ createUseReadContract({
@@ -19935,7 +21156,7 @@ export const useReadCtzndSaleRisingTideTotalCap =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleRisingTideValidating =
   /*#__PURE__*/ createUseReadContract({
@@ -19949,7 +21170,7 @@ export const useReadCtzndSaleRisingTideValidating =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleStart = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -19962,7 +21183,7 @@ export const useReadCtzndSaleStart = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleStartRegistration =
   /*#__PURE__*/ createUseReadContract({
@@ -19976,7 +21197,7 @@ export const useReadCtzndSaleStartRegistration =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleSupportsInterface =
   /*#__PURE__*/ createUseReadContract({
@@ -19990,7 +21211,7 @@ export const useReadCtzndSaleSupportsInterface =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleToken = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -20003,7 +21224,7 @@ export const useReadCtzndSaleToken = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleTokenToPaymentToken =
   /*#__PURE__*/ createUseReadContract({
@@ -20017,7 +21238,7 @@ export const useReadCtzndSaleTokenToPaymentToken =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleTotalTokensForSale =
   /*#__PURE__*/ createUseReadContract({
@@ -20031,7 +21252,7 @@ export const useReadCtzndSaleTotalTokensForSale =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleTotalUncappedAllocations =
   /*#__PURE__*/ createUseReadContract({
@@ -20045,7 +21266,7 @@ export const useReadCtzndSaleTotalUncappedAllocations =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleUncappedAllocation =
   /*#__PURE__*/ createUseReadContract({
@@ -20059,7 +21280,7 @@ export const useReadCtzndSaleUncappedAllocation =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useReadCtzndSaleWithdrawn = /*#__PURE__*/ createUseReadContract({
   abi: ctzndSaleAbi,
@@ -20072,7 +21293,7 @@ export const useReadCtzndSaleWithdrawn = /*#__PURE__*/ createUseReadContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSale = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -20084,7 +21305,7 @@ export const useWriteCtzndSale = /*#__PURE__*/ createUseWriteContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleBuy = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -20097,7 +21318,7 @@ export const useWriteCtzndSaleBuy = /*#__PURE__*/ createUseWriteContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleGrantRole = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -20110,7 +21331,7 @@ export const useWriteCtzndSaleGrantRole = /*#__PURE__*/ createUseWriteContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleRefund = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -20123,7 +21344,7 @@ export const useWriteCtzndSaleRefund = /*#__PURE__*/ createUseWriteContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleRenounceRole =
   /*#__PURE__*/ createUseWriteContract({
@@ -20137,7 +21358,7 @@ export const useWriteCtzndSaleRenounceRole =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleRevokeRole = /*#__PURE__*/ createUseWriteContract(
   { abi: ctzndSaleAbi, address: ctzndSaleAddress, functionName: 'revokeRole' },
@@ -20148,7 +21369,7 @@ export const useWriteCtzndSaleRevokeRole = /*#__PURE__*/ createUseWriteContract(
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleRisingTideValidate =
   /*#__PURE__*/ createUseWriteContract({
@@ -20162,7 +21383,7 @@ export const useWriteCtzndSaleRisingTideValidate =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleSetEnd = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -20175,7 +21396,7 @@ export const useWriteCtzndSaleSetEnd = /*#__PURE__*/ createUseWriteContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleSetEndRegistration =
   /*#__PURE__*/ createUseWriteContract({
@@ -20189,7 +21410,7 @@ export const useWriteCtzndSaleSetEndRegistration =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleSetIndividualCap =
   /*#__PURE__*/ createUseWriteContract({
@@ -20203,7 +21424,7 @@ export const useWriteCtzndSaleSetIndividualCap =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleSetMaxTarget =
   /*#__PURE__*/ createUseWriteContract({
@@ -20217,7 +21438,7 @@ export const useWriteCtzndSaleSetMaxTarget =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleSetMerkleRoot =
   /*#__PURE__*/ createUseWriteContract({
@@ -20231,7 +21452,7 @@ export const useWriteCtzndSaleSetMerkleRoot =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleSetMinContribution =
   /*#__PURE__*/ createUseWriteContract({
@@ -20245,7 +21466,7 @@ export const useWriteCtzndSaleSetMinContribution =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleSetMinTarget =
   /*#__PURE__*/ createUseWriteContract({
@@ -20259,7 +21480,7 @@ export const useWriteCtzndSaleSetMinTarget =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleSetStart = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -20272,7 +21493,7 @@ export const useWriteCtzndSaleSetStart = /*#__PURE__*/ createUseWriteContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleSetStartRegistration =
   /*#__PURE__*/ createUseWriteContract({
@@ -20286,7 +21507,7 @@ export const useWriteCtzndSaleSetStartRegistration =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleSetToken = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -20299,7 +21520,7 @@ export const useWriteCtzndSaleSetToken = /*#__PURE__*/ createUseWriteContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWriteCtzndSaleWithdraw = /*#__PURE__*/ createUseWriteContract({
   abi: ctzndSaleAbi,
@@ -20312,7 +21533,7 @@ export const useWriteCtzndSaleWithdraw = /*#__PURE__*/ createUseWriteContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSale = /*#__PURE__*/ createUseSimulateContract({
   abi: ctzndSaleAbi,
@@ -20324,7 +21545,7 @@ export const useSimulateCtzndSale = /*#__PURE__*/ createUseSimulateContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleBuy = /*#__PURE__*/ createUseSimulateContract({
   abi: ctzndSaleAbi,
@@ -20337,7 +21558,7 @@ export const useSimulateCtzndSaleBuy = /*#__PURE__*/ createUseSimulateContract({
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleGrantRole =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20351,7 +21572,7 @@ export const useSimulateCtzndSaleGrantRole =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleRefund =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20365,7 +21586,7 @@ export const useSimulateCtzndSaleRefund =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleRenounceRole =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20379,7 +21600,7 @@ export const useSimulateCtzndSaleRenounceRole =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleRevokeRole =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20393,7 +21614,7 @@ export const useSimulateCtzndSaleRevokeRole =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleRisingTideValidate =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20407,7 +21628,7 @@ export const useSimulateCtzndSaleRisingTideValidate =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleSetEnd =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20421,7 +21642,7 @@ export const useSimulateCtzndSaleSetEnd =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleSetEndRegistration =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20435,7 +21656,7 @@ export const useSimulateCtzndSaleSetEndRegistration =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleSetIndividualCap =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20449,7 +21670,7 @@ export const useSimulateCtzndSaleSetIndividualCap =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleSetMaxTarget =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20463,7 +21684,7 @@ export const useSimulateCtzndSaleSetMaxTarget =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleSetMerkleRoot =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20477,7 +21698,7 @@ export const useSimulateCtzndSaleSetMerkleRoot =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleSetMinContribution =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20491,7 +21712,7 @@ export const useSimulateCtzndSaleSetMinContribution =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleSetMinTarget =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20505,7 +21726,7 @@ export const useSimulateCtzndSaleSetMinTarget =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleSetStart =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20519,7 +21740,7 @@ export const useSimulateCtzndSaleSetStart =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleSetStartRegistration =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20533,7 +21754,7 @@ export const useSimulateCtzndSaleSetStartRegistration =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleSetToken =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20547,7 +21768,7 @@ export const useSimulateCtzndSaleSetToken =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useSimulateCtzndSaleWithdraw =
   /*#__PURE__*/ createUseSimulateContract({
@@ -20561,7 +21782,7 @@ export const useSimulateCtzndSaleWithdraw =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWatchCtzndSaleEvent = /*#__PURE__*/ createUseWatchContractEvent(
   { abi: ctzndSaleAbi, address: ctzndSaleAddress },
@@ -20572,7 +21793,7 @@ export const useWatchCtzndSaleEvent = /*#__PURE__*/ createUseWatchContractEvent(
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWatchCtzndSaleClaimEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -20586,7 +21807,7 @@ export const useWatchCtzndSaleClaimEvent =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWatchCtzndSalePurchaseEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -20600,7 +21821,7 @@ export const useWatchCtzndSalePurchaseEvent =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWatchCtzndSaleRefundEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -20614,7 +21835,7 @@ export const useWatchCtzndSaleRefundEvent =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWatchCtzndSaleRoleAdminChangedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -20628,7 +21849,7 @@ export const useWatchCtzndSaleRoleAdminChangedEvent =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWatchCtzndSaleRoleGrantedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -20642,7 +21863,7 @@ export const useWatchCtzndSaleRoleGrantedEvent =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWatchCtzndSaleRoleRevokedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
@@ -20656,13 +21877,1130 @@ export const useWatchCtzndSaleRoleRevokedEvent =
  *
  * - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x85b34Aa54fdf8242e4656eA50b711F45340925bC)
  * -
- * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x1D4d57F29C8a0E73A4C836792abcAc0B2b0D5adD)
+ * - [__View Contract on Sepolia Etherscan__](https://sepolia.etherscan.io/address/0x7409dfa77bf9974a3e205eacb2b35bb2cff39154)
  */
 export const useWatchCtzndSaleWithdrawEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: ctzndSaleAbi,
     address: ctzndSaleAddress,
     eventName: 'Withdraw',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTest =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"IS_TEST"`
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTestIsTest =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'IS_TEST',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"excludeArtifacts"`
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTestExcludeArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'excludeArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"excludeContracts"`
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTestExcludeContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'excludeContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"excludeSenders"`
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTestExcludeSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'excludeSenders',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTestTargetArtifactSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'targetArtifactSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"targetArtifacts"`
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTestTargetArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'targetArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"targetContracts"`
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTestTargetContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'targetContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"targetInterfaces"`
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTestTargetInterfaces =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'targetInterfaces',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"targetSelectors"`
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTestTargetSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'targetSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"targetSenders"`
+ */
+export const useReadCtzndSaleMaxTargetNotReachedTestTargetSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'targetSenders',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__
+ */
+export const useWriteCtzndSaleMaxTargetNotReachedTest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useWriteCtzndSaleMaxTargetNotReachedTestFailed =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useWriteCtzndSaleMaxTargetNotReachedTestSetUp =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"test_AllocationAfterMaxTargetReached"`
+ */
+export const useWriteCtzndSaleMaxTargetNotReachedTestTestAllocationAfterMaxTargetReached =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'test_AllocationAfterMaxTargetReached',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"test_BuyRevertsWhenMaxTargetReached"`
+ */
+export const useWriteCtzndSaleMaxTargetNotReachedTestTestBuyRevertsWhenMaxTargetReached =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'test_BuyRevertsWhenMaxTargetReached',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__
+ */
+export const useSimulateCtzndSaleMaxTargetNotReachedTest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useSimulateCtzndSaleMaxTargetNotReachedTestFailed =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useSimulateCtzndSaleMaxTargetNotReachedTestSetUp =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"test_AllocationAfterMaxTargetReached"`
+ */
+export const useSimulateCtzndSaleMaxTargetNotReachedTestTestAllocationAfterMaxTargetReached =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'test_AllocationAfterMaxTargetReached',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `functionName` set to `"test_BuyRevertsWhenMaxTargetReached"`
+ */
+export const useSimulateCtzndSaleMaxTargetNotReachedTestTestBuyRevertsWhenMaxTargetReached =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    functionName: 'test_BuyRevertsWhenMaxTargetReached',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_address"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_array"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_bytes"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_bytes32"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_int"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_address"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogNamedAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_named_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_array"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogNamedArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_named_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_bytes"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogNamedBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_named_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_bytes32"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogNamedBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_named_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogNamedDecimalIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_named_decimal_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogNamedDecimalUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_named_decimal_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_int"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogNamedIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_named_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_string"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogNamedStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_named_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_uint"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogNamedUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_named_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_string"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"log_uint"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'log_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetNotReachedTestAbi}__ and `eventName` set to `"logs"`
+ */
+export const useWatchCtzndSaleMaxTargetNotReachedTestLogsEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetNotReachedTestAbi,
+    eventName: 'logs',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__
+ */
+export const useReadCtzndSaleMaxTargetReachedTest =
+  /*#__PURE__*/ createUseReadContract({ abi: ctzndSaleMaxTargetReachedTestAbi })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"IS_TEST"`
+ */
+export const useReadCtzndSaleMaxTargetReachedTestIsTest =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'IS_TEST',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"excludeArtifacts"`
+ */
+export const useReadCtzndSaleMaxTargetReachedTestExcludeArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'excludeArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"excludeContracts"`
+ */
+export const useReadCtzndSaleMaxTargetReachedTestExcludeContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'excludeContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"excludeSenders"`
+ */
+export const useReadCtzndSaleMaxTargetReachedTestExcludeSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'excludeSenders',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
+ */
+export const useReadCtzndSaleMaxTargetReachedTestTargetArtifactSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'targetArtifactSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"targetArtifacts"`
+ */
+export const useReadCtzndSaleMaxTargetReachedTestTargetArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'targetArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"targetContracts"`
+ */
+export const useReadCtzndSaleMaxTargetReachedTestTargetContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'targetContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"targetInterfaces"`
+ */
+export const useReadCtzndSaleMaxTargetReachedTestTargetInterfaces =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'targetInterfaces',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"targetSelectors"`
+ */
+export const useReadCtzndSaleMaxTargetReachedTestTargetSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'targetSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"targetSenders"`
+ */
+export const useReadCtzndSaleMaxTargetReachedTestTargetSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'targetSenders',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__
+ */
+export const useWriteCtzndSaleMaxTargetReachedTest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useWriteCtzndSaleMaxTargetReachedTestFailed =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useWriteCtzndSaleMaxTargetReachedTestSetUp =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"test_AllocationAfterMaxTargetReached"`
+ */
+export const useWriteCtzndSaleMaxTargetReachedTestTestAllocationAfterMaxTargetReached =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'test_AllocationAfterMaxTargetReached',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"test_BuyRevertsWhenMaxTargetReached"`
+ */
+export const useWriteCtzndSaleMaxTargetReachedTestTestBuyRevertsWhenMaxTargetReached =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'test_BuyRevertsWhenMaxTargetReached',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__
+ */
+export const useSimulateCtzndSaleMaxTargetReachedTest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useSimulateCtzndSaleMaxTargetReachedTestFailed =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useSimulateCtzndSaleMaxTargetReachedTestSetUp =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"test_AllocationAfterMaxTargetReached"`
+ */
+export const useSimulateCtzndSaleMaxTargetReachedTestTestAllocationAfterMaxTargetReached =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'test_AllocationAfterMaxTargetReached',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `functionName` set to `"test_BuyRevertsWhenMaxTargetReached"`
+ */
+export const useSimulateCtzndSaleMaxTargetReachedTestTestBuyRevertsWhenMaxTargetReached =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    functionName: 'test_BuyRevertsWhenMaxTargetReached',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_address"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_array"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_bytes"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_bytes32"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_int"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_named_address"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogNamedAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_named_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_named_array"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogNamedArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_named_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_named_bytes"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogNamedBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_named_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_named_bytes32"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogNamedBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_named_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogNamedDecimalIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_named_decimal_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogNamedDecimalUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_named_decimal_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_named_int"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogNamedIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_named_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_named_string"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogNamedStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_named_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_named_uint"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogNamedUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_named_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_string"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"log_uint"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'log_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMaxTargetReachedTestAbi}__ and `eventName` set to `"logs"`
+ */
+export const useWatchCtzndSaleMaxTargetReachedTestLogsEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMaxTargetReachedTestAbi,
+    eventName: 'logs',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedDevDeployScriptAbi}__
+ */
+export const useReadCtzndSaleMinTargetNotReachedDevDeployScript =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedDevDeployScriptAbi,
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedDevDeployScriptAbi}__ and `functionName` set to `"IS_SCRIPT"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedDevDeployScriptIsScript =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedDevDeployScriptAbi,
+    functionName: 'IS_SCRIPT',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedDevDeployScriptAbi}__
+ */
+export const useWriteCtzndSaleMinTargetNotReachedDevDeployScript =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMinTargetNotReachedDevDeployScriptAbi,
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedDevDeployScriptAbi}__ and `functionName` set to `"run"`
+ */
+export const useWriteCtzndSaleMinTargetNotReachedDevDeployScriptRun =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMinTargetNotReachedDevDeployScriptAbi,
+    functionName: 'run',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedDevDeployScriptAbi}__
+ */
+export const useSimulateCtzndSaleMinTargetNotReachedDevDeployScript =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMinTargetNotReachedDevDeployScriptAbi,
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedDevDeployScriptAbi}__ and `functionName` set to `"run"`
+ */
+export const useSimulateCtzndSaleMinTargetNotReachedDevDeployScriptRun =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMinTargetNotReachedDevDeployScriptAbi,
+    functionName: 'run',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__
+ */
+export const useReadCtzndSaleMinTargetNotReachedTest =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"IS_TEST"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedTestIsTest =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'IS_TEST',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"excludeArtifacts"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedTestExcludeArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'excludeArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"excludeContracts"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedTestExcludeContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'excludeContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"excludeSenders"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedTestExcludeSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'excludeSenders',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"targetArtifactSelectors"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedTestTargetArtifactSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'targetArtifactSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"targetArtifacts"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedTestTargetArtifacts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'targetArtifacts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"targetContracts"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedTestTargetContracts =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'targetContracts',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"targetInterfaces"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedTestTargetInterfaces =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'targetInterfaces',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"targetSelectors"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedTestTargetSelectors =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'targetSelectors',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"targetSenders"`
+ */
+export const useReadCtzndSaleMinTargetNotReachedTestTargetSenders =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'targetSenders',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__
+ */
+export const useWriteCtzndSaleMinTargetNotReachedTest =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useWriteCtzndSaleMinTargetNotReachedTestFailed =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useWriteCtzndSaleMinTargetNotReachedTestSetUp =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"test_AllocationWhenMinTargetReached"`
+ */
+export const useWriteCtzndSaleMinTargetNotReachedTestTestAllocationWhenMinTargetReached =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'test_AllocationWhenMinTargetReached',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"test_RefundsWhenMinTargetNotReached"`
+ */
+export const useWriteCtzndSaleMinTargetNotReachedTestTestRefundsWhenMinTargetNotReached =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'test_RefundsWhenMinTargetNotReached',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__
+ */
+export const useSimulateCtzndSaleMinTargetNotReachedTest =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"failed"`
+ */
+export const useSimulateCtzndSaleMinTargetNotReachedTestFailed =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'failed',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"setUp"`
+ */
+export const useSimulateCtzndSaleMinTargetNotReachedTestSetUp =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'setUp',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"test_AllocationWhenMinTargetReached"`
+ */
+export const useSimulateCtzndSaleMinTargetNotReachedTestTestAllocationWhenMinTargetReached =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'test_AllocationWhenMinTargetReached',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `functionName` set to `"test_RefundsWhenMinTargetNotReached"`
+ */
+export const useSimulateCtzndSaleMinTargetNotReachedTestTestRefundsWhenMinTargetNotReached =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    functionName: 'test_RefundsWhenMinTargetNotReached',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_address"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_array"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_bytes"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_bytes32"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_int"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_address"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogNamedAddressEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_named_address',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_array"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogNamedArrayEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_named_array',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_bytes"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogNamedBytesEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_named_bytes',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_bytes32"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogNamedBytes32Event =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_named_bytes32',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_decimal_int"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogNamedDecimalIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_named_decimal_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_decimal_uint"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogNamedDecimalUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_named_decimal_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_int"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogNamedIntEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_named_int',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_string"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogNamedStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_named_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_named_uint"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogNamedUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_named_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_string"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogStringEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_string',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"log_uint"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogUintEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'log_uint',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ctzndSaleMinTargetNotReachedTestAbi}__ and `eventName` set to `"logs"`
+ */
+export const useWatchCtzndSaleMinTargetNotReachedTestLogsEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ctzndSaleMinTargetNotReachedTestAbi,
+    eventName: 'logs',
   })
 
 /**

@@ -3,6 +3,7 @@
 ## Audit reports
 
 - [2022-05-04 - Hacken - Token Sale contracts](./audits/2022-05-04_hacken_token-sale.pdf)
+- [2024-05-18 - Cure53 - Sale contracts](./audits/FRC-03-report.pdf)
 
 ## Development
 

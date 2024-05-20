@@ -41,7 +41,7 @@ contract DevDeployScript is Script {
         start = 1715947200;
         end = 1716033600;
 
-        MockERC20 paymentToken = new MockERC20("USDC", "USDC", 18);
+        MockERC20 paymentToken = new MockERC20("USDC", "USDC", 6);
         Sale sale = new Sale(
             address(paymentToken),
             0.2 ether,

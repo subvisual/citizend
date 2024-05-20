@@ -457,6 +457,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     function setMinContribution(
         uint256 _minContribution
     ) external onlyRole(DEFAULT_ADMIN_ROLE) nonReentrant {
+        require(_minContribution > 0, "can't be zero");
         minContribution = _minContribution;
     }
 

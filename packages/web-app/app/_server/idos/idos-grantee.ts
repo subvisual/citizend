@@ -175,6 +175,7 @@ export class idOSGrantee {
 
   async isValidCredential(credential: any): Promise<boolean> {
     try {
+      // Ignore for now due to minification issues from idOS SDK side
       // let result: any;
 
       // if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {

@@ -115,7 +115,8 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
   const { error, data } = await supabase
     .from('applications')
     .select('address')
-    .eq('project', projectAddress);
+    .eq('project', projectAddress)
+    .order('address', { ascending: true });
 
   if (error) {
     return {

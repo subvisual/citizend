@@ -9,6 +9,7 @@ import {
   evmGranteePublicKey,
 } from '../wallet';
 import { createClient } from '../supabase/server';
+import { compareAddresses } from '@/app/_lib/utils';
 
 export interface idOSGrant {
   content: string;
@@ -143,7 +144,10 @@ export const updateAllowedProjectApplicants = async (
 
     // remove already allowed addresses
     const addresses = parsedApplicants.filter(
-      (address) => !currentAllowedList.includes(address),
+      (address) =>
+        !currentAllowedList.some((allowed) =>
+          compareAddresses(allowed, address),
+        ),
     );
 
     console.log('==>Current Applicants', parsedApplicants.length);

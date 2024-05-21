@@ -10,7 +10,7 @@ export const canContribute = async (project: string, address: string) => {
     .from('applications')
     .select('*')
     .eq('project', project)
-    .eq('address', address);
+    .ilike('address', `%${address}%`);
 
   if (error) {
     console.error(error);

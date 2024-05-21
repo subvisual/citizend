@@ -341,7 +341,13 @@ export const useCanContribute = (project?: string, address?: string) => {
     queryKey: ['can-contribute', project, address],
     queryFn: async () => {
       if (!project || !address) return false;
-      return await canContribute(project, address);
+      const result = await canContribute(project, address);
+      if (typeof result === 'object' && 'error' in result) {
+        appSignal.sendError(new Error(result.error));
+        throw new Error(result.error);
+      }
+
+      return result;
     },
     enabled: !!project && !!address,
   });

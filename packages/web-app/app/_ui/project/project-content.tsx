@@ -39,7 +39,7 @@ export const ProjectContent = () => {
   const project = data?.find(
     (project) => project.project.toLowerCase() === projectId,
   );
-  const canContribute = useCanContribute(projectId, address);
+  const { data: canContribute } = useCanContribute(projectId, address);
   const hasGrant = canContribute || (hasProjectGrant && hasCitizendGrant);
   const saleCompleted = project?.status === 'completed';
 

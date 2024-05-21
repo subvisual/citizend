@@ -331,7 +331,7 @@ export const useFetchRisingTideCap = (enabled?: boolean) => {
 
       return cap;
     },
-    refetchInterval: 1000 * 1, // 1 minute
+    refetchInterval: 1000 * 10, // 10 seconds
     enabled,
   });
 };

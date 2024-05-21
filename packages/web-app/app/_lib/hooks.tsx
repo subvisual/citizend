@@ -196,7 +196,7 @@ export const useCtzndPaymentTokenAllowance = (userAddress: `0x${string}`) => {
     args: [userAddress, saleAddress],
     query: {
       staleTime: 0,
-      refetchInterval: 5000,
+      refetchInterval: 1000 * 5, // 5 seconds
     },
   });
 

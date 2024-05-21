@@ -39,6 +39,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
     maxAmount,
     amount,
     amountInWei,
+    tokensToBuyInSzabo,
     tokensToBuyInWei,
     tokensToBuy,
     error,
@@ -61,6 +62,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
       amountInWei,
       tokensToBuy,
       tokensToBuyInWei,
+      tokensToBuyInSzabo,
     });
   }, [open, amount, tokensToBuy, amountInWei, tokensToBuyInWei, userAddress]);
 

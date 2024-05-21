@@ -222,6 +222,7 @@ export const useContributeToCtznd = () => {
     amountInWei,
     maxAmount: Number(maxAmount || 0),
     tokensToBuyInWei: tokensToBuyInWei || 0n,
+    tokensToBuyInSzabo: (parseUnits(formatEther(tokensToBuyInWei || 0n), 6)) || 0n,
     tokensToBuy: tokensToBuyInWei ? Number(formatEther(tokensToBuyInWei)) : 0,
     error: tokenError,
   };

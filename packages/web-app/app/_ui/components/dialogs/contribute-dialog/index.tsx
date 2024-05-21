@@ -64,21 +64,22 @@ const AllowFunds = ({ amountInWei }: TAllowFundsProps) => {
 
 type TContributeProps = {
   tokensToBuyInWei: bigint;
+  tokensToBuyInSzabo: bigint;
   contributionTxHash?: `0x${string}`;
   buyCtzndTokens: (tokensToBuyInWei: bigint) => void;
   error: any;
 };
 
 const Contribute = ({
-  tokensToBuyInWei,
+  tokensToBuyInSzabo,
   contributionTxHash,
   buyCtzndTokens,
   error,
 }: TContributeProps) => {
   useEffectSafe(() => {
-    if (!tokensToBuyInWei || contributionTxHash) return;
+    if (!tokensToBuyInSzabo || contributionTxHash) return;
 
-    buyCtzndTokens(tokensToBuyInWei);
+    buyCtzndTokens(tokensToBuyInSzabo);
   }, []);
 
   if (contributionTxHash) {
@@ -138,6 +139,7 @@ export type TContributeDialogProps = {
   tokensToBuy: number;
   amountInWei: bigint;
   tokensToBuyInWei: bigint;
+  tokensToBuyInSzabo: bigint;
 };
 
 export function ContributeDialog({
@@ -146,6 +148,7 @@ export function ContributeDialog({
   tokensToBuy,
   amountInWei,
   tokensToBuyInWei,
+  tokensToBuyInSzabo,
 }: TContributeDialogProps) {
   const { allowance, isLoading, error } =
     useCtzndPaymentTokenAllowance(userAddress);
@@ -181,6 +184,7 @@ export function ContributeDialog({
         >
           <Contribute
             tokensToBuyInWei={tokensToBuyInWei}
+            tokensToBuyInSzabo={tokensToBuyInSzabo}
             contributionTxHash={contributionTxHash}
             buyCtzndTokens={buyCtzndTokens}
             error={buyError}

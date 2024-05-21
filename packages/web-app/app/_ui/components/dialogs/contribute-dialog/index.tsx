@@ -2,7 +2,7 @@
 
 import { useCtzndPaymentTokenAllowance, useEffectSafe } from '@/app/_lib/hooks';
 import { Dialog } from '@headlessui/react';
-import { formatEther } from 'viem';
+import { formatEther, formatUnits } from 'viem';
 import {
   useBuyCtzndTokens,
   useSetPaymentTokenAllowance,
@@ -218,7 +218,7 @@ export function ContributeDialog({
         <div className="flex justify-between pb-6 text-sm">
           <div className="uppercase text-mono-800">Current allowed value:</div>
           <div className="text-mono-950">
-            {allowance ? formatEther(allowance) : 0} USDC
+            {allowance ? formatUnits(allowance, 6) : 0} USDC
           </div>
         </div>
       </div>

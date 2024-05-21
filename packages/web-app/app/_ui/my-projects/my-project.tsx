@@ -84,7 +84,7 @@ const Header = ({ project, logo, end }: TProjectSaleDetails) => {
           <h3 className="text-sm text-mono-800">Rising Tide Mechanism</h3>
           <div>
             {saleCapStatus === 'above'
-              ? 'ON (max. target reached'
+              ? 'ON (max. target reached)'
               : 'OFF (total contributed below max.)'}
           </div>
         </div>

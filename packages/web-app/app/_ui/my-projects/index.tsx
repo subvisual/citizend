@@ -11,7 +11,7 @@ import { MyProjectSkeleton } from './my-project';
 import { useReadCtzndSaleInvestorCount } from '@/wagmi.generated';
 import { useAccount } from 'wagmi';
 import { useUserTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
-import { formatEther } from 'viem';
+import { formatUnits } from 'viem';
 
 const ProjectRow = ({
   logo,
@@ -26,8 +26,8 @@ const ProjectRow = ({
   const totalContributions = contributions ? contributions.toString() : 0;
   const totalUsdc = useUserTotalInvestedUsdcCtznd(address!);
   const targetedRaise = usdRange(
-    BigInt(formatEther(minTarget)),
-    BigInt(formatEther(maxTarget)),
+    BigInt(formatUnits(minTarget, 6)),
+    BigInt(formatUnits(maxTarget, 6)),
   );
   return (
     <Link

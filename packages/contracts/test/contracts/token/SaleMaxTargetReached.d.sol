@@ -57,45 +57,45 @@ contract SaleMaxTargetReachedTest is Test {
         start = endRegistration + 1 * day + 1000;
         end = start + 1 * day;
 
-        paymentToken = new MockERC20("usdc", "usdc", 18);
+        paymentToken = new MockERC20("usdc", "usdc", 6);
         sale = new Sale(
             address(paymentToken),
-            0.2 ether,
+            0.2 * 1e6,
             start,
             end,
             2500000 ether,
-            500000 ether,
-            1000000 ether,
+            500000 * 1e6,
+            1000000 * 1e6,
             startRegistration,
             endRegistration
         );
 
         sale.setMerkleRoot(merkleRoot);
-        sale.setMinContribution(sale.paymentTokenToToken(100 ether));
+        sale.setMinContribution(sale.paymentTokenToToken(100 * 1e6));
 
-        paymentToken.mint(alice, 2000000 ether);
-        paymentToken.mint(bob, 2000000 ether);
+        paymentToken.mint(alice, 2000000 * 1e6);
+        paymentToken.mint(bob, 2000000 * 1e6);
 
         vm.stopPrank();
     }
 
     function test_BuyRevertsWhenMaxTargetReached() public {
         vm.startPrank(owner);
-        sale.setMaxTarget(1 ether);
-        sale.setMinContribution(1 ether);
+        sale.setMaxTarget(1 * 1e6);
+        sale.setMinContribution(1 * 1e6);
         vm.stopPrank();
 
         vm.warp(sale.start());
 
         vm.startPrank(alice);
-        paymentToken.approve(address(sale), 2 ether);
-        sale.buy(sale.paymentTokenToToken(2 ether), merkleProofs[alice]);
+        paymentToken.approve(address(sale), 2 * 1e6);
+        sale.buy(sale.paymentTokenToToken(2 * 1e6), merkleProofs[alice]);
         vm.stopPrank();
 
         vm.startPrank(bob);
-        paymentToken.approve(address(sale), 1 ether);
+        paymentToken.approve(address(sale), 1 * 1e6);
 
-        uint256 amount = sale.paymentTokenToToken(1 ether);
+        uint256 amount = sale.paymentTokenToToken(1 * 1e6);
 
         vm.expectRevert(Sale.MaxContributorsReached.selector);
         sale.buy(amount, merkleProofs[bob]);
@@ -104,16 +104,20 @@ contract SaleMaxTargetReachedTest is Test {
     }
 
     function test_AllocationAfterMaxTargetReached() public {
+        vm.startPrank(owner);
+        sale.setMaxTarget(2000000 * 1e6);
+        sale.setMinContribution(1000000 * 1e6);
+
         vm.warp(sale.start());
 
         vm.startPrank(alice);
-        paymentToken.approve(address(sale), 2000000 ether);
-        sale.buy(sale.paymentTokenToToken(2000000 ether), merkleProofs[alice]);
+        paymentToken.approve(address(sale), 2000000 * 1e6);
+        sale.buy(sale.paymentTokenToToken(2000000 * 1e6), merkleProofs[alice]);
         vm.stopPrank();
 
         vm.startPrank(bob);
-        paymentToken.approve(address(sale), 2000000 ether);
-        sale.buy(sale.paymentTokenToToken(2000000 ether), merkleProofs[bob]);
+        paymentToken.approve(address(sale), 2000000 * 1e6);
+        sale.buy(sale.paymentTokenToToken(2000000 * 1e6), merkleProofs[bob]);
         vm.stopPrank();
 
         vm.warp(sale.end() + 1000);

@@ -314,11 +314,7 @@ export const useUserTotalInvestedUsdcCtznd = (address: `0x${string}`) => {
 export const useCtzndMinContributionUsdc = () => {
   const { data: min } = useReadCtzndSaleMinContribution();
 
-  const { data: minUsdc } = useReadCtzndSaleTokenToPaymentToken({
-    args: [min || 0n],
-  });
-
-  const usdcValue = min && minUsdc ? formatUnits(minUsdc, 6) : '0';
+  const usdcValue = min  ? formatUnits(min, 6) : '0';
 
   return usdcValue;
 };

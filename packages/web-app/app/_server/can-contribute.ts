@@ -6,7 +6,7 @@ import { createClient } from './supabase/server';
 export const canContribute = async (project: string, address: string) => {
   const supabase = createClient();
 
-  const { error, count } = await supabase
+  const { error, data } = await supabase
     .from('applications')
     .select('*')
     .eq('project', project)
@@ -17,5 +17,5 @@ export const canContribute = async (project: string, address: string) => {
     return { error: error.message };
   }
 
-  return count && count > 0 ? true : false;
+  return data?.length && data.length > 0 ? true : false;
 };

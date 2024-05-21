@@ -125,9 +125,9 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
         <Button
           className="w-full rounded-none"
           onClick={onClick}
-          disabled={amount <= minAmount || !!errorMessage}
+          disabled={amount < minAmount || !!errorMessage}
           variant={
-            amount <= minAmount || !!errorMessage
+            amount < minAmount || !!errorMessage
               ? 'primary-disabled'
               : 'primary'
           }

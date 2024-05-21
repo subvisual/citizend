@@ -15,6 +15,8 @@ export const ProjectGrantCheck = ({ children }: PropsWithChildren) => {
     return <MyProjectSkeleton />;
   }
 
+  if (hasGrant) return children;
+
   if (error && error?.message !== PROJECT_NOT_FOUND)
     return (
       <div>
@@ -22,8 +24,6 @@ export const ProjectGrantCheck = ({ children }: PropsWithChildren) => {
         <p>{error.message}</p>
       </div>
     );
-
-  if (hasGrant) return children;
 
   <Redirect href="/my-projects" />;
 };

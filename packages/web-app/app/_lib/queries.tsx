@@ -25,6 +25,7 @@ import { computeRisingTideCap } from '../_server/risingTide/risingtide';
 import { appSignal } from '../app-signal';
 import { useEffect } from 'react';
 import { canContribute } from '../_server/can-contribute';
+import { userProjects } from '../_server/user-projects';
 
 export const usePublicInfo = () => {
   return useQuery({
@@ -314,7 +315,7 @@ export const useUserTotalInvestedUsdcCtznd = (address: `0x${string}`) => {
 export const useCtzndMinContributionUsdc = () => {
   const { data: min } = useReadCtzndSaleMinContribution();
 
-  const usdcValue = min  ? formatUnits(min, 6) : '0';
+  const usdcValue = min ? formatUnits(min, 6) : '0';
 
   return usdcValue;
 };
@@ -346,5 +347,25 @@ export const useCanContribute = (project?: string, address?: string) => {
       return result;
     },
     enabled: !!project && !!address,
+  });
+};
+
+export const useUserProjects = () => {
+  const { address } = useAccount();
+
+  return useQuery({
+    queryKey: ['my-projects', address],
+    queryFn: async () => {
+      if (!address) return null;
+      const result = await userProjects(address);
+
+      if (typeof result === 'object' && 'error' in result) {
+        appSignal.sendError(new Error(result.error));
+        throw new Error(result.error);
+      }
+
+      return result;
+    },
+    enabled: !!address,
   });
 };

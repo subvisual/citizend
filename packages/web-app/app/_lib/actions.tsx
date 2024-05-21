@@ -228,7 +228,6 @@ export const useBuyCtzndTokens = () => {
 
   const buyCtzndTokens = useCallback(
     (tokensToBuyInWei: bigint) => {
-      console.log(merkleProof);
       if (tokensToBuyInWei === undefined || merkleProof === undefined) {
         return;
       }

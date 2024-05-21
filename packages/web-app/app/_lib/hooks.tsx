@@ -8,6 +8,7 @@ import {
   useProjectPublicInfo,
   usePublicInfo,
   useTotalInvestedUsdcCtznd,
+  useUserProjects,
 } from './queries';
 import { useKyc } from '../_providers/kyc/context';
 import { compareAddresses } from './utils';
@@ -114,31 +115,25 @@ export const useMyProjects = () => {
     isSuccess,
   } = useFetchProjectsSaleDetails();
   const {
-    shares,
-    grants,
-    isLoading: isKycLoading,
-    error: kycError,
-    isSuccess: isKycSuccess,
-  } = useKyc();
+    data: userProjects,
+    isLoading: isLoadingUserProjects,
+    error: userProjectsError,
+    isSuccess: isUserProjectsSuccess,
+  } = useUserProjects();
 
   const myProjects = useMemo(() => {
-    if (!saleDetails || !shares) return [];
+    if (!userProjects || !saleDetails) return [];
 
-    return saleDetails.filter((project) => {
-      const projectGrants = grants?.filter((grant) =>
-        compareAddresses(grant.grantee, project.address),
-      );
-      if (!projectGrants?.length) return false;
-
-      return projectGrants.some((grant) => shares.includes(grant.dataId));
-    });
-  }, [saleDetails, shares, grants]);
+    return saleDetails.filter((project) =>
+      userProjects.includes(project.address),
+    );
+  }, [userProjects, saleDetails]);
 
   return {
     data: myProjects?.length ? myProjects : emptyArray,
-    isLoading: isLoading || isKycLoading,
-    error: kycError || saleDetailsError,
-    isSuccess: isKycSuccess && isSuccess,
+    isLoading: isLoading || isLoadingUserProjects,
+    error: saleDetailsError || userProjectsError,
+    isSuccess: isSuccess || isUserProjectsSuccess,
   };
 };
 

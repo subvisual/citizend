@@ -9,7 +9,6 @@ import { useIdOS } from '@/app/_providers/idos';
 export const KycApprovedCheck = ({ children }: PropsWithChildren) => {
   const { hasProfile } = useIdOS();
   const { status, isLoading, error } = useKyc();
-
   if (isLoading || (!status && !error && hasProfile)) {
     return (
       <Spinner className="mx-auto h-40 w-40 animate-spin-slow text-mono-50" />
@@ -28,6 +27,8 @@ export const KycApprovedCheck = ({ children }: PropsWithChildren) => {
     );
   }
 
+  if (status === 'approved') return children;
+
   if (error)
     return (
       <div>
@@ -35,8 +36,6 @@ export const KycApprovedCheck = ({ children }: PropsWithChildren) => {
         <p>{error.message}</p>
       </div>
     );
-
-  if (status === 'approved') return children;
 
   return <Redirect href="/" />;
 };

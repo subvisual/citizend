@@ -147,7 +147,6 @@ export function ContributeDialog({
   tokensToBuy,
   amountInWei,
   tokensToBuyInWei,
-  tokensToBuyInSzabo,
 }: TContributeDialogProps) {
   const { allowance, isLoading, error } =
     useCtzndPaymentTokenAllowance(userAddress);
@@ -183,7 +182,6 @@ export function ContributeDialog({
         >
           <Contribute
             tokensToBuyInWei={tokensToBuyInWei}
-            tokensToBuyInSzabo={tokensToBuyInSzabo}
             contributionTxHash={contributionTxHash}
             buyCtzndTokens={buyCtzndTokens}
             error={buyError}

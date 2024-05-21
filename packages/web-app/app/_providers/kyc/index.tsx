@@ -3,7 +3,12 @@
 import { PropsWithChildren, useMemo } from 'react';
 import { KycContext, TKycContextValue, TWallet } from './context';
 import { useKycCredential } from '@/app/_lib/hooks';
-import { useFetchCredentialContent, useFetchGrants } from '@/app/_lib/queries';
+import {
+  useCanContribute,
+  useFetchCredentialContent,
+  useFetchGrants,
+  usePublicInfo,
+} from '@/app/_lib/queries';
 import { useIdOS } from '../idos';
 import { compareAddresses } from '@/app/_lib/utils';
 import { blockedCountries } from '@/app/_server/blocked-countries';
@@ -58,6 +63,11 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
     isSuccess: grantsSuccess,
     refetch: refetchGrants,
   } = useFetchGrants();
+  const { data: citizendPublicInfo } = usePublicInfo();
+  const { data: hasPlatformGrant } = useCanContribute(
+    citizendPublicInfo?.grantee,
+    address,
+  );
 
   const wallet = useMemo(() => {
     return credentialContent?.credentialSubject?.wallets.find(
@@ -86,10 +96,10 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
   const state: TKycContextValue = useMemo(() => {
     return {
       id,
-      status: credentialContent?.status,
+      status: hasPlatformGrant ? 'approved' : credentialContent?.status,
       residentialCountry,
       idDocumentCountry,
-      isBlockedCountry,
+      isBlockedCountry: hasPlatformGrant ? false : isBlockedCountry,
       wallet,
       isLoading,
       error,
@@ -101,6 +111,7 @@ export const KycProvider = ({ children }: PropsWithChildren) => {
     };
   }, [
     id,
+    hasPlatformGrant,
     credentialContent,
     residentialCountry,
     idDocumentCountry,

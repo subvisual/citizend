@@ -336,10 +336,11 @@ export const useFetchRisingTideCap = (enabled?: boolean) => {
   });
 };
 
-export const useCanContribute = (project: string, address: string) => {
+export const useCanContribute = (project?: string, address?: string) => {
   return useQuery({
     queryKey: ['can-contribute', project, address],
     queryFn: async () => {
+      if (!project || !address) return false;
       return await canContribute(project, address);
     },
     enabled: !!project && !!address,

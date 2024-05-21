@@ -58,7 +58,7 @@ const SignedButton = () => {
 };
 
 const ConnectedButton = () => {
-  const { hasSigner, setSigner } = useIdOS();
+  // const { hasSigner, setSigner } = useIdOS();
   const { data: balance } = usePaymentTokenBalance();
 
   if (!balance)
@@ -66,9 +66,10 @@ const ConnectedButton = () => {
       <div className="h-14 w-44 animate-pulse rounded-md bg-gradient-to-br from-mono-800 to-mono-900" />
     );
 
-  if (!hasSigner) {
-    return <EdgeButton onClick={setSigner}>Verify identity</EdgeButton>;
-  }
+  // TEMPORARY DISABLED
+  // if (!hasSigner) {
+  //   return <EdgeButton onClick={setSigner}>Verify identity</EdgeButton>;
+  // }
 
   return <SignedButton />;
 };

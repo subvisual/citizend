@@ -6,7 +6,10 @@ import { CitizendProjectDescription } from './citizend-project-description';
 import { HowToParticipate } from './how-to-participate';
 import { SaleStatus } from './sale-status';
 import { ApplyButton } from './apply-button';
-import { useFetchProjectsSaleDetails } from '@/app/_lib/queries';
+import {
+  useCanContribute,
+  useFetchProjectsSaleDetails,
+} from '@/app/_lib/queries';
 import { useProject } from '@/app/_providers/project/context';
 import { ProjectContribution } from './project-contribution';
 import { useHasCitizendGrant, useHasProjectGrant } from '@/app/_lib/hooks';
@@ -36,7 +39,8 @@ export const ProjectContent = () => {
   const project = data?.find(
     (project) => project.project.toLowerCase() === projectId,
   );
-  const hasGrant = hasProjectGrant && hasCitizendGrant;
+  const canContribute = useCanContribute(projectId, address);
+  const hasGrant = canContribute || (hasProjectGrant && hasCitizendGrant);
   const saleCompleted = project?.status === 'completed';
 
   if (isLoading || isLoadingGrant || (!data && !isError)) {

@@ -165,8 +165,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         maxTarget = _maxTarget;
         startRegistration = _startRegistration;
         endRegistration = _endRegistration;
-        minPrice = 0.2 ether;
-        maxPrice = 0.4 ether;
+        minPrice = 0.2 * 1e6;
+        maxPrice = 0.4 * 1e6;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);

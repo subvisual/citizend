@@ -65,8 +65,8 @@ contract SaleTest is Test {
         token = new Citizend(owner, end);
 
         paymentTokenMultiplier = 10 ** paymentToken.decimals();
-        rate = (2 * paymentTokenMultiplier ) / 10;
-        minContribution = 2 * paymentTokenMultiplier / 10;
+        rate = (2 * paymentTokenMultiplier) / 10;
+        minContribution = (2 * paymentTokenMultiplier) / 10;
 
         sale = new Sale(
             address(paymentToken),
@@ -114,8 +114,8 @@ contract SaleTest is Test {
     function testConstructor() public view {
         require(sale.paymentToken() == address(paymentToken));
         require(sale.rate() == rate);
-        require(sale.minPrice() == 2 * paymentTokenMultiplier / 10);
-        require(sale.maxPrice() == 4 * paymentTokenMultiplier / 10);
+        require(sale.minPrice() == (2 * paymentTokenMultiplier) / 10);
+        require(sale.maxPrice() == (4 * paymentTokenMultiplier) / 10);
         require(sale.start() == start);
         require(sale.end() == end);
         require(sale.hasRole(sale.DEFAULT_ADMIN_ROLE(), owner));
@@ -441,7 +441,7 @@ contract SaleTest is Test {
         require(sale.allocation(alice) == 25 ether);
         require(
             sale.allocation(alice) ==
-                (6 * 1e6 / sale.currentTokenPrice()) * 1 ether
+                ((6 * 1e6) / sale.currentTokenPrice()) * 1 ether
         );
     }
 

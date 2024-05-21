@@ -19,6 +19,8 @@ declare global {
       NEXT_PUBLIC_DAPP_HOST: string;
       NEXT_PUBLIC_ALCHEMY_ARBITRUM_SEPOLIA: string;
       NEXT_PUBLIC_ALCHEMY_ARBITRUM: string;
+      NEXT_PUBLIC_SUPABASE_URL: string;
+      NEXT_SUPABASE_SERVICE_ROLE: string;
     }
   }
 }

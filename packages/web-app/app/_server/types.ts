@@ -25,3 +25,9 @@ export type TProjectsPublicInfo = {
 export type TInternalError = {
   error: string;
 };
+
+export type TApplications = {
+  project: string;
+  address: string;
+  createdAt: string;
+};

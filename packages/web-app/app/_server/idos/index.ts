@@ -1,4 +1,4 @@
-import { ServerPublicInfo } from '../types';
+import { ServerPublicInfo, TApplications } from '../types';
 import { getGrants, getProjectApplicants } from './grants';
 import { addressesListSchema, grantsSchema } from '../../_types/schemas';
 import { blockedCountries } from '../blocked-countries';
@@ -8,6 +8,7 @@ import {
   evmGrantee,
   evmGranteePublicKey,
 } from '../wallet';
+import { createClient } from '../supabase/server';
 
 export interface idOSGrant {
   content: string;
@@ -48,7 +49,7 @@ const userFilter = async (grantee: idOSGrantee, userAddress: string) => {
 
     //expected scenario
     if (isBlockedCountry) {
-      console.log('Blocked country found for user', userAddress);
+      console.log('Blocked country for user', userAddress);
       return null;
     }
 
@@ -66,7 +67,7 @@ const userFilter = async (grantee: idOSGrantee, userAddress: string) => {
 const filterApplicants = async (addresses: string[], grantee: idOSGrantee) => {
   const allowed = new Set<string>();
   const notAllowed = new Set<string>();
-  const batches = Math.ceil(addresses.length / 10);
+  const batches = addresses?.length > 10 ? Math.ceil(addresses.length / 10) : 1;
 
   // run in batches of 10
   for (let i = 0; i < batches; i++) {
@@ -106,10 +107,56 @@ const retryFailed = async (
   }
 };
 
+type TAddress = Pick<TApplications, 'address'>;
+
 export const getAllowedProjectApplicants = async (projectAddress: string) => {
+  const supabase = createClient();
+  const { error, data } = await supabase
+    .from('applications')
+    .select('address')
+    .eq('project', projectAddress);
+
+  if (error) {
+    return {
+      error: error.message,
+    };
+  }
+
+  return data.map((row: TAddress) => row.address);
+};
+
+export const updateAllowedProjectApplicants = async (
+  projectAddress: string,
+) => {
   try {
     const applicantsResult = await getProjectApplicants(projectAddress);
-    const addresses = addressesListSchema.parse(applicantsResult);
+    const parsedApplicants = addressesListSchema.parse(applicantsResult);
+    const currentAllowedList =
+      await getAllowedProjectApplicants(projectAddress);
+
+    if (
+      typeof currentAllowedList === 'object' &&
+      'error' in currentAllowedList
+    ) {
+      throw new Error(currentAllowedList.error);
+    }
+
+    // remove already allowed addresses
+    const addresses = parsedApplicants.filter(
+      (address) => !currentAllowedList.includes(address),
+    );
+
+    console.log('==>Current Applicants', parsedApplicants.length);
+    console.log(
+      '==>Allowed',
+      'color: green; background: yellow; font-size: 20px',
+      currentAllowedList.length,
+    );
+    console.log(
+      '==>To Process',
+      'color: green; background: yellow; font-size: 20px',
+      addresses.length,
+    );
 
     const grantee = await idOSGrantee.init({
       granteeSigner: evmGrantee,
@@ -121,18 +168,20 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
     });
 
     // first run to populate the lists
-    let { allowed, notAllowed } = await filterApplicants(addresses, grantee);
+    const { allowed, notAllowed } = await filterApplicants(addresses, grantee);
+
     // retry 2 times failed addresses
     let retry = 2;
     while (retry > 0 && notAllowed.size > 0) {
-      retryFailed(allowed, notAllowed, grantee);
+      await retryFailed(allowed, notAllowed, grantee);
       retry--;
     }
 
     console.log('==>', 'NOT ALLOWED:');
     console.log(notAllowed);
 
-    return Array.from(allowed);
+    const newlyAllowed = Array.from(allowed);
+    return [...currentAllowedList, ...newlyAllowed];
   } catch (error) {
     console.error(error);
 
@@ -141,7 +190,7 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
       return { error: error.message };
     }
 
-    return { error: 'Error retrieving applied addresses' };
+    return { error: 'Error uppdated applied addresses' };
   }
 };
 

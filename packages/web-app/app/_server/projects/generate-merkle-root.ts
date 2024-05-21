@@ -52,20 +52,19 @@ type TMerkleRoot = {
 export const generateMerkleRoot = async (): Promise<
   TMerkleRoot | TInternalError
 > => {
-  const result = await getAllowedProjectApplicants(
+  const addresses = await getAllowedProjectApplicants(
     projectsInfo.citizend.address,
   );
 
-  if (Array.isArray(result)) {
-    const root = generateTree(result).getHexRoot();
-
-    return {
-      root: root,
-      addresses: result,
-    };
-  } else {
-    const { error } = result;
-    console.error(error);
-    return { error: error };
+  if (typeof addresses === 'object' && 'error' in addresses) {
+    // forward the error
+    return addresses;
   }
+
+  const root = generateTree(addresses).getHexRoot();
+
+  return {
+    root: root,
+    addresses,
+  };
 };

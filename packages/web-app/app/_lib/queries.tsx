@@ -24,6 +24,7 @@ import { formatEther, formatUnits } from 'viem';
 import { computeRisingTideCap } from '../_server/risingTide/risingtide';
 import { appSignal } from '../app-signal';
 import { useEffect } from 'react';
+import { canContribute } from '../_server/can-contribute';
 
 export const usePublicInfo = () => {
   return useQuery({
@@ -332,5 +333,15 @@ export const useFetchRisingTideCap = (enabled?: boolean) => {
     },
     refetchInterval: 1000 * 1, // 1 minute
     enabled,
+  });
+};
+
+export const useCanContribute = (project: string, address: string) => {
+  return useQuery({
+    queryKey: ['can-contribute', project, address],
+    queryFn: async () => {
+      return await canContribute(project, address);
+    },
+    enabled: !!project && !!address,
   });
 };

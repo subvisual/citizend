@@ -3,7 +3,7 @@ import {
   useReadCtzndSaleMaxTarget,
 } from '@/wagmi.generated';
 import { usdValue } from '../utils/intl-formaters/usd-value';
-import { formatEther } from 'viem';
+import { formatEther, formatUnits } from 'viem';
 import clsx from 'clsx';
 import { number } from '../utils/intl-formaters/number';
 import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
@@ -186,7 +186,7 @@ const Info = () => {
 export const SaleStatus = ({ hasGrant }: { hasGrant: boolean }) => {
   const { data: maxTarget } = useReadCtzndSaleMaxTarget();
   const totalCommitted = useTotalInvestedUsdcCtznd();
-  const maxValue = maxTarget ? Number(formatEther(maxTarget)) : 0;
+  const maxValue = maxTarget ? Number(formatUnits(maxTarget, 6)) : 0;
   const { data: investorCount } = useReadCtzndSaleInvestorCount({
     query: {
       refetchInterval: 1000 * 10, // 10 seconds

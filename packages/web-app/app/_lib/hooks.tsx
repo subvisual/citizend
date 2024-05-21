@@ -21,7 +21,7 @@ import {
   useReadCtzndSaleStart,
   useReadCtzndSaleEnd,
 } from '@/wagmi.generated';
-import { formatEther, parseEther } from 'viem';
+import { formatEther, formatUnits, parseUnits } from 'viem';
 import { sepolia } from 'viem/chains';
 
 export const useKycCredential = () => {
@@ -209,7 +209,7 @@ export const useCtzndPaymentTokenAllowance = (userAddress: `0x${string}`) => {
 
 export const useContributeToCtznd = () => {
   const [amount, setAmount] = useState(0);
-  const amountInWei = useMemo(() => parseEther(amount.toString()), [amount]);
+  const amountInWei = useMemo(() => parseUnits(amount.toString(), 6), [amount]);
   const { formattedValue: maxAmount } = usePaymentTokenBalance();
   const { data: tokensToBuyInWei, error: tokenError } =
     useReadCtzndSalePaymentTokenToToken({
@@ -272,8 +272,8 @@ export const useCtzndSaleCapStatus = () => {
   const { data: minTarget } = useReadCtzndSaleMinTarget();
 
   const investedValue = Number(totalInvested);
-  const maxValue = maxTarget ? Number(formatEther(maxTarget)) : undefined;
-  const minValue = minTarget ? Number(formatEther(minTarget)) : undefined;
+  const maxValue = maxTarget ? Number(formatUnits(maxTarget, 6)) : undefined;
+  const minValue = minTarget ? Number(formatUnits(minTarget, 6)) : undefined;
 
   if (maxValue === undefined || minValue === undefined) {
     return 'loading';

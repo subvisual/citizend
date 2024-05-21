@@ -10,7 +10,7 @@ import { Status } from './status';
 import { usdValue } from '../utils/intl-formaters/usd-value';
 import { usdRange } from '../utils/intl-formaters/usd-range';
 import { shortDateRange } from '../utils/intl-formaters/date-range';
-import { formatEther } from 'viem/utils';
+import { formatUnits } from 'viem/utils';
 import {
   useCtzndMinContributionUsdc,
   useTotalInvestedUsdcCtznd,
@@ -25,8 +25,8 @@ const Upcoming = ({
   start,
 }: TProjectSaleDetails) => {
   const targetedRaise = usdRange(
-    BigInt(formatEther(minTarget)),
-    BigInt(formatEther(maxTarget)),
+    BigInt(formatUnits(minTarget, 6)),
+    BigInt(formatUnits(maxTarget, 6)),
   );
   const registerPeriod = shortDateRange(startRegistration, endRegistration);
   const { days, hours, minutes, seconds } = useCountdown(start);
@@ -60,8 +60,8 @@ const FullData = ({
   totalTokensForSale,
 }: TProjectSaleDetails) => {
   const targetedRaise = usdRange(
-    BigInt(formatEther(minTarget)),
-    BigInt(formatEther(maxTarget)),
+    BigInt(formatUnits(minTarget, 6)),
+    BigInt(formatUnits(maxTarget, 6)),
   );
   const minPrice = useCtzndMinContributionUsdc();
   const totalTokens = new Intl.NumberFormat('default').format(

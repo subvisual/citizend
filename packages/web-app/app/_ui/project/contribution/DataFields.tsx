@@ -2,7 +2,7 @@ import {
   useReadCtzndSaleMaxTarget,
   useReadCtzndSaleTotalTokensForSale,
 } from '@/wagmi.generated';
-import { formatEther } from 'viem';
+import { formatEther, formatUnits } from 'viem';
 import { number } from '../../utils/intl-formaters/number';
 import { useCtzndMinContributionUsdc } from '@/app/_lib/queries';
 import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
@@ -14,7 +14,7 @@ const useMaxParticipants = () => {
   const { data: maxTarget, isLoading: targetLoading } =
     useReadCtzndSaleMaxTarget();
   const min = useCtzndMinContributionUsdc();
-  const targetValue = maxTarget ? Number(formatEther(maxTarget)) : undefined;
+  const targetValue = maxTarget ? Number(formatUnits(maxTarget, 6)) : undefined;
   const minValue = min ? Number(min) : undefined;
 
   return {

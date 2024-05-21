@@ -4,6 +4,7 @@ import { ctzndSaleAbi, ctzndSaleAddress } from '@/wagmi.generated';
 import {
   createWalletClient,
   formatEther,
+  formatUnits,
   getContract,
   http,
   publicActions,
@@ -83,8 +84,8 @@ export const saleDetails = async (): Promise<
         maxTarget: contractResults[3],
         start: contractResults[4] * 1000n,
         end: contractResults[5] * 1000n,
-        minContribution: formatEther(contractResults[6]),
-        maxContribution: formatEther(contractResults[7]),
+        minContribution: formatUnits(contractResults[6], 6),
+        maxContribution: formatUnits(contractResults[7], 6),
         totalTokensForSale: formatEther(contractResults[8]),
         startRegistration: contractResults[9] * 1000n,
         endRegistration: contractResults[10] * 1000n,

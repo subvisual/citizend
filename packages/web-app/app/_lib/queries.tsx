@@ -20,7 +20,7 @@ import {
   useReadCtzndSaleTotalUncappedAllocations,
   useReadCtzndSaleUncappedAllocation,
 } from '@/wagmi.generated';
-import { formatEther, formatUnits } from 'viem';
+import { formatEther, formatUnits, parseEther } from 'viem';
 import { computeRisingTideCap } from '../_server/risingTide/risingtide';
 import { appSignal } from '../app-signal';
 import { useEffect } from 'react';
@@ -289,7 +289,7 @@ export const useTotalInvestedUsdcCtznd = () => {
   });
 
   const usdcValue =
-    ctzndTokensSold && tokensInvested ? formatEther(tokensInvested) : '0';
+    ctzndTokensSold && tokensInvested ? formatUnits(tokensInvested, 6) : '0';
 
   return usdcValue;
 };
@@ -302,7 +302,7 @@ export const useUserTotalInvestedUsdcCtznd = (address: `0x${string}`) => {
     },
   });
   const { data: tokensInvested } = useReadCtzndSaleTokenToPaymentToken({
-    args: [ctzndTokensSold || 0n],
+    args: [parseEther(formatUnits(ctzndTokensSold || 0n, 6)) || 0n],
   });
 
   const usdcValue =
@@ -315,10 +315,10 @@ export const useCtzndMinContributionUsdc = () => {
   const { data: min } = useReadCtzndSaleMinContribution();
 
   const { data: minUsdc } = useReadCtzndSaleTokenToPaymentToken({
-    args: [min || 0n],
+    args: [parseEther(formatUnits(min || 0n, 6)) || 0n],
   });
 
-  const usdcValue = min && minUsdc ? formatEther(minUsdc) : '0';
+  const usdcValue = min && minUsdc ? formatUnits(minUsdc, 6) : '0';
 
   return usdcValue;
 };

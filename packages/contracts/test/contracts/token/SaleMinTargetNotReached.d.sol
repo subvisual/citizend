@@ -59,24 +59,24 @@ contract SaleMinTargetNotReachedTest is Test {
         start = endRegistration + 1 * DAY + 1000;
         end = start + 1 * DAY;
 
-        paymentToken = new MockERC20("USDC", "USDC", 18);
+        paymentToken = new MockERC20("USDC", "USDC", 6);
         sale = new Sale(
             address(paymentToken),
-            0.2 ether,
+            0.2 * 1e6,
             start,
             end,
             2500000 ether,
-            500000 ether,
-            1000000 ether,
+            500000 * 1e6,
+            1000000 * 1e6,
             startRegistration,
             endRegistration
         );
 
         sale.setMerkleRoot(merkleRoot);
-        sale.setMinContribution(sale.paymentTokenToToken(100 ether));
+        sale.setMinContribution(100 * 1e6);
 
-        paymentToken.mint(alice, 300000 ether);
-        paymentToken.mint(bob, 300000 ether);
+        paymentToken.mint(alice, 300000 * 1e6);
+        paymentToken.mint(bob, 300000 * 1e6);
 
         vm.stopPrank();
     }
@@ -85,35 +85,35 @@ contract SaleMinTargetNotReachedTest is Test {
         vm.warp(sale.start());
 
         vm.startPrank(alice);
-        paymentToken.approve(address(sale), 300000 ether);
-        sale.buy(sale.paymentTokenToToken(300000 ether), merkleProofs[alice]);
+        paymentToken.approve(address(sale), 300000 * 1e6);
+        sale.buy(sale.paymentTokenToToken(300000 * 1e6), merkleProofs[alice]);
         vm.stopPrank();
 
         vm.startPrank(bob);
-        paymentToken.approve(address(sale), 200000 ether);
-        sale.buy(sale.paymentTokenToToken(200000 ether), merkleProofs[bob]);
+        paymentToken.approve(address(sale), 200000 * 1e6);
+        sale.buy(sale.paymentTokenToToken(200000 * 1e6), merkleProofs[bob]);
         vm.stopPrank();
 
-        require(paymentToken.balanceOf(address(sale)) == 500000 ether);
+        require(paymentToken.balanceOf(address(sale)) == 500000 * 1e6);
 
         vm.startPrank(bob);
-        paymentToken.approve(address(sale), 100000 ether);
-        sale.buy(sale.paymentTokenToToken(100000 ether), merkleProofs[bob]);
+        paymentToken.approve(address(sale), 100000 * 1e6);
+        sale.buy(sale.paymentTokenToToken(100000 * 1e6), merkleProofs[bob]);
         vm.stopPrank();
 
         vm.warp(sale.end() + 1000);
 
         require(
             sale.totalUncappedAllocations() ==
-                sale.paymentTokenToToken(600000 ether)
+                sale.paymentTokenToToken(600000 * 1e6)
         );
         require(
             sale.allocation(address(alice)) ==
-                ((300000 ether / sale.currentTokenPrice()) * 1 ether)
+                (((300000 * 1e6) / sale.currentTokenPrice()) * 1 ether)
         );
         require(
             sale.allocation(address(bob)) ==
-                ((300000 ether / sale.currentTokenPrice()) * 1 ether)
+                (((300000 * 1e6) / sale.currentTokenPrice()) * 1 ether)
         );
     }
 
@@ -123,44 +123,47 @@ contract SaleMinTargetNotReachedTest is Test {
         require(bytes32(sale.merkleRoot()) == bytes32(merkleRoot));
 
         vm.startPrank(alice);
-        paymentToken.approve(address(sale), 200 ether);
-        sale.buy(sale.paymentTokenToToken(200 ether), merkleProofs[alice]);
+        paymentToken.approve(address(sale), 200 * 1e6);
+        sale.buy(sale.paymentTokenToToken(200 * 1e6), merkleProofs[alice]);
         vm.stopPrank();
 
-        require(paymentToken.balanceOf(address(sale)) == 200 ether);
+        require(paymentToken.balanceOf(address(sale)) == 200 * 1e6);
 
         vm.startPrank(bob);
-        paymentToken.approve(address(sale), 100 ether);
-        sale.buy(sale.paymentTokenToToken(100 ether), merkleProofs[bob]);
+        paymentToken.approve(address(sale), 100 * 1e6);
+        sale.buy(sale.paymentTokenToToken(100 * 1e6), merkleProofs[bob]);
         vm.stopPrank();
 
         require(
             sale.totalUncappedAllocations() ==
-                sale.paymentTokenToToken(300 ether)
+                sale.paymentTokenToToken(300 * 1e6)
         );
-        require(sale.totalUncappedAllocations() < sale.minTarget());
+        require(
+            sale.totalUncappedAllocations() <
+                sale.paymentTokenToToken(sale.minTarget())
+        );
 
         vm.warp(sale.end() + 1000);
 
-        require(paymentToken.balanceOf(address(sale)) == 300 ether);
+        require(paymentToken.balanceOf(address(sale)) == 300 * 1e6);
 
         vm.prank(owner);
         sale.setIndividualCap(1000 ether);
 
         require(sale.allocation(alice) == 0);
-        require(sale.refundAmount(alice) == 200 ether);
+        require(sale.refundAmount(alice) == 200 * 1e6);
 
         vm.prank(alice);
         sale.refund(alice);
 
-        require(paymentToken.balanceOf(address(sale)) == 100 ether);
+        require(paymentToken.balanceOf(address(sale)) == 100 * 1e6);
 
         require(sale.allocation(bob) == 0);
-        require(sale.refundAmount(bob) == 100 ether);
+        require(sale.refundAmount(bob) == 100 * 1e6);
 
         vm.prank(bob);
         sale.refund(bob);
 
-        require(paymentToken.balanceOf(address(sale)) == 0 ether);
+        require(paymentToken.balanceOf(address(sale)) == 0 * 1e6);
     }
 }

@@ -10,13 +10,14 @@ import { hashFn } from 'wagmi/query';
 
 const oneMinute = 1_000 * 60;
 const oneHour = oneMinute * 60;
+const tenMinutes = oneMinute * 10;
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       queryKeyHashFn: hashFn,
       retry: 0,
-      staleTime: oneMinute,
+      staleTime: tenMinutes,
       gcTime: oneHour,
     },
   },

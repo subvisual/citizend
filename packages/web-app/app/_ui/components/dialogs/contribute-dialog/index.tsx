@@ -64,22 +64,21 @@ const AllowFunds = ({ amountInWei }: TAllowFundsProps) => {
 
 type TContributeProps = {
   tokensToBuyInWei: bigint;
-  tokensToBuyInSzabo: bigint;
   contributionTxHash?: `0x${string}`;
   buyCtzndTokens: (tokensToBuyInWei: bigint) => void;
   error: any;
 };
 
 const Contribute = ({
-  tokensToBuyInSzabo,
+  tokensToBuyInWei,
   contributionTxHash,
   buyCtzndTokens,
   error,
 }: TContributeProps) => {
   useEffectSafe(() => {
-    if (!tokensToBuyInSzabo || contributionTxHash) return;
+    if (!tokensToBuyInWei || contributionTxHash) return;
 
-    buyCtzndTokens(tokensToBuyInSzabo);
+    buyCtzndTokens(tokensToBuyInWei);
   }, []);
 
   if (contributionTxHash) {

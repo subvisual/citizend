@@ -191,14 +191,14 @@ contract SaleTest is Test {
 
     function test_BuyRevertsAfterReachingMaxTarget() public {
         vm.startPrank(owner);
-        sale.setMinContribution(1 ether);
-        sale.setMaxTarget(1 ether);
+        sale.setMinContribution(1 * 1e6);
+        sale.setMaxTarget(1 * 1e6);
 
         vm.startPrank(alice);
-        sale.buy(1 ether, aliceMerkleProof);
+        sale.buy(5 ether, aliceMerkleProof);
 
         vm.expectRevert(Sale.MaxContributorsReached.selector);
-        sale.buy(1 ether, aliceMerkleProof);
+        sale.buy(5 ether, aliceMerkleProof);
     }
 
     function test_WithdrawRevertsIfNotOwner() public {
@@ -250,6 +250,9 @@ contract SaleTest is Test {
     }
 
     function test_WithdrawDoesNotWithdrawRefunds() public {
+        vm.startPrank(owner);
+        sale.setMinContribution(0.1 * 1e6);
+
         vm.startPrank(alice);
         sale.buy(sale.paymentTokenToToken(0.1 * 1e6), aliceMerkleProof);
         vm.stopPrank();

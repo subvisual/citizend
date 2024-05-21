@@ -247,7 +247,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         bool isValidLeaf = MerkleProof.verify(_merkleProof, merkleRoot, leaf);
         if (!isValidLeaf) revert InvalidLeaf();
 
-        require(_amount >= minContribution, "can't be below minimum");
+        require(_amount >= paymentTokenToToken(minContribution), "can't be below minimum");
 
         uint256 paymentAmount = tokenToPaymentToken(_amount);
         require(paymentAmount > 0, "can't be zero");

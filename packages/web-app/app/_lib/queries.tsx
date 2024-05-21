@@ -315,7 +315,7 @@ export const useCtzndMinContributionUsdc = () => {
   const { data: min } = useReadCtzndSaleMinContribution();
 
   const { data: minUsdc } = useReadCtzndSaleTokenToPaymentToken({
-    args: [parseEther(formatUnits(min || 0n, 6)) || 0n],
+    args: [min || 0n],
   });
 
   const usdcValue = min && minUsdc ? formatUnits(minUsdc, 6) : '0';

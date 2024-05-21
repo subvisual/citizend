@@ -32,7 +32,7 @@ export const CountDown = () => {
           </div>
           {days ? (
             <div className="flex items-baseline">
-              <div className="text-3.5xl leading-10">{hours}</div>
+              <div className="text-3.5xl leading-10">{days}</div>
               <span className="pl-1">DAYS</span>
             </div>
           ) : null}

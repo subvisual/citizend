@@ -9,9 +9,19 @@ import { ContributeDialog } from '../components/dialogs/contribute-dialog';
 import { useContributeToCtznd } from '@/app/_lib/hooks';
 import Link from 'next/link';
 
-const getErrorMessage = (amount: number, maxAmount: number, error: any) => {
+const getErrorMessage = (
+  amount: number,
+  maxAmount: number,
+  minAmount: number,
+  error: any,
+) => {
   if (amount < 0) {
     return 'The amount must be greater than 0';
+  }
+
+  // 0 is the default/initial value
+  if (amount > 0 && amount < minAmount) {
+    return 'The amount is below the minimum balance';
   }
 
   if (amount > maxAmount) {
@@ -37,6 +47,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
   const { open } = useDialog();
   const {
     maxAmount,
+    minAmount,
     amount,
     amountInWei,
     tokensToBuyInSzabo,
@@ -64,9 +75,17 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
       tokensToBuyInWei,
       tokensToBuyInSzabo,
     });
-  }, [open, amount, tokensToBuy, amountInWei, tokensToBuyInWei, userAddress]);
+  }, [
+    open,
+    amount,
+    tokensToBuy,
+    amountInWei,
+    tokensToBuyInWei,
+    userAddress,
+    tokensToBuyInSzabo,
+  ]);
 
-  const errorMessage = getErrorMessage(amount, maxAmount, error);
+  const errorMessage = getErrorMessage(amount, maxAmount, minAmount, error);
 
   return (
     <div className="flex flex-col">
@@ -86,7 +105,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
             className="col-span-2 md:col-span-1"
             onSubmit={onClick}
             defaultValue={amount}
-            min={0}
+            min={minAmount}
           />
           <Input
             label="You Get"
@@ -106,9 +125,11 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
         <Button
           className="w-full rounded-none"
           onClick={onClick}
-          disabled={amount <= 0 || !!errorMessage}
+          disabled={amount <= minAmount || !!errorMessage}
           variant={
-            amount <= 0 || !!errorMessage ? 'primary-disabled' : 'primary'
+            amount <= minAmount || !!errorMessage
+              ? 'primary-disabled'
+              : 'primary'
           }
         >
           Contribute

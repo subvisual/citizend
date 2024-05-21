@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
+  useCtzndMinContributionUsdc,
   useFetchCredentials,
   useFetchProjectsSaleDetails,
   useFetchRisingTideCap,
@@ -211,6 +212,7 @@ export const useContributeToCtznd = () => {
   const [amount, setAmount] = useState(0);
   const amountInWei = useMemo(() => parseUnits(amount.toString(), 6), [amount]);
   const { formattedValue: maxAmount } = usePaymentTokenBalance();
+  const minAmount = useCtzndMinContributionUsdc();
   const { data: tokensToBuyInWei, error: tokenError } =
     useReadCtzndSalePaymentTokenToToken({
       args: [amountInWei],
@@ -221,8 +223,10 @@ export const useContributeToCtznd = () => {
     setAmount,
     amountInWei,
     maxAmount: Number(maxAmount || 0),
+    minAmount: Number(minAmount || 0),
     tokensToBuyInWei: tokensToBuyInWei || 0n,
-    tokensToBuyInSzabo: (parseUnits(formatEther(tokensToBuyInWei || 0n), 6)) || 0n,
+    tokensToBuyInSzabo:
+      parseUnits(formatEther(tokensToBuyInWei || 0n), 6) || 0n,
     tokensToBuy: tokensToBuyInWei ? Number(formatEther(tokensToBuyInWei)) : 0,
     error: tokenError,
   };

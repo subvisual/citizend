@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
+  useCanContribute,
   useCtzndMinContributionUsdc,
   useFetchCredentials,
   useFetchProjectsSaleDetails,
@@ -25,6 +26,7 @@ import {
 } from '@/wagmi.generated';
 import { formatEther, formatUnits, parseUnits } from 'viem';
 import { sepolia } from 'viem/chains';
+import { useAccount } from 'wagmi';
 
 export const useKycCredential = () => {
   const {
@@ -138,6 +140,7 @@ export const useMyProjects = () => {
 };
 
 export const useHasProjectGrant = (projectId: string) => {
+  const { address } = useAccount();
   const {
     shares,
     grants,
@@ -154,6 +157,10 @@ export const useHasProjectGrant = (projectId: string) => {
   const isLoading = isKycLoading || isProjectInfoLoading;
   const error = kycError || projectError;
   const isSuccess = isKycSuccess && isProjectSuccess;
+  const { data: canContribute } = useCanContribute(
+    projectPublicInfo?.address,
+    address,
+  );
 
   const projectGrants = useMemo(
     () =>
@@ -165,10 +172,12 @@ export const useHasProjectGrant = (projectId: string) => {
 
   // check if at least one of the projectGrants dataId exists in the credential shares array
   const hasGrant = useMemo(() => {
+    if (canContribute) return true;
+
     if (!projectGrants?.length || !shares) return false;
 
     return projectGrants.some((grant) => shares.includes(grant.dataId));
-  }, [projectGrants, shares]);
+  }, [projectGrants, shares, canContribute]);
 
   return useMemo(() => {
     return {

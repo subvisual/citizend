@@ -9,6 +9,9 @@ import { useIdOS } from '@/app/_providers/idos';
 export const KycApprovedCheck = ({ children }: PropsWithChildren) => {
   const { hasProfile } = useIdOS();
   const { status, isLoading, error } = useKyc();
+
+  if (status === 'approved') return children;
+
   if (isLoading || (!status && !error && hasProfile)) {
     return (
       <Spinner className="mx-auto h-40 w-40 animate-spin-slow text-mono-50" />
@@ -26,8 +29,6 @@ export const KycApprovedCheck = ({ children }: PropsWithChildren) => {
       </div>
     );
   }
-
-  if (status === 'approved') return children;
 
   if (error)
     return (

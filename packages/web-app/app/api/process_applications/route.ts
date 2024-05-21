@@ -11,7 +11,7 @@ const persistData = async (data: string[]) => {
     return { project: projectsInfo.citizend.address, address };
   });
 
-  const { error, count } = await supabase
+  const { error, data: result } = await supabase
     .from('applications')
     .upsert(rows)
     .select();
@@ -22,7 +22,7 @@ const persistData = async (data: string[]) => {
     });
   }
 
-  return count;
+  return result?.length || 0;
 };
 
 export async function GET(_request: Request) {

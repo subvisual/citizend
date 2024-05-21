@@ -9,6 +9,7 @@ import {
   evmGranteePublicKey,
 } from '../wallet';
 import { createClient } from '../supabase/server';
+import { compareAddresses } from '@/app/_lib/utils';
 
 export interface idOSGrant {
   content: string;
@@ -143,20 +144,15 @@ export const updateAllowedProjectApplicants = async (
 
     // remove already allowed addresses
     const addresses = parsedApplicants.filter(
-      (address) => !currentAllowedList.includes(address),
+      (address) =>
+        !currentAllowedList.some((allowed) =>
+          compareAddresses(allowed, address),
+        ),
     );
 
     console.log('==>Current Applicants', parsedApplicants.length);
-    console.log(
-      '==>Allowed',
-      'color: green; background: yellow; font-size: 20px',
-      currentAllowedList.length,
-    );
-    console.log(
-      '==>To Process',
-      'color: green; background: yellow; font-size: 20px',
-      addresses.length,
-    );
+    console.log('==>Allowed', currentAllowedList.length);
+    console.log('==>To Process', addresses.length);
 
     const grantee = await idOSGrantee.init({
       granteeSigner: evmGrantee,
@@ -180,8 +176,7 @@ export const updateAllowedProjectApplicants = async (
     console.log('==>', 'NOT ALLOWED:');
     console.log(notAllowed);
 
-    const newlyAllowed = Array.from(allowed);
-    return [...currentAllowedList, ...newlyAllowed];
+    return Array.from(allowed);
   } catch (error) {
     console.error(error);
 

@@ -336,11 +336,18 @@ export const useFetchRisingTideCap = (enabled?: boolean) => {
   });
 };
 
-export const useCanContribute = (project: string, address: string) => {
+export const useCanContribute = (project?: string, address?: string) => {
   return useQuery({
     queryKey: ['can-contribute', project, address],
     queryFn: async () => {
-      return await canContribute(project, address);
+      if (!project || !address) return false;
+      const result = await canContribute(project, address);
+      if (typeof result === 'object' && 'error' in result) {
+        appSignal.sendError(new Error(result.error));
+        throw new Error(result.error);
+      }
+
+      return result;
     },
     enabled: !!project && !!address,
   });

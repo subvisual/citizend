@@ -11,10 +11,7 @@ const persistData = async (data: string[]) => {
     return { project: projectsInfo.citizend.address, address };
   });
 
-  const { error, data: result } = await supabase
-    .from('applications')
-    .upsert(rows)
-    .select();
+  const { error } = await supabase.from('applications').upsert(rows);
 
   if (error) {
     return new Response(`Insert applications list: ${error.message}`, {
@@ -22,7 +19,7 @@ const persistData = async (data: string[]) => {
     });
   }
 
-  return result?.length || 0;
+  return rows?.length || 0;
 };
 
 export async function GET(_request: Request) {

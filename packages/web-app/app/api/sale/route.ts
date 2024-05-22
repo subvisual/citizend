@@ -25,7 +25,6 @@ export async function GET(_request: Request) {
   const tempDetails = details.map((project) => {
     return {
       ...project,
-      status: 'Starting Soon',
       minTarget: formatUnits(project.minTarget, 6),
       maxTarget: formatUnits(project.maxTarget, 6),
     };

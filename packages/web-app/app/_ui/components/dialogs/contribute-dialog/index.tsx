@@ -2,7 +2,7 @@
 
 import { useCtzndPaymentTokenAllowance, useEffectSafe } from '@/app/_lib/hooks';
 import { Dialog } from '@headlessui/react';
-import { formatEther, formatUnits } from 'viem';
+import { formatUnits } from 'viem';
 import {
   useBuyCtzndTokens,
   useSetPaymentTokenAllowance,
@@ -11,7 +11,6 @@ import { Spinner } from '../../svg/spinner';
 import { Check } from '../../svg/check';
 import { Error } from '../../svg/error';
 import { Done } from '../done';
-import { use } from 'react';
 import { appSignal } from '@/app/app-signal';
 import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
 import { calculateTokenPrice } from '@/app/_ui/utils/calculateTokenPrice';
@@ -132,11 +131,13 @@ const Description = ({ amount }: TDescriptionProps) => {
       </div>
       <div className="flex justify-between">
         <div className="uppercase text-mono-800">CTND Amount</div>
-        <div className="text-mono-950">{(amount / currentTokenPrice).toFixed(0)} CTND</div>
+        <div className="text-mono-950">
+          {(amount / currentTokenPrice).toFixed(0)} CTND
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export type TContributeDialogProps = {
   userAddress: `0x${string}`;

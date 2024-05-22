@@ -7,7 +7,10 @@ import { formatEther, formatUnits } from 'viem';
 import clsx from 'clsx';
 import { number } from '../utils/intl-formaters/number';
 import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
-import { useCtzndRisingTideCap, useCtzndRisingTideCapInUSDC, useCtzndSaleCapStatus } from '@/app/_lib/hooks';
+import {
+  useCtzndRisingTideCapInUSDC,
+  useCtzndSaleCapStatus,
+} from '@/app/_lib/hooks';
 import Link from 'next/link';
 import { calculateTokenPrice } from '../utils/calculateTokenPrice';
 
@@ -56,7 +59,8 @@ const ProgressBar = ({
 }) => {
   const valueInMillions = value / 1_000_000;
   const maxTargetInMillion = max / 1_000_000;
-  const maxInMillions = valueInMillions > 1.4 ? valueInMillions : 1.4;
+  // const maxInMillions = valueInMillions > 1.4 ? valueInMillions : 1.4;
+  const maxInMillions = 1.02;
   const maxTargetPosition = Math.round(
     (maxTargetInMillion / maxInMillions) * 100,
   );
@@ -84,15 +88,19 @@ const ProgressBar = ({
         </label>
         <div
           id="progress-bar"
-          className="mt-4 flex h-6 w-full overflow-hidden rounded-md bg-blue-100"
+          className="relative mt-4 flex h-6 w-full overflow-hidden rounded-md bg-green-200"
           role="progressbar"
           aria-valuenow={Number(valueInMillions)}
           aria-valuemin={0}
           aria-valuemax={Number(maxInMillions)}
         >
           <div
+            style={{ width: `${halfTargetPosition + 0.1}%` }}
+            className="z-0 flex flex-col justify-center whitespace-nowrap bg-blue-200 text-center text-white"
+          />
+          <div
             className={clsx(
-              'flex flex-col justify-center overflow-hidden whitespace-nowrap bg-blue-500 text-center text-xs text-white transition duration-500 dark:bg-blue-500',
+              'absolute left-0 z-10 flex h-6 flex-col justify-center overflow-hidden whitespace-nowrap bg-blue-500 text-center text-xs text-white transition duration-500',
               percentageRounded === '100%' ? 'rounded-md' : 'rounded-l-md',
             )}
             style={{ width: percentageRounded }}
@@ -253,7 +261,13 @@ export const SaleStatus = ({ hasGrant }: { hasGrant: boolean }) => {
               Current max. allocation/participant:
             </span>
             <span className="md:text-end">
-              {isLoadingCap ? <LoadingField /> : (cap == "N/A" ? cap : `${number(Number(cap))} USDC`)}
+              {isLoadingCap ? (
+                <LoadingField />
+              ) : cap == 'N/A' ? (
+                cap
+              ) : (
+                `${number(Number(cap))} USDC`
+              )}
             </span>
           </div>
         </div>

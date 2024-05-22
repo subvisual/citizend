@@ -12,6 +12,7 @@ import { useReadCtzndSaleInvestorCount } from '@/wagmi.generated';
 import { useAccount } from 'wagmi';
 import { useUserTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
 import { formatUnits } from 'viem';
+import { number } from '../utils/intl-formaters/number';
 
 const ProjectRow = ({
   logo,
@@ -46,7 +47,7 @@ const ProjectRow = ({
         </div>
         <div className="hidden md:block">{totalContributions}</div>
         <div className="hidden md:block">{targetedRaise}</div>
-        <div>{totalUsdc} USDC</div>
+        <div>{number(Number(totalUsdc))} USDC</div>
       </div>
     </Link>
   );

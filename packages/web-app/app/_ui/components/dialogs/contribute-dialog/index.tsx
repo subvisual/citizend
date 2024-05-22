@@ -132,7 +132,7 @@ const Description = ({ amount }: TDescriptionProps) => {
       </div>
       <div className="flex justify-between">
         <div className="uppercase text-mono-800">CTND Amount</div>
-        <div className="text-mono-950">{amount / currentTokenPrice} CTND</div>
+        <div className="text-mono-950">{(amount / currentTokenPrice).toFixed(0)} CTND</div>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { saleDetails } from '@/app/_server/sales';
-import { formatEther } from 'viem';
+import { formatEther, formatUnits } from 'viem';
 
 declare global {
   interface BigInt {
@@ -26,8 +26,8 @@ export async function GET(_request: Request) {
     return {
       ...project,
       status: 'Starting Soon',
-      minTarget: formatEther(project.minTarget),
-      maxTarget: formatEther(project.maxTarget),
+      minTarget: formatUnits(project.minTarget, 6),
+      maxTarget: formatUnits(project.maxTarget, 6),
     };
   });
 

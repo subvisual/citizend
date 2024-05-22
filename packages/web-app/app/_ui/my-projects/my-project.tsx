@@ -182,7 +182,7 @@ const useAvailableToClaim = () => {
     return "TBD once sale ends";
   }
 
-  return `${availableToClaim} CTND`;
+  return `${formatEther(availableToClaim || 0n)} CTND`;
 }
 
 const MyTokens = () => {

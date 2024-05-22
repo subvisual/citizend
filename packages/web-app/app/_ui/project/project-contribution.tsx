@@ -25,7 +25,7 @@ const getErrorMessage = (
 
   // 0 is the default/initial value
   if (amount > 0 && amount < minAmount) {
-    return 'The amount is below the minimum balance';
+    return 'The amount is below the minimum contribution';
   }
 
   if (amount > maxAmount) {
@@ -111,7 +111,6 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
             className="col-span-2 md:col-span-1"
             onSubmit={onClick}
             defaultValue={amount}
-            min={minAmount}
           />
           <Input
             label="You Get"
@@ -128,16 +127,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
           </p>
         </div>
         <DataFields />
-        <Button
-          className="w-full rounded-none"
-          onClick={onClick}
-          disabled={amount < minAmount || !!errorMessage}
-          variant={
-            amount < minAmount || !!errorMessage
-              ? 'primary-disabled'
-              : 'primary'
-          }
-        >
+        <Button className="w-full rounded-none" onClick={onClick}>
           Contribute
         </Button>
       </div>

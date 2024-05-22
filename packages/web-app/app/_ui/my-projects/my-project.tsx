@@ -172,9 +172,6 @@ const MyContribution = () => {
 const useAvailableToClaim = () => {
   const { address } = useAccount();
   const capStatus = useCtzndSaleCapStatus();
-  const { data: uncappedAllocation } = useReadCtzndSaleUncappedAllocation({
-    args: [address!],
-  });
   const { data: availableToClaim } = useReadCtzndSaleAllocation({
     args: [address!],
     query: {

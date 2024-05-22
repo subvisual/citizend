@@ -119,7 +119,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
             id="ctnd-amount"
             units="CTND*"
             disabled
-            value={amount / currentTokenPrice}
+            value={(amount / currentTokenPrice).toFixed(0)}
             className="col-span-2 md:col-span-1"
           />
           <p className="col-span-2 text-mono-800">

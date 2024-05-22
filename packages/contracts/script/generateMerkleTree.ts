@@ -31,8 +31,6 @@ async function main(address: string) {
       .filter((s: string) => s.length > 0);
   }
 
-  console.log("Addresses: ", addresses);
-
   const data = addresses.map((addr: string) => {
     return {
       address: addr,

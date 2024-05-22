@@ -13,8 +13,7 @@ contract DeployScript is Script {
         uint256 start = 1716378600;
         uint256 end = 1716638400;
 
-        // address USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
-        address USDC = 0x697485a9E004Da9bd9b3204dfB24efc288C04c2c;
+        address USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
 
         Sale sale = new Sale(
             USDC,
@@ -29,6 +28,9 @@ contract DeployScript is Script {
         );
 
         sale.setMinContribution(100 * 1e6);
+        sale.setMerkleRoot(
+            0x3473739e14ba98305b06c55d144c1059932d192d12e4a558bde18f25bde0b388
+        );
 
         vm.stopBroadcast();
     }

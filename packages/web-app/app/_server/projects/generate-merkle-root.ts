@@ -56,6 +56,8 @@ export const generateMerkleRoot = async (): Promise<
     projectsInfo.citizend.address,
   );
 
+  console.log(addresses);
+
   if (typeof addresses === 'object' && 'error' in addresses) {
     // forward the error
     return addresses;

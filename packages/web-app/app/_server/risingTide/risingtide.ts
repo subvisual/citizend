@@ -1,11 +1,13 @@
 'use server';
 
 import { Address, createPublicClient, http, publicActions } from 'viem';
-import { sepolia } from 'viem/chains';
+import { mainnet, sepolia } from 'viem/chains';
 
 import { ctzndSaleAbi, ctzndSaleAddress } from '@/wagmi.generated';
 
-const saleContractAddress = ctzndSaleAddress[sepolia.id];
+const chainId =
+  process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? sepolia.id : mainnet.id;
+const saleContractAddress = ctzndSaleAddress[chainId];
 
 const client = createPublicClient({
   chain: sepolia,

@@ -26,7 +26,7 @@ import {
   useReadCtzndSaleTokenToPaymentToken,
 } from '@/wagmi.generated';
 import { formatEther, formatUnits, parseUnits } from 'viem';
-import { sepolia } from 'viem/chains';
+import { mainnet, sepolia } from 'viem/chains';
 import { useAccount } from 'wagmi';
 
 export const useKycCredential = () => {
@@ -191,7 +191,11 @@ export const useHasProjectGrant = (projectId: string) => {
 };
 
 export const useCtzndPaymentTokenAllowance = (userAddress: `0x${string}`) => {
-  const saleAddress = ctzndSaleAddress[sepolia.id];
+  const chainId =
+    process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+      ? sepolia.id
+      : mainnet.id;
+  const saleAddress = ctzndSaleAddress[chainId];
   const { data: paymentToken } = useReadCtzndSalePaymentToken();
   const {
     data: allowance,
@@ -322,12 +326,14 @@ export const useCtzndRisingTideCapInUSDC = () => {
   const aboveCap = status === 'above';
   const { data, isLoading, error } = useFetchRisingTideCap(aboveCap);
 
-  const { data: maxAllocation } = useReadCtzndSaleTokenToPaymentToken({ args: [data || 0n] });
+  const { data: maxAllocation } = useReadCtzndSaleTokenToPaymentToken({
+    args: [data || 0n],
+  });
 
   const cap = aboveCap && maxAllocation ? formatUnits(maxAllocation, 6) : 'N/A';
   return {
     data: cap,
     isLoading,
-    error
+    error,
   };
 };

@@ -109,6 +109,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
             className="col-span-2 md:col-span-1"
             onSubmit={onClick}
             defaultValue={amount}
+            min={minAmount}
           />
           <Input
             label="You Get"
@@ -125,7 +126,16 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
           </p>
         </div>
         <DataFields />
-        <Button className="w-full rounded-none" onClick={onClick}>
+        <Button
+          className="w-full rounded-none"
+          onClick={onClick}
+          disabled={amount < minAmount || !!errorMessage}
+          variant={
+            amount < minAmount || !!errorMessage
+              ? 'primary-disabled'
+              : 'primary'
+          }
+        >
           Contribute
         </Button>
       </div>

@@ -8,8 +8,6 @@ import { useDialog } from '@/app/_providers/dialog/context';
 import { ContributeDialog } from '../components/dialogs/contribute-dialog';
 import { useContributeToCtznd } from '@/app/_lib/hooks';
 import Link from 'next/link';
-import { useReadCtzndSaleCurrentTokenPrice } from '@/wagmi.generated';
-import { formatUnits } from 'viem';
 import { calculateTokenPrice } from '../utils/calculateTokenPrice';
 import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
 

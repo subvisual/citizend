@@ -23,6 +23,7 @@ import {
   useReadCtzndSaleMinTarget,
   useReadCtzndSaleStart,
   useReadCtzndSaleEnd,
+  useReadCtzndSaleTokenToPaymentToken,
 } from '@/wagmi.generated';
 import { formatEther, formatUnits, parseUnits } from 'viem';
 import { sepolia } from 'viem/chains';
@@ -314,4 +315,19 @@ export const useCtzndRisingTideCap = () => {
   }, [cap, isLoading, error]);
 
   return result;
+};
+
+export const useCtzndRisingTideCapInUSDC = () => {
+  const status = useCtzndSaleCapStatus();
+  const aboveCap = status === 'above';
+  const { data, isLoading, error } = useFetchRisingTideCap(aboveCap);
+
+  const { data: maxAllocation } = useReadCtzndSaleTokenToPaymentToken({ args: [data || 0n] });
+
+  const cap = aboveCap && maxAllocation ? formatUnits(maxAllocation, 6) : 'N/A';
+  return {
+    data: cap,
+    isLoading,
+    error
+  };
 };

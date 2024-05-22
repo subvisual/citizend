@@ -8,6 +8,10 @@ import { useDialog } from '@/app/_providers/dialog/context';
 import { ContributeDialog } from '../components/dialogs/contribute-dialog';
 import { useContributeToCtznd } from '@/app/_lib/hooks';
 import Link from 'next/link';
+import { useReadCtzndSaleCurrentTokenPrice } from '@/wagmi.generated';
+import { formatUnits } from 'viem';
+import { calculateTokenPrice } from '../utils/calculateTokenPrice';
+import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
 
 const getErrorMessage = (
   amount: number,
@@ -56,6 +60,8 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
     error,
     setAmount,
   } = useContributeToCtznd();
+  const totalContributions = useTotalInvestedUsdcCtznd();
+  const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
 
   const updateAmount = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,7 +119,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
             id="ctnd-amount"
             units="CTND*"
             disabled
-            value={tokensToBuy}
+            value={amount / currentTokenPrice}
             className="col-span-2 md:col-span-1"
           />
           <p className="col-span-2 text-mono-800">

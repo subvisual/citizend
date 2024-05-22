@@ -7,7 +7,7 @@ import { formatEther, formatUnits } from 'viem';
 import clsx from 'clsx';
 import { number } from '../utils/intl-formaters/number';
 import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
-import { useCtzndRisingTideCap, useCtzndSaleCapStatus } from '@/app/_lib/hooks';
+import { useCtzndRisingTideCap, useCtzndRisingTideCapInUSDC, useCtzndSaleCapStatus } from '@/app/_lib/hooks';
 import Link from 'next/link';
 import { calculateTokenPrice } from '../utils/calculateTokenPrice';
 
@@ -192,7 +192,7 @@ export const SaleStatus = ({ hasGrant }: { hasGrant: boolean }) => {
       refetchInterval: 1000 * 10, // 10 seconds
     },
   });
-  const { data: cap, isLoading: isLoadingCap } = useCtzndRisingTideCap();
+  const { data: cap, isLoading: isLoadingCap } = useCtzndRisingTideCapInUSDC();
   const totalContributions = useTotalInvestedUsdcCtznd();
   const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
 
@@ -253,7 +253,7 @@ export const SaleStatus = ({ hasGrant }: { hasGrant: boolean }) => {
               Current max. allocation/participant:
             </span>
             <span className="md:text-end">
-              {isLoadingCap ? <LoadingField /> : cap}
+              {isLoadingCap ? <LoadingField /> : (cap == "N/A" ? cap : `${number(Number(cap))} USDC`)}
             </span>
           </div>
         </div>

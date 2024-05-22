@@ -15,11 +15,13 @@ import {
   useReadCtzndSaleAllocation,
   useReadCtzndSaleInvestorCount,
   useReadCtzndSaleRefundAmount,
+  useReadCtzndSaleTokenToPaymentToken,
+  useReadCtzndSaleUncappedAllocation,
   useWriteCtzndSaleRefund,
 } from '@/wagmi.generated';
 import { useAccount } from 'wagmi';
-import { formatEther } from 'viem';
-import { useCtzndSaleCapStatus, useCtzndSaleStatus } from '@/app/_lib/hooks';
+import { formatEther, parseEther } from 'viem';
+import { useCtzndRisingTideCap, useCtzndSaleCapStatus, useCtzndSaleStatus } from '@/app/_lib/hooks';
 import { useDialog } from '@/app/_providers/dialog/context';
 import { number } from '../utils/intl-formaters/number';
 import { usdValue } from '../utils/intl-formaters/usd-value';
@@ -163,6 +165,26 @@ const MyContribution = () => {
   );
 };
 
+const useAvailableToClaim = () => {
+  const { address } = useAccount();
+  const capStatus = useCtzndSaleCapStatus();
+  const { data: uncappedAllocation } = useReadCtzndSaleUncappedAllocation({ args: [address!] });
+  const { data: availableToClaim } = useReadCtzndSaleAllocation({
+    args: [address!],
+    query: {
+      enabled: !!address,
+      staleTime: 0,
+    },
+  });
+  // const { data: cap } = useCtzndRisingTideCap();
+
+  if (capStatus == "above") {
+    return "TBD once sale ends";
+  }
+
+  return `${availableToClaim} CTND`;
+}
+
 const MyTokens = () => {
   const { address } = useAccount();
   const investedUsdc = useUserTotalInvestedUsdcCtznd(address!);
@@ -178,13 +200,7 @@ const MyTokens = () => {
   const status = useCtzndSaleStatus();
   const totalContributions = useTotalInvestedUsdcCtznd();
   const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
-  const { data: availableToClaim } = useReadCtzndSaleAllocation({
-    args: [address!],
-    query: {
-      enabled: !!address,
-      staleTime: 0,
-    },
-  });
+  const availableToClaim = useAvailableToClaim();
 
   return (
     <div className="flex flex-col gap-2 rounded-md bg-mono-50 px-6 py-8 text-mono-950">
@@ -208,7 +224,7 @@ const MyTokens = () => {
         </div>
         <div className="flex flex-col gap-2">
           <h3 className="text-sm text-mono-800">CTND Available to Claim</h3>
-          <div>{availableToClaim ? formatEther(availableToClaim) : 0} CTND</div>
+          <div>{availableToClaim}</div>
         </div>
         <div className="flex flex-col gap-2">
           <h3 className="text-sm text-mono-800">Available for refund</h3>

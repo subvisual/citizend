@@ -13,6 +13,8 @@ import { Error } from '../../svg/error';
 import { Done } from '../done';
 import { use } from 'react';
 import { appSignal } from '@/app/app-signal';
+import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
+import { calculateTokenPrice } from '@/app/_ui/utils/calculateTokenPrice';
 
 type TAllowFundsProps = {
   amount: number;
@@ -116,21 +118,25 @@ const Contribute = ({
 
 type TDescriptionProps = {
   amount: number;
-  tokensToBuy: number;
 };
 
-const Description = ({ amount, tokensToBuy }: TDescriptionProps) => (
-  <div className="my-6 flex flex-col gap-6 border-b border-t border-mono-200 py-6 text-sm">
-    <div className="flex justify-between">
-      <div className="uppercase text-mono-800">My Contribution</div>
-      <div className="text-mono-950">{amount} USDC</div>
+const Description = ({ amount }: TDescriptionProps) => {
+  const totalContributions = useTotalInvestedUsdcCtznd();
+  const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
+
+  return (
+    <div className="my-6 flex flex-col gap-6 border-b border-t border-mono-200 py-6 text-sm">
+      <div className="flex justify-between">
+        <div className="uppercase text-mono-800">My Contribution</div>
+        <div className="text-mono-950">{amount} USDC</div>
+      </div>
+      <div className="flex justify-between">
+        <div className="uppercase text-mono-800">CTND Amount</div>
+        <div className="text-mono-950">{amount / currentTokenPrice} CTND</div>
+      </div>
     </div>
-    <div className="flex justify-between">
-      <div className="uppercase text-mono-800">CTND Amount</div>
-      <div className="text-mono-950">{tokensToBuy} CTND</div>
-    </div>
-  </div>
-);
+  );
+}
 
 export type TContributeDialogProps = {
   userAddress: `0x${string}`;
@@ -155,7 +161,6 @@ export function ContributeDialog({
     buyCtzndTokens,
     error: buyError,
   } = useBuyCtzndTokens();
-
   useEffectSafe(() => {
     const reportError = error || buyError;
 
@@ -188,7 +193,7 @@ export function ContributeDialog({
           />
         </Dialog.Title>
         <div className="-mt-6 flex flex-col">
-          <Description amount={amount} tokensToBuy={tokensToBuy} />
+          <Description amount={amount} />
           <p className="text-sm">
             Keep in mind that if you want to contribute again, you’ll need to
             use the same wallet.
@@ -215,7 +220,7 @@ export function ContributeDialog({
         {amount} USDC).
       </p>
       <div className="flex flex-col">
-        <Description amount={amount} tokensToBuy={tokensToBuy} />
+        <Description amount={amount} />
         <div className="flex justify-between pb-6 text-sm">
           <div className="uppercase text-mono-800">Current allowed value:</div>
           <div className="text-mono-950">

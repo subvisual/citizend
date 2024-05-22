@@ -21,7 +21,11 @@ import {
 } from '@/wagmi.generated';
 import { useAccount } from 'wagmi';
 import { formatEther, parseEther } from 'viem';
-import { useCtzndRisingTideCap, useCtzndSaleCapStatus, useCtzndSaleStatus } from '@/app/_lib/hooks';
+import {
+  useCtzndRisingTideCap,
+  useCtzndSaleCapStatus,
+  useCtzndSaleStatus,
+} from '@/app/_lib/hooks';
 import { useDialog } from '@/app/_providers/dialog/context';
 import { number } from '../utils/intl-formaters/number';
 import { usdValue } from '../utils/intl-formaters/usd-value';
@@ -168,7 +172,9 @@ const MyContribution = () => {
 const useAvailableToClaim = () => {
   const { address } = useAccount();
   const capStatus = useCtzndSaleCapStatus();
-  const { data: uncappedAllocation } = useReadCtzndSaleUncappedAllocation({ args: [address!] });
+  const { data: uncappedAllocation } = useReadCtzndSaleUncappedAllocation({
+    args: [address!],
+  });
   const { data: availableToClaim } = useReadCtzndSaleAllocation({
     args: [address!],
     query: {
@@ -176,14 +182,13 @@ const useAvailableToClaim = () => {
       staleTime: 0,
     },
   });
-  // const { data: cap } = useCtzndRisingTideCap();
 
-  if (capStatus == "above") {
-    return "TBD once sale ends";
+  if (capStatus == 'above') {
+    return 'TBD once sale ends';
   }
 
-  return `${formatEther(availableToClaim || 0n)} CTND`;
-}
+  return `${number(Number(formatEther(availableToClaim || 0n)))} CTND`;
+};
 
 const MyTokens = () => {
   const { address } = useAccount();

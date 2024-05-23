@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import { CitizendProjectDescription } from './citizend-project-description';
 import { HowToParticipate } from './how-to-participate';
 import { SaleStatus } from './sale-status';
-import { ApplyButton } from './apply-button';
 import {
   useCanContribute,
   useFetchProjectsSaleDetails,
@@ -58,13 +57,14 @@ export const ProjectContent = () => {
     );
   }
 
-  if (isError)
+  if (isError && !project)
     return (
       <div>
         <p>Something went wrong...</p>
         <p>{error.message}</p>
       </div>
     );
+
   if (!project) return <div>Project not found</div>;
 
   const { start, startRegistration, endRegistration } = project;

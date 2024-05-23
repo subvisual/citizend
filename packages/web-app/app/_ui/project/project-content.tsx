@@ -28,7 +28,9 @@ const generateTabClassName = ({ selected }: { selected: boolean }) =>
 export const ProjectContent = () => {
   const { address } = useAccount();
   const { projectId } = useProject();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(
+    process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? 1 : 0,
+  );
   const { data, isLoading, isError, error } = useFetchProjectsSaleDetails();
   const { hasGrant: hasCitizendGrant } = useHasCitizendGrant();
   const {

@@ -72,6 +72,9 @@ export const saleDetails = async (): Promise<
       contract.read.totalUncappedAllocations(),
     ]);
 
+    const usdc = await contract.read.tokenToPaymentToken([contractResults[11]]);
+    const currentPrice = calculateTokenPrice(Number(formatUnits(usdc, 6)));
+
     return [
       {
         address: evmGrantee.address,
@@ -94,9 +97,7 @@ export const saleDetails = async (): Promise<
         background: `${host}/citizend-card-desktop.png`,
         backgroundMobile: `${host}/citizend-card-mobile.png`,
         supplyPercentage: '2.5%',
-        currentPrice: calculateTokenPrice(
-          Number(formatEther(contractResults[11])),
-        ),
+        currentPrice: currentPrice,
       },
     ];
   } catch (error) {

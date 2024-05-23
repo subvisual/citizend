@@ -3,7 +3,14 @@ import { Spinner } from '../../svg/spinner';
 import { Error } from '../../svg/error';
 import { Done } from '../done';
 import { Check } from '../../svg/check';
-import { WriteContractErrorType } from 'viem';
+import { WriteContractErrorType, formatEther } from 'viem';
+import {
+  useReadCtzndSaleRefundAmount,
+  useWriteCtzndSaleRefund,
+} from '@/wagmi.generated';
+import { use } from 'react';
+import { useAccount } from 'wagmi';
+import { useEffectSafe } from '@/app/_lib/hooks';
 
 type TTitleProps = {
   txHash?: `0x${string}`;
@@ -40,24 +47,35 @@ const Title = ({ txHash, error }: TTitleProps) => {
   );
 };
 
-type TRefundDialogProps = {
-  refundValue: string;
-  txHash?: `0x${string}`;
-  error: string | null;
-};
+export const RefundDialog = () => {
+  const { address } = useAccount();
+  const { data: refundValue } = useReadCtzndSaleRefundAmount({
+    args: [address!],
+  });
+  const formattedValue =
+    refundValue !== undefined ? formatEther(refundValue) : '0';
 
-export const RefundDialog = ({
-  refundValue,
-  txHash,
-  error,
-}: TRefundDialogProps) => {
+  const { writeContract, data: txHash, error } = useWriteCtzndSaleRefund();
+
+  useEffectSafe(() => {
+    if (!address) return;
+    writeContract({ args: [address] });
+  }, [address]);
+
+  if (error) {
+    console.log('error', error);
+  }
+
   return (
     <>
       <Dialog.Title
         as="h2"
         className="relative flex w-full flex-col items-center justify-center gap-4 p-8 text-mono-950"
       >
-        <Title txHash={txHash} error={error} />
+        <Title
+          txHash={txHash}
+          error={(error as unknown as any)?.shortMessage || null}
+        />
       </Dialog.Title>
       <div className="flex flex-col">
         <div className="my-6 flex flex-col gap-6 border-b border-t border-mono-200 py-6 text-sm">
@@ -65,7 +83,7 @@ export const RefundDialog = ({
             <div className="uppercase text-mono-800">
               Refund After cap calculations
             </div>
-            <div className="text-mono-950">{refundValue} USDC</div>
+            <div className="text-mono-950">{formattedValue} USDC</div>
           </div>
         </div>
         <p className="pt-8 text-sm">

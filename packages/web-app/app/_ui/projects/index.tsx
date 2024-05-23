@@ -11,7 +11,7 @@ export const Projects = () => {
     return <CardSkeleton className="h-[532px] md:w-[433px]" />;
   }
 
-  if (isError) return <div>Something went wrong...</div>;
+  if (isError && !data) return <div>Something went wrong...</div>;
 
   return (
     <div className="flex justify-center">

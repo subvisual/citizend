@@ -141,11 +141,17 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
       </div>
       <div className="px-6 pt-5 text-mono-400">
         By clicking &quot;Contribute&quot; you agree to the platform{' '}
-        <Link href={''} className="text-mono-50">
+        <Link
+          href="https://citizend.xyz/legal/terms-conditions"
+          className="text-mono-50"
+        >
           Terms and Conditions{' '}
         </Link>
         and confirm you read the{' '}
-        <Link href={''} className="text-mono-50">
+        <Link
+          href="https://citizend.xyz/legal/privacy-policy"
+          className="text-mono-50"
+        >
           Privacy Policy
         </Link>
         .

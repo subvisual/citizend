@@ -61,7 +61,7 @@ export const MyTokens = () => {
             ) : null}
           </div>
         </h3>
-        <div className="text-3.5xl">{confirmedAllocation} USDC</div>
+        <div className="text-3.5xl">0 USDC</div>
         <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-3">
           <div className="flex flex-col gap-2">
             <h3 className="text-sm text-mono-800">Current CTND PRICE (FDV)</h3>

@@ -224,7 +224,11 @@ export const SaleStatus = ({ hasGrant }: { hasGrant: boolean }) => {
         </h4>
         <div className="p-8">
           <ProgressBar
-            title="Current raise status"
+            title={
+              status === 'completed'
+                ? 'Final raise status'
+                : 'Current raise status'
+            }
             max={maxValue}
             value={Number(totalCommitted)}
           />

@@ -10,6 +10,7 @@ import { useTotalInvestedUsdcCtznd } from '@/app/_lib/queries';
 import {
   useCtzndRisingTideCapInUSDC,
   useCtzndSaleCapStatus,
+  useCtzndSaleStatus,
 } from '@/app/_lib/hooks';
 import Link from 'next/link';
 import { calculateTokenPrice } from '../utils/calculateTokenPrice';
@@ -203,13 +204,15 @@ export const SaleStatus = ({ hasGrant }: { hasGrant: boolean }) => {
   const { data: cap, isLoading: isLoadingCap } = useCtzndRisingTideCapInUSDC();
   const totalContributions = useTotalInvestedUsdcCtznd();
   const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
+  const status = useCtzndSaleStatus();
 
   return (
     <>
       <div className="flex w-full flex-col rounded-lg bg-mono-50 text-mono-950">
         <h4 className="flex justify-between border-b border-mono-200 px-8 py-6 font-medium uppercase">
           Community Sale Status
-          {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? (
+          {process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' &&
+          status === 'live' ? (
             <div className="flex items-center gap-3 text-mono-800">
               Live
               <span className="relative flex h-4 w-4">

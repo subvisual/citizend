@@ -63,7 +63,8 @@ contract SaleMaxTargetReachedTest is Test {
             0.2 * 1e6,
             start,
             end,
-            2500000 ether,
+            250000 ether,
+            1250000 ether,
             500000 * 1e6,
             1000000 * 1e6,
             startRegistration,
@@ -123,10 +124,10 @@ contract SaleMaxTargetReachedTest is Test {
         vm.warp(sale.end() + 1000);
 
         vm.prank(owner);
-        sale.setIndividualCap(1250000 ether);
+        sale.setIndividualCap(625000 ether);
 
         require(sale.risingTide_isValidCap() == true);
-        require(sale.allocation(address(alice)) == 1250000 ether);
-        require(sale.allocation(address(bob)) == 1250000 ether);
+        require(sale.allocation(address(alice)) == 625000 ether);
+        require(sale.allocation(address(bob)) == 625000 ether);
     }
 }

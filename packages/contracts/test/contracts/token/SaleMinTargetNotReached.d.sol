@@ -65,7 +65,8 @@ contract SaleMinTargetNotReachedTest is Test {
             0.2 * 1e6,
             start,
             end,
-            2500000 ether,
+            250000 ether,
+            1250000 ether,
             500000 * 1e6,
             1000000 * 1e6,
             startRegistration,
@@ -109,11 +110,11 @@ contract SaleMinTargetNotReachedTest is Test {
         );
         require(
             sale.allocation(address(alice)) ==
-                (((300000 * 1e6) / sale.currentTokenPrice()) * 1 ether)
+                (((300000 * 1e6) / sale.rate()) * 1 ether)
         );
         require(
             sale.allocation(address(bob)) ==
-                (((300000 * 1e6) / sale.currentTokenPrice()) * 1 ether)
+                (((300000 * 1e6) / sale.rate()) * 1 ether)
         );
     }
 

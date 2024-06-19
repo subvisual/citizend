@@ -38,8 +38,8 @@ contract DevDeployScript is Script {
 
         startRegistration = 1715342400;
         endRegistration = 1715860800;
-        start = 1715947200;
-        end = 1716033600;
+        start = 1718787833;
+        end = 1719230400;
 
         MockERC20 paymentToken = new MockERC20("USDC", "USDC", 6);
         Sale sale = new Sale(
@@ -47,21 +47,22 @@ contract DevDeployScript is Script {
             0.2 ether,
             start,
             end,
-            2500000 ether,
-            500000 ether,
-            1000000 ether,
+            250000 ether,
+            1250000 ether,
+            50000 * 1e6,
+            250000 * 1e6,
             startRegistration,
             endRegistration
         );
 
         sale.setMerkleRoot(merkleRoot);
-        sale.setMinContribution(200 ether);
+        sale.setMinContribution(100 * 1e6);
 
-        bool success = paymentToken.approve(address(sale), 1000 ether);
+        bool success = paymentToken.approve(address(sale), 1000 * 1e6);
         require(success, "approve failed");
 
         for (uint256 i; i < testAccounts.length; i++) {
-            paymentToken.mint(testAccounts[i], 1000 ether);
+            paymentToken.mint(testAccounts[i], 1000 * 1e6);
         }
         vm.stopBroadcast();
     }

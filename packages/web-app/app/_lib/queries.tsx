@@ -26,6 +26,7 @@ import { appSignal } from '../app-signal';
 import { useEffect } from 'react';
 import { canContribute } from '../_server/can-contribute';
 import { userProjects } from '../_server/user-projects';
+import { extraAllocation } from '../_server/extra-allocation';
 
 export const usePublicInfo = () => {
   return useQuery({
@@ -330,6 +331,23 @@ export const useFetchRisingTideCap = (enabled?: boolean) => {
     },
     refetchInterval: 1000 * 10, // 10 seconds
     enabled,
+  });
+};
+
+export const useExtraAllocation = (address?: string) => {
+  return useQuery({
+    queryKey: ['extra-allocation', address],
+    queryFn: async () => {
+      if (!address) return false;
+      const result = await extraAllocation(address);
+      if (typeof result === 'object' && 'error' in result) {
+        appSignal.sendError(new Error(result.error));
+        throw new Error(result.error);
+      }
+
+      return result;
+    },
+    enabled: !!address,
   });
 };
 

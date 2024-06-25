@@ -442,11 +442,7 @@ contract SaleTest is Test {
 
         require(sale.allocation(alice) == 30 ether);
 
-
-        require(
-            sale.allocation(alice) ==
-                ((6 * 1e6) / sale.rate()) * 1 ether
-        );
+        require(sale.allocation(alice) == ((6 * 1e6) / sale.rate()) * 1 ether);
     }
 
     function test_CurrentPrice() public {

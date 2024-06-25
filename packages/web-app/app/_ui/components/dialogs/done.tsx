@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Spinner } from '../svg/spinner';
 import { useTransaction } from 'wagmi';
-import { sepolia, mainnet } from 'viem/chains';
+import { arbitrumSepolia, arbitrum } from 'viem/chains';
 
 const getTxLink = (hash: string) => {
   if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
@@ -15,8 +15,8 @@ export const Done = ({ hash }: { hash: `0x${string}` }) => {
     hash,
     chainId:
       process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-        ? sepolia.id
-        : mainnet.id,
+        ? arbitrumSepolia.id
+        : arbitrum.id,
     query: {
       staleTime: 0,
       refetchInterval: 1000,

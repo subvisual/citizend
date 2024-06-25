@@ -26,7 +26,7 @@ import {
   useReadCtzndSaleTokenToPaymentToken,
 } from '@/wagmi.generated';
 import { formatEther, formatUnits, parseUnits } from 'viem';
-import { mainnet, sepolia } from 'viem/chains';
+import { arbitrum, arbitrumSepolia } from 'viem/chains';
 import { useAccount } from 'wagmi';
 
 export const useKycCredential = () => {
@@ -193,8 +193,8 @@ export const useHasProjectGrant = (projectId: string) => {
 export const useCtzndPaymentTokenAllowance = (userAddress: `0x${string}`) => {
   const chainId =
     process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-      ? sepolia.id
-      : mainnet.id;
+      ? arbitrumSepolia.id
+      : arbitrum.id;
   const saleAddress = ctzndSaleAddress[chainId];
   const { data: paymentToken } = useReadCtzndSalePaymentToken();
   const {

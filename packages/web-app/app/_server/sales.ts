@@ -9,7 +9,7 @@ import {
   http,
   publicActions,
 } from 'viem';
-import { mainnet, sepolia } from 'viem/chains';
+import { arbitrumSepolia, mainnet } from 'viem/chains';
 import { TProjectSaleDetails, TProjectStatus } from '../_types';
 import { TInternalError } from './types';
 import { evmGrantee, evmGranteePublicKey } from './wallet';
@@ -18,7 +18,7 @@ import { calculateTokenPrice } from '../_ui/utils/calculateTokenPrice';
 const config =
   process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
     ? {
-        chain: sepolia,
+        chain: arbitrumSepolia,
         transport: http(),
       }
     : {
@@ -66,7 +66,8 @@ export const saleDetails = async (): Promise<
       contract.read.end(),
       contract.read.minContribution(),
       contract.read.maxContribution(),
-      contract.read.totalTokensForSale(),
+      contract.read.minTokensForSale(),
+      contract.read.maxTokensForSale(),
       contract.read.startRegistration(),
       contract.read.endRegistration(),
       contract.read.totalUncappedAllocations(),
@@ -89,9 +90,10 @@ export const saleDetails = async (): Promise<
         end: contractResults[5] * 1000n,
         minContribution: formatUnits(contractResults[6], 6),
         maxContribution: formatUnits(contractResults[7], 6),
-        totalTokensForSale: formatEther(contractResults[8]),
-        startRegistration: contractResults[9] * 1000n,
-        endRegistration: contractResults[10] * 1000n,
+        minTokensForSale: formatEther(contractResults[8]),
+        maxTokensForSale: formatEther(contractResults[9]),
+        startRegistration: contractResults[10] * 1000n,
+        endRegistration: contractResults[11] * 1000n,
         url: `${host}/projects/citizend`,
         logo: `${host}/project-citizend-logo.svg`,
         background: `${host}/citizend-card-desktop.png`,

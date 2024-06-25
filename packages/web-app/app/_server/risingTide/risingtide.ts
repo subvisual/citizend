@@ -1,16 +1,18 @@
 'use server';
 
 import { Address, createPublicClient, http, publicActions } from 'viem';
-import { mainnet, sepolia } from 'viem/chains';
+import { arbitrum, arbitrumSepolia } from 'viem/chains';
 
 import { ctzndSaleAbi, ctzndSaleAddress } from '@/wagmi.generated';
 
 const chainId =
-  process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? sepolia.id : mainnet.id;
+  process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
+    ? arbitrumSepolia.id
+    : arbitrum.id;
 const saleContractAddress = ctzndSaleAddress[chainId];
 
 const client = createPublicClient({
-  chain: sepolia,
+  chain: arbitrumSepolia,
   transport: http(),
 }).extend(publicActions);
 
@@ -25,7 +27,7 @@ export const computeRisingTideCap = async (): Promise<bigint> => {
   const available = await client.readContract({
     address: saleContractAddress,
     abi: ctzndSaleAbi,
-    functionName: 'totalTokensForSale',
+    functionName: 'risingTide_totalCap',
   });
 
   const events = purchases.filter(

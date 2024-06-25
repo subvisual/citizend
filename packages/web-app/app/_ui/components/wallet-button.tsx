@@ -7,10 +7,9 @@ import { EdgeBorderButton, EdgeButton } from './edge';
 import { Avatar } from './avatar';
 import { useAccount } from 'wagmi';
 import { usePaymentTokenBalance } from '@/app/_lib/queries';
-import { mainnet, sepolia } from 'viem/chains';
+import { arbitrum, arbitrumSepolia } from 'viem/chains';
 import { useKyc } from '@/app/_providers/kyc/context';
 import { idOSCredentialStatus } from '@/app/_types/idos';
-import { useIdOS } from '@/app/_providers/idos';
 
 const statusDotMap = {
   pending: 'yellow-500',
@@ -58,18 +57,12 @@ const SignedButton = () => {
 };
 
 const ConnectedButton = () => {
-  // const { hasSigner, setSigner } = useIdOS();
   const { data: balance } = usePaymentTokenBalance();
 
   if (!balance)
     return (
       <div className="h-14 w-44 animate-pulse rounded-md bg-gradient-to-br from-mono-800 to-mono-900" />
     );
-
-  // TEMPORARY DISABLED
-  // if (!hasSigner) {
-  //   return <EdgeButton onClick={setSigner}>Verify identity</EdgeButton>;
-  // }
 
   return <SignedButton />;
 };
@@ -104,9 +97,9 @@ export function WalletButton() {
 
             if (
               (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' &&
-                chain?.id !== sepolia.id) ||
+                chain?.id !== arbitrumSepolia.id) ||
               (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'false' &&
-                chain?.id !== mainnet.id)
+                chain?.id !== arbitrum.id)
             ) {
               return (
                 <EdgeButton onClick={openChainModal}>Wrong network</EdgeButton>

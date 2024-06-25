@@ -88,6 +88,9 @@ const Contribute = ({
         <Check className="h-8 w-8 text-blue-500" />
         Contribution submitted
         <div className="text-sm">
+          You can check the 'My Projects' tab to see the details of your contribution
+        </div>
+        <div className="text-sm">
           <Done hash={contributionTxHash} />
         </div>
       </>

@@ -175,7 +175,7 @@ const Info = () => {
   if (status === 'above') {
     return (
       <div className="flex flex-col border-t border-mono-200 p-8 text-mono-800">
-        *The contributions exceed $1M, activating our Rising Tide Mechanism.
+        *The contributions exceed $250k, activating our Rising Tide Mechanism.
         Your final token allocation will be determined by the number of
         participants and their total contribution amount.
         <Link

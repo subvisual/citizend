@@ -92,7 +92,7 @@ const FullData = ({
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400">% of total supply distributed</span>
-        <span>2.5%</span>
+        <span>0.25% - 1.25%</span>
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400"># of tokens distributed</span>

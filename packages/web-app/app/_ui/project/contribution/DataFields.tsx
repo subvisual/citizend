@@ -46,8 +46,8 @@ export const DataFields = () => {
         </div>
         <span className="text-sm text-mono-800">Price range (FDV range):</span>
         <div className="text-sm md:text-end">
-          <span>$0.2 - $0.4 </span>
-          <span className="text-mono-800">($20m - $40m)</span>
+          <span>$0.2</span>
+          <span className="text-mono-800">($20m)</span>
         </div>
       </div>
       <div className="grid grid-cols-1 gap-x-2 gap-y-1 md:grid-cols-2">
@@ -62,7 +62,7 @@ export const DataFields = () => {
         </div>
         <span className="text-sm text-mono-800">(% of total supply):</span>
         <div className="text-sm md:text-end">
-          <span className="text-mono-800">(2.5%)</span>
+          <span className="text-mono-800">(0.25% - 1.25)</span>
         </div>
       </div>
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">

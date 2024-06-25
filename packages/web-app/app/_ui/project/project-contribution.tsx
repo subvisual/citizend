@@ -122,7 +122,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
           />
           <p className="col-span-2 text-mono-800">
             Please keep in mind that you may not get your full desired
-            contribution and price/token may vary as the sale progresses.
+            contribution.
           </p>
         </div>
         <DataFields />

@@ -8,8 +8,7 @@ export const SaleBanner = () => {
         discovery.
       </p>
       <p>
-        Please keep in mind that you may not get your full desired contribution
-        and price/token may vary as the sale progresses.
+        Please keep in mind that you may not get your full desired contribution.
       </p>
       <Link
         className="text-blue-500"

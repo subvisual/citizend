@@ -1,4 +1,3 @@
-import { useKyc } from '@/app/_providers/kyc/context';
 import { DefaultAvatar, LockedAvatar, PendingAvatar } from './svg/avatars';
 import { idOSCredentialStatus } from '@/app/_types/idos';
 
@@ -15,11 +14,5 @@ const getAvatarFromStatus = (status: idOSCredentialStatus | undefined) => {
 };
 
 export const Avatar = () => {
-  const { status, isBlockedCountry } = useKyc();
-
-  if (isBlockedCountry) return <LockedAvatar />;
-
-  const Avatar = getAvatarFromStatus(status);
-
-  return <Avatar />;
+  return <DefaultAvatar />;
 };

@@ -5,9 +5,9 @@ import { arbitrumSepolia, arbitrum } from 'viem/chains';
 
 const getTxLink = (hash: string) => {
   if (process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true') {
-    return `https://sepolia.etherscan.io/tx/${hash}`;
+    return `https://sepolia.arbiscan.io/tx/${hash}`;
   }
-  return `https://etherscan.io/tx/${hash}`;
+  return `https://arbiscan.io/tx/${hash}`;
 };
 
 export const Done = ({ hash }: { hash: `0x${string}` }) => {
@@ -27,7 +27,7 @@ export const Done = ({ hash }: { hash: `0x${string}` }) => {
   if (data?.blockHash) {
     return (
       <Link href={getTxLink(hash)} target="_blank" className="text-blue-500">
-        View on etherscan
+        View on arbiscan
       </Link>
     );
   }

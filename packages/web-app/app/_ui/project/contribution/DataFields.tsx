@@ -1,6 +1,7 @@
 import {
   useReadCtzndSaleMaxTarget,
-  useReadCtzndSaleTotalTokensForSale,
+  useReadCtzndSaleMinTokensForSale,
+  useReadCtzndSaleMaxTokensForSale,
 } from '@/wagmi.generated';
 import { formatEther, formatUnits } from 'viem';
 import { number } from '../../utils/intl-formaters/number';
@@ -28,7 +29,8 @@ const LoadingField = () => (
 );
 
 export const DataFields = () => {
-  const { data: totalTokensForSale } = useReadCtzndSaleTotalTokensForSale();
+  const { data: minTotalTokensForSale } = useReadCtzndSaleMinTokensForSale();
+  const { data: maxTotalTokensForSale } = useReadCtzndSaleMaxTokensForSale();
   const minContribution = useCtzndMinContributionUsdc();
   const { data: maxParticipants } = useMaxParticipants();
   const totalContributions = useTotalInvestedUsdcCtznd();
@@ -51,8 +53,9 @@ export const DataFields = () => {
       <div className="grid grid-cols-1 gap-x-2 gap-y-1 md:grid-cols-2">
         <span className="text-mono-800">Tokens distributed:</span>
         <div className="md:text-end">
-          {totalTokensForSale !== undefined ? (
-            <>{number(Number(formatEther(totalTokensForSale)))} CTND</>
+          {minTotalTokensForSale !== undefined &&
+          maxTotalTokensForSale !== undefined ? (
+            <>{`${number(Number(formatEther(minTotalTokensForSale)))} - ${number(Number(formatEther(maxTotalTokensForSale)))}} CTND`}</>
           ) : (
             <LoadingField />
           )}

@@ -57,15 +57,19 @@ const Upcoming = ({
 const FullData = ({
   minTarget,
   maxTarget,
-  totalTokensForSale,
+  minTokensForSale,
+  maxTokensForSale,
 }: TProjectSaleDetails) => {
   const targetedRaise = usdRange(
     BigInt(formatUnits(minTarget, 6)),
     BigInt(formatUnits(maxTarget, 6)),
   );
   const minPrice = useCtzndMinContributionUsdc();
-  const totalTokens = new Intl.NumberFormat('default').format(
-    Number(totalTokensForSale),
+  const minTotalTokens = new Intl.NumberFormat('default').format(
+    Number(minTokensForSale),
+  );
+  const maxTotalTokens = new Intl.NumberFormat('default').format(
+    Number(maxTokensForSale),
   );
   const totalContributions = useTotalInvestedUsdcCtznd();
   const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
@@ -92,7 +96,7 @@ const FullData = ({
       </li>
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400"># of tokens distributed</span>
-        <span>{totalTokens}</span>
+        <span>{`${minTotalTokens} - ${maxTotalTokens}`}</span>
       </li>
     </ul>
   );

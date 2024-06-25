@@ -13,7 +13,7 @@ import {
   useWriteCtzndSaleBuy,
   useWriteCtzndErc20Approve,
 } from '@/wagmi.generated';
-import { mainnet, sepolia } from 'viem/chains';
+import { arbitrum, arbitrumSepolia } from 'viem/chains';
 import { appSignal } from '../app-signal';
 
 export const useAcquireAccessGrantMutation = () => {
@@ -248,8 +248,8 @@ export const useBuyCtzndTokens = () => {
 export const useSetPaymentTokenAllowance = () => {
   const chainId =
     process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-      ? sepolia.id
-      : mainnet.id;
+      ? arbitrumSepolia.id
+      : arbitrum.id;
   const saleAddress = ctzndSaleAddress[chainId];
   const { data: paymentToken } = useReadCtzndSalePaymentToken();
   const {

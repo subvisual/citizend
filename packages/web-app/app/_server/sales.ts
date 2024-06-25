@@ -18,13 +18,13 @@ import { calculateTokenPrice } from '../_ui/utils/calculateTokenPrice';
 const config =
   process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
     ? {
-      chain: arbitrumSepolia,
-      transport: http(),
-    }
+        chain: arbitrumSepolia,
+        transport: http(),
+      }
     : {
-      chain: arbitrum,
-      transport: http(),
-    };
+        chain: arbitrum,
+        transport: http(),
+      };
 
 const client = createWalletClient(config).extend(publicActions);
 

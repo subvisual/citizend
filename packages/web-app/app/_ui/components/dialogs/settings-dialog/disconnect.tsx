@@ -3,7 +3,7 @@
 import { Button } from '../..';
 import { Disconnect as DisconnectIcon } from '../../svg/disconnect';
 import { useDialog } from '@/app/_providers/dialog/context';
-import { useDisconnect } from "wagmi";
+import { useDisconnect } from 'wagmi';
 
 export const DisconnectMenu = () => {
   const { close } = useDialog();

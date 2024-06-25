@@ -2,7 +2,11 @@
 
 import { useProject } from '@/app/_providers/project/context';
 import { PropsWithChildren } from 'react';
-import { PROJECT_NOT_FOUND, useCanContribute, useFetchProjectsSaleDetails } from '@/app/_lib/queries';
+import {
+  PROJECT_NOT_FOUND,
+  useCanContribute,
+  useFetchProjectsSaleDetails,
+} from '@/app/_lib/queries';
 import { Redirect } from '../components/redirect';
 import { MyProjectSkeleton } from './my-project';
 import { useAccount } from 'wagmi';

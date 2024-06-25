@@ -1,17 +1,22 @@
 'use client';
 
-import { useHasProjectGrant } from '@/app/_lib/hooks';
 import { useProject } from '@/app/_providers/project/context';
 import { PropsWithChildren } from 'react';
-import { PROJECT_NOT_FOUND, useCanContribute } from '@/app/_lib/queries';
+import { PROJECT_NOT_FOUND, useCanContribute, useFetchProjectsSaleDetails } from '@/app/_lib/queries';
 import { Redirect } from '../components/redirect';
 import { MyProjectSkeleton } from './my-project';
+import { useAccount } from 'wagmi';
 
 export const ProjectGrantCheck = ({ children }: PropsWithChildren) => {
+  const { address } = useAccount();
   const { projectId } = useProject();
-  const { hasGrant, isLoading, error } = useHasProjectGrant(projectId);
+  const { data, isLoading, error } = useFetchProjectsSaleDetails();
+  const project = data?.find(
+    (project) => project.project.toLowerCase() === projectId,
+  );
+  const { data: canContribute } = useCanContribute(project?.address, address);
 
-  if (hasGrant) return children;
+  if (canContribute) return children;
 
   if (isLoading || !error) {
     return <MyProjectSkeleton />;

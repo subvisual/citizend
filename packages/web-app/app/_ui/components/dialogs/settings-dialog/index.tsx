@@ -4,7 +4,6 @@ import { Dialog } from '@headlessui/react';
 import { Avatar } from '../../avatar';
 import { Address } from './address';
 import { Balance } from './balance';
-import { IdStatus } from './status';
 import { DisconnectMenu } from './disconnect';
 
 export function SettingsDialog() {
@@ -23,9 +22,6 @@ export function SettingsDialog() {
         </div>
         <div className="flex gap-2 py-6">
           <Balance />
-        </div>
-        <div className="relative flex gap-2 py-6">
-          <IdStatus />
         </div>
         <div className="flex gap-2 pt-6">
           <DisconnectMenu />

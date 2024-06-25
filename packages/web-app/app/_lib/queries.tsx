@@ -213,7 +213,7 @@ export const useFetchNewDataId = (
 };
 
 export const useFetchMerkleProof = () => {
-  const { address } = useIdOS();
+  const { address } = useAccount();
 
   return useQuery({
     queryKey: ['merkle-proof', address],

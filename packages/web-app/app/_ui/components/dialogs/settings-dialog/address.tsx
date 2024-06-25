@@ -1,16 +1,16 @@
 'use client';
 
-import { useIdOS } from '@/app/_providers/idos';
 import { useCopyToClipboard } from '@/app/_ui/hooks/useCopyToClipboard';
 import { formatAddress } from '@/app/_ui/utils/formatAddress';
 import { useCallback, useMemo } from 'react';
 import { Button } from '../../button';
 import { Check } from '../../svg/check';
 import { Clipboard } from '../../svg/clipboard';
+import { useAccount } from 'wagmi';
 
 export const Address = () => {
   const [copiedText, copy] = useCopyToClipboard();
-  const { address } = useIdOS();
+  const { address } = useAccount();
   const displayAddress = useMemo(() => {
     if (!address) return;
 

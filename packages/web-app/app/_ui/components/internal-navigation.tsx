@@ -3,20 +3,13 @@
 import clsx from 'clsx';
 import { NavLink } from './nav-link';
 import { TClassNameProps } from '@/app/_types';
-import { useKyc } from '@/app/_providers/kyc/context';
 
 type TMyProjectsLinkProps = {
   topbar?: boolean;
 };
 
 export const MyProjectsLink = ({ topbar = false }: TMyProjectsLinkProps) => {
-  const { status } = useKyc();
-
-  if (status === 'approved') {
-    return <NavLink href="/my-projects" name="My Projects" topbar={topbar} />;
-  }
-
-  return null;
+  return <NavLink href="/my-projects" name="My Projects" topbar={topbar} />;
 };
 
 export const InternalNavigation = ({ className }: TClassNameProps) => {

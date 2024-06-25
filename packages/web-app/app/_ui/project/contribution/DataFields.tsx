@@ -55,7 +55,7 @@ export const DataFields = () => {
         <div className="md:text-end">
           {minTotalTokensForSale !== undefined &&
           maxTotalTokensForSale !== undefined ? (
-            <>{`${number(Number(formatEther(minTotalTokensForSale)))} - ${number(Number(formatEther(maxTotalTokensForSale)))}} CTND`}</>
+            <>{`${number(Number(formatEther(minTotalTokensForSale)))} - ${number(Number(formatEther(maxTotalTokensForSale)))} CTND`}</>
           ) : (
             <LoadingField />
           )}

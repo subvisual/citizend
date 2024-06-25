@@ -58,14 +58,13 @@ const ProgressBar = ({
   max: number;
   value: number;
 }) => {
-  const valueInMillions = value / 1_000_000;
-  const maxTargetInMillion = max / 1_000_000;
-  // const maxInMillions = valueInMillions > 1.4 ? valueInMillions : 1.4;
+  const valueInMillions = value / 250_000;
+  const maxTargetInMillion = max / 250_000;
   const maxInMillions = 1.02;
   const maxTargetPosition = Math.round(
     (maxTargetInMillion / maxInMillions) * 100,
   );
-  const halfTargetInMillion = maxTargetInMillion / 2;
+  const halfTargetInMillion = maxTargetInMillion / 5;
   const halfTargetPosition = Math.round(
     (halfTargetInMillion / maxInMillions) * 100,
   );
@@ -76,7 +75,7 @@ const ProgressBar = ({
   const displayValue =
     valueInMillions > 0 && valueInMillions < 0.1
       ? '<0.1'
-      : valueInMillions.toFixed(2);
+      : (value / 1000).toFixed(1);
 
   return (
     <div>
@@ -118,7 +117,7 @@ const ProgressBar = ({
               <>
                 <div className="absolute -left-1 -top-9 h-2 w-2 rotate-45 transform bg-blue-500" />
                 <div className="absolute -top-14 -translate-x-1/2 -translate-y-1 text-blue-500">
-                  {displayValue}M
+                  {displayValue}k
                 </div>
               </>
             )}
@@ -130,7 +129,7 @@ const ProgressBar = ({
             }}
           >
             <div className="h-2 w-0.5 border-[1px] border-blue-500" />
-            <div className="-translate-x-1/2">{halfTargetInMillion}M</div>
+            <div className="-translate-x-1/2">50k</div>
           </div>
           <div
             className="absolute top-0 flex flex-col  items-start"
@@ -139,7 +138,7 @@ const ProgressBar = ({
             }}
           >
             <div className="h-2 w-0.5 border-[1px] border-blue-500" />
-            <div className="-translate-x-1/2">{maxTargetInMillion}M</div>
+            <div className="-translate-x-1/2">250k</div>
           </div>
           <ProgressBarInfo />
         </div>
@@ -158,7 +157,7 @@ const Info = () => {
   if (status === 'below') {
     return (
       <div className="flex items-center border-t border-mono-200 p-8 text-mono-800">
-        *If the total contributions fall below $500K, the token will not be
+        *If the total contributions fall below $50K, the token will not be
         launched, and refunds will be issued.
       </div>
     );

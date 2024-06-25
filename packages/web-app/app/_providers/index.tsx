@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, type ReactNode } from 'react';
-import { IdOsProvider } from './idos';
 import { wagmiConfig } from './wagmi-config';
 import { SsrWrapper } from './ssr-wrapper';
 import { DialogProvider } from './dialog';
@@ -14,7 +13,6 @@ import {
   darkTheme,
   type Theme,
 } from '@rainbow-me/rainbowkit';
-import { KycProvider } from './kyc';
 import { arbitrumSepolia, arbitrum } from 'wagmi/chains';
 import { AppSignalWrapper } from './app-signal-wrapper';
 type TProvidersProps = {
@@ -60,11 +58,7 @@ export function Providers({ children }: TProvidersProps) {
                 theme={customTheme}
                 modalSize="compact"
               >
-                <IdOsProvider>
-                  <KycProvider>
-                    <DialogProvider>{children}</DialogProvider>
-                  </KycProvider>
-                </IdOsProvider>
+                <DialogProvider>{children}</DialogProvider>
               </RainbowKitProvider>
             </ChainWrapper>
           </PersistQueryWrapper>

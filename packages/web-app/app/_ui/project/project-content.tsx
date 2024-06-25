@@ -11,7 +11,6 @@ import {
 } from '@/app/_lib/queries';
 import { useProject } from '@/app/_providers/project/context';
 import { ProjectContribution } from './project-contribution';
-import { useHasCitizendGrant, useHasProjectGrant } from '@/app/_lib/hooks';
 import { AppliedSuccess } from './applied-success';
 import { CardSkeleton } from '../components/skeletons/card-skeleton';
 import { useAccount } from 'wagmi';
@@ -31,20 +30,14 @@ export const ProjectContent = () => {
     process.env.NEXT_PUBLIC_CONTRIBUTE_OPEN === 'true' ? 1 : 0,
   );
   const { data, isLoading, isError, error } = useFetchProjectsSaleDetails();
-  const { hasGrant: hasCitizendGrant } = useHasCitizendGrant();
-  const {
-    hasGrant: hasProjectGrant,
-    isLoading: isLoadingGrant,
-    error: errorLoadingGrant,
-  } = useHasProjectGrant(projectId);
   const project = data?.find(
     (project) => project.project.toLowerCase() === projectId,
   );
   const { data: canContribute } = useCanContribute(project?.address, address);
-  const hasGrant = canContribute || (hasProjectGrant && hasCitizendGrant);
+  const hasGrant = canContribute || false;
   const saleCompleted = project?.status === 'completed';
 
-  if (isLoading || isLoadingGrant || (!data && !isError)) {
+  if (isLoading || (!data && !isError)) {
     return (
       <div className="grid grid-cols-1 gap-6  md:grid-cols-2">
         <CardSkeleton className="h-[544px]" />
@@ -96,7 +89,7 @@ export const ProjectContent = () => {
                     saleDate={start}
                     startRegistration={startRegistration}
                     endRegistration={endRegistration}
-                    error={errorLoadingGrant}
+                    error={error}
                   />
                 )}
                 <TokenMetrics />
@@ -134,7 +127,7 @@ export const ProjectContent = () => {
                   saleDate={start}
                   startRegistration={startRegistration}
                   endRegistration={endRegistration}
-                  error={errorLoadingGrant}
+                  error={error}
                 />
               )}
               <TokenMetrics />

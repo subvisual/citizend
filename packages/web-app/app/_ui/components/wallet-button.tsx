@@ -8,38 +8,8 @@ import { Avatar } from './avatar';
 import { useAccount } from 'wagmi';
 import { usePaymentTokenBalance } from '@/app/_lib/queries';
 import { arbitrum, arbitrumSepolia } from 'viem/chains';
-import { useKyc } from '@/app/_providers/kyc/context';
-import { idOSCredentialStatus } from '@/app/_types/idos';
-
-const statusDotMap = {
-  pending: 'yellow-500',
-  contacted: 'yellow-500',
-  rejected: 'red-700',
-  expired: 'yellow-500',
-};
-
-type TStatus = Exclude<idOSCredentialStatus, 'approved'>;
-
-const StatusDot = ({
-  status,
-  isLoading,
-}: {
-  status: TStatus | undefined;
-  isLoading: boolean;
-}) => {
-  const color = isLoading
-    ? 'yellow-500'
-    : (status && statusDotMap[status]) || 'red-700';
-
-  return (
-    <div
-      className={`h-4 w-4 rounded-full bg-${color} absolute -right-1.5 -top-1.5 ml-1 animate-pulse`}
-    ></div>
-  );
-};
 
 const SignedButton = () => {
-  const { status, isLoading } = useKyc();
   const { data: balance, formattedValue } = usePaymentTokenBalance();
   const { open } = useDialog();
 
@@ -49,9 +19,6 @@ const SignedButton = () => {
       onClick={() => open(SettingsDialog.displayName)}
     >
       {`${formattedValue} ${balance?.symbol}`}
-      {status !== 'approved' ? (
-        <StatusDot status={status} isLoading={isLoading} />
-      ) : null}
     </EdgeBorderButton>
   );
 };

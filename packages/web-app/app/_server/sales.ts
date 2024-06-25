@@ -9,7 +9,7 @@ import {
   http,
   publicActions,
 } from 'viem';
-import { arbitrumSepolia, mainnet } from 'viem/chains';
+import { arbitrumSepolia, arbitrum } from 'viem/chains';
 import { TProjectSaleDetails, TProjectStatus } from '../_types';
 import { TInternalError } from './types';
 import { evmGrantee, evmGranteePublicKey } from './wallet';
@@ -18,13 +18,13 @@ import { calculateTokenPrice } from '../_ui/utils/calculateTokenPrice';
 const config =
   process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
     ? {
-        chain: arbitrumSepolia,
-        transport: http(),
-      }
+      chain: arbitrumSepolia,
+      transport: http(),
+    }
     : {
-        chain: mainnet,
-        transport: http(),
-      };
+      chain: arbitrum,
+      transport: http(),
+    };
 
 const client = createWalletClient(config).extend(publicActions);
 
@@ -78,7 +78,7 @@ export const saleDetails = async (): Promise<
 
     return [
       {
-        address: evmGrantee.address,
+        address: contract.address,
         publicKey: evmGranteePublicKey,
         project: 'citizend',
         description: 'The community-curated token launch platform of web3.',

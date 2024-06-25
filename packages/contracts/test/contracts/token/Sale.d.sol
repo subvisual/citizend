@@ -27,7 +27,6 @@ contract SaleTest is Test {
     uint256 paymentTokenMultiplier;
     uint256 rate;
     uint256 minContribution;
-    uint256 minPrice;
 
     event Purchase(
         address indexed from,
@@ -73,6 +72,7 @@ contract SaleTest is Test {
             rate,
             start,
             end,
+            5 ether,
             10 ether,
             5 * 1e6,
             15 * 1e6,
@@ -114,8 +114,6 @@ contract SaleTest is Test {
     function testConstructor() public view {
         require(sale.paymentToken() == address(paymentToken));
         require(sale.rate() == rate);
-        require(sale.minPrice() == (2 * paymentTokenMultiplier) / 10);
-        require(sale.maxPrice() == (4 * paymentTokenMultiplier) / 10);
         require(sale.start() == start);
         require(sale.end() == end);
         require(sale.hasRole(sale.DEFAULT_ADMIN_ROLE(), owner));
@@ -440,16 +438,15 @@ contract SaleTest is Test {
 
         vm.warp(sale.end() + 1000);
 
-        require(sale.currentTokenPrice() == 0.24 * 1e6);
-        require(sale.allocation(alice) == 25 ether);
-        require(
-            sale.allocation(alice) ==
-                ((6 * 1e6) / sale.currentTokenPrice()) * 1 ether
-        );
+        require(sale.rate() == 0.2 * 1e6);
+
+        require(sale.allocation(alice) == 30 ether);
+
+        require(sale.allocation(alice) == ((6 * 1e6) / sale.rate()) * 1 ether);
     }
 
     function test_CurrentPrice() public {
-        require(sale.currentTokenPrice() == 0.2 * 1e6);
+        require(sale.rate() == 0.2 * 1e6);
 
         vm.startPrank(owner);
         sale.setMinTarget(5 * 1e6);
@@ -460,6 +457,6 @@ contract SaleTest is Test {
         sale.buy(sale.paymentTokenToToken(7.5 * 1e6), aliceMerkleProof);
         vm.stopPrank();
 
-        require(sale.currentTokenPrice() == 0.3 * 1e6);
+        require(sale.rate() == 0.2 * 1e6);
     }
 }

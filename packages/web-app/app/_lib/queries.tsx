@@ -313,6 +313,17 @@ export const useUserTotalInvestedUsdcCtznd = (address: `0x${string}`) => {
   return usdcValue;
 };
 
+export const useUserAvailableCtznd = (address: `0x${string}`) => {
+  const { data: ctzndTokensSold } = useReadCtzndSaleUncappedAllocation({
+    args: [address],
+    query: {
+      staleTime: 0,
+    },
+  });
+
+  return formatEther(ctzndTokensSold || 0n);
+}
+
 export const useCtzndMinContributionUsdc = () => {
   const { data: min } = useReadCtzndSaleMinContribution();
 

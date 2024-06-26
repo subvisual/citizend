@@ -1,11 +1,11 @@
 import {
-  useCtzndRisingTideCap,
   useCtzndSaleCapStatus,
   useCtzndSaleStatus,
 } from '@/app/_lib/hooks';
 import {
   useExtraAllocation,
   useTotalInvestedUsdcCtznd,
+  useUserAvailableCtznd,
   useUserTotalInvestedUsdcCtznd,
 } from '@/app/_lib/queries';
 import {
@@ -22,7 +22,6 @@ import { Tooltip } from '../components/tooltip';
 const useAvailableToClaim = () => {
   const { address } = useAccount();
   const capStatus = useCtzndSaleCapStatus();
-  const cap = useCtzndRisingTideCap();
   const { data: availableToClaim } = useReadCtzndSaleAllocation({
     args: [address!],
     query: {
@@ -30,12 +29,17 @@ const useAvailableToClaim = () => {
       staleTime: 0,
     },
   });
+  const available = useUserAvailableCtznd(address!);
 
   if (capStatus == 'above') {
     return 'TBD once sale ends';
   }
 
-  return `${number(Number(formatEther(availableToClaim || 0n)))} CTND`;
+  if (capStatus == 'below') {
+    return Number(available);
+  }
+
+  return Number(availableToClaim);
 };
 
 export const MyTokens = () => {
@@ -57,7 +61,7 @@ export const MyTokens = () => {
   const extraAllocation = useExtraAllocation(address).data;
   const bonusAllocation =
     typeof availableToClaim === 'number'
-      ? availableToClaim * 1.25
+      ? availableToClaim * 0.25
       : 'TBD once sale ends';
 
   return (
@@ -93,7 +97,7 @@ export const MyTokens = () => {
           </div>
           <div className="flex flex-col gap-2">
             <h3 className="text-sm text-mono-800">CTND Available to Claim</h3>
-            <div>{availableToClaim}</div>
+            <div>{`${availableToClaim} CTND`}</div>
           </div>
           {extraAllocation ? (
             <div className="flex flex-col gap-2">

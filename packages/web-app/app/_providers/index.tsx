@@ -57,6 +57,7 @@ export function Providers({ children }: TProvidersProps) {
                 showRecentTransactions={true}
                 theme={customTheme}
                 modalSize="compact"
+                initialChain={arbitrum}
               >
                 <DialogProvider>{children}</DialogProvider>
               </RainbowKitProvider>

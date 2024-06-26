@@ -54,8 +54,11 @@ export const MyTokens = () => {
   const totalContributions = useTotalInvestedUsdcCtznd();
   const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
   const availableToClaim = useAvailableToClaim();
-  const bonusAllocation = 0 * 1.25;
   const extraAllocation = useExtraAllocation(address).data;
+  const bonusAllocation =
+    typeof availableToClaim === 'number'
+      ? availableToClaim * 1.25
+      : 'TBD once sale ends';
 
   return (
     <>

@@ -16,11 +16,7 @@ import {
 } from '@/app/_lib/queries';
 import { calculateTokenPrice } from '../utils/calculateTokenPrice';
 
-const Upcoming = ({
-  minTarget,
-  maxTarget,
-  start,
-}: TProjectSaleDetails) => {
+const Upcoming = ({ minTarget, maxTarget, start }: TProjectSaleDetails) => {
   const targetedRaise = usdRange(
     BigInt(formatUnits(minTarget, 6)),
     BigInt(formatUnits(maxTarget, 6)),

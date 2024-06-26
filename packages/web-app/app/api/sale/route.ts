@@ -27,7 +27,7 @@ export async function GET(_request: Request) {
       ...project,
       minTarget: formatUnits(project.minTarget, 6),
       maxTarget: formatUnits(project.maxTarget, 6),
-    }
+    };
   });
 
   return Response.json(tempDetails);

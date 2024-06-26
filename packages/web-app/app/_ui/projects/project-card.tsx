@@ -9,7 +9,6 @@ import { BannerImage } from './banner-image';
 import { Status } from './status';
 import { usdValue } from '../utils/intl-formaters/usd-value';
 import { usdRange } from '../utils/intl-formaters/usd-range';
-import { shortDateRange } from '../utils/intl-formaters/date-range';
 import { formatUnits } from 'viem/utils';
 import {
   useCtzndMinContributionUsdc,
@@ -20,15 +19,12 @@ import { calculateTokenPrice } from '../utils/calculateTokenPrice';
 const Upcoming = ({
   minTarget,
   maxTarget,
-  startRegistration,
-  endRegistration,
   start,
 }: TProjectSaleDetails) => {
   const targetedRaise = usdRange(
     BigInt(formatUnits(minTarget, 6)),
     BigInt(formatUnits(maxTarget, 6)),
   );
-  const registerPeriod = shortDateRange(startRegistration, endRegistration);
   const { days, hours, minutes, seconds } = useCountdown(start);
 
   return (
@@ -36,10 +32,6 @@ const Upcoming = ({
       <li className="flex flex-col justify-between gap-3 md:flex-row">
         <span className="text-mono-400">Targeted Raise</span>
         <span>{targetedRaise}</span>
-      </li>
-      <li className="flex flex-col justify-between gap-3 md:flex-row">
-        <span className="text-mono-400">Register period</span>
-        <span>{registerPeriod}</span>
       </li>
       <li className="-mx-6 -mb-4 flex flex-row items-center gap-3 border-t border-t-mono-400 px-6 pt-4 md:-mx-8 md:px-8">
         <div className="flex flex-col gap-3 md:flex-row">

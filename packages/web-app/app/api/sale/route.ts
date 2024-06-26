@@ -1,4 +1,5 @@
 import { saleDetails } from '@/app/_server/sales';
+import { formatUnits } from 'viem';
 
 declare global {
   interface BigInt {
@@ -21,5 +22,13 @@ export async function GET(_request: Request) {
     });
   }
 
-  return Response.json(details);
+  const tempDetails = details.map((project) => {
+    return {
+      ...project,
+      minTarget: formatUnits(project.minTarget, 6),
+      maxTarget: formatUnits(project.maxTarget, 6),
+    }
+  });
+
+  return Response.json(tempDetails);
 }

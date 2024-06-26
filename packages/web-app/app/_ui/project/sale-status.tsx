@@ -279,12 +279,6 @@ export const SaleStatus = ({ hasGrant }: { hasGrant: boolean }) => {
         </div>
         {hasGrant ? <Info /> : null}
       </div>
-      {!hasGrant ? (
-        <div>
-          This token sale is exclusively open to individuals who have previously
-          applied for participation. Stay tuned for future opportunities.
-        </div>
-      ) : null}
     </>
   );
 };

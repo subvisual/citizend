@@ -320,7 +320,7 @@ export const CitizendProjectDescription = () => {
         ecosystem. By empowering its community to curate and select projects,
         citizend is breaking new ground, fostering a space where innovation
         thrives on the merits of consensus and shared values. Created by the
-        community, for the community.highest potential.
+        community, for the community.
       </p>
       <h3 className="mt-16">How does it work</h3>
       <p className="text-mono-400">

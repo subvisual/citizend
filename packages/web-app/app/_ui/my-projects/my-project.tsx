@@ -71,6 +71,10 @@ export const MyProject = () => {
         </div>
       </div>
       {status === 'completed' && address ? <Refund address={address} /> : null}
+      <p className="text-center text-mono-400">
+        Your CTND allocation and bonus will be able to be claimed upon token
+        launch (TGE)
+      </p>
     </div>
   );
 };

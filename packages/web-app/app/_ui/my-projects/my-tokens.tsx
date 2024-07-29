@@ -1,15 +1,11 @@
-import {
-  useCtzndSaleStatus,
-} from '@/app/_lib/hooks';
+import { useCtzndSaleStatus } from '@/app/_lib/hooks';
 import {
   useExtraAllocation,
   useTotalInvestedUsdcCtznd,
   useUserAvailableCtznd,
   useUserTotalInvestedUsdcCtznd,
 } from '@/app/_lib/queries';
-import {
-  useReadCtzndSaleRefundAmount,
-} from '@/wagmi.generated';
+import { useReadCtzndSaleRefundAmount } from '@/wagmi.generated';
 import { formatEther } from 'viem';
 import { useAccount } from 'wagmi';
 import { calculateTokenPrice } from '../utils/calculateTokenPrice';
@@ -39,7 +35,7 @@ export const MyTokens = () => {
   const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
   const availableToClaim = useAvailableToClaim();
   const extraAllocation = useExtraAllocation(address).data;
-  const bonusAllocation = availableToClaim * 0.25
+  const bonusAllocation = availableToClaim * 0.25;
 
   return (
     <>

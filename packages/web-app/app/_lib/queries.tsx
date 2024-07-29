@@ -322,7 +322,7 @@ export const useUserAvailableCtznd = (address: `0x${string}`) => {
   });
 
   return formatEther(ctzndTokensSold || 0n);
-}
+};
 
 export const useCtzndMinContributionUsdc = () => {
   const { data: min } = useReadCtzndSaleMinContribution();

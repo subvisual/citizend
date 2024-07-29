@@ -34,8 +34,10 @@ export const Header = ({ project, logo, end }: TProjectSaleDetails) => {
         <div className="relative flex w-full flex-col md:flex-row md:items-center">
           {projectTitle}
           {status === 'completed' ? (
-            <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-full rounded-full bg-blue-500 px-2 pb-0.5 pt-1 text-xs uppercase leading-3 text-mono-50">
-              Closed
+            <div className="flex">
+              <div className="-translate-y-1/2 rounded-full bg-blue-500 px-2 pb-0.5 pt-1 text-xs uppercase leading-3 text-mono-50">
+                Closed
+              </div>
             </div>
           ) : null}
           {status === 'live' ? (

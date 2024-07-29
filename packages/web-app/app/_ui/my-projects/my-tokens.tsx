@@ -1,5 +1,4 @@
 import {
-  useCtzndSaleCapStatus,
   useCtzndSaleStatus,
 } from '@/app/_lib/hooks';
 import {
@@ -9,37 +8,18 @@ import {
   useUserTotalInvestedUsdcCtznd,
 } from '@/app/_lib/queries';
 import {
-  useReadCtzndSaleAllocation,
   useReadCtzndSaleRefundAmount,
 } from '@/wagmi.generated';
 import { formatEther } from 'viem';
 import { useAccount } from 'wagmi';
 import { calculateTokenPrice } from '../utils/calculateTokenPrice';
-import { number } from '../utils/intl-formaters/number';
 import { usdValue } from '../utils/intl-formaters/usd-value';
 import { Tooltip } from '../components/tooltip';
 
 const useAvailableToClaim = () => {
   const { address } = useAccount();
-  const capStatus = useCtzndSaleCapStatus();
-  const { data: availableToClaim } = useReadCtzndSaleAllocation({
-    args: [address!],
-    query: {
-      enabled: !!address,
-      staleTime: 0,
-    },
-  });
   const available = useUserAvailableCtznd(address!);
-
-  if (capStatus == 'above') {
-    return 'TBD once sale ends';
-  }
-
-  if (capStatus == 'below') {
-    return Number(available);
-  }
-
-  return Number(availableToClaim);
+  return Number(available);
 };
 
 export const MyTokens = () => {
@@ -59,10 +39,7 @@ export const MyTokens = () => {
   const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
   const availableToClaim = useAvailableToClaim();
   const extraAllocation = useExtraAllocation(address).data;
-  const bonusAllocation =
-    typeof availableToClaim === 'number'
-      ? availableToClaim * 0.25
-      : 'TBD once sale ends';
+  const bonusAllocation = availableToClaim * 0.25
 
   return (
     <>

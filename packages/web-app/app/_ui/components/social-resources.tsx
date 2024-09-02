@@ -54,7 +54,7 @@ const resources = [
   },
   {
     name: 'Discord',
-    href: 'https://discord.gg/citizend',
+    href: 'https://discord.gg/citizendxyz',
     icon: Discord,
   },
   {

@@ -36,10 +36,10 @@ contract DevDeployScript is Script {
 
         bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
 
-        startRegistration = 1715342400;
-        endRegistration = 1715860800;
-        start = 1718787833;
-        end = 1719230400;
+        startRegistration = 1761149955;
+        endRegistration = 1781149955;
+        start = 1761149955;
+        end = 1781149955;
 
         MockERC20 paymentToken = new MockERC20("USDC", "USDC", 6);
         Sale sale = new Sale(

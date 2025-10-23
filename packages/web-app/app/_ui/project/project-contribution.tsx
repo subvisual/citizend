@@ -59,6 +59,103 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
 		setAmount,
 	} = useContributeToCtznd();
 	const totalContributions = useTotalInvestedUsdcCtznd();
+	const currentTokenPrice = calculateTokenPrice(Number(totalContributions));
 
-	return <div className="flex flex-col"></div>;
+	const updateAmount = useCallback(
+		(evt: React.ChangeEvent<HTMLInputElement>) => {
+			const { value } = evt.target;
+			setAmount(Number(value));
+		},
+		[setAmount],
+	);
+
+	const onClick = useCallback(() => {
+		if (!amount || !tokensToBuy) return;
+		return open(ContributeDialog.displayName, {
+			userAddress,
+			amount,
+			amountInWei,
+			tokensToBuy,
+			tokensToBuyInWei,
+			tokensToBuyInSzabo,
+		});
+	}, [
+		open,
+		amount,
+		tokensToBuy,
+		amountInWei,
+		tokensToBuyInWei,
+		userAddress,
+		tokensToBuyInSzabo,
+	]);
+
+	const errorMessage = getErrorMessage(amount, maxAmount, minAmount, error);
+
+	return (
+		<div className="flex flex-col">
+			<div className="flex w-full flex-col rounded-lg bg-mono-50 text-mono-950">
+				<h4 className="border-b border-mono-200 px-8 py-6 font-medium uppercase">
+					Your Contribution
+				</h4>
+				<div className="grid grid-cols-2 gap-x-6 gap-y-8 p-4 md:p-6">
+					<Input
+						variant="number"
+						onChange={updateAmount}
+						label="Your Contribution"
+						type="number"
+						id="usdc-amount"
+						units="USDC"
+						error={errorMessage}
+						className="col-span-2 md:col-span-1"
+						onSubmit={onClick}
+						defaultValue={amount}
+						min={minAmount}
+					/>
+					<Input
+						label="You Get"
+						type="number"
+						id="ctnd-amount"
+						units="CTND*"
+						disabled
+						value={(amount / currentTokenPrice).toFixed(0)}
+						className="col-span-2 md:col-span-1"
+					/>
+					<p className="col-span-2 text-mono-800">
+						Please keep in mind that you may not get your full desired
+						contribution.
+					</p>
+				</div>
+				<DataFields />
+				<Button
+					className="w-full rounded-none"
+					onClick={onClick}
+					disabled={amount < minAmount || !!errorMessage}
+					variant={
+						amount < minAmount || !!errorMessage
+							? "primary-disabled"
+							: "primary"
+					}
+				>
+					Contribute
+				</Button>
+			</div>
+			<div className="px-6 pt-5 text-mono-400">
+				By clicking &quot;Contribute&quot; you agree to the platform{" "}
+				<Link
+					href="https://citizend.xyz/legal/terms-conditions"
+					className="text-mono-50"
+				>
+					Terms and Conditions{" "}
+				</Link>
+				and confirm you read the{" "}
+				<Link
+					href="https://citizend.xyz/legal/privacy-policy"
+					className="text-mono-50"
+				>
+					Privacy Policy
+				</Link>
+				.
+			</div>
+		</div>
+	);
 };

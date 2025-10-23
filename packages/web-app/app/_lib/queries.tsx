@@ -221,7 +221,12 @@ export const useFetchMerkleProof = () => {
 		queryFn: async () => {
 			if (!address) return undefined;
 
+			console.log("enter");
 			const result = await fetchAndGenerateProof(address);
+
+			console.log("exit");
+
+			console.log(result);
 
 			if (typeof result === "object" && "error" in result) {
 				appSignal.sendError(new Error(result.error));
@@ -236,23 +241,31 @@ export const useFetchMerkleProof = () => {
 
 export const usePaymentTokenBalance = () => {
 	const { address } = useAccount();
-
-	console.log("asdfasdfasdf");
 	const {
 		data: paymentToken,
 		isLoading: isLoadingToken,
 		error: errorToken,
 	} = useReadCtzndSalePaymentToken();
 
-	console.log("paymentToken", paymentToken);
+	const {
+		data: balance,
+		isLoading: isLoadingBalance,
+		error: errorBalance,
+	} = useBalance({
+		token: paymentToken,
+		address,
+		query: {
+			enabled: !!paymentToken,
+		},
+	});
 
 	useEffect(() => {
-		const errorToReport = errorToken;
+		const errorToReport = errorToken || errorBalance;
 
 		if (errorToReport) {
 			appSignal.sendError(errorToReport);
 		}
-	}, [errorToken]);
+	}, [errorToken, errorBalance]);
 
 	if (!paymentToken) {
 		return {
@@ -264,10 +277,10 @@ export const usePaymentTokenBalance = () => {
 	}
 
 	return {
-		data: 0,
-		formattedValue: 0, //? formatUnits(balance.value, 6) : null,
-		isLoading: isLoadingToken,
-		error: errorToken,
+		data: balance,
+		formattedValue: balance ? formatUnits(balance.value, 6) : null,
+		isLoading: isLoadingBalance || isLoadingToken,
+		error: errorToken || errorBalance,
 	};
 };
 

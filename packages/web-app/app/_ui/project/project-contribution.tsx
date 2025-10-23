@@ -88,7 +88,7 @@ export const ProjectContribution = ({ userAddress }: TProjectContribution) => {
 		userAddress,
 		tokensToBuyInSzabo,
 	]);
-
+	console.log("bla", amount, maxAmount, minAmount, error);
 	const errorMessage = getErrorMessage(amount, maxAmount, minAmount, error);
 
 	return (

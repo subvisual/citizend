@@ -62,10 +62,6 @@ export const ProjectContent = () => {
 
 	const { start, startRegistration, endRegistration } = project;
 
-	console.log(hasGrant);
-	console.log(address);
-	console.log(!saleCompleted);
-	console.log(hasGrant && address && !saleCompleted);
 	return (
 		<>
 			<div className="md:hidden">

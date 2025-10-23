@@ -13,10 +13,10 @@ import { compareAddresses } from "@/app/_lib/utils";
 import { Address } from "@/app/_ui/components/dialogs/settings-dialog/address";
 import { getAddress } from "viem";
 
-export interface idOSGrant {
-	content: string;
-	encryption_public_key: string;
-}
+//export interface idOSGrant {
+//	content: string;
+//	encryption_public_key: string;
+//}
 
 const userFilter = async (grantee: any, userAddress: string) => {
 	//  try {
@@ -121,8 +121,12 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
 	const { error, data } = await supabase
 		.from("applications")
 		.select("address")
-		.eq("project", projectAddress)
 		.order("address", { ascending: true });
+
+	console.log(supabase);
+	console.log(error);
+	console.log(data);
+	console.log(projectAddress);
 
 	if (error) {
 		return {
@@ -137,8 +141,8 @@ export const updateAllowedPgojectApplicants = async (
 	projectAddress: string,
 ) => {
 	try {
-		const applicantsResult = await getProjectApplicants(projectAddress);
-		const parsedApplicants = addressesListSchema.parse(applicantsResult);
+		//		const applicantsResult = await getProjectApplicants(projectAddress);
+		//		const parsedApplicants = addressesListSchema.parse(applicantsResult);
 		const currentAllowedList =
 			await getAllowedProjectApplicants(projectAddress);
 
@@ -150,16 +154,16 @@ export const updateAllowedPgojectApplicants = async (
 		}
 
 		// remove already allowed addresses
-		const addresses = parsedApplicants.filter(
-			(address) =>
-				!currentAllowedList.some((allowed) =>
-					compareAddresses(allowed, address),
-				),
-		);
+		//		const addresses = parsedApplicants.filter(
+		//			(address) =>
+		//				!currentAllowedList.some((allowed) =>
+		//					compareAddresses(allowed, address),
+		//				),
+		//		);
 
-		console.log("==>Current Applicants", parsedApplicants.length);
-		console.log("==>Allowed", currentAllowedList.length);
-		console.log("==>To Process", addresses.length);
+		//		console.log("==>Current Applicants", parsedApplicants.length);
+		//		console.log("==>Allowed", currentAllowedList.length);
+		//		console.log("==>To Process", addresses.length);
 
 		//const grantee = await idOSGrantee.init({
 		//	granteeSigner: evmGrantee,
@@ -183,7 +187,7 @@ export const updateAllowedPgojectApplicants = async (
 		//console.log("==>", "NOT ALLOWED:");
 		//console.log(notAllowed);
 
-		return Array.from(addresses);
+		return Array.from(currentAllowedList);
 	} catch (error) {
 		console.error(error);
 
@@ -197,7 +201,7 @@ export const updateAllowedPgojectApplicants = async (
 };
 
 export const serverPublicInfo: ServerPublicInfo = {
-	grantee: getAddress("0"), //evmGrantee.address,
-	encryptionPublicKey: getAddress("0"), //evmGranteePublicKey,
+	grantee: getAddress("0x0000000000000000000000000000000000000000"), //evmGrantee.address,
+	encryptionPublicKey: getAddress("0x0000000000000000000000000000000000000000"), //evmGranteePublicKey,
 	lockTimeSpanSeconds: 3600 * 24 * 365, // one year?
 };

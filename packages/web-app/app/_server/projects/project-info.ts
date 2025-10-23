@@ -14,6 +14,6 @@ export const projectsInfo: TProjectsPublicInfo = {
 	citizend: {
 		id: "citizend",
 		address: saleContractAddress,
-		publicKey: getAddress("0"), //evmGranteePublicKey,
+		publicKey: getAddress("0x0000000000000000000000000000000000000000"), //evmGranteePublicKey,
 	},
 };

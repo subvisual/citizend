@@ -8,7 +8,6 @@ import { MerkleTree } from 'merkletreejs';
 import { appSignal } from '@/app/app-signal';
 
 const generateTree = (addresses: string[]): MerkleTree => {
-  console.log('addresses', addresses);
   const data = addresses.map((addr: string) => {
     return {
       address: addr as `0x${string}`,
@@ -30,15 +29,9 @@ export const generateProof = async (addresses: string[], address: string) => {
 
 // For testing purposes, to be removed
 export const fetchAndGenerateProof = async (address: string) => {
-  console.log('entered');
-
-  console.log(projectsInfo);
-
   const result = await getAllowedProjectApplicants(
     projectsInfo.citizend.address,
   );
-
-  console.log('result', result);
 
   //	//forward the error
   if (typeof result === 'object' && 'error' in result) {
@@ -63,8 +56,6 @@ export const generateMerkleRoot = async (): Promise<
   const addresses = await getAllowedProjectApplicants(
     projectsInfo.citizend.address,
   );
-
-  console.log(addresses);
 
   if (typeof addresses === 'object' && 'error' in addresses) {
     // forward the error

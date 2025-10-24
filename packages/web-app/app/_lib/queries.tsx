@@ -221,12 +221,7 @@ export const useFetchMerkleProof = () => {
     queryFn: async () => {
       if (!address) return undefined;
 
-      console.log('enter');
       const result = await fetchAndGenerateProof(address);
-
-      console.log('exit');
-
-      console.log(result);
 
       if (typeof result === 'object' && 'error' in result) {
         appSignal.sendError(new Error(result.error));

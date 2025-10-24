@@ -123,11 +123,6 @@ export const getAllowedProjectApplicants = async (projectAddress: string) => {
     .select('address')
     .order('address', { ascending: true });
 
-  console.log(supabase);
-  console.log(error);
-  console.log(data);
-  console.log(projectAddress);
-
   if (error) {
     return {
       error: error.message,

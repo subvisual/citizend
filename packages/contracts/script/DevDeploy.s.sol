@@ -14,8 +14,8 @@ import {Project} from "contracts/discovery/Project.sol";
 
 contract DevDeployScript is Script {
     address owner = address(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266);
-    address alice = address(0x70997970C51812dc3A010C7d01b50e0d17dc79C8);
-    address bob = address(0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC);
+    address alice = address(0x6E336729686A9964dD5D0fDDD57B30d057144bfb);
+    address bob = address(0x7a6Da886dA5C7a3a4aa7eD187b2253C20FE58af7);
 
     address[] testAccounts;
 
@@ -34,28 +34,28 @@ contract DevDeployScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
+        bytes32 merkleRoot = 0xfcad8757f2b82be748959d6be658a7c0accde2ee0efc8fce800bb088f373539b;
 
         startRegistration = 1715342400;
         endRegistration = 1715860800;
-        start = 1715947200;
-        end = 1716033600;
+        start = 1761853769;
+        end = 1761940159;
 
         MockERC20 paymentToken = new MockERC20("USDC", "USDC", 6);
         Sale sale = new Sale(
             address(paymentToken),
-            0.2 ether,
+            0.02 * 1e6,
             start,
             end,
-            2500000 ether,
-            500000 ether,
-            1000000 ether,
+            25000000 ether,
+            500000 * 1e6,
+            2500000 * 1e6,
             startRegistration,
             endRegistration
         );
 
         sale.setMerkleRoot(merkleRoot);
-        sale.setMinContribution(200 ether);
+        sale.setMinContribution(200 * 1e6);
 
         bool success = paymentToken.approve(address(sale), 1000 ether);
         require(success, "approve failed");
@@ -63,6 +63,8 @@ contract DevDeployScript is Script {
         for (uint256 i; i < testAccounts.length; i++) {
             paymentToken.mint(testAccounts[i], 1000 ether);
         }
+
+        paymentToken.mint(address(0x5C3099098BCaF0E1F94b16f1c516127b99535be2), 1000 ether);
         vm.stopBroadcast();
     }
 }

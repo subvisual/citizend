@@ -34,12 +34,12 @@ contract DevDeployScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        bytes32 merkleRoot = 0xfcad8757f2b82be748959d6be658a7c0accde2ee0efc8fce800bb088f373539b;
+        bytes32 merkleRoot = 0xd97a52e08c2e044989f7dec032c30ca6e5217e99a1f52416a189ac55c5060819;
 
         startRegistration = 1715342400;
         endRegistration = 1715860800;
-        start = 1761853769;
-        end = 1761940159;
+        start = 1762365499;
+        end = 1762451896;
 
         MockERC20 paymentToken = new MockERC20("USDC", "USDC", 6);
         Sale sale = new Sale(
@@ -49,7 +49,7 @@ contract DevDeployScript is Script {
             end,
             25000000 ether,
             500000 * 1e6,
-            2500000 * 1e6,
+            2000000 * 1e6,
             startRegistration,
             endRegistration
         );
@@ -65,6 +65,10 @@ contract DevDeployScript is Script {
         }
 
         paymentToken.mint(address(0x5C3099098BCaF0E1F94b16f1c516127b99535be2), 1000 ether);
+        paymentToken.mint(address(0xeF1d9b810e3F7c59796F694e82Ff5872dCb5E498), 1000 ether);
+        paymentToken.mint(address(0x8fDD962D2d7979F78Aa103E059C1F1a3D610167d), 1000 ether);
+        paymentToken.mint(address(0x6E336729686A9964dD5D0fDDD57B30d057144bfb), 1000 ether);
+        paymentToken.mint(address(0x7a6Da886dA5C7a3a4aa7eD187b2253C20FE58af7), 1000 ether);
         vm.stopBroadcast();
     }
 }

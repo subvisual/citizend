@@ -19,8 +19,7 @@ contract SaleTest is Test {
     address alice = 0x70997970C51812dc3A010C7d01b50e0d17dc79C8;
     address bob = 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC;
 
-    bytes32 merkleRoot =
-        0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
+    bytes32 merkleRoot = 0xa5c09e2a9128afef7246a5900cfe02c4bd2cfcac8ac4286f0159a699c8455a49;
     bytes32[] aliceMerkleProof = new bytes32[](2);
     bytes32[] bobMerkleProof = new bytes32[](2);
 
@@ -29,11 +28,7 @@ contract SaleTest is Test {
     uint256 minContribution;
     uint256 minPrice;
 
-    event Purchase(
-        address indexed from,
-        uint256 paymentTokenAmount,
-        uint256 tokenAmount
-    );
+    event Purchase(address indexed from, uint256 paymentTokenAmount, uint256 tokenAmount);
 
     event Claim(address indexed to, uint256 tokenAmount);
     event Refund(address indexed to, uint256 paymentTokenAmount);
@@ -47,25 +42,17 @@ contract SaleTest is Test {
         start = vm.getBlockTimestamp();
         end = start + 60 * 60 * 24;
 
-        aliceMerkleProof[0] = bytes32(
-            0xe9707d0e6171f728f7473c24cc0432a9b07eaaf1efed6a137a4a8c12c79552d9
-        );
-        aliceMerkleProof[1] = bytes32(
-            0x347dce04eb339ca70588960730ef0cada966bb1d5e10a9b9489a3e0ba47dc1b6
-        );
+        aliceMerkleProof[0] = bytes32(0xe9707d0e6171f728f7473c24cc0432a9b07eaaf1efed6a137a4a8c12c79552d9);
+        aliceMerkleProof[1] = bytes32(0x347dce04eb339ca70588960730ef0cada966bb1d5e10a9b9489a3e0ba47dc1b6);
 
-        bobMerkleProof[0] = bytes32(
-            0x8a3552d60a98e0ade765adddad0a2e420ca9b1eef5f326ba7ab860bb4ea72c94
-        );
-        bobMerkleProof[1] = bytes32(
-            0x070e8db97b197cc0e4a1790c5e6c3667bab32d733db7f815fbe84f5824c7168d
-        );
+        bobMerkleProof[0] = bytes32(0x8a3552d60a98e0ade765adddad0a2e420ca9b1eef5f326ba7ab860bb4ea72c94);
+        bobMerkleProof[1] = bytes32(0x070e8db97b197cc0e4a1790c5e6c3667bab32d733db7f815fbe84f5824c7168d);
 
         paymentToken = new MockERC20("USDC", "USDC", 6);
         token = new Citizend(owner, end);
 
         paymentTokenMultiplier = 10 ** paymentToken.decimals();
-        rate = (2 * paymentTokenMultiplier) / 10;
+        rate = (2 * paymentTokenMultiplier) / 10 / 10;
         minContribution = (2 * paymentTokenMultiplier) / 10;
 
         sale = new Sale(
@@ -73,9 +60,9 @@ contract SaleTest is Test {
             rate,
             start,
             end,
-            10 ether,
-            5 * 1e6,
-            15 * 1e6,
+            25_000_000 ether, // tokens for sale
+            500_000 * 1e6,
+            2_000_000 * 1e6,
             startRegistration,
             endRegistration
         );
@@ -90,15 +77,15 @@ contract SaleTest is Test {
 
         vm.startPrank(alice);
 
-        paymentToken.mint(alice, 100 * 1e6);
-        paymentToken.approve(address(sale), 100 * 1e6);
+        paymentToken.mint(alice, 100_000_000 * 1e6);
+        paymentToken.approve(address(sale), 100_000_000 * 1e6);
 
         vm.stopPrank();
 
         vm.startPrank(bob);
 
-        paymentToken.mint(bob, 100 * 1e6);
-        paymentToken.approve(address(sale), 100 * 1e6);
+        paymentToken.mint(bob, 100_000_000 * 1e6);
+        paymentToken.approve(address(sale), 100_000_000 * 1e6);
 
         vm.stopPrank();
     }
@@ -335,9 +322,7 @@ contract SaleTest is Test {
         require(sale.refundAmount(alice) == 0);
     }
 
-    function test_RefundAmountIsZeroIfIndividualCapIsHigherThanInvestedTotal()
-        public
-    {
+    function test_RefundAmountIsZeroIfIndividualCapIsHigherThanInvestedTotal() public {
         vm.prank(alice);
         sale.buy(1 ether, aliceMerkleProof);
 
@@ -428,24 +413,72 @@ contract SaleTest is Test {
         require(sale.refundAmount(alice) == sale.tokenToPaymentToken(2 ether));
     }
 
+    // case 1:
     function test_AllocationWhenMaxTargetNotReached() public {
+        console2.log(sale.rate());
+        console2.log(sale.minPrice());
+        console2.log(sale.maxPrice());
         vm.startPrank(owner);
-        sale.setMinTarget(5 * 1e6);
-        sale.setMaxTarget(10 * 1e6);
+        sale.setMinTarget(500_000 * 1e6);
+        sale.setMaxTarget(2_000_000 * 1e6);
         vm.stopPrank();
 
         vm.startPrank(alice);
-        sale.buy(sale.paymentTokenToToken(6 * 1e6), aliceMerkleProof);
+        console2.log("alice");
+        sale.buy(25_000_000 ether, aliceMerkleProof);
+        vm.stopPrank();
+        vm.startPrank(bob);
+        console2.log("bob");
+        sale.buy(25_000_000 ether, bobMerkleProof);
         vm.stopPrank();
 
         vm.warp(sale.end() + 1000);
 
-        require(sale.currentTokenPrice() == 0.24 * 1e6);
-        require(sale.allocation(alice) == 25 ether);
+        require(sale.currentTokenPrice() == 0.04 * 1e6);
+        require(sale.refundAmount(alice) == 0);
+        require(sale.refundAmount(bob) == 0);
+        require(sale.allocation(alice) == 12_500_000 ether);
+        require(sale.allocation(bob) == 12_500_000 ether);
+    }
+
+    function test_AllocationWhenMaxTargetNotReached2() public {
+        console2.log(sale.rate());
+        console2.log(sale.minPrice());
+        console2.log(sale.maxPrice());
+        vm.startPrank(owner);
+        sale.setMinTarget(500_000 * 1e6);
+        sale.setMaxTarget(2_000_000 * 1e6);
+        vm.stopPrank();
+
+        vm.startPrank(alice);
+        console2.log("alice");
+        sale.buy(105_000_000 ether, aliceMerkleProof);
+        vm.stopPrank();
+        vm.startPrank(bob);
+        console2.log("bob");
+        sale.buy(105_000_000 ether, bobMerkleProof);
+        vm.stopPrank();
+
+        vm.warp(sale.end() + 1000);
+        vm.startPrank(owner);
+        sale.setIndividualCap(12_500_000 ether);
+        vm.stopPrank();
+
+        require(sale.currentTokenPrice() == 0.08 * 1e6);
+        require(sale.refundAmount(alice) == 1_850_000 * 1e6);
+        require(sale.refundAmount(bob) == 1_850_000 * 1e6);
+        console2.log("payment", sale.tokenToPaymentToken(105_000_000 ether));
+        console2.log("refund ", sale.refundAmount(alice));
+        console2.log("alloc  ", sale.allocation(alice));
+        console2.log((sale.tokenToPaymentToken(105_000_000 ether) - sale.refundAmount(alice)) / sale.allocation(alice));
+        console2.log(sale.currentTokenPrice());
         require(
-            sale.allocation(alice) ==
-                ((6 * 1e6) / sale.currentTokenPrice()) * 1 ether
+            (sale.tokenToPaymentToken(105_000_000 ether) - sale.refundAmount(alice)) / sale.allocation(alice)
+                == sale.currentTokenPrice()
         );
+        // require(sale.refundAmount(bob) == 0);
+        // require(sale.allocation(alice) == 12_500_000 ether);
+        // require(sale.allocation(bob) == 12_500_000 ether);
     }
 
     function test_CurrentPrice() public {

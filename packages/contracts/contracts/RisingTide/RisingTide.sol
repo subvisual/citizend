@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
+import "forge-std/console2.sol";
 
 import {Math} from "../libraries/Math.sol";
 
@@ -66,11 +67,7 @@ abstract contract RisingTide {
     /// How many allocations have been made, regardless of the future individual cap
     ///
     /// @return Total amount invested
-    function risingTide_totalAllocatedUncapped()
-        public
-        view
-        virtual
-        returns (uint256);
+    function risingTide_totalAllocatedUncapped() public view virtual returns (uint256);
 
     /// How many tokens are to be distributed in total
     ///
@@ -92,8 +89,7 @@ abstract contract RisingTide {
     /// @param _cap The cap to validate
     function _risingTide_setCap(uint256 _cap) internal {
         require(
-            risingTideState == RisingTideState.NotSet ||
-                risingTideState == RisingTideState.Invalid,
+            risingTideState == RisingTideState.NotSet || risingTideState == RisingTideState.Invalid,
             "already set or in progress"
         );
 
@@ -102,6 +98,7 @@ abstract contract RisingTide {
         risingTideCache = RisingTideCache(0, 0, 0, 0);
 
         risingTide_validate();
+        console2.log("validating");
     }
 
     /// Continues a pending validation of the individual cap
@@ -112,11 +109,7 @@ abstract contract RisingTide {
         uint256 count = investorCount();
         uint256 localCap = individualCap;
 
-        for (
-            ;
-            validation.index < count && gasleft() > CAP_VALIDATION_GAS_LIMIT;
-            ++validation.index
-        ) {
+        for (; validation.index < count && gasleft() > CAP_VALIDATION_GAS_LIMIT; ++validation.index) {
             uint256 amount = investorAmountAt(validation.index);
 
             validation.sumForCap += amount.min(localCap);
@@ -142,9 +135,7 @@ abstract contract RisingTide {
      * @param _amount amount to apply cap to
      * @return capped amount
      */
-    function risingTide_applyCap(
-        uint256 _amount
-    ) public view returns (uint256) {
+    function risingTide_applyCap(uint256 _amount) public view returns (uint256) {
         if (!risingTide_isValidCap()) {
             return 0;
         }
@@ -176,10 +167,7 @@ abstract contract RisingTide {
     /// @param _validation The calculated CapValidation struct
     ///
     /// @return true if `cap` is a valid rising tide cap for the given parameters.
-    function _risingTide_validCap(
-        uint256 _cap,
-        RisingTideCache memory _validation
-    ) internal view returns (bool) {
+    function _risingTide_validCap(uint256 _cap, RisingTideCache memory _validation) internal view returns (bool) {
         uint256 total = risingTide_totalAllocatedUncapped();
         uint256 max = risingTide_totalCap();
 
@@ -190,8 +178,7 @@ abstract contract RisingTide {
         if (total <= max) {
             return _cap == _validation.largest;
         } else {
-            return (_validation.sumForNextCap > max &&
-                _validation.sumForCap <= max);
+            return (_validation.sumForNextCap > max && _validation.sumForCap <= max);
         }
     }
 }

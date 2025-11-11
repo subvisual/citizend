@@ -165,8 +165,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         maxTarget = _maxTarget;
         startRegistration = _startRegistration;
         endRegistration = _endRegistration;
-        minPrice = 0.02 * 1e6;
-        maxPrice = 0.08 * 1e6;
+        minPrice = _rate;
+        maxPrice = _rate * 2;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -306,7 +306,14 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 uncapped = account.uncappedAllocation;
         uint256 capped = allocation(to);
 
-        return tokenToPaymentToken(uncapped - capped);
+        // What the user paid (at rate during sale)
+        uint256 paidAmount = tokenToPaymentToken(uncapped);
+
+        // What they should pay at final price
+        uint256 shouldPay = (capped * currentTokenPrice()) / MUL;
+
+        // Refund difference (handle case where price decreased)
+        return paidAmount > shouldPay ? paidAmount - shouldPay : 0;
     }
 
     function uncappedAllocation(

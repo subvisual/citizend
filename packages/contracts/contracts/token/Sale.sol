@@ -67,6 +67,12 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// Fixed price of token, expressed in paymentToken amount
     uint256 public immutable rate;
 
+    /// Fixed minimum price of token, expressed in paymentToken amount
+    uint256 public immutable minPrice;
+
+    /// Fixed maximum price of token, expressed in paymentToken amount
+    uint256 public immutable maxPrice;
+
     /// Minimum amount per contribution, expressed in paymentToken amount
     uint256 public minContribution;
 
@@ -85,11 +91,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// Timestamp at which registration period ends
     uint256 public endRegistration;
 
-    /// Minimum tokens available for sale
-    uint256 public immutable minTokensForSale;
-
-    /// Maximum tokens available for sale
-    uint256 public immutable maxTokensForSale;
+    /// Total tokens available for sale
+    uint256 public immutable totalTokensForSale;
 
     /// Minimum amount to be raised
     uint256 public minTarget;
@@ -122,8 +125,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     /// @param _rate token:paymentToken exchange rate, multiplied by 10e18
     /// @param _start Start timestamp
     /// @param _end End timestamp
-    /// @param _minTokensForSale Minimum amount of tokens for sale
-    /// @param _maxTokensForSale Maximum amount of tokens for sale
+    /// @param _totalTokensForSale Total amount of tokens for sale
     /// @param _minTarget Minimum target for the sale
     /// @param _maxTarget Maximum target for the sale
     /// @param _startRegistration Registration period start timestamp
@@ -133,8 +135,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 _rate,
         uint256 _start,
         uint256 _end,
-        uint256 _minTokensForSale,
-        uint256 _maxTokensForSale,
+        uint256 _totalTokensForSale,
         uint256 _minTarget,
         uint256 _maxTarget,
         uint256 _startRegistration,
@@ -144,11 +145,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         require(_rate > 0, "can't be zero");
         require(_start > 0, "can't be zero");
         require(_end > _start, "end must be after start");
-        require(_minTokensForSale > 0, "can't be zero");
-        require(
-            _maxTokensForSale > _minTokensForSale,
-            "_maxTokensForSale cannot be lower than _minTokensForSale"
-        );
+        require(_totalTokensForSale > 0, "total cannot be 0");
         require(_minTarget > 0, "_minTarget cannot be 0");
         require(
             _maxTarget > _minTarget,
@@ -163,12 +160,13 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         rate = _rate;
         start = _start;
         end = _end;
-        minTokensForSale = _minTokensForSale;
-        maxTokensForSale = _maxTokensForSale;
+        totalTokensForSale = _totalTokensForSale;
         minTarget = _minTarget;
         maxTarget = _maxTarget;
         startRegistration = _startRegistration;
         endRegistration = _endRegistration;
+        minPrice = _rate;
+        maxPrice = _rate * 2;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -308,7 +306,14 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         uint256 uncapped = account.uncappedAllocation;
         uint256 capped = allocation(to);
 
-        return tokenToPaymentToken(uncapped - capped);
+        // What the user paid (at rate during sale)
+        uint256 paidAmount = tokenToPaymentToken(uncapped);
+
+        // What they should pay at final price
+        uint256 shouldPay = (capped * currentTokenPrice()) / MUL;
+
+        // Refund difference (handle case where price decreased)
+        return paidAmount > shouldPay ? paidAmount - shouldPay : 0;
     }
 
     function uncappedAllocation(
@@ -329,7 +334,25 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
             return _applyCap(uncappedAllocation(_to));
         }
 
-        return (tokenToPaymentToken(uncappedAllocation(_to)) / rate) * MUL;
+        return
+            (tokenToPaymentToken(uncappedAllocation(_to)) /
+                currentTokenPrice()) * MUL;
+    }
+
+    function currentTokenPrice() public view returns (uint256) {
+        if (tokenToPaymentToken(totalUncappedAllocations) < minTarget) {
+            return minPrice;
+        }
+
+        if (tokenToPaymentToken(totalUncappedAllocations) > maxTarget) {
+            return maxPrice;
+        }
+
+        return
+            minPrice +
+            ((maxPrice - minPrice) *
+                (tokenToPaymentToken(totalUncappedAllocations) - minTarget)) /
+            (maxTarget - minTarget);
     }
 
     //
@@ -373,15 +396,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         override(RisingTide)
         returns (uint256)
     {
-        if (totalUncappedAllocations < minTarget) {
-            return minTokensForSale;
-        }
-
-        if (totalUncappedAllocations > maxTarget) {
-            return maxTokensForSale;
-        }
-
-        return totalUncappedAllocations / rate;
+        return totalTokensForSale;
     }
 
     //
@@ -475,15 +490,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     /// @return the amount of tokens already allocated
     function allocated() public view returns (uint256) {
-        if (totalUncappedAllocations < minTarget) {
-            return Math.min(totalUncappedAllocations, minTokensForSale);
-        }
-
-        if (totalUncappedAllocations > maxTarget) {
-            return Math.min(totalUncappedAllocations, maxTokensForSale);
-        }
-
-        return totalUncappedAllocations;
+        return Math.min(totalUncappedAllocations, totalTokensForSale);
     }
 
     //

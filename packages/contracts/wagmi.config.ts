@@ -10,11 +10,10 @@ export default defineConfig({
       namePrefix: "Ctznd",
       deployments: {
         Sale: {
-          42161: "0x85b34Aa54fdf8242e4656eA50b711F45340925bC",
-          421614: "0x067126ce81fa5a2ae8d7a3dafd01c6e8c0764560",
-          31337: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
           1: "0x733e41e5a08c6d922eddaef715186d7e97d55c50",
-          11155111: "0x3b11b3bc2ef9a24a1a1fae9d80127f44386e3f7d",
+          31337: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+          11155111: "0xcf4d549de6b5cc79d3f71a9698456c448a951f14",
+          421614: "0x5e4bf20bbb995bd6a30d1e384c85a56b5ad703e4"
         },
       },
     }),

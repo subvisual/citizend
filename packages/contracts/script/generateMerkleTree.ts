@@ -5,9 +5,11 @@ import { keccak256, encodePacked } from "viem";
 
 let test_addresses = [
   "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+  "0x5C3099098BCaF0E1F94b16f1c516127b99535be2",
+  "0xeF1d9b810e3F7c59796F694e82Ff5872dCb5E498",
+  "0x8fDD962D2d7979F78Aa103E059C1F1a3D610167d",
+  "0x6E336729686A9964dD5D0fDDD57B30d057144bfb",
+  "0x7a6Da886dA5C7a3a4aa7eD187b2253C20FE58af7",
 ];
 
 let sale_addresses = [
@@ -21,7 +23,7 @@ const root = 0x8f01d3093ac8686620cade48849cf16f17ebf59fa84357bd5512541e33806424;
 async function main(address: string) {
   let addresses: string[][];
 
-  if (process.env.TEST_MODE) {
+  if (true) {
     addresses = test_addresses;
   } else {
     addresses = fs
@@ -37,6 +39,8 @@ async function main(address: string) {
       leaf: keccak256(encodePacked(["address"], [addr])),
     };
   });
+
+  console.log(data);
 
   const leafs = data.map(({ leaf }: any) => leaf);
   const merkleTree = new MerkleTree(leafs, keccak256, { sortPairs: true });

@@ -165,8 +165,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         maxTarget = _maxTarget;
         startRegistration = _startRegistration;
         endRegistration = _endRegistration;
-        minPrice = 0.02 * 1e6;
-        maxPrice = 0.08 * 1e6;
+        minPrice = 0.01 * 1e6;
+        maxPrice = 0.01 * 1e6;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -303,10 +303,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
             return 0;
         }
 
-        uint256 uncapped = account.uncappedAllocation;
+        uint256 uncapped = tokenToPaymentToken(account.uncappedAllocation);
         uint256 capped = allocation(to);
 
-        return tokenToPaymentToken(uncapped - capped);
+        return uncapped - capped;
     }
 
     function uncappedAllocation(
@@ -324,12 +324,11 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         }
 
         if (tokenToPaymentToken(totalUncappedAllocations) > maxTarget) {
-            return _applyCap(uncappedAllocation(_to));
+            return _applyCap(tokenToPaymentToken(uncappedAllocation(_to)));
         }
 
         return
-            (tokenToPaymentToken(uncappedAllocation(_to)) /
-                currentTokenPrice()) * MUL;
+            tokenToPaymentToken(uncappedAllocation(_to));
     }
 
     function currentTokenPrice() public view returns (uint256) {
@@ -369,7 +368,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         address addr = investorByIndex[i];
         Account storage account = accounts[addr];
 
-        return account.uncappedAllocation;
+        return tokenToPaymentToken(account.uncappedAllocation);
     }
 
     /// @inheritdoc RisingTide
@@ -379,7 +378,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         override(RisingTide)
         returns (uint256)
     {
-        return totalUncappedAllocations;
+        return tokenToPaymentToken(totalUncappedAllocations);
     }
 
     /// @inheritdoc RisingTide
@@ -389,7 +388,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         override(RisingTide)
         returns (uint256)
     {
-        return totalTokensForSale;
+        return maxTarget;
     }
 
     //

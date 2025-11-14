@@ -11340,4 +11340,27 @@ merkleProofs[0x5Cce53773253765CD6D98b70D8FCA4af4d95610B].push(bytes32(0x9f9951c1
             require(sale.refundAmount(participants[i]) == (amounts[i] < 2764967167 ? 0 : amounts[i] - 2764967167));
         }
     }
+
+    function test_case8() public {
+        address p0 = participants[0];
+        address p1 = participants[1];
+
+        buy(p0, usdc(2_000_000));
+
+        vm.warp(sale.end() + 1000);
+
+        vm.startPrank(owner);
+        sale.setIndividualCap(usdc(2_000_000));
+               
+        sale.setCustodian(p1);
+        require(sale.custodian() == p1);
+
+        uint256 balanceBefore = paymentToken.balanceOf(p1);
+        sale.withdraw();
+        uint256 balanceAfter = paymentToken.balanceOf(p1);
+        
+        require(balanceAfter == balanceBefore + usdc(2_000_000));
+
+        vm.stopPrank();   
+    }
 }

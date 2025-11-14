@@ -118,6 +118,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
     // Merkle root for contributions validation
     bytes32 public merkleRoot;
 
+    address public custodian;
+
     error MaxContributorsReached();
     error InvalidLeaf();
 
@@ -165,8 +167,8 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         maxTarget = _maxTarget;
         startRegistration = _startRegistration;
         endRegistration = _endRegistration;
-        minPrice = 0.01 * 1e6;
-        maxPrice = 0.01 * 1e6;
+        minPrice = 0.02 * 1e6;
+        maxPrice = 0.02 * 1e6;
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(CAP_VALIDATOR_ROLE, msg.sender);
@@ -214,11 +216,10 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         withdrawn = true;
 
         uint256 allocatedAmount = allocated();
-        uint256 paymentTokenAmount = tokenToPaymentToken(allocatedAmount);
 
-        emit Withdraw(msg.sender, paymentTokenAmount);
+        emit Withdraw(msg.sender, allocatedAmount);
 
-        IERC20(paymentToken).transfer(msg.sender, paymentTokenAmount);
+        IERC20(paymentToken).transfer(custodian, allocatedAmount);
     }
 
     /// @inheritdoc ISale
@@ -482,7 +483,7 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
 
     /// @return the amount of tokens already allocated
     function allocated() public view returns (uint256) {
-        return Math.min(totalUncappedAllocations, totalTokensForSale);
+        return Math.min(tokenToPaymentToken(totalUncappedAllocations), maxTarget);
     }
 
     //
@@ -505,5 +506,9 @@ contract Sale is ISale, RisingTide, ERC165, AccessControl, ReentrancyGuard {
         }
 
         return _amount;
+    }
+
+    function setCustodian(address _custodian) external onlyRole(DEFAULT_ADMIN_ROLE) {
+       custodian = _custodian;
     }
 }
